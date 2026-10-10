@@ -164,3 +164,4 @@
 | 2026-10-10 20:33 | Dhruv | P11 | noidea v2.21b (merged) / gpt-6-astra | 0.79 (LOW draw; empty round 3 -> final at msg 3) | 3cc43596599ab8f4 |
 | 2026-10-10 20:40 | Dhruv | P11 | noidea v2.21c / gpt-6-astra | **0.80 BEST P11** (floor trade: agreed 44.95 @ 300/0) | eac20911ec06e2d6 |
 | 2026-10-10 20:41 | Neel | P08 | noidea_neel / gpt-6-astra | **0.63** | 81ee4b1e4096514b |
+| 2026-10-10 20:46 | Dhruv | P11 | noidea v2.21d / gpt-6-astra | 0.71 (high draw; floor > 45.45) | 11e2d8727fc045a1 |
