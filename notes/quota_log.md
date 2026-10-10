@@ -246,3 +246,6 @@
 | 2026-10-11 00:11 | Dhruv | P08 | v2.34c hidden L2 / gpt-6-astra | 0.9156 | 2bfced14e95b42d6 |
 | 2026-10-11 00:11 | Dhruv | P10 | v2.34c hidden L2 (503 -> stale retry after its final -> walk) / gpt-6-astra | 0.0000 | 8134c6d18ce18953 |
 | 2026-10-11 00:11 | Dhruv | P18 | v2.34c hidden L2 / gpt-6-astra | 0.6207 | 77b16b90ff3c91b7 |
+| 2026-10-11 00:06 | Neel | P10 | noidea_p10b (NOIDEA_EXPERIMENTS=hidden; r1 rubber idx instead of OTD) / gpt-6-astra | **0.69** | a9e2c0e41cc1be12 |
+| 2026-10-11 00:08 | Neel | P10 | noidea_p10b v2 (NOIDEA_EXPERIMENTS=hidden; record r1 incl. OTD, r2 labour idx) / gpt-6-astra | **0.69** | 67f3678ff842d9a8 |
+| 2026-10-11 00:18 | Neel | P10 | noidea_p10 (cloud plan: r1 24 m + path + should-cost + rubber idx; r2 36 m move + labour idx) / gpt-6-astra | **0.71** | 59c899b93ba24dec |
