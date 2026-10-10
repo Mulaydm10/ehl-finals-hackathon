@@ -352,11 +352,13 @@ class NoIdeaAgent:
             if (t.get("lead_time_days") or min_lead) >= min_lead:
                 yield t
 
-    def sheets_at(self, case, sid, value, cap_price=None):
+    def sheets_at(self, case, sid, value, cap_price=None, only=None):
         """The 3 different term sheets that give the supplier `value` per unit at the lowest cost to us."""
         s = self.sup[sid]
         ranked = []
         for t in self.combos(case, dict(s["open_terms"]), s["dossier"].get("motives", {})):
+            if only and any(t.get(f) != v for f, v in only.items()):
+                continue
             t = complete_offer(case, {**t, "unit_price": 100.0})
             v1 = supplier_value(case, t, s["est"])
             slope = (supplier_value(case, {**t, "unit_price": 200.0}, s["est"]) - v1) / 100.0
@@ -556,7 +558,18 @@ class NoIdeaAgent:
                 log.info("%s escalation: %s", sid, [(t["unit_price"], t.get("payment_days")) for t in esc])
                 return self.message(case, sid, events, esc, k)
         cap = terms.get("unit_price") if sheet_id else None
-        sheets = self.sheets_at(case, sid, self.value_target(case, sid, events), cap)
+        target = self.value_target(case, sid, events)
+        sheets = self.sheets_at(case, sid, target, cap)
+        # cloud task 12 (analysis/cases/P08_round2_payment.md): a hedged raw-material supplier answers round 1 with a
+        # nominal headline on our longest term, then re-prices round 2 by value. Moving to its 14-day proposal in round 2
+        # drew -0.157 / -0.160 / -0.170 (1363, c387, cae4) and 90 -> 60 d -0.162 (db7d); STAYING on 90 d drew -0.118
+        # (6912fd89, the only one). Equal value for us (+-0.005), so round 2 goes to the shortest payment term.
+        # From message 3 on, re-price on the payment term it priced (sim: our 3rd ask hopped 14 -> 30 d because its
+        # structure was not in our top-3 sheets and the hold-structure filter fell back to our first; MISTAKES.md L5).
+        if k >= 1 and self.hedged_raw(case, sid):
+            days = (min(case.get("term_options", {}).get("payment_days") or [0]) or None) if k == 1 else \
+                (terms.get("payment_days") if sheet_id else None)
+            sheets = (days and self.sheets_at(case, sid, target, cap, only={"payment_days": days})) or sheets
         if not sheets:
             return accept if ok else walk
         committee = central.committee_round1(motives)
