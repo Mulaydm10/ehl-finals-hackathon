@@ -19,6 +19,16 @@ v3 (this file) = that best path, plus one change that makes a record possible:
 - round 2: 4.86 @ 14 d with its clause (+0.10, the best game's step size) + forecast;
 - round 3: HOLD 4.86 @ 14 d db0 + the labour index (a new fact, so not an empty repeat). Agreed -> 0.761 (beats); refused -> main
   climbs monotone from 4.86 (the 0.707 / 0.727 games' path).
+  Live ed9a881a = 0.598: 4.86 @ 14 d drew 5.10 (-0.10), and the hold drew its final at once ("nothing without a move").
+
+v4 (this version) - the MIRROR model fitted on all 26 games: its hidden target moves ~0.85 x our step (in its value: 14 d pays it
+~1.07% more than 30 d) and it agrees once our ask crosses the target, so the deal is near a fixed meeting point
+M = (m x opening + T1) / (1 + m), whatever the steps. Our 4.76 opening gave M at 4.91-4.94 @ 14 d (0c968aae agreed 4.91, a09d9536
+4.94). A lower opening lowers M by ~0.46 x the cut, so the opening goes to 4.69 @ 30 d - the lowest above the score-1.0 line
+(4.66 for these terms: below it the ask is under its floor). Then the best game's step pattern, always moving:
+r2 4.80 @ 14 d + its clause + forecast (the same +0.16 step in its value as 0c968aae's 4.76 -> 4.87, which drew -0.20);
+r3 4.84 + labour index; r4 4.86 + the other bars' price history. Agreed at <= 4.86 -> 0.761. Its own offer at or under our next
+ask -> taken. Its final -> main accepts it.
 """
 import logging
 
@@ -29,8 +39,8 @@ from arena_kit.play import latest, standing
 log = logging.getLogger("arena")
 
 P18_CASES = {"case:P18"}
-R1 = {"unit_price": 4.76, "payment_days": 30, "contract_months": 24, "index_clause": None}
-ASK, DAYS = 4.86, 14  # round 2 ask, held in round 3 (<= 4.86 @ 14 d db0 beats 0.75595)
+R1 = {"unit_price": 4.69, "payment_days": 30, "contract_months": 24, "index_clause": None}  # score-1.0 line: 4.66
+ASKS, DAYS = {1: 4.80, 2: 4.84, 3: 4.86}, 14  # our 2nd-4th asks @ 14 d with its clause (<= 4.86 db0 beats 0.75595)
 SIGN = "Kind regards,\nPurchasing, Hollerau Pumpenwerke"
 
 
@@ -74,26 +84,31 @@ class NoIdeaAgent(_Main):
                         "committee; please put this proposal to them.\n\n"
                         f"On this basis we propose EUR {R1['unit_price']:.2f} per kg, 30 days net, 24 months (term sheet "
                         f"attached).\n\n{SIGN}")
-                log.info("%s P18 v3 round 1: 4.76 @ 30 d / 24 m + price path, AS-14404, PPI-C2431", sid)
+                log.info("%s P18 v4 round 1: %.2f @ 30 d / 24 m + price path, AS-14404, PPI-C2431", sid, R1["unit_price"])
                 return self._send(case, sid, t, body, path["ids"] + alloy["ids"] + ppi["ids"])
         ic = theirs.get("index_clause")
         db0 = ic is not None and not float(ic.get("deadband_pct") or 0)
-        if k == 1 and ic:
-            fc = self._claim(sid, "forecast")
-            t = complete_offer(case, {"unit_price": ASK, "payment_days": DAYS, "contract_months": 24, "index_clause": ic})
-            body = ("Dear Sir or Madam,\n\nThank you for your offer. We accept your AS-14404 price adjustment clause, and we "
-                    "will pay faster: 14 days net instead of 30.\n\n" + (fc["sentence"] + "\n\n" if fc else "")
-                    + f"We propose EUR {ASK:.2f} per kg with your AS-14404 clause, 14 days net, 24 months (term sheet attached)."
-                    f"\n\n{SIGN}")
-            log.info("%s P18 v3 round 2: %.2f @ 14 d + its clause + forecast (its %.2f)", sid, ASK, theirs.get("unit_price") or 0)
-            return self._send(case, sid, t, body, fc["ids"] if fc else [])
-        if k == 2 and db0 and (theirs.get("payment_days") or 99) <= DAYS and (theirs.get("unit_price") or 0) > ASK + 1e-9:
-            lab = self._claim(sid, "index_change", "LCI-C")
-            if lab:
-                t = complete_offer(case, {"unit_price": ASK, "payment_days": DAYS, "contract_months": 24, "index_clause": ic})
-                body = ("Dear Sir or Madam,\n\nThank you for your step. We are close.\n\n" + lab["sentence"] + "\n\n"
-                        f"We propose EUR {ASK:.2f} per kg with your AS-14404 clause, 14 days net, 24 months (term sheet "
-                        f"attached). On your confirmation we will issue the order.\n\n{SIGN}")
-                log.info("%s P18 v3 round 3: hold %.2f @ 14 d db0 (its %.2f) + labour", sid, ASK, theirs["unit_price"])
-                return self._send(case, sid, t, body, lab["ids"])
+        if k in ASKS and ic:
+            ask = ASKS[k]
+            on_ours = (theirs.get("payment_days") or 99) <= DAYS and db0
+            if on_ours and theirs.get("unit_price") is not None and theirs["unit_price"] <= ask + 1e-9:
+                sh = standing(events)[0]
+                log.info("%s P18 v4: its %.2f @ 14 d is at or under our next ask %.2f - accept", sid, theirs["unit_price"], ask)
+                return {"supplier_id": sid, "message": {"action": {"type": "accept", "term_sheet_id": sh}}}
+            if k == 1 or on_ours:
+                fact = (self._claim(sid, "forecast") if k == 1 else self._claim(sid, "index_change", "LCI-C") if k == 2
+                        else self._claim(sid, "po_prices"))
+                use_ic = ic if db0 else next((o for o in case["term_options"]["index_clause"]
+                                               if o and not float(o.get("deadband_pct") or 0)), ic)
+                t = complete_offer(case, {"unit_price": ask, "payment_days": DAYS, "contract_months": 24, "index_clause": use_ic})
+                lead = {1: "Thank you for your offer. We accept your AS-14404 price adjustment clause, and we will pay faster: "
+                           "14 days net instead of 30.",
+                        2: "Thank you for your step. We move again.",
+                        3: "Thank you. We take one more step to close today."}[k]
+                body = (f"Dear Sir or Madam,\n\n{lead}\n\n" + (fact["sentence"] + "\n\n" if fact else "")
+                        + f"We propose EUR {ask:.2f} per kg with your AS-14404 clause, 14 days net, 24 months (term sheet attached)."
+                        + (" On your confirmation we will issue the order." if k == 3 else "") + f"\n\n{SIGN}")
+                log.info("%s P18 v4 msg %d: %.2f @ 14 d db0 (its %.2f @ %s d) + %s", sid, k + 1, ask, theirs.get("unit_price") or 0,
+                         theirs.get("payment_days"), fact["kind"] if fact else "no fact")
+                return self._send(case, sid, t, body, fact["ids"] if fact else [])
         return super()._decide(case, threads)
