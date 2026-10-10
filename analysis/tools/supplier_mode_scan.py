@@ -7,8 +7,11 @@ A reply is TEMPLATE when every sentence in its trace `reasons` is one of the eng
 cooperation and have made a step towards you.", "Any further step needs approval from our management.", "The contract
 term is reflected in the price.", ...). Normal mode adds model-written sentences ("Given our current capacity constraints,
 we must maintain a firm position on pricing."). Report: analysis/cases/P10_draw.md.
-Mode per session: TEMPLATE (all replies), model (none), mixed (some). A lone "Without movement from your side we cannot
-move either." also reads as template: that is a hold reply, not the fallback.
+Mode per session: TEMPLATE (all replies), model (none), mixed (some). Replies made only of lines both modes write (claim
+checks "We checked the ... you cited", the hold "Without movement from your side we cannot move either.") are ambiguous and
+not counted: a walk-away or a hold says nothing about the mode.
+Files are read as UTF-8 on every platform: under Windows' default cp1252 the "…" in the engine sentences does not match and
+template games read as "model" (673ee890 did).
 """
 import datetime
 import glob
@@ -42,24 +45,35 @@ ENGINE = [
     r"^We have reviewed your offer and hold our Angebot\.$",
 ]
 ENGINE_RE = [re.compile(x) for x in ENGINE]
+BOTH_MODES = [re.compile(x) for x in (ENGINE[0], r"^Without movement from your side we cannot move either\.$",
+                                      r"^We have reviewed your offer and hold our Angebot\.$")]
 
 
 def engine_sentence(s):
     return any(r.search(s.strip()) for r in ENGINE_RE)
 
 
+def reply_mode(reasons):
+    """'T' engine template, 'M' model-written, None ambiguous (only lines both modes write)."""
+    if not all(engine_sentence(r) for r in reasons):
+        return "M"
+    if all(any(b.search(r.strip()) for b in BOTH_MODES) for r in reasons):
+        return None
+    return "T"
+
+
 def games():
     out = {}
     for p in sorted(glob.glob("datasets/runs/*.json")):
         try:
-            d = json.load(open(p))
+            d = json.load(open(p, encoding="utf-8"))
         except Exception:
             continue
         if isinstance(d, dict) and "session" in d:
             s = d["session"]
             out[s["session_id"]] = (s.get("case_id"), s.get("created_at"), (d.get("detail") or {}).get("result") or {})
     for p in sorted(glob.glob("tools/replays/raw/*.json")):
-        d = json.load(open(p))
+        d = json.load(open(p, encoding="utf-8"))
         out.setdefault(d.get("session_id"), (d.get("case_id"), None, d.get("result") or {}))
     return out
 
@@ -73,7 +87,9 @@ def main(cases):
         for t in res.get("trace") or []:
             if t["actor"] == "buyer" or t["round"] == 0 or not t.get("reasons"):
                 continue
-            flags.append(all(engine_sentence(r) for r in t["reasons"]))
+            m = reply_mode(t["reasons"])
+            if m is not None:
+                flags.append(m == "T")
             if first is None:
                 mv = t["move"]
                 first = ((mv.get("terms") or {}).get("unit_price"), (mv.get("signals") or {}).get("reply_delay_days"))
