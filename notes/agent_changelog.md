@@ -791,3 +791,6 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
 
 - loop 1/8 (19:57): 0.71 (3608ce1410ab5cf9) - high draw 46.50/46.00/45.50, probes 45.10/45.38/45.45 refused, took 45.50 (late-round accept band fired with the 45.45 probe pending - gain would have been 0.008).
 - loop 2/8 (20:01): 0.71 (f70d7a6ed006d68c) - high draw, final_offer 45.50 at its 4th message (no probe window).
+- loop 3/8 (20:03): **0.7935** (77f61e477a353895) - HIGH draw (46.50) yet reached 45.00: r2 electricity -> 45.50, r3 QNs + price history -> hold ("do not change"), r4 **labour -0.3% -> "it is a tiny drop, but we can pass that on to you" + "with your promise to pay exactly on time, we can drop the price to 45.00"**, r5 our 44.75 -> "45.00 is really our absolute bottom line" + final 45.00.
+- **Learning: on a grid supplier a TAKEN fact is a full grid step whatever its size** (corrects rule 15, which came from non-grid P03). Floor 45.00 again (bottom line named) - same floor as every low draw.
+### v2.19e (offline): later-round facts ordered by THIS supplier take-rate (taken first, shrugged-off fillers last), not by size. P11: r2 electricity + QNs, r3 labour + price history. Tests 38, offline 0.931, walk replays unchanged.

@@ -394,8 +394,16 @@ class NoIdeaAgent:
         # -0.3% -> no cut) comes after every other fact; then later rounds' data
         tiny = lambda c: c["kind"] == "index_change" and abs((c.get("figure") or 0) * (c.get("weight") or 0)) < 0.25 \
             and c.get("weight") is not None
-        ranked = [c for c in ranked if not c.get("late") and not tiny(c)] + [c for c in ranked if c.get("late")] + \
-                 [{**c, "late": True} for c in ranked if tiny(c) and not c.get("late")]  # never in round 1
+        late = [c for c in ranked if c.get("late")] + [{**c, "late": True} for c in ranked if tiny(c) and not c.get("late")]
+        # later rounds: what THIS supplier takes first, what it shrugged off last - NOT by size: on a grid supplier a taken
+        # fact is a full step whatever its size (P11 77f61e47: labour -0.3% "it's a tiny drop, but we can pass that on to
+        # you" -> 45.50 to 45.00; price history and QNs "do not change our calculation" every time)
+        if central:
+            try:
+                late.sort(key=lambda c: (c.get("filler", False), -central.take_rate(c["kind"], case["case_id"])))
+            except Exception:
+                pass
+        ranked = [c for c in ranked if not c.get("late") and not tiny(c)] + late  # tiny falls never in round 1
         # the arena counts a volume trend once per case: a 2nd forecast (another part) came back `duplicate` (P07 x4)
         fc = [c for c in ranked if c["kind"] == "forecast"]
         ranked = [c for c in ranked if c["kind"] != "forecast" or c is fc[0]]
