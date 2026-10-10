@@ -960,3 +960,21 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
   (45 d 4.88 refused x5, 90 d 4.93 refused), first-counter levers in round 1 (forecast fact, price path 4.29 -> 4.39, account
   value + its own EUR 4.63 quote): first counter 4.90 every time. Sub-cent prices: forbidden (2 decimals).
 - Our agent now reaches the ceiling every time: 0.874 x5 today (was 0.81-0.86).
+
+## Arena live records (GET /v1/live, 21:55) - we rank #1 in practice (83.8; gLarPC 77.7, Codacabana 77.6)
+| case | record | holder | house | ours |
+|---|---:|---|---:|---:|
+| P01 | 0.998 | pegasus | 0.966 | 0.910 (below the house!) |
+| P02 | 0.847 | NoIdea | 0.740 | 0.847 |
+| P03 | 0.936 | NoIdea | 0.925 | 0.936 |
+| P04 | 0.874 | makeAnother.md | 0.860 | 0.874 (tie; 21 teams, nobody above) |
+| P05 | 0.924 | TakeTheMoneyAndRun | 0.555 | 0.820 (agent 0.61) |
+| P07 | 0.812 | NoIdea | 0.782 | 0.812 |
+| P08 | 0.916 | NoIdea | 0.752 | 0.916 |
+| P10 | 0.702 | NoIdea | 0.686 | 0.702 |
+| P11 | 0.807 | TakeTheMoneyAndRun | 0.314 | 0.802 |
+| P18 | 0.677 | NoIdea | 0.386 | 0.677 |
+- Biggest gaps: P01 (+0.088, we are below the house; last played on v2.9), P05 (+0.104).
+- Arena notices: quota raised to 450 practice sessions / 24 h; Sun 08:00 data release (re-run `arena data`), 09:00 pre-flight,
+  12:00 code + slides freeze (submit on ehl.gg, `arena run --set final` running before 12:00). During the final the agent must
+  NOT read leaderboard / results / events.
