@@ -40,6 +40,7 @@ CLOSE_GAP = 0.015     # ...only when our last ask is within 1.5% of its standing
 STALL_DROP = 1 / 3    # it stalled: its last move (share of the gap) < 1/3 of the previous one...
 STALL_MIN = 0.02      # ...or < 2% of the gap
 MESO_BAND = 0.03  # round-1 MESOs: other structures within 3% of our best cost
+GRID_PROBES = 4  # grid probe: asks between (its price - grid) and its price, stepping up (P11 floor hidden in the 0.50 grid)
 NEAR_CLOSE_TRY = 0.0075  # one ask this far below an OPEN offer before taking it (P11 7117d351: agreed to ours, -0.8%)
 WALK_GUARD_MOVE = 0.005  # its last move cut our cost > 0.5%: still conceding, not about to walk
 CASH_SHORT_RISK = 2.0  # a cash-short supplier prices uncertain cash outflows (chargebacks) ~2x their expectation
@@ -954,6 +955,12 @@ class NoIdeaAgent:
             if len(meso) > 1:
                 sheets = meso
                 s["meso"] = [t for _, t in meso]
+        if not sheets and status == "open" and moves_left(case, events) > 1 and s.get("last_main") and k >= 1:
+            # nothing priced below its offer (e.g. a premium we mis-learned): don't take an OPEN offer by default - repeat
+            # our last ask and let the probe / later rules decide (P11 f5157e0d: this guard accepted 46.50 in round 2, 0.54)
+            lm = complete_offer(case, dict(s["last_main"]))
+            if lm.get("unit_price") and must_haves_ok(case, lm, s["std"]):
+                sheets = [(total_cost(case, lm, s["std"], s["est"]), lm)]
         if not sheets:  # nothing left to offer this one: accept only if it is the best deal across ALL bidders
             if ok and c_stand <= best_elsewhere:
                 return accept
@@ -968,28 +975,46 @@ class NoIdeaAgent:
         # OPEN EUR 45.50 in round 3 with facts unused; with one more fact it cut EUR 0.50 each time)
         if near_final and status not in ("final_offer", "agreed") and self.next_args(sid, 1):
             near_final = False
-        # one near-close ask before taking an OPEN (not final) offer: it may agree to our price (P11 7117d351: it held 45.50,
-        # we asked 45.13, it AGREED -> 0.77 vs 0.71 when we took its 45.50). A push on an open offer never caused a walk
-        # in our games (walks: after final_offer, or after a repeated objection while stalling - both guarded)
-        try_close = near_final and status == "open" and not s.get("close_tried") and k < PLANNED_ROUNDS
+        # GRID PROBE (v2.17): a supplier that quotes on a coarse price grid (P11: every counter in 12 games a multiple of
+        # EUR 0.50) rounds its real floor UP to the grid, and agrees to a buyer ask at or above that floor (7117d351: it
+        # showed 45.50 and AGREED to our 45.13; f80f/e662 held at 45.13/45.16; 3d85 held at 44.98 -> the floor lies between
+        # grid points and is drawn per session). Once it stops cutting (no new facts left), we step our ask UP from just
+        # above (standing - grid) in GRID_PROBES small steps on ITS sheet; the first ask >= its floor is agreed. Its final
+        # offer is still accepted at once (never push after final). Without a grid: one near-close ask (-0.75%).
+        g = self.price_grid(events)
+        own = [ts["terms"]["unit_price"] for m in events if m.get("from") != "buyer"
+               for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get("unit_price")]
+        holding = len(own) >= 2 and abs(own[-1] - own[-2]) < 1e-9
+        probing = (near_final or holding) and status == "open" and moves_left(case, events) > 1 and ok \
+            and c_stand <= best_elsewhere and not self.next_args(sid, 1) and (holding or not g)
         close_now = False
-        if try_close:
-            near_final = False
-        if try_close and ok and c_stand <= sheets[0][0] * 1.003 and c_stand <= best_elsewhere:
-            # its open offer is already at our ask: ask NEAR_CLOSE_TRY below its own price instead (once), then accept
-            # its OWN open sheet, only the price lowered (same structure; the value scales of supplier_value and
-            # sheets_at differ by the learned premiums, so derive nothing)
+        if probing and g and s.get("probes", 0) < GRID_PROBES:
+            j = s.get("probes", 0)
+            ask = terms["unit_price"] - g + g * (j + 1) / (GRID_PROBES + 1)
+            last = next((ts["terms"]["unit_price"] for m in reversed(events) if m.get("from") == "buyer"
+                         for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get("unit_price")), 0.0)
+            ask = round(min(terms["unit_price"] - 0.01, max(ask, last + 0.01)), 2)
+            if ask < terms["unit_price"]:
+                t_close = complete_offer(case, {**terms, "unit_price": ask})
+                if must_haves_ok(case, t_close, s["std"]):
+                    s["probes"] = j + 1
+                    near_final, close_now = False, True
+                    sheets = [(total_cost(case, t_close, s["std"], s["est"]), t_close)]
+                    target = supplier_value(case, t_close, s["est"]) + self.premium(sid, t_close)
+                    log.info("%s: grid probe %d/%d ask %.2f (its open %.2f, grid %.2f)", sid, j + 1, GRID_PROBES, ask,
+                             terms["unit_price"], g)
+        elif probing and not g and not s.get("close_tried") and k < PLANNED_ROUNDS and c_stand <= sheets[0][0] * 1.003:
             t_close = complete_offer(case, {**terms, "unit_price": round(terms["unit_price"] * (1 - NEAR_CLOSE_TRY), 2)})
-            near = [(total_cost(case, t_close, s["std"], s["est"]), t_close)] if must_haves_ok(case, t_close, s["std"]) else []
-            if near:
+            if must_haves_ok(case, t_close, s["std"]):
                 s["close_tried"] = close_now = True
-                sheets = near
+                near_final = False
+                sheets = [(total_cost(case, t_close, s["std"], s["est"]), t_close)]
                 target = supplier_value(case, t_close, s["est"]) + self.premium(sid, t_close)
-                log.info("%s: one near-close ask %.2f below its open %.2f", sid, near[0][1]["unit_price"], terms.get("unit_price"))
+                log.info("%s: one near-close ask %.2f below its open %.2f", sid, t_close["unit_price"], terms.get("unit_price"))
         # walk-risk: it repeats the same objection / counter-proposal in its last two e-mails (P02 x2: "returning to our
         # standard 30-day payment term" + a 30-day '-a' sheet in rounds 2 and 3, we kept 90 d, it walked in round 4
         # "our general terms dictate this position"; 372.15 @ 90 d would have scored ~0.50) -> take its best sheet
-        if ok and k >= 2 and c_stand <= best_elsewhere and self.repeats_objection(events) and \
+        if ok and k >= 2 and c_stand <= best_elsewhere and self.repeats_objection(events, case) and \
                 c_stand <= sheets[0][0] * 1.015 and not self.still_moving(case, sid, events):
             log.info("%s: it repeats its objection - taking its best sheet before it walks", sid)
             return accept
@@ -1293,6 +1318,19 @@ class NoIdeaAgent:
                               r"restrict(s|ing)? our (pricing )?flexibility|financing costs|cannot (go|move) (any )?further|"
                               r"unable to (reduce|lower|accommodate)|must maintain|strictly (fixed|frozen)|maximum flexibility)")
 
+    @staticmethod
+    def price_grid(events, min_n=3):
+        """The coarse grid its prices sit on (1.00 / 0.50 / 0.25), if every one of its >= min_n quoted prices is a multiple
+        of it and the grid is a real step (>= 0.4% of the price). P11: 47.00, 46.50, 46.00, 45.50, 45.00 -> 0.50."""
+        prices = [ts["terms"]["unit_price"] for m in events if m.get("from") != "buyer"
+                  for ts in (m.get("term_sheets") or []) if (ts.get("terms") or {}).get("unit_price")]
+        if len(prices) < min_n:
+            return None
+        for g in (1.0, 0.5, 0.25):
+            if all(abs(x / g - round(x / g)) < 1e-6 for x in prices) and g >= 0.004 * max(prices):
+                return g
+        return None
+
     def still_moving(self, case, sid, events, min_move=WALK_GUARD_MOVE):
         """Its last counter cut our cost by more than `min_move` (share of C): a supplier still conceding is not about to
         walk, whatever template objection it repeats (P11 v2.16 6b02b8cc94796703: 46.00 -> 45.00 = 2.2%, the repeated
@@ -1301,13 +1339,19 @@ class NoIdeaAgent:
               for m in events if m.get("from") != "buyer" and m.get("term_sheets")][-2:]
         return len(cs) == 2 and cs[0] - cs[1] > min_move * cs[0]
 
-    def repeats_objection(self, events):
-        """Its last two e-mails carry the same kind of objection / standard-terms counter-proposal."""
+    def repeats_objection(self, events, case=None):
+        """Its last two e-mails carry the same kind of objection / standard-terms counter-proposal. A payment-term phrase
+        counts only when payment is negotiable: "Our standard Zahlungsziel is 60 days net" is a template line in EVERY P11
+        e-mail (payment fixed there) and fired the walk guard on a supplier that never walks; the P02 walks repeated real
+        counter-proposals ("returning to our standard 30-day", "restrict our pricing flexibility")."""
         sup = [m.get("body") or "" for m in events if m.get("from") != "buyer"][-2:]
         if len(sup) < 2:
             return False
         a, b = ({x.group(0).lower() for x in self.OBJECTION_RX.finditer(t)} for t in sup)
-        return bool(a & b)
+        common = a & b
+        if case is not None and "payment_days" not in case.get("negotiable", []):
+            common = {x for x in common if "zahlungsziel" not in x and "financing" not in x and "-day" not in x}
+        return bool(common)
 
     def events_for(self, sid):
         return (getattr(self, "threads_ref", {}) or {}).get(sid, [])

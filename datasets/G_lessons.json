@@ -29,7 +29,8 @@
   "Identify the supplier's engine early: a MIRROR answers our step with its own (spread facts, one per round); a HOLDER moves only for new verified facts (pack two per round before its fixed final); a one-shot is final at message 1 (put everything in message 1).",
   "Suppliers go final at a fixed message count; make sure every verified fact you have lands before it, and never send a round without a new fact.",
   "Write one number per claim sentence - the figure the arena checks, no thousands separator; a sentence with several numbers got the wrong one checked and was contradicted (P02, -0.24).",
-  "A supplier that says it holds full authority must never be pointed to a committee or management."
+  "A supplier that says it holds full authority must never be pointed to a committee or management.",
+  "A supplier that quotes only round numbers (every price a multiple of 0.50) may accept a buyer price between them: once it holds, raise the ask in small steps from just above its previous grid point instead of taking its round number (P11 agreed to 45.13 while quoting 45.50)."
  ],
  "price_increase": [
   "P01 (stabilise, family foundry, data-naive owner): index data + short-notice argument + later effective date + faster payment → 0.85 in 3 rounds.",

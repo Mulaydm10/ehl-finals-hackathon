@@ -125,3 +125,10 @@ Sources: Neel `analysis/central/LEARNINGS.md` 1-8, `analysis/central/ENGINES.md`
 52. **Short-fuse suppliers (final early, P10)**: credible anchor (today's price, not a deep one - a deep anchor got a floor-level
     final in round 1), the order history as a price PATH (last old price -> today's), one 1/3-gap step in round 2 (Parth
     87653f3, live 0.694; 0.90 not reachable with that engine).
+53. **Grid probe**: a supplier quoting on a coarse grid (all counters multiples of 0.50 / 1.00) hides its real floor between grid
+    points and agrees to any ask >= it (P11 agreed to our 45.13 while showing 45.50). When it holds and no facts are left,
+    step the ask UP from (shown - grid) in small steps on its own sheet; accept its final at once.
+54. **Template lines are not objections**: a phrase a supplier writes in every e-mail ("Our standard Zahlungsziel is 60 days net")
+    must not trigger a walk guard - count payment-term phrases only when payment is negotiable.
+55. **Rule-order audit**: guards that accept (no-sheets, walk risk, near-final) must not pre-empt a cheaper probe unless the walk
+    risk is real; "no sheet below its offer" usually means a modelling error, not a deal - repeat the last ask.

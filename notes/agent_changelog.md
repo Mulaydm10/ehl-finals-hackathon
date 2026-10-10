@@ -701,3 +701,20 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
 - **P11 summary, 10 games on v2.16.x: 0.79 / 0.71 / 0.71 / 0.77 / 0.71 / 0.71 / 0.71 / 0.54 (bug, fixed) / 0.71** - median 0.71, best 0.79 (was 0.67 best, 0.55 mean on v2.7-2.10). The ceiling is set by its round-1 answer (46.00 in 2 of 10 -> 0.77-0.79). Stop spending P11 games; the general fixes stay.
 
 - Root cause of the contradicted P11 qn claims (fa9a9d02), found by Parth (db447d4): the arena read "18,558" as 18.558 - the thousands separator, not the averaging. Rule 39 (no thousands separator) covers it; his fix is merged.
+
+### v2.17 (offline): GRID PROBE - find the floor a supplier hides between its price grid points (target P11 >= 0.85)
+- **Finding (12 P11 games, `/tmp/asks.py`):** every counter it ever made is a multiple of EUR 0.50, yet in 7117d351 it AGREED to our
+  45.13 while showing 45.50; f80f/e662 held at 45.13/45.16, 3d85 held at 44.98. -> It rounds its real floor UP to the 0.50 grid
+  and agrees to any buyer ask >= that floor; the floor is drawn per session inside (shown - 0.50, shown].
+- **Rule (general):** `price_grid()` detects a coarse grid (1.00 / 0.50 / 0.25, >= 3 prices, >= 0.4% of price). Once it HOLDS
+  (same price twice) and no new facts are left, step our ask UP on ITS sheet: shown - grid + grid x j/5 (4 probes, P11: 45.10,
+  45.20, 45.30, 45.40). First ask >= floor is agreed. A final offer is still accepted at once. No grid -> one near-close (-0.75%).
+- `src/eval/probe_sim.py` (real state + simulated floor): 6b02 (shown 45.00) floor 44.60 -> deal 44.60 = **0.86**, 44.75 -> 0.83;
+  3d85 (shown 45.50) floor 45.05 -> 0.78, 45.20 -> 0.75, >= 45.35 -> 0.71 (as today). Never worse than accepting.
+- **Conflicts fixed (audit of decide() rule order):**
+  1. walk guard fired on the TEMPLATE line "Our standard Zahlungsziel is 60 days net" (every P11 e-mail, payment fixed) ->
+     payment-term phrases count as an objection only when payment is negotiable (P02 walk replays unchanged).
+  2. the "no sheets -> accept" guard ran BEFORE the probe (0.54 game) -> with an open offer and rounds left we repeat our last
+     ask instead. Checked: no duplicate function / constant names in noidea.py; final_offer still accepted before any probe;
+     walk guard still precedes the probe (walk risk > probe gain).
+- Tests 38; offline 0.931 (P10 = Parth's live-validated anchor); walk + finals replays unchanged.
