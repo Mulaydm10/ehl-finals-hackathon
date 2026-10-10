@@ -89,3 +89,9 @@
 | 2026-10-10 17:28 | Parth | P05 | noidea e5926b8 E1 / gpt-6-astra | 0.00 (crashed: 422 not a standing offer in this session; ended no_deal, all bidders walked; timeouts 6) | d9af85e000ab3d4d |
 | 2026-10-10 17:37 | Dhruv | P02 | noidea v2.15 / gpt-6-astra | 0.20 | ef17b16a03f0225d |
 | 2026-10-10 17:37 | Dhruv | P05 | noidea v2.15 / gpt-6-astra | **0.61 best P05** | e9eaf87e62371fdf |
+| 2026-10-10 17:40 | Parth | P10 | noidea dac5e97 E2 / gpt-6-astra | 0.66 (first counter 0.663, final round 1, timeouts 0) | 7e8bb04ad08893d3 |
+| 2026-10-10 17:41 | Parth | P02 | noidea dac5e97 E2 / gpt-6-astra | 0.49 (first counter 0.264, final round 4, timeouts 0) | 466f3cb54614635f |
+| 2026-10-10 17:42 | Parth | P18 | noidea dac5e97 E2 / gpt-6-astra | 0.61 (first counter 0.485, final round 4, timeouts 0) | 6d61c1fd91f3f13c |
+| 2026-10-10 17:43 | Parth | P11 | noidea dac5e97 E2 / gpt-6-astra | 0.67 (first counter 0.505, final round 5, timeouts 0) | 03a3beee7e64f5b3 |
+| 2026-10-10 17:46 | Parth | P18 | noidea 0b9ee8b E3 + all_parts_po / gpt-6-astra | 0.54 (first counter 0.485, final round 3, timeouts 0) | 928a3878c58f7dc3 |
+| 2026-10-10 17:46 | Parth | P18 | noidea 0b9ee8b E3 + all_parts_po / gpt-6-astra | 0.68 (first counter 0.552, final round 3, timeouts 0) | 4e244819e8b9207b |
