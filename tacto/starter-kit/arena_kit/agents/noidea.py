@@ -40,6 +40,8 @@ CLOSE_GAP = 0.015     # ...only when our last ask is within 1.5% of its standing
 STALL_DROP = 1 / 3    # it stalled: its last move (share of the gap) < 1/3 of the previous one...
 STALL_MIN = 0.02      # ...or < 2% of the gap
 MESO_BAND = 0.03  # round-1 MESOs: other structures within 3% of our best cost
+HAIR = 0.001  # one ask this far under a floor the supplier NAMED (P11: 45.00 -> 44.95)
+GRID_LADDER = (0.5, 0.25, 0.1, 0.04)  # probe j asks its price - grid x GRID_LADDER[j] (P11 low draw: 44.75, 44.875, 44.95, 44.98)
 GRID_PROBES = 4  # grid probe: asks between (its price - grid) and its price, stepping up (P11 floor hidden in the 0.50 grid)
 NEAR_CLOSE_TRY = 0.0075  # one ask this far below an OPEN offer before taking it (P11 7117d351: agreed to ours, -0.8%)
 WALK_GUARD_MOVE = 0.005  # its last move cut our cost > 0.5%: still conceding, not about to walk
@@ -982,21 +984,32 @@ class NoIdeaAgent:
         # above (standing - grid) in GRID_PROBES small steps on ITS sheet; the first ask >= its floor is agreed. Its final
         # offer is still accepted at once (never push after final). Without a grid: one near-close ask (-0.75%).
         g = self.price_grid(events)
+        close_now = False
         own = [ts["terms"]["unit_price"] for m in events if m.get("from") != "buyer"
                for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get("unit_price")]
         holding = len(own) >= 2 and abs(own[-1] - own[-2]) < 1e-9
         probing = (near_final or holding) and status == "open" and moves_left(case, events) > 1 and ok \
             and c_stand <= best_elsewhere and not self.next_args(sid, 1) and (holding or not g)
-        close_now = False
         named = re.search(r"(?i)(?:give you|offer|do|best we can do|lowest)[^.€]{0,40}(?:€|eur\s?)\s?(\d+[.,]\d{2})",
                           latest(events).get("body") or "") if s.get("asked_floor") else None
-        if named and abs(float(named.group(1).replace(",", ".")) - terms["unit_price"]) < 0.005:
-            # it NAMED its floor = its standing price (P11 37ea72de: "We can give you a price of EUR 45.00" -> held 45.00 x2,
-            # final 45.00): probes below a named floor only spend its patience
-            s["probes"] = GRID_PROBES
+        hair = False
+        if named and abs(float(named.group(1).replace(",", ".")) - terms["unit_price"]) < 0.005 and not s.get("hair_tried"):
+            # it NAMED its floor = its standing price (P11 37ea72de: "We can give you a price of EUR 45.00" -> held 44.60-44.80,
+            # final 45.00; 3fa2 final after ONE probe): a ladder far below a named floor only spends its patience. Send ONE
+            # hair-below ask instead (-0.1%, P11 44.95 = 0.802); refused -> its final at the floor is still there.
+            s["probes"], s["hair_tried"], hair = GRID_PROBES, True, True
+        if hair and probing:
+            t_h = complete_offer(case, {**terms, "unit_price": round(int(terms["unit_price"] * (1 - HAIR) * 100) / 100, 2)})
+            if must_haves_ok(case, t_h, s["std"]) and t_h["unit_price"] < terms["unit_price"]:
+                near_final, close_now = False, True
+                sheets = [(total_cost(case, t_h, s["std"], s["est"]), t_h)]
+                target = supplier_value(case, t_h, s["est"]) + self.premium(sid, t_h)
+                log.info("%s: hair-below ask %.2f under its named floor %.2f", sid, t_h["unit_price"], terms["unit_price"])
         if probing and g and s.get("probes", 0) < GRID_PROBES:
             j = s.get("probes", 0)
-            ask = terms["unit_price"] - g + g * (j + 1) / (GRID_PROBES + 1)
+            # HIGH ladder: its patience allows 1-3 probes (P11 3fa2: final after one; 37ea: after three), and its floor sat at
+            # the TOP of the gap in low draws (45.00 named; 44.60-44.80 all refused) -> 50%, 25%, 10%, 4% of a grid step under it
+            ask = terms["unit_price"] - g * GRID_LADDER[min(j, len(GRID_LADDER) - 1)]
             last = next((ts["terms"]["unit_price"] for m in reversed(events) if m.get("from") == "buyer"
                          for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get("unit_price")), 0.0)
             ask = round(min(terms["unit_price"] - 0.01, max(ask, last + 0.01)), 2)
