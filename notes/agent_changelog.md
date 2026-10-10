@@ -863,3 +863,17 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 
 ### v2.21d (offline): two-step floor ask for 0.81 - round 1 at the floor: [44.90 (0.810), 45.00 + EUR 300 chargeback (0.809)]; if refused: 44.95 alone (0.802, agreed in eac20911). Replay + simulated refusal OK; tests 50, offline 0.930/0.925.
 - v2.21d live P11 (20:46): 0.71 (11e2d8727fc045a1) - HIGH draw 46.50/45.50; probe 45.10, floor trade (45.50 + EUR 300 / 45.39), hair 45.45 all held -> accepted 45.50. Its high-draw floor this session > 45.45. The 44.90 step needs a LOW draw.
+
+### Parth (branch), ~21:05: P08 0.732 -> 0.916 (agent) - PLEASE MERGE (also carries the HTTP-500 crash fix)
+| game | what | round 1 | final | score |
+|---|---|---|---|---:|
+| probe A 44afd13 | best low-draw path + upward price path in round 1, no QNs, lean later rounds | 5.25 @ 90 | 4.94 @ 14 | 0.912 |
+| agent 544b5cd | year-rise path + no hedged index | 5.20 @ 30 | 5.02 @ 14 | 0.822 |
+| agent 6567650 | + clause-free asks | 5.20 @ 30 | 5.03 @ 30 | 0.830 |
+| **agent c1d7678** | + all code sheets in round 1 (90 d highest), plain later openings | **5.25 @ 90** | **4.97 @ 45** | **0.916** |
+- `year_rise_path()`: a >= 3% rise in the last 12 months (P08: 5.17 -> 5.24 -> 5.43 -> 5.45) leads round 1 -> "we took it into
+  account"; first counter 5.25 vs 5.40-5.42 in all 16 earlier games. Not for kits / price_frozen. Practice: P08 only changes.
+- hedged_forward suppliers: no claim / cost calc on the hedged series ("not our reality" 5/5); clause-free asks (taking its db0
+  in round 2 drew "We appreciate your acceptance of the AS-14404 index clause" and ~0.07); round 1 all code sheets; plain
+  later openings. Offline: the other 9 cases unchanged. House 0.752.
+- P04: 0.874 confirmed as the ceiling (3 tests, incl. Claude's --probe: walked after the repeated probe).
