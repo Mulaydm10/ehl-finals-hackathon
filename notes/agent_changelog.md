@@ -678,3 +678,12 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
   its own terms, not re-derived. Tests 38; offline 0.945; walk + finals replays unchanged.
 - Rules doc: `docs/GENERAL_RULES.md` now 47 rules incl. section I (teammates: engines, fixed final count, one number per claim,
   fillers, full authority, hedged series, own quote, one-shot P10 probe, RFQ loop).
+
+## v2.16h live P11 (18:48): 0.71 (e662af62eb9341a4) -> v2.16i
+- r1 46.50 -> 46.00 -> 45.50; the one near-close ask 45.16 -> it held 45.50 -> accepted (0.71). Near-close try kept (no cost).
+- **Round-1 comparison of all 11 P11 games** (`/tmp/r1cmp.py` logic): 0d5b (TWO sheets 800/150 + 300/0, ONE fact) -> 300/0 @ EUR
+  45.50 in round 1; one sheet + three facts -> 46.00 (2x) / 46.50 (5x). The number of sheets mattered more than the data.
+### v2.16i (offline): round-1 MESOs on non-cash terms
+- Round 1 sends up to 3 genuinely different sheets within 3% of our best cost (multiple equivalent simultaneous offers, Medvec &
+  Galinsky), **never varying the payment term** (P02/P03: payment variants were priced and hopping cost 0.04).
+  Only P11 changes (300 / 800 / 1500 ppm, EUR 0); all other hosted cases still send their single sheet. Tests 38; offline 0.945.

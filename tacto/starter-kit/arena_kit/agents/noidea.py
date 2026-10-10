@@ -38,6 +38,7 @@ CLOSE_STEP = 0.0008   # near-close: ask 0.08% below its standing value (live P04
 CLOSE_GAP = 0.015     # ...only when our last ask is within 1.5% of its standing value
 STALL_DROP = 1 / 3    # it stalled: its last move (share of the gap) < 1/3 of the previous one...
 STALL_MIN = 0.02      # ...or < 2% of the gap
+MESO_BAND = 0.03  # round-1 MESOs: other structures within 3% of our best cost
 NEAR_CLOSE_TRY = 0.0075  # one ask this far below an OPEN offer before taking it (P11 7117d351: agreed to ours, -0.8%)
 WALK_GUARD_MOVE = 0.005  # its last move cut our cost > 0.5%: still conceding, not about to walk
 CASH_SHORT_RISK = 2.0  # a cash-short supplier prices uncertain cash outflows (chargebacks) ~2x their expectation
@@ -607,15 +608,15 @@ class NoIdeaAgent:
                     continue
             yield t
 
-    def sheets_at(self, case, sid, value, cap_price=None, n=3):
-        out = self._sheets_at(case, sid, value, cap_price, n)
+    def sheets_at(self, case, sid, value, cap_price=None, n=3, band_pct=None):
+        out = self._sheets_at(case, sid, value, cap_price, n, band_pct)
         if not out and self.sup[sid].get("limits"):  # model-read limits filtered everything (P05): ignore them
             saved, self.sup[sid]["limits"] = self.sup[sid]["limits"], {}
-            out = self._sheets_at(case, sid, value, cap_price, n)
+            out = self._sheets_at(case, sid, value, cap_price, n, band_pct)
             self.sup[sid]["limits"] = saved
         return out
 
-    def _sheets_at(self, case, sid, value, cap_price=None, n=3):
+    def _sheets_at(self, case, sid, value, cap_price=None, n=3, band_pct=None):
         """The `n` different term sheets that give the supplier `value` per unit at the lowest cost to us,
         with the premiums it showed us (learn) and the limits it stated (refusals) taken into account."""
         s = self.sup[sid]
@@ -711,7 +712,7 @@ class NoIdeaAgent:
         if ranked and "price_frozen" in s["dossier"].get("motives", {}) and "payment_days" in case["negotiable"]:
             near = [x for x in ranked if x[0] <= ranked[0][0] * 1.01]
             ranked = sorted(near, key=lambda x: (-(x[1].get("payment_days") or 0), x[0])) + ranked[len(near):]
-        band = ranked[0][0] * (1.01 if n <= 3 else 1.015) if ranked else 0
+        band = ranked[0][0] * (1 + band_pct if band_pct else 1.01 if n <= 3 else 1.015) if ranked else 0
         for c, t in ranked:  # 3 genuinely different options: same-cost duplicates waste a slot
             if c > band:
                 break
@@ -887,6 +888,22 @@ class NoIdeaAgent:
         cap = terms.get("unit_price") if sheet_id else None
         target = self.value_target(case, sid, events)
         sheets = self.sheets_at(case, sid, target, cap)
+        if k == 0:
+            # round 1: MESOs - up to 3 genuinely different structures of near-equal cost to us (Medvec & Galinsky: multiple
+            # equivalent simultaneous offers show flexibility, reveal its preference and draw a bigger first move). P11:
+            # two sheets (800/150 + 300/0) with ONE fact got EUR 45.50 on 300/0 in round 1 (0d5bc007); one sheet with three
+            # facts got 46.00-46.50 in 7 games. Every sheet is one we'd be glad to have accepted (within MESO_BAND of our best).
+            meso = self.sheets_at(case, sid, target, cap, n=3, band_pct=MESO_BAND)
+            # never vary the PAYMENT term: suppliers price each payment term separately and our hopping cost P02 / P03
+            # (3 sheets 60/45/30 d on P03 = 0.862 vs one 90-d sheet 0.90+); MESOs vary the non-cash terms only
+            lead = (sheets or meso or [(0, {})])[0][1]
+            meso = [x for x in meso if x[1].get("payment_days") == lead.get("payment_days")]
+            if sheets and meso and sheets[0][1] not in [t for _, t in meso]:
+                meso = [sheets[0]] + meso[:2]
+            s["meso"] = None
+            if len(meso) > 1:
+                sheets = meso
+                s["meso"] = [t for _, t in meso]
         if not sheets:  # nothing left to offer this one: accept only if it is the best deal across ALL bidders
             if ok and c_stand <= best_elsewhere:
                 return accept
@@ -1031,6 +1048,8 @@ class NoIdeaAgent:
                 s["limits"][f] = (lo, hi)
         log.info("%s model: sheets %s args %s notes %s", sid, idx, aidx, json.dumps(notes)[:300])
         chosen = [cands[i][1] for i in idx]
+        if k == 0 and s.get("meso"):  # round 1 structure is code's: all MESOs go out
+            chosen = list(s["meso"])
         args = [pool[i] for i in aidx]
         opening = self.clean_opening(case, str(d.get("opening") or ""))
         return self.message(case, sid, events, chosen, k, args=args, opening=opening)
