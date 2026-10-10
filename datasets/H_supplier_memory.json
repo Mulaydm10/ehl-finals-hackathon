@@ -1,7 +1,8 @@
 {
  "sup:70110": {
-  "games": 8,
+  "games": 9,
   "scores": [
+   1.0,
    0.78,
    0.91,
    0.583,
@@ -58,6 +59,7 @@
      ]
     ],
     "finals": [
+     129.6,
      133.8
     ],
     "named_floors": [],
@@ -65,6 +67,10 @@
      [
       127.31,
       133.4
+     ],
+     [
+      127.31,
+      134.5
      ],
      [
       127.89,
@@ -80,7 +86,15 @@
      ],
      [
       128.04,
+      130.8
+     ],
+     [
+      128.04,
       131.3
+     ],
+     [
+      129.11,
+      129.6
      ],
      [
       129.11,
@@ -133,15 +147,15 @@
    }
   },
   "took": {
-   "index change": 5,
-   "notice period": 4,
+   "index change": 6,
+   "notice period": 5,
    "quality record": 1,
    "volume change": 4,
    "volume forecast": 1
   }
  },
  "sup:70140": {
-  "games": 48,
+  "games": 52,
   "scores": [
    0.672,
    0.609,
@@ -171,7 +185,10 @@
    0.794,
    0.71,
    0.71,
+   0.752,
    0.0,
+   0.877,
+   0.752,
    0.71,
    0.358,
    0.777,
@@ -181,7 +198,9 @@
    0.71,
    0.723,
    0.794,
+   0.794,
    0.885,
+   0.794,
    0.794,
    0.752,
    0.71,
@@ -195,7 +214,7 @@
    "labour cost index and the old pos you cited, and we took them into account. we checked the price history": 1,
    "news": 1,
    "old order prices you mentioned, and they are correct, but our situation is different now. we checked the price history": 1,
-   "price history": 26
+   "price history": 28
   },
   "structures": {
    "chargeback_eur_per_complaint=0.0|ppm_commitment=300": {
@@ -236,6 +255,10 @@
       45.0
      ],
      [
+      44.75,
+      45.0
+     ],
+     [
       44.76,
       45.5
      ],
@@ -253,6 +276,10 @@
      ],
      [
       44.95,
+      45.0
+     ],
+     [
+      44.96,
       45.0
      ],
      [
@@ -307,14 +334,14 @@
    "energy cost": 1,
    "energy index": 7,
    "index and price history": 1,
-   "index change": 74,
+   "index change": 84,
    "labour cost index": 1,
-   "quality record": 44,
-   "volume change": 41
+   "quality record": 48,
+   "volume change": 45
   }
  },
  "sup:70410": {
-  "games": 19,
+  "games": 20,
   "scores": [
    0.0,
    0.686,
@@ -324,6 +351,7 @@
    0.694,
    0.639,
    0.663,
+   0.741,
    0.461,
    0.694,
    0.663,
@@ -337,10 +365,10 @@
    0.647
   ],
   "shrugged": {
-   "delivery record": 1,
+   "delivery record": 2,
    "price history": 1,
    "quality record": 1,
-   "volume change": 11
+   "volume change": 12
   },
   "structures": {
    "contract_months=24|lead_time_days=35|volume_per_year=23400": {
@@ -415,6 +443,7 @@
    "contract_months=36|lead_time_days=56|volume_per_year=23400": {
     "agreed_to_our_ask": [],
     "finals": [
+     30.7,
      31.2,
      31.3,
      31.4,
@@ -443,6 +472,10 @@
      ],
      [
       29.57,
+      31.0
+     ],
+     [
+      29.57,
       31.5
      ],
      [
@@ -452,6 +485,10 @@
      [
       29.79,
       31.4
+     ],
+     [
+      29.94,
+      30.7
      ],
      [
       30.11,
@@ -477,16 +514,18 @@
    }
   },
   "took": {
-   "price history": 6,
-   "should cost": 7
+   "price history": 7,
+   "should cost": 8
   }
  },
  "sup:70510": {
-  "games": 21,
+  "games": 23,
   "scores": [
+   0.809,
    0.0,
    0.338,
    0.318,
+   0.56,
    0.491,
    0.0,
    0.847,
@@ -507,13 +546,14 @@
    0.607
   ],
   "shrugged": {
-   "price history": 1,
+   "price history": 2,
    "quality record": 1
   },
   "structures": {
    "index_clause=None|payment_days=30": {
     "agreed_to_our_ask": [],
     "finals": [
+     366.26,
      369.45
     ],
     "named_floors": [],
@@ -527,8 +567,16 @@
       369.45
      ],
      [
+      361.33,
+      366.66
+     ],
+     [
       361.4,
       369.45
+     ],
+     [
+      361.81,
+      366.26
      ]
     ]
    },
@@ -554,6 +602,7 @@
     "finals": [
      368.25,
      368.55,
+     368.74,
      370.32,
      370.45,
      370.95,
@@ -630,6 +679,14 @@
      ],
      [
       364.69,
+      370.94
+     ],
+     [
+      364.69,
+      372.52
+     ],
+     [
+      364.69,
       373.13
      ],
      [
@@ -654,6 +711,14 @@
      ],
      [
       365.13,
+      370.85
+     ],
+     [
+      365.31,
+      368.93
+     ],
+     [
+      365.31,
       370.85
      ],
      [
@@ -709,6 +774,10 @@
       372.15
      ],
      [
+      365.97,
+      368.74
+     ],
+     [
       366.02,
       369.45
      ],
@@ -719,6 +788,10 @@
      [
       366.09,
       372.71
+     ],
+     [
+      366.21,
+      368.93
      ],
      [
       366.21,
@@ -797,6 +870,10 @@
       368.55
      ],
      [
+      368.63,
+      368.74
+     ],
+     [
       369.04,
       370.95
      ]
@@ -804,12 +881,12 @@
    }
   },
   "took": {
-   "index change": 6,
-   "volume change": 7
+   "index change": 10,
+   "volume change": 8
   }
  },
  "sup:70530": {
-  "games": 16,
+  "games": 17,
   "scores": [
    0.936,
    0.0,
@@ -825,6 +902,7 @@
    0.903,
    0.915,
    0.903,
+   0.954,
    0.862,
    0.9
   ],
@@ -834,7 +912,16 @@
   },
   "structures": {
    "contract_months=24|payment_days=90|volume_per_year=4580": {
-    "agreed_to_our_ask": [],
+    "agreed_to_our_ask": [
+     [
+      430.81,
+      430.81
+     ],
+     [
+      430.81,
+      438.21
+     ]
+    ],
     "finals": [],
     "named_floors": [],
     "refused_asks": [
@@ -981,12 +1068,13 @@
   }
  },
  "sup:70610": {
-  "games": 19,
+  "games": 20,
   "scores": [
    0.676,
    0.695,
    0.65,
    0.747,
+   0.825,
    0.792,
    0.689,
    0.812,
@@ -1045,6 +1133,7 @@
      ]
     ],
     "finals": [
+     5.29,
      5.34,
      5.4,
      5.41,
@@ -1054,6 +1143,10 @@
     ],
     "named_floors": [],
     "refused_asks": [
+     [
+      4.94,
+      5.44
+     ],
      [
       4.94,
       5.53
@@ -1091,6 +1184,10 @@
       5.48
      ],
      [
+      5.09,
+      5.37
+     ],
+     [
       5.13,
       5.44
      ],
@@ -1103,12 +1200,20 @@
       5.4
      ],
      [
+      5.18,
+      5.31
+     ],
+     [
       5.21,
       5.34
      ],
      [
       5.21,
       5.38
+     ],
+     [
+      5.22,
+      5.29
      ],
      [
       5.24,
@@ -1134,12 +1239,12 @@
    }
   },
   "took": {
-   "index change": 6,
+   "index change": 8,
    "volume change": 5
   }
  },
  "sup:70620": {
-  "games": 15,
+  "games": 16,
   "scores": [
    0.874,
    0.7,
@@ -1149,6 +1254,7 @@
    0.874,
    0.81,
    0.0,
+   0.815,
    0.874,
    0.766,
    0.0,
@@ -1159,17 +1265,26 @@
   ],
   "shrugged": {
    "index change": 6,
-   "price history": 4,
-   "volume change": 8
+   "price history": 5,
+   "volume change": 9
   },
   "structures": {
    "contract_months=36|payment_days=14": {
-    "agreed_to_our_ask": [],
+    "agreed_to_our_ask": [
+     [
+      4.86,
+      4.86
+     ]
+    ],
     "finals": [
      4.86
     ],
     "named_floors": [],
     "refused_asks": [
+     [
+      4.79,
+      4.87
+     ],
      [
       4.8,
       4.86
@@ -1263,8 +1378,9 @@
   "took": {}
  },
  "sup:70710": {
-  "games": 23,
+  "games": 24,
   "scores": [
+   0.781,
    0.83,
    0.642,
    0.0,
@@ -1322,6 +1438,7 @@
     "agreed_to_our_ask": [],
     "finals": [
      4.97,
+     5.09,
      5.21,
      5.32
     ],
@@ -1373,17 +1490,18 @@
    }
   },
   "took": {
-   "index change": 20,
-   "price history": 4,
-   "volume change": 12
+   "index change": 22,
+   "price history": 5,
+   "volume change": 13
   }
  },
  "sup:70740": {
-  "games": 16,
+  "games": 17,
   "scores": [
    0.53,
    0.727,
    0.0,
+   0.688,
    0.677,
    0.43,
    0.61,
@@ -1399,9 +1517,9 @@
    0.598
   ],
   "shrugged": {
-   "index change": 3,
+   "index change": 4,
    "lci-c": 1,
-   "volume change": 8
+   "volume change": 9
   },
   "structures": {
    "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}|payment_days=14": {

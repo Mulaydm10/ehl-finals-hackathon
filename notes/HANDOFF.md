@@ -1,4 +1,4 @@
-# HANDOFF - read this first after a context reset (state at 2026-10-10 ~17:40)
+# HANDOFF - read this first after a context reset (state at 2026-10-11 ~00:05, agent v2.34b)
 
 EHL Munich 2026 hackathon, **Tacto Negotiation Arena** track, team **🃏 NoIdea** (Dhruv = user, Neel, Parth).
 Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden suppliers, no human in the loop; top-10 pitch 13:00.
@@ -7,7 +7,7 @@ Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden supp
 - **Repo (source of truth):** Mac mini `~/Dhruv/ehl-finals-hackathon` (`ssh macmini`), GitHub `Mulaydm10/ehl-finals-hackathon`
   (private), branch `main`. Laptop scratch copy for editing: `/tmp/claude-1000/-home-mulaydm10/<session>/scratchpad/repo`
   (NOT a git repo - always `cat` the Mac file into it before patching, then `scp` back).
-- **Agent:** `tacto/starter-kit/arena_kit/agents/noidea.py` (current **v2.15**). Run: `cd tacto/starter-kit && source .venv/bin/activate`
+- **Agent:** `tacto/starter-kit/arena_kit/agents/noidea.py` (current **v2.34b**; the final runs `--agent noidea` = noidea_rfq.NoIdeaAgent on top). Run: `cd tacto/starter-kit && source .venv/bin/activate`
   then `arena play case:Pxx --agent noidea -v`.
 - **Model for the e-mails:** gpt-6-astra (OpenAI). Env: `set -a; . ./.env; . ./.env.openai; set +a; export LLM_PROVIDER=openai
   LLM_BASE_URL=https://api.openai.com/v1 LLM_MODEL=gpt-6-astra LLM_API_KEY=$OPENAI_API_KEY`. Default `.env` = local Qwen
@@ -42,7 +42,9 @@ Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden supp
 ## Best live score per hosted case (team, all versions)
 | P01 | P02 | P03 | P04 | P05 | P07 | P08 | P10 | P11 | P18 |
 |---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| **1.00** (v2.26) | **0.85** (Neel) | 0.94 (Neel) | **0.87** (Parth; agent 0.874 v2.24) | **0.965** (Parth scripted; agent 0.87) | **0.81** (Parth) | **0.91** (Parth) | 0.70 (Parth) | **0.80** (v2.21c) | **0.73** (v2.28) |
+| **1.00** (v2.34 hidden 0.9997) | **0.85** (Neel; hidden 0.809) | **0.963** (Neel; hidden 0.954) | **0.874** (ceiling; hidden 0.815) | **0.965** (Parth scripted; agent 0.87) | **0.825** (v2.34b HIDDEN) | **0.916** (Parth; hidden 0.781) | **0.741** (v2.34b HIDDEN) | **0.885** (Parth scripted; agent 0.80, hidden 0.79) | **0.727** (v2.28; hidden 0.688) |
+
+**Single-agent hidden pass (memory off, v2.34b):** see changelog tail. Validation mode: `NOIDEA_EXPERIMENTS=hidden`.
 
 ## Last live results (recorded)
 - v2.15: **P05 0.61 (new best, e9eaf87e62371fdf)**; **P02 0.20** (ef17b16a03f0225d) - supplier switched its primary to 30 d and made that its final; analyse vs the 0.48/0.51 games (they stayed on 90 d).

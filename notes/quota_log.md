@@ -222,3 +222,16 @@
 | 2026-10-10 22:59 | Neel | P04 | noidea_p04 (P04_SHOT=True) / gpt-6-astra | **0.70** | 1992e28afb6e7f4b |
 | 2026-10-10 22:57 | Parth | P11 | p11_hold none first=0d5b 42.77/43.57/44.01 hair-0.08 937f0d7 / scripted | 0.8770 | 6d6f9a2b7348b149 |
 | 2026-10-10 23:00 | Parth | P11 | p11_hold none first=0d5b 42.77/43.57/44.01 hair-0.08 43adcf3 / scripted | 0.8770 | 7463ab2485f55bcd |
+| 2026-10-10 23:44 | Dhruv | P11 | v2.34 hidden (1 fact r1) / gpt-6-astra | 0.7935 | d30c19f68c77e236 |
+| 2026-10-10 23:44 | Dhruv | P11 | v2.34 hidden (1 fact r1) / gpt-6-astra | 0.7935 | deb7f45c85f14f84 |
+| 2026-10-10 23:46 | Dhruv | P01 | v2.34 hidden / gpt-6-astra | 0.9997 | 3ebbbec25f9e9fbb |
+| 2026-10-10 23:46 | Dhruv | P02 | v2.34 hidden (2 facts/later e-mail) / gpt-6-astra | 0.5599 | 407b3d1a59044346 |
+| 2026-10-10 23:46 | Dhruv | P03 | v2.34 hidden / gpt-6-astra | 0.9536 | fe4d84556f855572 |
+| 2026-10-10 23:46 | Dhruv | P04 | v2.34 hidden / gpt-6-astra | 0.8153 | 6c23da73bc3efcc3 |
+| 2026-10-10 23:51 | Dhruv | P11 | v2.34 hidden + decoy / gpt-6-astra | 0.7517 | 8ccbdcc0590cdee9 |
+| 2026-10-10 23:51 | Dhruv | P11 | v2.34 hidden + decoy / gpt-6-astra | 0.7517 | 98e834e4234e6cc0 |
+| 2026-10-10 23:58 | Dhruv | P02 | v2.34b hidden (1 fact/later e-mail) / gpt-6-astra | 0.8089 | 10b624c15674036d |
+| 2026-10-10 23:58 | Dhruv | P07 | v2.34b hidden / gpt-6-astra | 0.8249 | 216f49e98cec02c1 |
+| 2026-10-10 23:58 | Dhruv | P08 | v2.34b hidden / gpt-6-astra | 0.7815 | 00e8923eed8d12dc |
+| 2026-10-10 23:58 | Dhruv | P10 | v2.34b hidden / gpt-6-astra | 0.7410 | 673ee8904fe2d292 |
+| 2026-10-10 23:58 | Dhruv | P18 | v2.34b hidden / gpt-6-astra | 0.6883 | 3cb62cb905451df8 |

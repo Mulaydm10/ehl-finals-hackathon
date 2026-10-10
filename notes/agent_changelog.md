@@ -1093,3 +1093,54 @@ Replayed each team-best game through OUR agent (the final's `--agent noidea`) an
   P18 / P05 replays unchanged; tests 64; offline 0.940 / 0.872.
 - Not ported (case-tuned, would overfit): Neel's P08 deferral/hair switches keyed to "hedged raw material", per-case
   `mirror_supplier(case_id)` (memory of practice cases), FINAL_AT_MSG table by case type.
+
+## v2.34 (offline -> live) - fact pacing by supplier: ONE fact per e-mail for a CASH-SHORT supplier; `hidden` mode
+Why (all archived traces; scripts in notes/analysis_v234/, 2026-10-10 23:20):
+- Later e-mails earn ~one fact's worth: a 2nd fact in the same later e-mail cut no more (P11 0.88% vs 0.92% per message,
+  n=21 / 77; P07 1.26 vs 1.26; P03 0.01 vs 0.06).
+- Round 1 prices several facts for most suppliers (first counter by verified facts in round 1: P01 137.4 (0) -> 133.4-134.3
+  (2-3); P02 374.5 / 373.6 / 372.8 (0 / 1 / 2); P03 432.9 / 432.3 / 431.8 (1 / 2 / 3); P10 31.9-32.0 (1) / 31.5 (2-3))
+  -> default unchanged (3).
+- NOT the cash-short P11: our four levers in round 1 (quality record, steel, forecast, late-pay admission + call-off CSV) drew
+  46.00 / 46.50 (38 games) and the later rounds had nothing left (45.00-45.50, 0.71-0.80). Parth's driver (quality record only,
+  then energy + admission, steel, forecast - one per e-mail) reached 45.00 -> 44.50 from EITHER first-counter draw, 4 of 4
+  (d51e49df 0.885 agreed 44.45; 6d6f9a2b / 7463ab24 0.877; 8f62abf9 final 44.50). P11 cuts only at our messages 2-4
+  (0 of 35 replies from message 5 on).
+Change - keyed to the generator's `cash_short` label (dossier lever "it does not squeeze its margin"; three suppliers outside
+the hosted set carry it: 70130, 70280, 70350), no case ids:
+- `r1_facts()`: round 1 carries 1 fact for a cash-short single supplier (not RFQ, not raw-material budget, not short-fuse),
+  else 3. The one fact = the one behind our structure (its quality record when we ask a ppm commitment).
+- later e-mails to it: one strong fact each (model path per_round 1; others unchanged: mirror 1, holder 2).
+- the late-payment admission moves to round 2 (it answers "faster payment would help us more than anything"); round 1 keeps
+  the plain on-time promise; the admission e-mail takes the WEAKEST remaining strong fact (energy 1.03 pts before steel 1.11).
+- no unasked call-off CSV in a one-fact first e-mail.
+- experiment `hidden`: no supplier memory, no per-case claim reactions (take-rates over all cases only) = play as if the
+  supplier were new (the final's are); the validation mode for the single-agent pass.
+Offline: tests 64 pass; round 1-2 dump of all 10 hosted cases: only P11 changed (the other nine byte-identical); replay of
+d51e49df through the agent (normal and hidden): r1 quality record, r2 energy + admission, r3 steel, r4 forecast = the
+winning order; offline Astra P11 e-mails clean (one fact each, no figures from the model).
+Rejected: a hair-under ask with the last fact (expected +0.004; could give away a full step on an unseen supplier).
+
+### v2.34 live - the HIDDEN-SUPPLIER pass (memory + per-case reactions off), 2026-10-10 23:44 - 00:00
+| case | hidden score | team best | note |
+|---|---:|---:|---|
+| P01 | **0.9997** | 0.9987 | above the record (3ebbbec25f9e9fbb) |
+| P03 | **0.954** | 0.963 | within 0.01 (fe4d84556f855572) |
+| P07 | **0.825** | 0.812 | NEW BEST, no memory (216f49e98cec02c1) |
+| P10 | **0.741** | 0.702 | NEW BEST, no memory (673ee8904fe2d292) |
+| P02 | 0.560 -> **0.809** | 0.847 | v2.34b fix below (407b3d1a -> 10b624c1) |
+| P18 | 0.688 | 0.727 | -0.04 (3cb62cb905451df8) |
+| P08 | 0.781 | 0.916 | the SAME rounds 1-2 as the 0.916 game (4ff01141): its draws 5.28 / 5.13 vs 5.25 / 5.02 - coin-flip case |
+| P04 | 0.815 | 0.874 | memorised: 45 d came from memory; without it 14 d (lottery, see below) |
+| P11 | 0.794, 0.794, 0.752, 0.752 | 0.885 | 4 of 4 HIGH first counters (46.50); every held fact = one step after it |
+- P11 one-fact pacing works as predicted: 46.50 -> 45.50 (energy + admission) -> 45.00 (steel) -> hold (forecast); high draws end
+  at 45.00 (0.79). The two-sheet decoy (800/150 + 300/0, = Parth's opener) did NOT change the draw in our 2 games (46.50 both,
+  then 45.25 = 0.752); Parth's 3 no-timeout decoy games drew 45.50. Wording check over all games: the "more defects than your
+  record" label is in 27 openings, 45.50 only 3 times -> the first counter is mostly a draw. Decoy kept (opt-out `no_decoy`):
+  3 of 5 low vs 0 of 40 at 45.50 without it - weak evidence, flagged.
+- **v2.34b (general): ONE fact per later e-mail for EVERY supplier** (model path per_round 1; the deterministic path already was).
+  P02 hidden 0.56: 2 facts per e-mail emptied its facts by round 3 -> empty e-mail -> its final 366.26 @ 30 d. The 0.847 game
+  sent copper, labour, -, OTD one by one and held 90 d for five rounds. Re-run with the fix: 0.809 @ 90 d.
+- P04 without memory is a cent-rounding lottery: our cost ranks its real finals right (45 d > 90 d > 14 d > 60 d > 30 d), the
+  agent's supplier model sees all terms as equal (cash 8% = ours). Experiment `rate07` (normal supplier's cash at 7%, fitted
+  P03 6.1% / P04 6.8-8.4%) changed round 1 on SIX cases and still not P04's term -> rejected, stays off.

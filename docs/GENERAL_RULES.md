@@ -234,3 +234,27 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
 102. **One sheet in round 1** (top games of 7 cases), the term chosen by the supplier's currency (90 d / 14 d / grid term).
 103. **The best deals close with the supplier agreeing to our ask** after it holds - keep a standing ask just under its line.
 104. **One more round while it still moves or facts are left** - the top games ran a round longer on P02, P03, P04, P11.
+
+## N. Fact pacing by supplier (v2.34, all archived traces)
+105. **After round 1 one e-mail earns about one fact's worth**: a 2nd fact in the same later e-mail cut no more than one (P11
+     0.88% vs 0.92% per message, n=21 / 77; P07 1.26% vs 1.26%; P03 0.01% vs 0.06%). Later e-mails carry one new fact (mirrors
+     always; other holders still up to 2 - untested either way).
+106. **Round 1 prices several facts - except at a cash-short supplier.** First counter by verified round-1 facts: P01 137.4 (0)
+     -> 133.4-134.3 (2-3), P02 374.5 / 373.6 / 372.8 (0 / 1 / 2), P03 432.9 / 432.3 / 431.8 (1 / 2 / 3), P10 31.9 (1) / 31.5
+     (2-3): load round 1 (rule 101). A CASH-SHORT supplier ("it does not squeeze its margin") cuts ONE step per e-mail however
+     much it is shown: P11, the same five levers - four in round 1 -> 45.00-45.50 (38 games); one per e-mail -> 44.45-44.50
+     (4 of 4, both first-counter draws). Round 1 there = the one fact behind our structure (its quality record for a ppm
+     commitment), then one strong fact per e-mail.
+107. **A lever that earns its own cut travels with the WEAKEST remaining fact** (P11 round 2: late-payment admission + energy
+     1.03 pts -> 45.00; steel 1.11 pts alone in round 3 -> 44.50). Never spend two strong reasons in one capped e-mail.
+108. **Plan the levers for the productive rounds**: P11 cut only at our messages 2-4 (0 of 35 replies from message 5 on). A fact
+     held past its final is lost: one strong fact per productive round, weak ones after.
+109. **Validate as if every supplier were new**: `NOIDEA_EXPERIMENTS=hidden` switches off supplier memory and per-case reactions
+     (the final's suppliers are new). The gap between hidden and normal play is what the agent memorised, not learned.
+110. **One fact per later e-mail holds for EVERY supplier, not only mirrors** (v2.34b): P02 hidden with 2 per e-mail ran out of
+     facts by round 3 -> empty e-mail -> its final on a worse term (0.56); one per e-mail -> 0.809 (best 0.847 did the same).
+111. **A floor-stop supplier without memory is a cent-rounding lottery** (P04: 14 d 0.815 / 30 d 0.766 / 45 d 0.874 / 60 d 0.810 /
+     90 d 0.860, the same floor). No pre-game rule picks 45 d; recalibrating the supplier's cash rate moved six other cases and not
+     P04 (rejected). Accept the lottery; memory helps only if a supplier comes back.
+112. **The first counter of P11 is mostly a draw** (46.00 / 46.50; 45.50 in 3 games): wording labels and the payment promise do
+     not separate the draws over 51 games. What we control is the rest: one held fact = one step, from either draw.

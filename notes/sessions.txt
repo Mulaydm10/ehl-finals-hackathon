@@ -103,3 +103,16 @@ ceb3295e8f463b18 P05 v2.31 0.807
 51dcee25992e24f3 P05 v2.31 0.807
 7271fbdd0ff0e105 P05 v2.31 low12 0.871
 0e9974d5c45ca01b P05 v2.31 low15 0.865
+d30c19f68c77e236 P11 v2.34_hidden_(1_fact_r1) 0.7935
+deb7f45c85f14f84 P11 v2.34_hidden_(1_fact_r1) 0.7935
+3ebbbec25f9e9fbb P01 v2.34_hidden 0.9997
+407b3d1a59044346 P02 v2.34_hidden_(2_facts/later_e-mail) 0.5599
+fe4d84556f855572 P03 v2.34_hidden 0.9536
+6c23da73bc3efcc3 P04 v2.34_hidden 0.8153
+8ccbdcc0590cdee9 P11 v2.34_hidden_+_decoy 0.7517
+98e834e4234e6cc0 P11 v2.34_hidden_+_decoy 0.7517
+10b624c15674036d P02 v2.34b_hidden_(1_fact/later_e-mail) 0.8089
+216f49e98cec02c1 P07 v2.34b_hidden 0.8249
+00e8923eed8d12dc P08 v2.34b_hidden 0.7815
+673ee8904fe2d292 P10 v2.34b_hidden 0.7410
+3cb62cb905451df8 P18 v2.34b_hidden 0.6883
