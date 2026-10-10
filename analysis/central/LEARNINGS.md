@@ -226,3 +226,7 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
     on 36 m: **5.40 @ 90 = 5.328 (1 cent below every 24-month low draw, 5.41-5.42)** -> 5.21 @ 14 -> 5.16 (deferral
     5 of 5) -> final 5.11 @ 14 = 5.128. Total cut -0.20 again. 36 m moved the floor by about -0.01 (one sample, cent
     rounding). It costs us nothing, so keep it.
+13. **Loop run 3: live 8180d3894dd5c5b3 = 0.721 (low draw), agent 1f58b46 (36 m + deeper anchor 0.26).** Round 1:
+    **5.41 @ 90 (36 m)**, so the deeper anchor didn't lower the headline (run 2: 5.40). Revert it. Then our 4.72 @ 14 ->
+    5.16 @ 14 = 5.178 (-0.15) -> our 4.75 (0.2x step) -> **final at our 3rd message** (the deferral failed for the first
+    time, 5 of 6) 5.11 @ 14 = 5.128. Total cut -0.21: the same budget whether the deferral works or not.

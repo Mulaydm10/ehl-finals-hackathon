@@ -214,6 +214,11 @@ class NoIdeaAgent:
         self.fc = {k: v for k, v in _facts.items() if k.startswith("fc:")}
         self.facts = {k: v for k, v in _facts.items() if k.startswith("qn:")}  # quality notifications (complaint_args)
         self.all_facts = _facts
+        mem = root / "datasets/H_supplier_memory.json"  # src/eval/supplier_memory.py, rebuilt after every game
+        try:
+            self.memory = json.loads(mem.read_text(encoding="utf-8")) if mem.exists() else {}
+        except ValueError:
+            self.memory = {}
         self.po_hist = {}  # (supplier, part) -> [(date, po id, price)] by date (price_path)
         for k, v in _facts.items():
             if k.startswith("po:") and v.get("unit_price") and v.get("date"):
@@ -1073,10 +1078,12 @@ class NoIdeaAgent:
             # its answer picks the ladder: it NAMED its floor = standing -> the hair ask above; it kept its limits internal
             # ("Our margin and our limits stay internal") -> its floor sat LOW in the gap: the high-draw P11 games agreed to
             # the FIRST probe at 45.10 / 45.13 / 45.25 -> start low
-            secret = s.get("asked_floor") and re.search(r"(?i)limits stay internal|margin .{0,20}internal|cannot (share|disclose)",
-                                                        " ".join(m.get("body") or "" for m in events[-4:] if m.get("from") != "buyer"))
-            ladder = GRID_LADDER_LOW if secret else GRID_LADDER
-            ask = terms["unit_price"] - g * ladder[min(j, len(ladder) - 1)]
+            # MEMORY first (datasets/H_supplier_memory.json, all our past games with this supplier): at this same standing
+            # price and structure, the asks it AGREED to, then just above the highest ask it REFUSED; else the default
+            # ladder. (The "limits stay internal" sentence picked the ladder before - P11 writes it in EVERY session, and
+            # the low ladder wasted a low draw: 74cc062d probed 44.60 / 44.70, final 45.00, 44.95 never asked.)
+            mlad = self.memory_ladder(case, sid, terms)
+            ask = mlad[min(j, len(mlad) - 1)] if mlad else terms["unit_price"] - g * GRID_LADDER[min(j, len(GRID_LADDER) - 1)]
             last = next((ts["terms"]["unit_price"] for m in reversed(events) if m.get("from") == "buyer"
                          for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get("unit_price")), 0.0)
             ask = round(min(terms["unit_price"] - 0.01, max(ask, last + 0.01)), 2)
@@ -1148,6 +1155,7 @@ class NoIdeaAgent:
         principles = [f"- {x}" for x in self.lessons.get("principles", [])]
         return ("SIGNALS IN ITS E-MAIL (and what works):\n" + ("\n".join(sig) or "- none") +
                 "\nOUR NOTES ON THIS SUPPLIER (verbatim, most relevant first):\n" + ("\n".join(notes) or "- none") +
+                "\nOUR PAST GAMES WITH THIS SUPPLIER (memory):\n" + self.memory_note(sid) +
                 "\nNEGOTIATION PRINCIPLES (always):\n" + "\n".join(principles) +
                 "\nLESSONS FROM OUR PAST NEGOTIATIONS:\n" + "\n".join(lessons[:12]))
 
@@ -1411,6 +1419,37 @@ class NoIdeaAgent:
     OBJECTION_RX = re.compile(r"(?i)(return(ing)? to our standard|our standard (terms|\d+-day|zahlungsziel)|"
                               r"restrict(s|ing)? our (pricing )?flexibility|financing costs|cannot (go|move) (any )?further|"
                               r"unable to (reduce|lower|accommodate)|must maintain|strictly (fixed|frozen)|maximum flexibility)")
+
+    def memory_ladder(self, case, sid, terms):
+        """Probe prices from our past games with this supplier at the SAME standing price and structure: the prices it
+        agreed to (lowest first), else halfway between the highest ask it refused and its price, then a hair below it."""
+        mem = (self.memory.get(sid) or {}).get("structures", {})
+        k = "|".join(f"{f}={terms[f]}" for f in sorted(terms) if f != "unit_price" and f in case["negotiable"])
+        st = next((v for kk, v in mem.items() if all(part in kk.split("|") for part in k.split("|") if part)), None)
+        S = terms["unit_price"]
+        if not st:
+            return None
+        agreed = sorted({a for a, std in st.get("agreed_to_our_ask", []) if std is not None and abs(std - S) < 0.005 and a < S})
+        refused = [a for a, std in st.get("refused_asks", []) if abs(std - S) < 0.005]
+        hair = round(int(S * (1 - HAIR) * 100) / 100, 2)
+        if agreed:
+            return [round(a, 2) for a in agreed] + [hair]
+        if refused:
+            top = max(refused)
+            return [round((top + S) / 2, 2), hair] if (top + S) / 2 < hair else [hair]
+        return None
+
+    def memory_note(self, sid):
+        m = self.memory.get(sid) or {}
+        if not m:
+            return "- none"
+        lines = [f"- {m.get('games', 0)} past games; scores {m.get('scores', [])[-6:]}"]
+        for k, v in list(m.get("structures", {}).items())[:3]:
+            lines.append(f"- terms {k}: it agreed to our asks {v.get('agreed_to_our_ask', [])[:5]} [price, its standing before]; "
+                         f"refused {v.get('refused_asks', [])[-5:]}; finals {v.get('finals', [])}; named floors {v.get('named_floors', [])}")
+        if m.get("took") or m.get("shrugged"):
+            lines.append(f"- data it took: {sorted(m.get('took', {}))[:6]}; data it shrugged off: {sorted(m.get('shrugged', {}))[:4]}")
+        return "\n".join(lines)
 
     @staticmethod
     def price_grid(events, min_n=3):
