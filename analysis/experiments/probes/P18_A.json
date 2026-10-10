@@ -1,0 +1,30 @@
+{
+  "case": "P18",
+  "label": "P18_A 90 d + AS db5 structure",
+  "hypothesis": "11 games ended at EUR 5.00-5.40 with 14-30 d payment and mostly db0 (best 0.677 = 5.00/30 d/db0). At 5.00, 90 d/db5 scores 0.795 (+0.12): db5 is worth EUR 0.11/kg to us, 90 d EUR 0.07/kg. It is not cash-short (credit 148) and offered 90 d at the same price as 45 d (6833e98fbbe5ebdf); it wants the clause on 24 m. Pre-empt: 24 m, 90 d, its AS-14404 clause at 5% deadband, round 1 with the data that gave the best first counters (since-peak AS -5.5%, PPI-C2431 -2.3%, price path 5.26 -> 5.84).",
+  "on_agreed": "accept",
+  "on_open": "next",
+  "on_final": "alternative",
+  "rounds": [
+    {
+      "body": "Dear Blankstahl Werdenfels team,\n\nThank you for your offer. We are ready to commit for 24 months, 47,400 kg in total, and we accept your request for an AS-14404 price adjustment clause, with a 5% deadband, on 90 days payment.\n\nAlloy surcharge 1.4404, Isartal Edelstahlwerk (fictional mill, derived) changed -5.5% from 2026-06 to 2026-09 (idx:AS-14404@2026-06, idx:AS-14404@2026-09).\nProducer prices DE: cold drawing of bars changed -2.3% from 2026-06 to 2026-08 (idx:PPI-C2431@2026-06, idx:PPI-C2431@2026-08).\nOur orders for Round bar 1.4404 dia 30 mm were at EUR 5.26 until June 2026 and have been at EUR 5.84 since July 2026 (po:4500014078-10, po:4500014140-10, po:4500014427-10).\n\nWe propose EUR 4.77 per kg on these terms.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 4.77, "payment_days": 90, "contract_months": 24, "index_clause": {"series": "AS-14404", "material_share": 0.45, "deadband_pct": 5, "base_month": "2026-08"}}],
+      "refs": ["idx:AS-14404@2026-06", "idx:AS-14404@2026-09", "idx:PPI-C2431@2026-06", "idx:PPI-C2431@2026-08", "po:4500014078-10", "po:4500014140-10", "po:4500014427-10"]
+    },
+    {
+      "body": "Dear Blankstahl Werdenfels team,\n\nThank you for moving. Our demand forecast for Round bar 1.4404 dia 30 mm is up +1.9% (fc:370010@2026-09).\n\nWe propose EUR 4.90 per kg, 24 months, 90 days, AS-14404 clause with a 5% deadband.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 4.9, "payment_days": 90, "contract_months": 24, "index_clause": {"series": "AS-14404", "material_share": 0.45, "deadband_pct": 5, "base_month": "2026-08"}}],
+      "refs": ["fc:370010@2026-09"]
+    },
+    {
+      "body": "Dear Blankstahl Werdenfels team,\n\nThank you. We propose EUR 5.00 per kg on the same terms.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 5.0, "payment_days": 90, "contract_months": 24, "index_clause": {"series": "AS-14404", "material_share": 0.45, "deadband_pct": 5, "base_month": "2026-08"}}],
+      "refs": []
+    },
+    {
+      "body": "Dear Blankstahl Werdenfels team,\n\nThank you. To close, we propose EUR 5.08 per kg on the same terms.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 5.08, "payment_days": 90, "contract_months": 24, "index_clause": {"series": "AS-14404", "material_share": 0.45, "deadband_pct": 5, "base_month": "2026-08"}}],
+      "refs": []
+    }
+  ]
+}
