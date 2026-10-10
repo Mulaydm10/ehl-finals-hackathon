@@ -175,3 +175,4 @@
 | 2026-10-10 21:02 | Parth | P08 | noidea c1d7678 (hedged: 3 sheets r1, lean later) / gpt-6-astra | 0.916 (agent, P08 rules complete) | 4ff01141bab9fea6 |
 | 2026-10-10 21:19 | Parth | P05 | p05_record 1e8ac31 / scripted | 0.820 | 9ce672fffbf931a7 |
 | 2026-10-10 21:46 | Parth | P05 | p05_record e8666ae / scripted | 0.820 | 1ebd6e0eb14313c8 |
+| 2026-10-10 22:00 | Parth | P05 | p05_record 3c6c292 / scripted | 0.381 | 8e94b127db1e6eaa |
