@@ -419,7 +419,31 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
   confirm our case: that driver rose"). P08 refs now: AS-14404 only.
 - Tests 32 passed; offline 0.939 / 0.947; Astra P08 trial clean (10.3 s per call).
 
-### v2.7 (Parth, offline, 0 games): more verifiable data + switchable live experiments (see analysis/strategy_0.9.md)
+## Full live pass, v2.7 + gpt-6-astra, all 10 hosted cases (2 parallel batches of 5, 16:30-16:41)
+| case | v2.7 | previous best | session | note |
+|---|---:|---:|---|---|
+| P03 | **0.90** | first | 8c2816f2d571b367 | renewal, stabilise |
+| P04 | **0.82** | 0.86 (Neel) | 53f2239cea14a247 | |
+| P01 | 0.78 | 0.85 (v1) | 5edea8c8264bd88f | below best |
+| P07 | **0.75** | 0.73 | 89308a143f38f901 | **new best** |
+| P11 | 0.67 | first | 29cbb6d69fe5e642 | quality |
+| P10 | 0.64 | 0.65 | 396a494d88001ce8 | floor as always |
+| P18 | **0.54** | 0.43 (Parth) | c4599331a4ed849b | **new best** |
+| P02 | **0.50** | 0.48 | af0b93ab36742595 | **new best** (v2.6 fix works) |
+| P05 | 0.39 | first | f8604d43d3fbf92f | RFQ, weakest type |
+| P08 | **0.00** | 0.65 | 1f27ac1b2856c285 | **walked away - bug below** |
+- **Mean 0.60** over 10 (0.65 with the P08 fix applied on replay). New bests on P02, P07, P18; first results P03 0.90, P04 0.82, P11 0.67.
+- **P08 bug (v2.8 fix):** its final offer had a proper ID'd alternative sheet (offer:70710-3-a, €5.35 @ 45 d, **db0**). The prose
+  parser read "€5.35 … Preisgleitklausel on AS-14404" from the text, filled in OUR 5% deadband, judged it cheaper and sent it
+  back as a counter; Astra's opening added new asks ("reconsider sharing the cost breakdown… a modest further unit-price
+  reduction… clause only after your alloy cover ends") → "we are withdrawing from this negotiation" → no deal, 0.0.
+  **Fix:** at final_offer with ≥ 2 ID'd sheets, accept the cheapest (best_sheet); the prose route only without structured
+  alternatives; the final message is a fixed template (no model text, no asks). Replay: P08 → accept -a (0.491);
+  15 real finals: +0.031 mean vs taking the first sheet. Tests 32 passed; offline 0.939 / 0.947.
+- Also reviewed an external negotiation-agent playbook → `docs/PLAYBOOK_REVIEW.md` (main gaps: overfitting to the 9,
+  growing concession steps, no injection test, no leave-one-out / synthetic suppliers).
+
+### Parth v2.7-p (offline, 0 games): more verifiable data + switchable live experiments (see analysis/strategy_0.9.md)
 - Builder: per cost driver, the **fall from its 12-month peak** as an extra `index_change` claim (any window ≤ 12 m
   ending in the data's last 12 months is checked). +84 claims, self-check 811 ok / 0 bad. P18 now cites AS-14404
   −5.5% and PPI-C2431 −2.3%; P01/P11 energy −6.1%.

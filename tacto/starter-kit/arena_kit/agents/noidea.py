@@ -548,7 +548,12 @@ class NoIdeaAgent:
                 return walk if self.c_alt < math.inf or len(live) > 1 else accept if sheet_id else walk
             # its final message may carry a prose alternative that is cheaper for us (P10 live: "Alternatively,
             # with Lieferzeit ... days: EUR ..."): propose exactly that once - it is its own offer, not a push
-            if status == "final_offer" and sid not in self.final_asked and moves_left(case, events) > 1:
+            # if its final carries alternatives as ID'd sheets, best_sheet() already picked the cheapest: just
+            # accept it. The prose route only applies when there is no structured alternative. P08 v2.7 live
+            # (1f27ac1b2856c285): the prose parse of "€5.35 … Preisgleitklausel" filled in OUR 5% deadband (its -a
+            # sheet had 0%), looked cheaper, went out as a counter with new asks -> it walked away, 0.0
+            ided = [ts for ts in latest(events).get("term_sheets") or [] if ts.get("term_sheet_id")]
+            if status == "final_offer" and len(ided) < 2 and sid not in self.final_asked and moves_left(case, events) > 1:
                 alts = [a for a in (self.refused_alternative(case, sid, events),
                                     self.prose_alternative(case, sid, events)) if a]
                 alt_p = min(alts, key=lambda a: a[0]) if alts else None
@@ -965,6 +970,10 @@ class NoIdeaAgent:
         offers = "; ".join(", ".join(x for f, v in t.items() if f in case["negotiable"] and (x := self.plain(f, v)))
                            for t in sheets)
         opening = given_opening or "Thank you for your message."
+        if final:  # taking its own alternative after a final offer: nothing new, no model text, no extra asks
+            return (f"Dear {name} team,\n\nThank you for your final offer. We accept your alternative exactly as you "
+                    f"proposed it ({offers}); it is attached as a term sheet for your confirmation.\n\n"
+                    "Kind regards,\nPurchasing, Hollerau Pumpenwerke")
         if self.complete and not given_opening:
             levers = "; ".join(f"{m}: {v['lever']}" for m, v in motives.items())
             playbook = _sections(self.playbooks.get(case["type"], ""), PLAYBOOK_SECTIONS)[:2500]
