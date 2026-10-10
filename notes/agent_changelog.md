@@ -1030,3 +1030,16 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 - rfq_low10 (62a9e69f67fc482a): **0.824 = our agent best P05** (> Parth scripted 0.820): 70210 30.50 -> 28.00 @ 30 d, accepted.
 - rfq_low12 (c88d676f208af3c0): 0.761 - a TIMEOUT with 70240 (reply > 60 s after its move: 3 bidders + model calls), then 70210 agreed 28.51 @ 14 d.
 - **Default now 10% under the market low** (= the RFQ market anchor). Risk for the final: 3-bidder RFQs run close to the 60-s limit - check latency in the pre-flight.
+
+### v2.30 (offline): RFQ ratchet also for OPEN offers
+- The base would accept an OPEN offer while other live bidders sit above it and have not seen it (62a9e69f: took 70210 open 28.00 @ 30 d at once with two bidders live, 0.824) -> show it to them first, once per (bidder, offer); agreed / final unchanged. Opt-out no_rfq_show_open.
+- Offline Qwen P05 0.95, offline Astra 0.95, injection PASS, tests 64. Live: 2 runs in parallel.
+
+## v2.30 live P05 x2 (22:26): 0.824 (fef71f65d9545953) and 0.761 (37c25dfb8f43d84b)
+- The open-offer ratchet fired (70210 open 28.00 shown to 70240/70250) but the others NEVER move (70250 30.25-30.50, 70240 33.00 in every game): P05 is 70210 alone.
+- 70210 counters with its OWN price on 30 d when our ask is below its floor (28.00 @ 30 = 0.824) and AGREES to our ask when it is above (~28.6 @ 14 d = 0.76).
+- **Bug:** "RFQ ask 28.61 (cap 27.45)" - the base round-1 anchor sat above the RFQ cap and the no-backtracking creep kept every later ask above it.
+### v2.31 (offline): RFQ round-1 anchor capped at 10% under the market low (in value). Round-1 asks: 70210 28.70 @ 45 -> 28.06 @ 14; 70250 30.25 -> 27.85. Opt-out no_rfq_cap_r1. Tests 64, offline unchanged, Astra offline P05 OK.
+
+## v2.31 live P05 x2 (22:33): 0.807 / 0.807 (ceb3295e8f463b18, 51dcee25992e24f3)
+- Both: 70210 30.00 @ 14 -> AGREED to our round-1 ask 28.06 @ 14 d at once; shown to the others (70250 29.50 final, 70240 32.00) -> accepted. Consistent (v2.30: 0.824 / 0.761) but 70210 says yes at once -> its floor is LOWER. Next: rfq_low12 / rfq_low15.

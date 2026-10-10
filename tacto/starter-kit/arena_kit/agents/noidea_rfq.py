@@ -54,8 +54,11 @@ RFQ_BELOW_LOW = 0.10  # ... and stays at least 10% under the lowest standing off
 # record 0.924 ~ 27.00 @ 14 d; an extreme anchor made both bidders walk - Parth run 3)
 import os as _os
 _EXP = {x.strip() for x in _os.environ.get("NOIDEA_EXPERIMENTS", "").split(",") if x.strip()}
+EXPERIMENTS_RFQ = _EXP
 if "rfq_low10" in _EXP:
     RFQ_BELOW_LOW = 0.10
+if "rfq_low15" in _EXP:
+    RFQ_BELOW_LOW = 0.15
 if "rfq_low12" in _EXP:
     RFQ_BELOW_LOW = 0.12
 
@@ -69,14 +72,21 @@ class NoIdeaAgent(_Main):
             return super().value_target(case, sid, events)
         s = self.sup[sid]
         hist = s.get("ours")
-        if not hist:
-            return super().value_target(case, sid, events)  # round 1: the market anchor
         lows = []  # every live bidder's standing offer, valued with THIS bidder's cash rate (our asks are values)
         for other in live_threads(self.threads_ref):
             if other in self.sup:
                 t = standing(self.threads_ref[other])[1] or {}
                 if t.get("unit_price"):
                     lows.append(supplier_value(case, complete_offer(case, t), s["est"]))
+        if not hist:
+            # round 1: the base market anchor, but never above the cap - the base anchor came out at 28.61 (value) while
+            # the cap was 27.45, and the no-backtracking creep kept every later ask above the cap (live fef71f65 /
+            # 62a9e69f: 70210's 28.00 was below our own ask and was taken, 0.824)
+            v = super().value_target(case, sid, events)
+            if lows and "no_rfq_cap_r1" not in EXPERIMENTS_RFQ:
+                v = min(v, min(lows) * (1 - RFQ_BELOW_LOW))
+                s["ours"][-1] = v
+            return v
         cap = min(lows) * (1 - RFQ_BELOW_LOW) if lows else hist[-1] + RFQ_CREEP
         nxt = max(hist[-1], min(hist[-1] + RFQ_CREEP, cap))
         hist.append(nxt)
@@ -112,7 +122,32 @@ class NoIdeaAgent(_Main):
                     if d.get("supplier_id") not in pending:  # the base turned elsewhere: don't block the close
                         shown.update((x, cb) for x in pending)
                     return d
-        return super().decide(case, threads)
+        d = super().decide(case, threads)
+        # 7. (v2.30) the base would ACCEPT an OPEN offer while other live bidders sit above it and have not seen it: show it
+        #    to them first, once (live 62a9e69f: we took 70210's open 28.00 @ 30 d at once with two bidders live - 0.824).
+        #    Not for agreed / final offers (handled above) and never twice per (bidder, offer).
+        act = (d.get("message") or {}).get("action") or {}
+        if case["type"] == "rfq" and act.get("type") == "accept" and "no_rfq_show_open" not in EXPERIMENTS_RFQ:
+            sid = d.get("supplier_id")
+            ev = threads.get(sid) or []
+            live = [x for x in live_threads(threads) if x in self.sup]
+            if ev and latest(ev).get("status") == "open" and len(live) > 1:
+                price = {x: (standing(threads[x])[1] or {}).get("unit_price") for x in live}
+                shown = self.__dict__.setdefault("_shown", set())
+                pending = [x for x in live if x != sid and price.get(x) and price.get(sid)
+                           and price[x] > price[sid] and (x, sid) not in shown]
+                if pending:
+                    log.info("RFQ: %s open at %.2f - showing it to %s before accepting", sid, price[sid], pending)
+                    saved = self.focus
+                    self.focus = set(pending)
+                    try:
+                        d2 = super().decide(case, threads)
+                    finally:
+                        self.focus = saved
+                    shown.update((x, sid) for x in pending)
+                    if d2.get("supplier_id") in pending and not ((d2.get("message") or {}).get("action") or {}):
+                        return d2
+        return d
 
     def rank_args(self, case, sid, ask_pct):
         if case["type"] == "rfq":  # 1. cost drivers for the RFQ part
