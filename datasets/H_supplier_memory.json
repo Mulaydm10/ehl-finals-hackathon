@@ -6,7 +6,8 @@
    0.91,
    0.583,
    0.0,
-   0.853
+   0.853,
+   0.993
   ],
   "shrugged": {
    "rival quote": 1
@@ -49,6 +50,14 @@
      [
       127.89,
       136.2
+     ],
+     [
+      128.04,
+      131.3
+     ],
+     [
+      129.11,
+      130.2
      ],
      [
       129.11,
@@ -1065,7 +1074,7 @@
   }
  },
  "sup:70620": {
-  "games": 13,
+  "games": 14,
   "scores": [
    0.874,
    0.0,
@@ -1079,12 +1088,13 @@
    0.0,
    0.86,
    0.86,
+   0.874,
    0.874
   ],
   "shrugged": {
    "index change": 6,
    "price history": 4,
-   "volume change": 6
+   "volume change": 7
   },
   "structures": {
    "contract_months=36|payment_days=14": {

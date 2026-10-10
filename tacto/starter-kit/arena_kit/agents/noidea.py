@@ -1293,14 +1293,15 @@ or null, "reason": "<one sentence>"}."""
         mf = s.get("mem_final")
         if mf and status == "open" and k >= 1 and not s.get("mem_close") and ok and terms.get("unit_price") \
                 and terms["unit_price"] - mf <= 0.02 + 1e-9 and terms["unit_price"] > mf - 0.01 + 1e-9 \
-                and all(terms.get(f) == v for f, v in (self.memory_best_structure(case, sid) or ({}, 0))[0].items()):
+                and all(abs(float(terms.get(f) or 0) - float(v or 0)) < 1e-9
+                        for f, v in (self.memory_best_structure(case, sid) or ({}, 0))[0].items()):
             # MEMORY CLOSE: it usually goes final at mf on this structure; ask one cent UNDER that, while its offer is still
             # open (after its final it walked: Parth 4.93 @ 90 d -> 0.00). Refused -> its final at mf (P04 45 d: 0.874).
             close_p = round(mf - 0.01, 2)
             if "subcent_close" in EXPERIMENTS:
                 mem = (self.memory.get(sid) or {}).get("structures") or {}
-                key = next((kk for kk in mem if all(f"{f}={terms.get(f)}" in kk.split("|") for f in case["negotiable"]
-                                                    if f != "unit_price")), None)
+                key = next((kk for kk in mem if self.mem_match(kk, {f: terms.get(f) for f in case["negotiable"]
+                                                                     if f != "unit_price"})), None)
                 ref = [a for a, _ in (mem.get(key) or {}).get("refused_asks", [])] if key else []
                 if any(abs(a - close_p) < 0.0005 for a in ref):
                     # its floor lies BETWEEN the refused cent and its final (P04 45 d: 4.88 refused, 4.89 final; the case
@@ -1648,8 +1649,8 @@ or null, "reason": "<one sentence>"}."""
         """Probe prices from our past games with this supplier at the SAME standing price and structure: the prices it
         agreed to (lowest first), else halfway between the highest ask it refused and its price, then a hair below it."""
         mem = (self.memory.get(sid) or {}).get("structures", {})
-        k = "|".join(f"{f}={terms[f]}" for f in sorted(terms) if f != "unit_price" and f in case["negotiable"])
-        st = next((v for kk, v in mem.items() if all(part in kk.split("|") for part in k.split("|") if part)), None)
+        want = {f: terms[f] for f in terms if f != "unit_price" and f in case["negotiable"]}
+        st = next((v for kk, v in mem.items() if self.mem_match(kk, want)), None)
         S = terms["unit_price"]
         if not st:
             return None
@@ -1662,6 +1663,23 @@ or null, "reason": "<one sentence>"}."""
             top = max(refused)
             return [round((top + S) / 2, 2), hair] if (top + S) / 2 < hair else [hair]
         return None
+
+    @staticmethod
+    def mem_match(key, terms):
+        """Does a memory structure key ('f=v|f=v') match these terms? Numbers compared as numbers (the arena sends 45.0
+        where memory wrote 45, and 0.0 where memory wrote 0.0) - string matching missed P04's 45-day memory."""
+        for part in key.split("|"):
+            f, _, val = part.partition("=")
+            if f not in terms:
+                continue
+            v = terms.get(f)
+            try:
+                if abs(float(val) - float(v)) > 1e-9:
+                    return False
+            except (TypeError, ValueError):
+                if str(v) != val:
+                    return False
+        return True
 
     def memory_finals(self, case, sid):
         """{structure-terms-dict: lowest final price} from our past games with this supplier (memory)."""
@@ -1701,7 +1719,7 @@ or null, "reason": "<one sentence>"}."""
             # skip terms where that one-cent-under ask was already REFUSED (memory: P04 45 d 4.88, ffef2938)
             mem = (self.memory.get(sid) or {}).get("structures") or {}
             def refused(x):
-                key = next((k for k in mem if all(f"{f}={v}" in k.split("|") for f, v in x[0].items())), None)
+                key = next((k for k in mem if self.mem_match(k, x[0])), None)
                 return key is not None and any(abs(a - (x[1] - 0.01)) < 0.005 for a, _ in mem[key].get("refused_asks", []))
             ok = [x for x in ok if not refused(x)] or ok
             return min(ok, key=lambda x: cost(x, 0.01))

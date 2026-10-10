@@ -951,3 +951,12 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 - B subcent_close (0cccb38498fd407b): NOT really tested - the merge had replaced our supplier memory with a teammate copy
   without the refusal fix, so 4.88 was not known as refused and the close asked 4.88 (held 4.89). Re-run after rebuild.
 - Process lesson: generated files (memory, reactions) must be REBUILT after a merge, not taken from either side.
+- B re-run (f0df06534b3ce1a0): 0.874 - still asked 4.88: the memory lookup compared "payment_days=45.0" (arena float) with
+  "payment_days=45" (memory). Fixed with a numeric matcher `mem_match()` used by every memory lookup (P11 replays unchanged).
+  Then found: our kit rounds prices to cents, and **api.md: "unit_price: number, EUR with 2 decimals"** -> sub-cent asks are
+  not allowed. `subcent_close` is dead by the rules.
+### P04 conclusion: **0.874 is the ceiling** (Parth was right)
+- Levers tried live: term choice (45 d best; 14/30/60/90 d all lower at their stops), one cent under its stop BEFORE the final
+  (45 d 4.88 refused x5, 90 d 4.93 refused), first-counter levers in round 1 (forecast fact, price path 4.29 -> 4.39, account
+  value + its own EUR 4.63 quote): first counter 4.90 every time. Sub-cent prices: forbidden (2 decimals).
+- Our agent now reaches the ceiling every time: 0.874 x5 today (was 0.81-0.86).

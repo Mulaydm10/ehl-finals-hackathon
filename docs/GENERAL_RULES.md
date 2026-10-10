@@ -201,3 +201,6 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
     "prove your reliability" / "earn our confidence" / "documented complaints" leaned high. Put the reassurance in code, not luck.
 87. **Floor-stop suppliers stop at a fixed price per term: choose the TERM from memory** (P04: 45 d = 0.874 vs 14 d = 0.815, the
     same supplier); then one ask one cent under its usual final BEFORE its final (free: refused -> its final). Agent 0.82 -> 0.874.
+88. **Check the spec before inventing a lever**: prices are EUR with 2 decimals (api.md) - a floor between two cents is out of reach.
+    P04: 0.874 is the ceiling; the agent reaches it every time (5 of 5) once the TERM is chosen from memory.
+89. **Memory lookups must compare numbers as numbers** (the arena sends 45.0 where we stored 45) - a silent mismatch disabled a rule.

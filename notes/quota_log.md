@@ -184,3 +184,4 @@
 | 2026-10-10 21:43 | Dhruv | P04 | noidea v2.25 experiment / gpt-6-astra | 0.874 | 24cf72ca71830fb8 |
 | 2026-10-10 21:43 | Dhruv | P04 | noidea v2.25 experiment / gpt-6-astra | 0.874 | 0cccb38498fd407b |
 | 2026-10-10 21:43 | Dhruv | P04 | noidea v2.25 experiment / gpt-6-astra | 0.874 | 5c8773bf751a3149 |
+| 2026-10-10 21:45 | Dhruv | P04 | noidea v2.25 subcent_close (re-run) / gpt-6-astra | 0.874 | f0df06534b3ce1a0 |
