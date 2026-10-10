@@ -211,3 +211,11 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
    -0.16/-0.17/-0.17 when we moved to 14 d, 60 d, or stayed on 45 d). In round 1 it proposed 14 d ("we propose ... with
    14-day payment terms"). Best live evidence path: r1 90-day headline, **r2 switch to 14 d** (cae4, c387: -0.16/-0.17),
    r3 deferral (-0.05), r4 final (-0.05) = **5.07, about 0.76**. Untested as one game.
+10. **Live a4b92d2f2b871341 = 0.710 (low draw, 5.42), agent 11e95af (TASK 12: round 2 on 14 d).** 5.42 @ 90 = 5.348 -> our
+    4.89 @ 14 (30% step) -> **5.22 @ 14 = 5.238 (-0.11)** -> our 4.91 (deferral, 3 of 3 worked) -> 5.17 = 5.188 (-0.05,
+    open) -> our 4.99 -> final 5.12 @ 14 = 5.138 (-0.05). Switching to 14 d did NOT restore the -0.16.
+    **P08 is FLOOR-BOUND (same as Dhruv's rule 60 on P11). The total cut from round 1 is fixed: low draw cae4 -0.22 (3
+    rounds), c387 -0.21 (3), 6912 -0.22 (4), a4b9 -0.21 (4); high draw 1363 -0.26, db7d -0.28.** An extra round only
+    spreads the same cut: the round-2 cut shrinks from -0.16 to -0.11/-0.12 when 4 rounds follow. Low-draw floor ~5.12-5.14
+    (0.71-0.73), high ~5.18-5.20. The house's 5.10 is below every low-draw game we've played. Only a lever that moves the
+    FLOOR can beat it (Dhruv's rule 58 "ask the floor", rule 59 "the person's currency moves the floor"), or a lucky draw.
