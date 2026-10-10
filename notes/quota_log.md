@@ -237,3 +237,4 @@
 | 2026-10-10 23:58 | Dhruv | P18 | v2.34b hidden / gpt-6-astra | 0.6883 | 3cb62cb905451df8 |
 | 2026-10-10 23:05 | Parth | P11 | p11_hold timeout first=0d5b 42.77/43.57/44.01 hair-0.08 bc363f2 / scripted | 0.8850 | d51e49df4d9826a4 |
 | 2026-10-10 23:09 | Parth | P11 | p11_hold timeout first=0d5b 42.77/43.57/44.01 hair-0.08 5e37c67 / scripted | 0.8770 | 8f62abf996ef150f |
+| 2026-10-11 00:06 | Neel | P10 | noidea_p10b (NOIDEA_EXPERIMENTS=hidden; r1 rubber idx instead of OTD) / gpt-6-astra | **0.69** | a9e2c0e41cc1be12 |
