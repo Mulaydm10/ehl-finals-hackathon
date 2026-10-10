@@ -115,3 +115,4 @@
 | 2026-10-10 18:17 | Neel | P02 | noidea_neel / gpt-6-astra | **0.61** | f778b35c67ecd799 |
 | 2026-10-10 18:23 | Dhruv | P11 | noidea v2.16d / gpt-6-astra | 0.77 (agreed to our near-close 45.13; news claim no effect) | 7117d3517bedd67e |
 | 2026-10-10 18:25 | Parth | P10 | probe P10_A 2%-ladder (scripted, no model) | 0.674 (unit_price=31.56, volume_per_year=23400, contract_months=24, lead_time_days=56) | e479da115f89e76a |
+| 2026-10-10 18:25 | Neel | P08 | noidea_neel / gpt-6-astra | **0.73** | cae4b621695f8161 |

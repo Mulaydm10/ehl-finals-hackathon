@@ -232,17 +232,20 @@ class NoIdeaAgent:
         if central.mirror_supplier(case["case_id"]):  # keep its rounds going with verified facts (P02)
             out = [c for c in out if c["kind"] != "scorecard_otd"] + central.quality_notification_claims(
                 case, self.facts, sid) + central.delivery_year_claims(self.facts, sid)
-        if not best:  # no falling 6/12-month window: the steepest fall in any window the arena checks
-            drivers = {dr["series"]: dr.get("weight") or 0.0 for p in self.dossiers.get(sid, {}).get("parts", [])
-                       if p["part"] in parts for dr in p.get("cost_drivers", []) if dr["series"] not in hedged}
-            out += central.falling_window_claims(case, drivers)
+        # every unhedged cost driver without a falling 6/12-month window: its steepest fall in any window the arena
+        # checks (P08 cae4b621695f8161: labour -0.3% was never built because cold drawing already had one -> round 3
+        # went out empty: "Which figures is that based on?" and final)
+        drivers = {dr["series"]: dr.get("weight") or 0.0 for p in self.dossiers.get(sid, {}).get("parts", [])
+                   if p["part"] in parts for dr in p.get("cost_drivers", []) if dr["series"] not in hedged
+                   and dr["series"] not in best}
+        out += central.falling_window_claims(case, drivers)
         # quality notifications on the part (never cited before; cloud ENGINES.md: in 8 of 10 cases)
         if not central.mirror_supplier(case["case_id"]):
             out += central.quality_notification_claims(case, self.facts, sid)
         # a green scorecard is not an argument ("our service levels remain within acceptable parameters", P02/P03/P08)
         out = [c for c in out if not (c["kind"].startswith("scorecard") and c.get("colour") == "green"
                                       and not c.get("keep_alive") and case["type"] != "quality")]
-        seen, ranked = set(), []
+        seen, ranked, fillers = set(), [], []
         for c in central.rank(out, case["case_id"]):
             # a FALL of a cost driver is judged on its own: P08's 5 "does not change" were all on the hedged AS-14404
             falling = c["kind"] == "index_change" and (c.get("figure") or 0) < 0
@@ -250,7 +253,12 @@ class NoIdeaAgent:
                                               or falling):
                 seen.add(c["sentence"])
                 ranked.append(c)
-        return ranked
+            elif c["sentence"] not in seen and not (c["kind"] == "index_change" and (c.get("figure") or 0) > 0):
+                seen.add(c["sentence"])
+                fillers.append({**c, "filler": True})
+        # verified facts it shrugged off before go LAST, so no round goes out empty: a round without data drew "Which
+        # figures is that based on?" and a final (P02, P08); P02's "does not change" order history still came with a cut
+        return ranked + fillers
 
     def kit_calc(self, case, sid):
         """Bundling: the kit priced at the supplier's OWN current prices, plus today's best price for the
@@ -305,6 +313,8 @@ class NoIdeaAgent:
                 break
             # one index claim per e-mail: two or more drew "We received a lot of material" 11 of 11 times
             if c["kind"] == "index_change" and any(x["kind"] == "index_change" for x in picked):
+                continue
+            if (c.get("filler") or c.get("keep_alive")) and len(self.cited) == 0:  # round 1: only data that moves it
                 continue
             if not any(i in self.cited for i in c["ids"]):
                 picked.append(c)
