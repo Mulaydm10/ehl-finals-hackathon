@@ -2,31 +2,16 @@
  "session": {
   "session_id": "03a3beee7e64f5b3",
   "case_id": "case:P11",
-<<<<<<< HEAD
-  "status": "open",
-  "end_reason": null,
-  "deal": null,
-  "score": null,
-  "rounds": 3,
-  "created_at": 1791646804.4636135
-=======
   "status": "ended",
   "set": "practice",
   "created_at": 1791647025.068358
->>>>>>> origin/parth/n1-p06-p09-p12
  },
  "detail": {
   "session_id": "03a3beee7e64f5b3",
   "case_id": "case:P11",
-<<<<<<< HEAD
-  "status": "open",
-  "end_reason": null,
-  "rounds": 3,
-=======
   "status": "ended",
   "end_reason": "accepted",
   "rounds": 6,
->>>>>>> origin/parth/n1-p06-p09-p12
   "set": "practice",
   "opening": {
    "sup:70140": {
@@ -52,16 +37,6 @@
   },
   "threads": {
    "sup:70140": {
-<<<<<<< HEAD
-    "offer_id": "offer:70140-3",
-    "status": "open",
-    "offers": 3,
-    "closed": null,
-    "seconds_left": 38.1
-   }
-  },
-  "moves": []
-=======
     "offer_id": "offer:70140-5",
     "status": "agreed",
     "offers": 6,
@@ -476,18 +451,12 @@
    ]
   },
   "replay_url": "/replay/03a3beee7e64f5b3"
->>>>>>> origin/parth/n1-p06-p09-p12
  },
  "threads": {
   "sup:70140": {
    "supplier_id": "sup:70140",
-<<<<<<< HEAD
-   "offer_id": "offer:70140-3",
-   "status": "open",
-=======
    "offer_id": "offer:70140-5",
    "status": "agreed",
->>>>>>> origin/parth/n1-p06-p09-p12
    "closed": null,
    "messages": [
     {
@@ -722,8 +691,6 @@
      },
      "missing_fields": [],
      "claim_results": []
-<<<<<<< HEAD
-=======
     },
     {
      "from": "buyer",
@@ -891,7 +858,6 @@
      },
      "missing_fields": [],
      "claim_results": []
->>>>>>> origin/parth/n1-p06-p09-p12
     }
    ],
    "timeouts": []
