@@ -1,4 +1,4 @@
-"""Replay supplier for P08 (Donautal, sup:70710), fitted to its 10 live games - offline, no quota, no LLM.
+"""Replay supplier for P08 (Donautal, sup:70710), fitted to its 11 live games - offline, no quota, no LLM.
 
     cd tacto/starter-kit && uv run python ../../analysis/tools/sim_donautal.py [agent_file ...] [--validate] [--save NAME]
     (no agent file: the cloud copy analysis/agent_variants/noidea_neel_cloud.py)
@@ -10,10 +10,11 @@ Values below are its cash value per kg: price at its 30-day standard and 8% rate
     AS-14404 db0 clause and 24 months on every sheet; an alternative at 14 d;
   - its clause is mandatory for 24 months; a clause-free ask is countered with the clause; deadband priced at +0.024/pt;
   - every reply is on the payment days of our sheet worth most to it (ties within 0.003 -> the longest);
-  - round 2: -0.16 when our ask stays clause-free (5 / 5: c387 cae4 1363 a43d db7d, whatever our step: +0.10 or +0.22);
+  - round 2: -0.16 when our ask stays clause-free (5 / 5: c387 cae4 1363 a43d db7d, whatever our step: +0.10 or +0.22),
+    but -0.118 when we STAY on its 90-day headline (6912fd89, n=1; analysis/cases/P08_round2_payment.md);
     -0.07 when we take its db0 clause (325d -0.09, ab47 -0.05); db5 asks -0.07 (mean of a hold 1f27, -0.15, -0.06);
-  - our message 3: final_offer (-0.05; 9 / 10) unless our step there is < 0.3x its last step: then open -0.06 and the final
-    (-0.06) one message later (db7d315a); a second small step is untested - `max_defer` (default 1) caps it;
+  - our message 3: final_offer (-0.05; 9 / 10) unless our step there is < 0.3x its last step: then open -0.055 and the
+    final (-0.055) one message later (db7d315a 0.06/0.06, 6912fd89 0.049/0.049); `max_defer` (default 1) caps it;
   - any message after its final_offer: it walks (1f27); an alternative's id ('-a') cannot be accepted (arena 422);
   - it agrees when our sheet is worth at least its next counter (clause-free sheets 0.14 less: the AS-14404 path risk);
   - data: verified, no price effect (8 kinds, 10 games); 'Which figures is that based on?' when a round cites nothing;
@@ -40,7 +41,8 @@ STD = {"payment_days": 30, "incoterm": "DAP", "ppm_commitment": 50, "chargeback_
 RATE, DB_PT, FREE_RISK = 0.08, 0.024, 0.14
 HEADLINE = {"low": 5.41, "high": 5.53}
 R2_STEP = {"free": 0.16, "db0": 0.07, "db5": 0.07}  # db5 asks: 0 (1f27, hold) / -0.15 (586a) / -0.06 (9bfa) -> the mean
-FINAL_STEP, DEFER_STEP, DEFER_BELOW, FINAL_AT = 0.05, 0.06, 0.3, 3
+R2_STAY90 = 0.118  # task 12: clause-free but STAYING on its 90-day headline (6912fd89, n=1) vs 0.150-0.170 in the 5 others
+FINAL_STEP, DEFER_STEP, DEFER_BELOW, FINAL_AT = 0.05, 0.055, 0.3, 3  # deferral rounds: db7d 0.06/0.06, 6912fd89 0.049/0.049
 HOUSE = 0.752
 
 
@@ -82,7 +84,7 @@ class Donautal:
     def __init__(self, draw="low", max_defer=1):
         self.draw, self.max_defer = draw, max_defer
         self.v, self.n, self.defers, self.final, self.ours = None, 0, 0, False, []
-        self.its_steps, self.last_prim = [], None
+        self.its_steps, self.last_prim, self.head_days = [], None, None
 
     def reply(self, sheets, refs):
         """Our message (term sheets, refs) -> (status, primary, alternative, body)."""
@@ -92,7 +94,7 @@ class Donautal:
         best = max(value(t) for t in sheets)  # it answers on the sheet of ours worth most to it (ties: the longest)
         first = max((t for t in sheets if value(t) >= best - 0.003), key=lambda t: t["payment_days"])
         if self.n == 1:
-            days = first["payment_days"]
+            days = self.head_days = first["payment_days"]
             h = HEADLINE[self.draw]
             self.v = h * f(days)
             prim = {"unit_price": h, "payment_days": days, "index_clause": clause(0), "contract_months": 24}
@@ -102,6 +104,8 @@ class Donautal:
             if self.n == 2:
                 kind = "free" if db is None else ("db0" if db < 2.5 else "db5")
                 step = R2_STEP[kind]
+                if kind == "free" and first["payment_days"] == 90 and self.head_days == 90:
+                    step = R2_STAY90
             elif self.n >= FINAL_AT:
                 ours = plain_value(first) - plain_value(self.ours[-1])
                 last = self.its_steps[-1] if self.its_steps else 0
