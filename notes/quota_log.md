@@ -123,3 +123,4 @@
 | 2026-10-10 18:42 | Parth | P10 | noidea 2a53cb1 short-fuse / gpt-6-astra | 0.679 (open 31.70 -> final 31.50 @ 56, 36 m; flat price history 'does not change' (probes' 28.94->29.89 path was taken)) | c283f47ddedd3b53 |
 | 2026-10-10 18:48 | Parth | P10 | noidea 87653f3 short-fuse + price path / gpt-6-astra | 0.694 (price path taken -> open 31.50, final 31.30 @ 56, 36 m) | 53bab007f0218897 |
 | 2026-10-10 18:51 | Parth | P10 | probe P10_F higher credible anchor 30.50 (scripted, no model) | 0.694 (unit_price=31.3, volume_per_year=23400, contract_months=36, lead_time_days=56) | a2e38ea824aa1d67 |
+| 2026-10-10 18:58 | Parth | P11 | probe P11_A one new fact per round (scripted, no model) | 0.794 (ppm_commitment=300, chargeback_eur_per_complaint=0.0, unit_price=45.0) | 4d6c9a1396e4d0a0 |
