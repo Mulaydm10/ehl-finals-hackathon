@@ -8,12 +8,12 @@ of every case for the time check, notes/quota_log.md, notes/agent_changelog.md, 
 | question | answer |
 |---|---|
 | What gave 31.00? | **The arena's engine-template mode.** Every session created 23:51:08-23:58:06 CEST on 10 Oct (7 of 7, six cases, incl. 673ee890) got replies made only of the engine's fixed sentences. No model-written sentence appeared. Before (23:46:02) and after (00:06) the replies were normal again |
-| How do the modes price P10? | Template: **31.00** (1 of 1). Normal: **31.50 in 9 of 9** games whose round 1 had the price path + should-cost taken (with or without a third fact) |
+| How do the modes price P10? | Template: **31.00** (1 of 1). Normal: **31.50 in 11 of 11** games whose round 1 had the price path + should-cost taken (with or without a third fact) |
 | Did our e-mail cause it? | **No.** 67f3678f sent 673ee890's round 1 again: same sheet, refs, data sentences, committee sentence and subject. It drew 31.50 in normal mode. Only the model-written first paragraph differed, and in template mode no model reads it |
 | Can we predict it? | **Not before round 1**: the opening is byte-identical in all 30 P10 sessions. **After round 1, yes**: engine sentences + a 4-day delay (normal mode: 2) |
 | Can we trigger it? | **No.** It switched on and off for every case and every agent at once (an arena-side state). The only way to force it would be to make the arena's model fail. That attacks the organiser's service and shows in the replays. **Not built, not recommended** |
 | Can 0.741 be beaten in normal mode? | **Not with any known lever.** It needs ≤ 30.69, i.e. 0.81 below the 31.50 first counter in the one e-mail before its final. The best measured step is 0.40 (59c899b9) |
-| Plan | Keep `noidea_p10` (0.710 live in normal mode). Its round 2 (36-month move + labour index) is also what the engine's approval ladder rewards. A template-mode session is the only chance at > 0.741: estimate 30.40-30.60 (0.75-0.76, unmeasured) |
+| Plan | Keep `noidea_p10` (0.710 live in normal mode, 2 of 2: 59c899b9, 3c4aa1a6). Its round 2 (36-month move + labour index) is also what the engine's approval ladder rewards. A template-mode session is the only chance at > 0.741: estimate 30.40-30.60 (0.75-0.76, unmeasured) |
 
 ## 2. 673ee890 vs 67f3678f, field by field
 | field | 673ee890 (0.741) | 67f3678f (0.694) |
@@ -62,18 +62,27 @@ single replies, not only in the window.
 
   The model in normal mode departs from the engine's figure in both directions: firmer on P10 (+0.50), sometimes softer on P11 (-0.50).
 
-## 5. Warning for main (v2.34b)
-P02 0.56 -> 0.81, P07 0.825 and P10 0.741 are credited to v2.34b (one fact per later e-mail). All three came in the template
-window, and the v2.34 pass six minutes earlier ran in normal mode, so **the agent change and the arena mode are mixed up**.
-The P02 fix has its own explanation in the changelog (empty e-mail -> final at 30 d), so it may still be right. Re-check
-P02 and P07 in normal mode before relying on those gains.
+## 5. Warning for main (v2.34b) - now settled by the 00:06-00:10 normal-mode pass
+P02 0.56 -> 0.81, P07 0.825 and P10 0.741 were credited to v2.34b (one fact per later e-mail). All three came in the template
+window. Dhruv's next pass (v2.34d, 00:06-00:10, every reply model-written) separates the two:
+
+| case | template window (23:58) | normal mode (00:06-00:10) | verdict |
+|---|---:|---:|---|
+| P02 | 0.809 | **0.828** (b09861f7) | the fact-pacing fix is real |
+| P07 | 0.825 | **0.773** (88c1d97f) | 0.825 was the window, not the agent |
+| P10 | 0.741 | 0.694-0.710 (main, noidea_p10) | 0.741 was the window |
+| P08 | 0.781 | 0.916 (2bfced14) | the window was worse here |
+| P18 | 0.688 | 0.621 (77b16b90) | - |
+
+Check: `python3 analysis/tools/supplier_mode_scan.py` (reads UTF-8; on Windows the default cp1252 made 673ee890 read as
+"model"). A session that ends in a walk-away or a hold is not "mixed": those replies are now ignored.
 
 ## 6. P10 in normal mode: what the data says next
 | finding | evidence |
 |---|---|
-| Round 1 stops at 31.50 after two taken facts | 31.50 with 2 taken (991f, a2e3, 7a92, e61c), 3 taken (a9e2, 59c8: rubber index "took it into account") or + OTD/ppm (67f3, 0b29) |
+| Round 1 stops at 31.50 after two taken facts | 31.50 with 2 taken (991f, a2e3, 7a92, e61c, 8134), 3 taken (a9e2, 59c8, 3c4a: rubber index "took it into account") or + OTD/ppm (67f3, 0b29) |
 | So round 1's third fact is wasted | the rubber index changed nothing in round 1 (a9e2, 59c8) |
-| Stacked round 2 is the biggest step | 59c8: 36-m move + labour index, ask 30.40 -> 31.10 (-0.40); the move alone -0.10 to -0.30; labour alone -0.20 |
+| Stacked round 2 is the biggest step | 59c8 and 3c4a: 36-m move + labour index, ask 30.40 -> 31.10 (-0.40), 2 of 2; the move alone -0.10 to -0.30; labour alone -0.20 |
 | **Untested tweak** | round 1 = path + should-cost only; round 2 = the 36-m move + labour **and** rubber index. Best case about 30.90 (0.725). Risk: v2.34's finding that a 2nd fact in a later e-mail usually adds nothing (P11, P07, P03). It cannot reach 0.741 either |
 
 ## 7. How to read a P10 game while it runs
