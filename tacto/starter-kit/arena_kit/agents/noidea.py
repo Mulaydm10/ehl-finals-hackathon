@@ -117,6 +117,7 @@ def _sections(text, wanted):
 class NoIdeaAgent:
     def __init__(self, complete=None):
         self.complete = complete
+        self.focus = None  # RFQs: the bidders play.py lets us answer now (their replies are in)
         root = _repo()
         self.dossiers = json.loads((root / "datasets/A_dossiers.json").read_text())
         self.claims = [json.loads(line) for line in (root / "datasets/C_arguments.jsonl").read_text().splitlines()]
@@ -542,12 +543,14 @@ class NoIdeaAgent:
             self.prepare(case, threads)
         self.threads_ref = threads
         live = [s for s in live_threads(threads) if s in self.sup]
+        # play.py sets `focus` in RFQs: the bidders whose reply is in (the others' are still out)
+        choices = [s for s in live if not self.focus or s in self.focus] or live
         # talk to the supplier whose thread is furthest behind (RFQ round-robin)
-        sid = min(live, key=lambda s: sum(m.get("from") == "buyer" for m in threads[s]))
+        sid = min(choices, key=lambda s: sum(m.get("from") == "buyer" for m in threads[s]))
         if len(live) > 1:
             # P05 v2.7 live (f8604d43d3fbf92f): 70250 had agreed at EUR 30.83 and 70210 made a final EUR 30.00, but the
             # turn went to 70240 and we accepted its EUR 32.00 - the dearest bid. Closing bidders first, cheapest first.
-            closing = [x for x in live if latest(threads[x]).get("status") in ("agreed", "final_offer")]
+            closing = [x for x in choices if latest(threads[x]).get("status") in ("agreed", "final_offer")]
             if closing:
                 cs = {x: self.best_sheet(case, x, threads[x])[2] for x in live}
                 best = min(closing, key=lambda x: cs[x])
