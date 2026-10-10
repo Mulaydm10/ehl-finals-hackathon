@@ -1,0 +1,147 @@
+{
+ "games": 54,
+ "by_kind": {
+  "index_change": {
+   "taken": 4,
+   "confirm_case": 7,
+   "no_change": 2,
+   "take_rate": 0.31
+  },
+  "notice_period": {
+   "no_change": 1,
+   "taken": 1,
+   "take_rate": 0.5
+  },
+  "po_prices": {
+   "taken": 4,
+   "no_change": 5,
+   "take_rate": 0.44
+  },
+  "rival_quote": {
+   "no_change": 1,
+   "taken": 3,
+   "take_rate": 0.75
+  },
+  "scorecard_otd": {
+   "no_change": 1,
+   "take_rate": 0.0
+  },
+  "scorecard_ppm": {
+   "taken": 1,
+   "take_rate": 1.0
+  },
+  "should_cost": {
+   "taken": 2,
+   "take_rate": 1.0
+  },
+  "volume_change": {
+   "taken": 12,
+   "no_change": 7,
+   "take_rate": 0.63
+  }
+ },
+ "by_case": {
+  "case:P01": {
+   "index_change": {
+    "taken": 1
+   },
+   "volume_change": {
+    "taken": 1
+   },
+   "rival_quote": {
+    "no_change": 1
+   },
+   "notice_period": {
+    "no_change": 1,
+    "taken": 1
+   }
+  },
+  "case:P02": {
+   "volume_change": {
+    "taken": 3
+   },
+   "index_change": {
+    "confirm_case": 1
+   }
+  },
+  "case:P03": {
+   "po_prices": {
+    "no_change": 2
+   },
+   "volume_change": {
+    "taken": 1
+   }
+  },
+  "case:P04": {
+   "volume_change": {
+    "no_change": 1
+   },
+   "index_change": {
+    "confirm_case": 1
+   }
+  },
+  "case:P05": {
+   "rival_quote": {
+    "taken": 3
+   }
+  },
+  "case:P07": {
+   "index_change": {
+    "confirm_case": 2
+   },
+   "po_prices": {
+    "no_change": 3
+   },
+   "volume_change": {
+    "taken": 1
+   }
+  },
+  "case:P08": {
+   "index_change": {
+    "no_change": 2,
+    "confirm_case": 1
+   },
+   "volume_change": {
+    "taken": 1
+   }
+  },
+  "case:P10": {
+   "volume_change": {
+    "no_change": 6
+   },
+   "scorecard_otd": {
+    "no_change": 1
+   },
+   "should_cost": {
+    "taken": 2
+   },
+   "index_change": {
+    "confirm_case": 1
+   }
+  },
+  "case:P11": {
+   "scorecard_ppm": {
+    "taken": 1
+   }
+  },
+  "case:P18": {
+   "index_change": {
+    "taken": 3,
+    "confirm_case": 1
+   },
+   "volume_change": {
+    "taken": 5
+   },
+   "po_prices": {
+    "taken": 4
+   }
+  }
+ },
+ "signals": {
+  "padding": 11,
+  "asked_for_data": 26,
+  "rising_index_backfired": 7,
+  "fair_point": 6,
+  "already_counted": 6
+ }
+}

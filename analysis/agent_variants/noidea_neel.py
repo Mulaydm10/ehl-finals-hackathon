@@ -39,6 +39,22 @@ from ..play import latest, live_threads, moves_left, standing
 
 log = logging.getLogger("arena")
 
+
+def _central():
+    """analysis/agent_variants/central.py - the team's shared learnings (loaded by path: this file is loaded by path)."""
+    import importlib.util
+    import sys
+    if "noidea_central" in sys.modules:
+        return sys.modules["noidea_central"]
+    spec = importlib.util.spec_from_file_location("noidea_central", Path(__file__).with_name("central.py"))
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules["noidea_central"] = mod
+    spec.loader.exec_module(mod)
+    return mod
+
+
+central = _central()
+
 PLANNED_ROUNDS = 8  # P07 live: ~25 s per round, so an 8-minute wave fits ~12-15; keep a margin
 MIN_GAIN_PTS = 1.0  # never pay more than ask - 1 pt unless it is the last word
 CLOSE_STEP = 0.0008  # near-close: ask for 0.08% below its standing cash value. Live P04 5f80eb75c793f352: 0.2% below
@@ -48,7 +64,7 @@ STALL_DROP = 1 / 3  # it stalled when its last move (share of the gap) fell belo
 STALL_MIN = 0.02  # ...or below 2% of the gap
 STALL_NOISE = 0.10  # a small move UP (cent rounding on another structure) still counts; a big one doesn't
 TIE_BAND = 0.0001  # sheets within 0.01% of our best cost count as a tie (0.015% and 0.05% made P02 worse: 0.94 -> 0.86)
-ESCALATE_GIVEBACK = (0.15, 0.3)  # escalation: also offer to pay back 30% / 45% of its cash loss (live P03: it countered 433.09 = ~50%)
+ESCALATE_GIVEBACK = (0.15,)  # 0.30 (EUR 432.48 @ 90 d in P03) scored below the house agent (0.925)  # escalation: also offer to pay back 30% / 45% of its cash loss (live P03: it countered 433.09 = ~50%)
 LIMIT_HIT = re.compile(r"(?i)maximum (flexibility|extension)|within (our|my) (delegated |approval )?(authority|remit)|"
                        r"(base )?prices? (are|is|remain)s? (strictly |currently )?(fixed|frozen)|price freeze|"
                        r"cannot reduce the (unit )?price|unable to (reduce|accommodate any further price)|"
@@ -57,6 +73,8 @@ LIMIT_HIT = re.compile(r"(?i)maximum (flexibility|extension)|within (our|my) (de
 # live P03 1db1ce07b2f78a35 "base prices are currently frozen"; 78f03f1c9dcde080 "group pricing guidelines strictly
 # prohibit further price reductions" / "absolute minimum price" - the wording changes every game, so the trigger
 # is also behavioural: its price did not move between its last two replies (see decide)
+EDGE_PLUS = 0.0004  # edge sheet: its approval threshold + 0.04% (P03: 2.04% beats the house agent, 2.00% scores 0.919)
+FREEZE_CUT = 0.01  # escalation under a price freeze: also offer its own structure 1% lower
 CLOSE_GAP = 0.015  # ...and our last ask is within 1.5% of its standing value (live P04: 1.0%)
 # How far below the opening quote to anchor (src/eval/calibrate.py: best deal vs opening, practice cases)
 ANCHOR_DEPTH = {"rfq": 0.20, "bundling": 0.15, "raw_material": 0.22, "capacity": 0.14, "quality": 0.09}
@@ -118,6 +136,8 @@ class NoIdeaAgent:
         pb = root / "playbooks"
         self.playbooks = {p.stem: p.read_text(encoding="utf-8") for p in pb.glob("*.md")} if pb.exists() else {}
         self.correspondence = root / "tacto/data/correspondence"
+        self.facts = json.loads((root / "tacto/data/facts.json").read_text(encoding="utf-8"))
+        self._opening_price = None
         # today's price of every part at every supplier (for kit calculations)
         self.part_prices = {}
         for sid, d in self.dossiers.items():
@@ -150,9 +170,14 @@ class NoIdeaAgent:
             ref = min(x for x in (cur, open_terms.get("unit_price")) if x)  # the quote can be below today's price
             full_cost = min(should[0]["figure"], ref) * 0.94 if should else ref * 0.94
             rate = 0.25 if "cash_short" in motives else 0.14 if "wants_faster_payment" in motives else 0.08
-            est = {"standard": std, "interest_rate": rate, "usual_rate": 0.08, "full_cost": full_cost}
+            # central layer: its hidden full cost and cash rate, fitted on the relationship charge of our real deals
+            # (P03: EUR 395.30 / 6.1%, P02: EUR 367.60 / 6.6% - both reproduce every c_deal to the cent)
+            if (cal := central.calibrated(case["case_id"], sid)):
+                full_cost, rate = cal["full_cost"], cal["interest_rate"]
+            est = {"standard": std, "interest_rate": rate, "usual_rate": rate if cal else 0.08, "full_cost": full_cost}
             ask_pct = (open_terms["unit_price"] / cur - 1) * 100 if cur and open_terms.get("unit_price") else 0.0
-            self.sup[sid] = {"dossier": d, "std": std, "est": est, "justified": justified, "cur": cur,
+            self._opening_price = open_terms.get("unit_price")
+            self.sup[sid] = {"dossier": d, "std": std, "est": est, "justified": justified, "cur": cur, "calibrated": bool(cal),
                              "ask_pct": ask_pct, "open_terms": open_terms,
                              "args": self.rank_args(case, sid, ask_pct),
                              "kit": self.kit_calc(case, sid) if case["type"] == "bundling" else None}
@@ -187,9 +212,14 @@ class NoIdeaAgent:
             out += [c for c in mine if c["kind"] == "po_prices" and c["part"] in parts]
         if case["type"] in ("capacity", "price_increase"):
             out += [c for c in mine if c["kind"] == "scorecard_otd" and (c["figure"] or 100) < 85]
+        # central layer: data suppliers take into account. Live P03 x6: round 1 carried NO checkable claim (every driver
+        # rose) and it answered "Which figures is that based on? Please send us the data" (26 such replies in 54 games).
+        opening = (self.sup.get(sid) or {}).get("open_terms", {}).get("unit_price") or self._opening_price
+        out += central.should_cost_claims(mine, sid, parts, opening)
+        out += central.volume_claims(case, self.facts)
         seen, ranked = set(), []
-        for c in out:
-            if c["sentence"] not in seen:
+        for c in central.rank(out, case["case_id"]):
+            if c["sentence"] not in seen and central.take_rate(c["kind"], case["case_id"]) > 0:
                 seen.add(c["sentence"])
                 ranked.append(c)
         return ranked
@@ -311,7 +341,10 @@ class NoIdeaAgent:
             anchor_price = min(anchor_price, s["cur"] * (1 + s["justified"] / 100))
         limit_price = s["cur"] * (1 + (s["ask_pct"] - MIN_GAIN_PTS) / 100)
         anchor, limit = v(anchor_price), v(min(limit_price, opening))
-        if goal in ("stabilise", "secure_supply"):  # the relationship charge: never ask below its full cost
+        # the relationship charge: never ask below its full cost - a guess. With a calibrated supplier the sheets are
+        # ranked by the exact charge instead (P02: real full cost EUR 367.60 vs its EUR 370.96 quote; the guard pinned
+        # our ask at 369.51 = 0.51, while 364 @ 60 d scores 0.96 charge included)
+        if goal in ("stabilise", "secure_supply") and not s.get("calibrated"):
             anchor = max(anchor, min(s["est"]["full_cost"], limit))
         hist = s.setdefault("ours", [])
         k = len(hist)
@@ -393,6 +426,11 @@ class NoIdeaAgent:
         sheets = self.sheets_at(case, sid, self.value_target(case, sid, events), cap)
         if not sheets:
             return accept if ok else walk
+        committee = central.committee_round1(motives)
+        # central 3c: once it priced our lead structure, stay on it (P03 47a88b4d0bb75ce3: management gave 433.08 @ 90 d,
+        # we asked 60/45/30 d and its final fell back to 431.61 @ 60 d: 0.90 -> 0.86)
+        if committee and k >= 1 and sheet_id and central.same_structure(sheets[0][1], terms):
+            sheets = [x for x in sheets if central.same_structure(x[1], terms)]
         # accept when the supplier meets our current ask, or when we are within 0.3% late in the game
         if ok and k > 0 and c_stand <= best_elsewhere and not s.get("closing") and (
                 c_stand <= sheets[0][0] * 1.0005 or (k >= PLANNED_ROUNDS - 2 and c_stand <= sheets[0][0] * 1.003)):
@@ -406,6 +444,13 @@ class NoIdeaAgent:
             sheets = [x for x in sheets if x[0] <= band]
             log.info("%s near-close: %s", sid, [(t["unit_price"], t.get("payment_days")) for _, t in sheets])
         out = [t for _, t in sheets]
+        # central 3b: approval ladder -> put ONE structure to its committee in round 1 (Dhruv's v2.7 P03 game
+        # 8c2816f2d571b367 got the committee's 90-day price in round 1, the best first answer in 7 P03 games; with 3
+        # sheets its KAM picked 60 d and stopped at its 2% limit in all 6 of ours)
+        if committee and k == 0:
+            out = out[:1]
+            s["escalate_now"] = s["committee_r1"] = True
+            log.info("%s round 1 to the committee: %s", sid, [(t["unit_price"], t.get("payment_days")) for t in out])
         alt_prose = self.prose_alternative(case, sid, events)
         # only when it is near our ask or late in the game: it may pick any sheet (P10 lesson),
         # so an early far-off prose offer in our sheets would just be accepting its number
@@ -448,8 +493,68 @@ class NoIdeaAgent:
                 t = complete_offer(case, {**tweak, "unit_price": round(tweak["unit_price"] + share * loss / slope, 2)})
                 if t not in out:
                     out.append(t)
+        # "edge" sheet: its approval threshold on its own quote, priced onto our best payment term with ITS per-day
+        # payment pricing (live P03 x5: +EUR 0.049 per day = 4.1% a year, half our 8%; its KAM gave 1.84%, limit 2%)
+        if (edge := self.edge_sheet(case, sid, tweak)) is not None and edge not in out:
+            out.append(edge)
+        # its "frozen" base price sits above today's price (P03: EUR 431.61 vs 412.74): offer its own structure
+        # 1% lower too - a frozen price argues for today's price, not for an increase
+        if self.freeze_gap(sid, terms) > 0:
+            t = complete_offer(case, {**terms, "unit_price": round(max(s["cur"], terms["unit_price"] * (1 - FREEZE_CUT)), 2)})
+            if t not in out:
+                out.append(t)
         gain = c_stand - total_cost(case, tweak, s["std"], s["est"])
         return [t for t in out if c_stand - total_cost(case, t, s["std"], s["est"]) >= 0.4 * gain][:3]
+
+    def payment_slope(self, case, sid):
+        """EUR per payment day in its own offers: two of its sheets that differ only in price and payment days."""
+        events = self.threads_ref.get(sid, [])
+        pts = {}
+        for m in events:
+            if m.get("from") == "buyer":
+                continue
+            for x in m.get("term_sheets") or []:
+                t = x["terms"]
+                key = tuple(sorted((k, json.dumps(v)) for k, v in t.items() if k not in ("unit_price", "payment_days")))
+                if t.get("payment_days") is not None and t.get("unit_price"):
+                    pts.setdefault(key, {})[t["payment_days"]] = t["unit_price"]
+        best = None
+        for by_day in pts.values():
+            if len(by_day) >= 2:
+                d0, d1 = min(by_day), max(by_day)
+                slope = (by_day[d1] - by_day[d0]) / (d1 - d0)
+                if slope > 0 and (best is None or d1 - d0 > best[1]):
+                    best = (slope, d1 - d0)
+        return best[0] if best else None
+
+    def approval_threshold(self, sid):
+        """'price changes above 2 % need the approval of their pricing committee' -> 0.02 (None if not stated)."""
+        s = self.sup[sid]
+        for doc in s["dossier"].get("motives", {}).get("approval_ladder", {}).get("evidence", []):
+            path = self.correspondence / f"{doc.removeprefix('doc:')}.md"
+            if path.exists() and (m := re.search(r"above (\d+(?:[.,]\d+)?)\s?%", path.read_text(encoding="utf-8"))):
+                return float(m.group(1).replace(",", ".")) / 100
+        return None
+
+    def edge_sheet(self, case, sid, tweak):
+        """Our best structure at its approval threshold (+EDGE_PLUS) on its opening quote, via its payment pricing."""
+        s = self.sup[sid]
+        slope, thr = self.payment_slope(case, sid), self.approval_threshold(sid)
+        o = s["open_terms"]
+        d_std = o.get("payment_days") or s["std"].get("payment_days")
+        if not (slope and thr and o.get("unit_price") and d_std and tweak.get("payment_days")):
+            return None
+        base = o["unit_price"] * (1 - thr - EDGE_PLUS)
+        price = round(base + slope * (tweak["payment_days"] - d_std), 2)
+        s["edge_note"] = (o["unit_price"], d_std, slope, thr, base, price, tweak["payment_days"])
+        return complete_offer(case, {**tweak, "unit_price": price})
+
+    def freeze_gap(self, sid, terms):
+        """% its standing price sits above today's price when its motives say prices are frozen (else 0)."""
+        s = self.sup[sid]
+        if "price_frozen" not in s["dossier"].get("motives", {}) or not s["cur"] or not terms.get("unit_price"):
+            return 0.0
+        return max(0.0, (terms["unit_price"] / s["cur"] - 1) * 100)
 
     def final_tweak(self, case, sid, terms):
         """Its final offer with the one non-price option that helps us most (same price)."""
@@ -514,6 +619,17 @@ class NoIdeaAgent:
     # ---- the words -----------------------------------------------------------------------------
     def message(self, case, sid, events, sheets, k, final=False):
         args = self.next_args(sid, 3 if k == 0 else 1)
+        s = self.sup[sid]
+        if s.get("escalate_now") and not s.get("committee_r1") and (gap := self.freeze_gap(sid, self.best_sheet(case, sid, events)[1])) > 0:
+            # live P03 x4: "our base prices are strictly frozen" while charging +4.6% on today's EUR 412.74.
+            # Use its own words: a freeze means today's price continues. Our order prices back it (checked claim).
+            po = [c for c in self.claims if c["supplier"] == sid and c["kind"] == "po_prices"
+                  and c["part"] in case["parts"] and not any(i in self.cited for i in c["ids"])]
+            args = po[:1] + [c for c in args if c not in po][:1]
+            s["freeze_note"] = (f"You write that your base prices are frozen. Our current price is EUR {s['cur']:.2f}; "
+                                f"EUR {self.best_sheet(case, sid, events)[1]['unit_price']:.2f} is an increase of "
+                                f"{gap:.1f}% on it. Under a price freeze we would expect today's price to continue - our "
+                                f"proposal already accepts most of that increase.")
         rival = self.rival_offer(case, sid) if case["type"] == "rfq" else None
         refs = sorted({i for c in args for i in c["ids"]} | ({rival[0]} if rival else set()))
         self.cited.update(refs)
@@ -610,7 +726,9 @@ class NoIdeaAgent:
             playbook = _sections(self.playbooks.get(case["type"], ""), PLAYBOOK_SECTIONS)[:2500]
             user = (f"SUPPLIER: {name}\nCASE: {case['title']} ({case['type']}, goal {case['buyer']['category_goal']})\n"
                     f"ROUND: {k + 1}{' (its final offer - make one last small request, then we close)' if final else ''}\n"
-                    + ("OUR MOVE: we keep their price and ask for a longer payment term / their best non-price term, "
+                    + ("OUR MOVE: our proposal is above what their key account manager may approve alone - ask them "
+                       "plainly to put it to their pricing committee.\n" if s.get("committee_r1") else
+                       "OUR MOVE: we keep their price and ask for a longer payment term / their best non-price term, "
                        "which needs their committee or management - ask them to put it to them.\n"
                        if s.get("escalate_now") else "")
                     + f"SUPPLIER SITUATION (about THEM, not us) and how we respond: {levers or 'n/a'}\n"
@@ -662,14 +780,30 @@ class NoIdeaAgent:
             nxt.append("Please send us your 8D report and a binding ppm commitment.")
         if k == 0 and "we_pay_late" in motives:
             nxt.append("We have put our invoice processing in order and will pay on the agreed due date.")
+        if (note := s.pop("freeze_note", None)):
+            basis.insert(0, note)
+        if (e := s.pop("edge_note", None)) and any(abs(t.get("unit_price", 0) - e[5]) < 0.005 for t in sheets):
+            op, d0, slope, thr, base, price, d1 = e
+            basis.insert(0, f"Your own offers price payment terms at EUR {slope:.3f} per day. At that rate EUR {price:.2f} "
+                            f"at {d1} days equals EUR {base:.2f} at your standard {d0} days - {(1 - base / op) * 100:.2f}% "
+                            f"below your quote of EUR {op:.2f}, at your {thr * 100:g}% approval threshold. So far the "
+                            f"concession is {(1 - (self.best_sheet(case, sid, events)[1]['unit_price'] - slope * (self.best_sheet(case, sid, events)[1].get('payment_days', d0) - d0)) / op) * 100:.2f}%.")
+        if s.pop("committee_r1", False) and total and p0:
+            s.pop("escalate_now", None)
+            thr = self.approval_threshold(sid)
+            nxt.append((f"You told us that price changes above {thr * 100:g}% need your pricing committee. " if thr else "")
+                       + f"Please put this proposal to your pricing committee: a binding {months or 12}-month agreement "
+                       f"for {total:,} {unit}, about EUR {p0 * total:,.0f}. On the committee's written confirmation we "
+                       f"issue the order the same day, and we pay every invoice on the due date.")
         if s.pop("escalate_now", False) and total and p0:
             nxt.append(f"We ask you to put this proposal to your pricing committee: a binding {months or 12}-month "
                        f"agreement for {total:,} {unit}, about EUR {p0 * total:,.0f}, justifies a decision beyond the "
                        f"standard approval limit. Your base price stays unchanged in option A. On your confirmation of "
                        f"any option we confirm the order in writing the same day, and we pay every invoice on the due "
                        f"date - no further rounds.")
-        nxt.append("All other terms as in your quote; on your written confirmation of "
-                   + ("one option" if len(sheets) > 1 else "these terms") + " we will issue the order.")
+        if not any("committee's written confirmation" in x for x in nxt):
+            nxt.append("All other terms as in your quote; on your written confirmation of "
+                       + ("one option" if len(sheets) > 1 else "these terms") + " we will issue the order.")
         if final:
             body = "As our final step, we can accept your offer with this one change (attached)."
         else:

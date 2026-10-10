@@ -1,0 +1,16 @@
+{
+ "case:P02": {
+  "sup:70510": {
+   "full_cost": 367.6,
+   "interest_rate": 0.066,
+   "deals": 4
+  }
+ },
+ "case:P03": {
+  "sup:70530": {
+   "full_cost": 395.3,
+   "interest_rate": 0.061,
+   "deals": 4
+  }
+ }
+}

@@ -18,6 +18,7 @@ Built from all 58 practice games (`datasets/runs/`), the suppliers' back office 
 | **Prompt injection: no.** | api.md lists "attempts to manipulate" among what it understands, "with consequences"; rule 1; the jury reads replays. Prices are code-set anyway. |
 
 ## 2. Where each case stands, and what 0.95 would take
+(Current bests/medians over 74 games are in `analysis/experiments/plan.json` → `baseline`; the table below is from the first 58.)
 | case | best / median | 0.95 needs (same structure) | what limits it | realistic next step |
 |---|---|---|---|---|
 | P01 | 0.85 / 0.78 | −0.5% | accepted while it was still conceding (old v1) | current accept logic + notice period in round 1 |
@@ -37,7 +38,8 @@ fixing what loses points (RFQ timing, dropped arguments) and from more verified 
 ## 3. What changed (all on `parth/n1-p06-p09-p12`, each with a test)
 1. `d85babc` **RFQ timing**: `play()` sends to all bidders in parallel; the agent answers whoever has replied.
    Test: arena-sim with 66 s replies, the old loop loses a bidder to 3 timeouts, the new one has none.
-2. `392174a` **Round-1 argument backbone in code**: top 3 by `ARG_PRIORITY` (the measured order above), one
+2. `392174a` **Round-1 argument backbone in code**: top 3 of the ranked pool (since the v2.12 merge: Neel's measured
+   take-rates, `central.rank`; `ARG_PRIORITY` is the fallback), one
    forecast per case, next unused argument every later round. **UTF-8** for every data file: games archived on
    Windows were unreadable by the team's tools; `build_abc.py` (Sunday rebuild) had the same bug.
 3. `a124590` experiment `all_parts_po`: other parts' price jumps in rounds 2+ (api.md: "Order lines of different
@@ -51,8 +53,8 @@ reserve of 40, archives every game (UTF-8) and the back office, and appends to `
 and `notes/quota_log.md`. Each experiment changes one thing; its keep rule is fixed in `plan.json` before it runs.
 | ID | what | games | keep if |
 |---|---|---:|---|
-| E1 | RFQ parallel sends | P05 ×2 | 0 timeouts and mean ≥ 0.55 |
+| E1 | RFQ parallel sends | P05 ×2 | 0 timeouts and mean ≥ 0.65 (best so far 0.588) |
 | E2 | round-1 backbone | P10, P18, P11, P02 | first counter ≥ best − 0.02 in ≥ 3 of 4, no final < median − 0.05 |
-| E3 | `all_parts_po` | P18 ×2 | no `contradicted`, other-part claims verified, mean ≥ 0.585 |
-| E4 | full pass, kept switches (`--switches …`) | all 10 | mean ≥ 0.66, no case < median − 0.10 |
+| E3 | `all_parts_po` | P18 ×2 | no `contradicted`, other-part claims verified, mean ≥ 0.59 |
+| E4 | full pass, kept switches (`--switches …`) | all 10 | mean ≥ 0.68, no case < median − 0.10 |
 18 games in total. After E4 passes: merge into `main` (Dhruv) for the final.

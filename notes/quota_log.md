@@ -54,7 +54,25 @@
 | 2026-10-10 16:30 | Dhruv | P10 | noidea v2.7 / gpt-6-astra (full pass, 2x5 parallel) | 0.64 | 396a494d88001ce8 |
 | 2026-10-10 16:30 | Dhruv | P11 | noidea v2.7 / gpt-6-astra (full pass, 2x5 parallel) | 0.67 | 29cbb6d69fe5e642 |
 | 2026-10-10 16:30 | Dhruv | P18 | noidea v2.7 / gpt-6-astra (full pass, 2x5 parallel) | 0.54 | c4599331a4ed849b |
+| 2026-10-10 16:27 | Neel | P03 | noidea_neel / gpt-6-astra | **0.90** | ff7b0d58330fc9f6 |
+| 2026-10-10 16:39 | Neel | P03 | noidea_neel / gpt-6-astra | **0.90** | 32c6fd9789e3dc35 |
 | 2026-10-10 16:50 | Parth | P07 | v2.7-p + escalate,ask_lever / gpt-6-astra | 0.73 (best 0.75; 5.44, 90 d, 24 m; escalate: "management authorised a further reduction" 5.52 -> 5.47) | fa67e0b1165affda |
 | 2026-10-10 16:50 | Parth | P18 | v2.7-p + batna,escalate / gpt-6-astra | **0.67** (new best; batna in round 2 -> final_offer 5.10, 14 d, 24 m + AS db5; escalate never fired) | 9d4d288eb4ae6789 |
 | 2026-10-10 16:50 | Parth | P10 | v2.7-p + ask_lever,escalate / gpt-6-astra | 0.64 (best 0.65; final_offer in round 1, so neither switch was sent) | 582e0e7305d7ef92 |
 | 2026-10-10 16:50 | Parth | P08 | v2.7-p + batna / gpt-6-astra | 0.49 (best 0.65; 5.43, 14 d, 24 m + AS db5) | 586a9adfb92cc519 |
+| 2026-10-10 16:57 | Dhruv | P05 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.59 | 7a89bc8fb36043f1 |
+| 2026-10-10 16:57 | Dhruv | P08 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.41 | 9bfa86104bcbdd30 |
+| 2026-10-10 16:57 | Dhruv | P02 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.32 | 3326d83651ba5cfc |
+| 2026-10-10 16:57 | Dhruv | P18 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.61 | 92616dfb9cccf039 |
+| 2026-10-10 16:57 | Dhruv | P10 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.66 | 5acf9fdda2e23ee2 |
+| 2026-10-10 16:57 | Dhruv | P11 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.36 | a6cb7ced9fdbae89 |
+| 2026-10-10 16:57 | Dhruv | P01 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.91 | 8bdb783a31363dfd |
+| 2026-10-10 17:05 | Dhruv | P02 | noidea v2.10 / gpt-6-astra (parallel x4) | 0.00 | 4d18bd1107811ea9 |
+| 2026-10-10 17:05 | Dhruv | P08 | noidea v2.10 / gpt-6-astra (parallel x4) | 0.46 | 325d6e71f6bffd36 |
+| 2026-10-10 17:05 | Dhruv | P11 | noidea v2.10 / gpt-6-astra (parallel x4) | 0.61 | 0d5bc007545e737b |
+| 2026-10-10 17:05 | Dhruv | P03 | noidea v2.10 / gpt-6-astra (parallel x4) | 0.90 | f89f7230b033867d |
+| 2026-10-10 17:10 | Neel | P03 | noidea_neel / gpt-6-astra | **0.92** | 27e05be06bb4181f |
+| 2026-10-10 17:12 | Dhruv | P02 | noidea v2.11 / gpt-6-astra (parallel x2) | 0.51 | af2439f039d0e14f |
+| 2026-10-10 17:12 | Dhruv | P08 | noidea v2.11 / gpt-6-astra (parallel x2) | 0.52 | ab473a1c7a00763a |
+| 2026-10-10 17:18 | Neel | P02 | noidea_neel / gpt-6-astra | **0.22** | 6e7579c3ce8fb63c |
+| 2026-10-10 17:21 | Neel | P05 | noidea_neel / gpt-6-astra | **0.53** | 993222d5d55e7d40 |
