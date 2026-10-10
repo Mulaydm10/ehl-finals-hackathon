@@ -40,6 +40,7 @@ CLOSE_GAP = 0.015     # ...only when our last ask is within 1.5% of its standing
 STALL_DROP = 1 / 3    # it stalled: its last move (share of the gap) < 1/3 of the previous one...
 STALL_MIN = 0.02      # ...or < 2% of the gap
 MESO_BAND = 0.03  # round-1 MESOs: other structures within 3% of our best cost
+HAIR_DEEP = 0.0022  # first floor round (P11 45.00 -> 44.90 = 0.810; refused once in 7285, try it with the chargeback sheet)
 HAIR = 0.001  # one ask this far under a floor the supplier NAMED (P11: 45.00 -> 44.95)
 GRID_LADDER = (0.5, 0.25, 0.1, 0.04)
 GRID_LADDER_LOW = (0.8, 0.6, 0.4, 0.2)  # when it keeps its limits internal (P11 high draws: agreed 45.10-45.25)  # probe j asks its price - grid x GRID_LADDER[j] (P11 low draw: 44.75, 44.875, 44.95, 44.98)
@@ -737,8 +738,9 @@ class NoIdeaAgent:
                 break
             if any(i in self.cited for i in c["ids"]) or (first_round and (c.get("other_part") or c.get("late"))):
                 continue
-            if not first_round and not self.sup[sid].get("weak_ok", True) and self.weak(c):
-                continue
+            if not first_round and not self.sup[sid].get("weak_ok", True) and self.weak(c) and \
+                    any(not self.weak(x) and not any(i in self.cited for i in x["ids"]) for x in self.sup[sid]["args"]):
+                continue  # weak facts wait only while a strong one is left (never an empty round)
             # one index claim per e-mail: 2+ drew "we received a lot of material" 11 of 11 times (Neel)
             if c["kind"] == "index_change" and any(x["kind"] == "index_change" for x in picked):
                 continue
@@ -1119,7 +1121,11 @@ class NoIdeaAgent:
         # probes re-offer ITS sheet at a lower price: only when that sheet has OUR structure (P08 sim 0.92 -> 0.32 when a
         # probe re-offered its own, worse-for-us structure)
         probing = (near_final or holding) and status == "open" and moves_left(case, events) > 1 and ok \
-            and c_stand <= best_elsewhere and not self.next_args(sid, 1) and (holding or not g) and same_structure
+            and c_stand <= best_elsewhere and (not self.next_args(sid, 1) or (holding and g)) and (holding or not g) \
+            and same_structure
+        # (a grid holder that holds gets the probe AND its next fact in the same e-mail: Parth's weak-facts-after-a-hold
+        # rule keeps a fact pending exactly at the hold, and P11 goes final 1-2 rounds after it holds - waiting for "no
+        # facts left" meant no probe / floor trade ever went out in the merged agent, replay 7285b182)
         named = re.search(r"(?i)(?:can give you|can do|best we can do|lowest (?:price )?(?:we|i) can|our (?:absolute )?(?:floor|bottom|minimum)|as low as we can go|meet you at)[^.€]{0,40}(?:€|eur\s?)\s?(\d+[.,]\d{2})",
                           latest(events).get("body") or "") if s.get("asked_floor") else None
         hair = False
@@ -1135,6 +1141,38 @@ class NoIdeaAgent:
                 sheets = [(total_cost(case, t_h, s["std"], s["est"]), t_h)]
                 target = supplier_value(case, t_h, s["est"]) + self.premium(sid, t_h)
                 log.info("%s: hair-below ask %.2f under its named floor %.2f", sid, t_h["unit_price"], terms["unit_price"])
+        # AT A HARD PRICE FLOOR, trade a term that is cheap for it AT ITS OWN COMMITMENT (v2.21): P11 refused every price
+        # under 45.00 (named "absolute bottom line", 44.90 -> final); the only cost left is quality (EUR 2,146/yr). A EUR 300
+        # chargeback at the 300 ppm it commits to is ~5 complaints/yr (~EUR 1,400 = 0.09/unit, under one 0.50 grid step) and
+        # scores 0.809 at 45.00 (0.81 = another team's P11). Refused earlier only at 800 ppm (29cbb6d6, +1.00 for EUR 150).
+        # Two sheets: its floor price WITH the chargeback, and a hair under it without. Once per game.
+        opts = case.get("term_options", {}).get("chargeback_eur_per_complaint") or []
+        mlad = self.memory_ladder(case, sid, terms) if probing and g else None
+        hard = bool(mlad) and len(mlad) == 1  # memory: it refused asks right up to a hair under this standing price
+        at_floor = probing and g and holding and (s.get("probes", 0) >= 1 or s.get("hair_tried") or hard)
+        tries = s.get("floor_tries", 0)
+        if at_floor and tries == 1 and status == "open":
+            # 2nd floor round: it refused the deeper hair -> the shallow hair alone (P11 eac20911 agreed 44.95 = 0.8019)
+            t_h = complete_offer(case, {**terms, "unit_price": round(int(terms["unit_price"] * (1 - HAIR) * 100) / 100, 2)})
+            if must_haves_ok(case, t_h, s["std"]):
+                s["floor_tries"], near_final, close_now = 2, False, True
+                sheets = [(total_cost(case, t_h, s["std"], s["est"]), t_h)]
+                target = supplier_value(case, t_h, s["est"]) + self.premium(sid, t_h)
+                log.info("%s: floor round 2 - hair %.2f", sid, t_h["unit_price"])
+        if at_floor and "chargeback_eur_per_complaint" in case["negotiable"] and not s.get("cb_tried") \
+                and (terms.get("chargeback_eur_per_complaint") or 0) == 0 and terms.get("ppm_commitment") and opts \
+                and "no_floor_chargeback" not in EXPERIMENTS:
+            cb = next((o for o in sorted(opts) if o >= 300), max(opts))
+            t_cb = complete_offer(case, {**terms, "chargeback_eur_per_complaint": cb})
+            t_h = complete_offer(case, {**terms, "unit_price": round(int(terms["unit_price"] * (1 - HAIR_DEEP) * 100) / 100, 2)})
+            pair = [x for x in (t_cb, t_h) if must_haves_ok(case, x, s["std"])]
+            if pair and total_cost(case, t_cb, s["std"], s["est"]) < c_stand:
+                s["cb_tried"], s["probes"], s["send_all"], s["floor_tries"] = cb, GRID_PROBES, True, 1
+                near_final, close_now = False, True
+                sheets = sorted(((total_cost(case, x, s["std"], s["est"]), x) for x in pair), key=lambda z: z[0])
+                target = supplier_value(case, sheets[0][1], s["est"]) + self.premium(sid, sheets[0][1])
+                log.info("%s: floor trade - %.2f with EUR %s chargeback, or %.2f without", sid, t_cb["unit_price"], cb,
+                         t_h["unit_price"])
         if probing and g and s.get("probes", 0) < GRID_PROBES:
             j = s.get("probes", 0)
             # HIGH ladder: its patience allows 1-3 probes (P11 3fa2: final after one; 37ea: after three), and its floor sat at
@@ -1191,7 +1229,7 @@ class NoIdeaAgent:
             # the backbone (structure) is code's: after round 1 the model may only pick sheets with the structure code
             # leads with (P02 v2.13 dc1d4fd8a7cd47cb: the model moved us to 30 d, it made 30 d its final -> 0.20; the
             # good P02 games held 90 d every round)
-            if k >= 1 and sheets and cands:
+            if k >= 1 and sheets and cands and not close_now:  # code-built probe / floor pair: no structure lock
                 lead = sheets[0][1]
                 keep = [x for x in cands if all(x[1].get(f) == lead.get(f) for f in case["negotiable"] if f != "unit_price")]
                 cands = keep or cands[:1]
@@ -1228,8 +1266,13 @@ class NoIdeaAgent:
         pre-priced candidate sheets and up to 3 verified arguments, write the opening. Everything it returns is
         validated; any problem -> None (the deterministic path runs instead)."""
         s = self.sup[sid]
-        pool = [c for c in s["args"] if not any(i in self.cited for i in c["ids"])
-                and (k == 0 or s.get("weak_ok", True) or not self.weak(c))][:8]
+        fresh = [c for c in s["args"] if not any(i in self.cited for i in c["ids"])]
+        pool = [c for c in fresh if k == 0 or s.get("weak_ok", True) or not self.weak(c)][:8]
+        if not pool and fresh and k >= 1:
+            # NEVER an empty round: when only weak facts are left, send the next one anyway (P11 3cc43596: Parth's
+            # weak-facts-while-it-moves gate left round 3 with 0 facts -> "Which figures is that based on?" + final at our
+            # 3rd message on a LOW draw; a taken weak fact is a full grid step there, 77f61e47)
+            pool = fresh[:8]
         motives = s["dossier"].get("motives", {})
         levers = "; ".join(f"{m}: {v['lever']}" for m, v in motives.items())
         lines = [f"[{i}] rank {i + 1}: " + ", ".join(f"{f} {v}" for f, v in t.items() if f in case["negotiable"])
@@ -1291,6 +1334,8 @@ class NoIdeaAgent:
         chosen = [cands[i][1] for i in idx]
         if k == 0 and s.get("meso"):  # round 1 structure is code's: all MESOs go out
             chosen = list(s["meso"])
+        if s.pop("send_all", False):  # the floor trade: both sheets go out (with chargeback at its price / hair without)
+            chosen = [t for _, t in cands]
         args = [pool[i] for i in aidx]
         opening = self.clean_opening(case, str(d.get("opening") or ""))
         return self.message(case, sid, events, chosen, k, args=args, opening=opening)
@@ -1733,6 +1778,16 @@ class NoIdeaAgent:
             out.append(f"Straight talk: over the last 12 months we paid {rec[0] * 100:.0f}% of your invoices late, on average "
                        f"{rec[1]:.0f} days after the due date. That is on us, and it ends with this contract: every invoice "
                        f"paid on the due date, which brings your cash in about {rec[1]:.0f} days earlier than you are used to.")
+        if self.sup[sid].get("cb_tried") and not self.sup[sid].get("cb_said"):
+            self.sup[sid]["cb_said"] = True
+            cb = self.sup[sid]["cb_tried"]
+            ppm = next((t.get("ppm_commitment") for t in sheets if t.get("ppm_commitment")), None)
+            need = case["buyer"]["need_per_year"]
+            if ppm:
+                n = need * ppm / 1e6
+                out.append(f"We accept your price. On the chargeback: at the {ppm:.0f} ppm you commit to, EUR {cb:.0f} per "
+                           f"complaint means about {n:.0f} complaints a year, around EUR {n * cb:,.0f} - it only costs you if "
+                           f"quality slips below your own commitment. Alternatively the second sheet, without a chargeback.")
         # 0b. ask its floor (experiment `ask_floor`): "questions go to the person in charge, who answers as openly as the
         #     company is" - once it holds, ask the one number we need
         if "no_ask_floor" not in EXPERIMENTS and (stalled or k >= 2) and not self.sup[sid].get("asked_floor"):

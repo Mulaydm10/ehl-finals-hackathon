@@ -197,6 +197,24 @@ def own_quote_note(facts, sid, parts, opening_price, today="2026-09-30", days=90
             f"{(opening_price / best['unit_price'] - 1) * 100:.1f}% above it.")
 
 
+def cross_sell_note(facts, sid, dossier, case_parts):
+    """Its person's currency (cloud task 13, analysis/cases/P08_floor.md): a stock distributor ends every e-mail with "our whole
+    range is at your disposal, so if there is anything else on your list, just send it over" (P08: 21 of its e-mails). A part
+    it is qualified for, at 0% quota, that we buy elsewhere and it has quoted us before -> an invitation to quote, in words
+    (no ID, no figure: nothing for the arena to contradict). P08: Sheet 1.4301 2 mm (fc:370021 72100 a year, from 70730;
+    its own quote:7100069 in 2024)."""
+    for p in dossier.get("parts", []):
+        if p["part"] in case_parts or (p.get("quota_pct") or 0) > 0 or p.get("status") != "qualified":
+            continue
+        pid = p["part"].split(":")[1]
+        bought = any(k.startswith("po:") and v.get("part") == p["part"] and v.get("supplier") != sid for k, v in facts.items())
+        quoted = any(k.startswith("quote:") and v.get("part") == p["part"] and v.get("supplier") == sid for k, v in facts.items())
+        if bought and quoted and any(k.startswith(f"fc:{pid}@") for k in facts):
+            return (f"Beyond this part, we buy {p['description']} from another supplier today, in a volume close to this "
+                    f"bar's, and you have quoted it for us before. Once this agreement is signed, we will invite you to quote for it.")
+    return None
+
+
 def delivery_year_claims(facts, sid, bar=95.0):
     """On-time delivery as the mean of 4 quarterly scorecard rows, for the last 12 months and the 12 months before
     (P02: 89.3% and 83.9%). Each a verified fact with its own IDs. For a MIRRORING supplier only, as the last items:

@@ -58,6 +58,18 @@ central = _central()
 ALT_BAND = 1.003  # alternative sheets within 0.3% of our best C (cloud REGRESSION_FIX.md #3)
 MIRROR_GATE = 0.2  # from our 3rd ask: big mirror steps only while its last step >= 0.2x ours (cloud #4; P02 live 0.26-0.76x)
 R2_HEDGED_SHARE = 0.30  # cloud task 9: round-2 step for hedged suppliers, share of the gap (was ~0.16)
+FINAL_AT_MSG = {"raw_material": 3}  # cloud task 10: our message at which this case type's supplier goes final (P08 9/10, P18 7/10)
+DEFER_RATIO = 0.18  # ...where our step is only this share of its last step (P08 deferred at 0.19x; final at >= 0.9x, P18 at 0.53x)
+DEEP_ANCHOR_HEDGED = None  # cloud task 15: round-1 anchor depth for hedged raw material; tested 0.26 in loop run 3 (8180d389):
+# headline 5.41 (no gain) and a bigger round-2 cut that left no budget for the deferral -> OFF (task 16)
+PAY_DAYS_HEDGED = 60  # cloud task 16 (P08_loop3.md): payment term from round 2 for hedged raw material. Its final is cent-rounded on
+# OUR payment term; at the low-draw floor (value ~5.116-5.121) 60 d lands on 5.15 = 0.7329, 14 d on 5.10 = 0.7323 (the record).
+# P(score > 0.7323 | low draw, 5.40 headline) 54% at 60 d vs 20% at 14 d (noise model, 8 budgets); mean -0.002
+LONG_TERM_HEDGED = True  # cloud task 14: 36 m sheets for hedged raw-material suppliers (experiment, P08 loop run 2)
+CROSS_SELL = True  # cloud task 13: invite a hedged raw-material distributor to quote for a part we buy elsewhere (untested live)
+DEFER_TIMES = 1  # cloud task 11: small steps in a row (1 = live-tested in db7d315a; 2+ untested - sim_donautal --max-defer)
+DEFER_FLOOR = 0.002  # ...but at least 0.2% of its price (a zero step reads as a repeat)
+DEFER_MIN_GAP = 0.02  # ...and only while the gap is still >= 2% of its price (< 0.35% left defers by itself: P01/P02 4 of 4)
 PLANNED_ROUNDS = 8  # P07 live: ~25 s per round, so an 8-minute wave fits ~12-15; keep a margin
 MIN_GAIN_PTS = 1.0  # never pay more than ask - 1 pt unless it is the last word
 CLOSE_STEP = 0.0008  # near-close: ask for 0.08% below its standing cash value. Live P04 5f80eb75c793f352: 0.2% below
@@ -113,6 +125,10 @@ Rules:
   their committee, their capacity, their restructuring) - never describe it as ours.
 - Never reveal our position: no targets, budgets, urgency, alternatives or weaknesses.
 - Do not mention materials, costs or facts that are not in their e-mail.
+- Never call a price for different payment days or a different clause an increase; compare only like for like
+  (P08 ad0427655e885fc1: "We reject a price increase for shorter payment terms" - it had raised nothing).
+- Never comment on their departments, colleagues or internal processes (credit control, finance, sales,
+  management disagreements) - P02 walked away twice after such remarks.
 - Do NOT write any number, price, percentage, date or data ID - the facts and offers are added
   below your paragraph automatically. No greeting line, no sign-off, no placeholders.
 Write in English only.
@@ -333,17 +349,25 @@ class NoIdeaAgent:
         return picked
 
     # ---- term sheets ---------------------------------------------------------------------------
-    def combos(self, case, base):
+    def combos(self, case, base, motives=()):
         opts = case.get("term_options", {})
         fields = [f for f in case["negotiable"] if f != "unit_price" and opts.get(f) and f != "index_clause"]
+        # cloud task 11 (MISTAKES.md L2): a capacity-tight supplier prices a lead time below its own quote as overtime it
+        # does not have - supplier_value has no lead-time premium, so lead 35 tied and went out (P10 675fc6b9: lead 35
+        # "technically unfeasible", final 35.00 = 0.46; every 0.67-0.70 game asked >= its quoted 54 d)
+        min_lead = (base.get("lead_time_days") or 0) if "capacity_tight" in motives else 0
         for values in itertools.product(*(opts[f] for f in fields)):
-            yield {**base, **dict(zip(fields, values))}
+            t = {**base, **dict(zip(fields, values))}
+            if (t.get("lead_time_days") or min_lead) >= min_lead:
+                yield t
 
-    def sheets_at(self, case, sid, value, cap_price=None):
+    def sheets_at(self, case, sid, value, cap_price=None, only=None):
         """The 3 different term sheets that give the supplier `value` per unit at the lowest cost to us."""
         s = self.sup[sid]
         ranked = []
-        for t in self.combos(case, dict(s["open_terms"])):
+        for t in self.combos(case, dict(s["open_terms"]), s["dossier"].get("motives", {})):
+            if only and any(t.get(f) != v for f, v in only.items()):
+                continue
             t = complete_offer(case, {**t, "unit_price": 100.0})
             v1 = supplier_value(case, t, s["est"])
             slope = (supplier_value(case, {**t, "unit_price": 200.0}, s["est"]) - v1) / 100.0
@@ -363,7 +387,13 @@ class NoIdeaAgent:
         # P08 / cloud ENGINES.md: 36 m was priced higher than 24 m (P07, P10) at equal cost to us -> prefer the horizon
         # length; committee suppliers keep the longest (P03: "reflecting the value of the binding 36-month contract")
         horizon = 12 * (case["buyer"].get("horizon_years") or 1)
-        longest = central.committee_round1(s["dossier"].get("motives", {}))
+        longest = central.committee_round1(s["dossier"].get("motives", {})) and case["type"] not in ("bundling", "raw_material")
+        # cloud task 14 (analysis/cases/P08_loop1.md): P08's final = round-1 value - 0.20-0.22 (13 games), so only a lower
+        # round-1 headline moves the deal. 36 m costs us nothing on the 2-year horizon (score 0.7886 at 5.05 @ 14 for 24 and
+        # 36 m) and it says "The contract term is reflected in the price" (a43d, 9bfa) - untested in P08
+        longest = longest or (LONG_TERM_HEDGED and self.hedged_raw(case, sid))
+        # cloud task 11 (MISTAKES.md L3): 36 m was priced higher at P07 (0f754b13 0.65 vs 0.695-0.70 at 24 m); P18 is raw
+        # material like P08, where 36 m buys nothing on a 2-year horizon
         ranked.sort(key=lambda x: (round(x[0], 0), -(x[1].get("contract_months") or 0) if longest
                                    else abs((x[1].get("contract_months") or horizon) - horizon)))
         # approval ladder / price freeze (P03 offline run 1: we cut its EUR 438.21 by 2.7-3.3%, above the 2% its
@@ -384,6 +414,10 @@ class NoIdeaAgent:
                 break
         return out
 
+    def hedged_raw(self, case, sid):
+        """A hedged supplier in a case type with a measured final message (cloud tasks 10-11: P08 among the practice cases)."""
+        return case["type"] in FINAL_AT_MSG and "hedged_forward" in self.sup[sid]["dossier"].get("motives", {})
+
     def value_target(self, case, sid, events):
         """Supplier value we ask for this round: calibrated anchor, then reciprocal concession."""
         s = self.sup[sid]
@@ -394,11 +428,18 @@ class NoIdeaAgent:
         depth = ANCHOR_DEPTH.get(kind, ANCHOR_DEPTH_BY_GOAL.get(goal, 0.05))
         if kind in ("price_increase", "renewal") and goal in ANCHOR_DEPTH_BY_GOAL:
             depth = ANCHOR_DEPTH_BY_GOAL[goal]
+        if DEEP_ANCHOR_HEDGED and self.hedged_raw(case, sid):  # cloud task 15 (P08_loop2.md): untested, sign unknown
+            depth = DEEP_ANCHOR_HEDGED
         # central: a mirroring supplier meets us in the middle (P02 ee98266bedd37231: its cut was ~half our step), so the
         # meeting point follows OUR anchor; its first answer did not depend on the anchor (374.84 for 361.96 and 364.69)
         if central.mirror_supplier(case["case_id"]):
             depth = max(depth, central.MIRROR_ANCHOR)
         anchor_price = opening * (1 - depth)
+        # cloud task 11 (MISTAKES.md row 12): a capacity-tight supplier goes final in its first answer (P10 10 of 10), so a
+        # deep anchor is answered at its floor-level price (31.90-32.00 = 0.64-0.65); a credible ask at today's price kept
+        # round 1 open and closed at 31.20-31.56 (Parth's probes B-F, live 0.674-0.702)
+        if "capacity_tight" in s["dossier"].get("motives", {}) and s.get("cur"):
+            anchor_price = max(anchor_price, s["cur"])
         if kind == "price_increase":  # the cost-justified change (EDA 3) when it is lower
             anchor_price = min(anchor_price, s["cur"] * (1 + s["justified"] / 100))
         limit_price = s["cur"] * (1 + (s["ask_pct"] - MIN_GAIN_PTS) / 100)
@@ -432,6 +473,19 @@ class NoIdeaAgent:
             s["closing"] = True
             hist.append(max(hist[-1], min(sv[-2:]) * (1 - CLOSE_STEP)))
             return hist[-1]
+        # cloud task 10 (analysis/central/FINAL_TRIGGER.md): a supplier goes final at a fixed message of ours when our step
+        # there roughly matches its last one (P08 final at our 3rd message in 9 of 9 such games, step ratio 0.9-2.5); a step
+        # well below its own deferred it once (P08 db7d315a: 0.19x -> open -0.06, final -0.06 a round later: 0.666, best
+        # high draw). Raw-material suppliers go final at our 3rd message (P08 9/10, P18 7/10), so there
+        # our 3rd ask moves only DEFER_RATIO x its last step - once per thread; the next ask is a normal step again.
+        # Hedged suppliers only: P08 gives a fixed ~1% per round whatever we do; P18 mirrors 0.8-0.9 of our step, so an
+        # extra round buys nothing there (6d61c1fd went final one message later than its identical twin a99d02eb: 0.61 vs 0.62).
+        if (k == FINAL_AT_MSG.get(kind, 0) - 1 + s.get("defers", 0) and s.get("defers", 0) < DEFER_TIMES
+                and self.hedged_raw(case, sid) and len(sv) >= 2 and sv[-2] - sv[-1] > 0
+                and sv[-1] - hist[-1] > DEFER_MIN_GAP * sv[-1]):
+            s["defers"] = s.get("defers", 0) + 1
+            hist.append(min(limit, hist[-1] + max(DEFER_FLOOR * sv[-1], DEFER_RATIO * (sv[-2] - sv[-1]))))
+            return hist[-1]
         theirs = max(0.0, vals[0] - vals[1]) if len(vals) == 2 else (limit - anchor) / PLANNED_ROUNDS
         step = min(scheduled - hist[-1], max(theirs, (limit - anchor) / (2 * PLANNED_ROUNDS)))
         # central: a mirroring supplier answers our step with its own - step a share of the remaining gap, but stay a
@@ -453,7 +507,10 @@ class NoIdeaAgent:
         if k == 1 and sv and "hedged_forward" in s["dossier"].get("motives", {}):
             gap = sv[-1] - hist[-1]
             step = max(step, R2_HEDGED_SHARE * gap)
-        hist.append(min(limit, hist[-1] + max(0.0, step)))
+        nxt = min(limit, hist[-1] + max(0.0, step))
+        if sv and self.hedged_raw(case, sid):  # cloud task 11: the schedule catch-up after small steps must stay below
+            nxt = max(hist[-1], min(nxt, sv[-1] * (1 - CLOSE_STEP)))  # its standing value (sim: 5.03 vs 5.00 at msg 6)
+        hist.append(nxt)
         return hist[-1]
 
     # ---- the move ------------------------------------------------------------------------------
@@ -516,7 +573,19 @@ class NoIdeaAgent:
                 log.info("%s escalation: %s", sid, [(t["unit_price"], t.get("payment_days")) for t in esc])
                 return self.message(case, sid, events, esc, k)
         cap = terms.get("unit_price") if sheet_id else None
-        sheets = self.sheets_at(case, sid, self.value_target(case, sid, events), cap)
+        target = self.value_target(case, sid, events)
+        sheets = self.sheets_at(case, sid, target, cap)
+        # cloud task 12 (analysis/cases/P08_round2_payment.md): a hedged raw-material supplier answers round 1 with a
+        # nominal headline on our longest term, then re-prices round 2 by value. Moving to its 14-day proposal in round 2
+        # drew -0.157 / -0.160 / -0.170 (1363, c387, cae4) and 90 -> 60 d -0.162 (db7d); STAYING on 90 d drew -0.118
+        # (6912fd89, the only one). Equal value for us (+-0.005), so round 2 goes to the shortest payment term.
+        # From message 3 on, re-price on the payment term it priced (sim: our 3rd ask hopped 14 -> 30 d because its
+        # structure was not in our top-3 sheets and the hold-structure filter fell back to our first; MISTAKES.md L5).
+        if k >= 1 and self.hedged_raw(case, sid):
+            opts_d = case.get("term_options", {}).get("payment_days") or []
+            days = (PAY_DAYS_HEDGED if PAY_DAYS_HEDGED in opts_d else (min(opts_d) if opts_d else None)) if k == 1 else \
+                (terms.get("payment_days") if sheet_id else None)
+            sheets = (days and self.sheets_at(case, sid, target, cap, only={"payment_days": days})) or sheets
         if not sheets:
             return accept if ok else walk
         committee = central.committee_round1(motives)
@@ -577,6 +646,13 @@ class NoIdeaAgent:
             sheets = [x for x in sheets if x[0] <= band]
             log.info("%s near-close: %s", sid, [(t["unit_price"], t.get("payment_days")) for _, t in sheets])
         out = [t for _, t in sheets]
+        # cloud task 11: a hedged raw-material supplier answers round 1 with ONE nominal price on the payment days of the
+        # sheet of ours worth most to it (P08: 5.41 / 5.53 at 45, 30 or 90 d; our 90-day sheet won 4 of 4 by a value tie of
+        # 0.0004). The longest payment term makes that headline worth 0.05 less to it (5.53 @ 90 = 5.456 vs @ 45 = 5.512,
+        # 0.05-0.06 score): lead with it and make it the most valuable sheet by one cent.
+        if k == 0 and len(out) > 1 and self.hedged_raw(case, sid):
+            lng = max(out, key=lambda t: t.get("payment_days") or 0)
+            out = [{**lng, "unit_price": round(lng["unit_price"] + 0.01, 2)}] + [t for t in out if t is not lng]
         # central 3b: approval ladder -> put ONE structure to its committee in round 1 (Dhruv's v2.7 P03 game
         # 8c2816f2d571b367 got the committee's 90-day price in round 1, the best first answer in 7 P03 games; with 3
         # sheets its KAM picked 60 d and stopped at its 2% limit in all 6 of ours)
@@ -607,6 +683,11 @@ class NoIdeaAgent:
         sheets = latest(events).get("term_sheets") or []
         if not sheets:
             return None, {}
+        # cloud task 11 (MISTAKES.md L1): only an id the arena accepts. Its alternatives ('-a') get "422 not a standing offer"
+        # (P05 d9af85e0); play.recover_close then strips the id, the stripped sheet stayed the cheapest, sheet_id = None and
+        # the final_offer branch WALKED (offline replay of 75 archived finals: 8 walks, e.g. P18 a99d02eb, P04 d3050f95).
+        # All 112 archived deals were on the primary. Alternatives still reach us via prose_alternative().
+        sheets = [x for x in sheets if x.get("term_sheet_id") and not str(x["term_sheet_id"]).endswith("-a")] or sheets[:1]
         ok = [x for x in sheets if must_haves_ok(case, x["terms"], s["std"])] or sheets
         best = min(ok, key=lambda x: total_cost(case, x["terms"], s["std"], s["est"]))
         return best["term_sheet_id"], best["terms"]
@@ -779,7 +860,7 @@ class NoIdeaAgent:
         refs = sorted({i for c in args for i in c["ids"]} | ({rival[0]} if rival else set()))
         self.cited.update(refs)
         msg = {"subject": f"Re: {case['title']}"[:300],
-               "body": self.write(case, sid, events, sheets, k, [c["sentence"] for c in args], rival, final),
+               "body": self.write(case, sid, events, sheets, k, [c["sentence"].replace(" per 1 (", " per unit (") for c in args], rival, final),
                "term_sheets": [{"terms": t} for t in sheets],
                "refs": refs[:20]}
         if (att := self.call_off(case, sid, events, sheets, k)):
@@ -822,6 +903,11 @@ class NoIdeaAgent:
             if sh and t.get("unit_price") and must_haves_ok(case, t, s["std"]):
                 if best is None or t["unit_price"] < best[1]:
                     best = (sh, t["unit_price"])
+        # cloud task 11 (MISTAKES.md row 13): a dearer rival is no argument (P05 993222d5: "does not change our
+        # calculation" twice; 38.50 cited to a bidder at 36.00)
+        mine = standing(self.threads_ref.get(sid) or [])[1].get("unit_price") if sid in self.threads_ref else None
+        if best and mine and best[1] >= mine:
+            return None
         if best and (sid, best[0]) not in self.cited:
             self.cited.add((sid, best[0]))
             return best
@@ -831,17 +917,17 @@ class NoIdeaAgent:
     def say(field, v):
         """A term in words (Tacto: write as to a person; v1.5 sent "index_clause None, payment_days 14")."""
         if field == "unit_price":
-            return f"EUR {v:,.2f} per unit"
+            return f"EUR {v:.2f} per unit"
         if field == "index_clause":
             return "no price-adjustment clause" if not v else (
                 f"{v['series']} price-adjustment clause ({v['material_share'] * 100:.0f}% material share, "
                 f"{v['deadband_pct']:g}% deadband)")
         fmt = {"payment_days": "{} days net", "contract_months": "{}-month contract",
-               "volume_per_year": "{:,} units per year", "lead_time_days": "{} days lead time",
-               "effective_date": "valid from {}", "ppm_commitment": "{:,} ppm quality commitment",
-               "chargeback_eur_per_complaint": "EUR {:,.0f} chargeback per complaint", "incoterm": "{}",
-               "tooling_eur": "EUR {:,.0f} tooling"}.get(field)
-        try:  # format only this field (P01: a date through "{:,}" crashed the e-mail)
+               "volume_per_year": "{} units per year", "lead_time_days": "{} days lead time",
+               "effective_date": "valid from {}", "ppm_commitment": "{} ppm quality commitment",
+               "chargeback_eur_per_complaint": "EUR {:.0f} chargeback per complaint", "incoterm": "{}",
+               "tooling_eur": "EUR {:.0f} tooling"}.get(field)
+        try:  # format only this field (P01: a date through "{}" crashed the e-mail)
             return fmt.format(v) if fmt else f"{field} {v}"
         except (ValueError, TypeError):
             return f"{field} {v}"
@@ -903,10 +989,10 @@ class NoIdeaAgent:
         # German business style (negotiationacademy.com, how-to-negotiate-with-germans): a clear agenda, specific and
         # measurable, evidence, risks addressed upfront, no details left open. Numbered sections; figures from code.
         total = vol * months // 12 if months else vol
-        sec1 = f"Volume and term: we confirm a binding volume of {vol:,} {unit} per year" + (
-            f" for {months} months, {total:,} {unit} in total." if months else ".")
+        sec1 = f"Volume and term: we confirm a binding volume of {vol} {unit} per year" + (
+            f" for {months} months, {total} {unit} in total." if months else ".")
         p0 = sheets[0].get("unit_price")
-        worth = f" about EUR {p0 * total:,.0f} over the term." if p0 else ""
+        worth = f" about EUR {p0 * total:.0f} over the term." if p0 else ""
         sec2 = f"Our proposal: {offers}." + (
             (f" Option A amounts to{worth}" if len(sheets) > 1 else f" This amounts to{worth}") if worth else "")
         basis = []
@@ -919,12 +1005,17 @@ class NoIdeaAgent:
         spend = (d.get("spend_by_fy") or [[None, 0]])[-1][1]
         deal = vol * (s["cur"] or 0)
         if spend and deal > 1.5 * spend and ({"needs_volume", "bundle", "wants_commitment"} & set(motives)):
-            basis.append(f"That is about EUR {deal:,.0f} a year, around {deal / spend:.0f} times our current business with you.")
+            basis.append(f"That is about EUR {deal:.0f} a year, around {deal / spend:.0f} times our current business with you.")
         if rival:
             basis.append(f"We have an offer at EUR {rival[1]:.2f} per unit ({rival[0]}).")
         # its own recent quote for this part, in words (cloud P08_engine.md: EUR 5.45 on 2026-09-10 vs its 6.05 opening)
         if k == 0 and (oq := central.own_quote_note(self.facts, sid, set(case["parts"]), s["open_terms"].get("unit_price"))):
             basis.insert(0, oq)
+        # cloud task 13 (analysis/cases/P08_floor.md): P08's concession budget is fixed (final = round-1 value - 0.21 on the
+        # low draw, whatever data, steps or rounds); only its person's currency is untested: more items on its order
+        if CROSS_SELL and self.hedged_raw(case, sid) and k in (0, FINAL_AT_MSG.get(case["type"], 0) - 1):
+            if (xs := central.cross_sell_note(self.facts, sid, s["dossier"], set(case["parts"]))):
+                basis.append(xs if k == 0 else "Our invitation to quote for the other part stands once this agreement is signed.")
         basis += args
         nxt = []
         # ask once: skip if the LLM paragraph already asked (P04 offline: it was asked twice in one e-mail)
@@ -945,18 +1036,18 @@ class NoIdeaAgent:
                             f"concession is {(1 - (self.best_sheet(case, sid, events)[1]['unit_price'] - slope * (self.best_sheet(case, sid, events)[1].get('payment_days', d0) - d0)) / op) * 100:.2f}%.")
         if s.pop("mgmt_now", False) and total and p0:
             nxt.append(f"We have made a clear step towards you. Please take this proposal to your management for a decision: "
-                       f"a binding {months or 12}-month agreement for {total:,} {unit}, about EUR {p0 * total:,.0f}. On "
+                       f"a binding {months or 12}-month agreement for {total} {unit}, about EUR {p0 * total:.0f}. On "
                        f"your written confirmation we issue the order the same day and pay every invoice on the due date.")
         if s.pop("committee_r1", False) and total and p0:
             s.pop("escalate_now", None)
             thr = self.approval_threshold(sid)
             nxt.append((f"You told us that price changes above {thr * 100:g}% need your pricing committee. " if thr else "")
                        + f"Please put this proposal to your pricing committee: a binding {months or 12}-month agreement "
-                       f"for {total:,} {unit}, about EUR {p0 * total:,.0f}. On the committee's written confirmation we "
+                       f"for {total} {unit}, about EUR {p0 * total:.0f}. On the committee's written confirmation we "
                        f"issue the order the same day, and we pay every invoice on the due date.")
         if s.pop("escalate_now", False) and total and p0:
             nxt.append(f"We ask you to put this proposal to your pricing committee: a binding {months or 12}-month "
-                       f"agreement for {total:,} {unit}, about EUR {p0 * total:,.0f}, justifies a decision beyond the "
+                       f"agreement for {total} {unit}, about EUR {p0 * total:.0f}, justifies a decision beyond the "
                        f"standard approval limit. Your base price stays unchanged in option A. On your confirmation of "
                        f"any option we confirm the order in writing the same day, and we pay every invoice on the due "
                        f"date - no further rounds.")
