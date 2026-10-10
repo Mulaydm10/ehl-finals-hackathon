@@ -115,6 +115,10 @@
 | 2026-10-10 18:17 | Neel | P02 | noidea_neel / gpt-6-astra | **0.61** | f778b35c67ecd799 |
 | 2026-10-10 18:23 | Dhruv | P11 | noidea v2.16d / gpt-6-astra | 0.77 (agreed to our near-close 45.13; news claim no effect) | 7117d3517bedd67e |
 | 2026-10-10 18:25 | Parth | P10 | probe P10_A 2%-ladder (scripted, no model) | 0.674 (unit_price=31.56, volume_per_year=23400, contract_months=24, lead_time_days=56) | e479da115f89e76a |
+| 2026-10-10 18:27 | Parth | P10 | probe P10_B current-price anchor (scripted, no model) | 0.702 (unit_price=31.2, volume_per_year=23400, contract_months=36, lead_time_days=56) | 991ff7c420b037fc |
+| 2026-10-10 18:30 | Parth | P10 | probe P10_C bigger round-2 step + quality data (scripted, no model) | 0.694 (unit_price=31.3, volume_per_year=23400, contract_months=36, lead_time_days=56) | 7a9294b8466a475d |
+| 2026-10-10 18:32 | Parth | P10 | probe P10_D 2023-price anchor + small round-2 move (scripted, no model) | 0.686 (unit_price=31.4, volume_per_year=23400, contract_months=36, lead_time_days=56) | e61c28186f958320 |
+| 2026-10-10 18:35 | Parth | P10 | probe P10_E 3 round-1 claims + optimal step (scripted, no model) | 0.686 (unit_price=31.4, volume_per_year=23400, contract_months=36, lead_time_days=56) | 0b29bc23bb8ed5e4 |
 | 2026-10-10 18:25 | Neel | P08 | noidea_neel / gpt-6-astra | **0.73** | cae4b621695f8161 |
 | 2026-10-10 18:31 | Dhruv | P11 | noidea v2.16f / gpt-6-astra | 0.71 (1 fact/round; accepted open 45.50 in r3) | 352bdb0495fc67e4 |
 | 2026-10-10 18:37 | Dhruv | P11 | noidea v2.16g / gpt-6-astra | 0.71 (data budget used by r3; accepted open 45.50) | c0d6894ce2cf586a |
@@ -123,3 +127,7 @@
 | 2026-10-10 18:49 | Neel | P08 | noidea_neel / gpt-6-astra | **0.72** | c387f78034601d57 |
 | 2026-10-10 18:53 | Dhruv | P11 | noidea v2.16i / gpt-6-astra | 0.54 (MESO + premium-extrapolation bug -> accepted r2) | f5157e0d3ca6b113 |
 | 2026-10-10 18:56 | Dhruv | P11 | noidea v2.16j / gpt-6-astra | 0.71 (held 45.50 four rounds) | 3d85f13947660729 |
+| 2026-10-10 18:42 | Parth | P10 | noidea 2a53cb1 short-fuse / gpt-6-astra | 0.679 (open 31.70 -> final 31.50 @ 56, 36 m; flat price history 'does not change' (probes' 28.94->29.89 path was taken)) | c283f47ddedd3b53 |
+| 2026-10-10 18:48 | Parth | P10 | noidea 87653f3 short-fuse + price path / gpt-6-astra | 0.694 (price path taken -> open 31.50, final 31.30 @ 56, 36 m) | 53bab007f0218897 |
+| 2026-10-10 18:51 | Parth | P10 | probe P10_F higher credible anchor 30.50 (scripted, no model) | 0.694 (unit_price=31.3, volume_per_year=23400, contract_months=36, lead_time_days=56) | a2e38ea824aa1d67 |
+| 2026-10-10 18:58 | Parth | P11 | probe P11_A one new fact per round (scripted, no model) | 0.794 (ppm_commitment=300, chargeback_eur_per_complaint=0.0, unit_price=45.0) | 4d6c9a1396e4d0a0 |

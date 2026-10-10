@@ -1,0 +1,40 @@
+{
+  "case": "P11",
+  "label": "P11_A one new fact per round",
+  "hypothesis": "Kalwisz cuts only for a NEW verified fact (Neel's engine: step 0 without one, 0.3-1.0x ours with one) and goes final around msg 4-5. Rounds 1-2 repeat the best game (6b02: 46.0 then 45.0); rounds 3-6 add one untried fact each: QN mean ppm written without a thousands separator (the agent's '18,558' was read as 18.558 -> contradicted), its own quote 45.15 (quote:7300011), labour -0.3% ('factored in' in 7117), the downward price path 46.33 -> 45.15.",
+  "on_agreed": "accept",
+  "on_open": "next",
+  "on_final": "alternative",
+  "rounds": [
+    {
+      "body": "Dear Odlewnia Kalwisz team,\n\nThank you for your offer. Quality comes first for us: we need a binding commitment of 300 ppm, backed by your 8D report, and in return we will not ask you for chargebacks. We understand cash flow matters to you: we will pay every invoice reliably on the agreed day.\n\nWe confirm a binding volume of 15,900 units per year for 12 months.\nYour quality over the last 12 months was 2376 ppm (sc:70140@2026Q3).\nProducer prices DE: basic iron and steel, ferro-alloys changed -4.3% from 2024-10 to 2025-10 (idx:PPI-C241@2024-10, idx:PPI-C241@2025-10).\nOur demand forecast for Bearing bracket HN is up +20.0% (fc:310020@2026-09).\n\nWe propose EUR 42.77 per piece, 300 ppm, no chargeback.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 42.77, "ppm_commitment": 300, "chargeback_eur_per_complaint": 0}],
+      "refs": ["sc:70140@2026Q3", "idx:PPI-C241@2024-10", "idx:PPI-C241@2025-10", "fc:310020@2026-09"]
+    },
+    {
+      "body": "Dear Odlewnia Kalwisz team,\n\nThank you for moving. Producer prices DE: electric power generation, transmission and distribution changed -17.1% from 2025-02 to 2026-02 (idx:PPI-D351@2025-02, idx:PPI-D351@2026-02).\n\nWe move towards you and propose EUR 43.77 per piece, 300 ppm, no chargeback.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 43.77, "ppm_commitment": 300, "chargeback_eur_per_complaint": 0}],
+      "refs": ["idx:PPI-D351@2025-02", "idx:PPI-D351@2026-02"]
+    },
+    {
+      "body": "Dear Odlewnia Kalwisz team,\n\nThank you. Your recent quality notifications for Bearing bracket HN show 18558 ppm (qn:20004756, qn:20004952, qn:20005025), far above the 300 ppm we need.\n\nWe propose EUR 44.17 per piece, 300 ppm, no chargeback.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 44.17, "ppm_commitment": 300, "chargeback_eur_per_complaint": 0}],
+      "refs": ["qn:20004756", "qn:20004952", "qn:20005025"]
+    },
+    {
+      "body": "Dear Odlewnia Kalwisz team,\n\nThank you. Your own quote of 13 September 2026 offered this part at EUR 45.15 (quote:7300011).\n\nWe propose EUR 44.37 per piece, 300 ppm, no chargeback.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 44.37, "ppm_commitment": 300, "chargeback_eur_per_complaint": 0}],
+      "refs": ["quote:7300011"]
+    },
+    {
+      "body": "Dear Odlewnia Kalwisz team,\n\nThank you. Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01).\n\nWe propose EUR 44.50 per piece, 300 ppm, no chargeback.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 44.5, "ppm_commitment": 300, "chargeback_eur_per_complaint": 0}],
+      "refs": ["idx:LCI-C@2025-10", "idx:LCI-C@2026-01"]
+    },
+    {
+      "body": "Dear Odlewnia Kalwisz team,\n\nThank you. Our orders for Bearing bracket HN were at EUR 46.33 until December 2025 and have been at EUR 45.15 since January 2026 (po:4500013262-10, po:4500013376-10, po:4500014429-10).\n\nWe propose EUR 44.60 per piece, 300 ppm, no chargeback.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 44.6, "ppm_commitment": 300, "chargeback_eur_per_complaint": 0}],
+      "refs": ["po:4500013262-10", "po:4500013376-10", "po:4500014429-10"]
+    }
+  ]
+}

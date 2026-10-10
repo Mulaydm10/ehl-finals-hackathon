@@ -1,0 +1,25 @@
+{
+  "case": "P10",
+  "label": "P10_C bigger round-2 step + quality data",
+  "hypothesis": "Probe B: anchor 29.89 -> open 31.50; our +0.51 and 36 m -> its -0.30, final (31.20, 0.702). If it mirrors our step (~0.6x), a round-2 ask of ~30.90 meets its counter; if its step is fixed we get 31.20 again. Round 2 also answers its 'Which figures is that based on?' with one new verified fact (mean ppm vs its 300 ppm commitment).",
+  "on_agreed": "accept",
+  "on_open": "next",
+  "on_final": "alternative",
+  "rounds": [
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for your offer and for being open about your capacity situation.\n\nWe are ready to give you the firm commitment you asked for: a binding 23,400 pieces per year for 24 months, and we accept a longer lead time of 56 days so you can plan production.\n\nOur orders for the 24 mm mechanical seal were at EUR 28.94 in 2023 and have been at EUR 29.89 since January 2024 (po:4500010364-10, po:4500010407-10, po:4500014436-10).\nOur should-cost estimate for this seal is EUR 24.31 per piece (cost:340010).\n\nWe therefore propose to keep EUR 29.89 per piece, the price we have paid since January 2024.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 29.89, "volume_per_year": 23400, "contract_months": 24, "lead_time_days": 56}],
+      "refs": ["po:4500010364-10", "po:4500010407-10", "po:4500014436-10", "cost:340010"]
+    },
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for moving. We move clearly towards you as well: we extend the commitment to 36 months, 70,200 pieces in total, and propose EUR 30.90 per piece.\n\nOn your question about our figures: your quote commits to 300 ppm, while your delivered quality over the last four quarters averaged 363 ppm (sc:70410@2025Q4, sc:70410@2026Q1, sc:70410@2026Q2, sc:70410@2026Q3).\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 30.9, "volume_per_year": 23400, "contract_months": 36, "lead_time_days": 56}],
+      "refs": ["sc:70410@2025Q4", "sc:70410@2026Q1", "sc:70410@2026Q2", "sc:70410@2026Q3"]
+    },
+    {
+      "body": "Dear Ms Zellner,\n\nThank you. To close, we propose EUR 31.00 per piece on the same 36-month, 56-day terms.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 31.0, "volume_per_year": 23400, "contract_months": 36, "lead_time_days": 56}],
+      "refs": []
+    }
+  ]
+}

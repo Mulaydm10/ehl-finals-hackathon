@@ -17,6 +17,7 @@ deep dives (analysis/cases/). Change log with evidence: notes/agent_changelog.md
     alternative is cheaper)
 """
 
+import datetime
 import itertools
 import json
 import logging
@@ -208,6 +209,13 @@ class NoIdeaAgent:
         self.fc = {k: v for k, v in _facts.items() if k.startswith("fc:")}
         self.facts = {k: v for k, v in _facts.items() if k.startswith("qn:")}  # quality notifications (complaint_args)
         self.all_facts = _facts
+        self.po_hist = {}  # (supplier, part) -> [(date, po id, price)] by date (price_path)
+        for k, v in _facts.items():
+            if k.startswith("po:") and v.get("unit_price") and v.get("date"):
+                self.po_hist.setdefault((v.get("supplier"), v.get("part")), []).append(
+                    (v["date"], k, float(v["unit_price"])))
+        for rows in self.po_hist.values():
+            rows.sort()
         # today's price of every part at every supplier (for kit calculations)
         self.part_prices = {}
         for sid, d in self.dossiers.items():
@@ -310,7 +318,14 @@ class NoIdeaAgent:
         # ... and when the price already jumped (P18: an index clause took it 5.26 -> 5.84 in July, +11%,
         # more than the 12-month driver change): the history shows the rise is already paid for
         pos =[c for c in mine if c["kind"] == "po_prices" and c["part"] in parts]
-        if case["type"] != "bundling" and (ask_pct <= 0 or any(self.po_jump(c) >= 3.0 for c in pos)):
+        # a short-fuse supplier (final in round 1-2) never reads a round-2 fact: its flat history goes in round 1
+        # (P10 probes A-E: "price history ... it holds and we took it into account", counter 31.50 vs 31.70 without)
+        short = self.patience_prior(case, sid) <= 2
+        if short:  # and as the price PATH, which it takes, not the flat run it shrugs off (price_path)
+            desc = {p["part"]: p["description"] for p in self.dossiers.get(sid, {}).get("parts", [])}
+            pos = [(self.price_path(sid, c["part"], desc.get(c["part"], c["part"])) or c)
+                   if self.po_jump(c) == 0 else c for c in pos]
+        if case["type"] != "bundling" and (ask_pct <= 0 or short or any(self.po_jump(c) >= 3.0 for c in pos)):
             out += pos
         elif case["type"] != "bundling" and ask_pct > 0:
             # an increase on a price our orders show flat or falling: the history is checkable data for a later round
@@ -465,6 +480,29 @@ class NoIdeaAgent:
         m = re.search(r"were at ([\d.]+(?:, [\d.]+)*) per", claim["sentence"]) if claim else None
         prices = [float(x) for x in m.group(1).split(", ")] if m else []
         return (prices[-1] / prices[0] - 1) * 100 if len(prices) > 1 and prices[0] else 0.0
+
+    def price_path(self, sid, part, desc):
+        """The order history as a PATH: the last order at the earlier price, the first at today's and the latest.
+        P10: [28.94, 29.89, 29.89] got "it holds and we took it into account" (probes A-E, 5/5); the flat [29.89 x 8]
+        got "it holds, but it does not change our calculation" (c283f47ddedd3b53). Only if today's price was a rise."""
+        rows = self.po_hist.get((sid, part)) or []
+        if len(rows) < 3:
+            return None
+        start = len(rows) - 1
+        while start > 0 and rows[start - 1][2] == rows[-1][2]:
+            start -= 1
+        if start == 0 or rows[start - 1][2] >= rows[-1][2]:
+            return None  # never changed in the data, or the last change was a cut
+        before, first, last = rows[start - 1], rows[start], rows[-1]
+
+        def month(d):
+            return datetime.date.fromisoformat(d[:10]).strftime("%B %Y")
+
+        ids = [before[1], first[1], last[1]]
+        return {"supplier": sid, "part": part, "kind": "po_prices", "ids": ids, "figure": None, "unit": None,
+                "checked_by_arena": True, "path": True,
+                "sentence": f"Our orders for {desc} were at EUR {before[2]:.2f} until {month(before[0])} and have been "
+                            f"at EUR {last[2]:.2f} since {month(first[0])} ({', '.join(ids)})."}
 
     def price_story(self, case, sid, body):
         """Round-1 prose built from the supplier's OWN statements and our contract, all figures from code.
@@ -735,6 +773,11 @@ class NoIdeaAgent:
         anchor_price = opening * (1 - depth)
         if kind == "price_increase":  # the cost-justified change (EDA 3) when it is lower
             anchor_price = min(anchor_price, s["cur"] * (1 + s["justified"] / 100))
+        if self.patience_prior(case, sid) <= 2 and kind != "rfq" and s["cur"] and opening > s["cur"]:
+            # a short-fuse supplier answers an anchor at its floor with its final at once (P10 x11: EUR 27.38 = C_best's
+            # price at lead 56, "your target price is unrealistic", final 31.70-32.00); the price we pay today, backed
+            # by the order history, keeps it negotiating (P10 probes B-E: open in round 1, final in round 2, 0.70)
+            anchor_price = max(anchor_price, s["cur"])
         limit_price = s["cur"] * (1 + (s["ask_pct"] - MIN_GAIN_PTS) / 100)
         market = self.market_low(case, sid)
         if market:
@@ -767,6 +810,11 @@ class NoIdeaAgent:
         # near-close (Neel; live P04 d3050f951dc2c45b: it moved 55% of the gap, then 5%, then final at that price while
         # we were ~1% lower): when it stalls close to us, ask a hair below its standing value instead of creeping
         sv = [supplier_value(case, complete_offer(case, t), s["est"]) for t in stand]
+        if k == 1 and sv and self.patience_prior(case, sid) <= 1:
+            # a capacity supplier goes final in round 2 (P10 probes B-E): one real step, a third of the gap to its
+            # standing value, drew its largest move (+0.51 -> -0.30; +0.15 -> -0.10; +1.01 -> -0.20)
+            hist.append(min(limit, hist[-1] + max(0.0, (sv[-1] - hist[-1]) / 3)))
+            return hist[-1]
         fr = [(sv[j - 1] - sv[j]) / (sv[j - 1] - hist[j - 1]) for j in range(1, min(len(sv), len(hist) + 1))
               if sv[j - 1] - hist[j - 1] > 1e-9]
         stalled = len(fr) >= 2 and fr[-1] > -STALL_NOISE and fr[-2] > 0 and (fr[-1] < STALL_DROP * fr[-2] or fr[-1] < STALL_MIN)
