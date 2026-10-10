@@ -863,3 +863,7 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 
 ### v2.21d (offline): two-step floor ask for 0.81 - round 1 at the floor: [44.90 (0.810), 45.00 + EUR 300 chargeback (0.809)]; if refused: 44.95 alone (0.802, agreed in eac20911). Replay + simulated refusal OK; tests 50, offline 0.930/0.925.
 - v2.21d live P11 (20:46): 0.71 (11e2d8727fc045a1) - HIGH draw 46.50/45.50; probe 45.10, floor trade (45.50 + EUR 300 / 45.39), hair 45.45 all held -> accepted 45.50. Its high-draw floor this session > 45.45. The 44.90 step needs a LOW draw.
+
+### Merge parth (P08 price path, 544b5cd) + cloud (P08 floor trade port, CLOUD_LEARNINGS.md, P03 own-quote plan)
+- Round 1 change only for P08: order-price path (4 po IDs) + cold-drawing index lead; P11 / all others identical. Tests 50,
+  offline 0.930 / 0.925, walk replays unchanged. Rules 81-85 + 2 lessons for the model.
