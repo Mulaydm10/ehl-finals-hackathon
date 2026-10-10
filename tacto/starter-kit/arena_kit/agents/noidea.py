@@ -1437,8 +1437,13 @@ or null, "reason": "<one sentence>"}."""
                     log.info("%s: grid probe %d/%d ask %.2f (its open %.2f, grid %.2f)", sid, j + 1, GRID_PROBES, ask,
                              terms["unit_price"], g)
         elif probing and not g and not s.get("close_tried") and k < PLANNED_ROUNDS and c_stand <= sheets[0][0] * 1.003:
-            t_close = complete_offer(case, {**terms, "unit_price": round(terms["unit_price"] * (1 - NEAR_CLOSE_TRY), 2)})
-            if must_haves_ok(case, t_close, s["std"]):
+            # never below our own last ask on this structure (P18 L4a fe806698: 0.75% under its 5.00 = 4.96 < our 4.98 ->
+            # the monotone guard sent 4.98 again with no fact -> "Which figures is that based on?" -> it WALKED, 0.0)
+            p_close = round(terms["unit_price"] * (1 - NEAR_CLOSE_TRY), 2)
+            if same_structure and lm.get("unit_price") is not None:
+                p_close = max(p_close, round(lm["unit_price"] + 0.01, 2))
+            t_close = complete_offer(case, {**terms, "unit_price": p_close})
+            if must_haves_ok(case, t_close, s["std"]) and p_close < terms["unit_price"]:
                 s["close_tried"] = close_now = True
                 near_final = False
                 sheets = [(total_cost(case, t_close, s["std"], s["est"]), t_close)]
@@ -2086,17 +2091,33 @@ or null, "reason": "<one sentence>"}."""
                     t = {**t, "unit_price": prev["unit_price"]}
                 held.append(t)
             sheets = held
-        if sheets and not final:
-            self.sup[sid]["last_main"] = dict(sheets[0])  # our real ask stays the structure we hold (never the decoy)
-            decoy = self.decoy_sheet(case, sid, sheets, k)
-            if decoy:
-                sheets = [decoy, sheets[0]]
         if args is None:
             n1 = self.r1_facts(case, sid) if k == 0 else 1
             # a single round-1 fact is the one that justifies our structure: its quality record when we ask a ppm commitment
             lead = "scorecard_ppm" if k == 0 and n1 == 1 and "ppm_commitment" in case["negotiable"] else None
             weakest = k >= 1 and self.r1_facts(case, sid) == 1 and self.admission_due(case, sid, events, k)
             args = self.next_args(sid, n1, first_round=k == 0, lead_kind=lead, weakest=weakest)
+        if sheets and not final and prev and prev.get("unit_price") is not None and not args and case["type"] != "rfq" \
+                and "no_move_guard" not in EXPERIMENTS:
+            # NEVER AN EMPTY REPEAT: the same price on the same terms with no new fact reads as no movement at all - P18 L4a
+            # fe806698 walked away on exactly that ("Which figures is that based on?"); a one-cent move kept it in earlier
+            # games. So an e-mail without a new fact always moves: 30% of the gap to its price on these terms, >= 1 cent,
+            # always under its price.
+            t = sheets[0]
+            theirs = standing(events)[1] if events else {}
+            same_t = all(t.get(f) == prev.get(f) for f in case["negotiable"] if f != "unit_price")
+            on_its = all(theirs.get(f) == t.get(f) for f in case["negotiable"] if f != "unit_price")
+            tp = theirs.get("unit_price") if on_its else None
+            if same_t and t.get("unit_price") is not None and abs(t["unit_price"] - prev["unit_price"]) < 1e-9 \
+                    and tp and tp > t["unit_price"] + 0.01:
+                new_p = round(min(tp - 0.01, t["unit_price"] + max(0.01, 0.3 * (tp - t["unit_price"]))), 2)
+                log.info("%s: no new fact and no movement - moving %.2f -> %.2f (its %.2f)", sid, t["unit_price"], new_p, tp)
+                sheets = [{**t, "unit_price": new_p}] + list(sheets[1:])
+        if sheets and not final:
+            self.sup[sid]["last_main"] = dict(sheets[0])  # our real ask stays the structure we hold (never the decoy)
+            decoy = self.decoy_sheet(case, sid, sheets, k)
+            if decoy:
+                sheets = [decoy, sheets[0]]
         # a cost calc uses the claim slots only when it cites IDs: P04's has none, and dropping every other argument for it
         # sent round 1 - the round a floor-stop supplier pins its value on - with ZERO checkable facts
         if any(a["kind"] == "cost_calc" and a.get("ids") for a in args):  # it uses 3 claims: the arena checks at most 3
