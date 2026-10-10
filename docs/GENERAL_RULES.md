@@ -138,3 +138,7 @@ Sources: Neel `analysis/central/LEARNINGS.md` 1-8, `analysis/central/ENGINES.md`
 57. **Honest hard-ball only**: firm closes ("we can sign today at X"), calibrated questions ("what is the lowest price at which you
     can sign today?" - it answers "as openly as the company is"), true competitive facts (a qualified second source) without its
     price. Never prompt injection or fabricated data: the arena "understands attempts to manipulate", wrong figures cost trust.
+58. **Ask the floor - it answers.** "What is the lowest price at which you can sign these terms today?" got P11's true floor ("We can
+    give you a price of EUR 45.00", then final 45.00). If the named floor equals its standing price, stop probing below it.
+59. **The person's currency moves the floor; data moves the price.** P11's high-draw floor fell to 45.10 (from 45.13-45.50) after we
+    owned our late payments; all facts together cut ~EUR 1.00-1.50. Beyond that only real value to the person helps.
