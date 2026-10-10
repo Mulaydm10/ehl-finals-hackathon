@@ -91,3 +91,12 @@ rank versions, not to predict arena scores. It ignores arguments, tone and the r
 - **P07 with gpt-6-astra (c819aac1445eb5d0): 0.70, identical to Qwen** (same moves, same final). Offline Astra writes
   better and faster (5.2 s, goal-fitting tone), but on this case the words didn't change the outcome. Points again
   at the levers (36 m, committee) rather than the prose.
+
+### v1.5 (offline only): prefer the longer contract on cost ties
+- `sheets_at` breaks cost ties by the longest `contract_months`. On P07's 2-year horizon 24 and 36 months cost us
+  exactly the same (€327,204 at €5.49 / 90 d: a commitment beyond the horizon "neither costs nor earns"), but 36 m
+  is more security for the supplier, whose final sat at ~€5.50 on 24 m in 4 live games (task A1).
+- Offline: P07 round-1 sheets all 36 m; e-mail states "30,000 kits per year for 36 months"; eval unchanged
+  0.936 / 0.944 (no regression on the other 9 cases; the tie-break only fires on equal cost).
+- **Not measurable offline**: the arena's margin formula ignores contract length ("security, not cash") and the
+  simulator only models cost. Whether the supplier moves below €5.49 for 36 m needs one live P07 game.

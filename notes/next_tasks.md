@@ -7,7 +7,7 @@ State: agent **v1.4** (`--agent noidea`). Live: P01 **0.85**, P07 **0.70** (best
 ## A. Close the P07 gap (0.70 → toward 1.0) (D)
 The supplier's final lands at the same cash value (~€5.45–5.50 @ 90 d) whatever our anchor, arguments or
 pace. C_best ≈ €5.00. Untested levers, one live game each, offline-check first:
-1. **36 months** instead of 24: same C for us on a 2-year horizon, more security for it.
+1. **36 months** instead of 24: same C for us on a 2-year horizon, more security for it. **v1.5 offline: done, no cost, no regression; needs 1 live P07 game.**
 2. **Bring in its boss / committee** (approval_ladder: changes > 2% need the pricing committee):
    explicitly ask for a bundle price above the KAM's authority, with the strategic reason.
 3. **Hold longer** before its final: smaller concessions (we reach €5.08 by round 4).

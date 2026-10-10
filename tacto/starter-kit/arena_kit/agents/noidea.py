@@ -236,7 +236,9 @@ class NoIdeaAgent:
             if cap_price and t["unit_price"] > cap_price:  # never above its standing price (P01, score 0)
                 continue
             ranked.append((total_cost(case, t, s["std"], s["est"]), t))
-        ranked.sort(key=lambda x: x[0])
+        # on a cost tie prefer the LONGER contract: beyond the horizon it "neither costs nor earns" for us
+        # (api.md) but is security for the supplier (P07: its final sat at ~EUR 5.50 on 24 m in 4 games)
+        ranked.sort(key=lambda x: (round(x[0], 0), -(x[1].get("contract_months") or 0)))
         out = []
         # the supplier may pick ANY sheet we send: only offer ones we'd be glad to have accepted
         # (offline eval P10: a 12-month sheet at equal supplier value cost us +33% and got picked)
