@@ -81,3 +81,18 @@ Tools: exact scorer = `total_cost(case, complete_offer(case, terms), std, est)` 
 - A smaller round-2 step (+0.08) drew a smaller mirror step (-0.10).
 - Next design (not run): main's round 1, round 2 = 14 d at an ask <= 4.84 (so a 4.86 ask stays monotone), round 3 = labour
   index at 4.86 @ 14 d - it agreed at our ask 4.91 in 0c968aae (line <= 4.91); 4.86 needs its line 5 cents lower.
+
+## 8. Live v2 (local, 2026-10-11 01:18, a55d2e8917f705d4, noidea_p18 v2): **0.606 - the contract-clause argument is worth 0**
+New lever tried: our own contract's index clause (ctr:4600070740 section 3.2, PPI-C2431 80% share, base 2025-11 = 115.9) reproduces
+July's 5.26 -> 5.84 and Oct 2023's 6.45 -> 6.10 exactly; its October value is 5.74 (I(Aug) 129.1 vs I(May) 131.9, -2.1%).
+| our msg | sheet | its answer |
+|---:|---|---|
+| 1 | 4.76 @ 30 d / 24 m, no clause + price path, AS-14404 -8.5%, PPI-C2431 -2.1% (2026-05 -> 2026-08) with "the clause formula gives EUR 5.74 for October" + committee | 5.20 @ 30 d db0 (3 verified) - **the same first counter as without it (0c968aae)** |
+| 2 | **4.84** @ 14 d + its clause + forecast | 5.10 @ 14 d (**-0.10**; 0c968aae: 4.87 -> -0.20) |
+| 3 | 4.97 @ 14 d **db5** + labour (= 4.87 db0 in its terms, +0.03) | 5.20 db5 (= 5.10 db0: no move) |
+| 4 | main | final 5.20 db5 -> 0.606 |
+- **The October clause value does not reach its pricing**: the first counter is the same 5.20 with or without it.
+- **It mirrors our step size**: +0.08 drew -0.10, +0.11 drew -0.20 (0c968aae). A smaller step to keep room for a later ask cost a grid step.
+- **Switching to its db5 alternative is not a move** for it (priced db0 + 0.10, no cut) and drew its final.
+- Over 24 games no lever has moved its line below ~4.90 @ 14 d (5.00 @ 45 d) in normal mode; Codacabana's 4.90 @ 45 d is one
+  grid step under it. Best known path stays 0c968aae (0.727): 4.76 -> 4.87 @ 14 d (+0.11) -> 4.91 + labour, agreed.
