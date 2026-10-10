@@ -32,10 +32,13 @@
 | 2026-10-10 15:42 | Parth | P18 | noidea v1.7 / gpt-6-astra (OpenAI) | 0.43 (deal at final_offer: 5.40, 60 d, 24 m + AS-14404 clause db0) | 6833e98fbbe5ebdf |
 | 2026-10-10 15:46 | Dhruv | P02 | noidea v2.3 / gpt-6-astra | **0.48** (final 372.15 @ 90 d) | da8d0e3d77ce091c |
 | 2026-10-10 15:55 | Neel | P03 | noidea_neel / gpt-6-astra | **0.86** | fef482f41a6e1e8f |
+| 2026-10-10 15:58 | Parth | P18 | noidea v2.4 (branch: v2.3 args + cheapest sheet / 422 fallback) / gpt-6-astra | **0.62** (agreed: its alternative 5.20, 30 d, 24 m + AS-14404 db5, proposed back after a 422) | a99d02eb41cafa66 |
 | 2026-10-10 16:00 | Dhruv | P02 | noidea v2.4 merged / gpt-6-astra | 0.34 (no cost calc sent, payment hops) | 159def0f5e514b40 |
 | 2026-10-10 16:03 | Neel | P03 | noidea_neel / gpt-6-astra | **0.90** | 1db1ce07b2f78a35 |
+| 2026-10-10 16:05 | Parth | P18 | noidea v2.3 (+ v2.4 sheet fix, branch a73e390) / gpt-6-astra | 0.53 (agreed 5.20, 14 d, 24 m + AS-14404 db0; ctr:4600070740#3.2 not cited live) | 06f8f4f5a7689632 |
 | 2026-10-10 16:06 | Dhruv | P02 | noidea v2.5 / gpt-6-astra | 0.27 (6-month cost calc rejected: twelve-month pressure) | c52de0252df56877 |
 | 2026-10-10 16:11 | Neel | P03 | noidea_neel / gpt-6-astra | **0.86** | 78f03f1c9dcde080 |
+| 2026-10-10 16:12 | Parth | P18 | noidea v2.6 / gpt-6-astra | 0.44 (final 5.40, 14 d, 24 m + AS-14404 db3) | bf73ee394e5b7e2c |
 | 2026-10-10 16:19 | Neel | P03 | noidea_neel / gpt-6-astra | **0.86** | 47a88b4d0bb75ce3 |
 | 2026-10-10 16:22 | Dhruv | P08 | noidea v2.6 / gpt-6-astra (parallel x4) | **0.65** | a43d77c01405cba4 |
 | 2026-10-10 16:22 | Dhruv | P02 | noidea v2.6 / gpt-6-astra (parallel x4) | 0.44 | d0c627ec43ba1f5d |

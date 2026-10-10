@@ -18,6 +18,7 @@ rank versions, not to predict arena scores. It ignores arguments, tone and the r
 | probe (Neel) | 9 cases | 0–0.12 | see quota_log | walk-away probes for exact C_open/C_best |
 | v1.1 | P07 | 0.68 | 00ae513af1091e9c | 24 m won (+0.48); price stalled at €5.52; volume question unanswered 3× |
 | v1.7 / gpt-6-astra | P18 | 0.43 | 6833e98fbbe5ebdf | final_offer €5.40, 60 d, 24 m + AS-14404 db0 in round 3; its db5 alternative sheet was 0.485 (see "P18 live 1") |
+| v2.4 (branch) / gpt-6-astra | P18 | **0.62** | a99d02eb41cafa66 | round-1 counter €5.30 (game 1: €5.60); 422 on its alternative's id, proposed back, agreed: €5.20, 30 d, 24 m + AS db5 (see "P18 live 2") |
 
 ## Versions
 
@@ -339,6 +340,54 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
   another structure is ≥ 1% cheaper for us. Offline Astra P02: cost calc in round 1, 90 d in every round
   (364.69 → 367.26). Offline eval **0.939 / 0.947** (was 0.937 / 0.944). Lesson: **the model may choose, but the
   strategy's backbone (strongest argument, structure) must be fixed in code.**
+
+### P18 live 2 (Parth, v2.4 on the branch / gpt-6-astra, session a99d02eb41cafa66): 0.62 (game 1: 0.43)
+| round | supplier sheet (primary / alternative) | C primary / alt | score primary / alt |
+|---|---|---:|---:|
+| 0 open | €6.10, 30 d, 12 m, no clause | 295,173 | 0.000 |
+| 1 open | €5.30, 30 d, AS db0 / €5.40, 30 d, AS db5 | 260,808 / 259,970 | 0.474 / 0.485 |
+| 2 open | €5.20, 30 d, AS db0 | 255,887 | 0.542 |
+| 3 final_offer | €5.10, 30 d, AS db0 / €5.20, 30 d, AS db5 | 250,966 / **250,342** | 0.610 / **0.618** |
+| 4 agreed | €5.20, 30 d, AS db5 (our sheet = its alternative) | **250,342** (accepted) | **0.618** |
+- **Round 1 did the work: €5.30 vs €5.60 in game 1.** All 3 claims **verified**: AS-14404 −0.3%, the PO price history
+  (8 POs, 5.26 → 5.84), forecast +1.9%. Its reason: "your commitment to a 24-month contract … allows us to reduce our price".
+- **The arena refuses an alternative's id**: `422 not a standing offer in this session` (as in arena-sim). The fallback
+  proposed it back ("We accept your alternative as you proposed it") and it came back `agreed` in one round: +0.008 here.
+  `best_sheet()`'s first accept of an alternative will always 422; harmless (no round used), could go straight to proposing.
+- **The model's argument pick dropped v2.3's new lines live**: `args [0, 1, 2]` (index, PO history, forecast); the 80%-vs-38%
+  clause sentence, the €5.45 market line and the committee request never reached the supplier (offline they did).
+- **Risk in the final message**: the writer added "please consider one final modest base-price reduction within your
+  approval authority" next to "We accept your alternative as you proposed it" after a final_offer (P07 v1.3 walked on an
+  extra ask). It agreed anyway. Suggest: no asks from the model when `final=True`.
+- Clause still mandatory for it; our sheets stayed clause-free in rounds 2–3 although the model logged the refusal.
+  Next lever (P18.md §8): offer AS db5 ourselves for a base-price step. Rounds 2–3 cited nothing; it asked
+  "Which figures is that based on? Please send us the data." (round 2) and refused the cost breakdown twice.
+
+### v2.6 (Parth, offline + replay, 0 games): offer the index clause the supplier insists on
+- `required_clause()`: when the supplier answers our clause-free sheets with an index clause on **every** sheet, the
+  sheet search tries clause options on its series (`combos(..., clause)`), so the cheapest deadband for us goes out
+  (P18: AS-14404 db5). Otherwise clauses stay off as before.
+- Evidence: P18 live a99d02eb41cafa66 (0.62): "for a contract of this duration, we cannot offer a fixed price and must
+  include the AS-14404 index clause"; our rounds 2–3 stayed clause-free, it moved €0.10/round and went final in round 3.
+- Replay of both real P18 games: round 2 now sends €4.84–4.89 with AS db5 (was €4.88 no clause); finals unchanged
+  (accepts `-a` db5 0.618 > db0 0.610). Offline mean unchanged **0.939 / 0.947** (= main v2.5), 32 tests pass,
+  no new lint errors. Needs one live P18 game.
+
+### P18 live 4 (Parth, v2.6 / gpt-6-astra, session bf73ee394e5b7e2c): 0.44 (v2.4 live 2: 0.62)
+- **Round 2 did send AS sheets**: €4.84 / 14 d / db5, €4.86 / 30 d / db5 and €4.84 / 14 d / **db3**. It took the db3
+  structure at €5.40 / 14 d and repeated exactly that as `final_offer` in round 3 (our €4.92 / 14 d / db5 did not move it).
+  Offering the clause gave it the clause without a price step; offering db3 let it pick db3.
+- Price path €6.10 → 5.50 (db0; alt 5.60 db5) → 5.40 (14 d, db3) → 5.40 final, accepted. Live 2: 6.10 → 5.30 → 5.20 → 5.10 / 5.20 db5.
+- Round 1's own-cost-share calculation cited **PPI-C2431 +9.7%** → "Your figures confirm our case: that driver rose."
+  (also "We received a lot of material"). Its round-1 counter was €5.50 (live 2: €5.30).
+- `ctr:4600070740#3.2` was in the round-1 body but got no claim result (not read as a claim); the 3 index claims, the
+  PO history (round 2) and the forecast (round 3) were all verified; nothing contradicted.
+- **Reverted (Parth): v2.6 clause sheets.** Live 4 shows offering the clause hands it over with no price step (it chose
+  db3 + 14 d and froze at €5.40), while live 2's clause-free sheets kept it moving €0.10/round to €5.10 / €5.20 db5.
+  Best known P18 path = live 2: clause-free asks, then take (propose back) its db5 alternative at `final_offer`.
+  Round 1 of live 4 was also weaker because the cost calc cited PPI-C2431 +9.7% ("your figures confirm our case");
+  main's 527a81f (both windows below the ask) addresses that.
+
 - **P02 v2.5 live (c52de0252df56877): 0.27.** Cost calc now in round 1 and 90 d held every round, but: "Your figures
   confirm our case: that driver rose. We have reviewed your calculations based on six-month index movements; however,
   **our pricing must reflect the full twelve-month cost pressure**"; it then only moved €374.84 → 373.85 @ 90 d
@@ -403,3 +452,10 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
   (sheets can be empty when model-stated limits filter every combination). Also: on an RFQ the agent should, once a
   bidder says `agreed`/`final_offer` with the lowest C, accept THAT bidder first, not whoever's turn it is.
 - Next: fix both, then the RFQ auction tactics (cite the leader's offer to the others, step targets down together).
+### Parth v2.7-p (offline, 0 games): more verifiable data + switchable live experiments (see analysis/strategy_0.9.md)
+- Builder: per cost driver, the **fall from its 12-month peak** as an extra `index_change` claim (any window ≤ 12 m
+  ending in the data's last 12 months is checked). +84 claims, self-check 811 ok / 0 bad. P18 now cites AS-14404
+  −5.5% and PPI-C2431 −2.3%; P01/P11 energy −6.1%.
+- `NOIDEA_EXPERIMENTS=batna,ask_lever,escalate` (default off): a real alternative (leverage/routine), "which lever
+  matters to you", escalate once on a stall / authority mention. Offline unchanged 0.939 / 0.947, 32 tests pass.
+- `tools/replays/fetch_backoffice.py`: the suppliers' internal talk for every ended session (GET only, no quota).
