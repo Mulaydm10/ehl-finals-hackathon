@@ -400,31 +400,11 @@ class NoIdeaAgent:
         return picked
 
     # ---- term sheets ---------------------------------------------------------------------------
-    def combos(self, case, base, clause=None):
-        """Every option combination. Index clauses stay off (they cost us whenever the index path is positive)
-        unless the supplier requires one: then only clause options on its series are tried (`clause`)."""
+    def combos(self, case, base):
         opts = case.get("term_options", {})
         fields = [f for f in case["negotiable"] if f != "unit_price" and opts.get(f) and f != "index_clause"]
-        series = (clause or {}).get("series")
-        clauses = [o for o in opts.get("index_clause") or [] if series and o and o.get("series") == series]
         for values in itertools.product(*(opts[f] for f in fields)):
-            t = {**base, **dict(zip(fields, values))}
-            if clauses:
-                yield from ({**t, "index_clause": o} for o in clauses)
-            else:
-                yield t
-
-    def required_clause(self, sid):
-        """The index clause the supplier insists on: it answered our clause-free sheets with a clause on EVERY
-        sheet. P18 live (a99d02eb41cafa66): "for a contract of this duration, we cannot offer a fixed price and
-        must include the AS-14404 index clause"; we kept sending clause-free sheets and it moved EUR 0.10 a round."""
-        events = getattr(self, "threads_ref", {}).get(sid, [])
-        ours = [t.get("terms", {}) for m in events if m.get("from") == "buyer" for t in m.get("term_sheets") or []]
-        theirs = [m for m in events if m.get("from") != "buyer" and m.get("term_sheets")]
-        last = [t.get("terms", {}) for t in theirs[-1]["term_sheets"]] if len(theirs) > 1 else []
-        if last and all(t.get("index_clause") for t in last) and any(not t.get("index_clause") for t in ours):
-            return last[0]["index_clause"]
-        return None
+            yield {**base, **dict(zip(fields, values))}
 
     def sheets_at(self, case, sid, value, cap_price=None, n=3):
         """The `n` different term sheets that give the supplier `value` per unit at the lowest cost to us,
@@ -432,7 +412,7 @@ class NoIdeaAgent:
         s = self.sup[sid]
         ranked = []
         lim = s.get("limits", {})
-        for t in self.combos(case, dict(s["open_terms"]), self.required_clause(sid)):
+        for t in self.combos(case, dict(s["open_terms"])):
             if any((lo is not None and (t.get(f) or 0) < lo) or (hi is not None and (t.get(f) or 0) > hi)
                    for f, (lo, hi) in lim.items() if t.get(f) is not None):
                 continue

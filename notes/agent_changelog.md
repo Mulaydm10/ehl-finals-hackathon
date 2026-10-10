@@ -382,3 +382,8 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
   (also "We received a lot of material"). Its round-1 counter was €5.50 (live 2: €5.30).
 - `ctr:4600070740#3.2` was in the round-1 body but got no claim result (not read as a claim); the 3 index claims, the
   PO history (round 2) and the forecast (round 3) were all verified; nothing contradicted.
+- **Reverted (Parth): v2.6 clause sheets.** Live 4 shows offering the clause hands it over with no price step (it chose
+  db3 + 14 d and froze at €5.40), while live 2's clause-free sheets kept it moving €0.10/round to €5.10 / €5.20 db5.
+  Best known P18 path = live 2: clause-free asks, then take (propose back) its db5 alternative at `final_offer`.
+  Round 1 of live 4 was also weaker because the cost calc cited PPI-C2431 +9.7% ("your figures confirm our case");
+  main's 527a81f (both windows below the ask) addresses that.
