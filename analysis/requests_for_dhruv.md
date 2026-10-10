@@ -54,3 +54,9 @@
    English. New live-calibrated simulator `analysis/tools/sim_floorstop.py` (reproduces the live game), comparison
    `analysis/tools/variant_check.py`: no case worse in any simulator. Please review, then merge or add
    `--agent-file` to `arena play`. Details: `analysis/agent_variants/README.md`.
+12. **Central layer** (`analysis/agent_variants/central.py`, `analysis/central/LEARNINGS.md`), worth porting to
+   `noidea.py`: (a) calibrated supplier full cost / cash rate from deal breakdowns (P02 full cost EUR 367.60, almost
+   its quote, so a full-cost guard caps us at ~0.5); (b) cite should-cost against the **quote**, not today's price;
+   (c) never send round 1 without a checkable claim (26 "Which figures is that based on?" replies); (d) on an approval
+   ladder, stay on the structure the committee priced. Your v2.7 P03 game (volume forecast + committee in round 1)
+   is our best P03 at 0.903.

@@ -1,0 +1,21 @@
+{
+ "case": "P02",
+ "variant": "noidea_neel",
+ "sim_score": 0.5061921583732925,
+ "end": "deal {'unit_price': 369.51, 'payment_days': 60, 'index_clause': None}",
+ "rounds": 1,
+ "emails": [
+  {
+   "body": "Dear Petra Lechner,\n\nThank you for your message.\n\n1. Volume and term: we confirm a binding volume of 6,110 units per year for 12 months, 6,110 units in total.\n2. Our proposal: EUR 369.51 per unit, 60 days net, no price-adjustment clause. This amounts to about EUR 2,257,706 over the term.\n3. Next step: You told us that price changes above 2% need your pricing committee. Please put this proposal to your pricing committee: a binding 12-month agreement for 6,110 units, about EUR 2,257,706. On the committee's written confirmation we issue the order the same day, and we pay every invoice on the due date.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [],
+   "sheets": [
+    {
+     "unit_price": 369.51,
+     "payment_days": 60,
+     "index_clause": null
+    }
+   ]
+  }
+ ],
+ "relationship": {}
+}
