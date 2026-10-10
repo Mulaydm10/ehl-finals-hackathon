@@ -146,3 +146,4 @@
 | 2026-10-10 20:03 | Dhruv | P11 | noidea v2.19d loop 3/8 / gpt-6-astra | 0.79 (high draw -> 45.00 via labour fact + on-time pay) | 77f61e477a353895 |
 | 2026-10-10 20:04 | Neel | P08 | noidea_neel / gpt-6-astra | **0.71** | ad0427655e885fc1 |
 | 2026-10-10 20:08 | Dhruv | P11 | noidea v2.19e loop 4/8 / gpt-6-astra | 0.78 (high draw; probe 45.10 agreed) | 76500e5742532008 |
+| 2026-10-10 20:11 | Dhruv | P11 | noidea v2.19e loop 5/8 / gpt-6-astra | 0.79 (LOW draw wasted by low ladder) | 74cc062d2fbc9d76 |

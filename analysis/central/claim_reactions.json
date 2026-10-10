@@ -1,5 +1,5 @@
 {
- "games": 107,
+ "games": 150,
  "by_kind": {
   "copper notation": {
    "taken": 1,
@@ -9,29 +9,33 @@
    "taken": 1,
    "take_rate": 1.0
   },
+  "energy index": {
+   "taken": 6,
+   "take_rate": 1.0
+  },
   "index and price history": {
    "taken": 1,
    "take_rate": 1.0
   },
   "index_change": {
-   "taken": 32,
+   "taken": 80,
    "confirm_case": 7,
-   "no_change": 6,
-   "take_rate": 0.71
+   "no_change": 7,
+   "take_rate": 0.85
   },
   "news": {
    "no_change": 1,
    "take_rate": 0.0
   },
   "notice_period": {
-   "taken": 2,
    "no_change": 1,
+   "taken": 2,
    "take_rate": 0.67
   },
   "po_prices": {
-   "taken": 10,
-   "no_change": 9,
-   "take_rate": 0.53
+   "no_change": 29,
+   "taken": 18,
+   "take_rate": 0.38
   },
   "rival_quote": {
    "taken": 24,
@@ -43,22 +47,29 @@
    "take_rate": 0.0
   },
   "scorecard_ppm": {
-   "taken": 8,
-   "no_change": 2,
-   "take_rate": 0.8
+   "taken": 27,
+   "no_change": 3,
+   "take_rate": 0.9
   },
   "should_cost": {
-   "taken": 11,
+   "taken": 18,
    "take_rate": 1.0
   },
   "volume_change": {
-   "taken": 37,
-   "no_change": 13,
-   "take_rate": 0.74
+   "taken": 67,
+   "no_change": 17,
+   "take_rate": 0.8
   }
  },
  "by_case": {
   "case:P01": {
+   "rival_quote": {
+    "no_change": 1
+   },
+   "notice_period": {
+    "no_change": 1,
+    "taken": 2
+   },
    "index_change": {
     "taken": 2
    },
@@ -67,70 +78,63 @@
    },
    "_signals": {
     "final_at_5": 1
-   },
-   "notice_period": {
-    "taken": 2,
-    "no_change": 1
-   },
-   "rival_quote": {
-    "no_change": 1
    }
   },
   "case:P02": {
+   "_signals": {
+    "mirror": 6,
+    "final_at_4": 14,
+    "final_at_5": 3,
+    "full_authority": 6
+   },
+   "po_prices": {
+    "no_change": 1
+   },
+   "index_change": {
+    "confirm_case": 1,
+    "taken": 6
+   },
    "volume_change": {
     "taken": 7
    },
-   "_signals": {
-    "full_authority": 6,
-    "final_at_4": 14,
-    "mirror": 6,
-    "final_at_5": 3
-   },
-   "index_change": {
-    "taken": 6,
-    "confirm_case": 1
-   },
    "scorecard_ppm": {
-    "no_change": 1
-   },
-   "po_prices": {
     "no_change": 1
    }
   },
   "case:P03": {
-   "index_change": {
-    "taken": 5
-   },
    "volume_change": {
     "taken": 8
+   },
+   "scorecard_otd": {
+    "no_change": 1
    },
    "should_cost": {
     "taken": 6
    },
    "_signals": {
-    "final_at_5": 5,
-    "final_at_3": 1
+    "final_at_3": 1,
+    "final_at_5": 5
    },
-   "copper notation": {
-    "taken": 1
-   },
-   "scorecard_otd": {
-    "no_change": 1
+   "index_change": {
+    "taken": 5
    },
    "po_prices": {
     "no_change": 2
+   },
+   "copper notation": {
+    "taken": 1
    }
   },
   "case:P04": {
+   "index_change": {
+    "confirm_case": 1
+   },
    "_signals": {
-    "final_at_2": 1,
-    "final_at_3": 2
+    "final_at_3": 2,
+    "final_at_2": 1
    },
    "volume_change": {
     "no_change": 1
-   },
-   "index_change": {
-    "confirm_case": 1
    }
   },
   "case:P05": {
@@ -139,119 +143,131 @@
     "no_change": 6
    },
    "_signals": {
-    "final_at_12": 1,
     "final_at_10": 3,
-    "final_at_11": 1,
-    "final_at_6": 3
+    "final_at_12": 1,
+    "final_at_6": 3,
+    "final_at_11": 1
    }
   },
   "case:P07": {
+   "volume_change": {
+    "taken": 9
+   },
    "_signals": {
-    "final_at_4": 9,
-    "mirror": 4
+    "final_at_4": 13,
+    "mirror": 5
    },
    "index_change": {
+    "taken": 6,
     "confirm_case": 2
    },
    "po_prices": {
     "no_change": 3
-   },
-   "volume_change": {
-    "taken": 1
    }
   },
   "case:P08": {
    "index_change": {
-    "no_change": 6,
-    "confirm_case": 1,
-    "taken": 2
-   },
-   "_signals": {
-    "final_at_3": 8
+    "taken": 10,
+    "no_change": 7,
+    "confirm_case": 1
    },
    "volume_change": {
-    "taken": 6
+    "taken": 11
    },
-   "scorecard_ppm": {
-    "no_change": 1
+   "_signals": {
+    "final_at_4": 5,
+    "final_at_3": 10
    },
    "po_prices": {
+    "no_change": 5
+   },
+   "scorecard_ppm": {
     "no_change": 1
    }
   },
   "case:P10": {
    "_signals": {
-    "final_at_1": 10
-   },
-   "volume_change": {
-    "no_change": 9
+    "final_at_1": 10,
+    "final_at_2": 7
    },
    "scorecard_otd": {
     "no_change": 1
    },
+   "volume_change": {
+    "no_change": 11
+   },
    "should_cost": {
-    "taken": 5
+    "taken": 12
+   },
+   "po_prices": {
+    "taken": 7,
+    "no_change": 1
    },
    "index_change": {
     "confirm_case": 1
    },
-   "po_prices": {
-    "taken": 1
+   "scorecard_ppm": {
+    "no_change": 1
    }
   },
   "case:P11": {
    "index_change": {
-    "taken": 10
+    "taken": 42
    },
    "scorecard_ppm": {
-    "taken": 8
+    "taken": 27
    },
    "volume_change": {
-    "taken": 7
+    "taken": 24
+   },
+   "po_prices": {
+    "no_change": 17
    },
    "_signals": {
-    "final_at_5": 2,
-    "final_at_4": 2,
+    "final_at_4": 5,
+    "final_at_5": 5,
+    "final_at_7": 1,
+    "final_at_6": 3,
     "final_at_3": 1
    },
    "energy cost": {
     "taken": 1
    },
-   "po_prices": {
-    "no_change": 2
-   },
-   "news": {
-    "no_change": 1
+   "energy index": {
+    "taken": 6
    },
    "index and price history": {
     "taken": 1
+   },
+   "news": {
+    "no_change": 1
    }
   },
   "case:P18": {
    "index_change": {
-    "taken": 7,
+    "taken": 9,
     "confirm_case": 1
    },
-   "volume_change": {
-    "taken": 6,
-    "no_change": 3
-   },
    "po_prices": {
-    "taken": 9
+    "taken": 11
+   },
+   "volume_change": {
+    "no_change": 5,
+    "taken": 6
    },
    "_signals": {
-    "final_at_3": 7,
-    "mirror": 4,
-    "final_at_4": 1,
+    "mirror": 5,
+    "final_at_4": 2,
+    "final_at_3": 8,
     "final_at_2": 2
    }
   }
  },
  "signals": {
-  "asked_for_data": 72,
-  "fair_point": 18,
-  "padding": 13,
+  "already_counted": 29,
+  "padding": 30,
+  "asked_for_data": 92,
   "rising_index_backfired": 7,
-  "already_counted": 9
+  "fair_point": 18
  }
 }
