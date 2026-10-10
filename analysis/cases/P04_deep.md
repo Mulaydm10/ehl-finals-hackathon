@@ -126,3 +126,26 @@ What else the games show:
 - **Agent** `noidea_p04.py`, replays vs main (`replay_cmp_cloud.py`):
   - default: **54 of 54 threads SAME** (14 P04 games incl. 1992e28a, P01, P03, P08, P11);
   - with the (disabled) shot switched on for the check only: 1992e28a turn 3 = accept the open 4.88 @ 30 d (0.766) instead of the hop that scored 0.700.
+
+## 9. Rules re-read and the record holder's deal (2026-10-11 ~03:00, user: "find any way in the rules")
+**The record holder's deal, to the cent.** The only whole-cent P04 deal (5 payment terms x 3 contract lengths x every price) that shows as 0.874 is **4.89 @ 45 d, 24 or 36 m: score 0.873682, C EUR 196,822.00, EUR 2,024 saved**. makeAnother.md's record and our six games are the same deal. Nothing on the grid sits between it and the next cent (4.88 @ 45 d = 1.0), which the supplier cannot accept (§3).
+
+**Every rule that could open a way, checked:**
+
+| rule (source) | what it allows | effect on P04 |
+|---|---|---|
+| "C_best is the cheaper of the best package any supplier in the case would ever accept, **with every valid lever applied**" (brief §6, api.md Cost and score) | C_best already includes every lever | the floor F derived from C_best cannot be lowered by any argument, tone or trade: the §3 proof stands |
+| "it never sells below its cost floor" (brief §2) | hard limit, in code | no persuasion goes under F |
+| "Everything else counts - including weaknesses you find in our bots" (brief §7.2) | exploiting bot behaviour | the weakness would have to beat a hard limit; none does. On the cent grid we already sit on its floor cent |
+| value = price, payment timing, tooling, freight leg, chargebacks, delivery, volume, defect commitment; "a longer contract ... does not count" (api.md) | the trades a supplier values | P04 negotiates only price, payment and contract length; lead time, volume, DAP, tooling and start date are fixed; ppm and chargeback are not negotiable |
+| term_options: payment 14/30/45/60/90, contract 12/24/36 (case file) | the only allowed values; anything else is a 422 | covered in §3: no other combination |
+| "unit_price: number, € with 2 decimals" (api.md Terms) | whole cents only | **4.885 @ 45 d would score 1.0**, but it is outside the documented format. At best a 422; if it ever went through, it would be a validation gap, not a negotiation (replays are open to the jury). Not built, not recommended |
+| "No deal scores your alternative" (brief §6) | walking | C_alt 203,169 > C_open: score 0 |
+| practice: "your best score per practice case counts"; ties in the FINAL go to more deals, then fewer rounds (api.md) | - | the practice record does not rank the Live Final; P04 is a tie on the practice board and costs us nothing |
+
+**What decides the competition** (brief §8-9): the Live Final points (5 waves of hidden cases, mean case score x 100 per wave), not practice records.
+- The P04 lessons carry over to hidden C-part cases:
+  - estimate its cash rate from its own two-sheet quotes;
+  - steer its primary to the term whose floor cent scores best;
+  - never hop terms after its first counter.
+- Request 14 (the price path for price-frozen suppliers, P03 +0.027) is already in main's `noidea.py`.
