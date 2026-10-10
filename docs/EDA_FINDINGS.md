@@ -93,6 +93,92 @@ cash-short (70130, 70150) the relationship charge bites hardest, so payment-for-
 - **leverage:** "hard bargain". Rival quotes, index evidence, an index clause, a credible walk-away.
 - **routine:** "fast and clean". 2–3 rounds, accept a decent deal, multi-year for a discount.
 
+### All 46 suppliers by category: likely goal, state and main motives
+
+Goal: **bold** = given by a practice case, otherwise predicted. Score = scorecard colour/ppm.
+Share = our spend as % of their turnover. Credit = credit index (≥ 300 = risk).
+
+**Castings (9)** → mostly **stabilise**; red ones → **quality_first**
+
+| sup | name | ctry | owner | score | share | credit | goal | motives |
+|---|---|---|---|---|---:|---:|---|---|
+| 70110 | Brandlhuber | DE | family | amber 712 | 4.9 | 222 | **stabilise (P01)** | partnership pride, data-naive, wants faster pay |
+| 70120 | Velkenreith | DE | family | amber 734 | 1.4 | 239 | **stabilise (P06)** | partnership pride |
+| 70130 | Wimbacher | DE | family | green 651 | 6.7 | 231 | stabilise | **cash-short**, needs volume, succession |
+| 70140 | Kalwisz | PL | private | **red 2376** | 7.0 | 225 | **quality_first (P11)** | cash-short, restructuring, escalation |
+| 70150 | Tarsevi | TR | family | **red 2652** | 3.2 | 228 | **stabilise (P06)** | cash-short, needs volume, restructuring, open book |
+| 70160 | Meridune | CN | private | green 0 | 0.1 | 254 | stabilise/leverage | wants faster pay |
+| 70170 | Vrbenský | CZ | family | **red 5682** | 2.4 | 239 | quality_first | new plant, values us |
+| 70180 | Allgäu-Reiter | DE | family | amber 526 | 3.3 | 244 | stabilise | partnership pride |
+| 70190 | Pfaffenreuth | DE | family | amber 715 | 7.1 | 227 | stabilise | **hedged power** (energy args won't land) |
+
+**Electrical (8)** → **stabilise**; mostly groups: price frozen/committee → negotiate terms
+
+| sup | name | ctry | owner | score | share | credit | goal | motives |
+|---|---|---|---|---|---:|---:|---|---|
+| 70510 | Nordmark AG | DE | group | green 273 | 0.2 | 147 | **stabilise (P02)** | pricing committee; copper-justified |
+| 70520 | Vesmo | CZ | group | green 764 | 1.2 | 173 | stabilise | hedged copper, small accounts |
+| 70530 | Selvbrunn | DE | group | green 0 | 0.3 | 157 | **stabilise (P03)** | **price frozen** |
+| 70540 | Konvertek | AT | group | green 0 | 0.6 | 178 | stabilise/secure | chip shortage, price list fixed |
+| 70550 | Platinenwerk Lausitz | DE | private | green 701 | 0.7 | 150 | **stabilise (P17)** | below cost once; boards +41% |
+| 70560 | Kabelwerk Rhönsberg | DE | group | green 111 | 0.8 | 149 | **stabilise (P14)** | hedged copper |
+| 70570 | Sensorik Ammertal | DE | private | green 271 | 1.2 | 176 | stabilise | price frozen, new owner |
+| 70580 | Motorenwerk Saalach | DE | group | green 0 | 0.6 | 171 | stabilise | **"not strategic"**, we pay late (+19 d) |
+
+**Machined parts (10)** → **leverage** (multi-source) or **secure_supply** (capacity-tight)
+
+| sup | name | ctry | owner | score | credit | goal | motives |
+|---|---|---|---|---|---:|---|---|
+| 70210 | Dralveck | DE | founder | amber 1863 | 249 | **leverage (P05)** | data-naive, needs volume, we pay late |
+| 70220 | Obermaier & Huber | DE | founder | amber 731 | 245 | **secure_supply (P09)** | **capacity tight**, full order book |
+| 70230 | Lindlbauer | DE | family | green 544 | 255 | **leverage (P13)** | data-naive, open book, we pay late |
+| 70240 | Hrvelec | CZ | founder | amber 980 | 246 | **leverage (P05)** | full order book, wants commitment |
+| 70250 | Fuchsreiter | DE | founder | green 318 | 228 | **leverage (P05)** | **free capacity**, needs volume, we pay late |
+| 70260 | Tauvelt | AT | family | green 0 | 240 | leverage | open book, partnership pride |
+| 70270 | Kraslin | CZ | founder | amber 1531 | 245 | leverage | data-naive, partnership pride |
+| 70280 | Wälzhammer | DE | family | green 425 | **302 (+72)** | leverage (careful) | **cash-short, credit watch, short-time work** |
+| 70290 | Rottaler | DE | founder | amber 921 | 231 | secure_supply? | big order won, wants commitment |
+| 70295 | Ilzauer | DE | founder | amber 1000 | 249 | leverage | free capacity, needs volume, data-naive |
+
+**Sheet metal (6)** → leverage/stabilise; red → **quality_first**
+
+| sup | name | ctry | owner | score | share | credit | goal | motives |
+|---|---|---|---|---|---:|---:|---|---|
+| 70310 | Aichbauer | DE | family | **red 4118** | **11.3** | 232 | **quality_first (P12)** | escalation, wants commitment |
+| 70320 | Ganghofer-Lenz | DE | family | green 949 | 3.4 | 251 | stabilise | wants faster pay |
+| 70330 | Varnoszeg | HU | private | amber 1879 | 8.2 | 248 | leverage | needs volume |
+| 70340 | Steinfelder | DE | family | green 489 | - | 230 | leverage | data-naive, open book |
+| 70350 | Weißacher | DE | founder | **red 5556** | - | **343 (+95)** | quality_first | **cash-short, credit downgrade** |
+| 70360 | Strasser | AT | founder | amber 762 | - | 223 | leverage | needs volume, data-naive |
+
+**Seals (4)** → **secure_supply** (allocation) or routine
+
+| sup | name | owner | credit | goal | motives |
+|---|---|---|---:|---|---|
+| 70410 | Ravensteiner | group | 159 | **secure_supply (P10)** | **allocation, capacity tight**; price +23% over should-cost |
+| 70420 | Kaltenbrunn AG (CH) | group | 162 | stabilise | price frozen; +16.6% over should-cost; 180 d notice |
+| 70430 | Hermannsdorfer | family | 167 | **routine (P15)** | bundle, open book |
+| 70440 | Pirkheim | family | 147 | secure_supply | allocation, needs multi-year |
+
+**Raw material (4)** → **leverage** (index clauses)
+
+| sup | name | owner | goal | motives |
+|---|---|---|---|---|
+| 70710 | Donautal | group | **leverage (P08)** | **hedged nickel until March** |
+| 70720 | Rupprecht-Kessel | family | **leverage (P16)** | proposes PPI-C index clause |
+| 70730 | Ostalpen (AT) | private | leverage | hedged nickel/alloys |
+| 70740 | Werdenfels | family | **leverage (P18)** | proposes AS-1.4404 surcharge clause |
+
+**C-parts (5)** → **routine**
+
+| sup | name | goal | motives |
+|---|---|---|---|
+| 70610 | Leitner & Sohn | **routine (P07)** | bundle kit, needs volume |
+| 70620 | Wälzlager-Zentrum Süd | **routine (P04)** | "not strategic", only multi-year moves price |
+| 70630 | Brucker | routine | price list fixed, price frozen |
+| 70640 | Inntal (AT) | **routine (P19)** | needs volume |
+| 70650 | Mairhofer | routine | "not strategic", needs volume |
+
 ---
 
 ## 2. Negotiation history: suppliers always settle 1-4 points below what they ask
