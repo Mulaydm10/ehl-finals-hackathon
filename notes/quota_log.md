@@ -193,3 +193,4 @@
 | 2026-10-10 23:09 | Parth | P11 | p11_hold timeout first=0d5b 42.77/43.57/44.01 hair-0.08 5e37c67 / scripted | 0.8770 | 8f62abf996ef150f |
 | 2026-10-11 00:51 | Parth | P04 | p04_months 2dbff17 (12-month sheets, 90 d primary) / scripted | 0.056 | d9254a0c99c892aa |
 | 2026-10-11 01:05 | Parth | P05 | p05_rounds cf31816 (max rounds: 31) / scripted | 0.965 | 30ec9eb7dd0febc9 |
+| 2026-10-11 01:17 | Parth | P05 | p05_hold note 25.54/26.6/26.8 b42cd96 / scripted | 0.872 | fff61af109edbf39 |
