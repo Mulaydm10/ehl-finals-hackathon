@@ -222,3 +222,7 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
 11. **Loop run 1: live ad0427655e885fc1 = 0.710 (low draw), agent 288ce7f (cross-sell invitation, TASK 13).** 5.41 @ 90 =
     5.338 -> 5.22 @ 14 = 5.238 (-0.10) -> 5.17 (-0.05, deferral 4 of 4) -> final 5.12 @ 14 = 5.138. Total cut -0.20,
     the same as a4b9: **the cross-sell did not move the floor.** Next untested floor lever (P08_floor.md): 36 m.
+12. **Loop run 2: live 94e77b7b71359f60 = 0.721 (low draw), agent 078e9a5 (36-month sheets, TASK 14).** Round 1 answered
+    on 36 m: **5.40 @ 90 = 5.328 (1 cent below every 24-month low draw, 5.41-5.42)** -> 5.21 @ 14 -> 5.16 (deferral
+    5 of 5) -> final 5.11 @ 14 = 5.128. Total cut -0.20 again. 36 m moved the floor by about -0.01 (one sample, cent
+    rounding). It costs us nothing, so keep it.
