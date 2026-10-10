@@ -250,3 +250,20 @@ Code still does all maths and safety checks; at runtime the agent now reads, lea
   1× asked for something new (90 instead of 30 days at €5.40) → `walked_away` (P07 c5d845883158676c, 0.12).
 - **Suppliers never concede after final_offer; pushing ends the deal.** Rule since v1.4: accept, or send back its own
   cheaper alternative. (Neel played a 2nd P04: 5f80eb75c793f352, accepted final €4.91.)
+
+## P02 live (price_increase, stabilise, group supplier 70510, gpt-6-astra)
+| version | score | session | what happened |
+|---|---:|---|---|
+| manual (web app) | 0 (walked) | 94dea31d90407b56 | 3 timeouts while writing by hand (60 s per message) → "We are withdrawing from this negotiation" |
+| v2.3 | **0.48** | da8d0e3d77ce091c | we asked 90 d @ €364.69 → it took 90 d but **priced the financing**: €373.13 @ 90 d (alt €369.02 @ 30 d) → 373.13 → 372.50 → **final €372.15 @ 90 d in round 4** (prior said 7) |
+- Its reasons: "extending payment terms to … days incurs financing costs that would necessitate a higher unit price";
+  "Which figures is that based on? Please send us the data"; final: "**without additional verified data to substantiate
+  your target price, our flexibility remains highly restricted**"; "our calculation stays internal".
+- It charges ~€4.11/unit for 60 extra days (≈ 6.7 %/yr, below our 8%), so 90 d was still right (alt €369.02 @ 30 d = C
+  €2.27 M vs our deal €2.26 M). Neel's score-1 package €368 @ 90 d needs ~€4 more.
+- **We gave it no data on price**: only the forecast (our rule: never cite a rising index). Its opening e-mail states
+  its OWN cost shares ("CU-NOTATION rose 47.7 % … 20 % of our cost; LCI-C 2.7 % … 20 %; PPI-C241 6.5 % … 14 %").
+  **Next idea: a cost-justification calculation from its own shares × the 6-month index moves** (copper +16% over 6 m vs
+  +47.7% over 12 m; Neel: 6-month driver mix ≈ +4.6% vs its +6.5% ask) - the calculation it asks for, like the kit calc.
+- Web app: manual play can't meet 60 s per message → add a countdown + "Ask NoIdea then edit" flow.
+- Patience prior for group/stabilise price increases is too high (7; this one went final in round 4).

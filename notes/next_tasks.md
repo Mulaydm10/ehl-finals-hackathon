@@ -1,7 +1,7 @@
 # Next tasks: focus list (2026-10-10 ~14:50)
 
 State: agent **v1.4** (`--agent noidea`). Live: P01 **0.85**, P07 **0.70** (best of 4). Offline mean 0.94
-(simulator, optimistic). Practice games: **26 of 200** (incl. Neel's P04) (resets Sun 12:22). History: `notes/agent_changelog.md`,
+(simulator, optimistic). Practice games: **29 of 200** (incl. Neel's 2× P04, 1 manual P02) (resets Sun 12:22). History: `notes/agent_changelog.md`,
 `notes/quota_log.md`. Owners: **D** = Dhruv (+ Claude), **N** = Neel (+ Claude).
 
 ## A. Close the P07 gap (0.70 → toward 1.0) (D)
@@ -30,6 +30,8 @@ P02 P03 (stabilise), P04 (routine renewal), **P05 (RFQ)**, P08 P18 (raw material
 P11 (quality). ~8 games. Order: P05, P10, P11 first (most different from what we've tested).
 
 ## D. Agent features still missing (D)
+- **Cost-justification calculation from the supplier's own stated cost shares** (P02 live 0.48: "without additional verified data to substantiate your target price, our flexibility remains highly restricted").
+- Web app: countdown timer (manual P02 timed out 3× → walked away).
 - **RFQ auction mechanics** (playbooks/rfq.md): step all bidders' targets down together, cite the
   leader's `offer:` to the trailing bidders each round. Today it's simple round-robin.
 - **Index clauses**: still off. Right when `index_paths` > 0 (P02, P08, P18); could help when ≤ 0.
