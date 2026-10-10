@@ -189,3 +189,10 @@ Code still does all maths and safety checks; at runtime the agent now reads, lea
 - Two bugs found and fixed offline: a moving premium baseline (price jumped 25.81 → 28.52); Qwen urgency
   ("we prioritize a reliable supply chain above all else") now filtered.
 - Tools: `src/eval/collect_threads.py` (real e-mails), `src/eval/parse_test.py` (parser + learner on them).
+| v2.0 live | P10 | **0.54** | afd996e3d4b14336 | round 1 still asked lead **42** (nothing learned yet) → "Accommodating this shorter lead time requires a premium, resulting in a unit price of €34.00" → **final_offer in round 1, no alternative this time** → accepted. Learning from round 2 comes too late: P10 goes final in round 1 in 3/3 games |
+
+### v2.1 (offline): round-1 prior for the lead-time premium
+- Prior: lead time below the supplier's own quoted lead costs it **0.49% of price per day** (P10 live ×2:
+  −€0.158/day at €32.20), applied from round 1 when lead time is negotiable; learned values replace it.
+- Offline: P10 round 1 now lead **56 @ €27.38** (was 42 @ €27.69); all 10 cases unchanged (0.937 / 0.944).
+- P10 live so far: 0.46 (lead 35), 0.65 (lead 42 + its alternative), 0.54 (lead 42, no alternative). House agent 0.69.

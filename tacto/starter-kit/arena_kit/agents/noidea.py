@@ -145,6 +145,7 @@ class NoIdeaAgent:
                              "ask_pct": ask_pct, "open_terms": open_terms,
                              "args": self.rank_args(case, sid, ask_pct),
                              "kit": self.kit_calc(case, sid) if case["type"] == "bundling" else None}
+            self.sup[sid]["k"] = self.prior_k(case, sid)
             log.info("prep %s: ask %+.1f%%, justified %+.1f%%, full_cost~%.2f, cash_rate %.2f, motives %s",
                      sid, ask_pct, justified, full_cost, rate, list(motives))
 
@@ -516,6 +517,10 @@ class NoIdeaAgent:
         return complete_offer(case, t)
 
     LEARN_FIELDS = ("lead_time_days", "contract_months", "volume_per_year")
+    # Prior for round 1, before it has shown us anything: lead time below the supplier's own quoted lead costs it
+    # ~0.49% of price per day (P10 live x2: -EUR 0.158/day at EUR 32.20 = 0.49%). Capacity suppliers go final in
+    # round 1 (3/3 P10 games), so round 1 must already price this; learned values replace the prior.
+    PRIOR_LEAD_PREMIUM_PCT = 0.0049
 
     def learn(self, case, sid, events):
         """In-negotiation learning: the supplier's price premium per unit of each non-cash term, from the
@@ -533,9 +538,16 @@ class NoIdeaAgent:
                 if len(diff) == 1 and diff[0] in self.LEARN_FIELDS:
                     f = diff[0]
                     slopes.setdefault(f, []).append((b["unit_price"] - a["unit_price"]) / (b[f] - a[f]))
-        s["k"] = {f: sum(v) / len(v) for f, v in slopes.items()}
+        s["k"] = {**self.prior_k(case, sid), **{f: sum(v) / len(v) for f, v in slopes.items()}}
         if s["k"]:
             log.info("%s learned premiums (EUR/unit per unit of term): %s", sid, {f: round(v, 3) for f, v in s["k"].items()})
+
+    def prior_k(self, case, sid):
+        s = self.sup[sid]
+        o = s["open_terms"]
+        if "lead_time_days" in case["negotiable"] and o.get("lead_time_days") and o.get("unit_price"):
+            return {"lead_time_days": -self.PRIOR_LEAD_PREMIUM_PCT * o["unit_price"]}
+        return {}
 
     def premium(self, sid, t):
         """Value adjustment for the learned premiums, relative to the supplier's latest standing terms."""
