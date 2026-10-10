@@ -779,3 +779,9 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
 - High draws agreed to the FIRST probe 3 of 3 (45.13 7117, 45.10 b1f9, 45.25 e647) -> the floor sits LOW in the gap; low draws NAME it at the top (45.00, 37ea).
 ### v2.19c (offline): the answer to the floor question picks the ladder
 - Floor question one round earlier (k >= 2, in the last data e-mail) so the answer arrives before the first probe. Named = standing -> hair (44.95); "limits stay internal" -> LOW ladder 80/60/40/20% of a step (high draw 45.10 first). Tests 38, offline 0.931, walk replays unchanged.
+
+### v2.19d (offline) - conflicts found and fixed while checking the ladder
+1. Hair / probe on a supplier WITHOUT a price grid re-offered its own (worse-for-us) sheet: offline P08 stubborn 0.92 -> 0.32. Now: hair only with a detected grid, and any probe only when its sheet has OUR structure (same_structure).
+2. The named-floor regex matched its standard sentence "Our offer stands at a price of EUR X" (e647 -> hair at 45.45). Now only answer phrases (can give you / best we can do / lowest we can / floor / meet you at).
+3. After the probes, the next ask could fall BELOW our previous ask (37ea replay 44.95 -> 44.72): now we hold our last ask (no backtracking).
+- Offline back to 0.931 / 0.930, tests 38, walk replays unchanged.
