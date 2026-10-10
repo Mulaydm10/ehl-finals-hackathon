@@ -801,3 +801,14 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
 - Agent: probes come from memory at the same standing price (P11: at 45.00 -> 44.90, 44.95; at 45.50 -> 45.10, 45.25, 45.45); the model prompt gets an OUR PAST GAMES WITH THIS SUPPLIER block. After every game /tmp/after_game.sh archives + rebuilds memory + re-mines claim reactions, so the next game starts from everything learned.
 - Tests 38, offline 0.931, walk replays unchanged. (For the final: if hidden suppliers repeat across waves, memory carries over between waves.)
 - loop 6/8 (20:15, v2.20 memory): 0.71 (a5ab83b965976781) - high draw 46.50/46.00/45.50, memory probe 45.10 -> final 45.50 at once. Loop so far: 0.71, 0.71, 0.79, 0.78, 0.79, 0.71.
+- loop 7/8 (20:18): 0.7935 (7285b18239ee9465) - LOW draw, memory probe 44.90 -> final 45.00 at once. **45.00 is a hard price
+  floor**: every ask under it refused in every session (44.60-44.90), named "absolute bottom line".
+### v2.21 (offline): at a hard price floor, trade a term that is cheap for the supplier AT ITS OWN COMMITMENT
+- Only cost left above the floor: quality EUR 2,146/yr. EUR 300 chargeback at the 300 ppm it commits to = ~5 complaints/yr
+  (~EUR 1,431 = 0.09/unit, under one 0.50 grid step) -> 0.8086 at 45.00 (= the other team's 0.81). Earlier refusals were at
+  800 ppm (+1.00 for EUR 150, 29cbb6d6) - never tested at 300 ppm.
+- At the floor (after a refused probe, or at once when memory says the price is hard) send TWO sheets: floor price + EUR 300
+  chargeback, and a hair under the floor without; framing: "it only costs you if quality slips below your own commitment".
+- Conflicts fixed: the structure lock dropped the second sheet (code-built probe / floor pairs now exempt); the model kept
+  only one sheet (send_all). Replays: low draw 7285 -> [(45.00, 300), (44.95, 0)]; high draw a5ab -> probe 45.10 first.
+  Tests 38, offline 0.931, walk replays unchanged.
