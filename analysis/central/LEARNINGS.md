@@ -35,6 +35,8 @@ Consequences:
 | delivery record (OTD) | 0 / 1 | 1 |
 - **26 replies asked "Which figures is that based on? Please send us the data."** All 6 of our P03 round-1 e-mails had
   **no checkable claim** (every driver rose, and nothing else was ranked), so every P03 game started with that question.
+- **When every standard window rose, search all checkable windows (≤ 12 months, ending in the last 12 months) for the
+  steepest fall of a cost driver** - P03: −2.3% on its main driver took the committee from 432.15 to 431.67 (0.923 → 0.934).
 - Never cite a rising index. All 11 "We received a lot of material" (padding) replies came after e-mails with two or
   more index claims; three claims of *different* kinds never drew it (P10, P18).
 - Should-cost was ranked against **today's** price (P03: 2.4% → never cited), not against the **quote** (8.7% above).
@@ -72,9 +74,12 @@ Consequences:
 | 3 sheets 60/45/30 d, no data, 36 m (×6, ours) | sales 431.61 @ 60 d, then holds | 0.862 |
 | … + escalation to the committee on 90 d (×3) | 433.08–433.09 @ 90 d | 0.8996–0.8998 |
 | 1 sheet 90 d / 24 m, volume forecast, committee asked in round 1 (Dhruv v2.7) | 432.94 @ 90 d | 0.903 |
-| **plan:** 1 sheet 90 d / 36 m, should-cost + volume forecast, committee in round 1, then stay at 90 d | sim: 432.80 @ 90 d | sim 0.913 |
+| central layer: 1 sheet 90 d / 36 m, should-cost + volume forecast, committee in round 1, stay at 90 d (27e05be06bb4181f) | committee 432.15 @ 90 d (429.22 @ 30 d) | 0.9228 |
+| … + on-time delivery 84.6% as a 3rd claim (3091eac920857dc0) | "does not change our calculation"; 432.15 again | 0.9228 |
+| **… + electronic components −2.3% (2025-01 → 2025-10) instead of OTD (2e4bf89ac2967a45)** | **431.67 @ 90 d** | **0.9342 - beats the house** |
 | house agent | – | 0.9249 (= 432.06 @ 90 d) |
 
-Best of all 24 teams on P03: 0.903 (public board); nobody has beaten the house (12 teams tried). To beat it we need
-the committee about EUR 0.75 lower than any game so far. Only taken data has moved it, and we have used every
-kind of data that helps.
+**The committee is deterministic:** the same claims gave exactly the same price twice (432.15). Each piece of data
+it takes into account lowers its price; data it shrugs off changes nothing. What beat the house was the **steepest
+fall of its main cost driver in any window the arena checks** (`central.falling_window_claims`): all 6- and 12-month
+windows rose, but electronic components (44% of cost) fell −2.3% from Jan to Oct 2025 → −EUR 0.48.
