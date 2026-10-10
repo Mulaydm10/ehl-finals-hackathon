@@ -57,6 +57,8 @@ _EXP = {x.strip() for x in _os.environ.get("NOIDEA_EXPERIMENTS", "").split(",") 
 EXPERIMENTS_RFQ = _EXP
 if "rfq_low10" in _EXP:
     RFQ_BELOW_LOW = 0.10
+if "rfq_low15" in _EXP:
+    RFQ_BELOW_LOW = 0.15
 if "rfq_low12" in _EXP:
     RFQ_BELOW_LOW = 0.12
 

@@ -1,5 +1,5 @@
 {
- "games": 203,
+ "games": 206,
  "by_kind": {
   "copper notation": {
    "taken": 1,
@@ -18,10 +18,10 @@
    "take_rate": 1.0
   },
   "index_change": {
-   "taken": 141,
+   "taken": 146,
    "no_change": 17,
    "confirm_case": 7,
-   "take_rate": 0.85
+   "take_rate": 0.86
   },
   "labour cost index": {
    "taken": 1,
@@ -32,9 +32,9 @@
    "take_rate": 0.0
   },
   "news": {
-   "taken": 2,
+   "taken": 3,
    "no_change": 1,
-   "take_rate": 0.67
+   "take_rate": 0.75
   },
   "notice_period": {
    "taken": 5,
@@ -42,21 +42,21 @@
    "take_rate": 0.83
   },
   "po_prices": {
-   "no_change": 44,
+   "no_change": 45,
    "taken": 25,
    "take_rate": 0.36
   },
   "rival_quote": {
-   "taken": 60,
-   "no_change": 10,
-   "take_rate": 0.86
+   "taken": 67,
+   "no_change": 12,
+   "take_rate": 0.85
   },
   "scorecard_otd": {
    "no_change": 2,
    "take_rate": 0.0
   },
   "scorecard_ppm": {
-   "taken": 41,
+   "taken": 42,
    "no_change": 3,
    "take_rate": 0.93
   },
@@ -70,7 +70,7 @@
   },
   "volume_change": {
    "no_change": 27,
-   "taken": 89,
+   "taken": 90,
    "take_rate": 0.77
   }
  },
@@ -163,25 +163,25 @@
   },
   "case:P05": {
    "index_change": {
-    "taken": 21,
+    "taken": 25,
     "no_change": 1
    },
    "rival_quote": {
-    "taken": 60,
-    "no_change": 9
+    "taken": 67,
+    "no_change": 11
    },
    "_signals": {
     "final_at_10": 3,
-    "final_at_8": 1,
-    "final_at_9": 1,
+    "final_at_8": 2,
+    "final_at_9": 2,
     "final_at_12": 1,
     "final_at_7": 4,
-    "final_at_6": 3,
+    "final_at_6": 4,
     "final_at_11": 1,
     "final_at_4": 1
    },
    "news": {
-    "taken": 2
+    "taken": 3
    }
   },
   "case:P07": {
@@ -248,16 +248,16 @@
   },
   "case:P11": {
    "index_change": {
-    "taken": 68
+    "taken": 69
    },
    "scorecard_ppm": {
-    "taken": 40
+    "taken": 41
    },
    "volume_change": {
-    "taken": 37
+    "taken": 38
    },
    "po_prices": {
-    "no_change": 27
+    "no_change": 28
    },
    "_signals": {
     "final_at_4": 6,
@@ -307,10 +307,10 @@
   }
  },
  "signals": {
-  "asked_for_data": 118,
-  "already_counted": 44,
-  "padding": 45,
-  "fair_point": 50,
+  "asked_for_data": 120,
+  "already_counted": 46,
+  "padding": 46,
+  "fair_point": 55,
   "rising_index_backfired": 7
  }
 }
