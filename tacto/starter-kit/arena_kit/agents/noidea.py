@@ -752,7 +752,11 @@ class NoIdeaAgent:
         s = self.sup.get(getattr(self, "_combo_sid", None), {})
         for values in itertools.product(*(opts[f] for f in fields)):
             t = {**base, **dict(zip(fields, values))}
-            if "index_clause" in t and s.get("clause_required"):
+            # a HEDGED supplier: keep asking clause-free; its counters carry its clause anyway and we accept its final
+            # (P08: clause-free round 2 -0.15 / -0.25 (probe A, 0.912) vs -0.05 / -0.09 after we took its clause - "We
+            # appreciate your acceptance of the AS-14404 index clause", agent 6701d5ddffb86dd4 0.822)
+            hedged = "hedged_forward" in (s.get("dossier") or {}).get("motives", {})
+            if "index_clause" in t and s.get("clause_required") and not hedged:
                 # it insists on a clause: take ITS clause, don't pick our own deadband (P08 v2.9 9bfa86104bcbdd30: our db5 +
                 # 14 d was priced at EUR 5.55 and stalled; v2.6 took its db0 @ 45 d at EUR 5.21)
                 own = s.get("their_clause")
@@ -825,10 +829,11 @@ class NoIdeaAgent:
         # we locked chargeback EUR 150, it countered EUR 0 every round, final EUR 47.50 vs 45.50 when we switched in v2.7)
         theirs = [ts["terms"] for m in self.events_for(sid)[-4:] if m.get("from") != "buyer"
                   for ts in (m.get("term_sheets") or [])[:1] if ts.get("terms")]
+        hedged = "hedged_forward" in s["dossier"].get("motives", {})
         if prev and len(theirs) >= 2:
             for f in case["negotiable"]:
                 if f != "unit_price" and theirs[-1].get(f) == theirs[-2].get(f) and theirs[-1].get(f) != prev.get(f) \
-                        and f in theirs[-1]:
+                        and f in theirs[-1] and not (f == "index_clause" and hedged):  # see combos(): stay clause-free
                     prev[f] = theirs[-1][f]
         # follow the structure IT priced best for us: its own counter reveals what a structure really costs it (P11 v2.10
         # 0d5bc007545e737b: it answered our 300 ppm / EUR 0 sheet with EUR 45.50 = 0.71 in round 1, we went back to our
