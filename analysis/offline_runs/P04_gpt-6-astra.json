@@ -1,0 +1,256 @@
+[
+ {
+  "case": "P04",
+  "model": "gpt-6-astra",
+  "supplier_r": 0.3,
+  "sim_score": 1.0,
+  "end": "deal",
+  "messages": 2,
+  "llm": {
+   "n": 2,
+   "seconds": 9.290632963180542,
+   "errors": 0
+  },
+  "emails": [
+   {
+    "to": "sup:70620",
+    "subject": "Re: Renewal of the ball bearing 6306 agreement",
+    "body": "Dear WÃ¤lzlager-Zentrum SÃ¼d GmbH team,\n\nThank you for your offer and for sharing the cost indicators behind it. Please send your cost calculation in XLSX format so we can review the individual elements together. We would be open to discussing a longer-term agreement linked to volume commitments, alongside the corresponding pricing and payment terms.\n\nWe confirm a binding volume of 20,000 units per year for 36 months. Producer prices DE: bearings, gears, gearing and driving elements changed +0.6% from 2026-02 to 2026-08 (idx:PPI-C2815@2026-02, idx:PPI-C2815@2026-08). Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed +1.7% from 2025-12 to 2026-06 (idx:LCI-C@2025-12, idx:LCI-C@2026-06). Could you share your cost breakdown for this part, so we can understand the drivers together?\n\nOn this basis we propose the attached term sheets (unit_price 4.79, payment_days 14, contract_months 36; unit_price 4.84, payment_days 60, contract_months 36; unit_price 4.81, payment_days 30, contract_months 36). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 4.79,
+      "payment_days": 14,
+      "contract_months": 36
+     },
+     {
+      "unit_price": 4.84,
+      "payment_days": 60,
+      "contract_months": 36
+     },
+     {
+      "unit_price": 4.81,
+      "payment_days": 30,
+      "contract_months": 36
+     }
+    ],
+    "refs": [
+     "idx:LCI-C@2025-12",
+     "idx:LCI-C@2026-06",
+     "idx:PPI-C2815@2026-02",
+     "idx:PPI-C2815@2026-08"
+    ],
+    "action": null
+   },
+   {
+    "to": "sup:70620",
+    "subject": "Re: Renewal of the ball bearing 6306 agreement",
+    "body": "Dear WÃ¤lzlager-Zentrum SÃ¼d GmbH team,\n\nWe would welcome a straightforward, cooperative approach to renewing the agreement, including consideration of a longer contract term. Please share your calculation in XLSX format so we can review its elements alongside the proposed contractual terms.\n\nWe confirm a binding volume of 20,000 units per year for 36 months.\n\nOn this basis we propose the attached term sheets (unit_price 4.88, payment_days 90, contract_months 36; unit_price 4.8, payment_days 14, contract_months 36; unit_price 4.85, payment_days 60, contract_months 36). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 4.88,
+      "payment_days": 90,
+      "contract_months": 36
+     },
+     {
+      "unit_price": 4.8,
+      "payment_days": 14,
+      "contract_months": 36
+     },
+     {
+      "unit_price": 4.85,
+      "payment_days": 60,
+      "contract_months": 36
+     }
+    ],
+    "refs": [],
+    "action": null
+   },
+   {
+    "to": "sup:70620",
+    "subject": null,
+    "body": null,
+    "term_sheets": [],
+    "refs": null,
+    "action": {
+     "type": "accept",
+     "term_sheet_id": "offer:sup:70620-2"
+    }
+   }
+  ]
+ },
+ {
+  "case": "P04",
+  "model": "gpt-6-astra",
+  "supplier_r": 0.1,
+  "sim_score": 0.9824428897587868,
+  "end": "deal",
+  "messages": 6,
+  "llm": {
+   "n": 6,
+   "seconds": 37.57226920127869,
+   "errors": 0
+  },
+  "emails": [
+   {
+    "to": "sup:70620",
+    "subject": "Re: Renewal of the ball bearing 6306 agreement",
+    "body": "Dear WÃ¤lzlager-Zentrum SÃ¼d GmbH team,\n\nThank you for your offer and the visibility into your underlying costs; we appreciate your continued support. Please share your cost calculation in XLSX format so we can review its individual elements together. We would be open to discussing a longer-term agreement linked to volume commitments, subject to the pricing and terms available on that basis.\n\nWe confirm a binding volume of 20,000 units per year for 36 months. Producer prices DE: bearings, gears, gearing and driving elements changed +0.6% from 2026-02 to 2026-08 (idx:PPI-C2815@2026-02, idx:PPI-C2815@2026-08). Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed +1.7% from 2025-12 to 2026-06 (idx:LCI-C@2025-12, idx:LCI-C@2026-06). Could you share your cost breakdown for this part, so we can understand the drivers together?\n\nOn this basis we propose the attached term sheets (unit_price 4.79, payment_days 14, contract_months 36; unit_price 4.84, payment_days 60, contract_months 36; unit_price 4.81, payment_days 30, contract_months 36). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 4.79,
+      "payment_days": 14,
+      "contract_months": 36
+     },
+     {
+      "unit_price": 4.84,
+      "payment_days": 60,
+      "contract_months": 36
+     },
+     {
+      "unit_price": 4.81,
+      "payment_days": 30,
+      "contract_months": 36
+     }
+    ],
+    "refs": [
+     "idx:LCI-C@2025-12",
+     "idx:LCI-C@2026-06",
+     "idx:PPI-C2815@2026-02",
+     "idx:PPI-C2815@2026-08"
+    ],
+    "action": null
+   },
+   {
+    "to": "sup:70620",
+    "subject": "Re: Renewal of the ball bearing 6306 agreement",
+    "body": "Dear WÃ¤lzlager-Zentrum SÃ¼d GmbH team,\n\nWe would be pleased to explore a longer-term agreement on mutually workable terms. Please outline the contractual options you could offer and how duration would affect your proposal, so we can keep the renewal discussion focused and straightforward.\n\nWe confirm a binding volume of 20,000 units per year for 36 months.\n\nOn this basis we propose the attached term sheets (unit_price 4.83, payment_days 45, contract_months 36; unit_price 4.88, payment_days 90, contract_months 36; unit_price 4.8, payment_days 14, contract_months 36). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 4.83,
+      "payment_days": 45,
+      "contract_months": 36
+     },
+     {
+      "unit_price": 4.88,
+      "payment_days": 90,
+      "contract_months": 36
+     },
+     {
+      "unit_price": 4.8,
+      "payment_days": 14,
+      "contract_months": 36
+     }
+    ],
+    "refs": [],
+    "action": null
+   },
+   {
+    "to": "sup:70620",
+    "subject": "Re: Renewal of the ball bearing 6306 agreement",
+    "body": "Dear WÃ¤lzlager-Zentrum SÃ¼d GmbH team,\n\nGern möchten wir die Verlängerung unserer Zusammenarbeit mit Ihnen unkompliziert und partnerschaftlich gestalten. Als Grundlage können wir eine mehrjährige Mengenvereinbarung prüfen und zunächst Laufzeit sowie Abrufbedingungen gemeinsam abstimmen.\n\nWe confirm a binding volume of 20,000 units per year for 36 months.\n\nOn this basis we propose the attached term sheets (unit_price 4.81, payment_days 14, contract_months 36; unit_price 4.86, payment_days 60, contract_months 36; unit_price 4.83, payment_days 30, contract_months 36). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 4.81,
+      "payment_days": 14,
+      "contract_months": 36
+     },
+     {
+      "unit_price": 4.86,
+      "payment_days": 60,
+      "contract_months": 36
+     },
+     {
+      "unit_price": 4.83,
+      "payment_days": 30,
+      "contract_months": 36
+     }
+    ],
+    "refs": [],
+    "action": null
+   },
+   {
+    "to": "sup:70620",
+    "subject": "Re: Renewal of the ball bearing 6306 agreement",
+    "body": "Dear WÃ¤lzlager-Zentrum SÃ¼d GmbH team,\n\nFor the renewal, we are open to exploring a longer-term volume agreement alongside the commercial terms. Please share your cost breakdown in XLSX format so we can discuss its individual elements and work towards a straightforward agreement.\n\nWe confirm a binding volume of 20,000 units per year for 36 months.\n\nOn this basis we propose the attached term sheets (unit_price 4.85, payment_days 45, contract_months 36; unit_price 4.9, payment_days 90, contract_months 36; unit_price 4.82, payment_days 14, contract_months 36). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 4.85,
+      "payment_days": 45,
+      "contract_months": 36
+     },
+     {
+      "unit_price": 4.9,
+      "payment_days": 90,
+      "contract_months": 36
+     },
+     {
+      "unit_price": 4.82,
+      "payment_days": 14,
+      "contract_months": 36
+     }
+    ],
+    "refs": [],
+    "action": null
+   },
+   {
+    "to": "sup:70620",
+    "subject": "Re: Renewal of the ball bearing 6306 agreement",
+    "body": "Dear WÃ¤lzlager-Zentrum SÃ¼d GmbH team,\n\nWe would welcome a straightforward discussion of the renewal, considering contract duration and commercial terms together. Please let us know what improved terms you could offer for a longer agreement so we can review the proposal as a whole.\n\nWe confirm a binding volume of 20,000 units per year for 36 months.\n\nOn this basis we propose the attached term sheets (unit_price 4.84, payment_days 14, contract_months 36; unit_price 4.89, payment_days 60, contract_months 36; unit_price 4.86, payment_days 30, contract_months 36). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 4.84,
+      "payment_days": 14,
+      "contract_months": 36
+     },
+     {
+      "unit_price": 4.89,
+      "payment_days": 60,
+      "contract_months": 36
+     },
+     {
+      "unit_price": 4.86,
+      "payment_days": 30,
+      "contract_months": 36
+     }
+    ],
+    "refs": [],
+    "action": null
+   },
+   {
+    "to": "sup:70620",
+    "subject": "Re: Renewal of the ball bearing 6306 agreement",
+    "body": "Dear WÃ¤lzlager-Zentrum SÃ¼d GmbH team,\n\nVielen Dank für den bisherigen Austausch. Gern prüfen wir eine längerfristige Vereinbarung; lassen Sie uns dafür zunächst die Vertragslaufzeit und die Rahmenbedingungen abstimmen, um eine für beide Seiten tragfähige Lösung zu finden.\n\nWe confirm a binding volume of 20,000 units per year for 36 months.\n\nOn this basis we propose the attached term sheets (unit_price 4.88, payment_days 45, contract_months 36; unit_price 4.85, payment_days 14, contract_months 36; unit_price 4.9, payment_days 60, contract_months 36). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 4.88,
+      "payment_days": 45,
+      "contract_months": 36
+     },
+     {
+      "unit_price": 4.85,
+      "payment_days": 14,
+      "contract_months": 36
+     },
+     {
+      "unit_price": 4.9,
+      "payment_days": 60,
+      "contract_months": 36
+     }
+    ],
+    "refs": [],
+    "action": null
+   },
+   {
+    "to": "sup:70620",
+    "subject": null,
+    "body": null,
+    "term_sheets": [],
+    "refs": null,
+    "action": {
+     "type": "accept",
+     "term_sheet_id": "offer:sup:70620-6"
+    }
+   }
+  ]
+ }
+]

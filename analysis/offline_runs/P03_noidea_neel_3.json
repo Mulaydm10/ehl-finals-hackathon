@@ -1,0 +1,75 @@
+{
+ "case": "P03",
+ "variant": "noidea_neel",
+ "sim_score": 0.9979095737041307,
+ "end": "deal {'unit_price': 426.61, 'payment_days': 60, 'contract_months': 36, 'volume_per_year': 4580}",
+ "rounds": 2,
+ "emails": [
+  {
+   "body": "Dear Birgit Mayrhofer,\n\nWe acknowledge your renewal proposal and the cost context provided. Please revise the proposal to extend the contract term and payment period and increase call-off flexibility within your existing approval authority.\n\n1. Volume and term: we confirm a binding volume of 4,580 units per year for 36 months, 13,740 units in total.\n2. Our proposal: option A: EUR 425.71 per unit, 60 days net, 36-month contract, 4,580 units per year; option B: EUR 424.29 per unit, 45 days net, 36-month contract, 4,580 units per year; option C: EUR 422.87 per unit, 30 days net, 36-month contract, 4,580 units per year. Option A amounts to about EUR 5,849,255 over the term.\n3. Next step: All other terms as in your quote; on your written confirmation of one option we will issue the order.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [],
+   "sheets": [
+    {
+     "unit_price": 425.71,
+     "payment_days": 60,
+     "contract_months": 36,
+     "volume_per_year": 4580
+    },
+    {
+     "unit_price": 424.29,
+     "payment_days": 45,
+     "contract_months": 36,
+     "volume_per_year": 4580
+    },
+    {
+     "unit_price": 422.87,
+     "payment_days": 30,
+     "contract_months": 36,
+     "volume_per_year": 4580
+    }
+   ]
+  },
+  {
+   "body": "Dear Birgit Mayrhofer,\n\nWe acknowledge your price freeze and the requirement for management approval of larger changes. Please propose extended payment terms and greater call-off flexibility within your existing approval authority.\n\n1. Volume and term: we confirm a binding volume of 4,580 units per year for 36 months, 13,740 units in total.\n2. Our proposal: option A: EUR 426.61 per unit, 60 days net, 36-month contract, 4,580 units per year; option B: EUR 425.18 per unit, 45 days net, 36-month contract, 4,580 units per year; option C: EUR 423.77 per unit, 30 days net, 36-month contract, 4,580 units per year. Option A amounts to about EUR 5,861,621 over the term.\n3. Next step: All other terms as in your quote; on your written confirmation of one option we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [],
+   "sheets": [
+    {
+     "unit_price": 426.61,
+     "payment_days": 60,
+     "contract_months": 36,
+     "volume_per_year": 4580
+    },
+    {
+     "unit_price": 425.18,
+     "payment_days": 45,
+     "contract_months": 36,
+     "volume_per_year": 4580
+    },
+    {
+     "unit_price": 423.77,
+     "payment_days": 30,
+     "contract_months": 36,
+     "volume_per_year": 4580
+    }
+   ]
+  }
+ ],
+ "relationship": {
+  "390.0": {
+   "relationship_eur": 5.785555207324232,
+   "score": 0.9978924064962372
+  },
+  "395.0": {
+   "relationship_eur": 8329.573628788241,
+   "score": 0.9732125734409592
+  },
+  "400.0": {
+   "relationship_eur": 32445.98023017962,
+   "score": 0.9017080393411917
+  },
+  "403.2": {
+   "relationship_eur": 56168.44665846498,
+   "score": 0.8313714980230141
+  }
+ }
+}
