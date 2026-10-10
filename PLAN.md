@@ -4,7 +4,7 @@
 suppliers, no human in the loop). Score = total cost C (price, payment, freight, quality,
 relationship, …) vs the best achievable deal. See `tacto/brief/brief.md` and `docs/EDA_FINDINGS.md`.
 
-**Baseline:** naive agent on P01 = **0.58** (replay https://arena.tacto.ai/replay/a44d915880203878).
+**Baseline:** naive agent on P01 = **0.58**; stock LLM agent + Qwen = 0.00; **NoIdea v1 + Qwen = 0.85** (replay https://arena.tacto.ai/replay/a44d915880203878).
 
 ## Architecture
 
@@ -25,7 +25,7 @@ a hosted model for the final.
 | # | Workstream | Owner | Folders / files |
 |---|---|---|---|
 | W1 | Datasets A/B/C builder + EDA | **Dhruv** | `src/datasets/`, `src/eda/`, `datasets/A_*`, `B_*`, `C_*`, `datasets/dossiers/`, `docs/EDA_FINDINGS.md` |
-| W2 | Agent: prepare → negotiate → close, model wiring, Live Final runner | **Dhruv** | `src/agent/`, `tacto/starter-kit/` (kit code) |
+| W2 | Agent: prepare → negotiate → close, model wiring, Live Final runner | **Dhruv** | `tacto/starter-kit/arena_kit/agents/noidea.py` (run: `arena play case:P01 --agent noidea`), `tacto/starter-kit/` |
 | W3 | Per-case deep dives (19 practice cases) | **Neel** | `analysis/cases/` |
 | W4 | Supplier economics model (cost floor, cash value, margin) | **Neel** | `analysis/supplier_economics/` |
 | W5 | Playbooks per case type (E) | **Neel** | `playbooks/` |
