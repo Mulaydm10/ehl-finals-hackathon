@@ -40,6 +40,9 @@ CLOSE_GAP = 0.015     # ...only when our last ask is within 1.5% of its standing
 STALL_DROP = 1 / 3    # it stalled: its last move (share of the gap) < 1/3 of the previous one...
 STALL_MIN = 0.02      # ...or < 2% of the gap
 MESO_BAND = 0.03  # round-1 MESOs: other structures within 3% of our best cost
+HAIR = 0.001  # one ask this far under a floor the supplier NAMED (P11: 45.00 -> 44.95)
+GRID_LADDER = (0.5, 0.25, 0.1, 0.04)
+GRID_LADDER_LOW = (0.8, 0.6, 0.4, 0.2)  # when it keeps its limits internal (P11 high draws: agreed 45.10-45.25)  # probe j asks its price - grid x GRID_LADDER[j] (P11 low draw: 44.75, 44.875, 44.95, 44.98)
 GRID_PROBES = 4  # grid probe: asks between (its price - grid) and its price, stepping up (P11 floor hidden in the 0.50 grid)
 NEAR_CLOSE_TRY = 0.0075  # one ask this far below an OPEN offer before taking it (P11 7117d351: agreed to ours, -0.8%)
 WALK_GUARD_MOVE = 0.005  # its last move cut our cost > 0.5%: still conceding, not about to walk
@@ -399,8 +402,16 @@ class NoIdeaAgent:
         # -0.3% -> no cut) comes after every other fact; then later rounds' data
         tiny = lambda c: c["kind"] == "index_change" and abs((c.get("figure") or 0) * (c.get("weight") or 0)) < 0.25 \
             and c.get("weight") is not None
-        ranked = [c for c in ranked if not c.get("late") and not tiny(c)] + [c for c in ranked if c.get("late")] + \
-                 [{**c, "late": True} for c in ranked if tiny(c) and not c.get("late")]  # never in round 1
+        late = [c for c in ranked if c.get("late")] + [{**c, "late": True} for c in ranked if tiny(c) and not c.get("late")]
+        # later rounds: what THIS supplier takes first, what it shrugged off last - NOT by size: on a grid supplier a taken
+        # fact is a full step whatever its size (P11 77f61e47: labour -0.3% "it's a tiny drop, but we can pass that on to
+        # you" -> 45.50 to 45.00; price history and QNs "do not change our calculation" every time)
+        if central:
+            try:
+                late.sort(key=lambda c: (c.get("filler", False), -central.take_rate(c["kind"], case["case_id"])))
+            except Exception:
+                pass
+        ranked = [c for c in ranked if not c.get("late") and not tiny(c)] + late  # tiny falls never in round 1
         # the arena counts a volume trend once per case: a 2nd forecast (another part) came back `duplicate` (P07 x4)
         fc = [c for c in ranked if c["kind"] == "forecast"]
         ranked = [c for c in ranked if c["kind"] != "forecast" or c is fc[0]]
@@ -1030,15 +1041,42 @@ class NoIdeaAgent:
         # above (standing - grid) in GRID_PROBES small steps on ITS sheet; the first ask >= its floor is agreed. Its final
         # offer is still accepted at once (never push after final). Without a grid: one near-close ask (-0.75%).
         g = self.price_grid(events)
+        close_now = False
         own = [ts["terms"]["unit_price"] for m in events if m.get("from") != "buyer"
                for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get("unit_price")]
         holding = len(own) >= 2 and abs(own[-1] - own[-2]) < 1e-9
+        lm = s.get("last_main") or {}
+        same_structure = all(terms.get(f) == lm.get(f) for f in case["negotiable"] if f != "unit_price") if lm else False
+        # probes re-offer ITS sheet at a lower price: only when that sheet has OUR structure (P08 sim 0.92 -> 0.32 when a
+        # probe re-offered its own, worse-for-us structure)
         probing = (near_final or holding) and status == "open" and moves_left(case, events) > 1 and ok \
-            and c_stand <= best_elsewhere and not self.next_args(sid, 1) and (holding or not g)
-        close_now = False
+            and c_stand <= best_elsewhere and not self.next_args(sid, 1) and (holding or not g) and same_structure
+        named = re.search(r"(?i)(?:can give you|can do|best we can do|lowest (?:price )?(?:we|i) can|our (?:absolute )?(?:floor|bottom|minimum)|as low as we can go|meet you at)[^.€]{0,40}(?:€|eur\s?)\s?(\d+[.,]\d{2})",
+                          latest(events).get("body") or "") if s.get("asked_floor") else None
+        hair = False
+        if named and abs(float(named.group(1).replace(",", ".")) - terms["unit_price"]) < 0.005 and not s.get("hair_tried"):
+            # it NAMED its floor = its standing price (P11 37ea72de: "We can give you a price of EUR 45.00" -> held 44.60-44.80,
+            # final 45.00; 3fa2 final after ONE probe): a ladder far below a named floor only spends its patience. Send ONE
+            # hair-below ask instead (-0.1%, P11 44.95 = 0.802); refused -> its final at the floor is still there.
+            s["probes"], s["hair_tried"], hair = GRID_PROBES, True, True
+        if hair and probing and g:  # grid suppliers only (P08 sim has no grid: its own sheet is a bad structure for us)
+            t_h = complete_offer(case, {**terms, "unit_price": round(int(terms["unit_price"] * (1 - HAIR) * 100) / 100, 2)})
+            if must_haves_ok(case, t_h, s["std"]) and t_h["unit_price"] < terms["unit_price"]:
+                near_final, close_now = False, True
+                sheets = [(total_cost(case, t_h, s["std"], s["est"]), t_h)]
+                target = supplier_value(case, t_h, s["est"]) + self.premium(sid, t_h)
+                log.info("%s: hair-below ask %.2f under its named floor %.2f", sid, t_h["unit_price"], terms["unit_price"])
         if probing and g and s.get("probes", 0) < GRID_PROBES:
             j = s.get("probes", 0)
-            ask = terms["unit_price"] - g + g * (j + 1) / (GRID_PROBES + 1)
+            # HIGH ladder: its patience allows 1-3 probes (P11 3fa2: final after one; 37ea: after three), and its floor sat at
+            # the TOP of the gap in low draws (45.00 named; 44.60-44.80 all refused) -> 50%, 25%, 10%, 4% of a grid step under it
+            # its answer picks the ladder: it NAMED its floor = standing -> the hair ask above; it kept its limits internal
+            # ("Our margin and our limits stay internal") -> its floor sat LOW in the gap: the high-draw P11 games agreed to
+            # the FIRST probe at 45.10 / 45.13 / 45.25 -> start low
+            secret = s.get("asked_floor") and re.search(r"(?i)limits stay internal|margin .{0,20}internal|cannot (share|disclose)",
+                                                        " ".join(m.get("body") or "" for m in events[-4:] if m.get("from") != "buyer"))
+            ladder = GRID_LADDER_LOW if secret else GRID_LADDER
+            ask = terms["unit_price"] - g * ladder[min(j, len(ladder) - 1)]
             last = next((ts["terms"]["unit_price"] for m in reversed(events) if m.get("from") == "buyer"
                          for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get("unit_price")), 0.0)
             ask = round(min(terms["unit_price"] - 0.01, max(ask, last + 0.01)), 2)
@@ -1059,6 +1097,13 @@ class NoIdeaAgent:
                 sheets = [(total_cost(case, t_close, s["std"], s["est"]), t_close)]
                 target = supplier_value(case, t_close, s["est"]) + self.premium(sid, t_close)
                 log.info("%s: one near-close ask %.2f below its open %.2f", sid, t_close["unit_price"], terms.get("unit_price"))
+        if s.get("probes") and not close_now and sheets and status == "open":
+            last_ask = next((ts["terms"]["unit_price"] for m in reversed(events) if m.get("from") == "buyer"
+                             for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get("unit_price")), None)
+            if last_ask and sheets[0][1].get("unit_price") is not None and sheets[0][1]["unit_price"] < last_ask:
+                # probes are over: hold our last ask, never step back below it (replay 37ea: 44.95 -> 44.72)
+                t_l = complete_offer(case, {**sheets[0][1], "unit_price": last_ask})
+                sheets, close_now = [(total_cost(case, t_l, s["std"], s["est"]), t_l)], True
         # walk-risk: it repeats the same objection / counter-proposal in its last two e-mails (P02 x2: "returning to our
         # standard 30-day payment term" + a 30-day '-a' sheet in rounds 2 and 3, we kept 90 d, it walked in round 4
         # "our general terms dictate this position"; 372.15 @ 90 d would have scored ~0.50) -> take its best sheet
@@ -1476,7 +1521,8 @@ class NoIdeaAgent:
         # text; the CSV appeared only in the two weak P02 games, the good ones had short e-mails with 0-1 data IDs)
         asked = re.search(r"(?i)release schedule|call-?off|delivery schedule|expected volumes|volume figures|"
                           r"documentation supporting|send us the (data|schedule)", latest(events).get("body") or "")
-        if not asked or s.get("schedule_sent"):
+        cash = {"cash_short", "wants_faster_payment"} & set(s["dossier"].get("motives", {}))
+        if not (asked or (k == 0 and cash)) or s.get("schedule_sent"):
             return None
         t0 = {**case.get("fixed_terms", {}), **sheets[0]}
         vol = t0.get("volume_per_year") or case["buyer"]["need_per_year"]
@@ -1528,6 +1574,32 @@ class NoIdeaAgent:
             return best
         return None
 
+    def late_payment(self, sid, months=12):
+        """Our OWN payment record with this supplier (invoices.csv): share of invoices paid after the due date and mean days
+        late over the last `months`. P11 Kalwisz: 96% late, 9.7 days - the thing its export manager complains about every
+        round ("we really need you to actually pay on time like you said, cash is tight here")."""
+        cache = self.__dict__.setdefault("_late_cache", {})
+        if sid in cache:
+            return cache[sid]
+        out = None
+        try:
+            import csv
+            import datetime as dt
+            rows = [r for r in csv.DictReader((_repo() / "tacto/data/data/invoices.csv").open(encoding="utf-8"))
+                    if r.get("supplier_id") == sid and r.get("paid_date") and r.get("due_date")]
+            if rows:
+                last = max(r["paid_date"] for r in rows)
+                y, m = int(last[:4]), int(last[5:7])
+                floor = f"{y - months // 12:04d}-{last[5:]}"
+                days = [(dt.date.fromisoformat(r["paid_date"]) - dt.date.fromisoformat(r["due_date"])).days
+                        for r in rows if r["paid_date"] >= floor]
+                if days:
+                    out = (sum(d > 0 for d in days) / len(days), sum(days) / len(days))
+        except Exception as e:
+            log.warning("late payment record not read (%s)", e)
+        cache[sid] = out
+        return out
+
     def experiment_lines(self, case, sid, events, sheets, k):
         """Untested levers the brief names ("signals of ... having no alternative, threats, questions ... have
         consequences"; "bigger moves need the boss's approval"), switched on per live A/B game via EXPERIMENTS.
@@ -1546,6 +1618,23 @@ class NoIdeaAgent:
             if other or alt or case["type"] == "rfq":
                 out.append("We have a qualified alternative for this part and will place the volume where the total "
                            "cost is best; we would prefer to keep it with you.")
+        # 0. PLAY THE MAN (experiment `own_late_pay`): a cash-driven counterpart that keeps asking us to pay on time, and our own
+        #    record shows we pay it late -> own it, concretely, and tie on-time payment to the close. True, and free for us
+        #    (the score assumes the agreed term); to a cash-short firm ~10 days of cash is worth more than the price gap.
+        motives = set(d.get("motives", {}))
+        rec = self.late_payment(sid)
+        if "no_own_late_pay" not in EXPERIMENTS and k >= 0 and rec and rec[0] >= 0.5 and rec[1] >= 3 and \
+                ({"cash_short", "wants_faster_payment"} & motives or re.search(r"pay on time|paid on time|cash", last)) \
+                and not self.sup[sid].get("owned_late"):
+            self.sup[sid]["owned_late"] = True
+            out.append(f"Straight talk: over the last 12 months we paid {rec[0] * 100:.0f}% of your invoices late, on average "
+                       f"{rec[1]:.0f} days after the due date. That is on us, and it ends with this contract: every invoice "
+                       f"paid on the due date, which brings your cash in about {rec[1]:.0f} days earlier than you are used to.")
+        # 0b. ask its floor (experiment `ask_floor`): "questions go to the person in charge, who answers as openly as the
+        #     company is" - once it holds, ask the one number we need
+        if "no_ask_floor" not in EXPERIMENTS and (stalled or k >= 2) and not self.sup[sid].get("asked_floor"):
+            self.sup[sid]["asked_floor"] = True
+            out.append("What is the lowest price at which you can sign these terms today?")
         # 2. ask what it needs: questions go to the person in charge, who answers as openly as the company is
         if "ask_lever" in EXPERIMENTS and k in (1, 2):
             names = {"payment_days": "payment terms", "contract_months": "contract length",
@@ -1650,8 +1739,10 @@ class NoIdeaAgent:
         if k == 0 and "open_book" in motives:
             what = "the kit" if case["type"] == "bundling" else "this part"
             lines.append(f"Could you share your cost breakdown for {what}, so we can understand the drivers together?")
+        rec = self.late_payment(sid)
+        owns_late = "no_own_late_pay" not in EXPERIMENTS and rec and rec[0] >= 0.5 and rec[1] >= 3
         if k <= 1 and "payment_days" not in case["negotiable"] and ({"cash_short", "wants_faster_payment"} & set(motives)) \
-                and "we_pay_late" not in motives:
+                and "we_pay_late" not in motives and not owns_late:  # the concrete admission replaces the generic line
             # P11: "Faster payment would help us more than anything" every round, but payment is fixed in the case
             lines.append("We understand cash flow matters to you: we will pay every invoice reliably on the agreed day.")
         if k == 0 and "we_pay_late" in motives:

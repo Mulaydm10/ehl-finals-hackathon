@@ -196,3 +196,33 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
    So the "-0.05 for round-1 data" is really the 90-day sheet it chose: keep a 90-day sheet in round 1.
    Untested lever: a round-2 step of at least 30% of the gap (P02's schedule trigger). All P08 round-2 steps so far were
    16-25% of the gap.
+8. **Live db7d315ac527a348 = 0.666 (high draw) with the 30% round-2 step (cloud TASK 9, 26d649d). Best high-draw game so
+   far (1363: 0.642).** Values: r1 5.46 -> our 4.97 @ 60 (30% of the gap) -> **5.29 (-0.17**, about the usual -0.16)
+   -> our 5.00 (+0.03) -> **5.23 (-0.06, still open: no final at our 3rd message, the first time in 9 games)** -> our 5.08
+   -> **final 5.18 (-0.05)** at our 4th. Total after round 1: -0.28 vs -0.26. The gain is an EXTRA round, not a bigger
+   round-2 step. Likely cause: our 3rd step was small (+0.03, against +0.15 before), so it didn't close. On the low draw
+   the same path gives 5.34 - 0.28 = 5.06, which beats the house's 5.10. Order history in round 4: "does not change".
+9. **Live 6912fd893400ea60 = 0.726 (low draw), agent d488bf0 (cloud TASK 10-11: 90-day lead sheet, 30% round-2 step, one
+   deferral).** Values: r1 5.41 @ 90 = 5.338 -> our 4.97 @ 90 -> **5.29 @ 90 = 5.220 (-0.12, not -0.16)** -> our 4.99
+   (+0.02, 0.18x) -> **5.24 = 5.171, still open (the deferral worked, 2 of 2 now)** -> our 5.07 -> **final 5.19 @ 90 =
+   5.122 (-0.05)**. The extra round paid -0.05, but the round-2 cut was 0.04 smaller, so we ended in the same place as
+   cae4 (5.118, 0.732).
+   **The only clause-free game that stayed on 90 d in round 2 got the smallest round-2 cut** (-0.12 against -0.15/-0.16/
+   -0.16/-0.17/-0.17 when we moved to 14 d, 60 d, or stayed on 45 d). In round 1 it proposed 14 d ("we propose ... with
+   14-day payment terms"). Best live evidence path: r1 90-day headline, **r2 switch to 14 d** (cae4, c387: -0.16/-0.17),
+   r3 deferral (-0.05), r4 final (-0.05) = **5.07, about 0.76**. Untested as one game.
+10. **Live a4b92d2f2b871341 = 0.710 (low draw, 5.42), agent 11e95af (TASK 12: round 2 on 14 d).** 5.42 @ 90 = 5.348 -> our
+    4.89 @ 14 (30% step) -> **5.22 @ 14 = 5.238 (-0.11)** -> our 4.91 (deferral, 3 of 3 worked) -> 5.17 = 5.188 (-0.05,
+    open) -> our 4.99 -> final 5.12 @ 14 = 5.138 (-0.05). Switching to 14 d did NOT restore the -0.16.
+    **P08 is FLOOR-BOUND (same as Dhruv's rule 60 on P11). The total cut from round 1 is fixed: low draw cae4 -0.22 (3
+    rounds), c387 -0.21 (3), 6912 -0.22 (4), a4b9 -0.21 (4); high draw 1363 -0.26, db7d -0.28.** An extra round only
+    spreads the same cut: the round-2 cut shrinks from -0.16 to -0.11/-0.12 when 4 rounds follow. Low-draw floor ~5.12-5.14
+    (0.71-0.73), high ~5.18-5.20. The house's 5.10 is below every low-draw game we've played. Only a lever that moves the
+    FLOOR can beat it (Dhruv's rule 58 "ask the floor", rule 59 "the person's currency moves the floor"), or a lucky draw.
+11. **Loop run 1: live ad0427655e885fc1 = 0.710 (low draw), agent 288ce7f (cross-sell invitation, TASK 13).** 5.41 @ 90 =
+    5.338 -> 5.22 @ 14 = 5.238 (-0.10) -> 5.17 (-0.05, deferral 4 of 4) -> final 5.12 @ 14 = 5.138. Total cut -0.20,
+    the same as a4b9: **the cross-sell did not move the floor.** Next untested floor lever (P08_floor.md): 36 m.
+12. **Loop run 2: live 94e77b7b71359f60 = 0.721 (low draw), agent 078e9a5 (36-month sheets, TASK 14).** Round 1 answered
+    on 36 m: **5.40 @ 90 = 5.328 (1 cent below every 24-month low draw, 5.41-5.42)** -> 5.21 @ 14 -> 5.16 (deferral
+    5 of 5) -> final 5.11 @ 14 = 5.128. Total cut -0.20 again. 36 m moved the floor by about -0.01 (one sample, cent
+    rounding). It costs us nothing, so keep it.

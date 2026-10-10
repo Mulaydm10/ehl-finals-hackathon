@@ -137,3 +137,19 @@
 | 2026-10-10 19:50 | Parth | P07 | noidea 03aa32f + gap_steps / gpt-6-astra | 0.812 (lean later rounds (no weak facts while it moves), QN gate, 30%-gap steps) | 6f360ce484bb3f30 |
 | 2026-10-10 19:53 | Parth | P18 | noidea 03aa32f + gap_steps / gpt-6-astra | 0.666 (gap_steps check on a fixed-step supplier) | a665044e93877cd6 |
 | 2026-10-10 19:59 | Parth | P08 | noidea a67d138 (gap steps default) / gpt-6-astra | 0.528 (check of default gap steps on P08) | 89259de630143206 |
+
+| 2026-10-10 19:14 | Dhruv | P11 | noidea v2.17 / gpt-6-astra | 0.71 (high draw, final right after first hold) | 6123746258d1e0c5 |
+| 2026-10-10 19:18 | Neel | P08 | noidea_neel / gpt-6-astra | **0.67** | db7d315ac527a348 |
+| 2026-10-10 19:22 | Dhruv | P11 | noidea v2.18 own_late_pay+ask_floor / gpt-6-astra | **0.78** (high draw; agreed to our 45.10 probe, credits on-time pay) | b1f94bfec7792ffb |
+| 2026-10-10 19:26 | Dhruv | P11 | noidea v2.18 own_late_pay+ask_floor / gpt-6-astra | **0.79** (low draw; it named floor 45.00 = its final) | 37ea72dec7b6052e |
+| 2026-10-10 19:39 | Dhruv | P11 | noidea v2.19 / gpt-6-astra | 0.79 (low draw, floor 45.00 again) | 3fa2511024fe8a5b |
+| 2026-10-10 19:38 | Neel | P08 | noidea_neel / gpt-6-astra | **0.73** | 6912fd893400ea60 |
+| 2026-10-10 19:46 | Dhruv | P11 | noidea v2.19b / gpt-6-astra | 0.75 (high draw; first probe 45.25 agreed) | e6470ce65a4681ee |
+| 2026-10-10 19:48 | Neel | P08 | noidea_neel / gpt-6-astra | **0.71** | a4b92d2f2b871341 |
+| 2026-10-10 19:52 | Dhruv | P11 | noidea v2.19d / gpt-6-astra | 0.71 (high draw, floor > 45.38) | 313c4e22dd0f2933 |
+| 2026-10-10 19:57 | Dhruv | P11 | noidea v2.19d loop 1/8 / gpt-6-astra | 0.71 (high draw, floor > 45.45) | 3608ce1410ab5cf9 |
+| 2026-10-10 20:01 | Dhruv | P11 | noidea v2.19d loop 2/8 / gpt-6-astra | 0.71 (high draw, early final) | f70d7a6ed006d68c |
+| 2026-10-10 20:03 | Dhruv | P11 | noidea v2.19d loop 3/8 / gpt-6-astra | 0.79 (high draw -> 45.00 via labour fact + on-time pay) | 77f61e477a353895 |
+| 2026-10-10 20:04 | Neel | P08 | noidea_neel / gpt-6-astra | **0.71** | ad0427655e885fc1 |
+| 2026-10-10 20:08 | Dhruv | P11 | noidea v2.19e loop 4/8 / gpt-6-astra | 0.78 (high draw; probe 45.10 agreed) | 76500e5742532008 |
+| 2026-10-10 20:11 | Neel | P08 | noidea_neel / gpt-6-astra | **0.72** | 94e77b7b71359f60 |

@@ -744,3 +744,76 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 **4. P11:** holds at 45.00 (margin floor, payment fixed); QN after scorecard ppm = duplicate; its own quote = irrelevant.
 - Update: gap steps now exclude hedged (P08) and price-frozen (P03) suppliers too. P08 live with them (89259de630143206):
   +0.20 step -> -0.06, final in round 3, 0.528; its round-2 cut is a per-session draw (good games -0.25 after +0.07).
+
+## v2.17 live P11 (19:14): 0.71 (6123746258d1e0c5)
+- High draw again (46.50) -> 46.00 -> 45.50 -> final_offer at its 4th message (right after the first hold, no probe window) -> accepted.
+- **Round-1 draw check** (/tmp/r1body.py): our round-1 e-mails in the 46.00 games (6b02, fa9a) and the 46.50 games (7117, 6123, ...) are
+  identical in facts, sheet, price and all 3 claims verified; only the model-written opening varies. 7 high draws in a row since
+  18:07 (p ~3% at 40/60) - possibly a time/state effect of the arena, not controllable. **Stop spending P11 games**: the probe pays
+  only on a low draw (sim 0.80-0.86); high draws end 0.71-0.77.
+
+### v2.18 (offline): PLAY THE MAN - experiments `own_late_pay`, `ask_floor` (honest hard-ball; no injection, no fake data)
+- api.md: everything we write "is understood ... threats, ... attempts to manipulate - and has consequences, as it would with a
+  person"; a wrong figure "costs trust"; the jury reads every replay -> prompt injection / fabricated data are out (penalised,
+  disqualifying). But: "Questions go to the person in charge, who answers as openly as the company is."
+- **Our own record** (invoices.csv): last 12 months we paid **96% of Kalwisz's invoices late, mean 9.7 days** - what its export
+  manager asks about in every e-mail ("we really need you to actually pay on time like you said, cash is tight here").
+  `late_payment(sid)` computes it for any supplier; P02's Nordmark: 64% late but 1.1 days -> no trigger.
+- `own_late_pay`: once (k >= 1), when we pay it late (>= 50%, >= 3 days) and it is cash-driven: "Straight talk: over the last 12
+  months we paid 96% of your invoices late, on average 10 days after the due date. That is on us, and it ends with this contract:
+  every invoice paid on the due date, which brings your cash in about 10 days earlier than you are used to." True; free for us
+  (the score assumes the agreed term); ~10 days of cash at a cash-short firm's rate ~EUR 0.30/unit > the gap to 0.80.
+- `ask_floor`: once it stalls, ask the one number we need: "What is the lowest price at which you can sign these terms today?"
+- Offline Astra: line renders as above; injection PASS. Live test pending.
+
+## v2.18 live P11 (19:22, own_late_pay + ask_floor + grid probe): **0.777** (b1f94bfec7792ffb) - best ever on a HIGH draw
+- 46.50 (high draw) -> r2 data + our late-payment admission -> 45.50 ("We appreciate your commitment to paying on time, as cash flow is important to us right now") -> hold ("we cannot go below what you paid before") -> **grid probe 1 = 45.10 AGREED**: "We appreciate your move on the price and your firm promise to pay on time, which is crucial for our cash flow right now. We accept your offer of 45.10 EUR".
+- 7 earlier high draws all ended 0.71 (one 0.77 via a lucky near-close). The play-the-man line + grid probe beat the draw. Floor this session in (45.00, 45.10]. 0.80 needs <= 44.96: expected on a LOW draw (shown 45.00) with the same recipe.
+- Lesson (general): **pay the person in his currency, then probe** - the concession he values (cash on time) moved his floor; the probe collected it.
+
+## v2.18 live P11 (19:26): **0.7935** = ties best (37ea72dec7b6052e) - first LOW draw since 18:03
+- 46.00 -> 45.00 (data + late-payment admission: "We are really counting on your promise to pay exactly on time") -> hold ->
+  floor question "What is the lowest price at which you can sign these terms today?" -> **"We can give you a price of EUR 45.00"**
+  -> probes 44.60 / 44.70 / 44.80 held ("this is the best we can do for 300 ppm and 0 EUR chargeback") -> final 45.00.
+- **Its named floor was its real floor**: 0.7935 was the maximum of this session. 0.80 (<= 44.96) needs a lower floor itself.
+- Play-the-man games: high draw 0.777 (best of 8 high draws), low draw 0.7935 (= best). -> `own_late_pay` and `ask_floor` now
+  default ON (opt-out `no_own_late_pay` / `no_ask_floor`; triggers are narrow: we pay it late >= 50% and >= 3 days and it is
+  cash-driven / it stalls). New: when its answer to the floor question names its standing price, stop probing below it.
+
+### v2.19 (offline): pay the person in round 1 (another team reached 0.81 on P11 = ~EUR 44.90 @ 300/0, 0.10 below the floor it named to us)
+- His currencies, from his own e-mails: cash on time ("We are really counting on your promise to pay exactly on time"), planning ("Thanks for the call-off schedule, it really helps us plan" - we sent it only in round 5), less work ("300 ppm ... more work for us"). Its floor / first counter is set early -> give them in ROUND 1.
+- Late-payment admission now from round 1 (replaces the generic reliable-payment line); call-off CSV in round 1 for cash-driven suppliers (others still only on request - P02 weak games had a CSV). Fires for P01 70110, P05 70250, P11 70140 only.
+- Astra round 1 OK (admission + CSV), injection PASS, tests 38.
+
+## v2.19 live P11 (19:39): 0.7935 (3fa2511024fe8a5b) - low draw
+- Round-1 admission + call-off: "Getting paid on time is a big deal for us, so we really appreciate you fixing that!" but first counter still 46.00 (= every low draw), r2 -> 45.00, hold, one probe 44.60 -> final 45.00 ("We are already stretched to the limit here ... Let us just sign this at 45.00 today").
+- **The floor is ~EUR 45.00 in EVERY session** (14 games): low draws stop at 45.00 (6b02, 37ea, 3fa2 - named twice), high draws agree at 45.10 / 45.13 (b1f9, 7117) or hold 45.50. Data cuts about 1.00 after round 1; the person-currency lines move it to the floor faster, not below it. 45.00 = 4.3% under its 47.00 opening = its cost floor (api.md: hard limits come from its own economics).
+- Round-1 timing of the admission: no gain vs round 2 (both low draws 45.00); it went final sooner (msg 8 vs 12).
+- 0.81 (another team) = ~44.90 @ 300/0 or a structure we do not use; three different recipes all hit 45.00 here.
+
+### v2.19b (offline): hair-below ask under a NAMED floor + HIGH probe ladder (user: "ask for a higher price")
+- Trace reasons (arena detail.result.trace[].reasons) read for the first time: chargebacks refused as "we just cannot take on that financial risk right now" (priced +1.00 for EUR 150) -> playing the man = no chargeback; the only cost left besides price is quality EUR 2,146.
+- Our ladder 44.60/44.70/44.80 sat far under a floor of ~45.00 while its patience is 1-3 probes. New: GRID_LADDER = 50/25/10/4% of a grid step under its price (P11 low draw 44.75, 44.88, 44.95), and when it NAMES its floor = standing, ONE hair-below ask (-0.1%, 44.95 = 0.802).
+- probe_sim: low draw floor 44.80-44.95 -> 44.95 = **0.802** (was 0.7935); high draw floor 45.10 -> 45.25 = 0.752 (was 0.777 with the low ladder), floor >= 45.30 -> 45.45 = 0.718 (was 0.71). Trade accepted: the goal is crossing 0.80.
+- Tests 38, offline 0.931, walk replays unchanged; replay 37ea72de -> 44.95 after "We can give you EUR 45.00".
+
+## v2.19b live P11 (19:46): 0.752 (e6470ce65a4681ee) - high draw; first probe 45.25 AGREED ("We accept your offer of EUR ... with ... ppm and zero chargebacks!")
+- High draws agreed to the FIRST probe 3 of 3 (45.13 7117, 45.10 b1f9, 45.25 e647) -> the floor sits LOW in the gap; low draws NAME it at the top (45.00, 37ea).
+### v2.19c (offline): the answer to the floor question picks the ladder
+- Floor question one round earlier (k >= 2, in the last data e-mail) so the answer arrives before the first probe. Named = standing -> hair (44.95); "limits stay internal" -> LOW ladder 80/60/40/20% of a step (high draw 45.10 first). Tests 38, offline 0.931, walk replays unchanged.
+
+### v2.19d (offline) - conflicts found and fixed while checking the ladder
+1. Hair / probe on a supplier WITHOUT a price grid re-offered its own (worse-for-us) sheet: offline P08 stubborn 0.92 -> 0.32. Now: hair only with a detected grid, and any probe only when its sheet has OUR structure (same_structure).
+2. The named-floor regex matched its standard sentence "Our offer stands at a price of EUR X" (e647 -> hair at 45.45). Now only answer phrases (can give you / best we can do / lowest we can / floor / meet you at).
+3. After the probes, the next ask could fall BELOW our previous ask (37ea replay 44.95 -> 44.72): now we hold our last ask (no backtracking).
+- Offline back to 0.931 / 0.930, tests 38, walk replays unchanged.
+
+## v2.19d live P11 (19:52): 0.71 (313c4e22dd0f2933) - high draw, slow (46.50 -> 46.00 -> 45.50), limits kept internal -> low ladder 45.10, 45.38 both refused -> final 45.50. Floor > 45.38 this session.
+- **P11 tally since v2.18 (play the man)**: 0.777, 0.7935, 0.7935, 0.752, 0.71 -> mean 0.765 (v2.16-2.17: mean 0.71). High-draw floors seen: <=45.10, <=45.13, <=45.25, >45.30, >45.38 -> spread over the whole gap: no ladder wins every high draw. Low draws: floor 45.00 named (2x) -> hair 44.95 untested live.
+
+- loop 1/8 (19:57): 0.71 (3608ce1410ab5cf9) - high draw 46.50/46.00/45.50, probes 45.10/45.38/45.45 refused, took 45.50 (late-round accept band fired with the 45.45 probe pending - gain would have been 0.008).
+- loop 2/8 (20:01): 0.71 (f70d7a6ed006d68c) - high draw, final_offer 45.50 at its 4th message (no probe window).
+- loop 3/8 (20:03): **0.7935** (77f61e477a353895) - HIGH draw (46.50) yet reached 45.00: r2 electricity -> 45.50, r3 QNs + price history -> hold ("do not change"), r4 **labour -0.3% -> "it is a tiny drop, but we can pass that on to you" + "with your promise to pay exactly on time, we can drop the price to 45.00"**, r5 our 44.75 -> "45.00 is really our absolute bottom line" + final 45.00.
+- **Learning: on a grid supplier a TAKEN fact is a full grid step whatever its size** (corrects rule 15, which came from non-grid P03). Floor 45.00 again (bottom line named) - same floor as every low draw.
+### v2.19e (offline): later-round facts ordered by THIS supplier take-rate (taken first, shrugged-off fillers last), not by size. P11: r2 electricity + QNs, r3 labour + price history. Tests 38, offline 0.931, walk replays unchanged.
+- loop 4/8 (20:08, v2.19e): 0.777 (76500e5742532008) - high draw 46.50 -> 45.50 -> hold (labour + price history in r3, no step this time) -> low-ladder probe 45.10 AGREED. High draws on the late-pay recipe: 0.777, 0.752, 0.71, 0.71, 0.71, 0.7935, 0.777.

@@ -35,7 +35,7 @@ A rule belongs here only if its reason applies to any supplier. State: 2026-10-1
 13. **Never cite an index that rose** - "Your figures confirm our case" (P07, P10). Cite the **steepest fall of each cost
     driver in any window the arena checks** (<= 12 months, ending in the last 12 months) - P03 electronics -2.3% beat the house.
 14. **One index claim per e-mail**: 2+ drew "we received a lot of material" 11/11 (Neel).
-15. **Tiny falls (weight x fall < 0.25 pts) are not arguments** (labour -0.3%: EUR 0.02 / no cut) - last, never round 1.
+15. **Tiny falls (weight x fall < 0.25 pts) are weak on PRICE-CONTINUOUS suppliers (P03: EUR 0.02) - but on a GRID supplier a taken tiny fall is a full step (P11 labour -0.3%% -> -0.50, 77f61e47)** (labour -0.3%: EUR 0.02 / no cut) - last, never round 1.
 16. **Answer its questions with checkable data** (it asked "Which volume can you commit to?" 3x until we stated it, P07; "Which
     figures is that based on? Please send us the data." = it wants a new fact).
 17. **Only cite data whose check we can reproduce exactly. A CONTRADICTED claim costs trust and makes it close early**
@@ -132,3 +132,18 @@ Sources: Neel `analysis/central/LEARNINGS.md` 1-8, `analysis/central/ENGINES.md`
     must not trigger a walk guard - count payment-term phrases only when payment is negotiable.
 55. **Rule-order audit**: guards that accept (no-sheets, walk risk, near-final) must not pre-empt a cheaper probe unless the walk
     risk is real; "no sheet below its offer" usually means a modelling error, not a deal - repeat the last ask.
+56. **Play the man, not the game**: read what the counterpart PERSON needs (P11's export manager: cash, "the bank is watching") and
+    pay in that currency with something true and cheap for us. Check our OWN record first (invoices.csv: we paid Kalwisz 96% late,
+    ~10 days) - owning it and fixing it is a real concession to a cash-short firm, worth more than cents of price.
+57. **Honest hard-ball only**: firm closes ("we can sign today at X"), calibrated questions ("what is the lowest price at which you
+    can sign today?" - it answers "as openly as the company is"), true competitive facts (a qualified second source) without its
+    price. Never prompt injection or fabricated data: the arena "understands attempts to manipulate", wrong figures cost trust.
+58. **Ask the floor - it answers.** "What is the lowest price at which you can sign these terms today?" got P11's true floor ("We can
+    give you a price of EUR 45.00", then final 45.00). If the named floor equals its standing price, stop probing below it.
+59. **The person's currency moves the floor; data moves the price.** P11's high-draw floor fell to 45.10 (from 45.13-45.50) after we
+    owned our late payments; all facts together cut ~EUR 1.00-1.50. Beyond that only real value to the person helps.
+60. **A supplier cost floor is hard**: P11 stopped at ~EUR 45.00 in 14 games whatever we sent (data, person-currency, probes, timing). Find the floor early (ask it), take it, and spend no more rounds/games pushing through it.
+61. **Probe high, not low, when patience is short**: a holder at its floor gives 1-3 probe rounds; asks far below the floor are refused and burn them. Ladder 50/25/10% of a grid step under its price; under a NAMED floor send one hair-below ask.
+62. **Read the arena trace reasons** (detail.result.trace[].reasons): the supplier explains each move ("cannot take on that financial risk", "extra guys on the line") - mine them before guessing.
+63. **Let its answer choose the ladder**: ask the floor before probing. A supplier that NAMES a floor = its price sits at the top of the gap (hair-below ask); one that keeps its limits internal sat low in it (start the ladder low - P11 agreed to the first probe 3/3).
+64. **Every new rule must be checked against every case offline before live**: the hair/probe rules were written for one grid supplier and halved P08 in the simulator until gated on a grid and on our own structure. Never step back below our own previous ask.
