@@ -28,3 +28,4 @@
 | 2026-10-10 15:30 | Dhruv | P10 | noidea v2.2 (36 m on ties) / gpt-6-astra | 0.65 (final 31.90 @ 56, 36 m) | f0a505fc3669a3b9 |
 | 2026-10-10 15:42 | Parth | P18 | noidea v1.7 / gpt-6-astra (OpenAI) | 0.43 (deal at final_offer: 5.40, 60 d, 24 m + AS-14404 clause db0) | 6833e98fbbe5ebdf |
 | 2026-10-10 15:58 | Parth | P18 | noidea v2.4 (branch: v2.3 args + cheapest sheet / 422 fallback) / gpt-6-astra | **0.62** (agreed: its alternative 5.20, 30 d, 24 m + AS-14404 db5, proposed back after a 422) | a99d02eb41cafa66 |
+| 2026-10-10 16:05 | Parth | P18 | noidea v2.3 (+ v2.4 sheet fix, branch a73e390) / gpt-6-astra | 0.53 (agreed 5.20, 14 d, 24 m + AS-14404 db0; ctr:4600070740#3.2 not cited live) | 06f8f4f5a7689632 |
