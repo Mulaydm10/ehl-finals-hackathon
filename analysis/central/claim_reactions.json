@@ -1,5 +1,5 @@
 {
- "games": 191,
+ "games": 193,
  "by_kind": {
   "copper notation": {
    "taken": 1,
@@ -18,10 +18,10 @@
    "take_rate": 1.0
   },
   "index_change": {
-   "taken": 124,
+   "taken": 127,
    "no_change": 16,
    "confirm_case": 7,
-   "take_rate": 0.84
+   "take_rate": 0.85
   },
   "labour cost index": {
    "taken": 1,
@@ -46,9 +46,9 @@
    "take_rate": 0.36
   },
   "rival_quote": {
-   "taken": 41,
+   "taken": 45,
    "no_change": 8,
-   "take_rate": 0.84
+   "take_rate": 0.85
   },
   "scorecard_otd": {
    "no_change": 2,
@@ -161,8 +161,11 @@
    }
   },
   "case:P05": {
+   "index_change": {
+    "taken": 9
+   },
    "rival_quote": {
-    "taken": 41,
+    "taken": 45,
     "no_change": 7
    },
    "_signals": {
@@ -170,11 +173,9 @@
     "final_at_8": 1,
     "final_at_12": 1,
     "final_at_6": 3,
+    "final_at_7": 1,
     "final_at_11": 1,
     "final_at_4": 1
-   },
-   "index_change": {
-    "taken": 6
    }
   },
   "case:P07": {
@@ -300,10 +301,10 @@
   }
  },
  "signals": {
-  "asked_for_data": 113,
+  "asked_for_data": 114,
   "already_counted": 43,
   "padding": 44,
-  "fair_point": 36,
+  "fair_point": 39,
   "rising_index_backfired": 7
  }
 }

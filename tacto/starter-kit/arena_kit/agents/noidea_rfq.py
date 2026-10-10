@@ -50,6 +50,14 @@ def _contract_days(facts, sid, kind):
 
 RFQ_CREEP = 0.15  # 5. after round 1 our ask creeps at most EUR 0.15 (value) a round ...
 RFQ_BELOW_LOW = 0.06  # ... and stays at least 6% under the lowest standing offer of any live bidder
+# experiments: hold the ask deeper under the market low (P05 f841e571: 70210 AGREED to our 28.57 = its floor is lower;
+# record 0.924 ~ 27.00 @ 14 d; an extreme anchor made both bidders walk - Parth run 3)
+import os as _os
+_EXP = {x.strip() for x in _os.environ.get("NOIDEA_EXPERIMENTS", "").split(",") if x.strip()}
+if "rfq_low10" in _EXP:
+    RFQ_BELOW_LOW = 0.10
+if "rfq_low12" in _EXP:
+    RFQ_BELOW_LOW = 0.12
 
 
 class NoIdeaAgent(_Main):

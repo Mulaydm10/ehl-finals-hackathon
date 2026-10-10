@@ -1021,3 +1021,7 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
   shown once to the other live bidders before accepting.
 - Parth: call-off schedule in RFQ round 1 (first counter 28.00 vs 30.50).
 - Offline P05 0.76 -> 0.95; all other cases unchanged; tests 64.
+
+## v2.29 live P05 (22:15): **0.755** (f841e57158853b8d) - = Neel best; our agent alone had 0.61
+- 70210 30.50 -> AGREED to our 28.57 @ 14 d; shown to 70240 / 70250; 70250 agreed 30.25; took 28.57. It agreed to OUR ask -> its floor is lower.
+### v2.29b experiments: rfq_low10 / rfq_low12 (asks 10% / 12% under the market low instead of 6%)
