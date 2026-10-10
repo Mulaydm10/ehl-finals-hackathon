@@ -135,3 +135,4 @@
 | 2026-10-10 19:24 | Parth | P18 | probe P18_A 90 d + AS db5 structure (scripted, no model) | 0.598 (unit_price=5.3, index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 5.0, 'base_month': '2026-08'}, payment_days=90, contract_months=24) | c9b288817e76ee78 |
 | 2026-10-10 19:28 | Parth | P07 | probe P07_A one 90 d sheet + bigger mirrored steps (scripted, no model) | 0.812 (unit_price=5.31, payment_days=90, contract_months=24) | 58bf025d01aa1275 |
 | 2026-10-10 19:32 | Parth | P07 | noidea 6d41238 + gap_steps / gpt-6-astra | 0.667 (arena HTTP 500 on our round-2 message (4 retries); closed by accepting its round-1 standing 5.46/30 d - not a test of the switch) | 79b7b274b6a77470 |
+| 2026-10-10 19:34 | Parth | P07 | noidea 6d41238 + gap_steps / gpt-6-astra | no score (agent with 30%-gap steps) | 55db9b3de85aa78d |
