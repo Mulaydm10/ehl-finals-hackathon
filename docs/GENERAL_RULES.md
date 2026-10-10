@@ -218,3 +218,5 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
 95. **Hold RFQ asks low and show the first agreement to the others once before accepting** - the auction ratchet
     (70250 agreed 30.25 -> shown -> 70210 agreed 28.57 @ 14 d). Never a walk-guard accept while another bidder is live.
 96. **Extreme anchors make bidders walk** (Parth run 3: 21.00 -> both walked, 0.381): anchor ~10% under the market low.
+97. **RFQ asks ~10% under the market low** (6% left money: a bidder agreed to our own ask; 10% -> 0.824; 12% and below risk walks
+    and slow rounds). Multi-bidder rounds run close to the 60-s reply limit - one timeout cost 0.06.

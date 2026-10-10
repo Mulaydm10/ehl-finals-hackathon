@@ -1,5 +1,5 @@
 {
- "games": 193,
+ "games": 196,
  "by_kind": {
   "copper notation": {
    "taken": 1,
@@ -18,7 +18,7 @@
    "take_rate": 1.0
   },
   "index_change": {
-   "taken": 127,
+   "taken": 133,
    "no_change": 16,
    "confirm_case": 7,
    "take_rate": 0.85
@@ -46,9 +46,9 @@
    "take_rate": 0.36
   },
   "rival_quote": {
-   "taken": 45,
-   "no_change": 8,
-   "take_rate": 0.85
+   "taken": 48,
+   "no_change": 9,
+   "take_rate": 0.84
   },
   "scorecard_otd": {
    "no_change": 2,
@@ -162,11 +162,11 @@
   },
   "case:P05": {
    "index_change": {
-    "taken": 9
+    "taken": 15
    },
    "rival_quote": {
-    "taken": 45,
-    "no_change": 7
+    "taken": 48,
+    "no_change": 8
    },
    "_signals": {
     "final_at_10": 3,
@@ -301,10 +301,10 @@
   }
  },
  "signals": {
-  "asked_for_data": 114,
+  "asked_for_data": 115,
   "already_counted": 43,
   "padding": 44,
-  "fair_point": 39,
+  "fair_point": 43,
   "rising_index_backfired": 7
  }
 }
