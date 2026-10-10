@@ -196,3 +196,9 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
    So the "-0.05 for round-1 data" is really the 90-day sheet it chose: keep a 90-day sheet in round 1.
    Untested lever: a round-2 step of at least 30% of the gap (P02's schedule trigger). All P08 round-2 steps so far were
    16-25% of the gap.
+8. **Live db7d315ac527a348 = 0.666 (high draw) with the 30% round-2 step (cloud TASK 9, 26d649d). Best high-draw game so
+   far (1363: 0.642).** Values: r1 5.46 -> our 4.97 @ 60 (30% of the gap) -> **5.29 (-0.17**, about the usual -0.16)
+   -> our 5.00 (+0.03) -> **5.23 (-0.06, still open: no final at our 3rd message, the first time in 9 games)** -> our 5.08
+   -> **final 5.18 (-0.05)** at our 4th. Total after round 1: -0.28 vs -0.26. The gain is an EXTRA round, not a bigger
+   round-2 step. Likely cause: our 3rd step was small (+0.03, against +0.15 before), so it didn't close. On the low draw
+   the same path gives 5.34 - 0.28 = 5.06, which beats the house's 5.10. Order history in round 4: "does not change".

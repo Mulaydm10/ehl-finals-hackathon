@@ -133,3 +133,4 @@
 | 2026-10-10 18:58 | Parth | P11 | probe P11_A one new fact per round (scripted, no model) | 0.794 (ppm_commitment=300, chargeback_eur_per_complaint=0.0, unit_price=45.0) | 4d6c9a1396e4d0a0 |
 | 2026-10-10 19:10 | Dhruv | P11 | noidea v2.17 / gpt-6-astra | 0.71 (high draw; probes 45.10/45.20/45.30 held, final 45.50) | 876705379b434d96 |
 | 2026-10-10 19:14 | Dhruv | P11 | noidea v2.17 / gpt-6-astra | 0.71 (high draw, final right after first hold) | 6123746258d1e0c5 |
+| 2026-10-10 19:18 | Neel | P08 | noidea_neel / gpt-6-astra | **0.67** | db7d315ac527a348 |
