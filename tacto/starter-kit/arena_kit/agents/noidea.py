@@ -26,7 +26,7 @@ from ..play import latest, live_threads, moves_left, standing
 
 log = logging.getLogger("arena")
 
-PLANNED_ROUNDS = 5  # rounds we plan to use; 8 min per wave fits about 4-6
+PLANNED_ROUNDS = 8  # P07 live: ~25 s per round, so an 8-minute wave fits ~12-15; keep a margin
 TYPICAL_MAX_GAP = 4.0  # history: suppliers settled 1.0-4.0 pts below their ask
 MIN_GAIN_PTS = 1.0  # never pay more than ask - 1 pt unless it is the last word
 
@@ -73,10 +73,11 @@ class NoIdeaAgent:
             should = [c for c in self.claims if c["kind"] == "should_cost" and c["part"] == part and c["supplier"] == sid]
             # should-cost has 5-15% error and several suppliers have sold below it ("accepted below
             # full cost to keep the volume"): take the lower of should-cost and today's price, minus 6%
-            full_cost = min(should[0]["figure"], cur) * 0.94 if should else cur * 0.94
+            open_terms = standing(events)[1]
+            ref = min(x for x in (cur, open_terms.get("unit_price")) if x)  # the quote can be below today's price
+            full_cost = min(should[0]["figure"], ref) * 0.94 if should else ref * 0.94
             rate = 0.25 if "cash_short" in motives else 0.14 if "wants_faster_payment" in motives else 0.08
             est = {"standard": std, "interest_rate": rate, "usual_rate": 0.08, "full_cost": full_cost}
-            open_terms = standing(events)[1]
             ask_pct = (open_terms["unit_price"] / cur - 1) * 100 if cur and open_terms.get("unit_price") else 0.0
             self.sup[sid] = {"dossier": d, "std": std, "est": est, "justified": justified, "cur": cur,
                              "ask_pct": ask_pct, "open_terms": open_terms, "args": self.pick_args(case, sid, ask_pct, justified)}
@@ -133,8 +134,8 @@ class NoIdeaAgent:
             ranked.append((total_cost(case, t, s["std"], s["est"]), t))
         ranked.sort(key=lambda x: x[0])
         out = []
-        for c, t in ranked:
-            if all(t != o for _, o in out):
+        for c, t in ranked:  # 3 genuinely different options: same-cost duplicates waste a slot
+            if all(t != o and abs(c - oc) > 1.0 for oc, o in out):
                 out.append((c, t))
             if len(out) == 3:
                 break
@@ -144,14 +145,30 @@ class NoIdeaAgent:
         """Concession path in supplier-value terms: anchor -> limit over PLANNED_ROUNDS."""
         s = self.sup[sid]
         cur, ask = s["cur"], s["ask_pct"]
-        anchor_pct = min(s["justified"], ask - TYPICAL_MAX_GAP)
+        goal = case["buyer"]["category_goal"]
+        # renewal history: 1-4 pts below the ask; routine/leverage (bundles, volume, competition) can go further
+        gap = TYPICAL_MAX_GAP if goal in ("stabilise", "secure_supply") else 2 * TYPICAL_MAX_GAP
+        anchor_pct = min(s["justified"], ask - gap)
         limit_pct = ask - MIN_GAIN_PTS
         base = complete_offer(case, s["open_terms"])
         v = lambda pct: supplier_value(case, {**base, "unit_price": cur * (1 + pct / 100)}, s["est"])
-        floor = s["est"]["full_cost"]  # hard floor: never ask below its estimated full cost
-        anchor, limit = max(v(anchor_pct), min(floor, v(limit_pct))), v(limit_pct)
+        anchor, limit = v(anchor_pct), v(limit_pct)
+        if goal in ("stabilise", "secure_supply"):  # the relationship charge: never ask below its full cost
+            anchor = max(anchor, min(s["est"]["full_cost"], limit))
         f = min(1.0, k / max(1, PLANNED_ROUNDS - 1)) ** 1.3
-        return anchor + (limit - anchor) * f
+        scheduled = anchor + (limit - anchor) * f
+        # reciprocity: never give more in a round than the supplier gave in its last move
+        # (P07 live: it moved 5.56 -> 5.55 -> 5.52 while a fixed schedule took us 5.25 -> 5.43)
+        hist = s.setdefault("ours", [])
+        if not hist:
+            hist.append(anchor)
+            return anchor
+        stand = [standing([m])[1] for m in self.events if m.get("from") != "buyer" and m.get("term_sheets")]
+        vals = [supplier_value(case, complete_offer(case, t), s["est"]) for t in stand[-2:]]
+        theirs = max(0.0, vals[0] - vals[1]) if len(vals) == 2 else (limit - anchor) / PLANNED_ROUNDS
+        step = min(scheduled - hist[-1], max(theirs, (limit - anchor) / (2 * PLANNED_ROUNDS)))
+        hist.append(min(limit, hist[-1] + max(0.0, step)))
+        return hist[-1]
 
     # ---- the move ------------------------------------------------------------------------------
     def decide(self, case, threads):
@@ -161,6 +178,7 @@ class NoIdeaAgent:
         # talk to the supplier whose thread is furthest behind (RFQ round-robin)
         sid = min(live, key=lambda s: sum(m.get("from") == "buyer" for m in threads[s]))
         events, s = threads[sid], self.sup[sid]
+        self.events = events
         sheet_id, terms = standing(events)
         status = latest(events).get("status")
         k = sum(m.get("from") == "buyer" and bool(m.get("term_sheets")) for m in events)
@@ -178,7 +196,9 @@ class NoIdeaAgent:
         sheets = self.sheets_at(case, sid, self.value_target(case, sid, k))
         if not sheets:
             return accept if ok else {"supplier_id": sid, "message": {"action": {"type": "walk_away"}}}
-        if ok and k > 0 and c_stand <= sheets[0][0] * 1.0005:
+        # accept when the supplier meets our current ask, or when we are within 0.3% late in the game
+        if ok and k > 0 and (c_stand <= sheets[0][0] * 1.0005 or
+                             (k >= PLANNED_ROUNDS - 2 and c_stand <= sheets[0][0] * 1.003)):
             return accept
         log.info("%s round %d: our best C %.0f vs standing %.0f (alt %.0f)", sid, k, sheets[0][0], c_stand, self.c_alt)
         refs = sorted({i for c in s["args"] for i in c["ids"]})
@@ -222,6 +242,12 @@ class NoIdeaAgent:
             except Exception as e:  # a slow or broken model must not cost the round
                 log.warning("LLM failed (%s) - plain opening used", e)
         facts = (" ".join(args) + "\n\n") if args else ""
-        return (f"Dear {name} team,\n\n{opening}\n\n{facts}"
+        # suppliers keep asking "Which volume can you commit to?" (P07 live, 3 rounds unanswered):
+        # state the binding volume and term in code, since the model may not write figures
+        t0 = {**case.get("fixed_terms", {}), **sheets[0]}
+        vol, months = t0.get("volume_per_year") or case["buyer"]["need_per_year"], t0.get("contract_months")
+        commit = (f"We confirm a binding volume of {vol:,} units per year"
+                  + (f" for {months} months" if months else "") + ", as in our enquiry.\n\n")
+        return (f"Dear {name} team,\n\n{opening}\n\n{commit}{facts}"
                 f"On this basis we propose the attached term sheets ({offers}). "
                 "Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke")

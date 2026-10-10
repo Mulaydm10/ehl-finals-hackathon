@@ -14,3 +14,4 @@
 | 2026-10-10 13:11 | Neel | P10 | probe: open + walk away (exact c_open/c_best) | 0.00 | 03968142fec00495 |
 | 2026-10-10 13:11 | Neel | P11 | probe: open + walk away (exact c_open/c_best) | 0.00 | 8cdb5ec604c3e006 |
 | 2026-10-10 13:11 | Neel | P18 | probe: open + walk away (exact c_open/c_best) | 0.00 | 3620a05514f2a069 |
+| 2026-10-10 13:29 | Dhruv | P07 | noidea v1 (cost-floor fix) / qwen local | **0.68** | 00ae513af1091e9c |
