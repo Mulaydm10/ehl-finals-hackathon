@@ -294,3 +294,12 @@
 | 2026-10-11 01:20 | Neel | P18 | noidea_p18 v2 (contract-clause October 5.74 argument; r2 4.84 @ 14 d; r3 4.97 db5) / gpt-6-astra | **0.61** | a55d2e8917f705d4 |
 | 2026-10-11 01:24 | Neel | P18 | noidea_p18 v3 (best path 4.76@30 -> 4.86@14 -> hold 4.86 + labour) / gpt-6-astra | **0.60** | ed9a881a0a93d1c5 |
 | 2026-10-11 01:35 | Neel | P18 | noidea_p18 v4 (mirror model: opening 4.69 @ 30 d, then 4.80 / 4.84 / 4.86 @ 14 d) / gpt-6-astra | **0.67** | 6a0a9bfdc4273cba |
+| 2026-10-11 01:40 | Dhruv | P01 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.9987 | see notes/analysis_v234/LOAD_L6.log |
+| 2026-10-11 01:40 | Dhruv | P02 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.7751 | see notes/analysis_v234/LOAD_L6.log |
+| 2026-10-11 01:40 | Dhruv | P03 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.9889 | see notes/analysis_v234/LOAD_L6.log |
+| 2026-10-11 01:40 | Dhruv | P04 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.8098 | see notes/analysis_v234/LOAD_L6.log |
+| 2026-10-11 01:40 | Dhruv | P07 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.7470 | see notes/analysis_v234/LOAD_L6.log |
+| 2026-10-11 01:40 | Dhruv | P08 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.9156 | see notes/analysis_v234/LOAD_L6.log |
+| 2026-10-11 01:40 | Dhruv | P10 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.6941 | see notes/analysis_v234/LOAD_L6.log |
+| 2026-10-11 01:40 | Dhruv | P11 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.8771 | see notes/analysis_v234/LOAD_L6.log |
+| 2026-10-11 01:40 | Dhruv | P18 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.6207 | see notes/analysis_v234/LOAD_L6.log |

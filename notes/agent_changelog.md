@@ -1288,3 +1288,9 @@ games 8ccbdcc0 / 98e834e4, P02 10b624c1, P07 216f49e9, P08 00e8923e, P10 673ee89
   3 s until 90 s before its wave cap (a session that did open is resumed - 409 names it); the case-list poll never stops the
   runner on an error (it re-raised everything but 403 before). Test `test_a_final_case_that_cannot_open_yet_is_retried`;
   67 tests pass. Runbook: nobody else uses the team key during the final.
+
+### Loop 6 (v2.34h, final configuration, 9 in parallel), 01:40 - 01:44 - STOP of the loops
+- P01 0.999, P02 0.775, P03 0.989, P04 0.810, P07 0.747, P08 0.916, P10 0.694, **P11 0.877** (2nd in a row), P18 0.621 =
+  mean 0.825, 0 warnings, every case a deal. Grid-probe depth NOT changed: memory shows mixed floors inside the 0.50 step.
+- Lessons of all loops, lean, for the next optimisation round: `docs/LESSONS.md` (how to work, mistakes + fixes, rejected ideas,
+  open questions).
