@@ -54,3 +54,7 @@
 | 2026-10-10 16:30 | Dhruv | P10 | noidea v2.7 / gpt-6-astra (full pass, 2x5 parallel) | 0.64 | 396a494d88001ce8 |
 | 2026-10-10 16:30 | Dhruv | P11 | noidea v2.7 / gpt-6-astra (full pass, 2x5 parallel) | 0.67 | 29cbb6d69fe5e642 |
 | 2026-10-10 16:30 | Dhruv | P18 | noidea v2.7 / gpt-6-astra (full pass, 2x5 parallel) | 0.54 | c4599331a4ed849b |
+| 2026-10-10 16:50 | Parth | P07 | v2.7-p + escalate,ask_lever / gpt-6-astra | 0.73 (best 0.75; 5.44, 90 d, 24 m; escalate: "management authorised a further reduction" 5.52 -> 5.47) | fa67e0b1165affda |
+| 2026-10-10 16:50 | Parth | P18 | v2.7-p + batna,escalate / gpt-6-astra | **0.67** (new best; batna in round 2 -> final_offer 5.10, 14 d, 24 m + AS db5; escalate never fired) | 9d4d288eb4ae6789 |
+| 2026-10-10 16:50 | Parth | P10 | v2.7-p + ask_lever,escalate / gpt-6-astra | 0.64 (best 0.65; final_offer in round 1, so neither switch was sent) | 582e0e7305d7ef92 |
+| 2026-10-10 16:50 | Parth | P08 | v2.7-p + batna / gpt-6-astra | 0.49 (best 0.65; 5.43, 14 d, 24 m + AS db5) | 586a9adfb92cc519 |
