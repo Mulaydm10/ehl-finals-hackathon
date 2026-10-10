@@ -1136,6 +1136,13 @@ or null, "reason": "<one sentence>"}."""
         cap = terms.get("unit_price") if sheet_id else None
         target = self.value_target(case, sid, events)
         sheets = self.sheets_at(case, sid, target, cap)
+        mb = self.memory_best_structure(case, sid) if "no_memory_term" not in EXPERIMENTS else None
+        if mb and sheets:
+            keep = [x for x in self.sheets_at(case, sid, target, cap, n=12, band_pct=0.2)
+                    if all(x[1].get(f) == v for f, v in mb[0].items())]
+            if keep:
+                sheets = keep[:1]
+                s["mem_final"] = mb[1]
         if k == 0 and "meso" in EXPERIMENTS:
             # round 1: MESOs (OFF by default: P11 f5157e0d it priced the loosest 1500 ppm sheet, 0.54; 0d5b +1 fact - n=1 each) - up to 3 genuinely different structures of near-equal cost to us (Medvec & Galinsky: multiple
             # equivalent simultaneous offers show flexibility, reveal its preference and draw a bigger first move). P11:
@@ -1273,6 +1280,18 @@ or null, "reason": "<one sentence>"}."""
                 sheets = [(total_cost(case, t_close, s["std"], s["est"]), t_close)]
                 target = supplier_value(case, t_close, s["est"]) + self.premium(sid, t_close)
                 log.info("%s: one near-close ask %.2f below its open %.2f", sid, t_close["unit_price"], terms.get("unit_price"))
+        mf = s.get("mem_final")
+        if mf and status == "open" and k >= 1 and not s.get("mem_close") and ok and terms.get("unit_price") \
+                and terms["unit_price"] - mf <= 0.02 + 1e-9 and terms["unit_price"] > mf - 0.01 + 1e-9 \
+                and all(terms.get(f) == v for f, v in (self.memory_best_structure(case, sid) or ({}, 0))[0].items()):
+            # MEMORY CLOSE: it usually goes final at mf on this structure; ask one cent UNDER that, while its offer is still
+            # open (after its final it walked: Parth 4.93 @ 90 d -> 0.00). Refused -> its final at mf (P04 45 d: 0.874).
+            t_mc = complete_offer(case, {**terms, "unit_price": round(mf - 0.01, 2)})
+            if must_haves_ok(case, t_mc, s["std"]):
+                s["mem_close"], close_now, near_final = True, True, False
+                sheets = [(total_cost(case, t_mc, s["std"], s["est"]), t_mc)]
+                target = supplier_value(case, t_mc, s["est"]) + self.premium(sid, t_mc)
+                log.info("%s: memory close %.2f (its usual final %.2f, now %.2f)", sid, t_mc["unit_price"], mf, terms["unit_price"])
         if s.get("probes") and not close_now and sheets and status == "open":
             last_ask = next((ts["terms"]["unit_price"] for m in reversed(events) if m.get("from") == "buyer"
                              for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get("unit_price")), None)
@@ -1296,7 +1315,7 @@ or null, "reason": "<one sentence>"}."""
             # the backbone (structure) is code's: after round 1 the model may only pick sheets with the structure code
             # leads with (P02 v2.13 dc1d4fd8a7cd47cb: the model moved us to 30 d, it made 30 d its final -> 0.20; the
             # good P02 games held 90 d every round)
-            if k >= 1 and sheets and cands and not close_now:  # code-built probe / floor pair: no structure lock
+            if (k >= 1 or s.get("mem_final")) and sheets and cands and not close_now:  # + round 1 when memory chose the structure
                 lead = sheets[0][1]
                 keep = [x for x in cands if all(x[1].get(f) == lead.get(f) for f in case["negotiable"] if f != "unit_price")]
                 cands = keep or cands[:1]
@@ -1614,6 +1633,37 @@ or null, "reason": "<one sentence>"}."""
             top = max(refused)
             return [round((top + S) / 2, 2), hair] if (top + S) / 2 < hair else [hair]
         return None
+
+    def memory_finals(self, case, sid):
+        """{structure-terms-dict: lowest final price} from our past games with this supplier (memory)."""
+        out = []
+        for k, v in ((self.memory.get(sid) or {}).get("structures") or {}).items():
+            if not v.get("finals"):
+                continue
+            try:
+                t = {}
+                for part in k.split("|"):
+                    f, val = part.split("=", 1)
+                    if f in case["negotiable"]:
+                        t[f] = json.loads(val) if val not in ("None",) else None
+                out.append((t, min(v["finals"])))
+            except (ValueError, json.JSONDecodeError):
+                continue
+        return out
+
+    def memory_best_structure(self, case, sid):
+        """MEMORY TERM CHOICE (v2.24): the structure whose remembered final is cheapest for us - a floor-stop supplier
+        (P04) stops at a fixed price per payment term (14 d 4.86, 30 d 4.88, 45 d 4.89, 60 d 4.91, 90 d 4.94), so the term
+        decides where we land (45 d = 0.874, the record; 14 d, which we led with, = 0.815). Needs >= 2 remembered terms."""
+        fin = self.memory_finals(case, sid)
+        # only for a FLOOR-STOP supplier (final at our 1st-2nd message, patience prior <= 2: P04): there the final is a
+        # fixed price per structure; for mirror / holder suppliers it depends on the path (P07, P02 changed for the worse)
+        if len(fin) < 2 or self.patience_prior(case, sid) > 2 or case["type"] == "rfq":
+            return None
+        s = self.sup[sid]
+        best = min(fin, key=lambda x: total_cost(case, complete_offer(case, {**s["open_terms"], **x[0], "unit_price": x[1]}),
+                                                  s["std"], s["est"]))
+        return best
 
     def memory_note(self, sid):
         m = self.memory.get(sid) or {}

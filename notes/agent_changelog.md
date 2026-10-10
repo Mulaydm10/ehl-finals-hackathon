@@ -898,3 +898,16 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
   refused -> final 45.00 = 0.7935. The planner said "accept" twice; the guard (no accept while a cheaper ask is untried) held,
   so it changed nothing - correct here, it would have cost nothing either.
 - Low-draw floor varies per session: 44.95 agreed (eac2) vs refused (dbf5); 44.90 refused 2 of 2.
+
+### v2.24 (offline): P04 - memory term choice + memory close (target: cross 0.87; our agent had 0.82, record 0.874 scripted)
+- Our cost model omits P04's quality line (EUR 570, the same on every term) - absolute scores were off by 0.246, rankings OK.
+- Memory: P04 stops at ONE price per payment term (14 d 4.86 = 0.815, 30 d 4.88 = 0.766, 45 d 4.89 = **0.874**, 60 d 4.91 =
+  0.81, 90 d 4.94 = 0.86). We led with 14 d. One cent under each stop scores 0.94-1.0 - never asked BEFORE its final
+  (Parth's 4.93 @ 90 d came after the final -> walked 0.00).
+- `memory_best_structure()`: for a FLOOR-STOP supplier (patience prior <= 2, >= 2 remembered terms; P07/P02 changed for the
+  worse without this gate) lead round 1 with the structure whose remembered final is cheapest for us (P04: 45 d / 36 m).
+  `memory close`: when its open offer is within 2 cents of that final, ask one cent UNDER it once (P04 4.88 @ 45 d = 1.0);
+  refused -> its final 4.89 = 0.874. Can only tie or beat the record.
+- Live-calibrated sim (analysis/tools/offline_round.py P04): 4.83 @ 45 -> 4.90; close 4.88 -> 4.89; agreed 4.89 = **0.874**
+  (was 0.81 with our old 14-d lead). Other cases' round 1 unchanged; tests 56; offline mean 0.931 (P04 stubborn generic sim
+  0.35 - that sim is not a floor-stop model; the calibrated one is).

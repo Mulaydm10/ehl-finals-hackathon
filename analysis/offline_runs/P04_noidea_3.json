@@ -1,0 +1,43 @@
+{
+ "case": "P04",
+ "variant": "noidea",
+ "sim_score": 0.8736820298574475,
+ "end": "deal {'unit_price': 4.89, 'payment_days': 45, 'contract_months': 36}",
+ "rounds": 3,
+ "emails": [
+  {
+   "body": "Dear Wälzlager-Zentrum Süd GmbH team,\n\nThank you for your message.\n\nWe confirm a binding volume of 20,000 units per year for 36 months. Using your own cost shares (LCI-C 10%, PPI-C2815 65%) and the latest six-month index moves (LCI-C +1.7%, PPI-C2815 +0.6%), your cost increase comes to about +0.6% of the price, not +13.0%. That supports a price of about EUR 4.41. Could you share your cost breakdown for this part, so we can understand the drivers together?\n\nOn this basis we propose the attached term sheets (EUR 4.83 per unit, 45 days payment, 36 months). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [],
+   "sheets": [
+    {
+     "unit_price": 4.83,
+     "payment_days": 45,
+     "contract_months": 36
+    }
+   ]
+  },
+  {
+   "body": "Dear Wälzlager-Zentrum Süd GmbH team,\n\nThank you for your message.\n\nWe confirm a binding volume of 20,000 units per year for 36 months. Using your own cost shares (LCI-C 10%, PPI-C2815 65%) and the latest six-month index moves (LCI-C +1.7%, PPI-C2815 +0.6%), your cost increase comes to about +0.6% of the price, not +13.0%. That supports a price of about EUR 4.41.\n\nOn this basis we propose the attached term sheets (EUR 4.88 per unit, 45 days payment, 36 months). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [],
+   "sheets": [
+    {
+     "unit_price": 4.88,
+     "payment_days": 45,
+     "contract_months": 36
+    }
+   ]
+  },
+  {
+   "body": "Dear Wälzlager-Zentrum Süd GmbH team,\n\nThank you for your message.\n\nWe confirm a binding volume of 20,000 units per year for 36 months. Using your own cost shares (LCI-C 10%, PPI-C2815 65%) and the latest six-month index moves (LCI-C +1.7%, PPI-C2815 +0.6%), your cost increase comes to about +0.6% of the price, not +13.0%. That supports a price of about EUR 4.41. What is the lowest price at which you can sign these terms today?\n\nOn this basis we propose the attached term sheets (EUR 4.89 per unit, 45 days payment, 36 months). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [],
+   "sheets": [
+    {
+     "unit_price": 4.89,
+     "payment_days": 45,
+     "contract_months": 36
+    }
+   ]
+  }
+ ],
+ "relationship": {}
+}
