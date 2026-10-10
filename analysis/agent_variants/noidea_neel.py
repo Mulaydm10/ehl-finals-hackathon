@@ -60,7 +60,11 @@ MIRROR_GATE = 0.2  # from our 3rd ask: big mirror steps only while its last step
 R2_HEDGED_SHARE = 0.30  # cloud task 9: round-2 step for hedged suppliers, share of the gap (was ~0.16)
 FINAL_AT_MSG = {"raw_material": 3}  # cloud task 10: our message at which this case type's supplier goes final (P08 9/10, P18 7/10)
 DEFER_RATIO = 0.18  # ...where our step is only this share of its last step (P08 deferred at 0.19x; final at >= 0.9x, P18 at 0.53x)
-DEEP_ANCHOR_HEDGED = 0.26  # cloud task 15: round-1 anchor depth for hedged raw material (all 14 P08 games ~0.22); ON for loop run 3
+DEEP_ANCHOR_HEDGED = None  # cloud task 15: round-1 anchor depth for hedged raw material; tested 0.26 in loop run 3 (8180d389):
+# headline 5.41 (no gain) and a bigger round-2 cut that left no budget for the deferral -> OFF (task 16)
+PAY_DAYS_HEDGED = 60  # cloud task 16 (P08_loop3.md): payment term from round 2 for hedged raw material. Its final is cent-rounded on
+# OUR payment term; at the low-draw floor (value ~5.116-5.121) 60 d lands on 5.15 = 0.7329, 14 d on 5.10 = 0.7323 (the record).
+# P(score > 0.7323 | low draw, 5.40 headline) 54% at 60 d vs 20% at 14 d (noise model, 8 budgets); mean -0.002
 LONG_TERM_HEDGED = True  # cloud task 14: 36 m sheets for hedged raw-material suppliers (experiment, P08 loop run 2)
 CROSS_SELL = True  # cloud task 13: invite a hedged raw-material distributor to quote for a part we buy elsewhere (untested live)
 DEFER_TIMES = 1  # cloud task 11: small steps in a row (1 = live-tested in db7d315a; 2+ untested - sim_donautal --max-defer)
@@ -578,7 +582,8 @@ class NoIdeaAgent:
         # From message 3 on, re-price on the payment term it priced (sim: our 3rd ask hopped 14 -> 30 d because its
         # structure was not in our top-3 sheets and the hold-structure filter fell back to our first; MISTAKES.md L5).
         if k >= 1 and self.hedged_raw(case, sid):
-            days = (min(case.get("term_options", {}).get("payment_days") or [0]) or None) if k == 1 else \
+            opts_d = case.get("term_options", {}).get("payment_days") or []
+            days = (PAY_DAYS_HEDGED if PAY_DAYS_HEDGED in opts_d else (min(opts_d) if opts_d else None)) if k == 1 else \
                 (terms.get("payment_days") if sheet_id else None)
             sheets = (days and self.sheets_at(case, sid, target, cap, only={"payment_days": days})) or sheets
         if not sheets:

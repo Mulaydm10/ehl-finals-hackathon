@@ -148,3 +148,5 @@ Sources: Neel `analysis/central/LEARNINGS.md` 1-8, `analysis/central/ENGINES.md`
 63. **Let its answer choose the ladder**: ask the floor before probing. A supplier that NAMES a floor = its price sits at the top of the gap (hair-below ask); one that keeps its limits internal sat low in it (start the ladder low - P11 agreed to the first probe 3/3).
 64. **Every new rule must be checked against every case offline before live**: the hair/probe rules were written for one grid supplier and halved P08 in the simulator until gated on a grid and on our own structure. Never step back below our own previous ask.
 65. **Remember each supplier across games** (`datasets/H_supplier_memory.json`): the prices it agreed to and refused at a given standing price are the best guide to its floor - start the next negotiation from them, not from a generic ladder. A sentence a supplier writes every time is not a signal.
+66. **At a hard price floor, stop pushing price - trade a term that is cheap for the supplier at ITS OWN commitment** (a
+    chargeback at the ppm it promised costs it little if it keeps its word; frame it that way), next to a hair-under-the-floor sheet.

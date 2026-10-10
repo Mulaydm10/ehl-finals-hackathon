@@ -1023,6 +1023,29 @@ class NoIdeaAgent:
                 sheets = [(total_cost(case, t_h, s["std"], s["est"]), t_h)]
                 target = supplier_value(case, t_h, s["est"]) + self.premium(sid, t_h)
                 log.info("%s: hair-below ask %.2f under its named floor %.2f", sid, t_h["unit_price"], terms["unit_price"])
+        # AT A HARD PRICE FLOOR, trade a term that is cheap for it AT ITS OWN COMMITMENT (v2.21): P11 refused every price
+        # under 45.00 (named "absolute bottom line", 44.90 -> final); the only cost left is quality (EUR 2,146/yr). A EUR 300
+        # chargeback at the 300 ppm it commits to is ~5 complaints/yr (~EUR 1,400 = 0.09/unit, under one 0.50 grid step) and
+        # scores 0.809 at 45.00 (0.81 = another team's P11). Refused earlier only at 800 ppm (29cbb6d6, +1.00 for EUR 150).
+        # Two sheets: its floor price WITH the chargeback, and a hair under it without. Once per game.
+        opts = case.get("term_options", {}).get("chargeback_eur_per_complaint") or []
+        mlad = self.memory_ladder(case, sid, terms) if probing and g else None
+        hard = bool(mlad) and len(mlad) == 1  # memory: it refused asks right up to a hair under this standing price
+        at_floor = probing and g and holding and (s.get("probes", 0) >= 1 or s.get("hair_tried") or hard)
+        if at_floor and "chargeback_eur_per_complaint" in case["negotiable"] and not s.get("cb_tried") \
+                and (terms.get("chargeback_eur_per_complaint") or 0) == 0 and terms.get("ppm_commitment") and opts \
+                and "no_floor_chargeback" not in EXPERIMENTS:
+            cb = next((o for o in sorted(opts) if o >= 300), max(opts))
+            t_cb = complete_offer(case, {**terms, "chargeback_eur_per_complaint": cb})
+            t_h = complete_offer(case, {**terms, "unit_price": round(int(terms["unit_price"] * (1 - HAIR) * 100) / 100, 2)})
+            pair = [x for x in (t_cb, t_h) if must_haves_ok(case, x, s["std"])]
+            if pair and total_cost(case, t_cb, s["std"], s["est"]) < c_stand:
+                s["cb_tried"], s["probes"], s["send_all"] = cb, GRID_PROBES, True
+                near_final, close_now = False, True
+                sheets = sorted(((total_cost(case, x, s["std"], s["est"]), x) for x in pair), key=lambda z: z[0])
+                target = supplier_value(case, sheets[0][1], s["est"]) + self.premium(sid, sheets[0][1])
+                log.info("%s: floor trade - %.2f with EUR %s chargeback, or %.2f without", sid, t_cb["unit_price"], cb,
+                         t_h["unit_price"])
         if probing and g and s.get("probes", 0) < GRID_PROBES:
             j = s.get("probes", 0)
             # HIGH ladder: its patience allows 1-3 probes (P11 3fa2: final after one; 37ea: after three), and its floor sat at
@@ -1079,7 +1102,7 @@ class NoIdeaAgent:
             # the backbone (structure) is code's: after round 1 the model may only pick sheets with the structure code
             # leads with (P02 v2.13 dc1d4fd8a7cd47cb: the model moved us to 30 d, it made 30 d its final -> 0.20; the
             # good P02 games held 90 d every round)
-            if k >= 1 and sheets and cands:
+            if k >= 1 and sheets and cands and not close_now:  # code-built probe / floor pair: no structure lock
                 lead = sheets[0][1]
                 keep = [x for x in cands if all(x[1].get(f) == lead.get(f) for f in case["negotiable"] if f != "unit_price")]
                 cands = keep or cands[:1]
@@ -1178,6 +1201,8 @@ class NoIdeaAgent:
         chosen = [cands[i][1] for i in idx]
         if k == 0 and s.get("meso"):  # round 1 structure is code's: all MESOs go out
             chosen = list(s["meso"])
+        if s.pop("send_all", False):  # the floor trade: both sheets go out (with chargeback at its price / hair without)
+            chosen = [t for _, t in cands]
         args = [pool[i] for i in aidx]
         opening = self.clean_opening(case, str(d.get("opening") or ""))
         return self.message(case, sid, events, chosen, k, args=args, opening=opening)
@@ -1620,6 +1645,16 @@ class NoIdeaAgent:
             out.append(f"Straight talk: over the last 12 months we paid {rec[0] * 100:.0f}% of your invoices late, on average "
                        f"{rec[1]:.0f} days after the due date. That is on us, and it ends with this contract: every invoice "
                        f"paid on the due date, which brings your cash in about {rec[1]:.0f} days earlier than you are used to.")
+        if self.sup[sid].get("cb_tried") and not self.sup[sid].get("cb_said"):
+            self.sup[sid]["cb_said"] = True
+            cb = self.sup[sid]["cb_tried"]
+            ppm = next((t.get("ppm_commitment") for t in sheets if t.get("ppm_commitment")), None)
+            need = case["buyer"]["need_per_year"]
+            if ppm:
+                n = need * ppm / 1e6
+                out.append(f"We accept your price. On the chargeback: at the {ppm:.0f} ppm you commit to, EUR {cb:.0f} per "
+                           f"complaint means about {n:.0f} complaints a year, around EUR {n * cb:,.0f} - it only costs you if "
+                           f"quality slips below your own commitment. Alternatively the second sheet, without a chargeback.")
         # 0b. ask its floor (experiment `ask_floor`): "questions go to the person in charge, who answers as openly as the
         #     company is" - once it holds, ask the one number we need
         if "no_ask_floor" not in EXPERIMENTS and (stalled or k >= 2) and not self.sup[sid].get("asked_floor"):

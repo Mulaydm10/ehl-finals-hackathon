@@ -148,4 +148,8 @@
 | 2026-10-10 20:08 | Dhruv | P11 | noidea v2.19e loop 4/8 / gpt-6-astra | 0.78 (high draw; probe 45.10 agreed) | 76500e5742532008 |
 | 2026-10-10 20:11 | Dhruv | P11 | noidea v2.19e loop 5/8 / gpt-6-astra | 0.79 (LOW draw wasted by low ladder) | 74cc062d2fbc9d76 |
 | 2026-10-10 20:11 | Neel | P08 | noidea_neel / gpt-6-astra | **0.72** | 94e77b7b71359f60 |
+| 2026-10-10 20:15 | Dhruv | P11 | noidea v2.20 loop 6/8 / gpt-6-astra | 0.71 (high draw; probe 45.10 -> final) | a5ab83b965976781 |
 | 2026-10-10 20:17 | Neel | P08 | noidea_neel / gpt-6-astra | **0.72** | 8180d3894dd5c5b3 |
+| 2026-10-10 20:18 | Dhruv | P11 | noidea v2.20 loop 7/8 / gpt-6-astra | 0.79 (low draw; 44.90 refused, floor 45.00 hard) | 7285b18239ee9465 |
+| 2026-10-10 20:24 | Neel | P08 | noidea_neel / gpt-6-astra | **0.68** | b1ca37903c477636 |
+| 2026-10-10 20:24 | Dhruv | P11 | noidea v2.21 loop 8/8 / gpt-6-astra | 0.71 (high draw; final after first probe) | bdff469fc8661110 |
