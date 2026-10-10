@@ -1,5 +1,5 @@
 {
- "games": 164,
+ "games": 168,
  "by_kind": {
   "copper notation": {
    "taken": 1,
@@ -10,7 +10,7 @@
    "take_rate": 1.0
   },
   "energy index": {
-   "taken": 6,
+   "taken": 7,
    "take_rate": 1.0
   },
   "index and price history": {
@@ -18,10 +18,14 @@
    "take_rate": 1.0
   },
   "index_change": {
-   "taken": 95,
+   "taken": 97,
    "no_change": 13,
    "confirm_case": 7,
    "take_rate": 0.83
+  },
+  "labour cost index": {
+   "taken": 1,
+   "take_rate": 1.0
   },
   "news": {
    "no_change": 1,
@@ -33,9 +37,9 @@
    "take_rate": 0.67
   },
   "po_prices": {
-   "no_change": 38,
-   "taken": 19,
-   "take_rate": 0.33
+   "no_change": 39,
+   "taken": 20,
+   "take_rate": 0.34
   },
   "rival_quote": {
    "taken": 24,
@@ -47,7 +51,7 @@
    "take_rate": 0.0
   },
   "scorecard_ppm": {
-   "taken": 33,
+   "taken": 34,
    "no_change": 3,
    "take_rate": 0.92
   },
@@ -56,9 +60,9 @@
    "take_rate": 1.0
   },
   "volume_change": {
-   "taken": 77,
+   "taken": 79,
    "no_change": 20,
-   "take_rate": 0.79
+   "take_rate": 0.8
   }
  },
  "by_case": {
@@ -171,20 +175,20 @@
   },
   "case:P08": {
    "index_change": {
-    "taken": 15,
+    "taken": 16,
     "no_change": 7,
     "confirm_case": 1
    },
    "volume_change": {
-    "taken": 15
+    "taken": 16
    },
    "_signals": {
     "final_at_4": 7,
-    "final_at_3": 12
+    "final_at_3": 13
    },
    "po_prices": {
     "no_change": 6,
-    "taken": 1
+    "taken": 2
    },
    "scorecard_ppm": {
     "no_change": 1
@@ -217,16 +221,16 @@
   },
   "case:P11": {
    "index_change": {
-    "taken": 52
+    "taken": 53
    },
    "scorecard_ppm": {
-    "taken": 33
+    "taken": 34
    },
    "volume_change": {
-    "taken": 30
+    "taken": 31
    },
    "po_prices": {
-    "no_change": 22
+    "no_change": 23
    },
    "_signals": {
     "final_at_4": 6,
@@ -239,13 +243,16 @@
     "taken": 1
    },
    "energy index": {
-    "taken": 6
+    "taken": 7
    },
    "index and price history": {
     "taken": 1
    },
    "news": {
     "no_change": 1
+   },
+   "labour cost index": {
+    "taken": 1
    }
   },
   "case:P18": {
@@ -269,9 +276,9 @@
   }
  },
  "signals": {
-  "already_counted": 35,
-  "padding": 38,
-  "asked_for_data": 97,
+  "already_counted": 37,
+  "padding": 39,
+  "asked_for_data": 100,
   "rising_index_backfired": 7,
   "fair_point": 18
  }

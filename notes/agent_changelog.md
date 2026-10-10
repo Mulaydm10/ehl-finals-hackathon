@@ -878,3 +878,4 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
   any penalties: we want a binding quality commitment and your corrective-action plan, not cash out of your business."
   Prompt rule: never sound like an accusation or a test ("prove your reliability", "earn our confidence", "documented complaints").
 - Astra round 1 OK (non-accusing opening + the line), injection PASS, tests 56.
+- v2.22 live P11 (20:55): 0.71 (605ed96c39467c97) - HIGH draw despite the fixed reassurance line (1 game: the wording hypothesis is neither confirmed nor refuted; 7 of 19 earlier high draws also had reassuring wording). Probes 45.10, floor trade 45.50+EUR 300 / 45.39, hair 45.45 all held.
