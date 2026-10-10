@@ -55,6 +55,7 @@ Rules:
 - Do not mention materials, costs or facts that are not in their e-mail.
 - Do NOT write any number, price, percentage, date or data ID - the facts and offers are added
   below your paragraph automatically. No greeting line, no sign-off, no placeholders.
+- Always write in English, even if the supplier mixes in German words.
 Reply with the paragraph only."""
 
 
@@ -470,7 +471,9 @@ class NoIdeaAgent:
                 text = " ".join(x for x in re.split(r"(?<=[.!?])\s+", text)
                                 if not any(ch.isdigit() for ch in x) and not BAD_OPENING.search(x)
                                 and not any(re.search(o, x, re.I) for o in off_table))
-                if 30 < len(text) < 700:
+                # Astra offline trial (P10 round 3) answered in German: keep the e-mail in one language
+                german = len(re.findall(r"(?i)\b(wir|sie|und|der|die|das|nicht|bitte|ihre?n?|mit|für)\b", text))
+                if 30 < len(text) < 700 and german < 3:
                     opening = text
                 else:
                     log.warning("LLM paragraph rejected (len %d)", len(text))

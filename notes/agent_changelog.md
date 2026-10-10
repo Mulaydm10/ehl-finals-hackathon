@@ -142,3 +142,12 @@ C_open/C_best). The arena's suppliers are hidden; Tacto's `arena-sim` is only a 
 - After the fixes: no off-table promises, no urgency, comparisons in place; offline scores P05 0.76, P10 0.98, P11 0.98;
   full eval unchanged 0.936 / 0.944; Qwen 5.8 s mean, 6.8 s max.
 - Simulator fix: offer IDs now look like the arena's (`offer:70210-1`, was `offer:sup:70210-1`).
+
+### v1.7 stage 2 (offline, gpt-6-astra): P05 / P10 / P11
+- Astra e-mails: shorter and firmer than Qwen; no off-table promises (P11 talks ppm + chargebacks only), no role
+  errors, no urgency; latency mean 6.0 s, max 7.9 s (11 calls). Same offline scores: P05 0.76, P10 0.98, P11 0.98.
+- **One issue: P10 round 3 answered in German** ("Wir sind bereit, verbindliche Jahresmengen…"), picking up the
+  suppliers' German words. Fix: "Always write in English" in the prompt + drop paragraphs with ≥ 3 German function
+  words (template opening instead). Re-run P10 with Astra: all 3 rounds English.
+- Both offline stages are now clean for P05 / P10 / P11 → ready for stage 3 (live).
+- Known offline weak spot: **P05 (RFQ) 0.76**; round-robin + rival citing, no auction mechanics yet (task D).

@@ -24,7 +24,7 @@ pace. C_best ≈ €5.00. Untested levers, one live game each, offline-check fir
 - No Antigravity proxy (user decision).
 
 ## C. Test v1.4 on every case type live (D) - workflow: Qwen offline → Astra offline → live
-P05/P10/P11: stage 1 (Qwen) done, 4 bugs fixed (v1.7); stage 2 (Astra) running.
+P05/P10/P11: stage 1 (Qwen) done, 4 bugs fixed (v1.7); stage 2 (Astra) done, 1 fix (English only). **Ready for live.**
 Only P01 (price_increase) and P07 (bundling) have been played by our agent. Still unplayed:
 P02 P03 (stabilise), P04 (routine renewal), **P05 (RFQ)**, P08 P18 (raw material), **P10 (capacity)**,
 P11 (quality). ~8 games. Order: P05, P10, P11 first (most different from what we've tested).
