@@ -26,3 +26,4 @@
 | 2026-10-10 15:22 | Dhruv | P10 | noidea v2.0 dynamic / gpt-6-astra | 0.54 (lead 42 in round 1, final 34.00, no alt) | afd996e3d4b14336 |
 | 2026-10-10 15:25 | Dhruv | P10 | noidea v2.1 (round-1 lead prior) / gpt-6-astra | 0.65 (final 31.90 @ 56 in round 1) | 0bba4ffdf93afbe8 |
 | 2026-10-10 15:30 | Dhruv | P10 | noidea v2.2 (36 m on ties) / gpt-6-astra | 0.65 (final 31.90 @ 56, 36 m) | f0a505fc3669a3b9 |
+| 2026-10-10 15:42 | Parth | P18 | noidea v1.7 / gpt-6-astra (OpenAI) | 0.43 (deal at final_offer: 5.40, 60 d, 24 m + AS-14404 clause db0) | 6833e98fbbe5ebdf |
