@@ -1433,7 +1433,8 @@ class NoIdeaAgent:
         # text; the CSV appeared only in the two weak P02 games, the good ones had short e-mails with 0-1 data IDs)
         asked = re.search(r"(?i)release schedule|call-?off|delivery schedule|expected volumes|volume figures|"
                           r"documentation supporting|send us the (data|schedule)", latest(events).get("body") or "")
-        if not asked or s.get("schedule_sent"):
+        cash = {"cash_short", "wants_faster_payment"} & set(s["dossier"].get("motives", {}))
+        if not (asked or (k == 0 and cash)) or s.get("schedule_sent"):
             return None
         t0 = {**case.get("fixed_terms", {}), **sheets[0]}
         vol = t0.get("volume_per_year") or case["buyer"]["need_per_year"]
@@ -1534,7 +1535,7 @@ class NoIdeaAgent:
         #    (the score assumes the agreed term); to a cash-short firm ~10 days of cash is worth more than the price gap.
         motives = set(d.get("motives", {}))
         rec = self.late_payment(sid)
-        if "no_own_late_pay" not in EXPERIMENTS and k >= 1 and rec and rec[0] >= 0.5 and rec[1] >= 3 and \
+        if "no_own_late_pay" not in EXPERIMENTS and k >= 0 and rec and rec[0] >= 0.5 and rec[1] >= 3 and \
                 ({"cash_short", "wants_faster_payment"} & motives or re.search(r"pay on time|paid on time|cash", last)) \
                 and not self.sup[sid].get("owned_late"):
             self.sup[sid]["owned_late"] = True
@@ -1650,8 +1651,10 @@ class NoIdeaAgent:
         if k == 0 and "open_book" in motives:
             what = "the kit" if case["type"] == "bundling" else "this part"
             lines.append(f"Could you share your cost breakdown for {what}, so we can understand the drivers together?")
+        rec = self.late_payment(sid)
+        owns_late = "no_own_late_pay" not in EXPERIMENTS and rec and rec[0] >= 0.5 and rec[1] >= 3
         if k <= 1 and "payment_days" not in case["negotiable"] and ({"cash_short", "wants_faster_payment"} & set(motives)) \
-                and "we_pay_late" not in motives:
+                and "we_pay_late" not in motives and not owns_late:  # the concrete admission replaces the generic line
             # P11: "Faster payment would help us more than anything" every round, but payment is fixed in the case
             lines.append("We understand cash flow matters to you: we will pay every invoice reliably on the agreed day.")
         if k == 0 and "we_pay_late" in motives:
