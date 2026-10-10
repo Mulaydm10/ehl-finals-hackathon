@@ -119,3 +119,9 @@ Sources: Neel `analysis/central/LEARNINGS.md` 1-8, `analysis/central/ENGINES.md`
 49. **MESOs (several equal-value sheets in round 1) are unproven**: one game better (0d5b), one worse (f5157e0d - it priced the
     loosest variant). Off (`meso`). Never vary the payment term across sheets (P02/P03).
 50. **One near-close ask (-0.75%) before taking an OPEN offer** costs nothing: it agreed once (7117d351), held twice.
+51. **Some suppliers draw their mode per session** (cloud VARIANCE.md): P08 50/50 (13 score pts), P11 ~40/60 (8 pts) - identical
+    inputs split; nothing we send moves the draw. Judge changes there on >= 2 games or on the rounds AFTER round 1. P02, P03,
+    P04, P07, P18 are deterministic for identical inputs: one live game judges a change.
+52. **Short-fuse suppliers (final early, P10)**: credible anchor (today's price, not a deep one - a deep anchor got a floor-level
+    final in round 1), the order history as a price PATH (last old price -> today's), one 1/3-gap step in round 2 (Parth
+    87653f3, live 0.694; 0.90 not reachable with that engine).
