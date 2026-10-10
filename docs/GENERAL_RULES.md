@@ -148,3 +148,40 @@ Sources: Neel `analysis/central/LEARNINGS.md` 1-8, `analysis/central/ENGINES.md`
 63. **Let its answer choose the ladder**: ask the floor before probing. A supplier that NAMES a floor = its price sits at the top of the gap (hair-below ask); one that keeps its limits internal sat low in it (start the ladder low - P11 agreed to the first probe 3/3).
 64. **Every new rule must be checked against every case offline before live**: the hair/probe rules were written for one grid supplier and halved P08 in the simulator until gated on a grid and on our own structure. Never step back below our own previous ask.
 65. **Remember each supplier across games** (`datasets/H_supplier_memory.json`): the prices it agreed to and refused at a given standing price are the best guide to its floor - start the next negotiation from them, not from a generic ladder. A sentence a supplier writes every time is not a signal.
+66. **At a hard price floor, stop pushing price - trade a term that is cheap for the supplier at ITS OWN commitment** (a
+    chargeback at the ppm it promised costs it little if it keeps its word; frame it that way), next to a hair-under-the-floor sheet.
+
+## J. Teammates' learnings, round 2 (all commits since 18:55 reviewed 2026-10-10 ~20:40; branches merged at 50d0513)
+Sources: Neel `analysis/central/LEARNINGS.md` 8b-9 (his request 13: "add them to GENERAL_RULES"), `MISTAKES.md` (every live
+mistake ranked by points lost), `FINAL_TRIGGER.md` (353 replies), `P08_*.md`; Parth's commits (gap steps, weak facts, QN
+crash fix, price path, P04 ceiling, P07/P10/P18 probes).
+67. **Know when it goes final**: suppliers go final at a fixed message count of ours (89% of 353 replies; P02 4, P07 4, P08 3,
+    P18 3, P04 3, P10 1-2); a holder (P11) counts its HOLDS instead (final after 1-3 holds). Plan every fact and probe before it.
+68. **Budget suppliers: final = first counter - a fixed budget** (P08: -0.21 low / -0.27 high whatever we do after round 1).
+    Test it by comparing total cuts across games; if it holds, only the FIRST counter matters - spend effort on round 1.
+69. **The first counter can be nominal on whichever sheet it picks** (P08 answered 5.41 on our 45-d AND 90-d sheet): lead with
+    the sheet worth least to it at equal nominal price - the longest payment term (-0.054 value, proven).
+70. **A small step at its final message postpones the final one round** (P08 5 of 6 at 0.18x its last step) - spreads the
+    budget, fails when less than one final step of budget is left.
+71. **The final is cent-rounded on OUR payment term**: at a fixed value floor pick the term whose cent grid lands lowest
+    (P08 5.15 @ 60 d = 0.7329 vs 5.10 @ 14 d = 0.7323).
+72. **Mirror suppliers: bigger steps** (30% of the gap to its standing) - P07 0.75 -> **0.81** (Parth gap_steps); NOT for
+    patient suppliers (patience prior >= 5: P01/P02 concede on their own, offline 0.99 -> 0.88), cash-short holders (P11),
+    hedged (P08: -0.20 -> 0.53) or price-frozen (P03).
+73. **Weak facts (QNs, tiny index falls, fillers) only for a supplier that HOLDS - but never at the price of an EMPTY round (rule 40 wins: P11 3cc43596 empty round 3 -> final at msg 3)** - a supplier that is moving answers them with
+    the fact's tiny value instead of mirroring our step (P07 0.812 lean vs 0.792 with QN / labour in round 2). On a grid holder
+    send the pending fact WITH the probe in the same e-mail (conflict found when merging - rule 61 needs its round).
+74. **QNs only when its quality is a problem** (last scorecard amber/red, or a quality case): a green supplier answered "we take
+    them seriously ... they do not alter" and cut less all game (P07).
+75. **Big claims can crash the arena** (HTTP 500 on a 19-ID QN claim, P07 x2): <= 8 IDs per claim, one part; on a 5xx resend once
+    without data IDs.
+76. **Order history as a PATH** (last old price -> today's), ignoring one-order blips - taken where the flat run is shrugged off.
+77. **Credible anchor for one-shot / capacity suppliers** (P10): round 1 near today's price stays open (7/7) and finals 31.20-31.56;
+    a deep anchor got a round-1 final at 31.90-32.00. Never ask a lead time below need or below its quote ("technically unfeasible").
+78. **Floor-stop suppliers (P04)**: whole-cent grid -> ceiling 0.874 (4.89 @ 45 d; 30-d floor 4.88); one longest-payment sheet in
+    message 1, near-close at message 2 (P04_plan.md; NOT yet in our agent).
+79. **Biggest live losses, never again** (MISTAKES.md, points lost): pushing after final_offer ~1.1; remarks about its departments /
+    walk after repeated objection ~1.0; structure hops ~0.83; empty / data-less rounds ~0.6; small steps against a mirror ~0.37;
+    contradicted claims 0.32. Coin-flip first counters (P08 50/50, P11 40/60) are NOT fixable - judge on 2+ games.
+80. **At a named / remembered hard floor, offer two sheets: the floor with a cheap-for-it term, and a hair under the floor**:
+    P11 eac20911 agreed to 44.95 (0.8019, first above 0.80) - the hair sheet, delivered in the same e-mail as its last facts.

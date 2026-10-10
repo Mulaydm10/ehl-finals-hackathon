@@ -197,6 +197,26 @@ def own_quote_note(facts, sid, parts, opening_price, today="2026-09-30", days=90
             f"{(opening_price / best['unit_price'] - 1) * 100:.1f}% above it.")
 
 
+def own_quote_claims(facts, sid, parts, opening_price, today="2026-09-30", days=90):
+    """Its OWN recent quote for this part, below its opening, as a checkable claim WITH its ID (cloud task 17,
+    analysis/cases/P03_beat.md). P03: quote:7300003 = EUR 412.74 on 2026-09-05, twelve days before its EUR 438.21 renewal
+    quote - a data kind never cited in 15 P03 games (the words-only version in round 1 carries no ID). One number per
+    sentence (a second figure got P02's QN claim contradicted)."""
+    from datetime import date
+    t0, best = date.fromisoformat(today), None
+    for k, v in facts.items():
+        if k.startswith("quote:") and v.get("supplier") == sid and v.get("part") in parts and v.get("date"):
+            if (t0 - date.fromisoformat(v["date"])).days <= days and opening_price and v["unit_price"] < opening_price:
+                if best is None or v["date"] > best[1]["date"]:
+                    best = (k, v)
+    if not best:
+        return []
+    k, v = best
+    return [{"supplier": sid, "part": v["part"], "kind": "own_past_quote", "ids": [k], "figure": v["unit_price"],
+             "sentence": f"Your own quote for this part ({k}) was EUR {v['unit_price']:.2f} per unit.",
+             "checked_by_arena": True, "keep_alive": True}]
+
+
 def cross_sell_note(facts, sid, dossier, case_parts):
     """Its person's currency (cloud task 13, analysis/cases/P08_floor.md): a stock distributor ends every e-mail with "our whole
     range is at your disposal, so if there is anything else on your list, just send it over" (P08: 21 of its e-mails). A part

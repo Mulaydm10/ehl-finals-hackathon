@@ -823,3 +823,43 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 - Agent: probes come from memory at the same standing price (P11: at 45.00 -> 44.90, 44.95; at 45.50 -> 45.10, 45.25, 45.45); the model prompt gets an OUR PAST GAMES WITH THIS SUPPLIER block. After every game /tmp/after_game.sh archives + rebuilds memory + re-mines claim reactions, so the next game starts from everything learned.
 - Tests 38, offline 0.931, walk replays unchanged. (For the final: if hidden suppliers repeat across waves, memory carries over between waves.)
 - loop 6/8 (20:15, v2.20 memory): 0.71 (a5ab83b965976781) - high draw 46.50/46.00/45.50, memory probe 45.10 -> final 45.50 at once. Loop so far: 0.71, 0.71, 0.79, 0.78, 0.79, 0.71.
+- loop 7/8 (20:18): 0.7935 (7285b18239ee9465) - LOW draw, memory probe 44.90 -> final 45.00 at once. **45.00 is a hard price
+  floor**: every ask under it refused in every session (44.60-44.90), named "absolute bottom line".
+### v2.21 (offline): at a hard price floor, trade a term that is cheap for the supplier AT ITS OWN COMMITMENT
+- Only cost left above the floor: quality EUR 2,146/yr. EUR 300 chargeback at the 300 ppm it commits to = ~5 complaints/yr
+  (~EUR 1,431 = 0.09/unit, under one 0.50 grid step) -> 0.8086 at 45.00 (= the other team's 0.81). Earlier refusals were at
+  800 ppm (+1.00 for EUR 150, 29cbb6d6) - never tested at 300 ppm.
+- At the floor (after a refused probe, or at once when memory says the price is hard) send TWO sheets: floor price + EUR 300
+  chargeback, and a hair under the floor without; framing: "it only costs you if quality slips below your own commitment".
+- Conflicts fixed: the structure lock dropped the second sheet (code-built probe / floor pairs now exempt); the model kept
+  only one sheet (send_all). Replays: low draw 7285 -> [(45.00, 300), (44.95, 0)]; high draw a5ab -> probe 45.10 first.
+  Tests 38, offline 0.931, walk replays unchanged.
+- loop 8/8 (20:24, v2.21): 0.71 (bdff469fc8661110) - high draw, probe 45.10 -> final 45.50; the floor trade (chargeback) did not get a round.
+### P11 loop summary (8 games, 19:57-20:27): 0.71, 0.71, 0.79, 0.78, 0.79, 0.71, 0.79, 0.71 - no 0.81. Best stays 0.7935.
+- Hard facts now: price floor 45.00 in every session (no ask under it accepted, 0 of 9); high draws stop at 45.10-45.50.
+- Untested live: the v2.21 floor trade (45.00 + EUR 300 chargeback = 0.809). It needs a round at the floor - high draws go
+  final right after the first probe. Next idea: on a high draw lead the first probe WITH the chargeback pair.
+
+### Merge parth/n1-p06-p09-p12 (33 commits) + v2.21b conflict fix
+- In: gap steps for mirror suppliers (P07 live 0.81, was 0.75), weak facts only after a hold, QNs only when quality is a problem, QN crash fix (<= 8 IDs, resend without IDs on HTTP 5xx), price path ignores one-order blips, P04 0.874 ceiling analysis, P07/P18/P10 probes.
+- **Conflict found:** Parth weak-facts-after-a-hold kept one fact pending exactly at the hold, while our probe / floor trade waited for no facts left -> no probe ever went out on P11 (replay 7285b182: accepted 45.00). Fix: a grid holder that holds gets the probe AND its next fact in the same e-mail. Replays: low draw -> [(45.00, EUR 300), (44.95, 0)] + 6 refs; high draw -> 45.10 + facts.
+- Tests 50 (Parth +12), offline 0.931 / 0.925 (P07 stubborn 0.91: gap steps, live 0.81), walk replays unchanged.
+
+## v2.21b live P11 (20:33, merged agent with all teammate learnings): 0.7935 (3cc43596599ab8f4) - LOW draw, wasted
+- 46.00 -> (electricity) 45.00 -> our round 3 had **0 facts**: Parth's weak-facts-while-it-moves gate (it had just moved
+  46 -> 45) held back labour / QNs, the only facts left -> "Which figures is that based on? Please send us the data." +
+  final_offer at our 3rd message (usually 4-5). No round for the floor trade.
+### v2.21c (offline): never an empty round - when only weak facts are left, send the next one anyway (model + code paths).
+- Conflict of rule 73 (weak facts only after a hold) with rule 40 (no round goes out empty); rule 40 wins.
+- Replays: 3cc4 round 3 now 6 refs; 7285 floor trade [(45.00, EUR 300), (44.95, 0)] with 8 refs. Tests 50, offline 0.930/0.925.
+
+## v2.21c live P11 (20:40): **0.8019 = NEW BEST P11, first above 0.80** (eac20911ec06e2d6)
+- Low draw: 46.00 (round-1 facts + late-payment admission: "Thanks for being straight about the late payments") -> 45.00
+  (electricity) -> hold at 45.00 with labour + QNs ("barely moves our costs", "old news") -> **floor trade: two sheets, 45.00 with
+  EUR 300 chargeback or 44.95 without -> it AGREED to 44.95** (0.8019). The chargeback sheet was not chosen.
+- What made it work: no empty round (v2.21c), the probe / floor pair in the same e-mail as the pending facts (v2.21b), the
+  hair-under-the-floor price (v2.19b), memory saying its price is hard at 45.00 (v2.20), the person's currency (v2.18).
+- P11 history: 0.67 (v2.7) -> 0.79 (v2.16) -> 0.8019 (v2.21c).
+
+### v2.21d (offline): two-step floor ask for 0.81 - round 1 at the floor: [44.90 (0.810), 45.00 + EUR 300 chargeback (0.809)]; if refused: 44.95 alone (0.802, agreed in eac20911). Replay + simulated refusal OK; tests 50, offline 0.930/0.925.
+- v2.21d live P11 (20:46): 0.71 (11e2d8727fc045a1) - HIGH draw 46.50/45.50; probe 45.10, floor trade (45.50 + EUR 300 / 45.39), hair 45.45 all held -> accepted 45.50. Its high-draw floor this session > 45.45. The 44.90 step needs a LOW draw.

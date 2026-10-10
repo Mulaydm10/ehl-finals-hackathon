@@ -46,7 +46,9 @@ R2_STEP = {"free": 0.16, "db0": 0.07, "db5": 0.07}  # db5 asks: 0 (1f27, hold) /
 # a ~16% step of ours, 0.11-0.12 after a 30% step (6912 at 90 d, a4b9 at 14 d: the step, not the payment term), 0.16 on the
 # high draw; a deferral round takes half of what is left, the final the rest. XSELL: an untested floor shift (cross-sell).
 BUDGET = {"low": 0.208, "high": 0.27}  # 14 games (task 15): low c387 .210 cae4 .220 6912 .217 a4b9 .210 a43d .199 ad04 .200 94e7 .200
-R2_BIG_STEP_CUT = 0.115  # low draw, our round-2 step >= 25% of the gap
+R2_BIG_STEP_CUT = 0.115  # (task 15, superseded by R2_GAP_SHARE)
+R2_GAP_SHARE = 0.255  # task 16: round-2 cut = min(0.16, 0.255 x gap after our ask): 8180 0.60 -> 0.16, 6912 0.43 -> 0.118, a4b9 0.44 -> 0.109
+DEFER_MIN_LEFT = 0.07  # task 16: no deferral when the budget left after round 2 is one final step (8180d389: 0.05 left -> final at msg 3)
 FINAL_STEP, DEFER_STEP, DEFER_BELOW, FINAL_AT = 0.05, 0.055, 0.3, 3  # deferral rounds: db7d 0.06/0.06, 6912fd89 0.049/0.049
 HOUSE = 0.752
 
@@ -117,12 +119,14 @@ class Donautal:
                 step = R2_STEP[kind]
                 gap = self.last_v_before - plain_value(self.ours[-1])
                 share = (plain_value(first) - plain_value(self.ours[-1])) / gap if gap > 0 else 0
-                if kind == "free" and self.draw == "low" and share >= 0.25:
-                    step = R2_BIG_STEP_CUT
+                if kind == "free":  # task 16: 15 games fit cut = min(0.16, 0.255 x the gap left after our ask)
+                    step = min(R2_STEP["free"], R2_GAP_SHARE * (self.last_v_before - plain_value(first)))
             elif self.n >= FINAL_AT:
                 ours = plain_value(first) - plain_value(self.ours[-1])
                 last = self.its_steps[-1] if self.its_steps else 0
-                if self.n == FINAL_AT + self.defers and self.defers < self.max_defer and last > 0 and ours < DEFER_BELOW * last:
+                left = self.v - floor
+                if (self.n == FINAL_AT + self.defers and self.defers < self.max_defer and last > 0 and ours < DEFER_BELOW * last
+                        and (not self.free or left > DEFER_MIN_LEFT)):
                     step, self.defers = DEFER_STEP, self.defers + 1
                     if self.free:
                         step = (self.v - floor) / 2
