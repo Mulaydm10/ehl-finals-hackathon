@@ -812,3 +812,8 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
 - Conflicts fixed: the structure lock dropped the second sheet (code-built probe / floor pairs now exempt); the model kept
   only one sheet (send_all). Replays: low draw 7285 -> [(45.00, 300), (44.95, 0)]; high draw a5ab -> probe 45.10 first.
   Tests 38, offline 0.931, walk replays unchanged.
+- loop 8/8 (20:24, v2.21): 0.71 (bdff469fc8661110) - high draw, probe 45.10 -> final 45.50; the floor trade (chargeback) did not get a round.
+### P11 loop summary (8 games, 19:57-20:27): 0.71, 0.71, 0.79, 0.78, 0.79, 0.71, 0.79, 0.71 - no 0.81. Best stays 0.7935.
+- Hard facts now: price floor 45.00 in every session (no ask under it accepted, 0 of 9); high draws stop at 45.10-45.50.
+- Untested live: the v2.21 floor trade (45.00 + EUR 300 chargeback = 0.809). It needs a round at the floor - high draws go
+  final right after the first probe. Next idea: on a high draw lead the first probe WITH the chargeback pair.

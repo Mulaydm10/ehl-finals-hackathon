@@ -63,7 +63,7 @@
   }
  },
  "sup:70140": {
-  "games": 30,
+  "games": 31,
   "scores": [
    0.672,
    0.609,
@@ -89,6 +89,7 @@
    0.358,
    0.777,
    0.71,
+   0.71,
    0.752,
    0.71,
    0.543,
@@ -100,7 +101,7 @@
    "labour cost index and the old pos you cited, and we took them into account. we checked the price history": 1,
    "news": 1,
    "old order prices you mentioned, and they are correct, but our situation is different now. we checked the price history": 1,
-   "price history": 16
+   "price history": 17
   },
   "structures": {
    "chargeback_eur_per_complaint=0.0|ppm_commitment=300": {
@@ -191,9 +192,9 @@
    "energy cost": 1,
    "energy index": 6,
    "index and price history": 1,
-   "index change": 45,
-   "quality record": 28,
-   "volume change": 25
+   "index change": 47,
+   "quality record": 29,
+   "volume change": 26
   }
  },
  "sup:70410": {
@@ -708,18 +709,19 @@
   }
  },
  "sup:70620": {
-  "games": 5,
+  "games": 6,
   "scores": [
    0.0,
    0.815,
    0.81,
    0.874,
+   0.766,
    0.86
   ],
   "shrugged": {
-   "index change": 2,
-   "price history": 1,
-   "volume change": 2
+   "index change": 4,
+   "price history": 2,
+   "volume change": 3
   },
   "structures": {
    "contract_months=36|payment_days=14": {
@@ -732,6 +734,19 @@
      [
       4.8,
       4.86
+     ]
+    ]
+   },
+   "contract_months=36|payment_days=30": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     4.88
+    ],
+    "named_floors": [],
+    "refused_asks": [
+     [
+      4.8,
+      4.88
      ]
     ]
    },
@@ -784,13 +799,14 @@
    0.71,
    0.524,
    0.71,
+   0.677,
    0.721,
    0.732,
    0.666
   ],
   "shrugged": {
    "index change": 7,
-   "price history": 5,
+   "price history": 6,
    "quality record": 1
   },
   "structures": {
@@ -853,6 +869,14 @@
     "agreed_to_our_ask": [],
     "finals": [
      5.11
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   },
+   "contract_months=36|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}|payment_days=60": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     5.2
     ],
     "named_floors": [],
     "refused_asks": []
