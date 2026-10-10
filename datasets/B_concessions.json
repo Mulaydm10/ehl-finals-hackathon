@@ -1,0 +1,2954 @@
+{
+ "sup:70110": {
+  "supplier": "sup:70110",
+  "name": "Gießerei Brandlhuber GmbH & Co. KG",
+  "events": [
+   {
+    "date": "2022-11-22",
+    "part_id": "part:310012",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-05",
+    "part_id": "part:310010",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": "accepted below full cost to keep the volume"
+   },
+   {
+    "date": "2023-11-16",
+    "part_id": "part:310010",
+    "type": "annual renewal",
+    "asked_pct": "-2.2",
+    "settled_pct": "-5.6",
+    "note": "accepted below full cost to keep the volume"
+   },
+   {
+    "date": "2023-11-25",
+    "part_id": "part:310012",
+    "type": "annual renewal",
+    "asked_pct": "-3.3",
+    "settled_pct": "-5.6",
+    "note": ""
+   },
+   {
+    "date": "2024-11-17",
+    "part_id": "part:310010",
+    "type": "annual renewal",
+    "asked_pct": "1.9",
+    "settled_pct": "-0.1",
+    "note": "accepted below full cost to keep the volume"
+   },
+   {
+    "date": "2024-12-01",
+    "part_id": "part:310012",
+    "type": "annual renewal",
+    "asked_pct": "2.6",
+    "settled_pct": "-0.1",
+    "note": ""
+   },
+   {
+    "date": "2025-11-26",
+    "part_id": "part:310012",
+    "type": "annual renewal",
+    "asked_pct": "1.5",
+    "settled_pct": "-1.4",
+    "note": ""
+   },
+   {
+    "date": "2025-12-03",
+    "part_id": "part:310010",
+    "type": "annual renewal",
+    "asked_pct": "2.1",
+    "settled_pct": "-1.4",
+    "note": "accepted below full cost to keep the volume"
+   }
+  ],
+  "n_settled": 6,
+  "mean_asked_pct": 0.43,
+  "mean_settled_pct": -2.37,
+  "mean_gap_pts": 2.8,
+  "kept_share_of_increase": -0.42,
+  "ever_below_full_cost": true
+ },
+ "sup:70120": {
+  "supplier": "sup:70120",
+  "name": "Eisengießerei Velkenreith GmbH",
+  "events": [
+   {
+    "date": "2022-11-27",
+    "part_id": "part:310030",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": "accepted below full cost to keep the volume"
+   },
+   {
+    "date": "2022-12-01",
+    "part_id": "part:310031",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-26",
+    "part_id": "part:310031",
+    "type": "annual renewal",
+    "asked_pct": "-2.1",
+    "settled_pct": "-3.9",
+    "note": ""
+   },
+   {
+    "date": "2023-12-05",
+    "part_id": "part:310030",
+    "type": "annual renewal",
+    "asked_pct": "-4.1",
+    "settled_pct": "-5.6",
+    "note": "accepted below full cost to keep the volume"
+   },
+   {
+    "date": "2024-11-14",
+    "part_id": "part:310030",
+    "type": "annual renewal",
+    "asked_pct": "1.1",
+    "settled_pct": "-0.1",
+    "note": "accepted below full cost to keep the volume"
+   },
+   {
+    "date": "2024-11-25",
+    "part_id": "part:310031",
+    "type": "annual renewal",
+    "asked_pct": "2.0",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-26",
+    "part_id": "part:310031",
+    "type": "annual renewal",
+    "asked_pct": "3.2",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-12-03",
+    "part_id": "part:310030",
+    "type": "annual renewal",
+    "asked_pct": "2.6",
+    "settled_pct": "-1.4",
+    "note": "accepted below full cost to keep the volume"
+   }
+  ],
+  "n_settled": 6,
+  "mean_asked_pct": 0.45,
+  "mean_settled_pct": -1.83,
+  "mean_gap_pts": 2.28,
+  "kept_share_of_increase": -0.16,
+  "ever_below_full_cost": true
+ },
+ "sup:70130": {
+  "supplier": "sup:70130",
+  "name": "Gießerei Wimbacher GmbH",
+  "events": [
+   {
+    "date": "2022-11-12",
+    "part_id": "part:310011",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": "accepted below full cost to keep the volume"
+   },
+   {
+    "date": "2022-11-23",
+    "part_id": "part:310012",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-29",
+    "part_id": "part:310012",
+    "type": "annual renewal",
+    "asked_pct": "-3.2",
+    "settled_pct": "-5.6",
+    "note": ""
+   },
+   {
+    "date": "2023-12-04",
+    "part_id": "part:310011",
+    "type": "annual renewal",
+    "asked_pct": "-2.9",
+    "settled_pct": "-5.6",
+    "note": "accepted below full cost to keep the volume"
+   },
+   {
+    "date": "2024-11-25",
+    "part_id": "part:310012",
+    "type": "annual renewal",
+    "asked_pct": "1.4",
+    "settled_pct": "-0.1",
+    "note": ""
+   },
+   {
+    "date": "2024-12-01",
+    "part_id": "part:310011",
+    "type": "annual renewal",
+    "asked_pct": "1.3",
+    "settled_pct": "-0.1",
+    "note": "accepted below full cost to keep the volume"
+   },
+   {
+    "date": "2025-11-18",
+    "part_id": "part:310011",
+    "type": "annual renewal",
+    "asked_pct": "0.9",
+    "settled_pct": "-1.4",
+    "note": "accepted below full cost to keep the volume"
+   },
+   {
+    "date": "2025-11-19",
+    "part_id": "part:310012",
+    "type": "annual renewal",
+    "asked_pct": "0.9",
+    "settled_pct": "-1.4",
+    "note": ""
+   }
+  ],
+  "n_settled": 6,
+  "mean_asked_pct": -0.27,
+  "mean_settled_pct": -2.37,
+  "mean_gap_pts": 2.1,
+  "kept_share_of_increase": -0.81,
+  "ever_below_full_cost": true
+ },
+ "sup:70140": {
+  "supplier": "sup:70140",
+  "name": "Odlewnia Kalwisz Sp. z o.o.",
+  "events": [
+   {
+    "date": "2022-12-05",
+    "part_id": "part:310030",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-06",
+    "part_id": "part:310020",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-18",
+    "part_id": "part:310020",
+    "type": "annual renewal",
+    "asked_pct": "-3.3",
+    "settled_pct": "-5.5",
+    "note": ""
+   },
+   {
+    "date": "2023-11-28",
+    "part_id": "part:310030",
+    "type": "annual renewal",
+    "asked_pct": "-4.7",
+    "settled_pct": "-6.2",
+    "note": ""
+   },
+   {
+    "date": "2024-11-19",
+    "part_id": "part:310030",
+    "type": "annual renewal",
+    "asked_pct": "3.8",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-21",
+    "part_id": "part:310020",
+    "type": "annual renewal",
+    "asked_pct": "1.3",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-12-08",
+    "part_id": "part:310020",
+    "type": "annual renewal",
+    "asked_pct": "-1.0",
+    "settled_pct": "-2.5",
+    "note": ""
+   },
+   {
+    "date": "2025-12-08",
+    "part_id": "part:310030",
+    "type": "annual renewal",
+    "asked_pct": "2.8",
+    "settled_pct": "0.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 6,
+  "mean_asked_pct": -0.18,
+  "mean_settled_pct": -2.37,
+  "mean_gap_pts": 2.18,
+  "kept_share_of_increase": 0.0,
+  "ever_below_full_cost": false
+ },
+ "sup:70150": {
+  "supplier": "sup:70150",
+  "name": "Tarsevi Döküm Sanayi A.Ş.",
+  "events": [
+   {
+    "date": "2022-11-14",
+    "part_id": "part:310060",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-19",
+    "part_id": "part:310060",
+    "type": "annual renewal",
+    "asked_pct": "-0.7",
+    "settled_pct": "-4.5",
+    "note": ""
+   },
+   {
+    "date": "2024-11-17",
+    "part_id": "part:310060",
+    "type": "annual renewal",
+    "asked_pct": "3.0",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-12-08",
+    "part_id": "part:310060",
+    "type": "annual renewal",
+    "asked_pct": "0.7",
+    "settled_pct": "-1.9",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 1.0,
+  "mean_settled_pct": -2.13,
+  "mean_gap_pts": 3.13,
+  "kept_share_of_increase": -1.36,
+  "ever_below_full_cost": false
+ },
+ "sup:70160": {
+  "supplier": "sup:70160",
+  "name": "Meridune Precision Castings Co., Ltd.",
+  "events": [
+   {
+    "date": "2022-11-25",
+    "part_id": "part:310051",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": "accepted below full cost to keep the volume"
+   },
+   {
+    "date": "2023-12-02",
+    "part_id": "part:310051",
+    "type": "annual renewal",
+    "asked_pct": "-2.6",
+    "settled_pct": "-5.1",
+    "note": "accepted below full cost to keep the volume"
+   },
+   {
+    "date": "2024-11-13",
+    "part_id": "part:310051",
+    "type": "annual renewal",
+    "asked_pct": "1.0",
+    "settled_pct": "-0.3",
+    "note": "accepted below full cost to keep the volume"
+   },
+   {
+    "date": "2025-12-09",
+    "part_id": "part:310051",
+    "type": "annual renewal",
+    "asked_pct": "-1.1",
+    "settled_pct": "-2.3",
+    "note": "accepted below full cost to keep the volume"
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": -0.9,
+  "mean_settled_pct": -2.57,
+  "mean_gap_pts": 1.67,
+  "kept_share_of_increase": -0.3,
+  "ever_below_full_cost": true
+ },
+ "sup:70170": {
+  "supplier": "sup:70170",
+  "name": "Slévárna Vrbenský s.r.o.",
+  "events": [
+   {
+    "date": "2022-11-24",
+    "part_id": "part:310050",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-25",
+    "part_id": "part:310050",
+    "type": "annual renewal",
+    "asked_pct": "-2.5",
+    "settled_pct": "-5.9",
+    "note": ""
+   },
+   {
+    "date": "2024-12-06",
+    "part_id": "part:310050",
+    "type": "annual renewal",
+    "asked_pct": "1.2",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-17",
+    "part_id": "part:310050",
+    "type": "annual renewal",
+    "asked_pct": "0.6",
+    "settled_pct": "-1.7",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": -0.23,
+  "mean_settled_pct": -2.53,
+  "mean_gap_pts": 2.3,
+  "kept_share_of_increase": -1.42,
+  "ever_below_full_cost": false
+ },
+ "sup:70180": {
+  "supplier": "sup:70180",
+  "name": "Feinguss Allgäu-Reiter GmbH",
+  "events": [
+   {
+    "date": "2022-12-04",
+    "part_id": "part:310051",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-12",
+    "part_id": "part:310050",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-23",
+    "part_id": "part:310050",
+    "type": "annual renewal",
+    "asked_pct": "-2.1",
+    "settled_pct": "-3.7",
+    "note": ""
+   },
+   {
+    "date": "2023-11-29",
+    "part_id": "part:310051",
+    "type": "annual renewal",
+    "asked_pct": "-5.1",
+    "settled_pct": "-6.4",
+    "note": ""
+   },
+   {
+    "date": "2024-11-15",
+    "part_id": "part:310051",
+    "type": "annual renewal",
+    "asked_pct": "4.0",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-19",
+    "part_id": "part:310050",
+    "type": "annual renewal",
+    "asked_pct": "1.5",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-18",
+    "part_id": "part:310050",
+    "type": "annual renewal",
+    "asked_pct": "0.0",
+    "settled_pct": "-2.1",
+    "note": ""
+   },
+   {
+    "date": "2025-12-09",
+    "part_id": "part:310051",
+    "type": "annual renewal",
+    "asked_pct": "0.1",
+    "settled_pct": "-3.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 6,
+  "mean_asked_pct": -0.27,
+  "mean_settled_pct": -2.53,
+  "mean_gap_pts": 2.27,
+  "kept_share_of_increase": -10.0,
+  "ever_below_full_cost": false
+ },
+ "sup:70190": {
+  "supplier": "sup:70190",
+  "name": "Gießerei Pfaffenreuth GmbH",
+  "events": [
+   {
+    "date": "2022-11-20",
+    "part_id": "part:310060",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-03",
+    "part_id": "part:310040",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-18",
+    "part_id": "part:310060",
+    "type": "annual renewal",
+    "asked_pct": "-2.3",
+    "settled_pct": "-4.0",
+    "note": ""
+   },
+   {
+    "date": "2023-11-22",
+    "part_id": "part:310040",
+    "type": "annual renewal",
+    "asked_pct": "-3.1",
+    "settled_pct": "-4.7",
+    "note": ""
+   },
+   {
+    "date": "2024-11-24",
+    "part_id": "part:310060",
+    "type": "annual renewal",
+    "asked_pct": "1.6",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-26",
+    "part_id": "part:310040",
+    "type": "annual renewal",
+    "asked_pct": "4.0",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-20",
+    "part_id": "part:310060",
+    "type": "annual renewal",
+    "asked_pct": "1.5",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-12-04",
+    "part_id": "part:310040",
+    "type": "annual renewal",
+    "asked_pct": "1.3",
+    "settled_pct": "-2.5",
+    "note": ""
+   }
+  ],
+  "n_settled": 6,
+  "mean_asked_pct": 0.5,
+  "mean_settled_pct": -1.87,
+  "mean_gap_pts": 2.37,
+  "kept_share_of_increase": -0.48,
+  "ever_below_full_cost": false
+ },
+ "sup:70210": {
+  "supplier": "sup:70210",
+  "name": "Zerspanung Dralveck GmbH",
+  "events": [
+   {
+    "date": "2022-11-15",
+    "part_id": "part:320010",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-12",
+    "part_id": "part:320080",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-30",
+    "part_id": "part:320010",
+    "type": "annual renewal",
+    "asked_pct": "-3.2",
+    "settled_pct": "-6.6",
+    "note": ""
+   },
+   {
+    "date": "2023-12-02",
+    "part_id": "part:320080",
+    "type": "annual renewal",
+    "asked_pct": "0.2",
+    "settled_pct": "-2.1",
+    "note": ""
+   },
+   {
+    "date": "2024-11-28",
+    "part_id": "part:320080",
+    "type": "annual renewal",
+    "asked_pct": "1.2",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-12-10",
+    "part_id": "part:320010",
+    "type": "annual renewal",
+    "asked_pct": "4.6",
+    "settled_pct": "2.2",
+    "note": ""
+   },
+   {
+    "date": "2025-11-23",
+    "part_id": "part:320010",
+    "type": "annual renewal",
+    "asked_pct": "-0.9",
+    "settled_pct": "-3.0",
+    "note": ""
+   },
+   {
+    "date": "2025-12-08",
+    "part_id": "part:320080",
+    "type": "annual renewal",
+    "asked_pct": "1.2",
+    "settled_pct": "0.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 6,
+  "mean_asked_pct": 0.52,
+  "mean_settled_pct": -1.58,
+  "mean_gap_pts": 2.1,
+  "kept_share_of_increase": -2.51,
+  "ever_below_full_cost": false
+ },
+ "sup:70220": {
+  "supplier": "sup:70220",
+  "name": "CNC-Technik Obermaier & Huber GmbH",
+  "events": [
+   {
+    "date": "2022-11-23",
+    "part_id": "part:320030",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-20",
+    "part_id": "part:320030",
+    "type": "annual renewal",
+    "asked_pct": "-0.4",
+    "settled_pct": "-4.1",
+    "note": ""
+   },
+   {
+    "date": "2024-11-19",
+    "part_id": "part:320030",
+    "type": "annual renewal",
+    "asked_pct": "3.1",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-12-04",
+    "part_id": "part:320030",
+    "type": "annual renewal",
+    "asked_pct": "3.5",
+    "settled_pct": "0.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 2.07,
+  "mean_settled_pct": -1.37,
+  "mean_gap_pts": 3.43,
+  "kept_share_of_increase": 0.0,
+  "ever_below_full_cost": false
+ },
+ "sup:70230": {
+  "supplier": "sup:70230",
+  "name": "Präzisionsteile Lindlbauer KG",
+  "events": [
+   {
+    "date": "2022-11-15",
+    "part_id": "part:320031",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-11-20",
+    "part_id": "part:320020",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-07",
+    "part_id": "part:320060",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-13",
+    "part_id": "part:320020",
+    "type": "annual renewal",
+    "asked_pct": "-0.5",
+    "settled_pct": "-4.1",
+    "note": ""
+   },
+   {
+    "date": "2023-11-15",
+    "part_id": "part:320060",
+    "type": "annual renewal",
+    "asked_pct": "0.5",
+    "settled_pct": "-3.0",
+    "note": ""
+   },
+   {
+    "date": "2023-11-19",
+    "part_id": "part:320031",
+    "type": "annual renewal",
+    "asked_pct": "-2.3",
+    "settled_pct": "-4.3",
+    "note": ""
+   },
+   {
+    "date": "2024-11-19",
+    "part_id": "part:320060",
+    "type": "annual renewal",
+    "asked_pct": "4.2",
+    "settled_pct": "0.3",
+    "note": ""
+   },
+   {
+    "date": "2024-11-26",
+    "part_id": "part:320031",
+    "type": "annual renewal",
+    "asked_pct": "1.3",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-27",
+    "part_id": "part:320020",
+    "type": "annual renewal",
+    "asked_pct": "2.4",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-16",
+    "part_id": "part:320020",
+    "type": "annual renewal",
+    "asked_pct": "3.8",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-23",
+    "part_id": "part:320031",
+    "type": "annual renewal",
+    "asked_pct": "2.1",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-26",
+    "part_id": "part:320060",
+    "type": "annual renewal",
+    "asked_pct": "3.4",
+    "settled_pct": "0.1",
+    "note": ""
+   }
+  ],
+  "n_settled": 9,
+  "mean_asked_pct": 1.66,
+  "mean_settled_pct": -1.22,
+  "mean_gap_pts": 2.88,
+  "kept_share_of_increase": -0.84,
+  "ever_below_full_cost": false
+ },
+ "sup:70240": {
+  "supplier": "sup:70240",
+  "name": "Strojírna Hrvelec s.r.o.",
+  "events": [
+   {
+    "date": "2022-11-14",
+    "part_id": "part:320031",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-12-12",
+    "part_id": "part:320031",
+    "type": "annual renewal",
+    "asked_pct": "2.4",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-12-02",
+    "part_id": "part:320031",
+    "type": "annual renewal",
+    "asked_pct": "3.3",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-14",
+    "part_id": "part:320031",
+    "type": "annual renewal",
+    "asked_pct": "-1.0",
+    "settled_pct": "-3.1",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 1.57,
+  "mean_settled_pct": -1.03,
+  "mean_gap_pts": 2.6,
+  "kept_share_of_increase": 0.0,
+  "ever_below_full_cost": false
+ },
+ "sup:70250": {
+  "supplier": "sup:70250",
+  "name": "Drehteile Fuchsreiter GmbH",
+  "events": [
+   {
+    "date": "2022-12-03",
+    "part_id": "part:320090",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-30",
+    "part_id": "part:320090",
+    "type": "annual renewal",
+    "asked_pct": "-3.9",
+    "settled_pct": "-5.2",
+    "note": ""
+   },
+   {
+    "date": "2024-12-03",
+    "part_id": "part:320090",
+    "type": "annual renewal",
+    "asked_pct": "1.3",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-29",
+    "part_id": "part:320090",
+    "type": "annual renewal",
+    "asked_pct": "-0.8",
+    "settled_pct": "-2.1",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": -1.13,
+  "mean_settled_pct": -2.43,
+  "mean_gap_pts": 1.3,
+  "kept_share_of_increase": 0.0,
+  "ever_below_full_cost": false
+ },
+ "sup:70260": {
+  "supplier": "sup:70260",
+  "name": "Mechanik Tauvelt GmbH",
+  "events": [
+   {
+    "date": "2022-11-20",
+    "part_id": "part:320012",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-30",
+    "part_id": "part:320012",
+    "type": "annual renewal",
+    "asked_pct": "-0.1",
+    "settled_pct": "-4.0",
+    "note": ""
+   },
+   {
+    "date": "2024-12-02",
+    "part_id": "part:320012",
+    "type": "annual renewal",
+    "asked_pct": "1.8",
+    "settled_pct": "-0.3",
+    "note": ""
+   },
+   {
+    "date": "2025-11-15",
+    "part_id": "part:320012",
+    "type": "annual renewal",
+    "asked_pct": "2.6",
+    "settled_pct": "-1.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 1.43,
+  "mean_settled_pct": -1.77,
+  "mean_gap_pts": 3.2,
+  "kept_share_of_increase": -0.28,
+  "ever_below_full_cost": false
+ },
+ "sup:70270": {
+  "supplier": "sup:70270",
+  "name": "Obrábění Kraslin s.r.o.",
+  "events": [
+   {
+    "date": "2022-11-29",
+    "part_id": "part:320050",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-18",
+    "part_id": "part:320050",
+    "type": "annual renewal",
+    "asked_pct": "-4.1",
+    "settled_pct": "-5.4",
+    "note": ""
+   },
+   {
+    "date": "2024-12-04",
+    "part_id": "part:320050",
+    "type": "annual renewal",
+    "asked_pct": "5.8",
+    "settled_pct": "2.7",
+    "note": ""
+   },
+   {
+    "date": "2025-12-02",
+    "part_id": "part:320050",
+    "type": "annual renewal",
+    "asked_pct": "2.8",
+    "settled_pct": "0.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 1.5,
+  "mean_settled_pct": -0.9,
+  "mean_gap_pts": 2.4,
+  "kept_share_of_increase": 0.23,
+  "ever_below_full_cost": false
+ },
+ "sup:70280": {
+  "supplier": "sup:70280",
+  "name": "Wälzhammer Präzision GmbH",
+  "events": [
+   {
+    "date": "2022-11-21",
+    "part_id": "part:320011",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-12-08",
+    "part_id": "part:320011",
+    "type": "annual renewal",
+    "asked_pct": "1.5",
+    "settled_pct": "-1.9",
+    "note": ""
+   },
+   {
+    "date": "2024-11-20",
+    "part_id": "part:320011",
+    "type": "annual renewal",
+    "asked_pct": "-0.7",
+    "settled_pct": "-3.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-24",
+    "part_id": "part:320011",
+    "type": "annual renewal",
+    "asked_pct": "3.5",
+    "settled_pct": "0.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 1.43,
+  "mean_settled_pct": -1.63,
+  "mean_gap_pts": 3.07,
+  "kept_share_of_increase": -0.63,
+  "ever_below_full_cost": false
+ },
+ "sup:70290": {
+  "supplier": "sup:70290",
+  "name": "Feinmechanik Rottaler GmbH",
+  "events": [
+   {
+    "date": "2022-12-07",
+    "part_id": "part:320010",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-12",
+    "part_id": "part:320010",
+    "type": "annual renewal",
+    "asked_pct": "-0.1",
+    "settled_pct": "-2.7",
+    "note": ""
+   },
+   {
+    "date": "2024-12-02",
+    "part_id": "part:320010",
+    "type": "annual renewal",
+    "asked_pct": "3.7",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-19",
+    "part_id": "part:320010",
+    "type": "annual renewal",
+    "asked_pct": "-1.2",
+    "settled_pct": "-2.9",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 0.8,
+  "mean_settled_pct": -1.87,
+  "mean_gap_pts": 2.67,
+  "kept_share_of_increase": 0.0,
+  "ever_below_full_cost": false
+ },
+ "sup:70295": {
+  "supplier": "sup:70295",
+  "name": "Drehzentrum Ilzauer GmbH",
+  "events": [
+   {
+    "date": "2022-11-13",
+    "part_id": "part:320020",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-11-23",
+    "part_id": "part:320040",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-11-28",
+    "part_id": "part:320090",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-12-01",
+    "part_id": "part:320040",
+    "type": "annual renewal",
+    "asked_pct": "1.9",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2023-12-08",
+    "part_id": "part:320020",
+    "type": "annual renewal",
+    "asked_pct": "-1.2",
+    "settled_pct": "-3.6",
+    "note": ""
+   },
+   {
+    "date": "2023-12-09",
+    "part_id": "part:320090",
+    "type": "annual renewal",
+    "asked_pct": "-0.1",
+    "settled_pct": "-3.1",
+    "note": ""
+   },
+   {
+    "date": "2024-11-17",
+    "part_id": "part:320090",
+    "type": "annual renewal",
+    "asked_pct": "1.7",
+    "settled_pct": "-1.7",
+    "note": ""
+   },
+   {
+    "date": "2024-11-24",
+    "part_id": "part:320040",
+    "type": "annual renewal",
+    "asked_pct": "6.6",
+    "settled_pct": "5.2",
+    "note": ""
+   },
+   {
+    "date": "2024-12-08",
+    "part_id": "part:320020",
+    "type": "annual renewal",
+    "asked_pct": "2.4",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-12",
+    "part_id": "part:320020",
+    "type": "annual renewal",
+    "asked_pct": "3.0",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-15",
+    "part_id": "part:320040",
+    "type": "annual renewal",
+    "asked_pct": "5.2",
+    "settled_pct": "3.1",
+    "note": ""
+   },
+   {
+    "date": "2025-11-18",
+    "part_id": "part:320090",
+    "type": "annual renewal",
+    "asked_pct": "3.3",
+    "settled_pct": "0.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 9,
+  "mean_asked_pct": 2.53,
+  "mean_settled_pct": -0.01,
+  "mean_gap_pts": 2.54,
+  "kept_share_of_increase": 0.05,
+  "ever_below_full_cost": false
+ },
+ "sup:70310": {
+  "supplier": "sup:70310",
+  "name": "Blechtechnik Aichbauer GmbH",
+  "events": [
+   {
+    "date": "2022-11-20",
+    "part_id": "part:330010",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-12-06",
+    "part_id": "part:330010",
+    "type": "annual renewal",
+    "asked_pct": "-2.2",
+    "settled_pct": "-6.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-27",
+    "part_id": "part:330010",
+    "type": "annual renewal",
+    "asked_pct": "2.2",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-20",
+    "part_id": "part:330010",
+    "type": "annual renewal",
+    "asked_pct": "3.6",
+    "settled_pct": "0.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 1.2,
+  "mean_settled_pct": -2.0,
+  "mean_gap_pts": 3.2,
+  "kept_share_of_increase": 0.0,
+  "ever_below_full_cost": false
+ },
+ "sup:70320": {
+  "supplier": "sup:70320",
+  "name": "Stahlbau Ganghofer-Lenz GmbH",
+  "events": [
+   {
+    "date": "2022-12-09",
+    "part_id": "part:330011",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-23",
+    "part_id": "part:330011",
+    "type": "annual renewal",
+    "asked_pct": "-3.9",
+    "settled_pct": "-6.6",
+    "note": ""
+   },
+   {
+    "date": "2024-11-14",
+    "part_id": "part:330011",
+    "type": "annual renewal",
+    "asked_pct": "3.1",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-22",
+    "part_id": "part:330011",
+    "type": "annual renewal",
+    "asked_pct": "-0.7",
+    "settled_pct": "-1.9",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": -0.5,
+  "mean_settled_pct": -2.83,
+  "mean_gap_pts": 2.33,
+  "kept_share_of_increase": 0.0,
+  "ever_below_full_cost": false
+ },
+ "sup:70330": {
+  "supplier": "sup:70330",
+  "name": "Lasertechnik Varnoszeg Kft.",
+  "events": [
+   {
+    "date": "2022-11-12",
+    "part_id": "part:330040",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-16",
+    "part_id": "part:330040",
+    "type": "annual renewal",
+    "asked_pct": "-3.8",
+    "settled_pct": "-7.5",
+    "note": ""
+   },
+   {
+    "date": "2024-12-05",
+    "part_id": "part:330040",
+    "type": "annual renewal",
+    "asked_pct": "3.2",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-18",
+    "part_id": "part:330040",
+    "type": "annual renewal",
+    "asked_pct": "1.5",
+    "settled_pct": "-2.5",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 0.3,
+  "mean_settled_pct": -3.33,
+  "mean_gap_pts": 3.63,
+  "kept_share_of_increase": -0.83,
+  "ever_below_full_cost": false
+ },
+ "sup:70340": {
+  "supplier": "sup:70340",
+  "name": "Metallbau Steinfelder KG",
+  "events": [
+   {
+    "date": "2022-11-19",
+    "part_id": "part:330020",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-12",
+    "part_id": "part:330030",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-24",
+    "part_id": "part:330020",
+    "type": "annual renewal",
+    "asked_pct": "-3.2",
+    "settled_pct": "-6.1",
+    "note": ""
+   },
+   {
+    "date": "2023-12-12",
+    "part_id": "part:330030",
+    "type": "annual renewal",
+    "asked_pct": "-3.4",
+    "settled_pct": "-7.4",
+    "note": ""
+   },
+   {
+    "date": "2024-11-19",
+    "part_id": "part:330020",
+    "type": "annual renewal",
+    "asked_pct": "0.4",
+    "settled_pct": "-1.1",
+    "note": ""
+   },
+   {
+    "date": "2024-11-22",
+    "part_id": "part:330030",
+    "type": "annual renewal",
+    "asked_pct": "2.1",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-30",
+    "part_id": "part:330030",
+    "type": "annual renewal",
+    "asked_pct": "3.2",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-12-12",
+    "part_id": "part:330020",
+    "type": "annual renewal",
+    "asked_pct": "0.2",
+    "settled_pct": "-1.3",
+    "note": ""
+   }
+  ],
+  "n_settled": 6,
+  "mean_asked_pct": -0.12,
+  "mean_settled_pct": -2.65,
+  "mean_gap_pts": 2.53,
+  "kept_share_of_increase": -2.31,
+  "ever_below_full_cost": false
+ },
+ "sup:70350": {
+  "supplier": "sup:70350",
+  "name": "Oberflächentechnik Weißacher GmbH",
+  "events": [
+   {
+    "date": "2022-12-12",
+    "part_id": "part:330060",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-12-07",
+    "part_id": "part:330060",
+    "type": "annual renewal",
+    "asked_pct": "-2.6",
+    "settled_pct": "-6.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-20",
+    "part_id": "part:330060",
+    "type": "annual renewal",
+    "asked_pct": "2.8",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-21",
+    "part_id": "part:330060",
+    "type": "annual renewal",
+    "asked_pct": "1.9",
+    "settled_pct": "0.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 0.7,
+  "mean_settled_pct": -2.0,
+  "mean_gap_pts": 2.7,
+  "kept_share_of_increase": 0.0,
+  "ever_below_full_cost": false
+ },
+ "sup:70360": {
+  "supplier": "sup:70360",
+  "name": "Kantteile Strasser GmbH",
+  "events": [
+   {
+    "date": "2022-11-23",
+    "part_id": "part:330030",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-20",
+    "part_id": "part:330030",
+    "type": "annual renewal",
+    "asked_pct": "-3.1",
+    "settled_pct": "-6.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-26",
+    "part_id": "part:330030",
+    "type": "annual renewal",
+    "asked_pct": "3.7",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-24",
+    "part_id": "part:330030",
+    "type": "annual renewal",
+    "asked_pct": "3.6",
+    "settled_pct": "0.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 1.4,
+  "mean_settled_pct": -2.0,
+  "mean_gap_pts": 3.4,
+  "kept_share_of_increase": 0.0,
+  "ever_below_full_cost": false
+ },
+ "sup:70410": {
+  "supplier": "sup:70410",
+  "name": "Dichtungswerk Ravensteiner GmbH",
+  "events": [
+   {
+    "date": "2022-11-14",
+    "part_id": "part:340030",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-11-18",
+    "part_id": "part:340010",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-10",
+    "part_id": "part:340011",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-12-02",
+    "part_id": "part:340011",
+    "type": "annual renewal",
+    "asked_pct": "1.8",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2023-12-08",
+    "part_id": "part:340030",
+    "type": "annual renewal",
+    "asked_pct": "2.2",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2023-12-10",
+    "part_id": "part:340010",
+    "type": "annual renewal",
+    "asked_pct": "7.0",
+    "settled_pct": "3.3",
+    "note": ""
+   },
+   {
+    "date": "2024-11-24",
+    "part_id": "part:340010",
+    "type": "annual renewal",
+    "asked_pct": "2.0",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-24",
+    "part_id": "part:340011",
+    "type": "annual renewal",
+    "asked_pct": "4.9",
+    "settled_pct": "2.1",
+    "note": ""
+   },
+   {
+    "date": "2024-12-06",
+    "part_id": "part:340030",
+    "type": "annual renewal",
+    "asked_pct": "5.6",
+    "settled_pct": "3.7",
+    "note": ""
+   },
+   {
+    "date": "2025-11-23",
+    "part_id": "part:340010",
+    "type": "annual renewal",
+    "asked_pct": "2.5",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-12-02",
+    "part_id": "part:340011",
+    "type": "annual renewal",
+    "asked_pct": "1.5",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-12-07",
+    "part_id": "part:340030",
+    "type": "annual renewal",
+    "asked_pct": "1.1",
+    "settled_pct": "0.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 9,
+  "mean_asked_pct": 3.18,
+  "mean_settled_pct": 1.01,
+  "mean_gap_pts": 2.17,
+  "kept_share_of_increase": 0.17,
+  "ever_below_full_cost": false
+ },
+ "sup:70420": {
+  "supplier": "sup:70420",
+  "name": "Gleitring-Systeme Kaltenbrunn AG",
+  "events": [
+   {
+    "date": "2022-12-05",
+    "part_id": "part:340012",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-20",
+    "part_id": "part:340012",
+    "type": "annual renewal",
+    "asked_pct": "3.3",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-20",
+    "part_id": "part:340012",
+    "type": "annual renewal",
+    "asked_pct": "2.2",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-12",
+    "part_id": "part:340012",
+    "type": "annual renewal",
+    "asked_pct": "1.3",
+    "settled_pct": "0.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 2.27,
+  "mean_settled_pct": 0.0,
+  "mean_gap_pts": 2.27,
+  "kept_share_of_increase": 0.0,
+  "ever_below_full_cost": false
+ },
+ "sup:70430": {
+  "supplier": "sup:70430",
+  "name": "Elasto-Dicht Hermannsdorfer GmbH",
+  "events": [
+   {
+    "date": "2022-11-20",
+    "part_id": "part:340040",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-11-29",
+    "part_id": "part:340020",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-22",
+    "part_id": "part:340040",
+    "type": "annual renewal",
+    "asked_pct": "1.1",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2023-12-02",
+    "part_id": "part:340020",
+    "type": "annual renewal",
+    "asked_pct": "2.7",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-22",
+    "part_id": "part:340040",
+    "type": "annual renewal",
+    "asked_pct": "2.5",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-26",
+    "part_id": "part:340020",
+    "type": "annual renewal",
+    "asked_pct": "1.1",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-24",
+    "part_id": "part:340020",
+    "type": "annual renewal",
+    "asked_pct": "5.4",
+    "settled_pct": "2.4",
+    "note": ""
+   },
+   {
+    "date": "2025-12-01",
+    "part_id": "part:340040",
+    "type": "annual renewal",
+    "asked_pct": "4.0",
+    "settled_pct": "2.6",
+    "note": ""
+   }
+  ],
+  "n_settled": 6,
+  "mean_asked_pct": 2.8,
+  "mean_settled_pct": 0.83,
+  "mean_gap_pts": 1.97,
+  "kept_share_of_increase": 0.18,
+  "ever_below_full_cost": false
+ },
+ "sup:70440": {
+  "supplier": "sup:70440",
+  "name": "Kohlering-Technik Pirkheim GmbH",
+  "events": [
+   {
+    "date": "2022-11-27",
+    "part_id": "part:340011",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-01",
+    "part_id": "part:340040",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-14",
+    "part_id": "part:340040",
+    "type": "annual renewal",
+    "asked_pct": "3.9",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2023-12-07",
+    "part_id": "part:340011",
+    "type": "annual renewal",
+    "asked_pct": "2.9",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-25",
+    "part_id": "part:340011",
+    "type": "annual renewal",
+    "asked_pct": "1.1",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-25",
+    "part_id": "part:340040",
+    "type": "annual renewal",
+    "asked_pct": "4.7",
+    "settled_pct": "1.8",
+    "note": ""
+   },
+   {
+    "date": "2025-11-12",
+    "part_id": "part:340040",
+    "type": "annual renewal",
+    "asked_pct": "1.7",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-17",
+    "part_id": "part:340011",
+    "type": "annual renewal",
+    "asked_pct": "4.8",
+    "settled_pct": "2.1",
+    "note": ""
+   }
+  ],
+  "n_settled": 6,
+  "mean_asked_pct": 3.18,
+  "mean_settled_pct": 0.65,
+  "mean_gap_pts": 2.53,
+  "kept_share_of_increase": 0.14,
+  "ever_below_full_cost": false
+ },
+ "sup:70510": {
+  "supplier": "sup:70510",
+  "name": "Antriebstechnik Nordmark AG",
+  "events": [
+   {
+    "date": "2022-11-27",
+    "part_id": "part:350011",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-03",
+    "part_id": "part:350010",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-12-09",
+    "part_id": "part:350011",
+    "type": "annual renewal",
+    "asked_pct": "-0.4",
+    "settled_pct": "-2.6",
+    "note": ""
+   },
+   {
+    "date": "2023-12-12",
+    "part_id": "part:350010",
+    "type": "annual renewal",
+    "asked_pct": "-1.2",
+    "settled_pct": "-2.6",
+    "note": ""
+   },
+   {
+    "date": "2024-11-29",
+    "part_id": "part:350011",
+    "type": "annual renewal",
+    "asked_pct": "3.5",
+    "settled_pct": "1.4",
+    "note": ""
+   },
+   {
+    "date": "2024-12-01",
+    "part_id": "part:350010",
+    "type": "annual renewal",
+    "asked_pct": "3.7",
+    "settled_pct": "1.4",
+    "note": ""
+   },
+   {
+    "date": "2025-11-12",
+    "part_id": "part:350011",
+    "type": "annual renewal",
+    "asked_pct": "4.7",
+    "settled_pct": "1.2",
+    "note": ""
+   },
+   {
+    "date": "2025-11-13",
+    "part_id": "part:350010",
+    "type": "annual renewal",
+    "asked_pct": "3.8",
+    "settled_pct": "1.2",
+    "note": ""
+   }
+  ],
+  "n_settled": 6,
+  "mean_asked_pct": 2.35,
+  "mean_settled_pct": -0.0,
+  "mean_gap_pts": 2.35,
+  "kept_share_of_increase": 0.34,
+  "ever_below_full_cost": false
+ },
+ "sup:70520": {
+  "supplier": "sup:70520",
+  "name": "Vesmo Elektromotory a.s.",
+  "events": [
+   {
+    "date": "2022-11-26",
+    "part_id": "part:350010",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-07",
+    "part_id": "part:350012",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-19",
+    "part_id": "part:350012",
+    "type": "annual renewal",
+    "asked_pct": "-0.9",
+    "settled_pct": "-2.6",
+    "note": ""
+   },
+   {
+    "date": "2023-12-08",
+    "part_id": "part:350010",
+    "type": "annual renewal",
+    "asked_pct": "-0.7",
+    "settled_pct": "-2.6",
+    "note": ""
+   },
+   {
+    "date": "2024-11-21",
+    "part_id": "part:350012",
+    "type": "annual renewal",
+    "asked_pct": "2.7",
+    "settled_pct": "1.4",
+    "note": ""
+   },
+   {
+    "date": "2024-12-06",
+    "part_id": "part:350010",
+    "type": "annual renewal",
+    "asked_pct": "4.7",
+    "settled_pct": "1.4",
+    "note": ""
+   },
+   {
+    "date": "2025-11-13",
+    "part_id": "part:350012",
+    "type": "annual renewal",
+    "asked_pct": "4.3",
+    "settled_pct": "1.2",
+    "note": ""
+   },
+   {
+    "date": "2025-11-19",
+    "part_id": "part:350010",
+    "type": "annual renewal",
+    "asked_pct": "3.5",
+    "settled_pct": "1.2",
+    "note": ""
+   }
+  ],
+  "n_settled": 6,
+  "mean_asked_pct": 2.27,
+  "mean_settled_pct": -0.0,
+  "mean_gap_pts": 2.27,
+  "kept_share_of_increase": 0.36,
+  "ever_below_full_cost": false
+ },
+ "sup:70530": {
+  "supplier": "sup:70530",
+  "name": "Selvbrunn Drive Systems GmbH",
+  "events": [
+   {
+    "date": "2022-12-02",
+    "part_id": "part:350020",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-13",
+    "part_id": "part:350020",
+    "type": "annual renewal",
+    "asked_pct": "1.4",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-12-08",
+    "part_id": "part:350020",
+    "type": "annual renewal",
+    "asked_pct": "-0.6",
+    "settled_pct": "-3.5",
+    "note": ""
+   },
+   {
+    "date": "2025-11-21",
+    "part_id": "part:350020",
+    "type": "annual renewal",
+    "asked_pct": "5.5",
+    "settled_pct": "3.1",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 2.1,
+  "mean_settled_pct": -0.13,
+  "mean_gap_pts": 2.23,
+  "kept_share_of_increase": 0.28,
+  "ever_below_full_cost": false
+ },
+ "sup:70540": {
+  "supplier": "sup:70540",
+  "name": "Konvertek Antriebselektronik GmbH",
+  "events": [
+   {
+    "date": "2022-12-02",
+    "part_id": "part:350021",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-18",
+    "part_id": "part:350021",
+    "type": "annual renewal",
+    "asked_pct": "3.2",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-26",
+    "part_id": "part:350021",
+    "type": "annual renewal",
+    "asked_pct": "1.0",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-12-09",
+    "part_id": "part:350021",
+    "type": "annual renewal",
+    "asked_pct": "2.8",
+    "settled_pct": "0.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 2.33,
+  "mean_settled_pct": 0.0,
+  "mean_gap_pts": 2.33,
+  "kept_share_of_increase": 0.0,
+  "ever_below_full_cost": false
+ },
+ "sup:70550": {
+  "supplier": "sup:70550",
+  "name": "Platinenwerk Lausitz GmbH",
+  "events": [
+   {
+    "date": "2022-12-09",
+    "part_id": "part:350030",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": "accepted below full cost to keep the volume"
+   },
+   {
+    "date": "2023-12-08",
+    "part_id": "part:350030",
+    "type": "annual renewal",
+    "asked_pct": "1.2",
+    "settled_pct": "-1.8",
+    "note": "accepted below full cost to keep the volume"
+   },
+   {
+    "date": "2024-11-13",
+    "part_id": "part:350030",
+    "type": "annual renewal",
+    "asked_pct": "-0.5",
+    "settled_pct": "-2.0",
+    "note": "accepted below full cost to keep the volume"
+   },
+   {
+    "date": "2025-11-21",
+    "part_id": "part:350030",
+    "type": "annual renewal",
+    "asked_pct": "2.1",
+    "settled_pct": "0.4",
+    "note": "accepted below full cost to keep the volume"
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 0.93,
+  "mean_settled_pct": -1.13,
+  "mean_gap_pts": 2.07,
+  "kept_share_of_increase": -0.65,
+  "ever_below_full_cost": true
+ },
+ "sup:70560": {
+  "supplier": "sup:70560",
+  "name": "Kabelwerk Rhönsberg GmbH",
+  "events": [
+   {
+    "date": "2022-12-03",
+    "part_id": "part:350040",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-12-10",
+    "part_id": "part:350040",
+    "type": "annual renewal",
+    "asked_pct": "2.1",
+    "settled_pct": "-1.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-15",
+    "part_id": "part:350040",
+    "type": "annual renewal",
+    "asked_pct": "2.7",
+    "settled_pct": "1.6",
+    "note": ""
+   },
+   {
+    "date": "2025-11-22",
+    "part_id": "part:350040",
+    "type": "annual renewal",
+    "asked_pct": "8.6",
+    "settled_pct": "6.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 4.47,
+  "mean_settled_pct": 2.2,
+  "mean_gap_pts": 2.27,
+  "kept_share_of_increase": 0.27,
+  "ever_below_full_cost": false
+ },
+ "sup:70570": {
+  "supplier": "sup:70570",
+  "name": "Sensorik Ammertal GmbH",
+  "events": [
+   {
+    "date": "2022-11-26",
+    "part_id": "part:350050",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-12-05",
+    "part_id": "part:350050",
+    "type": "annual renewal",
+    "asked_pct": "2.1",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-13",
+    "part_id": "part:350050",
+    "type": "annual renewal",
+    "asked_pct": "1.6",
+    "settled_pct": "-1.8",
+    "note": ""
+   },
+   {
+    "date": "2025-12-08",
+    "part_id": "part:350050",
+    "type": "annual renewal",
+    "asked_pct": "4.9",
+    "settled_pct": "3.1",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 2.87,
+  "mean_settled_pct": 0.43,
+  "mean_gap_pts": 2.43,
+  "kept_share_of_increase": -0.16,
+  "ever_below_full_cost": false
+ },
+ "sup:70580": {
+  "supplier": "sup:70580",
+  "name": "Motorenwerk Saalach GmbH",
+  "events": [
+   {
+    "date": "2022-11-28",
+    "part_id": "part:350013",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-23",
+    "part_id": "part:350013",
+    "type": "annual renewal",
+    "asked_pct": "2.4",
+    "settled_pct": "-1.5",
+    "note": ""
+   },
+   {
+    "date": "2024-11-19",
+    "part_id": "part:350013",
+    "type": "annual renewal",
+    "asked_pct": "3.9",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-18",
+    "part_id": "part:350013",
+    "type": "annual renewal",
+    "asked_pct": "3.3",
+    "settled_pct": "1.7",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 3.2,
+  "mean_settled_pct": 0.07,
+  "mean_gap_pts": 3.13,
+  "kept_share_of_increase": -0.04,
+  "ever_below_full_cost": false
+ },
+ "sup:70610": {
+  "supplier": "sup:70610",
+  "name": "Schraubenhandel Leitner & Sohn GmbH",
+  "events": [
+   {
+    "date": "2022-11-15",
+    "part_id": "part:360012",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-11-27",
+    "part_id": "part:360010",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-10",
+    "part_id": "part:360030",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-16",
+    "part_id": "part:360012",
+    "type": "annual renewal",
+    "asked_pct": "2.3",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2023-11-23",
+    "part_id": "part:360010",
+    "type": "annual renewal",
+    "asked_pct": "2.2",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2023-11-28",
+    "part_id": "part:360030",
+    "type": "annual renewal",
+    "asked_pct": "3.2",
+    "settled_pct": "1.5",
+    "note": ""
+   },
+   {
+    "date": "2024-11-12",
+    "part_id": "part:360012",
+    "type": "annual renewal",
+    "asked_pct": "3.3",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-11-23",
+    "part_id": "part:360030",
+    "type": "annual renewal",
+    "asked_pct": "2.3",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-12-06",
+    "part_id": "part:360010",
+    "type": "annual renewal",
+    "asked_pct": "2.4",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-12",
+    "part_id": "part:360012",
+    "type": "annual renewal",
+    "asked_pct": "1.7",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-24",
+    "part_id": "part:360030",
+    "type": "annual renewal",
+    "asked_pct": "1.2",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-12-06",
+    "part_id": "part:360010",
+    "type": "annual renewal",
+    "asked_pct": "3.6",
+    "settled_pct": "0.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 9,
+  "mean_asked_pct": 2.47,
+  "mean_settled_pct": 0.17,
+  "mean_gap_pts": 2.3,
+  "kept_share_of_increase": 0.05,
+  "ever_below_full_cost": false
+ },
+ "sup:70620": {
+  "supplier": "sup:70620",
+  "name": "Wälzlager-Zentrum Süd GmbH",
+  "events": [
+   {
+    "date": "2022-11-18",
+    "part_id": "part:360022",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-11-22",
+    "part_id": "part:360020",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-12",
+    "part_id": "part:360021",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-23",
+    "part_id": "part:360021",
+    "type": "annual renewal",
+    "asked_pct": "5.2",
+    "settled_pct": "2.3",
+    "note": ""
+   },
+   {
+    "date": "2023-11-23",
+    "part_id": "part:360022",
+    "type": "annual renewal",
+    "asked_pct": "1.6",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2023-12-10",
+    "part_id": "part:360020",
+    "type": "annual renewal",
+    "asked_pct": "5.7",
+    "settled_pct": "4.1",
+    "note": ""
+   },
+   {
+    "date": "2024-11-27",
+    "part_id": "part:360021",
+    "type": "annual renewal",
+    "asked_pct": "4.2",
+    "settled_pct": "2.4",
+    "note": ""
+   },
+   {
+    "date": "2024-12-02",
+    "part_id": "part:360022",
+    "type": "annual renewal",
+    "asked_pct": "7.1",
+    "settled_pct": "4.9",
+    "note": ""
+   },
+   {
+    "date": "2024-12-04",
+    "part_id": "part:360020",
+    "type": "annual renewal",
+    "asked_pct": "3.8",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-24",
+    "part_id": "part:360021",
+    "type": "annual renewal",
+    "asked_pct": "1.8",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-12-05",
+    "part_id": "part:360020",
+    "type": "annual renewal",
+    "asked_pct": "5.7",
+    "settled_pct": "2.3",
+    "note": ""
+   },
+   {
+    "date": "2025-12-10",
+    "part_id": "part:360022",
+    "type": "annual renewal",
+    "asked_pct": "2.1",
+    "settled_pct": "0.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 9,
+  "mean_asked_pct": 4.13,
+  "mean_settled_pct": 1.78,
+  "mean_gap_pts": 2.36,
+  "kept_share_of_increase": 0.31,
+  "ever_below_full_cost": false
+ },
+ "sup:70630": {
+  "supplier": "sup:70630",
+  "name": "Normteile Brucker KG",
+  "events": [
+   {
+    "date": "2022-12-10",
+    "part_id": "part:360013",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-11",
+    "part_id": "part:360030",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-12",
+    "part_id": "part:360030",
+    "type": "annual renewal",
+    "asked_pct": "1.7",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2023-11-20",
+    "part_id": "part:360013",
+    "type": "annual renewal",
+    "asked_pct": "-5.1",
+    "settled_pct": "-6.3",
+    "note": ""
+   },
+   {
+    "date": "2024-11-12",
+    "part_id": "part:360030",
+    "type": "annual renewal",
+    "asked_pct": "3.5",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-12-08",
+    "part_id": "part:360013",
+    "type": "annual renewal",
+    "asked_pct": "-1.1",
+    "settled_pct": "-2.8",
+    "note": ""
+   },
+   {
+    "date": "2025-11-22",
+    "part_id": "part:360013",
+    "type": "annual renewal",
+    "asked_pct": "-0.7",
+    "settled_pct": "-3.8",
+    "note": ""
+   },
+   {
+    "date": "2025-12-08",
+    "part_id": "part:360030",
+    "type": "annual renewal",
+    "asked_pct": "1.2",
+    "settled_pct": "0.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 6,
+  "mean_asked_pct": -0.08,
+  "mean_settled_pct": -2.15,
+  "mean_gap_pts": 2.07,
+  "kept_share_of_increase": 0.0,
+  "ever_below_full_cost": false
+ },
+ "sup:70640": {
+  "supplier": "sup:70640",
+  "name": "Kugellager-Vertrieb Inntal GmbH",
+  "events": [
+   {
+    "date": "2022-11-22",
+    "part_id": "part:360021",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-01",
+    "part_id": "part:360020",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-25",
+    "part_id": "part:360020",
+    "type": "annual renewal",
+    "asked_pct": "1.3",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2023-12-10",
+    "part_id": "part:360021",
+    "type": "annual renewal",
+    "asked_pct": "5.4",
+    "settled_pct": "1.8",
+    "note": ""
+   },
+   {
+    "date": "2024-11-23",
+    "part_id": "part:360020",
+    "type": "annual renewal",
+    "asked_pct": "5.0",
+    "settled_pct": "3.4",
+    "note": ""
+   },
+   {
+    "date": "2024-11-23",
+    "part_id": "part:360021",
+    "type": "annual renewal",
+    "asked_pct": "1.8",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-24",
+    "part_id": "part:360021",
+    "type": "annual renewal",
+    "asked_pct": "6.4",
+    "settled_pct": "4.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-26",
+    "part_id": "part:360020",
+    "type": "annual renewal",
+    "asked_pct": "3.4",
+    "settled_pct": "0.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 6,
+  "mean_asked_pct": 3.88,
+  "mean_settled_pct": 1.53,
+  "mean_gap_pts": 2.35,
+  "kept_share_of_increase": 0.27,
+  "ever_below_full_cost": false
+ },
+ "sup:70650": {
+  "supplier": "sup:70650",
+  "name": "Verbindungstechnik Mairhofer GmbH",
+  "events": [
+   {
+    "date": "2022-11-12",
+    "part_id": "part:360012",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-11-27",
+    "part_id": "part:360010",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-12",
+    "part_id": "part:360011",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-24",
+    "part_id": "part:360011",
+    "type": "annual renewal",
+    "asked_pct": "3.6",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2023-11-26",
+    "part_id": "part:360010",
+    "type": "annual renewal",
+    "asked_pct": "2.8",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2023-11-29",
+    "part_id": "part:360012",
+    "type": "annual renewal",
+    "asked_pct": "5.0",
+    "settled_pct": "2.8",
+    "note": ""
+   },
+   {
+    "date": "2024-11-27",
+    "part_id": "part:360011",
+    "type": "annual renewal",
+    "asked_pct": "3.9",
+    "settled_pct": "1.5",
+    "note": ""
+   },
+   {
+    "date": "2024-12-06",
+    "part_id": "part:360012",
+    "type": "annual renewal",
+    "asked_pct": "3.7",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2024-12-08",
+    "part_id": "part:360010",
+    "type": "annual renewal",
+    "asked_pct": "3.4",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-27",
+    "part_id": "part:360012",
+    "type": "annual renewal",
+    "asked_pct": "-1.8",
+    "settled_pct": "-3.1",
+    "note": ""
+   },
+   {
+    "date": "2025-11-29",
+    "part_id": "part:360010",
+    "type": "annual renewal",
+    "asked_pct": "1.7",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-12-02",
+    "part_id": "part:360011",
+    "type": "annual renewal",
+    "asked_pct": "0.5",
+    "settled_pct": "-2.0",
+    "note": ""
+   }
+  ],
+  "n_settled": 9,
+  "mean_asked_pct": 2.53,
+  "mean_settled_pct": -0.09,
+  "mean_gap_pts": 2.62,
+  "kept_share_of_increase": -0.38,
+  "ever_below_full_cost": false
+ },
+ "sup:70710": {
+  "supplier": "sup:70710",
+  "name": "Edelstahl-Service Donautal GmbH",
+  "events": [
+   {
+    "date": "2022-11-27",
+    "part_id": "part:370010",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-29",
+    "part_id": "part:370010",
+    "type": "annual renewal",
+    "asked_pct": "-3.1",
+    "settled_pct": "-7.1",
+    "note": ""
+   },
+   {
+    "date": "2024-12-04",
+    "part_id": "part:370010",
+    "type": "annual renewal",
+    "asked_pct": "2.0",
+    "settled_pct": "-1.5",
+    "note": ""
+   },
+   {
+    "date": "2025-12-05",
+    "part_id": "part:370010",
+    "type": "annual renewal",
+    "asked_pct": "3.2",
+    "settled_pct": "1.4",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": 0.7,
+  "mean_settled_pct": -2.4,
+  "mean_gap_pts": 3.1,
+  "kept_share_of_increase": -0.16,
+  "ever_below_full_cost": false
+ },
+ "sup:70720": {
+  "supplier": "sup:70720",
+  "name": "Stahlhandel Rupprecht-Kessel GmbH",
+  "events": [
+   {
+    "date": "2022-11-14",
+    "part_id": "part:370020",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-12-09",
+    "part_id": "part:370012",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-12-02",
+    "part_id": "part:370020",
+    "type": "annual renewal",
+    "asked_pct": "-9.4",
+    "settled_pct": "-11.7",
+    "note": ""
+   },
+   {
+    "date": "2023-12-08",
+    "part_id": "part:370012",
+    "type": "annual renewal",
+    "asked_pct": "-5.9",
+    "settled_pct": "-9.1",
+    "note": ""
+   },
+   {
+    "date": "2024-11-16",
+    "part_id": "part:370020",
+    "type": "annual renewal",
+    "asked_pct": "-3.1",
+    "settled_pct": "-6.5",
+    "note": ""
+   },
+   {
+    "date": "2024-11-17",
+    "part_id": "part:370012",
+    "type": "annual renewal",
+    "asked_pct": "1.5",
+    "settled_pct": "0.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-28",
+    "part_id": "part:370012",
+    "type": "annual renewal",
+    "asked_pct": "0.0",
+    "settled_pct": "-2.3",
+    "note": ""
+   },
+   {
+    "date": "2025-12-06",
+    "part_id": "part:370020",
+    "type": "annual renewal",
+    "asked_pct": "-0.8",
+    "settled_pct": "-2.3",
+    "note": ""
+   }
+  ],
+  "n_settled": 6,
+  "mean_asked_pct": -2.95,
+  "mean_settled_pct": -5.32,
+  "mean_gap_pts": 2.37,
+  "kept_share_of_increase": 0.0,
+  "ever_below_full_cost": false
+ },
+ "sup:70730": {
+  "supplier": "sup:70730",
+  "name": "Inox Center Ostalpen GmbH",
+  "events": [
+   {
+    "date": "2022-12-04",
+    "part_id": "part:370021",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-19",
+    "part_id": "part:370021",
+    "type": "annual renewal",
+    "asked_pct": "-6.4",
+    "settled_pct": "-8.9",
+    "note": ""
+   },
+   {
+    "date": "2024-12-07",
+    "part_id": "part:370021",
+    "type": "annual renewal",
+    "asked_pct": "1.2",
+    "settled_pct": "-1.2",
+    "note": ""
+   },
+   {
+    "date": "2025-11-20",
+    "part_id": "part:370021",
+    "type": "annual renewal",
+    "asked_pct": "-0.8",
+    "settled_pct": "-2.8",
+    "note": ""
+   }
+  ],
+  "n_settled": 3,
+  "mean_asked_pct": -2.0,
+  "mean_settled_pct": -4.3,
+  "mean_gap_pts": 2.3,
+  "kept_share_of_increase": -1.0,
+  "ever_below_full_cost": false
+ },
+ "sup:70740": {
+  "supplier": "sup:70740",
+  "name": "Blankstahl Werdenfels GmbH",
+  "events": [
+   {
+    "date": "2022-11-13",
+    "part_id": "part:370011",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-11-17",
+    "part_id": "part:370012",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2022-11-21",
+    "part_id": "part:370010",
+    "type": "initial price",
+    "asked_pct": "",
+    "settled_pct": "",
+    "note": ""
+   },
+   {
+    "date": "2023-11-20",
+    "part_id": "part:370011",
+    "type": "annual renewal",
+    "asked_pct": "1.8",
+    "settled_pct": "-1.7",
+    "note": ""
+   },
+   {
+    "date": "2023-11-22",
+    "part_id": "part:370012",
+    "type": "annual renewal",
+    "asked_pct": "-0.3",
+    "settled_pct": "-3.7",
+    "note": ""
+   },
+   {
+    "date": "2023-12-02",
+    "part_id": "part:370010",
+    "type": "annual renewal",
+    "asked_pct": "-2.4",
+    "settled_pct": "-5.7",
+    "note": ""
+   },
+   {
+    "date": "2024-11-17",
+    "part_id": "part:370010",
+    "type": "annual renewal",
+    "asked_pct": "-2.6",
+    "settled_pct": "-4.5",
+    "note": ""
+   },
+   {
+    "date": "2024-11-17",
+    "part_id": "part:370012",
+    "type": "annual renewal",
+    "asked_pct": "-1.0",
+    "settled_pct": "-2.4",
+    "note": ""
+   },
+   {
+    "date": "2024-12-07",
+    "part_id": "part:370011",
+    "type": "annual renewal",
+    "asked_pct": "-0.5",
+    "settled_pct": "-4.0",
+    "note": ""
+   },
+   {
+    "date": "2025-11-15",
+    "part_id": "part:370010",
+    "type": "annual renewal",
+    "asked_pct": "-0.6",
+    "settled_pct": "-4.2",
+    "note": ""
+   },
+   {
+    "date": "2025-11-27",
+    "part_id": "part:370012",
+    "type": "annual renewal",
+    "asked_pct": "3.0",
+    "settled_pct": "-0.3",
+    "note": ""
+   },
+   {
+    "date": "2025-12-05",
+    "part_id": "part:370011",
+    "type": "annual renewal",
+    "asked_pct": "2.5",
+    "settled_pct": "0.7",
+    "note": ""
+   }
+  ],
+  "n_settled": 9,
+  "mean_asked_pct": -0.01,
+  "mean_settled_pct": -2.87,
+  "mean_gap_pts": 2.86,
+  "kept_share_of_increase": -0.25,
+  "ever_below_full_cost": false
+ }
+}
