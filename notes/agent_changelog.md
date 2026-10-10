@@ -762,3 +762,9 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
 - His currencies, from his own e-mails: cash on time ("We are really counting on your promise to pay exactly on time"), planning ("Thanks for the call-off schedule, it really helps us plan" - we sent it only in round 5), less work ("300 ppm ... more work for us"). Its floor / first counter is set early -> give them in ROUND 1.
 - Late-payment admission now from round 1 (replaces the generic reliable-payment line); call-off CSV in round 1 for cash-driven suppliers (others still only on request - P02 weak games had a CSV). Fires for P01 70110, P05 70250, P11 70140 only.
 - Astra round 1 OK (admission + CSV), injection PASS, tests 38.
+
+## v2.19 live P11 (19:39): 0.7935 (3fa2511024fe8a5b) - low draw
+- Round-1 admission + call-off: "Getting paid on time is a big deal for us, so we really appreciate you fixing that!" but first counter still 46.00 (= every low draw), r2 -> 45.00, hold, one probe 44.60 -> final 45.00 ("We are already stretched to the limit here ... Let us just sign this at 45.00 today").
+- **The floor is ~EUR 45.00 in EVERY session** (14 games): low draws stop at 45.00 (6b02, 37ea, 3fa2 - named twice), high draws agree at 45.10 / 45.13 (b1f9, 7117) or hold 45.50. Data cuts about 1.00 after round 1; the person-currency lines move it to the floor faster, not below it. 45.00 = 4.3% under its 47.00 opening = its cost floor (api.md: hard limits come from its own economics).
+- Round-1 timing of the admission: no gain vs round 2 (both low draws 45.00); it went final sooner (msg 8 vs 12).
+- 0.81 (another team) = ~44.90 @ 300/0 or a structure we do not use; three different recipes all hit 45.00 here.

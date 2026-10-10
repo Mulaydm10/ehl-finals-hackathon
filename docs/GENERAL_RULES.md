@@ -142,3 +142,4 @@ Sources: Neel `analysis/central/LEARNINGS.md` 1-8, `analysis/central/ENGINES.md`
     give you a price of EUR 45.00", then final 45.00). If the named floor equals its standing price, stop probing below it.
 59. **The person's currency moves the floor; data moves the price.** P11's high-draw floor fell to 45.10 (from 45.13-45.50) after we
     owned our late payments; all facts together cut ~EUR 1.00-1.50. Beyond that only real value to the person helps.
+60. **A supplier cost floor is hard**: P11 stopped at ~EUR 45.00 in 14 games whatever we sent (data, person-currency, probes, timing). Find the floor early (ask it), take it, and spend no more rounds/games pushing through it.
