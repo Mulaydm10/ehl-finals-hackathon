@@ -339,3 +339,12 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
   another structure is ≥ 1% cheaper for us. Offline Astra P02: cost calc in round 1, 90 d in every round
   (364.69 → 367.26). Offline eval **0.939 / 0.947** (was 0.937 / 0.944). Lesson: **the model may choose, but the
   strategy's backbone (strongest argument, structure) must be fixed in code.**
+- **P02 v2.5 live (c52de0252df56877): 0.27.** Cost calc now in round 1 and 90 d held every round, but: "Your figures
+  confirm our case: that driver rose. We have reviewed your calculations based on six-month index movements; however,
+  **our pricing must reflect the full twelve-month cost pressure**"; it then only moved €374.84 → 373.85 @ 90 d
+  (pricing 90-day financing all along). P02 live so far: 0.48 (v2.3, no price argument), 0.34 (v2.4), 0.27 (v2.5).
+- **Root cause = our own EDA lesson ignored**: P02's increase IS justified over 12 months (copper +47.7%); its own
+  shares give +11% over 12 m > its +6.5% ask. The 6-month window was cherry-picked, and the calc cited 3 rising indices.
+- **v2.6 fix:** cost calc only when BOTH the 6- and 12-month totals are below its ask. Now fires on P04 and P08 only
+  (not P02, P03, P18, P10). Tests 32 passed; offline 0.939 / 0.947. P02 falls back to the v2.3-style behaviour (0.48).
+- Lesson (into G_lessons): **a justified increase is not fought with numbers; trade terms instead (payment, date).**

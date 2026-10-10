@@ -30,3 +30,4 @@
 | 2026-10-10 15:46 | Dhruv | P02 | noidea v2.3 / gpt-6-astra | **0.48** (final 372.15 @ 90 d) | da8d0e3d77ce091c |
 | 2026-10-10 15:42 | Parth | P18 | noidea v1.7 / gpt-6-astra (OpenAI) | 0.43 (deal at final_offer: 5.40, 60 d, 24 m + AS-14404 clause db0) | 6833e98fbbe5ebdf |
 | 2026-10-10 16:00 | Dhruv | P02 | noidea v2.4 merged / gpt-6-astra | 0.34 (no cost calc sent, payment hops) | 159def0f5e514b40 |
+| 2026-10-10 16:06 | Dhruv | P02 | noidea v2.5 / gpt-6-astra | 0.27 (6-month cost calc rejected: twelve-month pressure) | c52de0252df56877 |

@@ -1,6 +1,7 @@
 {
  "_about": "Lessons from our live practice games (notes/agent_changelog.md, datasets/runs/). Retrieved into the model's prompt by case type. Evidence = session ids.",
  "general": [
+  "Don't fight a JUSTIFIED increase with a cherry-picked window: P02's 6-month calc was answered 'our pricing must reflect the full twelve-month cost pressure' and 'your figures confirm our case' (0.27, c52de0252df56877). Use a calculation only when both 6- and 12-month windows are below the ask; otherwise trade terms.",
   "Suppliers react to the STRUCTURE of the term sheet (contract length, lead time, payment days) far more than to arguments; P07's price path was identical across 6 games and 5 agent versions.",
   "Never push after final_offer: one extra ask made the P07 supplier walk away (c5d845883158676c). Accept, or send back its own prose alternative verbatim (P10 agreed, 2d91214cf7693eff).",
   "Never cite an index that rose, even framed as 'below your ask': it answered 'Your figures confirm our case: that driver rose' (P07 0f754b1368387b8e, P10 675fc6b9c1c8c291).",
@@ -14,7 +15,8 @@
  ],
  "price_increase": [
   "P01 (stabilise, family foundry, data-naive owner): index data + short-notice argument + later effective date + faster payment → 0.85 in 3 rounds.",
-  "P02 (stabilise, group, pricing committee): it accepted 90-day payment but priced the financing (~6.7%/yr); final in round 4 at €372.15; wanted verified data behind our target."
+  "P02 (stabilise, group, pricing committee): it accepted 90-day payment but priced the financing (~6.7%/yr); final in round 4 at €372.15; wanted verified data behind our target.",
+  "P02 live: 0.48 with no price argument (v2.3), 0.34 and 0.27 when we argued with a 6-month cost calc; it prices 90-day financing at ~6.7%/yr."
  ],
  "bundling": [
   "P07: 24-month contract was the big win (+0.48); the kit-level calculation at its own prices got its best price (€5.40 @ 30 d); its final always lands at ~€5.49 @ 90 d in round 4; 36 months was priced higher."
@@ -22,8 +24,16 @@
  "capacity": [
   "P10 (secure_supply, allocation, approval ladder): goes final in ROUND 1 every time (5/5), so the first offer is everything; lead time below its own costs ~0.49% of price per day; its floor €31.90 @ 56 d (24 or 36 m alike)."
  ],
- "renewal": ["P04 (routine, Neel's games): final in round 3; 90-day payment and a small price step scored 0.86."],
- "rfq": ["Cite only rival offers that are cheaper than the bidder's own price; never show the leader worse prices."],
- "quality": ["Ask for the 8D report and a binding ppm commitment within the must-have; cash-short suppliers react badly to heavy chargebacks."],
- "raw_material": ["Hedged suppliers ('covered at fixed prices until …') answer market-index arguments with 'not our reality'; index clauses cost us when the path is positive."]
+ "renewal": [
+  "P04 (routine, Neel's games): final in round 3; 90-day payment and a small price step scored 0.86."
+ ],
+ "rfq": [
+  "Cite only rival offers that are cheaper than the bidder's own price; never show the leader worse prices."
+ ],
+ "quality": [
+  "Ask for the 8D report and a binding ppm commitment within the must-have; cash-short suppliers react badly to heavy chargebacks."
+ ],
+ "raw_material": [
+  "Hedged suppliers ('covered at fixed prices until …') answer market-index arguments with 'not our reality'; index clauses cost us when the path is positive."
+ ]
 }

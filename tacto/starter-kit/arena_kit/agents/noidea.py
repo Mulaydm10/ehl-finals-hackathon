@@ -269,15 +269,18 @@ class NoIdeaAgent:
         shares = [(sr, float(sh.replace(",", ".")) / 100) for sr, _, sh in self.SHARE_RX.findall(body)]
         if not shares or not cur or ask_pct <= 0:
             return None
-        best = None
+        best, totals = None, {}
         for w in (6, 12):
             moves = [(sr, sh, self.ch.get((sr, w))) for sr, sh in shares]
             if any(m is None for _, _, m in moves):
                 continue
-            total = sum(sh * m[0] for _, sh, m in moves)
+            totals[w] = total = sum(sh * m[0] for _, sh, m in moves)
             if best is None or total < best[0]:
                 best = (total, w, moves)
-        if not best or best[0] >= ask_pct - 0.5:
+        # only when BOTH windows come out below its ask: P02 v2.5 live (c52de0252df56877) - the 6-month total
+        # (+4.4%) was cherry-picked; over 12 months its own shares give +11% > its +6.5% ask, and it answered
+        # "our pricing must reflect the full twelve-month cost pressure" + "Your figures confirm our case" -> 0.27
+        if not best or len(totals) < 2 or max(totals.values()) >= ask_pct - 0.5:
             return None
         total, w, moves = best
         price = cur * (1 + total / 100)
