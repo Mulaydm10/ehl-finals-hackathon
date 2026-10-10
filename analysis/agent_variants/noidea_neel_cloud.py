@@ -65,7 +65,6 @@ DEEP_ANCHOR_HEDGED = None  # cloud task 15: round-1 anchor depth for hedged raw 
 PAY_DAYS_HEDGED = 60  # cloud task 16 (P08_loop3.md): payment term from round 2 for hedged raw material. Its final is cent-rounded on
 # OUR payment term; at the low-draw floor (value ~5.116-5.121) 60 d lands on 5.15 = 0.7329, 14 d on 5.10 = 0.7323 (the record).
 # P(score > 0.7323 | low draw, 5.40 headline) 54% at 60 d vs 20% at 14 d (noise model, 8 budgets); mean -0.002
-OWN_QUOTE_ID = True  # cloud task 17: cite a price-frozen supplier's own recent quote by ID (P03 only)
 LONG_TERM_HEDGED = True  # cloud task 14: 36 m sheets for hedged raw-material suppliers (experiment, P08 loop run 2)
 CROSS_SELL = True  # cloud task 13: invite a hedged raw-material distributor to quote for a part we buy elsewhere (untested live)
 DEFER_TIMES = 1  # cloud task 11: small steps in a row (1 = live-tested in db7d315a; 2+ untested - sim_donautal --max-defer)
@@ -287,15 +286,6 @@ class NoIdeaAgent:
                 fillers.append({**c, "filler": True})
         # verified facts it shrugged off before go LAST, so no round goes out empty: a round without data drew "Which
         # figures is that based on?" and a final (P02, P08); P02's "does not change" order history still came with a cut
-        # cloud task 17 (analysis/cases/P03_beat.md): a price-frozen holder cuts once per NEW verified data kind and every
-        # kind it takes is used; its own recent quote by ID is the one kind never cited -> right after round 1's data, so
-        # the remaining kinds still reach its final at our 5th message
-        if OWN_QUOTE_ID and "price_frozen" in self.dossiers.get(sid, {}).get("motives", {}):
-            oq = central.own_quote_claims(self.facts, sid, parts, opening)
-            r1 = [c for c in ranked if c["kind"] in ("should_cost", "volume_change")]
-            first_idx = next((c for c in ranked if c["kind"] == "index_change"), None)
-            head = r1 + ([first_idx] if first_idx else [])
-            ranked = head + oq + [c for c in ranked if c not in head]
         return ranked + fillers
 
     def kit_calc(self, case, sid):
