@@ -375,3 +375,40 @@ def test_a_server_error_on_our_email_is_resent_once_without_data_ids():
     assert table.send("sup:1", msg) == {"status": "open"}
     assert sent[1]["refs"] == [] and sent[1]["body"] == "Your complaints ran high. Kit at EUR 5.95 (per kit)."
     assert sent[1]["term_sheets"] == msg["term_sheets"]
+
+
+def test_an_agent_that_holds_sends_its_first_email_after_one_timeout_round(monkeypatch):
+    import importlib
+
+    P = importlib.import_module("arena_kit.play")  # the module (the package re-exports the play() function)
+    slept, sent = [], []
+    monkeypatch.setattr(P.time, "sleep", lambda s: slept.append(s))
+
+    class Table:
+        def open(self, case_id):
+            return {"case_id": case_id}, {"sup:1": [{"from": "sales@1", "status": "open", "term_sheets": []}]}
+
+        def send(self, supplier_id, message):
+            sent.append(message)
+            return {"from": "sales@1", "status": "final_offer", "term_sheets": []}
+
+        def close(self, supplier_id, message):
+            return {"deal": False}
+
+        def result(self):
+            return {"deal": False}
+
+    class Holder:
+        hold_first = True
+
+        def decide(self, case, threads):
+            if threads["sup:1"][-1]["status"] == "final_offer":
+                return {"supplier_id": "sup:1", "message": {"action": {"type": "walk_away"}}}
+            return {"supplier_id": "sup:1", "message": {"subject": "s", "body": "b"}}
+
+    P.play(Table(), "case:X", Holder())
+    assert len(sent) == 1 and len(slept) == 1 and 60 < slept[0] <= P.HOLD_FIRST_S  # one wait, before the first e-mail
+    slept.clear()
+    Holder.hold_first = False
+    P.play(Table(), "case:X", Holder())
+    assert not slept  # off by default: no wait
