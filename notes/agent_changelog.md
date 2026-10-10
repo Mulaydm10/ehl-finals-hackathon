@@ -757,3 +757,8 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
 - Play-the-man games: high draw 0.777 (best of 8 high draws), low draw 0.7935 (= best). -> `own_late_pay` and `ask_floor` now
   default ON (opt-out `no_own_late_pay` / `no_ask_floor`; triggers are narrow: we pay it late >= 50% and >= 3 days and it is
   cash-driven / it stalls). New: when its answer to the floor question names its standing price, stop probing below it.
+
+### v2.19 (offline): pay the person in round 1 (another team reached 0.81 on P11 = ~EUR 44.90 @ 300/0, 0.10 below the floor it named to us)
+- His currencies, from his own e-mails: cash on time ("We are really counting on your promise to pay exactly on time"), planning ("Thanks for the call-off schedule, it really helps us plan" - we sent it only in round 5), less work ("300 ppm ... more work for us"). Its floor / first counter is set early -> give them in ROUND 1.
+- Late-payment admission now from round 1 (replaces the generic reliable-payment line); call-off CSV in round 1 for cash-driven suppliers (others still only on request - P02 weak games had a CSV). Fires for P01 70110, P05 70250, P11 70140 only.
+- Astra round 1 OK (admission + CSV), injection PASS, tests 38.
