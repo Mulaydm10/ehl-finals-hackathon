@@ -22,7 +22,7 @@
    "take_rate": 1.0
   },
   "index_change": {
-   "taken": 269,
+   "taken": 270,
    "no_change": 30,
    "confirm_case": 7,
    "take_rate": 0.88
@@ -47,7 +47,7 @@
   },
   "po_prices": {
    "no_change": 74,
-   "taken": 80,
+   "taken": 81,
    "take_rate": 0.52
   },
   "rival_quote": {
@@ -73,7 +73,7 @@
    "take_rate": 1.0
   },
   "volume_change": {
-   "taken": 147,
+   "taken": 148,
    "no_change": 65,
    "take_rate": 0.69
   }
@@ -221,21 +221,21 @@
   },
   "case:P08": {
    "index_change": {
-    "taken": 39,
+    "taken": 40,
     "no_change": 7,
     "confirm_case": 1
    },
    "volume_change": {
-    "taken": 28
+    "taken": 29
    },
    "_signals": {
     "final_at_4": 7,
-    "final_at_3": 27,
+    "final_at_3": 28,
     "mirror": 1
    },
    "po_prices": {
     "no_change": 6,
-    "taken": 16
+    "taken": 17
    },
    "scorecard_ppm": {
     "no_change": 1
