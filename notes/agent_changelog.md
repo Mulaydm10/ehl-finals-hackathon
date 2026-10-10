@@ -325,3 +325,17 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
 | play.py: a `422` on accepting an alternative's id (the brief says accept takes the *standing* sheet; arena-sim only knows `offer_id`) clears that id, keeps its terms and decides again | 422 = "nothing happens, no round is used" (api.md) | new test `test_an_alternative_the_arena_refuses_is_kept_without_its_id` |
 | `refused_alternative()`: such a sheet is proposed back once at `final_offer` ("We accept your alternative as you proposed it"), the v1.8 prose-alternative path | P10 live: its own alternative came back `agreed` | replay: proposes €5.40 / 30 d / AS db5 (C 259,970) |
 - Offline unchanged: mean **0.937 / 0.944** (the offline supplier never sends alternatives), 32 tests pass, ruff clean on the changed lines.
+
+### Merge with Parth + P02 live on v2.4 (Astra) → v2.5 fixes
+- **Merged** `parth/n1-p06-p09-p12` into main (7435c91), both feature sets kept: his price story (PO price jump,
+  contract-clause share vs its stated share, market line, committee request), plain-word sheets, `refused_alternative`
+  + play.py 422 fallback, tests; our best_sheet (with C), cost calc, personas + RAG, patience. Tests 32 passed.
+- **P02 v2.4 live (159def0f5e514b40): 0.34** (v2.3 was 0.48). The model (a) chose **no argument in round 1**, so the
+  cost calculation built for this supplier was never sent (only restated later), and (b) **hopped the structure**
+  90 → 30 → 45 days; the supplier priced every hop (374.84 @ 90, 369.52 @ 30, 369.85 @ 45) → final €369.55 @ 45 d.
+  Its '-a' sheets were also there (370.71 @ 30, 368.44 @ 14).
+- **v2.5 fixes:** (1) **required round-1 argument**: the cost calc (or a short-notice claim) always goes in round 1,
+  the model can only add; (2) **stable structure**: after round 1 our main sheet keeps its non-price terms unless
+  another structure is ≥ 1% cheaper for us. Offline Astra P02: cost calc in round 1, 90 d in every round
+  (364.69 → 367.26). Offline eval **0.939 / 0.947** (was 0.937 / 0.944). Lesson: **the model may choose, but the
+  strategy's backbone (strongest argument, structure) must be fixed in code.**

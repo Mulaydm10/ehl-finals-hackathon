@@ -454,6 +454,16 @@ class NoIdeaAgent:
         out = []
         # the supplier may pick ANY sheet we send: only offer ones we'd be glad to have accepted
         # (offline eval P10: a 12-month sheet at equal supplier value cost us +33% and got picked)
+        # a stable structure: after round 1 keep the non-price terms of our previous main sheet unless another
+        # structure is >= 1% cheaper for us (P02 v2.4 live: the model hopped 90 -> 30 -> 45 days and the supplier
+        # priced every hop; final EUR 369.55 @ 45 d instead of 372.15 @ 90 d)
+        prev = s.get("last_main")
+        if prev and ranked:
+            same = lambda t: all(t.get(f) == prev.get(f) for f in case["negotiable"] if f != "unit_price")
+            keep = [x for x in ranked if same(x[1])]
+            if keep and keep[0][0] <= ranked[0][0] * 1.01:
+                ranked = keep + [x for x in ranked if not same(x[1]) and x[0] < keep[0][0] * 0.99]
+                ranked.sort(key=lambda x: (not same(x[1]), x[0]))
         band = ranked[0][0] * (1.01 if n <= 3 else 1.015) if ranked else 0
         for c, t in ranked:  # 3 genuinely different options: same-cost duplicates waste a slot
             if c > band:
@@ -608,6 +618,11 @@ class NoIdeaAgent:
         if not idx:
             return None
         aidx = [i for i in d.get("args", []) if isinstance(i, int) and 0 <= i < len(pool)][:3 if k == 0 else 2]
+        # required: our strongest argument goes in round 1 whatever the model picks (P02 v2.4 live 159def0f5e514b40:
+        # the model chose no argument and the cost calculation it was built for was never sent -> 0.34)
+        must = [i for i, c in enumerate(pool) if k == 0 and (c["kind"] == "cost_calc" or
+                                                             (c["kind"] == "notice_period" and c.get("short_notice")))]
+        aidx = list(dict.fromkeys(must + aidx))
         notes = d.get("notes") or {}
         for r in notes.get("refusals") or []:  # remember its stated limits for the next rounds
             f = r.get("field")
@@ -824,6 +839,8 @@ class NoIdeaAgent:
 
     # ---- the words -----------------------------------------------------------------------------
     def message(self, case, sid, events, sheets, k, final=False, args=None, opening=None):
+        if sheets and not final:
+            self.sup[sid]["last_main"] = dict(sheets[0])
         args = self.next_args(sid, 3 if k == 0 else 1) if args is None else args
         if any(a["kind"] == "cost_calc" for a in args):  # it uses 3 claims: the arena checks at most 3 per e-mail
             args = [a for a in args if a["kind"] == "cost_calc"]
