@@ -51,6 +51,42 @@ def price_for(case, terms, std, c_target):
     return 100.0 + (c_target - a) / ((b - a) / 100.0)
 
 
+LEAD_PREMIUM = -0.158  # EUR/unit per day of lead time, measured in both live P10 games (noidea.learn)
+
+
+def _pkg(t):
+    parts = [f"a price of €{t['unit_price']:.2f} per unit"]
+    if t.get("payment_days") is not None:
+        parts.append(f"Zahlungsziel {t['payment_days']} days net")
+    if t.get("lead_time_days") is not None:
+        parts.append(f"Lieferzeit {t['lead_time_days']} days")
+    if t.get("volume_per_year") is not None:
+        parts.append(f"a volume of {t['volume_per_year']} pcs per year")
+    if t.get("contract_months") is not None:
+        parts.append(f"a contract term of {t['contract_months']} months")
+    return ", ".join(parts)
+
+
+def arena_body(case, reply, events):
+    """Supplier e-mail in the arena's template (datasets/F_supplier_emails.jsonl), so the agent's package
+    parser, learner and model reader get exercised offline. Where lead time is negotiable and our offer asks
+    for less than its opening lead, it adds an alternative at its opening lead priced with LEAD_PREMIUM."""
+    t = reply["terms"]
+    lines = ["Dear Sir or Madam,", "", "Thank you for your proposal."]
+    if reply["status"] == "final_offer":
+        lines.append("This is our letztes Angebot. Please decide.")
+    lines.append(f"Our offer is {_pkg(t)}.")
+    first = next((m for m in events if m.get("from") != "buyer" and m.get("term_sheets")), None)
+    std_lead = first["term_sheets"][0]["terms"].get("lead_time_days") if first else None
+    if "lead_time_days" in case["negotiable"] and std_lead and (t.get("lead_time_days") or 0) < std_lead:
+        alt = {**t, "lead_time_days": std_lead,
+               "unit_price": round(t["unit_price"] + LEAD_PREMIUM * (std_lead - t["lead_time_days"]), 2)}
+        lines.append(f"A reduction in lead time to {t['lead_time_days']} days is difficult for our capacity.")
+        lines.append(f"Alternatively, by maintaining the lead time at {std_lead} days: {_pkg(alt)}.")
+    lines.append("Which volume can you commit to?")
+    return "\n".join(lines + ["", "Mit freundlichen Grüßen"])
+
+
 def simulate(Agent, case, opening, c_open, c_best, r, max_rounds=10, complete=None, show=False):
     threads = {sid: [dict(m) for m in ms] for sid, ms in opening.items()}
     agent, n = Agent(complete), {sid: 0 for sid in threads}
@@ -96,7 +132,7 @@ def simulate(Agent, case, opening, c_open, c_best, r, max_rounds=10, complete=No
             reply = {"status": "final_offer" if p <= floor + 0.005 or n[sid] >= max_rounds else "open",
                      "terms": {**t, "unit_price": round(p, 2)}}
         events += [{**msg, "from": "buyer"},
-                   {"from": f"sales@{sid}", "status": reply["status"], "body": "",
+                   {"from": f"sales@{sid}", "status": reply["status"], "body": arena_body(case, reply, events),
                     "term_sheets": [{"term_sheet_id": f"offer:{sid.split(':')[-1]}-{n[sid]}", "terms": reply["terms"]}]}]
     return 0.0, "timeout", sum(n.values())
 

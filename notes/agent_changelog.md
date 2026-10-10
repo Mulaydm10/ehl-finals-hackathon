@@ -174,3 +174,18 @@ C_open/C_best). The arena's suppliers are hidden; Tacto's `arena-sim` is only a 
   at a lower price. Model a lead-time premium in `supplier_value` (`extra` ≈ −k · (std_lead − lead) · price), so
   the optimizer sees the real trade. Capacity suppliers go final in round 1, so **round 1 must already be the
   right structure.**
+
+### v2.0 (offline Qwen + Astra clean): dynamic agent - "the model proposes, code checks"
+Code still does all maths and safety checks; at runtime the agent now reads, learns and chooses:
+| part | what's new | check that stays in code |
+|---|---|---|
+| **Package parser** (`parse_packages`) | every offer in the supplier's e-mail, primary + alternatives, all fields (arena template: "a price of €31.90 per unit, Lieferzeit 54 days, …") | 65/65 offer e-mails in `datasets/F_supplier_emails.jsonl` (78 real e-mails, 22 sessions; the 12 misses are order confirmations without prices) |
+| **In-negotiation learning** (`learn`, `premium`) | price premium per unit of lead time / contract length / volume from its own packages; offers are repriced with it | both live P10 games give the same **−€0.158 per unit per day of lead time**; baseline fixed at its opening terms |
+| **Feasible snapping** (`snap_feasible`) | a lead time it states snaps UP to the next allowed option (its 54 → 56, never 42) | allowed options only |
+| **Model reads + chooses + writes, one call per round** (`decide_with_model`) | notes (questions, refusals, wants) → its stated limits constrain later candidates; picks 1–3 of 8 pre-priced candidates and ≤ 3 verified arguments; writes the opening | candidates all within 1.5% of our best C, under its standing price, must-haves kept; indices validated; opening filtered (figures, leaks, off-table levers, German); any failure → deterministic path |
+- Offline (simulated supplier now writes arena-format e-mails with a lead-time alternative at −0.158/day):
+  deterministic mean 0.937 / 0.944 (no regression); Qwen dynamic P10 0.97 (15 s per call); **Astra dynamic P10 0.97,
+  P07 0.98, P11 0.97, 6.2 s per call.** Astra read P10 as "wants … a longer lead time" and picked the lead-56 offer.
+- Two bugs found and fixed offline: a moving premium baseline (price jumped 25.81 → 28.52); Qwen urgency
+  ("we prioritize a reliable supply chain above all else") now filtered.
+- Tools: `src/eval/collect_threads.py` (real e-mails), `src/eval/parse_test.py` (parser + learner on them).

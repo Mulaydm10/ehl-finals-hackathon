@@ -43,7 +43,7 @@ PLAYBOOK_SECTIONS = ("What the goal means here", "Motive", "Tone")
 BAD_OPENING = re.compile(r"(?i)\bour (current )?(restructuring|survival|pricing committee|committee|target|budget|cost pressure|"
                          r"capacity|liquidity|cash|bank|alternative)|\bwe (must|need to) (prioriti|close|sign)|"
                          r"cost pressures we|we face|line.down|no alternative|urgent|our need to|we (urgently )?need|secure (our|full) supply|"
-                         r"we depend|we cannot (afford|wait)")
+                         r"we depend|we cannot (afford|wait)|above all else|prioriti[sz]e (a )?reliable supply|critical for us|our production depends")
 
 SYSTEM = """You are a senior BUYER at Hollerau Pumpenwerke, a German pump maker, writing to one of
 your SUPPLIERS. Write ONLY the opening paragraph of the e-mail: 2-3 sentences that respond to the
@@ -57,6 +57,27 @@ Rules:
   below your paragraph automatically. No greeting line, no sign-off, no placeholders.
 - Always write in English, even if the supplier mixes in German words.
 Reply with the paragraph only."""
+
+
+DECIDE_SYSTEM = """You are a senior BUYER at Hollerau Pumpenwerke, a German pump maker, negotiating by e-mail with
+one of your SUPPLIERS. Code has already priced every option; you READ the supplier's last e-mail, CHOOSE
+what to send, and write the OPENING paragraph. Reply with ONE JSON object and nothing else:
+{"notes": {"questions": ["what the supplier asked us"],
+           "refusals": [{"field": "<negotiable field>", "min": <number or null>, "max": <number or null>, "why": "..."}],
+           "wants": "what the supplier wants most, in a few words"},
+ "sheets": [<1-3 indices from CANDIDATES>],
+ "args": [<0-3 indices from ARGUMENTS>],
+ "opening": "<2-3 sentences>"}
+Rules:
+- "We" is always Hollerau, the buyer. The supplier's situation is THEIRS, never ours.
+- sheets: choose the candidates that best answer what the supplier signalled (e.g. it refused a short lead
+  time -> pick candidates with a longer lead). All candidates are acceptable for us; lower rank = cheaper for us.
+- args: pick the facts that answer its questions or objections. Never more than 3.
+- refusals: only what it explicitly says it cannot or will not do (e.g. "lead time below 54 days is unfeasible"
+  -> {"field": "lead_time_days", "min": 54}).
+- opening: respond to its e-mail, set the tone the PLAYBOOK asks for, never reveal targets, budgets, urgency or
+  alternatives, only mention NEGOTIABLE levers, write NO numbers, prices, dates or IDs (code adds them), English
+  only, no greeting line, no sign-off."""
 
 
 def _repo():
@@ -242,14 +263,20 @@ class NoIdeaAgent:
         for values in itertools.product(*(opts[f] for f in fields)):
             yield {**base, **dict(zip(fields, values))}
 
-    def sheets_at(self, case, sid, value, cap_price=None):
-        """The 3 different term sheets that give the supplier `value` per unit at the lowest cost to us."""
+    def sheets_at(self, case, sid, value, cap_price=None, n=3):
+        """The `n` different term sheets that give the supplier `value` per unit at the lowest cost to us,
+        with the premiums it showed us (learn) and the limits it stated (refusals) taken into account."""
         s = self.sup[sid]
         ranked = []
+        lim = s.get("limits", {})
         for t in self.combos(case, dict(s["open_terms"])):
+            if any((lo is not None and (t.get(f) or 0) < lo) or (hi is not None and (t.get(f) or 0) > hi)
+                   for f, (lo, hi) in lim.items() if t.get(f) is not None):
+                continue
             t = complete_offer(case, {**t, "unit_price": 100.0})
-            v1 = supplier_value(case, t, s["est"])
-            slope = (supplier_value(case, {**t, "unit_price": 200.0}, s["est"]) - v1) / 100.0
+            adj = self.premium(sid, t)
+            v1 = supplier_value(case, t, s["est"]) + adj
+            slope = (supplier_value(case, {**t, "unit_price": 200.0}, s["est"]) + adj - v1) / 100.0
             if slope <= 0:
                 continue
             t = complete_offer(case, {**t, "unit_price": 100.0 + (value - v1) / slope})
@@ -276,13 +303,13 @@ class NoIdeaAgent:
         out = []
         # the supplier may pick ANY sheet we send: only offer ones we'd be glad to have accepted
         # (offline eval P10: a 12-month sheet at equal supplier value cost us +33% and got picked)
-        band = ranked[0][0] * 1.01 if ranked else 0
+        band = ranked[0][0] * (1.01 if n <= 3 else 1.015) if ranked else 0
         for c, t in ranked:  # 3 genuinely different options: same-cost duplicates waste a slot
             if c > band:
                 break
             if all(t != o and abs(c - oc) > 1.0 for oc, o in out):
                 out.append((c, t))
-            if len(out) == 3:
+            if len(out) == n:
                 break
         return out
 
@@ -353,8 +380,11 @@ class NoIdeaAgent:
             # The brief warns: "final_offer: push further and it may walk". final_tweak() is kept but unused.
             if c_stand <= best_elsewhere:
                 return accept
+        if k > 0:  # premiums are measured against its OPENING terms (fixed), like the value targets
+            self.learn(case, sid, events)
         cap = terms.get("unit_price") if sheet_id else None
-        sheets = self.sheets_at(case, sid, self.value_target(case, sid, events), cap)
+        target = self.value_target(case, sid, events)
+        sheets = self.sheets_at(case, sid, target, cap)
         if not sheets:
             return accept if ok else walk
         # accept when the supplier meets our current ask, or when we are within 0.3% late in the game
@@ -362,6 +392,11 @@ class NoIdeaAgent:
                 c_stand <= sheets[0][0] * 1.0005 or (k >= PLANNED_ROUNDS - 2 and c_stand <= sheets[0][0] * 1.003)):
             return accept
         log.info("%s round %d: our best C %.0f vs standing %.0f (alt %.0f)", sid, k, sheets[0][0], c_stand, self.c_alt)
+        if self.complete:  # dynamic: the model reads its e-mail and picks among pre-priced candidates
+            cands = self.sheets_at(case, sid, target, cap, n=8)
+            pick = self.decide_with_model(case, sid, events, cands, k)
+            if pick:
+                return pick
         out = [t for _, t in sheets]
         alt_prose = self.prose_alternative(case, sid, events)
         # only when it is near our ask or late in the game: it may pick any sheet (P10 lesson),
@@ -370,6 +405,60 @@ class NoIdeaAgent:
             # its own prose offer as a binding option: it can simply agree to what it proposed
             out = out[:2] + [alt_prose[1]]
         return self.message(case, sid, events, out, k)
+
+    def decide_with_model(self, case, sid, events, cands, k):
+        """One model call per round: read the supplier's e-mail (questions, refusals, wants), choose 1-3 of the
+        pre-priced candidate sheets and up to 3 verified arguments, write the opening. Everything it returns is
+        validated; any problem -> None (the deterministic path runs instead)."""
+        s = self.sup[sid]
+        pool = [c for c in s["args"] if not any(i in self.cited for i in c["ids"])][:8]
+        motives = s["dossier"].get("motives", {})
+        levers = "; ".join(f"{m}: {v['lever']}" for m, v in motives.items())
+        lines = [f"[{i}] rank {i + 1}: " + ", ".join(f"{f} {v}" for f, v in t.items() if f in case["negotiable"])
+                 for i, (_, t) in enumerate(cands)]
+        user = (f"SUPPLIER: {s['dossier'].get('name', sid)}\nCASE: {case['title']} ({case['type']}, goal "
+                f"{case['buyer']['category_goal']})\nROUND: {k + 1}\nNEGOTIABLE: {', '.join(case['negotiable'])}\n"
+                f"SUPPLIER SITUATION (theirs): {levers or 'n/a'}\n"
+                f"PLAYBOOK:\n{_sections(self.playbooks.get(case['type'], ''), PLAYBOOK_SECTIONS)[:1800]}\n"
+                f"THEIR LAST E-MAIL:\n{latest(events).get('body', '')[:1800]}\n\n"
+                f"CANDIDATES (all acceptable for us; rank 1 = cheapest for us):\n" + "\n".join(lines) +
+                "\n\nARGUMENTS (verified facts, each usable once):\n" +
+                "\n".join(f"[{i}] {c['sentence']}" for i, c in enumerate(pool)))
+        try:
+            raw = self.complete(DECIDE_SYSTEM, user)
+            d = json.loads(re.search(r"\{.*\}", raw, re.S).group(0))
+        except Exception as e:
+            log.warning("model decision failed (%s) - deterministic path", e)
+            return None
+        idx = [i for i in d.get("sheets", []) if isinstance(i, int) and 0 <= i < len(cands)]
+        idx = list(dict.fromkeys(idx))[:3]
+        if not idx:
+            return None
+        aidx = [i for i in d.get("args", []) if isinstance(i, int) and 0 <= i < len(pool)][:3 if k == 0 else 2]
+        notes = d.get("notes") or {}
+        for r in notes.get("refusals") or []:  # remember its stated limits for the next rounds
+            f = r.get("field")
+            if f in case["negotiable"] and f != "unit_price":
+                lo, hi = s.setdefault("limits", {}).get(f, (None, None))
+                lo = r["min"] if isinstance(r.get("min"), (int, float)) else lo
+                hi = r["max"] if isinstance(r.get("max"), (int, float)) else hi
+                s["limits"][f] = (lo, hi)
+        log.info("%s model: sheets %s args %s notes %s", sid, idx, aidx, json.dumps(notes)[:300])
+        chosen = [cands[i][1] for i in idx]
+        args = [pool[i] for i in aidx]
+        opening = self.clean_opening(case, str(d.get("opening") or ""))
+        return self.message(case, sid, events, chosen, k, args=args, opening=opening)
+
+    def clean_opening(self, case, text):
+        """The same filters as for the opening paragraph: no figures, no leaks, no off-table levers, English."""
+        text = " ".join(text.split())
+        off_table = [] if "payment_days" in case["negotiable"] else [r"payment", r"cash flow", r"liquidity", r"disburse"]
+        off_table += [] if "contract_months" in case["negotiable"] else [r"longer contract", r"contract term"]
+        text = " ".join(x for x in re.split(r"(?<=[.!?])\s+", text)
+                        if not any(ch.isdigit() for ch in x) and not BAD_OPENING.search(x)
+                        and not any(re.search(o, x, re.I) for o in off_table))
+        german = len(re.findall(r"(?i)\b(wir|sie|und|der|die|das|nicht|bitte|ihre?n?|mit|für)\b", text))
+        return text if 30 < len(text) < 700 and german < 3 else None
 
     def final_tweak(self, case, sid, terms):
         """Its final offer with the one non-price option that helps us most (same price)."""
@@ -389,6 +478,72 @@ class NoIdeaAgent:
     MONTHS = {m: i for i, m in enumerate(["january", "february", "march", "april", "may", "june", "july",
                                           "august", "september", "october", "november", "december"], 1)}
 
+    PKG = re.compile(r"(?i)(?:a )?price of (?:€|EUR)\s?(\d+(?:[.,]\d+)?)")
+
+    def parse_packages(self, case, body):
+        """Every offer package in a supplier e-mail, primary and alternatives, with raw (unsnapped) values.
+        The arena's e-mails are templated: "a price of €31.90 per unit, Lieferzeit 54 days, a volume of
+        23400 pcs per year, a contract term of 24 months" (datasets/F_supplier_emails.jsonl: 78 real e-mails)."""
+        out, hits = [], list(self.PKG.finditer(body or ""))
+        for i, m in enumerate(hits):
+            seg = body[m.start(): hits[i + 1].start() if i + 1 < len(hits) else len(body)]
+            seg = re.split(r"\n\s*\n", seg)[0]
+            t = {"unit_price": float(m.group(1).replace(",", ".")),
+                 "alternative": bool(re.search(r"(?i)alternativ", body[max(0, m.start() - 160): m.start()]))}
+            for f, rx in (("payment_days", r"(?i)zahlungsziel (\d{1,3})|(\d{1,3})[- ]day payment|payment (?:terms )?of (\d{1,3})"),
+                          ("lead_time_days", r"(?i)lieferzeit (\d{1,3})|lead time (?:of )?(\d{1,3})"),
+                          ("volume_per_year", r"(?i)volume of (\d[\d,.]*) (?:pcs|units|kits|kg|m)"),
+                          ("contract_months", r"(?i)contract term of (\d{1,2}) months|(\d{1,2})-month contract")):
+                if (g := re.search(rx, seg)):
+                    t[f] = int(next(x for x in g.groups() if x).replace(",", "").replace(".", ""))
+            iso = re.search(r"\d{4}-\d{2}-\d{2}", seg)
+            word = re.search(r"(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})", seg)
+            if iso:
+                t["effective_date"] = iso.group(0)
+            elif word and word.group(2).lower() in self.MONTHS:
+                t["effective_date"] = f"{word.group(3)}-{self.MONTHS[word.group(2).lower()]:02d}-{int(word.group(1)):02d}"
+            out.append(t)
+        return out
+
+    def snap_feasible(self, case, raw, base):
+        """A raw package -> a valid term sheet. Lead time snaps UP to the next option (shorter than it said
+        is what it refused; P10 live: its 54 days snapped to 56, not 42)."""
+        t = dict(base, **{k: v for k, v in raw.items() if k in case["negotiable"] or k == "unit_price"})
+        opts = case.get("term_options", {}).get("lead_time_days")
+        if "lead_time_days" in raw and opts and "lead_time_days" in case["negotiable"]:
+            up = [o for o in sorted(opts) if o >= raw["lead_time_days"]]
+            t["lead_time_days"] = up[0] if up else max(opts)
+        return complete_offer(case, t)
+
+    LEARN_FIELDS = ("lead_time_days", "contract_months", "volume_per_year")
+
+    def learn(self, case, sid, events):
+        """In-negotiation learning: the supplier's price premium per unit of each non-cash term, from the
+        packages it has shown us (P10 live: EUR 33.80 @ 42 d vs EUR 32.00 @ 54 d -> -0.15 EUR/unit per day).
+        Payment is left to supplier_value (its cash rate). Stored as s["k"][field] = dPrice/dField."""
+        s = self.sup[sid]
+        slopes = {}
+        for m in events:
+            if m.get("from") == "buyer":
+                continue
+            pk = self.parse_packages(case, m.get("body") or "")
+            for a, b in itertools.combinations(pk, 2):
+                diff = [f for f in self.LEARN_FIELDS + ("payment_days", "effective_date")
+                        if a.get(f) is not None and b.get(f) is not None and a.get(f) != b.get(f)]
+                if len(diff) == 1 and diff[0] in self.LEARN_FIELDS:
+                    f = diff[0]
+                    slopes.setdefault(f, []).append((b["unit_price"] - a["unit_price"]) / (b[f] - a[f]))
+        s["k"] = {f: sum(v) / len(v) for f, v in slopes.items()}
+        if s["k"]:
+            log.info("%s learned premiums (EUR/unit per unit of term): %s", sid, {f: round(v, 3) for f, v in s["k"].items()})
+
+    def premium(self, sid, t):
+        """Value adjustment for the learned premiums, relative to the supplier's latest standing terms."""
+        s = self.sup[sid]
+        ref = s["open_terms"]  # fixed baseline: a moving one made the price jump (offline P10: 25.81 -> 28.52)
+        return -sum(k * ((t.get(f) or 0) - (ref.get(f) or 0)) for f, k in (s.get("k") or {}).items()
+                    if t.get(f) is not None and ref.get(f) is not None)
+
     def prose_alternative(self, case, sid, events):
         """Signal 'prose_alternative' (src/eval/signals.py; P01 live: "Alternatively, with valid from
         ... January ...: EUR ... per unit"). Only term sheets bind, so turn it into one. Returns
@@ -397,7 +552,15 @@ class NoIdeaAgent:
         s = self.sup[sid]
         _, terms = standing(events)
         best = None
-        for sent in re.split(r"(?<=[.!?])\s+|\n+", body):
+        for raw in self.parse_packages(case, body):
+            if not raw["alternative"]:
+                continue
+            t = self.snap_feasible(case, raw, terms)
+            if must_haves_ok(case, t, s["std"]) and t != complete_offer(case, terms):
+                c = total_cost(case, t, s["std"], s["est"])
+                if best is None or c < best[0]:
+                    best = (c, t)
+        for sent in ([] if best else re.split(r"(?<=[.!?])\s+|\n+", body)):  # fallback: free-form prose
             if not re.search(r"(?i)\balternativ", sent):
                 continue
             price = re.search(r"(?:€|EUR)\s?([\d]+(?:[.,]\d+)?)|([\d]+(?:[.,]\d+)?)\s?(?:€|EUR)?\s?per unit", sent)
@@ -442,14 +605,14 @@ class NoIdeaAgent:
         return out
 
     # ---- the words -----------------------------------------------------------------------------
-    def message(self, case, sid, events, sheets, k, final=False):
-        args = self.next_args(sid, 3 if k == 0 else 1)
+    def message(self, case, sid, events, sheets, k, final=False, args=None, opening=None):
+        args = self.next_args(sid, 3 if k == 0 else 1) if args is None else args
         rival = self.rival_offer(case, sid) if case["type"] == "rfq" else None
         refs = sorted({i for c in args for i in c["ids"]} | ({rival[0]} if rival else set()))
         self.cited.update(refs)
         return {"supplier_id": sid, "message": {
             "subject": f"Re: {case['title']}"[:300],
-            "body": self.write(case, sid, events, sheets, k, [c["sentence"] for c in args], rival, final),
+            "body": self.write(case, sid, events, sheets, k, [c["sentence"] for c in args], rival, final, opening),
             "term_sheets": [{"terms": t} for t in sheets],
             "refs": refs[:20],
         }}
@@ -474,14 +637,14 @@ class NoIdeaAgent:
             return best
         return None
 
-    def write(self, case, sid, events, sheets, k, args, rival, final):
+    def write(self, case, sid, events, sheets, k, args, rival, final, given_opening=None):
         s = self.sup[sid]
         d = s["dossier"]
         name = d.get("name", "your company")
         motives = d.get("motives", {})
         offers = "; ".join(", ".join(f"{f} {v}" for f, v in t.items() if f in case["negotiable"]) for t in sheets)
-        opening = "Thank you for your message."
-        if self.complete:
+        opening = given_opening or "Thank you for your message."
+        if self.complete and not given_opening:
             levers = "; ".join(f"{m}: {v['lever']}" for m, v in motives.items())
             playbook = _sections(self.playbooks.get(case["type"], ""), PLAYBOOK_SECTIONS)[:2500]
             user = (f"SUPPLIER: {name}\nCASE: {case['title']} ({case['type']}, goal {case['buyer']['category_goal']})\n"
