@@ -261,3 +261,4 @@
 | 2026-10-11 00:26 | Dhruv | P11 | v2.34d hidden L3b / gpt-6-astra | 0.7935 | 542f9ce85b4a7482 |
 | 2026-10-11 00:26 | Dhruv | D01 | v2.34d SANDBOX unseen supplier / gpt-6-astra | 0.9098 | 6df9e5bd0a72465b |
 | 2026-10-11 00:26 | Dhruv | D02 | v2.34d SANDBOX unseen RFQ / gpt-6-astra | 0.5154 | ec2806ab3dd21e33 |
+| 2026-10-11 00:30 | Neel | P10 | noidea_p10 (cloud plan, after P10_draw.md; normal mode) / gpt-6-astra | **0.71** | 3c4aa1a6471cdc3c |

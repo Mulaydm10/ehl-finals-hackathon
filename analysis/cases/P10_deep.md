@@ -1,4 +1,5 @@
 STATUS: DONE (P10 deep analysis, user request) - 2026-10-11 ~03:45, cloud session, offline only (0 arena sessions, no LLM calls).
+UPDATE: the 31.00 first counter of the 0.741 record (673ee890, §9) came from the arena's engine-template mode, not from its e-mail -> `P10_draw.md`.
 Sources: all 18 P10 games (datasets/runs, tools/replays/raw and backoffice), the P10 data package (dossier, 4 letters, contract,
 facts), the team's P10 files (P10.md, P10_engine.md, probes P10_A-F + findings), supplier memory, claim reactions.
 Ready to run: `analysis/experiments/probes/P10_G.json` (scripted, `tools/experiments/probe.py`) and
