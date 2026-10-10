@@ -88,9 +88,10 @@ def score(t):
 
 
 class Donautal:
-    def __init__(self, draw="low", max_defer=1, xsell=0.0, term36=0.01):  # 94e77b7b: 36 m headline 5.40 vs 5.41/5.42
+    def __init__(self, draw="low", max_defer=1, xsell=0.0, term36=0.01, soft=0.0):  # 94e77b7b: 36 m headline 5.40 vs 5.41/5.42
         self.draw, self.max_defer, self.xsell, self.free, self.v1, self.xs = draw, max_defer, xsell, True, None, False
         self.term36, self.months = term36, 24  # term36: untested round-1 value shift for a 36-month ask (task 14)
+        self.soft = soft  # task 18: how far under its final it would still agree to ITS OWN structure (untested; P11's floor: 0)
         self.v, self.n, self.defers, self.final, self.ours = None, 0, 0, False, []
         self.its_steps, self.last_prim, self.head_days = [], None, None
 
@@ -143,8 +144,9 @@ class Donautal:
                 prim = self.last_prim
             status = "final_offer" if self.final else "open"
         # agreement: a sheet of ours worth at least what it would offer now
-        ok = [t for t in sheets if value(t, free_risk=True) >= self.v - 1e-6]
-        if ok and not self.final:
+        ok = [t for t in sheets if value(t, free_risk=True) >= self.v - (self.soft if db_of(t) is not None else 0) - 1e-6]
+        if ok and (not self.final or any(db_of(t) is not None for t in ok)):
+            self.final = False
             t = max(ok, key=lambda t: value(t, free_risk=True))
             self.ours.append(first)
             return "agreed", t, None, "We agree to your terms."
@@ -187,10 +189,10 @@ def load(path):
     return mod.NoIdeaAgent
 
 
-def run(Agent, draw="low", max_defer=1, verbose=True, xsell=0.0, term36=0.01):
+def run(Agent, draw="low", max_defer=1, verbose=True, xsell=0.0, term36=0.01, soft=0.0):
     threads = {sid: [dict(m) for m in ms] for sid, ms in PROBE["threads"].items()}
     sid = next(iter(threads))
-    events, sup, agent, log = threads[sid], Donautal(draw, max_defer, xsell, term36), Agent(None), []
+    events, sup, agent, log = threads[sid], Donautal(draw, max_defer, xsell, term36, soft), Agent(None), []
     for n in range(1, 11):
         d = agent.decide(CASE, threads)
         msg = d["message"]

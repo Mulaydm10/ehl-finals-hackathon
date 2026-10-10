@@ -25,6 +25,7 @@ deep dives (analysis/cases/). Change log with evidence: notes/agent_changelog.md
     alternative is cheaper)
 """
 
+import ast
 import itertools
 import json
 import logging
@@ -65,6 +66,8 @@ DEEP_ANCHOR_HEDGED = None  # cloud task 15: round-1 anchor depth for hedged raw 
 PAY_DAYS_HEDGED = 60  # cloud task 16 (P08_loop3.md): payment term from round 2 for hedged raw material. Its final is cent-rounded on
 # OUR payment term; at the low-draw floor (value ~5.116-5.121) 60 d lands on 5.15 = 0.7329, 14 d on 5.10 = 0.7323 (the record).
 # P(score > 0.7323 | low draw, 5.40 headline) 54% at 60 d vs 20% at 14 d (noise model, 8 budgets); mean -0.002
+HAIR_HEDGED = True  # cloud task 18: floor-trade pair at our final message after a deferral (P08 only)
+HAIR_CENTS = 1  # ...one cent under its expected final
 LONG_TERM_HEDGED = True  # cloud task 14: 36 m sheets for hedged raw-material suppliers (experiment, P08 loop run 2)
 CROSS_SELL = True  # cloud task 13: invite a hedged raw-material distributor to quote for a part we buy elsewhere (untested live)
 DEFER_TIMES = 1  # cloud task 11: small steps in a row (1 = live-tested in db7d315a; 2+ untested - sim_donautal --max-defer)
@@ -832,7 +835,56 @@ class NoIdeaAgent:
         return out
 
     # ---- the words -----------------------------------------------------------------------------
+    def best_final_value(self, case, sid):
+        """Lowest value of any final this supplier gave us (datasets/H_supplier_memory.json, Dhruv v2.20), or None."""
+        try:
+            mem = json.loads((_repo() / "datasets/H_supplier_memory.json").read_text(encoding="utf-8")).get(sid) or {}
+        except (OSError, ValueError):
+            return None
+        out = []
+        for key, rec in (mem.get("structures") or {}).items():
+            t = {}
+            for part in key.split("|"):
+                f, _, v = part.partition("=")
+                if f in ("payment_days", "contract_months"):
+                    t[f] = int(v)
+                elif f == "index_clause":
+                    t[f] = ast.literal_eval(v)  # the key holds a repr of a plain dict (or None)
+            for price in rec.get("finals") or []:
+                out.append(supplier_value(case, complete_offer(case, {**t, "unit_price": price}), self.sup[sid]["est"]))
+        return min(out) if out else None
+
+    def hair_pair(self, case, sid, events, sheets, k):
+        """cloud task 18 (analysis/cases/P08_task18.md): rule 66 floor trade for a budget supplier. After a deferral (its
+        message 3 stayed open), its final at our next message lands one step lower (P08 6 of 6: half the budget left,
+        0.049-0.060). Next to our normal step, send ITS OWN structure (the clause it insists on, its payment term) one cent
+        under that expected final. A hard floor refuses it and goes final as always (P11: 0 of 9 asks under its floor);
+        a soft one agrees, and the deal is under the record. Never above its expected final."""
+        s = self.sup[sid]
+        if not (HAIR_HEDGED and self.hedged_raw(case, sid) and k == FINAL_AT_MSG.get(case["type"], 0)
+                and s.get("defers") and latest(events).get("status") == "open"):
+            return sheets
+        stand = [standing([m]) for m in events if m.get("from") != "buyer" and m.get("term_sheets")]
+        if len(stand) < 2 or not stand[-1][0]:
+            return sheets
+        terms = complete_offer(case, stand[-1][1])
+        v = [supplier_value(case, complete_offer(case, t), s["est"]) for _, t in stand[-2:]]
+        step = v[0] - v[1]
+        if step <= 0:
+            return sheets
+        per_value = supplier_value(case, terms, s["est"]) / terms["unit_price"]
+        final_price = round((v[1] - step) / per_value, 2)
+        hair = {**stand[-1][1], "unit_price": round(final_price - HAIR_CENTS / 100, 2)}
+        # only a hair that beats every final it ever gave (supplier memory, rule 65): on a high draw the clause sheet only
+        # risks its smaller clause budget (sim: 0.666 -> 0.644; ab473a1c / 325d6e71 took the clause and got -0.09 / -0.15)
+        best = self.best_final_value(case, sid)
+        if best is not None and supplier_value(case, complete_offer(case, hair), s["est"]) >= best:
+            return sheets
+        log.info("%s floor trade: its structure at %.2f (expected final %.2f)", sid, hair["unit_price"], final_price)
+        return list(sheets[:1]) + [hair]
+
     def message(self, case, sid, events, sheets, k, final=False):
+        sheets = self.hair_pair(case, sid, events, sheets, k)
         # later rounds: up to 2 NEW data kinds - live P03 2e4bf89ac2967a45: a counter without data got "Which figures
         # is that based on? Please send us the data", and P03 never moved in a later round without data (12 games)
         # spread the data: P02/P03 cut their price for each NEW fact and went final once none was left - so keep one
