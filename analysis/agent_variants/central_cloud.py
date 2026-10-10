@@ -217,6 +217,53 @@ def own_quote_claims(facts, sid, parts, opening_price, today="2026-09-30", days=
              "checked_by_arena": True, "keep_alive": True}]
 
 
+NUM_WORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine", 10: "ten",
+             11: "eleven", 12: "twelve"}
+
+
+def rising_price_path(facts, sid, part, desc="", today="2026-09-30", window_days=365, max_ids=8):
+    """Our order history for this part as a RISING PATH within the last 12 months (cloud task 19, Parth rule 76; live P08
+    d0708ed1038995d1 = 0.912): the last order at the low price, the first order of every later price level, and the latest
+    order - "Our orders for this bar rose from EUR 5.17 to EUR 5.45 within nine months (po:4500013278-10, po:4500013392-10,
+    po:4500013795-10, po:4500014455-10)". Taken in round 1 ("it holds and we took it into account"); its first counter fell
+    5.41 -> 5.25 and the floor followed it. A one-order blip is noise (5.21 on 2025-12-23). Two figures in one sentence were
+    verified (both are order prices). None when the price did not rise inside the window."""
+    from datetime import date
+    t0 = date.fromisoformat(today)
+    rows = sorted((v["date"], k, float(v["unit_price"])) for k, v in facts.items()
+                  if k.startswith("po:") and v.get("supplier") == sid and v.get("part") == part and v.get("unit_price")
+                  and v.get("date") and 0 <= (t0 - date.fromisoformat(v["date"][:10])).days <= window_days)
+    if len(rows) < 3:
+        return None
+    runs = []  # [price, first index, last index]
+    for i, (_, _, p) in enumerate(rows):
+        if runs and abs(runs[-1][0] - p) < 1e-9:
+            runs[-1][2] = i
+        else:
+            runs.append([p, i, i])
+    runs = [r for k, r in enumerate(runs) if not (r[1] == r[2] and 0 < k < len(runs) - 1)]  # drop one-order blips
+    merged = []
+    for r in runs:
+        if merged and abs(merged[-1][0] - r[0]) < 1e-9:
+            merged[-1][2] = r[2]
+        else:
+            merged.append(list(r))
+    low_k = min(range(len(merged)), key=lambda k: (merged[k][0], -k))
+    path = merged[low_k:]
+    if len(path) < 2 or any(b[0] <= a[0] for a, b in zip(path, path[1:])):
+        return None  # not a rise from the low (or it fell again)
+    picks = [rows[path[0][2]]] + [rows[r[1]] for r in path[1:-1]] + [rows[-1]]  # the latest order stands for its level
+    picks = picks[:max_ids - 1] + ([rows[-1]] if len(picks) > max_ids else [])
+    d0, d1 = date.fromisoformat(picks[0][0][:10]), date.fromisoformat(picks[-1][0][:10])
+    months = (d1.year - d0.year) * 12 + d1.month - d0.month
+    noun = "bar" if "bar" in desc.lower() else "part"
+    ids = [k for _, k, _ in picks]
+    return {"supplier": sid, "part": part, "kind": "po_prices", "ids": ids, "figure": round((picks[-1][2] / picks[0][2] - 1) * 100, 1),
+            "unit": None, "checked_by_arena": True, "path": True,
+            "sentence": f"Our orders for this {noun} rose from EUR {picks[0][2]:.2f} to EUR {picks[-1][2]:.2f} within "
+                        f"{NUM_WORDS.get(months, str(months))} months ({', '.join(ids)})."}
+
+
 def cross_sell_note(facts, sid, dossier, case_parts):
     """Its person's currency (cloud task 13, analysis/cases/P08_floor.md): a stock distributor ends every e-mail with "our whole
     range is at your disposal, so if there is anything else on your list, just send it over" (P08: 21 of its e-mails). A part

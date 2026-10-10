@@ -68,6 +68,7 @@ PAY_DAYS_HEDGED = None  # cloud task 19 (P08_run81ee.md): REVERTED to the shorte
 # 0.199-0.220 in 8 low draws, 6 of them at 14 d). n=1 and confounded with an opening line ("no higher than the current level"),
 # but 14 d is the proven term and the grid gain was a tenth of a cent.
 OWN_QUOTE_ID = True  # cloud task 17: cite a price-frozen supplier's own recent quote by ID (P03 only)
+PRICE_PATH_HEDGED = True  # cloud task 19: round-1 order-history price path for hedged raw material (P08 0.912)
 HAIR_HEDGED = True  # cloud task 18: floor-trade pair at our final message after a deferral (P08 only)
 HAIR_CENTS = 1  # ...one cent under its expected final
 LONG_TERM_HEDGED = True  # cloud task 14: 36 m sheets for hedged raw-material suppliers (experiment, P08 loop run 2)
@@ -296,6 +297,15 @@ class NoIdeaAgent:
         # cloud task 17 (analysis/cases/P03_beat.md): a price-frozen holder cuts once per NEW verified data kind and every
         # kind it takes is used; its own recent quote by ID is the one kind never cited -> right after round 1's data, so
         # the remaining kinds still reach its final at our 5th message
+        # cloud task 19 (analysis/cases/P08_run81ee.md): a hedged raw-material supplier's FIRST counter is what its floor
+        # follows (budget model); our order history as a rising PATH in round 1 lowered it 5.41 -> 5.25 (live P08 d0708ed1 =
+        # 0.912, beat the house): first claim of round 1, replacing the flat run it shrugged off 6 of 6
+        if PRICE_PATH_HEDGED and case["type"] in FINAL_AT_MSG and "hedged_forward" in self.dossiers.get(sid, {}).get("motives", {}):
+            desc = {p["part"]: p["description"] for p in self.dossiers.get(sid, {}).get("parts", [])}
+            pp = [x for x in (central.rising_price_path(self.facts, sid, pt, desc.get(pt, "")) for pt in case["parts"]) if x]
+            if pp:
+                ranked = pp + [c for c in ranked if c["kind"] != "po_prices"]
+                fillers = [c for c in fillers if c["kind"] != "po_prices"]
         if OWN_QUOTE_ID and "price_frozen" in self.dossiers.get(sid, {}).get("motives", {}):
             oq = central.own_quote_claims(self.facts, sid, parts, opening)
             r1 = [c for c in ranked if c["kind"] in ("should_cost", "volume_change")]

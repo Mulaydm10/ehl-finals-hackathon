@@ -40,6 +40,8 @@ STD = {"payment_days": 30, "incoterm": "DAP", "ppm_commitment": 50, "chargeback_
        "lead_time_days": 10}
 RATE, DB_PT, FREE_RISK = 0.08, 0.024, 0.14
 HEADLINE = {"low": 5.41, "high": 5.53}
+PATH_SHIFT = 0.16  # task 19: a rising order-history PATH in round 1 ("rose from EUR 5.17 to EUR 5.45 within nine months") lowered the
+                   # low-draw headline 5.41 -> 5.25 (d0708ed1 = 0.912); the high draw is untested - the same shift assumed
 R2_STEP = {"free": 0.16, "db0": 0.07, "db5": 0.07}  # db5 asks: 0 (1f27, hold) / -0.15 (586a) / -0.06 (9bfa) -> the mean
 # task 13 (analysis/cases/P08_floor.md): FLOOR-BOUND. With clause-free asks its final = round-1 value - BUDGET, whatever the
 # path (low: c387 0.210, cae4 0.220, 6912 0.217, a4b9 0.210, a43d 0.199; high: 1363 0.258, db7d 0.281). Round 2 takes 0.16 after
@@ -109,7 +111,8 @@ class Donautal:
         if self.n == 1:
             days = self.head_days = first["payment_days"]
             self.months = 36 if first.get("contract_months") == 36 else 24
-            h = round(HEADLINE[self.draw] - (self.term36 if self.months == 36 else 0), 2)
+            h = round(HEADLINE[self.draw] - (self.term36 if self.months == 36 else 0)
+                      - (PATH_SHIFT if "rose from EUR" in (getattr(self, "body_in", "") or "") else 0), 2)
             self.v = self.v1 = h * f(days)
             prim = {"unit_price": h, "payment_days": days, "index_clause": clause(0), "contract_months": self.months}
             status, step = "open", None
