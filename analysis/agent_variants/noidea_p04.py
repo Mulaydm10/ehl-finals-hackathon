@@ -1,22 +1,19 @@
-"""P04 variant of the team's main agent (Dhruv's tacto/starter-kit/arena_kit/agents/noidea.py, untouched here). Report:
-analysis/cases/P04_lever.md.
+"""P04 variant of the team's main agent (Dhruv's tacto/starter-kit/arena_kit/agents/noidea.py, untouched here).
+Full analysis: analysis/cases/P04_deep.md.
 
-P04's supplier stops at ONE fixed floor value S in (4.8701, 4.8753] (its cash rate 6.8-8.4%), fitted on all 9 finals and 9
-refused asks. With whole-cent prices the best deal any team can get is 4.89 @ 45 d = 0.874. The board agrees: makeAnother.md
-0.874 = our 0.874, 16 teams beat the house, nobody above. Main reaches 0.874 every time (5 of 5).
+PROVEN (15 games, both rounding rules): no whole-cent deal the P04 supplier can accept scores above 0.8737.
+- Its cash rate is 7.28-7.69% a year. Its own two-sheet quotes give at most 7.69% (one value target per message). The arena's
+  1.0 line (C_best = its floor; no deal in any case has ever crossed it) gives at least 7.28%, because it agreed to 4.89 @ 45 d.
+- Its floor is F = 4.935 x (1 - rate/6) = EUR 4.8717-4.8751 of value. The cheapest cent on each term: 14 d 4.86 (0.815),
+  30 d 4.88 (0.766), **45 d 4.89 (0.8737)**, 60 d 4.91 (0.810), 90 d 4.94 (0.860); 24 m = 36 m.
+- The record-beating cents need a higher rate: 4.87 @ 30 d needs >= 7.90%, 4.85 @ 14 d >= 8.19%, 4.90 @ 60 d >= 8.45%,
+  4.88 @ 45 d >= 8.88%. 4.93 @ 90 d never clears it. The board's 0.874 (makeAnother.md) is this same 4.89 @ 45 d: it can be
+  tied, never beaten.
+- Main reaches 0.8737 every time it stays on 45 d (6 of 6). A hop costs the cent: live 1992e28a (4.87 @ 30 d shot, then
+  back to 45 d) got 4.90 @ 45 d = 0.700.
 
-Beating it needs the floor to fall. The ask that needs the SMALLEST fall is 4.87 @ 30 d (0.940; a median 0.05% fall), not
-main's memory close 4.88 @ 45 d (1.0; needs 0.16%, refused 5 of 5).
-
-P04_SHOT (default OFF = main exactly):
-- our 2nd message: ONE sheet, 4.87 @ 30 d, 36 m, no new data (data costs patience here: finals came a round earlier when
-  our 2nd e-mail cited data);
-- agreed -> 0.940;
-- still open -> our 3rd message: 4.89 @ 45 d alone (its usual final; it agreed to 4.89 @ 45 d when we sent it in 4 games)
-  to keep the 0.874;
-- final_offer -> main accepts its primary (4.88 @ 30 d = 0.766 - the board keeps our best, 0.874).
-4.87 @ 30 d was refused once before (62a17f4a, with two other sheets). Expected chance of 0.940: a few %, only if something
-lowered its floor in that session. Only the best practice score per case counts, so a miss costs quota, not score.
+So P04_SHOT stays OFF: the default is main exactly. If someone turns it on anyway, a refused shot no longer hops back to 45 d.
+It accepts the standing 30-day sheet (4.88 @ 30 d = 0.766, which beats the 0.700 that the hop cost).
 """
 import logging
 
@@ -27,9 +24,8 @@ from arena_kit.play import latest
 log = logging.getLogger("arena")
 
 P04_CASES = {"case:P04"}
-P04_SHOT = False  # True = the record lottery (see above); False = main unchanged (0.874)
+P04_SHOT = False  # never enable: proven unreachable (P04_deep.md section 3); False = main unchanged (0.8737)
 SHOT = {"unit_price": 4.87, "payment_days": 30, "contract_months": 36}
-KEEP = {"unit_price": 4.89, "payment_days": 45, "contract_months": 36}
 
 
 class NoIdeaAgent(_Main):
@@ -47,8 +43,10 @@ class NoIdeaAgent(_Main):
             s["p04_shot"] = True
             log.info("%s: P04 shot %s", sid, SHOT)
             return self.message(case, sid, events, [complete_offer(case, dict(SHOT))], k, args=[])
-        if status == "open" and k == 2 and s.get("p04_shot") and not s.get("p04_keep"):
-            s["p04_keep"] = True
-            log.info("%s: shot refused, back to its usual final %s", sid, KEEP)
-            return self.message(case, sid, events, [complete_offer(case, dict(KEEP))], k, args=[])
+        if status == "open" and k == 2 and s.get("p04_shot"):
+            # refused: take its standing sheet; never hop back (1992e28a: the hop to 45 d cost a cent -> 0.700)
+            sheet_id = self.best_sheet(case, sid, events)[0]
+            if sheet_id:
+                log.info("%s: shot refused - accepting its standing sheet %s", sid, sheet_id)
+                return {"supplier_id": sid, "message": {"action": {"type": "accept", "term_sheet_id": sheet_id}}}
         return super()._decide(case, threads)
