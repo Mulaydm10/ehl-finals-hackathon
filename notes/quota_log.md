@@ -173,3 +173,4 @@
 | 2026-10-10 20:55 | Dhruv | P11 | noidea v2.22 (wording) / gpt-6-astra | 0.71 (high draw) | 605ed96c39467c97 |
 | 2026-10-10 21:00 | Neel | P05 | noidea / gpt-6-astra | **0.51** | f60b3c3a6a65593f |
 | 2026-10-10 21:02 | Parth | P08 | noidea c1d7678 (hedged: 3 sheets r1, lean later) / gpt-6-astra | 0.916 (agent, P08 rules complete) | 4ff01141bab9fea6 |
+| 2026-10-10 21:19 | Parth | P05 | p05_record 1e8ac31 / scripted | 0.820 | 9ce672fffbf931a7 |
