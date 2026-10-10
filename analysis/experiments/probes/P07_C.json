@@ -1,0 +1,61 @@
+{
+  "case": "P07",
+  "label": "P07_C = A + tiny labour claim in round 2",
+  "hypothesis": "A is deterministic (0.812 x2); B (+QN in r2) 0.792. C adds only the agent's other round-2 filler, labour -0.3% (idx:LCI-C@2025-10 -> 2026-01): if worse than A, fillers hurt a mirror supplier (they help holders like P11).",
+  "on_agreed": "accept",
+  "on_open": "next",
+  "on_final": "alternative",
+  "rounds": [
+    {
+      "body": "Dear Leitner & Sohn team,\n\nThank you for your offer. We want one partner for the complete kit, which bundles parts we buy from several suppliers today: 30,000 kits a year, binding for 24 months, about four times our business with you today.\n\nOur kit calculation: at your own current prices (19 x Hex bolt ISO 4017 M12x40 8.8 at EUR 12.46/100; 21 x Hex nut ISO 4032 M12 8 at EUR 4.91/100; 23 x Washer ISO 7089 M12 at EUR 12.78/1000) plus the part you do not supply us yet (6 x Hex bolt ISO 4017 M16x60 8.8 at today's EUR 37.64/100), the kit costs EUR 5.95.\nOur demand forecast for Hex bolt ISO 4017 M16x60 8.8 is up +15.3% (fc:360011@2026-09).\nProducer prices DE: fasteners and screw machine products changed -1.6% from 2024-10 to 2025-10 (idx:PPI-C2594@2024-10, idx:PPI-C2594@2025-10).\n\nFor the whole kit on a multi-year single-source volume we propose EUR 4.94 per kit, 24 months, 90 days payment.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 4.94,
+          "payment_days": 90,
+          "contract_months": 24
+        }
+      ],
+      "refs": [
+        "fc:360011@2026-09",
+        "idx:PPI-C2594@2024-10",
+        "idx:PPI-C2594@2025-10"
+      ]
+    },
+    {
+      "body": "Dear Leitner & Sohn team,\n\nThank you for your offer. We move clearly towards you: EUR 5.06 per kit, 24 months, 90 days payment, for the complete kit.\nLabour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01).\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 5.06,
+          "payment_days": 90,
+          "contract_months": 24
+        }
+      ],
+      "refs": [
+        "idx:LCI-C@2025-10",
+        "idx:LCI-C@2026-01"
+      ]
+    },
+    {
+      "body": "Dear Leitner & Sohn team,\n\nThank you. We take another clear step: EUR 5.21 per kit on the same terms.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 5.21,
+          "payment_days": 90,
+          "contract_months": 24
+        }
+      ],
+      "refs": []
+    },
+    {
+      "body": "Dear Leitner & Sohn team,\n\nThank you. To close, we propose EUR 5.31 per kit on the same terms.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 5.31,
+          "payment_days": 90,
+          "contract_months": 24
+        }
+      ],
+      "refs": []
+    }
+  ]
+}
