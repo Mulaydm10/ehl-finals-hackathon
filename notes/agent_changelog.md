@@ -632,3 +632,12 @@ no committee; its call each round is counter / hold / final; final in round 4-5.
 - P11 rounds now: r1 forecast + iron & steel + scorecard, r2 electricity, r3 price history, r4-5 complaints, then labour.
 - Note: P02/P07 round 1 now carry a falling index - Neel's new reaction data (cfce529, P02 0.824) marks index data as taken.
 - Tests 37 passed; offline 0.942 / 0.945; P02 walk replays unchanged.
+
+## v2.16c live P11 (18:14): 0.71 (fa9a9d0277f372c6) -> qn claims switched OFF (v2.16d)
+- Round 1 -> EUR 46.00 (as the 0.79 game). Round 2 electricity -17.1% ("taken", but "the energy index drop is tiny for us") + our
+  qn mean-ppm claim -> **"the quality record figures you cite do not match the records. That costs trust"** -> only -0.50 (45.50).
+  Round 3 price history + a 2nd qn claim -> "contradicted" again + "We received a lot of material" -> **final_offer in round 3**.
+- Lesson (general): **a contradicted claim costs trust and shortens its patience** - cite only data whose check we know exactly
+  (api.md: qn rows are checked as a mean ppm we could not reproduce from facts.json lot ppm). Never ship an unverified claim type
+  live without first knowing its check; `qn_claims` stays behind NOIDEA_EXPERIMENTS.
+- P11 so far on v2.16: 0.79 / 0.71 / 0.71 (mean 0.74; v2.7-2.10 mean 0.55). The ceiling it shows: ~EUR 45.00-45.50 @ 300/0.

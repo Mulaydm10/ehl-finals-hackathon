@@ -294,7 +294,9 @@ class NoIdeaAgent:
             out += [{**c, "late": True} for c in pos if self.po_jump(c) <= 0]
         if case["type"] in ("capacity", "price_increase"):
             out += [c for c in mine if c["kind"] == "scorecard_otd" and (c["figure"] or 100) < 85]
-        if case["type"] == "quality" or case["buyer"].get("category_goal") == "quality_first":
+        # OFF by default: live P11 fa9a9d0277f372c6 the arena marked our qn mean-ppm claims CONTRADICTED ("do not match the
+        # records. That costs trust") and the supplier went final one round early. How it averages qn rows is unknown.
+        if "qn_claims" in EXPERIMENTS and (case["type"] == "quality" or case["buyer"].get("category_goal") == "quality_first"):
             out += self.complaint_args(sid, parts)
         out += self.forecast_args(case)
         # measured take-rates per data kind (Neel, 54 games: should-cost 2/2 taken, volume forecast 12/19, rising index
