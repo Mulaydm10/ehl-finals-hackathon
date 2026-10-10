@@ -282,7 +282,11 @@ class NoIdeaAgent:
                              "ask_pct": ask_pct, "open_terms": open_terms, "cost_calc": calc,
                              "args": ([calc] if calc else []) + [
                                  c for c in self.rank_args(case, sid, ask_pct)
-                                 if not (calc and c["kind"] == "index_change" and c.get("series") in calc["series"])],
+                                 # a FALLING window of a series the cost calc uses is a different, checkable fact (own
+                                 # IDs): P01 iron & steel -4.3% "we did not know that - a fair point" -> -5.10 (Neel
+                                 # f70338659b42114e, 0.993); excluding it left our P01 rounds without data
+                                 if not (calc and c["kind"] == "index_change" and c.get("series") in calc["series"]
+                                         and (c.get("figure") or 0) >= 0)],
                              "kit": self.kit_calc(case, sid) if case["type"] == "bundling" else None}
             self.sup[sid]["k"] = self.prior_k(case, sid)
             self.sup[sid]["patience"] = self.patience_prior(case, sid)

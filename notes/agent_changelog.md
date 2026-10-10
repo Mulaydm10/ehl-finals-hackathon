@@ -978,3 +978,11 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 - Arena notices: quota raised to 450 practice sessions / 24 h; Sun 08:00 data release (re-run `arena data`), 09:00 pre-flight,
   12:00 code + slides freeze (submit on ehl.gg, `arena run --set final` running before 12:00). During the final the agent must
   NOT read leaderboard / results / events.
+
+### v2.26 (offline): P01 - port the facts from Neel's 0.993 (f70338659b42114e; house 0.966, record pegasus 0.998)
+- Neel's path: r1 notice period + forecast + energy -17% -> 136.40; r2 iron & steel -4.3% ("we did not know that - a fair point")
+  -> 131.30; r3 labour -> 130.20 @ 14 d Jan = 0.993. Our v2.9 game (0.91): round 1 had NO facts, rounds without data.
+- **Bug (general):** a FALLING index window was dropped from the pool when the cost calc used the same series (iron & steel,
+  labour on P01) - different IDs, different fact. Now only rising/flat windows of calc series are excluded.
+- Our rounds now: r1 notice + iron & steel -4.3%, r2 energy -17%, r3 forecast, then labour / QNs. Other cases' round 1 unchanged;
+  tests 61; offline 0.931 / 0.861; walk replays unchanged.
