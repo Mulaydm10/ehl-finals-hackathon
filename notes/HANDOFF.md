@@ -34,6 +34,7 @@ Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden supp
 - Every change: **offline Qwen trial → offline Astra trial → live**. Record everything; **after each turn commit + push to main**
   (changelog, quota log, sessions, archive). Keep general learnings in `G_lessons.json` and memory.
 - Merge teammates' work keeping both sides; **never `git pull --rebase` over a merge commit** (use `git pull --no-rebase`).
+- After a merge ALWAYS check `git diff --name-only --diff-filter=U` before any commit (a `commit -a` once committed conflict markers, fixed in 4c2f71d).
 - Heredocs over ssh break on apostrophes → write scripts locally and `scp` them (pattern used all session).
 - User wants general improvements (no supplier-specific overfitting) + high scores.
 
