@@ -1,4 +1,4 @@
-STATUS: DONE (task 3) - 2026-10-10 evening, cloud session, offline only. Tasks 4-5: see engine_rules.py / REGRESSION.md.
+STATUS: tasks 3+4 DONE - 2026-10-10 evening, cloud session, offline only. Task 5 (REGRESSION.md) next.
 
 # Supplier engines of the 10 hosted practice cases
 
@@ -31,3 +31,12 @@ P10 (+0.03), P01 (+0.02).** House scores marked "?" are not recorded anywhere in
 5. **Auction** (RFQ P05): rival offers are the only data that moves bidders.
 6. **Never cited in any game, true and checkable, in 8 of 10 cases:** supplier-caused quality notifications on the part
    in the last 12 months (`qn:` IDs); the supplier's OWN recent quote (P01, P04, P08, P11); order-price history (P04, P08, P10).
+
+## Classifier (task 4): `analysis/central/engine_rules.py`
+`classify(events, rivals=0)` reads only the live thread (its e-mails, statuses, primary sheets, our sheets).
+Test: `cd tacto/starter-kit && uv run python ../../analysis/tools/test_engine_rules.py` (all archived games, round by round):
+- **70% of all replies; 78% after its 2nd reply, 87-88% after its 3rd/4th; 87% at the end of a thread (93 of 107).**
+- Perfect: P04 floor-stop, P05 auction, P07 / P08 mirror, P10 one-shot. Weak: holder vs mirror on P03 (8/14) and P11 (2/5);
+  P11 also moves without data in some games, so its label is itself borderline.
+- After its first counter it can't tell (35%: "unknown"), except one-shot (final at once) and auction (rivals > 0).
+  Default for "unknown": treat as mirror (5 of 10 practice suppliers).
