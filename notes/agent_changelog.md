@@ -867,3 +867,4 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 ### Merge parth (P08 price path, 544b5cd) + cloud (P08 floor trade port, CLOUD_LEARNINGS.md, P03 own-quote plan)
 - Round 1 change only for P08: order-price path (4 po IDs) + cold-drawing index lead; P11 / all others identical. Tests 50,
   offline 0.930 / 0.925, walk replays unchanged. Rules 81-85 + 2 lessons for the model.
+- Parth: **our agent with the P08 price path scored 0.822 live** (6785420; the 0.912 was scripted probe A). P04 probe experiment (pay-on-time promise + probe sheets beating 0.874).
