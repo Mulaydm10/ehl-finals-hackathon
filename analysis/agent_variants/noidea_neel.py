@@ -57,6 +57,7 @@ central = _central()
 
 ALT_BAND = 1.003  # alternative sheets within 0.3% of our best C (cloud REGRESSION_FIX.md #3)
 MIRROR_GATE = 0.2  # from our 3rd ask: big mirror steps only while its last step >= 0.2x ours (cloud #4; P02 live 0.26-0.76x)
+R2_HEDGED_SHARE = 0.30  # cloud task 9: round-2 step for hedged suppliers, share of the gap (was ~0.16)
 PLANNED_ROUNDS = 8  # P07 live: ~25 s per round, so an 8-minute wave fits ~12-15; keep a margin
 MIN_GAIN_PTS = 1.0  # never pay more than ask - 1 pt unless it is the last word
 CLOSE_STEP = 0.0008  # near-close: ask for 0.08% below its standing cash value. Live P04 5f80eb75c793f352: 0.2% below
@@ -444,6 +445,14 @@ class NoIdeaAgent:
             step = max(step, central.MIRROR_SHARE * gap)
             hist.append(min(limit, hist[-1] + max(0.0, min(step, gap - sv[-1] * CLOSE_STEP))))
             return hist[-1]
+        # cloud task 9 (analysis/cases/P08_round2.md): a hedged supplier that goes final at our 3rd message gives its one
+        # real step in round 2 (P08: -0.15 to -0.17 in value on all 4 clause-free games) and only ~0.05 at its final,
+        # whatever we do. All its round-2 answers so far followed a 16%-of-gap step from us; the pooled mirror fit
+        # (132 steps, P01/P02/P07/P08/P18: its share = 0.08 + 0.19 x ours) says a 30% step buys ~2-3 cents more.
+        # Round 2 only, hedged_forward suppliers only (P08 among the practice cases).
+        if k == 1 and sv and "hedged_forward" in s["dossier"].get("motives", {}):
+            gap = sv[-1] - hist[-1]
+            step = max(step, R2_HEDGED_SHARE * gap)
         hist.append(min(limit, hist[-1] + max(0.0, step)))
         return hist[-1]
 
