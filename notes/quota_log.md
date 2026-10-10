@@ -140,3 +140,4 @@
 | 2026-10-10 19:42 | Parth | P07 | probe P07_A one 90 d sheet + bigger mirrored steps (scripted, no model) | 0.812 (unit_price=5.31, payment_days=90, contract_months=24) | 44f5c5da31a47e9e |
 | 2026-10-10 19:43 | Parth | P07 | probe P07_B = A + quality notifications in round 2 (scripted, no model) | 0.792 (unit_price=5.34, payment_days=90, contract_months=24) | 287604034dad9f63 |
 | 2026-10-10 19:46 | Parth | P07 | probe P07_C = A + tiny labour claim in round 2 (scripted, no model) | 0.792 (unit_price=5.34, payment_days=90, contract_months=24) | 6404d167cbdc59ac |
+| 2026-10-10 19:50 | Parth | P07 | noidea 03aa32f + gap_steps / gpt-6-astra | 0.812 (lean later rounds (no weak facts while it moves), QN gate, 30%-gap steps) | 6f360ce484bb3f30 |
