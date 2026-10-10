@@ -664,3 +664,17 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
 | **mirror step (30% of gap) behind `mirror_step`** (off): gate = its words or classifier + a cut after a fact-free e-mail of ours | offline it cost P04 0.99 -> 0.82, P08 0.92 -> 0.86; live evidence only P02 (Neel) - test on P07 first |
 - P11 plan now: r1 forecast + steel + scorecard, r2 electricity + QNs, r3 labour + price history. Tests 38 passed; offline 0.945 / 0.945.
 - P11 v2.16 series: 0.79 / 0.71 / 0.71 / 0.77 / 0.71.
+
+## v2.16g live P11 (18:37): 0.71 (c0d6894ce2cf586a) -> v2.16h
+- r1 46.50, r2 electricity + QNs -> 46.00 (QNs = the same "quality record" kind it already took), r3 labour + price history ->
+  45.50, no facts left -> accepted the OPEN 45.50 (0.71).
+- **P11's data budget is ~EUR 1.50-2.00 of cuts in total -> EUR 45.00-45.50.** Above 0.80 (EUR 44.96) needs it to AGREE to our
+  price below its own, which happened once (7117d351 agreed to 45.13).
+### v2.16h (offline): one near-close ask before taking an OPEN offer
+- When we would accept its OPEN (not final) offer near its expected final, first send ITS sheet with the price 0.75% lower
+  (`NEAR_CLOSE_TRY`), once; accept next round. Pushing on an open offer never caused a walk in our games (walks came after
+  final_offer or after a stalling repeated objection - both guarded). Replay c0d6894c: 45.16 instead of accepting 45.50.
+- Bug found on the way: supplier_value() and sheets_at() differ by the learned premiums -> the near-close sheet is built from
+  its own terms, not re-derived. Tests 38; offline 0.945; walk + finals replays unchanged.
+- Rules doc: `docs/GENERAL_RULES.md` now 47 rules incl. section I (teammates: engines, fixed final count, one number per claim,
+  fillers, full authority, hedged series, own quote, one-shot P10 probe, RFQ loop).
