@@ -1,6 +1,11 @@
 {
  "_about": "Lessons from our live practice games (notes/agent_changelog.md, datasets/runs/). Retrieved into the model's prompt by case type. Evidence = session ids. 'principles' = supplier-agnostic rules (negotiation playbook: Fisher & Ury, Voss, Cialdini, game theory), always retrieved.",
  "general": [
+  "Suppliers mirror the SPEED of our concessions: when we give faster, they give less. Concede slowly and only in return for a move (live P02: fast steps → it moved €0.17 total; slow steps → €0.98).",
+  "Don't lock a term the supplier refuses round after round: if its counters keep the same different value, adopt it and negotiate price instead (live P11: locked chargeback → 0.36; switched → 0.67).",
+  "When a supplier insists on a clause or term structure, take ITS version; a 'smarter' variant of our own gets priced high and stalls (live P08: our deadband + short payment → €5.55; its own clause → €5.21).",
+  "A cash-short supplier values payment certainty; when payment days aren't negotiable, promise reliable on-time payment (free for us).",
+  "Offline simulators miss these behavioural effects: validate pace and structure changes live before trusting them.",
   "Don't fight a JUSTIFIED increase with a cherry-picked window: P02's 6-month calc was answered 'our pricing must reflect the full twelve-month cost pressure' and 'your figures confirm our case' (0.27, c52de0252df56877). Use a calculation only when both 6- and 12-month windows are below the ask; otherwise trade terms.",
   "Suppliers react to the STRUCTURE of the term sheet (contract length, lead time, payment days) far more than to arguments; P07's price path was identical across 6 games and 5 agent versions.",
   "Never push after final_offer: one extra ask made the P07 supplier walk away (c5d845883158676c). Accept, or send back its own prose alternative verbatim (P10 agreed, 2d91214cf7693eff).",

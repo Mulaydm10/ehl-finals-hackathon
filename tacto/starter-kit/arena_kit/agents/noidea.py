@@ -417,8 +417,12 @@ class NoIdeaAgent:
         s = self.sup.get(getattr(self, "_combo_sid", None), {})
         for values in itertools.product(*(opts[f] for f in fields)):
             t = {**base, **dict(zip(fields, values))}
-            if "index_clause" in t and t["index_clause"] is None and s.get("clause_required"):
-                continue  # it insists on a clause (P08/P18: added one to every sheet after round 0)
+            if "index_clause" in t and s.get("clause_required"):
+                # it insists on a clause: take ITS clause, don't pick our own deadband (P08 v2.9 9bfa86104bcbdd30: our db5 +
+                # 14 d was priced at EUR 5.55 and stalled; v2.6 took its db0 @ 45 d at EUR 5.21)
+                own = s.get("their_clause")
+                if t["index_clause"] is None or (own and t["index_clause"] != own):
+                    continue
             yield t
 
     def sheets_at(self, case, sid, value, cap_price=None, n=3):
@@ -481,7 +485,16 @@ class NoIdeaAgent:
         # a stable structure: after round 1 keep the non-price terms of our previous main sheet unless another
         # structure is >= 1% cheaper for us (P02 v2.4 live: the model hopped 90 -> 30 -> 45 days and the supplier
         # priced every hop; final EUR 369.55 @ 45 d instead of 372.15 @ 90 d)
-        prev = s.get("last_main")
+        prev = dict(s.get("last_main") or {})
+        # release a term it refused twice: its last two standing sheets both use another value (P11 v2.9 a6cb7ced9fdbae89:
+        # we locked chargeback EUR 150, it countered EUR 0 every round, final EUR 47.50 vs 45.50 when we switched in v2.7)
+        theirs = [ts["terms"] for m in self.events_for(sid)[-4:] if m.get("from") != "buyer"
+                  for ts in (m.get("term_sheets") or [])[:1] if ts.get("terms")]
+        if prev and len(theirs) >= 2:
+            for f in case["negotiable"]:
+                if f != "unit_price" and theirs[-1].get(f) == theirs[-2].get(f) and theirs[-1].get(f) != prev.get(f) \
+                        and f in theirs[-1]:
+                    prev[f] = theirs[-1][f]
         if prev and ranked:
             same = lambda t: all(t.get(f) == prev.get(f) for f in case["negotiable"] if f != "unit_price")
             keep = [x for x in ranked if same(x[1])]
@@ -526,7 +539,9 @@ class NoIdeaAgent:
         rounds = PLANNED_ROUNDS
         # linear path, steps capped by reciprocity -> never growing (playbook: "each concession <= the previous one");
         # was ** 1.3, which made each step bigger than the last (P07: 4.94 -> 4.97 -> 5.02 -> 5.07 -> 5.12)
-        f = min(1.0, k / max(1, rounds - 1)) ** 1.0
+        # back to ** 1.3 (v2.10): v2.9's linear curve made us concede faster and the supplier answered with tiny moves
+        # (P02 3326d83651ba5cfc: 373.63 -> 373.56 -> 373.46 vs 373.13 -> 372.15 when we were slow) - it mirrors our pace
+        f = min(1.0, k / max(1, rounds - 1)) ** 1.3
         scheduled = anchor + (limit - anchor) * f
         # reciprocity (P07 live: it moved 5.56 -> 5.52 while a fixed schedule took us 5.25 -> 5.43)
         stand = [standing([m])[1] for m in events if m.get("from") != "buyer" and m.get("term_sheets")]
@@ -783,6 +798,7 @@ class NoIdeaAgent:
             sheets = [ts["terms"] for ts in (m.get("term_sheets") or []) if (ts.get("terms") or {}).get("unit_price")]
             if sheets and all(t.get("index_clause") for t in sheets) and "index_clause" in case["negotiable"]:
                 s["clause_required"] = True
+                s["their_clause"] = sheets[0]["index_clause"]
             for a, b in itertools.combinations(sheets, 2):
                 ca, cb = a.get("index_clause"), b.get("index_clause")
                 if ca and cb and ca.get("deadband_pct") != cb.get("deadband_pct") and a.get("payment_days") == b.get("payment_days"):
@@ -860,6 +876,9 @@ class NoIdeaAgent:
             log.info("%s: prose alternative %s is cheaper - putting it in a term sheet", sid, best[1])
             return best
         return None
+
+    def events_for(self, sid):
+        return (getattr(self, "threads_ref", {}) or {}).get(sid, [])
 
     def best_sheet(self, case, sid, events):
         """(term_sheet_id, terms, C) of the cheapest-for-us sheet in its latest message that keeps the must-haves.
@@ -1061,6 +1080,10 @@ class NoIdeaAgent:
         if k == 0 and "open_book" in motives:
             what = "the kit" if case["type"] == "bundling" else "this part"
             lines.append(f"Could you share your cost breakdown for {what}, so we can understand the drivers together?")
+        if k <= 1 and "payment_days" not in case["negotiable"] and ({"cash_short", "wants_faster_payment"} & set(motives)) \
+                and "we_pay_late" not in motives:
+            # P11: "Faster payment would help us more than anything" every round, but payment is fixed in the case
+            lines.append("We understand cash flow matters to you: we will pay every invoice reliably on the agreed day.")
         if k == 0 and "we_pay_late" in motives:
             lines.append("We have also put our invoice processing in order and will pay reliably on the agreed day.")
         if k == 0 and case["type"] == "quality":

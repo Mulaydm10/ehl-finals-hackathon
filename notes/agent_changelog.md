@@ -489,3 +489,13 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
 - **Next (v2.10):** revert the concession curve to exponent 1.3 (slow; reciprocity cap kept) - the playbook's
   "decreasing steps" rule loses against suppliers that mirror our pace; make the clause lever conservative (keep its own
   clause/terms unless our gain clearly exceeds its premium); look at P11.
+
+### v2.10 (offline): fixes from analysing the weak v2.9 games + general learnings recorded
+| change | evidence (live) | offline check |
+|---|---|---|
+| Concession curve back to `** 1.3` (slow) | P02 3326d83651ba5cfc: faster steps → it moved only €0.17 in 3 rounds (vs €0.98 when slow) | eval 0.939 / 0.947 |
+| Stable structure **releases a term it refused twice** (adopt its value) | P11 a6cb7ced9fdbae89: we locked chargeback €150, it countered €0 every round → final €47.50 (0.36); v2.7 switched → €45.50 (0.67) | replay: switches to €0 from round 2 |
+| Clause required → **offer ITS clause**, not our own deadband pick | P08 9bfa86104bcbdd30: our db5 + 14 d priced €5.55, stalled (0.41); v2.6 took its db0 @ 45 d at €5.21 (0.65) | replay: offers db0 after its db0 |
+| Cash-short supplier + payment not negotiable → promise reliable on-time payment | P11: "Faster payment would help us more than anything" every round | – |
+| **General learnings** added to `G_lessons.json` (16 general + 8 principles) and project memory | pace mirroring, refused terms, its clause, payment certainty, sims miss behaviour | in the model prompt |
+- Tests 32 passed; finals replay +0.029 (16 finals); injection test PASS; Astra P11/P03 trials clean.
