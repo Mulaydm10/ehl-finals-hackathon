@@ -36,6 +36,12 @@ EXPERIMENTS = {x.strip() for x in os.environ.get("NOIDEA_EXPERIMENTS", "").split
 PLANNED_ROUNDS = 8  # P07 live: ~25 s per round, so an 8-minute wave fits ~12-15; keep a margin
 MIN_GAIN_PTS = 1.0  # never pay more than ask - 1 pt unless it is the last word
 # How far below the opening quote to anchor (src/eval/calibrate.py: best deal vs opening, practice cases)
+# Round-1 argument order = what moved suppliers' FIRST counters live (score units, 58 practice games):
+# short notice P01 +0.32 ("a fair point"), price history P18 +0.2, should-cost P10 +0.11, forecast P02 +0.13
+# (P10: "does not change our calculation"), quality record in quality cases (P11 "took it into account"),
+# falling indices small. Rising indices are never cited ("your figures confirm our case").
+ARG_PRIORITY = {"notice_period": 0, "cost_calc": 1, "po_prices": 2, "should_cost": 3, "forecast": 4,
+                "scorecard_ppm": 5, "scorecard_otd": 5, "index_change": 6}
 ANCHOR_DEPTH = {"rfq": 0.20, "bundling": 0.15, "raw_material": 0.22, "capacity": 0.14, "quality": 0.09}
 ANCHOR_DEPTH_BY_GOAL = {"stabilise": 0.03, "secure_supply": 0.10, "quality_first": 0.09,
                         "leverage": 0.18, "routine": 0.03}
@@ -119,14 +125,15 @@ class NoIdeaAgent:
         self.complete = complete
         self.focus = None  # RFQs: the bidders play.py lets us answer now (their replies are in)
         root = _repo()
-        self.dossiers = json.loads((root / "datasets/A_dossiers.json").read_text())
-        self.claims = [json.loads(line) for line in (root / "datasets/C_arguments.jsonl").read_text().splitlines()]
+        self.dossiers = json.loads((root / "datasets/A_dossiers.json").read_text(encoding="utf-8"))
+        claims = (root / "datasets/C_arguments.jsonl").read_text(encoding="utf-8")
+        self.claims = [json.loads(line) for line in claims.splitlines()]
         self.ch = {(c["series"], c.get("window_months")): (c["figure"], c) for c in self.claims if c["kind"] == "index_change"}
         pb = root / "playbooks"
-        self.playbooks = {p.stem: p.read_text() for p in pb.glob("*.md")} if pb.exists() else {}
+        self.playbooks = {p.stem: p.read_text(encoding="utf-8") for p in pb.glob("*.md")} if pb.exists() else {}
         self.correspondence = root / "tacto/data/correspondence"
         les = root / "datasets/G_lessons.json"
-        self.lessons = json.loads(les.read_text()) if les.exists() else {}
+        self.lessons = json.loads(les.read_text(encoding="utf-8")) if les.exists() else {}
         try:  # the signal catalogue (src/eval/signals.py): category -> (regex, what works)
             import importlib.util
             spec = importlib.util.spec_from_file_location("noidea_signals", root / "src/eval/signals.py")
@@ -137,7 +144,8 @@ class NoIdeaAgent:
             log.warning("signal catalogue not loaded (%s)", e)
             self.signal_rx = {}
         facts = root / "tacto/data/facts.json"
-        self.fc = {k: v for k, v in json.loads(facts.read_text()).items() if k.startswith("fc:")} if facts.exists() else {}
+        self.fc = ({k: v for k, v in json.loads(facts.read_text(encoding="utf-8")).items() if k.startswith("fc:")}
+                   if facts.exists() else {})
         # today's price of every part at every supplier (for kit calculations)
         self.part_prices = {}
         for sid, d in self.dossiers.items():
@@ -228,7 +236,12 @@ class NoIdeaAgent:
             if c["sentence"] not in seen:
                 seen.add(c["sentence"])
                 ranked.append(c)
-        return ranked
+        # the arena counts a volume trend once per case: a 2nd forecast (another part) came back `duplicate` (P07 x4)
+        fc = [c for c in ranked if c["kind"] == "forecast"]
+        ranked = [c for c in ranked if c["kind"] != "forecast" or c is fc[0]]
+        # what moved first counters live, strongest first (stable sort keeps the order within a kind)
+        prio = dict(ARG_PRIORITY, scorecard_ppm=1.5 if case["type"] == "quality" else ARG_PRIORITY["scorecard_ppm"])
+        return sorted(ranked, key=lambda c: prio.get(c["kind"], 9))
 
     # Expected round of its final_offer, by what we know before round 1 (26 practice games, src/eval/archive_runs.py):
     # capacity P10 round 1 (5/5), renewal P04 round 3, bundling P07 round 4 (6/6), stabilise price increase P01
@@ -352,7 +365,7 @@ class NoIdeaAgent:
         path = self.correspondence / f"{doc.removeprefix('doc:')}.md"
         if not path.exists():
             return None
-        lines = re.findall(r"-\s*(\d+)\s*x\s*(.+?)\s*\((part:\d+)\)", path.read_text())
+        lines = re.findall(r"-\s*(\d+)\s*x\s*(.+?)\s*\((part:\d+)\)", path.read_text(encoding="utf-8"))
         if not lines:
             return None
         items, total = [], 0.0
@@ -669,11 +682,11 @@ class NoIdeaAgent:
         if not idx:
             return None
         aidx = [i for i in d.get("args", []) if isinstance(i, int) and 0 <= i < len(pool)][:3 if k == 0 else 2]
-        # required: our strongest argument goes in round 1 whatever the model picks (P02 v2.4 live 159def0f5e514b40:
-        # the model chose no argument and the cost calculation it was built for was never sent -> 0.34)
-        must = [i for i, c in enumerate(pool) if k == 0 and (c["kind"] == "cost_calc" or
-                                                             (c["kind"] == "notice_period" and c.get("short_notice")))]
-        aidx = list(dict.fromkeys(must + aidx))
+        # the backbone is code's, not the model's: round 1 carries our top 3 (pool is ranked by ARG_PRIORITY), later
+        # rounds at least the next unused one. Live the model dropped the decisive argument (P02 v2.4 159def0f5e514b40:
+        # no argument, 0.34; P10 v2.x: should-cost never sent; P18 9d4d288eb4ae6789: 1 of 4 sent)
+        must = list(range(min(3, len(pool)))) if k == 0 else ([0] if pool else [])
+        aidx = list(dict.fromkeys(must + aidx))[:3 if k == 0 else 2]
         notes = d.get("notes") or {}
         for r in notes.get("refusals") or []:  # remember its stated limits for the next rounds
             f = r.get("field")

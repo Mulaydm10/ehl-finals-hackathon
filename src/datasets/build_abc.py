@@ -342,17 +342,18 @@ def build(data, out):
     # ---- write ---------------------------------------------------------------------------------
     out.mkdir(parents=True, exist_ok=True)
     (out / "dossiers").mkdir(exist_ok=True)
-    (out / "A_dossiers.json").write_text(json.dumps(A, indent=1, ensure_ascii=False))
-    (out / "B_concessions.json").write_text(json.dumps(B, indent=1, ensure_ascii=False))
+    (out / "A_dossiers.json").write_text(json.dumps(A, indent=1, ensure_ascii=False), encoding="utf-8")
+    (out / "B_concessions.json").write_text(json.dumps(B, indent=1, ensure_ascii=False), encoding="utf-8")
     with open(out / "C_arguments.jsonl", "w", encoding="utf-8") as f:
         for c in C:
             f.write(json.dumps(c, ensure_ascii=False) + "\n")
     for sid, d in A.items():
-        (out / "dossiers" / f"{sid.replace(':', '_')}.md").write_text(render_md(d, [c for c in C if c["supplier"] == sid]))
+        md = render_md(d, [c for c in C if c["supplier"] == sid])
+        (out / "dossiers" / f"{sid.replace(':', '_')}.md").write_text(md, encoding="utf-8")
 
     report = {"suppliers": len(A), "claims": len(C), "claims_by_kind": _count(c["kind"] for c in C),
               "self_check": self_check(C, facts)}
-    (out / "build_report.json").write_text(json.dumps(report, indent=1))
+    (out / "build_report.json").write_text(json.dumps(report, indent=1), encoding="utf-8")
     return report
 
 

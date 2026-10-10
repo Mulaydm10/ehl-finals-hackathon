@@ -119,7 +119,8 @@ def main():
         print(f"  [{n}x] {text[:200]}")
     out = {k: {"action": SIGNALS[k][1], "examples": v[:12], "n": len(v)} for k, v in by_cat.items()}
     out["_unmatched"] = [{"text": t, "n": n} for t, n in unmatched.most_common()]
-    (ROOT / "datasets/E_supplier_signals.json").write_text(json.dumps(out, indent=1, ensure_ascii=False))
+    (ROOT / "datasets/E_supplier_signals.json").write_text(json.dumps(out, indent=1, ensure_ascii=False),
+                                                            encoding="utf-8")
 
 
 if __name__ == "__main__":
