@@ -191,3 +191,4 @@
 | 2026-10-10 21:46 | Parth | P05 | p05_record e8666ae / scripted | 0.820 | 1ebd6e0eb14313c8 |
 | 2026-10-10 22:04 | Dhruv | P18 | noidea v2.27 r1_two_index / gpt-6-astra | **0.71 BEST P18** (agreed 4.94 @ 14 d) | a09d953636747cae |
 | 2026-10-10 22:03 | Neel | P11 | noidea / gpt-6-astra | **0.79** | 38c77b7d0dcd49cd |
+| 2026-10-10 22:00 | Parth | P05 | p05_record 3c6c292 / scripted | 0.381 | 8e94b127db1e6eaa |
