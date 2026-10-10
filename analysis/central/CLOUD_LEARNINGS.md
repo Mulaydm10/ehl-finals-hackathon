@@ -1,4 +1,4 @@
-STATUS: index of every cloud-session learning (tasks 1-21 + P03/P04 deep studies), updated 2026-10-11 ~02:30. Offline only: 0 arena sessions, no paid LLM calls.
+STATUS: index of every cloud-session learning (tasks 1-21 + P03/P04/P10 deep studies), updated 2026-10-11 ~03:50. Offline only: 0 arena sessions, no paid LLM calls.
 Branch `claude/wizardly-albattani-t7jmh3` (mirrored to `cloud/p02-p08-engine`). Agent copy: `analysis/agent_variants/noidea_neel_cloud.py`
 + `central_cloud.py` (= main `noidea_neel.py` + everything below). Each line points to the file with the evidence.
 
@@ -55,3 +55,4 @@ cited in 15 P03 games.
 | 21 | **Cent-grid ceiling proof** (P04): cash rate from its own two-sheet quotes (≤ 7.69%) + C_best floor -> no whole-cent deal above 0.8737; the record can only be tied | `tools/p04_floor_fit.py` |
 | 22 | **Never hop payment terms after a floor-stop supplier's first counter** (P04 1992e28a: one hop = one cent = -0.17); after a refused probe take its standing sheet | `cases/P04_deep.md` §5 |
 | 23 | P11 high draw: holding the labour index back to its first hold did not repeat 77f6's cut (0 of 2 live: 23cf3ecd, b450b035; 1 of 3 overall) | `cases/P11_lever.md` |
+| 24 | **Short-fuse suppliers cut once per MOVE and once per NEW taken fact, then go final at our 2nd message: keep one move (36 m) and one unused verified fact for round 2 together.** P10: Codacabana's record 0.71 = 31.10 @ 56 d, one 10-cent step under our 31.20. Plan stacks the 36-m move with the labour index (never combined) and adds the rubber index fall in round 1 | `cases/P10_deep.md`, `agent_variants/noidea_p10.py`, `experiments/probes/P10_G.json` |
