@@ -154,3 +154,4 @@
 | 2026-10-10 20:08 | Dhruv | P11 | noidea v2.19e loop 4/8 / gpt-6-astra | 0.78 (high draw; probe 45.10 agreed) | 76500e5742532008 |
 | 2026-10-10 20:11 | Neel | P08 | noidea_neel / gpt-6-astra | **0.72** | 94e77b7b71359f60 |
 | 2026-10-10 20:19 | Parth | P04 | p04_record e8ba28d / scripted | 0.874 | 6ecd1862cf32d939 |
+| 2026-10-10 20:23 | Parth | P04 | p04_record 21698a7 --main30 / scripted | 0.766 | 6ed05f043e2164b0 |
