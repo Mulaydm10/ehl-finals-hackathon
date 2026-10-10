@@ -133,3 +133,4 @@
 | 2026-10-10 18:58 | Parth | P11 | probe P11_A one new fact per round (scripted, no model) | 0.794 (ppm_commitment=300, chargeback_eur_per_complaint=0.0, unit_price=45.0) | 4d6c9a1396e4d0a0 |
 | 2026-10-10 19:10 | Dhruv | P11 | noidea v2.17 / gpt-6-astra | 0.71 (high draw; probes 45.10/45.20/45.30 held, final 45.50) | 876705379b434d96 |
 | 2026-10-10 19:24 | Parth | P18 | probe P18_A 90 d + AS db5 structure (scripted, no model) | 0.598 (unit_price=5.3, index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 5.0, 'base_month': '2026-08'}, payment_days=90, contract_months=24) | c9b288817e76ee78 |
+| 2026-10-10 19:28 | Parth | P07 | probe P07_A one 90 d sheet + bigger mirrored steps (scripted, no model) | 0.812 (unit_price=5.31, payment_days=90, contract_months=24) | 58bf025d01aa1275 |
