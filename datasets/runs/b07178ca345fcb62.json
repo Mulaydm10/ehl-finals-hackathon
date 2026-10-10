@@ -2,12 +2,9 @@
  "session": {
   "session_id": "b07178ca345fcb62",
   "case_id": "case:P05",
-  "status": "open",
-  "end_reason": null,
-  "deal": null,
-  "score": null,
-  "rounds": 9,
-  "created_at": 1791664514.4404073
+  "status": "ended",
+  "set": "practice",
+  "created_at": 1791664615.650911
  },
  "detail": {
   "session_id": "b07178ca345fcb62",

@@ -204,3 +204,10 @@
 | 2026-10-10 22:33 | Dhruv | P05 | noidea v2.31 / gpt-6-astra | 0.81 (agreed 28.06 @ 14 d) | ceb3295e8f463b18 |
 | 2026-10-10 22:33 | Dhruv | P05 | noidea v2.31 / gpt-6-astra | 0.81 (agreed 28.06 @ 14 d) | 51dcee25992e24f3 |
 | 2026-10-10 22:36 | Neel | P11 | noidea_p11 / gpt-6-astra | **0.71** | 23cf3ecd1ca82ac9 |
+| 2026-10-10 22:17 | Parth | P05 | p05_hold timeout 25.54/26.3/26.8 819e635 / scripted | 0.924 | 583554022ba413fd |
+| 2026-10-10 22:23 | Parth | P05 | p05_hold timeout 24.5/26.3/26.8 6d4f9d9 / scripted | 0.924 | b23b50ab87818b39 |
+| 2026-10-10 22:26 | Parth | P05 | p05_hold timeout 25.54/26.3/26.8 3657fc1 / scripted | 0.924 | 628a955aa9fb9183 |
+| 2026-10-10 22:30 | Parth | P05 | p05_hold timeout 25.54/26.3/26.8 68fb5da / scripted | 0.924 | ed572dab4c6d29b1 |
+| 2026-10-10 22:33 | Parth | P05 | p05_hold timeout 25.54/26.3/26.8 e35baee / scripted | 0.924 | ce9f4a1b6696039b |
+| 2026-10-10 22:36 | Parth | P05 | p05_hold timeout 25.54/26.3/26.8 172e4ec / scripted | 0.924 | b07178ca345fcb62 |
+| 2026-10-10 22:39 | Parth | P05 | p05_hold timeout 25.54/26.75/26.8 2797fee / scripted | 0.950 | 83612a5b5ce32831 |
