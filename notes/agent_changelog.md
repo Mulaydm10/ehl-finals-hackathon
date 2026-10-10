@@ -919,3 +919,16 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 - Memory builder: any ask answered with a HIGHER price is a refusal (it moved 4.90 -> 4.89 after our 4.88: was not recorded).
 - floor_gamble: among terms whose remembered final is within 0.02% of the best, the one with the best score one cent UNDER its final, skipping asks already refused. P04: 45 d 4.88 refused -> 90 d: open 4.88, close 4.93 (1.0) / fallback its 4.94 (0.86, -0.014 vs the record). Break-even acceptance chance 10%. Experiment only - ships only if it wins.
 - v2.24b live P04 (21:33) floor_gamble: **0.860** (d94cb59807684363) - 90 d: open 4.94, close 4.93 refused -> final 4.94. One-cent-under refused on 45 d AND 90 d: P04 stops are hard -> **0.874 (45 d) is its ceiling** (Parth was right). floor_gamble stays OFF.
+### Parth (branch), ~21:05: P08 0.732 -> 0.916 (agent) - PLEASE MERGE (also carries the HTTP-500 crash fix)
+| game | what | round 1 | final | score |
+|---|---|---|---|---:|
+| probe A 44afd13 | best low-draw path + upward price path in round 1, no QNs, lean later rounds | 5.25 @ 90 | 4.94 @ 14 | 0.912 |
+| agent 544b5cd | year-rise path + no hedged index | 5.20 @ 30 | 5.02 @ 14 | 0.822 |
+| agent 6567650 | + clause-free asks | 5.20 @ 30 | 5.03 @ 30 | 0.830 |
+| **agent c1d7678** | + all code sheets in round 1 (90 d highest), plain later openings | **5.25 @ 90** | **4.97 @ 45** | **0.916** |
+- `year_rise_path()`: a >= 3% rise in the last 12 months (P08: 5.17 -> 5.24 -> 5.43 -> 5.45) leads round 1 -> "we took it into
+  account"; first counter 5.25 vs 5.40-5.42 in all 16 earlier games. Not for kits / price_frozen. Practice: P08 only changes.
+- hedged_forward suppliers: no claim / cost calc on the hedged series ("not our reality" 5/5); clause-free asks (taking its db0
+  in round 2 drew "We appreciate your acceptance of the AS-14404 index clause" and ~0.07); round 1 all code sheets; plain
+  later openings. Offline: the other 9 cases unchanged. House 0.752.
+- P04: 0.874 confirmed as the ceiling (3 tests, incl. Claude's --probe: walked after the repeated probe).
