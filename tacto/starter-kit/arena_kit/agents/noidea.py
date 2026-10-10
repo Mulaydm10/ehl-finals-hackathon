@@ -38,6 +38,7 @@ CLOSE_STEP = 0.0008   # near-close: ask 0.08% below its standing value (live P04
 CLOSE_GAP = 0.015     # ...only when our last ask is within 1.5% of its standing value
 STALL_DROP = 1 / 3    # it stalled: its last move (share of the gap) < 1/3 of the previous one...
 STALL_MIN = 0.02      # ...or < 2% of the gap
+NEAR_CLOSE_TRY = 0.0075  # one ask this far below an OPEN offer before taking it (P11 7117d351: agreed to ours, -0.8%)
 WALK_GUARD_MOVE = 0.005  # its last move cut our cost > 0.5%: still conceding, not about to walk
 CASH_SHORT_RISK = 2.0  # a cash-short supplier prices uncertain cash outflows (chargebacks) ~2x their expectation
 STALL_NOISE = 0.10    # a big move UP (structure switch) is not a stall
@@ -900,6 +901,24 @@ class NoIdeaAgent:
         # OPEN EUR 45.50 in round 3 with facts unused; with one more fact it cut EUR 0.50 each time)
         if near_final and status not in ("final_offer", "agreed") and self.next_args(sid, 1):
             near_final = False
+        # one near-close ask before taking an OPEN (not final) offer: it may agree to our price (P11 7117d351: it held 45.50,
+        # we asked 45.13, it AGREED -> 0.77 vs 0.71 when we took its 45.50). A push on an open offer never caused a walk
+        # in our games (walks: after final_offer, or after a repeated objection while stalling - both guarded)
+        try_close = near_final and status == "open" and not s.get("close_tried") and k < PLANNED_ROUNDS
+        close_now = False
+        if try_close:
+            near_final = False
+        if try_close and ok and c_stand <= sheets[0][0] * 1.003 and c_stand <= best_elsewhere:
+            # its open offer is already at our ask: ask NEAR_CLOSE_TRY below its own price instead (once), then accept
+            # its OWN open sheet, only the price lowered (same structure; the value scales of supplier_value and
+            # sheets_at differ by the learned premiums, so derive nothing)
+            t_close = complete_offer(case, {**terms, "unit_price": round(terms["unit_price"] * (1 - NEAR_CLOSE_TRY), 2)})
+            near = [(total_cost(case, t_close, s["std"], s["est"]), t_close)] if must_haves_ok(case, t_close, s["std"]) else []
+            if near:
+                s["close_tried"] = close_now = True
+                sheets = near
+                target = supplier_value(case, t_close, s["est"]) + self.premium(sid, t_close)
+                log.info("%s: one near-close ask %.2f below its open %.2f", sid, near[0][1]["unit_price"], terms.get("unit_price"))
         # walk-risk: it repeats the same objection / counter-proposal in its last two e-mails (P02 x2: "returning to our
         # standard 30-day payment term" + a 30-day '-a' sheet in rounds 2 and 3, we kept 90 d, it walked in round 4
         # "our general terms dictate this position"; 372.15 @ 90 d would have scored ~0.50) -> take its best sheet
@@ -912,7 +931,7 @@ class NoIdeaAgent:
             return accept
         log.info("%s round %d: our best C %.0f vs standing %.0f (alt %.0f)", sid, k, sheets[0][0], c_stand, self.c_alt)
         if self.complete:  # dynamic: the model reads its e-mail and picks among pre-priced candidates
-            cands = self.sheets_at(case, sid, target, cap, n=8)
+            cands = sheets if close_now else self.sheets_at(case, sid, target, cap, n=8)
             # the backbone (structure) is code's: after round 1 the model may only pick sheets with the structure code
             # leads with (P02 v2.13 dc1d4fd8a7cd47cb: the model moved us to 30 d, it made 30 d its final -> 0.20; the
             # good P02 games held 90 d every round)

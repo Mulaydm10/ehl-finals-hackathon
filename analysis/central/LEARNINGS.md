@@ -182,3 +182,17 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
 4. **Final at our 3rd message: -0.03 to -0.06** (once -0.10, with quality notifications in round 3).
 5. Expected outcome of the current agent: low mode 5.08-5.13 (**0.73-0.78, beats the house about half the time**); high
    mode 5.20-5.25 (0.59-0.64). The rest is noise of a few cents. No message we can write changes the draw.
+6. **Offline run after the cloud regression fixes (28a2791): `analysis/offline_runs/P08_noidea_neel_7.json`, sim 0.99.**
+   The floor-stop sim isn't P08's engine: no mandatory 24-month clause, no bimodal first counter, and its floor sits at
+   C_best. Treat 0.99 as "no crash, data placed right", not as a forecast. Its three e-mails carry the same sheets and
+   refs as live 136352b4a3a9f752 (r1 forecast + drawing -2.3% + own quote in words; r2 labour -0.3%; r3 QNs). So the
+   fixes leave P08 untouched, and the live forecast stays 0.73-0.78 on the low draw and 0.59-0.64 on the high one.
+7. **Live c387f78034601d57 = 0.721 (low draw).** 5.41 @ 90 (value 5.34) -> 5.16 @ 14 (5.18, -0.16; labour -0.3% was
+   "incorporated", but the step equals cae4's step without data) -> final 5.11 @ 14 (5.13, -0.05; QNs: "do not impact the
+   cost structure"). That's the cae4 path again, one cent higher. **Corrected forecast: low draw 0.72-0.73, high draw
+   0.59-0.64. The house's 0.752 (value 5.10) needs 2-3 cents beyond the current recipe even on the low draw.** 1363's
+   final -0.10 was noise.
+   Round 1: cloud VARIANCE.md shows its headline is the same nominal price (5.41 or 5.53) whatever payment term it picks.
+   So the "-0.05 for round-1 data" is really the 90-day sheet it chose: keep a 90-day sheet in round 1.
+   Untested lever: a round-2 step of at least 30% of the gap (P02's schedule trigger). All P08 round-2 steps so far were
+   16-25% of the gap.

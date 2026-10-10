@@ -3,7 +3,7 @@
 One page with every rule we trust for **unseen** suppliers (the Live Final uses hidden ones). Each rule names the mechanism and
 the live evidence (session ids in `datasets/runs/`). Case-specific facts stay in `notes/agent_changelog.md` and
 `analysis/cases/*.md`; per-turn lessons the model reads are in `datasets/G_lessons.json`.
-A rule belongs here only if its reason applies to any supplier. State: 2026-10-10 evening, agent v2.16d.
+A rule belongs here only if its reason applies to any supplier. State: 2026-10-10 ~18:40, agent v2.16g; section I = teammates' learnings (Neel, Parth, cloud sessions).
 
 ## A. Architecture
 1. **Code sets every number; the model reads, chooses and writes.** A model that set prices offered above the ask (0.00).
@@ -82,3 +82,35 @@ A rule belongs here only if its reason applies to any supplier. State: 2026-10-1
 34. No case-id logic, no constants fitted to one supplier without a stated general reason; keep NOT-ported overfits out
     (`calibrated()` exact supplier costs of practice suppliers).
 35. Experiments that failed live stay behind `NOIDEA_EXPERIMENTS` (e.g. `qn_claims`), never on by default.
+
+## I. Teammates' learnings (all branches + commits reviewed 2026-10-10 18:30; merged into main)
+Sources: Neel `analysis/central/LEARNINGS.md` 1-8, `analysis/central/ENGINES.md`, `analysis/cases/*_engine.md`,
+`analysis/central/REGRESSION.md` (cloud review of our agent vs Neel's variant); Parth `tools/experiments/`, `analysis/cases/P*.md`,
+`analysis/strategy_0.9.md`, play.py RFQ fixes.
+36. **Know the supplier's ENGINE and play it** (ENGINES.md, 10 hosted cases): **mirror** 5/10 (its step follows ours), **holder**
+    2/10 (cuts only for new verified facts), **floor-stop** 1 (pinned after its first counter: only the cent grid + near-close),
+    **one-shot** 1 (final at message 1: everything in message 1), **auction** 1 (RFQ: rival offers move bidders).
+    Live classifier `analysis/central/engine_rules.py` (87% right at thread end; "unknown" after one reply). Our gate for
+    "mirror": its words ("in response to your step") or classifier + a cut after an e-mail of ours with no new fact.
+37. **Holder: pack facts (2 per later round) before its fixed final; mirror: spread (1 per round) and step bigger.**
+    Neel P02 (mirror): 30%-of-gap steps 0.67 -> 0.82, the path then follows a fixed schedule to the cent (0.847 x2).
+    Our P11 (holder): 2 facts in a round cut EUR 1.00 (3x), 1 fact 0.50. The 30% step is OFF until live-tested beyond P02
+    (offline it cost P04/P08 against non-mirroring sims) - `mirror_step`.
+38. **Suppliers go final at a fixed message count** (P02 4th-5th, P08 3rd, P10 1st, P11 4th-5th): time the data to land before it.
+39. **One number per claim sentence, the checked figure, no thousands separator** (Neel P02 f778b35c: 4 numbers in a QN sentence,
+    the arena checked the wrong one -> contradicted -> -0.24). **Quality notifications without a figure** (the data's own value
+    is checked) - P11 answered "already looked at those ... don't change our calculation" but still cut 0.50.
+40. **Facts it shrugged off are last-round fillers, never dropped and never round 1** - no round goes out empty ("Which figures
+    is that based on?" + final came after an empty round, P08 and P11).
+41. **"I hold full authority" -> never mention a committee** (P02 said it every round). Escalation only where it signals one.
+42. **Hedged series** (motive hedged_forward, "covered at fixed prices until ..."): never cite them - "That is not our reality".
+43. **A falling cost-driver index was taken in every case where we cited one** (P01, P02 x3, P03 x4, P18); a rising index of the
+    same kind earlier ("confirms our case") does not block a FALLING one.
+44. **The supplier's own recent quote** (P01, P04, P08, P11) and **order-price history** were never cited in most cases -
+    check them; cite its own quote in words when it is above our target.
+45. **One-shot suppliers (P10)**: a small ask + price history + should-cost in message 1 -> agreed in round 1 at 31.56 = 0.674,
+    P10 best (Parth probe A, 7eba122).
+46. **RFQ loop (Parth fcfdb78)**: no wait before accepting, urgent-first, resync stale offer ids; answer every bidder within its own
+    60 s (parallel sends).
+47. **Exact supplier calibration** (Neel: full cost + cash rate pinned by two deals) is practice-supplier knowledge - useful to
+    understand engines, NOT ported (it would overfit the hidden final).
