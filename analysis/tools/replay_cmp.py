@@ -3,15 +3,13 @@ No arena, no LLM (complete=None -> template wording). It reproduces our live ask
 
     cd tacto/starter-kit && .venv/Scripts/python.exe ../../analysis/tools/replay_cmp.py ../../tools/replays/raw/P03_14ab701cbfba6767.json
 Compares analysis/agent_variants/.tmp_replay/noidea_neel.py (copy the old version there, with central.py) against the current file."""
-import glob
 import importlib.util
 import json
 import logging
 import sys
 from pathlib import Path
 
-ROOT = Path(r"C:\Users\neels\ehl-finals-hackathon")
-sys.path.insert(0, str(ROOT / "tacto/starter-kit/src"))
+ROOT = Path(__file__).resolve().parents[2]
 logging.disable(logging.CRITICAL)
 
 
