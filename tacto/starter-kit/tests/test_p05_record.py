@@ -34,7 +34,7 @@ def test_first_message_to_fuchsreiter_cites_a_much_lower_rival_and_our_true_paym
     p = load()
     _, _, agent = p.simulate(26.26, verbose=False)
     first = next(r for r in agent.notes if r.get("sid") == "sup:70250")
-    assert "cite offer:70240-0 31.5" in first["do"] and first["do"].startswith("ask 24.2@14/28")
+    assert "cite offer:70240-0 31.5" in first["do"] and first["do"].startswith("ask 23.8@14/28")
     assert "93% of your invoices late" in agent.late_line
 
 

@@ -6,7 +6,8 @@
 
 Evidence (all 10 archived P05 games + back offices; analysis in analysis/cases/P05.md section 9):
 - C_best EUR 223,424 = Fuchsreiter at about EUR 26.26 @ 14 d (ppm 600: the cheapest quality cost). One cent = 0.001.
-  Our best 0.614 = EUR 30.00 @ 14 d; EUR 28.00 = 0.82, 27.00 = 0.92, 26.50 = 0.975.
+  Our best 0.614 = EUR 30.00 @ 14 d; EUR 28.00 = 0.82, 27.00 = 0.924 (the board's best, 0.92), 26.90 = 0.934,
+  26.50 = 0.975.
 - Fuchsreiter's first counter follows our ask (~70 % of the gap) plus "the buyer shows a much lower rival quote. I give
   half the step now and check the rest" (a rival >= ~10 % below its price; its own 36.00 opening rival did nothing):
   ask 29.17-30.25 -> 31.00; ask 25.54 (d9af85e000ab3d4d) -> 28.00, then "Checked: give the rest of the step" ->
@@ -43,12 +44,12 @@ TARGET, DRALVECK, HRVELEC = "sup:70250", "sup:70210", "sup:70240"
 NAMES = {TARGET: "Ms Fuchsreiter", DRALVECK: "Mr Dralveck", HRVELEC: "Ms Procházková"}
 # our asks, message by message (the last repeats +0.10 a round so we always move)
 ASKS = {
-    TARGET: [24.20, 25.80, 26.10, 26.30, 26.45, 26.60],  # anchor below d9af's 25.54 (-> 28.00), then real moves
+    TARGET: [23.80, 25.70, 26.10, 26.30, 26.45, 26.60],  # first counters measured: ask 29.17 -> 31.00, 25.54 -> 28.00
     DRALVECK: [27.20, 27.50, 27.80, 28.10, 28.40, 28.70],
     HRVELEC: [27.00, 27.30, 27.60, 27.90, 28.20, 28.50],
 }
 LEAD = {TARGET: 28, DRALVECK: 28, HRVELEC: 42}  # its standard 28 d; Hrvelec's 52 d breaks our must-have (<= 42)
-TAKE_AT = 26.30  # Fuchsreiter's open price at 14 d we take at once (0.99); else we keep moving until it agrees/finals
+TAKE_AT = 26.95  # the board's best is 0.92 = 27.00 @ 14 d: any open price below it at 14 d we take at once
 MUCH_LOWER = 0.90  # a rival at <= 90 % of its price drew "much lower rival quote" (36.00 vs 38.50 did not)
 SIGN = "Kind regards\nPurchasing, Hollerau Pumpenwerke"
 
