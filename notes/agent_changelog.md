@@ -1275,3 +1275,16 @@ games 8ccbdcc0 / 98e834e4, P02 10b624c1, P07 216f49e9, P08 00e8923e, P10 673ee89
   0.579, 0.579, 0.600, then 0.579 x3 with per-supplier facts vs 0.515-0.558 without (every claim "verified"; J1's first counter
   15.40 vs 15.80 after "We checked the volume change data you cited; it holds and we took it into account"). D01 neutral
   (0.876 / 0.914 vs 0.869-0.910). The 10 hosted cases unchanged (their refs are in our bank). Tests 66, crash 19/19.
+
+### Loop 5 (v2.34h, final configuration, 9 in parallel) + how we compare with every team (01:33 - 01:45)
+- L5: P02 0.835, P03 0.987, P04 0.815, P07 0.792, P08 0.916, P10 0.702, **P11 0.877** (0175125c: 46.00 -> 45.50 energy +
+  admission -> 45.00 steel -> 44.50 forecast -> final 44.50 = Parth's scripted record path, by the general agent with memory
+  off), P18 0.688. **P01 did not start: "HTTP 429: at most 10 open sessions per key"** (the shared team key was full) - see kit fix.
+- **Arena-wide records (GET /v1/live, all teams)**: we hold 8 of 10 (P01 1.0, P02 0.879, P03 0.989, P05 0.965, P07 0.825, P08
+  0.916, P10 0.741, P11 0.885); P04 0.874 = tie with makeAnother.md (the ceiling); P18 0.756 = Codacabana (ours 0.727).
+  Practice board: NoIdea #1 88.0; Codacabana 80.8, pegasus 79.1, NightHunter 79.0, gLarPC 78.9, += 78.7 - their totals are
+  best-of-many (0.79-0.81 per case); our agent's SINGLE hidden-mode run averages ~0.83.
+- **Kit (play_waves) robustness for the final**: a case that cannot open yet (429 open sessions, 5xx, network) is retried every
+  3 s until 90 s before its wave cap (a session that did open is resumed - 409 names it); the case-list poll never stops the
+  runner on an error (it re-raised everything but 403 before). Test `test_a_final_case_that_cannot_open_yet_is_retried`;
+  67 tests pass. Runbook: nobody else uses the team key during the final.

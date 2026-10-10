@@ -446,6 +446,9 @@ def play_all(new_table, case_ids, new_agent, parallel=8):
         return dict(pool.map(one, case_ids))
 
 
+START_RETRY_S = 3  # a final case that cannot open yet: try again this often
+
+
 def play_waves(client, new_agent, waves=5, parallel=10, poll=5.0):
     """The Live Final: wait for each wave, play its cases in parallel within the wave's cap, wait
     for the next. Keep it running from before the first wave until the last has closed; it returns
@@ -453,19 +456,36 @@ def play_waves(client, new_agent, waves=5, parallel=10, poll=5.0):
     started, closed, caps = {}, set(), {}  # caps: wave -> its cap as time.time()
 
     def one(case, deadline):
-        try:
-            return play(RemoteTable(client, case), case["case_id"], new_agent(), deadline)
-        except Exception as e:  # one broken case must not stop the others
-            log.exception("%s failed", case["case_id"])
-            return e
+        # a case that cannot open YET (429 "at most 10 open sessions per key" while other sessions close, a 5xx, a network
+        # drop) is retried until shortly before its wave's cap - giving up meant 0 for that case (live load test 01:33: P01
+        # never started). A session that did open is resumed by RemoteTable.open (409 names it). Never the practice quota.
+        import httpx
+        tries = 0
+        while True:
+            try:
+                return play(RemoteTable(client, case), case["case_id"], new_agent(), deadline)
+            except Exception as e:  # one broken case must not stop the others
+                tries += 1
+                cap = deadline() if callable(deadline) else deadline
+                transient = isinstance(e, httpx.TransportError) or (
+                    isinstance(e, ArenaError) and (e.status >= 500 or (e.status == 429 and not quota_used_up(e))))
+                if transient and tries <= 40 and (not cap or time.time() < cap - CLOSE_BEFORE_CAP_S):
+                    log.warning("%s: %s - retrying in %ss (try %d)", case["case_id"], e, START_RETRY_S, tries)
+                    time.sleep(START_RETRY_S)
+                    continue
+                log.exception("%s failed", case["case_id"])
+                return e
 
     with ThreadPoolExecutor(max_workers=parallel) as pool:
         while len(closed) < waves or not all(f.done() for f in started.values()):
             try:
                 cases = client.cases("final")
             except ArenaError as e:
-                if e.status != 403:  # 403: no wave has started yet
-                    raise
+                if e.status != 403:  # 403: no wave has started yet; anything else: keep polling, never stop the runner
+                    log.warning("final case list failed (%s) - polling again", e)
+                cases = []
+            except Exception as e:  # e.g. a network drop: the runner must outlive it (no human in the loop)
+                log.warning("final case list failed (%r) - polling again", e)
                 cases = []
             for case in cases:
                 if not case.get("open"):

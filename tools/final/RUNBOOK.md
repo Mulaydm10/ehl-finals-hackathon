@@ -13,6 +13,9 @@ Everything runs on the **Mac mini** (`ssh macmini`, repo `~/Dhruv/ehl-finals-hac
 | 12:00-~13:00 | Watch the log only: `tail -f logs/final-*.log` | - | 5 waves closed |
 
 ## Rules during the final (from the brief)
+- **Nobody else uses the team key during the final** - no practice or sandbox games from any laptop: the arena allows 10 open
+  sessions per key, and a wave case that cannot open would score 0. (The runner now retries a case that cannot open yet until
+  90 s before its wave cap, and keeps polling through transient errors - but do not rely on it.)
 - **No pushes after 12:00** (the organisers check the top 10). Do not run `src/eval/sync.sh`, `after_game.sh` or any commit.
 - The agent must not read `/v1/events`, `/screen`, `/leaderboard`, `/results` - ours never does (checked: agent, kit runner,
   archive tool). Humans may look at the board in a browser; never feed it to the agent.

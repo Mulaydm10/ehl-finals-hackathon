@@ -1,0 +1,101 @@
+{
+ "session": {
+  "session_id": "26336719b8c2bbfb",
+  "case_id": "case:P10",
+  "status": "open",
+  "end_reason": null,
+  "deal": null,
+  "score": null,
+  "rounds": 0,
+  "created_at": 1791675495.1881294
+ },
+ "detail": {
+  "session_id": "26336719b8c2bbfb",
+  "case_id": "case:P10",
+  "status": "open",
+  "end_reason": null,
+  "rounds": 0,
+  "set": "practice",
+  "opening": {
+   "sup:70410": {
+    "offer_id": "offer:70410-0",
+    "round": 0,
+    "status": "open",
+    "terms": {
+     "unit_price": 32.2,
+     "lead_time_days": 54,
+     "volume_per_year": 19890,
+     "contract_months": 12
+    },
+    "alternatives": [],
+    "missing_fields": [],
+    "claims": [],
+    "claim_results": [],
+    "signals": {
+     "reply_delay_days": 2,
+     "validity_days": 30
+    },
+    "text": "Dear Sir or Madam,\n\nThank you for your enquiry. Please find our Angebot below.\n\nWe offer a volume of 19890 pcs per year at a price of €32.20 per unit. The requested contract term is 12 months, and our Lieferzeit is 54 days. \n\nPlease note that this offer remains valid for 30 days. We look forward to proceeding according to our standard commercial procedure upon receipt of your confirmation.\n\nMit freundlichen Grüßen\nMonika Zellner\nSegment Manager, Dichtungswerk Ravensteiner GmbH"
+   }
+  },
+  "threads": {
+   "sup:70410": {
+    "offer_id": "offer:70410-0",
+    "status": "open",
+    "offers": 0,
+    "closed": null,
+    "seconds_left": 7.5
+   }
+  },
+  "moves": []
+ },
+ "threads": {
+  "sup:70410": {
+   "supplier_id": "sup:70410",
+   "offer_id": "offer:70410-0",
+   "status": "open",
+   "closed": null,
+   "messages": [
+    {
+     "thread_id": "thread:P10:70410",
+     "message_id": "msg:70410-0-0",
+     "in_reply_to": null,
+     "from": "sales@70410",
+     "from_name": "Segment Manager, Dichtungswerk Ravensteiner GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Quote from Dichtungswerk Ravensteiner GmbH: Ravensteiner cuts the seal allocation",
+     "body": "Dear Sir or Madam,\n\nThank you for your enquiry. Please find our Angebot below.\n\nWe offer a volume of 19890 pcs per year at a price of €32.20 per unit. The requested contract term is 12 months, and our Lieferzeit is 54 days. \n\nPlease note that this offer remains valid for 30 days. We look forward to proceeding according to our standard commercial procedure upon receipt of your confirmation.\n\nMit freundlichen Grüßen\nMonika Zellner\nSegment Manager, Dichtungswerk Ravensteiner GmbH",
+     "attachments": [
+      {
+       "attachment_id": "att:70410-0-quote",
+       "name": "quote-offer-70410-0.pdf",
+       "type": "pdf",
+       "content_b64": null
+      }
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70410-0",
+       "terms": {
+        "unit_price": 32.2,
+        "lead_time_days": 54,
+        "volume_per_year": 19890,
+        "contract_months": 12
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 2,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": []
+    }
+   ],
+   "timeouts": []
+  }
+ }
+}
