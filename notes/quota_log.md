@@ -169,3 +169,4 @@
 | 2026-10-10 20:46 | Dhruv | P11 | noidea v2.21d / gpt-6-astra | 0.71 (high draw; floor > 45.45) | 11e2d8727fc045a1 |
 | 2026-10-10 20:48 | Parth | P08 | noidea 544b5cd (year-rise path, no hedged index) / gpt-6-astra | 0.822 (agent with the P08 probe-A round 1) | 6701d5ddffb86dd4 |
 | 2026-10-10 20:56 | Parth | P04 | p04_record 11543a3 --probe / scripted | 0.000 | 62a17f4abde590c7 |
+| 2026-10-10 20:57 | Parth | P08 | noidea 6567650 (year-rise path, no hedged index, clause-free asks) / gpt-6-astra | 0.830 (agent, P08 rules) | 018b9519cfe7c8f4 |
