@@ -272,3 +272,11 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
   after our message cited nothing) and "Which volume can you commit to?" in the final.
 - Price path €6.10 → 5.60 → 5.50 → 5.40 (final in round 3), still above P18.md's floor (€5.45 no clause = 0.51).
 - e-mails still say "23,700 units" (P18 is kg). v1.7 printed raw field names; v2.3 fixes that.
+
+### v2.4 (Parth, local): accept the cheapest of the supplier's sheets, not only the standing one
+| change | evidence | offline check |
+|---|---|---|
+| `best_sheet()`: accept / price (`c_stand`, `best_standing`) the cheapest sheet in the supplier's message that keeps the must-haves, by its own id | P18 live 1: `offer:70740-3-a` 0.485 vs accepted `offer:70740-3` 0.430 | replay of the live final: accepts `offer:70740-3-a` |
+| play.py: a `422` on accepting an alternative's id (the brief says accept takes the *standing* sheet; arena-sim only knows `offer_id`) clears that id, keeps its terms and decides again | 422 = "nothing happens, no round is used" (api.md) | new test `test_an_alternative_the_arena_refuses_is_kept_without_its_id` |
+| `refused_alternative()`: such a sheet is proposed back once at `final_offer` ("We accept your alternative as you proposed it"), the v1.8 prose-alternative path | P10 live: its own alternative came back `agreed` | replay: proposes €5.40 / 30 d / AS db5 (C 259,970) |
+- Offline unchanged: mean **0.937 / 0.944** (the offline supplier never sends alternatives), 32 tests pass, ruff clean on the changed lines.

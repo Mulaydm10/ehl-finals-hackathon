@@ -410,11 +410,12 @@ class NoIdeaAgent:
         sid = min(live, key=lambda s: sum(m.get("from") == "buyer" for m in threads[s]))
         events, s = threads[sid], self.sup[sid]
         sheet_id, terms = standing(events)
+        acc_id, acc_terms = self.best_sheet(case, sid, events)  # its standing sheet or a cheaper alternative
         status = latest(events).get("status")
         k = sum(m.get("from") == "buyer" and bool(m.get("term_sheets")) for m in events)
-        c_stand = total_cost(case, terms, s["std"], s["est"]) if sheet_id else math.inf
-        ok = bool(sheet_id) and must_haves_ok(case, terms, s["std"]) and c_stand < self.c_alt
-        accept = {"supplier_id": sid, "message": {"action": {"type": "accept", "term_sheet_id": sheet_id}}}
+        c_stand = total_cost(case, acc_terms, s["std"], s["est"]) if acc_id else math.inf
+        ok = bool(acc_id) and must_haves_ok(case, acc_terms, s["std"]) and c_stand < self.c_alt
+        accept = {"supplier_id": sid, "message": {"action": {"type": "accept", "term_sheet_id": acc_id}}}
         walk = {"supplier_id": sid, "message": {"action": {"type": "walk_away"}}}
         best_elsewhere = min(self.best_standing(case, threads, skip=sid))
 
@@ -426,7 +427,9 @@ class NoIdeaAgent:
             # its final message may carry a prose alternative that is cheaper for us (P10 live: "Alternatively,
             # with Lieferzeit ... days: EUR ..."): propose exactly that once - it is its own offer, not a push
             if status == "final_offer" and sid not in self.final_asked and moves_left(case, events) > 1:
-                alt_p = self.prose_alternative(case, sid, events)
+                alts = [a for a in (self.refused_alternative(case, sid, events),
+                                    self.prose_alternative(case, sid, events)) if a]
+                alt_p = min(alts, key=lambda a: a[0]) if alts else None
                 if alt_p and ok and alt_p[0] < c_stand - 1:
                     self.final_asked.add(sid)
                     return self.message(case, sid, events, [alt_p[1]], k, final=True)
@@ -661,11 +664,38 @@ class NoIdeaAgent:
             return best
         return None
 
+    def best_sheet(self, case, sid, events):
+        """(term_sheet_id, terms) of the supplier's cheapest sheet for us that keeps the must-haves, else its
+        standing one. Alternatives come as term sheets with their own id (P18 live 6833e98fbbe5ebdf: we took
+        the standing AS db0 / 60 d sheet, 0.430; its offer:70740-3-a, AS db5 / 30 d, was 0.485)."""
+        s = self.sup[sid]
+        best = None
+        for ts in latest(events).get("term_sheets") or []:
+            if ts.get("term_sheet_id") and must_haves_ok(case, ts["terms"], s["std"]):
+                c = total_cost(case, ts["terms"], s["std"], s["est"])
+                if best is None or c < best[0] - 1:
+                    best = (c, ts["term_sheet_id"], ts["terms"])
+        return (best[1], best[2]) if best else standing(events)
+
+    def refused_alternative(self, case, sid, events):
+        """(C, terms) of the cheapest alternative sheet the arena would not take by its id (play.py clears
+        the id after a 422): proposed back once at final_offer, like a prose alternative."""
+        s = self.sup[sid]
+        best = None
+        for ts in latest(events).get("term_sheets") or []:
+            if not ts.get("term_sheet_id"):
+                t = complete_offer(case, ts["terms"])
+                if must_haves_ok(case, t, s["std"]):
+                    c = total_cost(case, t, s["std"], s["est"])
+                    if best is None or c < best[0]:
+                        best = (c, t)
+        return best
+
     def best_standing(self, case, threads, skip=None):
         out = [math.inf]
         for sid in live_threads(threads):
             if sid in self.sup and sid != skip:
-                sh, t = standing(threads[sid])
+                sh, t = self.best_sheet(case, sid, threads[sid])
                 if sh:
                     out.append(total_cost(case, t, self.sup[sid]["std"], self.sup[sid]["est"]))
         return out
