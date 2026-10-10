@@ -112,3 +112,14 @@ rank versions, not to predict arena scores. It ignores arguments, tone and the r
   change_pct), top 2: P07 M16 bolt +15.3% (fc:360011@2026-09), nut +9.0% (fc:360012@2026-09).
 - Offline: P07 round 1 = volume + kit calc + deal size + 2 forecasts, no rising index; eval unchanged 0.936 / 0.944.
 - P07 so far (live): 0.68, 0.69, 0.12 (walked), **0.70**, 0.70 (Astra), 0.65 (36 m). Best = v1.4 on 24 m.
+
+- **P07 v1.6 live (d67da0a2d2360134): 0.70**, final_offer €5.49 @ 90 d again. Forecast evidence verified and accepted,
+  the "driver rose" pushback is gone, but the price didn't move.
+- **Conclusion after 7 P07 games:** with our current approach this supplier's final converges on ~€5.49 @ 90 d
+  (≈ C €327k, 0.70) regardless of anchor, arguments, model (Qwen/Astra), pace or contract length. The remaining gap
+  to C_best (~€5.00) needs a lever we can't yet pull from the e-mail. Volume is fixed in P07 (it keeps asking
+  "Which volume can you commit to? A binding higher volume would help us").
+- Side finding: the deal-size line "around N times our current business with you" can't be backed by a checkable
+  ID (spend isn't in facts.json), and the supplier asked 3x for "the exact figures behind" it. Candidate: drop the
+  multiple, keep the € value (not done yet).
+- **Decision: stop iterating on P07, test v1.6 on the other case types (task C).**

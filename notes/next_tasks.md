@@ -1,14 +1,14 @@
 # Next tasks: focus list (2026-10-10 ~14:50)
 
 State: agent **v1.4** (`--agent noidea`). Live: P01 **0.85**, P07 **0.70** (best of 4). Offline mean 0.94
-(simulator, optimistic). Practice games: **18 of 200** (resets Sun 12:22). History: `notes/agent_changelog.md`,
+(simulator, optimistic). Practice games: **19 of 200** (resets Sun 12:22). History: `notes/agent_changelog.md`,
 `notes/quota_log.md`. Owners: **D** = Dhruv (+ Claude), **N** = Neel (+ Claude).
 
 ## A. Close the P07 gap (0.70 → toward 1.0) (D)
 The supplier's final lands at the same cash value (~€5.45–5.50 @ 90 d) whatever our anchor, arguments or
 pace. C_best ≈ €5.00. Untested levers, one live game each, offline-check first:
 1. **36 months** instead of 24: same C for us on a 2-year horizon, more security for it. ~~tested live: 0.65, priced higher → reverted (v1.6)~~
-2b. **Volume evidence** (v1.6: demand forecasts `fc:` cited, it asked 3× for volume documentation) → needs 1 live game.
+2b. ~~Volume evidence~~: v1.6 live 0.70, forecasts verified but final still 5.49. **P07 parked at 0.70 (7 games); move to task C.**
 2. **Bring in its boss / committee** (approval_ladder: changes > 2% need the pricing committee):
    explicitly ask for a bundle price above the KAM's authority, with the strategic reason.
 3. **Hold longer** before its final: smaller concessions (we reach €5.08 by round 4).
