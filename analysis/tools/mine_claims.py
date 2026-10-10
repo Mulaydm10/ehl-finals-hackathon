@@ -55,6 +55,12 @@ def main():
                     verdict = "taken" if "took" in m.group(3) else "no_change"
                     total[kind][verdict] += 1
                     by_case[case][kind][verdict] += 1
+                # "We have reviewed your proposal and the verified index data, which we have factored into our
+                # calculations" (P03 2e4bf89ac2967a45, price fell) / "We have verified the index changes you cited and have
+                # factored them into our calculation" (P18)
+                if re.search(r"(?i)verified (the )?index (data|changes?).{0,60}factored", r):
+                    total["index_change"]["taken"] += 1
+                    by_case[case]["index_change"]["taken"] += 1
                 if re.search(r"(?i)confirm our case", r):
                     general["rising_index_backfired"] += 1
                     by_case[case]["index_change"]["confirm_case"] += 1

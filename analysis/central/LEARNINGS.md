@@ -77,9 +77,35 @@ Consequences:
 | central layer: 1 sheet 90 d / 36 m, should-cost + volume forecast, committee in round 1, stay at 90 d (27e05be06bb4181f) | committee 432.15 @ 90 d (429.22 @ 30 d) | 0.9228 |
 | … + on-time delivery 84.6% as a 3rd claim (3091eac920857dc0) | "does not change our calculation"; 432.15 again | 0.9228 |
 | **… + electronic components −2.3% (2025-01 → 2025-10) instead of OTD (2e4bf89ac2967a45)** | **431.67 @ 90 d** | **0.9342 - beats the house** |
+| June forecast +23.3% instead of September's +10.3%, index window ending 2025-09 (d1bfa5a91489432b) | index "irrelevant - outdated timeframe"; 432.54 → 432.49 | 0.9146 |
+| **proven round 1, then one NEW index series per round: copper −2.2%, labour −0.3% (2483e3891d076863)** | **431.67 → 431.60 → 431.58** | **0.9363 - best** |
+| … + quality record 0 ppm in round 2 (14ab701cbfba6767) | 431.61 → 431.58, then "without new data … we cannot adjust" | 0.9363 |
 | house agent | – | 0.9249 (= 432.06 @ 90 d) |
 
 **The committee is deterministic:** the same claims gave exactly the same price twice (432.15). Each piece of data
 it takes into account lowers its price; data it shrugs off changes nothing. What beat the house was the **steepest
 fall of its main cost driver in any window the arena checks** (`central.falling_window_claims`): all 6- and 12-month
 windows rose, but electronic components (44% of cost) fell −2.3% from Jan to Oct 2025 → −EUR 0.48.
+
+## 6. The P03 engine, fully measured (12 live games)
+**Price = the sales person's stop (EUR 430.15 @ 30 d = 433.08 @ 90 d) − one cut per NEW verified data kind it takes.**
+Text, anchor depth, our moves (20-92% of the gap) and committee requests change nothing on their own; it says so:
+"As no new verified data or increased volume commitment has been provided, we cannot adjust our calculation further."
+
+| data (cited once per case) | cut per unit | note |
+|---|---:|---|
+| should-cost EUR 403.21 vs its EUR 438.21 quote | 0.79 | only one ID |
+| electronic components −2.27% (2025-01 → 2025-10), 42% of its cost | 0.48 | ≈ 0.5 × weight × fall% |
+| volume forecast +10.3% (latest) | 0.14 | the June +23.3% snapshot did worse; a 2nd fc ID = "duplicate" |
+| copper −2.21% (2026-01 → 2026-03), 5% | 0.07 | later rounds count too |
+| labour −0.26%, 16% | 0.02 | |
+| quality record 0 ppm | ~0 | |
+| on-time delivery 84.6%, price history | 0 | "does not change our calculation" |
+| a 2nd window of a series already cited | 0 | "duplicate" / "already taken" |
+| a window ending ≥ 12 months before the data's last month (2026-09) | 0 | "irrelevant - outdated timeframe" |
+| more volume (5,496 / yr) | – | can never pay: best possible score −1.15 |
+
+All of it used: **EUR 431.58 @ 90 d = 0.936**, above the house (0.925). 0.95 needs EUR 430.90, another EUR 0.68, and no
+data kind is left that this supplier takes into account. General rule for any supplier: **cite every verified, honest
+fact it takes, one new kind (or index series) per message, from round 1, and keep the rounds going while data is
+left**; it is the only thing a code-priced supplier rewards.
