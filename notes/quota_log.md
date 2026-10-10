@@ -211,3 +211,5 @@
 | 2026-10-10 22:33 | Parth | P05 | p05_hold timeout 25.54/26.3/26.8 e35baee / scripted | 0.924 | ce9f4a1b6696039b |
 | 2026-10-10 22:36 | Parth | P05 | p05_hold timeout 25.54/26.3/26.8 172e4ec / scripted | 0.924 | b07178ca345fcb62 |
 | 2026-10-10 22:39 | Parth | P05 | p05_hold timeout 25.54/26.75/26.8 2797fee / scripted | 0.950 | 83612a5b5ce32831 |
+| 2026-10-10 22:36 | Dhruv | P05 | noidea v2.31 rfq_low12 / gpt-6-astra | **0.87 agent best P05** (70210 27.44 @ 14 d) | 7271fbdd0ff0e105 |
+| 2026-10-10 22:37 | Dhruv | P05 | noidea v2.31 rfq_low15 / gpt-6-astra | 0.87 (70210 27.50 @ 14 d) | 0e9974d5c45ca01b |

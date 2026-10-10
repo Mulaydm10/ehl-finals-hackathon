@@ -1043,3 +1043,12 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 
 ## v2.31 live P05 x2 (22:33): 0.807 / 0.807 (ceb3295e8f463b18, 51dcee25992e24f3)
 - Both: 70210 30.00 @ 14 -> AGREED to our round-1 ask 28.06 @ 14 d at once; shown to the others (70250 29.50 final, 70240 32.00) -> accepted. Consistent (v2.30: 0.824 / 0.761) but 70210 says yes at once -> its floor is LOWER. Next: rfq_low12 / rfq_low15.
+
+## v2.31 live P05 depth experiments (22:36, parallel) + Parth's hold path
+- rfq_low12 (7271fbdd0ff0e105): **0.871 = our agent best P05**: 70210 27.44 @ 14 d. rfq_low15 (0e9974d5c45ca01b): 0.865 (27.50 @ 14 d).
+  Depth curve: 6% 0.755, 10% 0.807-0.824, **12% 0.871**, 15% 0.865 -> **default now 12%**.
+- **Parth's hold path: 0.950** (83612a5b5ce32831, scripted tools/experiments/p05_hold.py; 0.924 x6 before): Fuchsreiter (70250)
+  opens HIGHEST (38.50) but has the LOWEST floor (~26.26). Round 1: hold (no move from us - a deliberate timeout = "our last
+  offer repeated"; "Without movement from your side we cannot move either"). Round 2: ask 25.54 @ 14 + the lowest rival + our
+  true late-payment record -> 28.00 + "we need to clarify this internally". Then ONE move: after the clarification its line
+  drops ~1.00 a round and it AGREES at our standing ask once that is above its line -> 26.75 @ 14 d = 0.950.

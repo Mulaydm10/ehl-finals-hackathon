@@ -59,7 +59,10 @@
   "Cite only rival offers that are cheaper than the bidder's own price; never show the leader worse prices.",
   "Give every bidder verified cost data for the RFQ part itself, and cite the cheapest rival offer whatever its lead time.",
   "When one bidder agrees, show that price to the other bidders once before accepting - they often beat it.",
-  "Never anchor far below the market: an extreme anchor made both bidders walk; about 10% under the lowest offer works."
+  "Never anchor far below the market: an extreme anchor made both bidders walk; about 10% under the lowest offer works.",
+  "Ask about 12% under the lowest offer on the table; deeper anchors make bidders walk, shallower ones get simply accepted.",
+  "Do not write off the bidder that opens highest: it may have the lowest floor once it starts to move.",
+  "If a bidder holds and says it cannot move without movement from you, a deep ask plus the lowest rival offer can make it 'clarify internally' and then move a full step per round - make one move after that and let it agree."
  ],
  "quality": [
   "Ask for the 8D report and a binding ppm commitment within the must-have; cash-short suppliers react badly to heavy chargebacks.",

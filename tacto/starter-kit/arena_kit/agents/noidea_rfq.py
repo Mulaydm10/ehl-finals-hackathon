@@ -49,7 +49,7 @@ def _contract_days(facts, sid, kind):
 
 
 RFQ_CREEP = 0.15  # 5. after round 1 our ask creeps at most EUR 0.15 (value) a round ...
-RFQ_BELOW_LOW = 0.10  # ... and stays at least 10% under the lowest standing offer (6% -> 0.755, 10% -> 0.824 live, 12% -> 0.761 with a timeout)
+RFQ_BELOW_LOW = 0.12  # ... at least 12% under the market low (live P05: 6% 0.755, 10% 0.81-0.82, 12% 0.871, 15% 0.865)
 # experiments: hold the ask deeper under the market low (P05 f841e571: 70210 AGREED to our 28.57 = its floor is lower;
 # record 0.924 ~ 27.00 @ 14 d; an extreme anchor made both bidders walk - Parth run 3)
 import os as _os
