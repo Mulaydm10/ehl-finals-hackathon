@@ -230,3 +230,9 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
     **5.41 @ 90 (36 m)**, so the deeper anchor didn't lower the headline (run 2: 5.40). Revert it. Then our 4.72 @ 14 ->
     5.16 @ 14 = 5.178 (-0.15) -> our 4.75 (0.2x step) -> **final at our 3rd message** (the deferral failed for the first
     time, 5 of 6) 5.11 @ 14 = 5.128. Total cut -0.21: the same budget whether the deferral works or not.
+14. **Loop run 4 (last): live b1ca37903c477636 = 0.677 (HIGH draw), agent d3f51b2 (36 m, 60 d from round 2, deep anchor
+    off).** 5.53 @ 90 (36 m) = 5.456 -> 5.32 @ 60 -> 5.25 (deferral 6 of 7) -> final 5.20 @ 60 = 5.166. Total cut -0.29.
+    **Best high-draw game** (1363 0.642, db7d 0.666). Loop stopped here at the user's request.
+    **P08 summary (17 games):** low draw 0.710-0.732 (floor = round-1 value - 0.21 +- 0.01), high draw 0.642-0.677. Record
+    0.732 (cae4, budget at the top of its spread). The house's 0.752 (5.08 @ 14) is 2 cents below anything we've seen.
+    The agent loses no cents to mistakes (cloud loop reports 1-3). The rest is the per-session draw and cent rounding.

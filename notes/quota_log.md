@@ -150,3 +150,4 @@
 | 2026-10-10 20:11 | Neel | P08 | noidea_neel / gpt-6-astra | **0.72** | 94e77b7b71359f60 |
 | 2026-10-10 20:15 | Dhruv | P11 | noidea v2.20 loop 6/8 / gpt-6-astra | 0.71 (high draw; probe 45.10 -> final) | a5ab83b965976781 |
 | 2026-10-10 20:17 | Neel | P08 | noidea_neel / gpt-6-astra | **0.72** | 8180d3894dd5c5b3 |
+| 2026-10-10 20:24 | Neel | P08 | noidea_neel / gpt-6-astra | **0.68** | b1ca37903c477636 |
