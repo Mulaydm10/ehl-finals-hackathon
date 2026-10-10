@@ -1479,6 +1479,32 @@ class NoIdeaAgent:
             return best
         return None
 
+    def late_payment(self, sid, months=12):
+        """Our OWN payment record with this supplier (invoices.csv): share of invoices paid after the due date and mean days
+        late over the last `months`. P11 Kalwisz: 96% late, 9.7 days - the thing its export manager complains about every
+        round ("we really need you to actually pay on time like you said, cash is tight here")."""
+        cache = self.__dict__.setdefault("_late_cache", {})
+        if sid in cache:
+            return cache[sid]
+        out = None
+        try:
+            import csv
+            import datetime as dt
+            rows = [r for r in csv.DictReader((_repo() / "tacto/data/data/invoices.csv").open(encoding="utf-8"))
+                    if r.get("supplier_id") == sid and r.get("paid_date") and r.get("due_date")]
+            if rows:
+                last = max(r["paid_date"] for r in rows)
+                y, m = int(last[:4]), int(last[5:7])
+                floor = f"{y - months // 12:04d}-{last[5:]}"
+                days = [(dt.date.fromisoformat(r["paid_date"]) - dt.date.fromisoformat(r["due_date"])).days
+                        for r in rows if r["paid_date"] >= floor]
+                if days:
+                    out = (sum(d > 0 for d in days) / len(days), sum(days) / len(days))
+        except Exception as e:
+            log.warning("late payment record not read (%s)", e)
+        cache[sid] = out
+        return out
+
     def experiment_lines(self, case, sid, events, sheets, k):
         """Untested levers the brief names ("signals of ... having no alternative, threats, questions ... have
         consequences"; "bigger moves need the boss's approval"), switched on per live A/B game via EXPERIMENTS.
@@ -1497,6 +1523,23 @@ class NoIdeaAgent:
             if other or alt or case["type"] == "rfq":
                 out.append("We have a qualified alternative for this part and will place the volume where the total "
                            "cost is best; we would prefer to keep it with you.")
+        # 0. PLAY THE MAN (experiment `own_late_pay`): a cash-driven counterpart that keeps asking us to pay on time, and our own
+        #    record shows we pay it late -> own it, concretely, and tie on-time payment to the close. True, and free for us
+        #    (the score assumes the agreed term); to a cash-short firm ~10 days of cash is worth more than the price gap.
+        motives = set(d.get("motives", {}))
+        rec = self.late_payment(sid)
+        if "own_late_pay" in EXPERIMENTS and k >= 1 and rec and rec[0] >= 0.5 and rec[1] >= 3 and \
+                ({"cash_short", "wants_faster_payment"} & motives or re.search(r"pay on time|paid on time|cash", last)) \
+                and not self.sup[sid].get("owned_late"):
+            self.sup[sid]["owned_late"] = True
+            out.append(f"Straight talk: over the last 12 months we paid {rec[0] * 100:.0f}% of your invoices late, on average "
+                       f"{rec[1]:.0f} days after the due date. That is on us, and it ends with this contract: every invoice "
+                       f"paid on the due date, which brings your cash in about {rec[1]:.0f} days earlier than you are used to.")
+        # 0b. ask its floor (experiment `ask_floor`): "questions go to the person in charge, who answers as openly as the
+        #     company is" - once it holds, ask the one number we need
+        if "ask_floor" in EXPERIMENTS and stalled and not self.sup[sid].get("asked_floor"):
+            self.sup[sid]["asked_floor"] = True
+            out.append("What is the lowest price at which you can sign these terms today?")
         # 2. ask what it needs: questions go to the person in charge, who answers as openly as the company is
         if "ask_lever" in EXPERIMENTS and k in (1, 2):
             names = {"payment_days": "payment terms", "contract_months": "contract length",

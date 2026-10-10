@@ -729,3 +729,17 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
   identical in facts, sheet, price and all 3 claims verified; only the model-written opening varies. 7 high draws in a row since
   18:07 (p ~3% at 40/60) - possibly a time/state effect of the arena, not controllable. **Stop spending P11 games**: the probe pays
   only on a low draw (sim 0.80-0.86); high draws end 0.71-0.77.
+
+### v2.18 (offline): PLAY THE MAN - experiments `own_late_pay`, `ask_floor` (honest hard-ball; no injection, no fake data)
+- api.md: everything we write "is understood ... threats, ... attempts to manipulate - and has consequences, as it would with a
+  person"; a wrong figure "costs trust"; the jury reads every replay -> prompt injection / fabricated data are out (penalised,
+  disqualifying). But: "Questions go to the person in charge, who answers as openly as the company is."
+- **Our own record** (invoices.csv): last 12 months we paid **96% of Kalwisz's invoices late, mean 9.7 days** - what its export
+  manager asks about in every e-mail ("we really need you to actually pay on time like you said, cash is tight here").
+  `late_payment(sid)` computes it for any supplier; P02's Nordmark: 64% late but 1.1 days -> no trigger.
+- `own_late_pay`: once (k >= 1), when we pay it late (>= 50%, >= 3 days) and it is cash-driven: "Straight talk: over the last 12
+  months we paid 96% of your invoices late, on average 10 days after the due date. That is on us, and it ends with this contract:
+  every invoice paid on the due date, which brings your cash in about 10 days earlier than you are used to." True; free for us
+  (the score assumes the agreed term); ~10 days of cash at a cash-short firm's rate ~EUR 0.30/unit > the gap to 0.80.
+- `ask_floor`: once it stalls, ask the one number we need: "What is the lowest price at which you can sign these terms today?"
+- Offline Astra: line renders as above; injection PASS. Live test pending.
