@@ -854,7 +854,10 @@ class NoIdeaAgent:
             # standing value, drew its largest move (+0.51 -> -0.30; +0.15 -> -0.10; +1.01 -> -0.20)
             hist.append(min(limit, hist[-1] + max(0.0, (sv[-1] - hist[-1]) / 3)))
             return hist[-1]
-        mirror = 3 <= self.patience_prior(case, sid) <= 4 and "cash_short" not in s["dossier"].get("motives", {})
+        # not holders (cash_short: P11), hedged suppliers (P08: its round-2 cut is a per-session draw; Neel's rule) or
+        # frozen prices (P03, untested); P08 89259de630143206 with it: +0.20 step -> -0.06, final round 3, 0.528
+        mirror = 3 <= self.patience_prior(case, sid) <= 4 and not (
+            {"cash_short", "hedged_forward", "price_frozen"} & set(s["dossier"].get("motives", {})))
         if "no_gap_steps" not in EXPERIMENTS and k >= 1 and sv and kind != "rfq" and mirror:
             # a MIRROR supplier answers our step with 0.5-0.9x of it and goes final at a fixed round, so the 8-round
             # schedule (+0.07/round) starves it: P07 probe A 58bf025d01aa1275 +0.12 -> -0.11, +0.15 -> -0.08,
