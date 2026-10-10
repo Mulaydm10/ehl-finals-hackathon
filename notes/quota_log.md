@@ -24,3 +24,4 @@
 | 2026-10-10 15:07 | Dhruv | P10 | noidea v1.7 / gpt-6-astra | 0.46 (asked lead 35, final 35.00 accepted) | 675fc6b9c1c8c291 |
 | 2026-10-10 15:11 | Dhruv | P10 | noidea v1.8 / gpt-6-astra | **0.65** (its alternative 31.90 @ 56 agreed) | 2d91214cf7693eff |
 | 2026-10-10 15:22 | Dhruv | P10 | noidea v2.0 dynamic / gpt-6-astra | 0.54 (lead 42 in round 1, final 34.00, no alt) | afd996e3d4b14336 |
+| 2026-10-10 15:25 | Dhruv | P10 | noidea v2.1 (round-1 lead prior) / gpt-6-astra | 0.65 (final 31.90 @ 56 in round 1) | 0bba4ffdf93afbe8 |

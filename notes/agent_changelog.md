@@ -196,3 +196,13 @@ Code still does all maths and safety checks; at runtime the agent now reads, lea
   −€0.158/day at €32.20), applied from round 1 when lead time is negotiable; learned values replace it.
 - Offline: P10 round 1 now lead **56 @ €27.38** (was 42 @ €27.69); all 10 cases unchanged (0.937 / 0.944).
 - P10 live so far: 0.46 (lead 35), 0.65 (lead 42 + its alternative), 0.54 (lead 42, no alternative). House agent 0.69.
+| v2.1 live | P10 | 0.65 | 0bba4ffdf93afbe8 | round 1 lead **56 @ €27.38** (prior worked) → "We can revise our offer to €31.90 per unit to reflect the increased volume and extended contract duration… final offer" in round 1 → accepted. Same €31.90 @ 56 as game 21's alternative: **its floor at lead 56 is €31.90 in both games** |
+
+### P10 status after 4 live games (house agent 0.69)
+- Final offers: €35.00 @ 35, €33.80 @ 42 (+ alt €31.90 @ 54), €34.00 @ 42, €31.90 @ 56. It always goes **final in round 1**
+  and always says its price reflects "the increased volume and extended contract duration".
+- To beat 0.69 we need C ≤ €1,516,032 → **≤ €31.35 @ 56** or **≤ €32.07 @ 42** (about 2% below what it has ever given).
+- Hypothesis to test next: the dossier says **approval_ladder** ("price changes above X% need the pricing committee") and
+  Neel's capacity playbook says "price steps ≤ 2%". Our round-1 asks were 14–15% below its opening; a big ask may send
+  it straight to the committee's final word. A **small first ask (≤ 2–3% below its opening, at lead 56)** might keep it
+  in normal rounds where it concedes stepwise (as the approval-ladder supplier did in P07).
