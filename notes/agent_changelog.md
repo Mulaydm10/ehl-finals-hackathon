@@ -1070,3 +1070,10 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 ## Stopped P05 (user: "dont run p5 anymore") - two v2.32 live games were killed right after start (sessions end as
 timeouts, no deal). The hold path code (v2.32) stays in, untested live.
 ## Top-runs generalisation (src/eval/top_runs.py -> docs/TOP_RUNS_LEARNINGS.md, rules 101-104, 3 principles for the model)
+### Parth (branch), ~23:30: P05 0.820 -> **0.965** (scripted `tools/experiments/p05_hold.py`; board's best 0.92)
+- Hold Fuchsreiter's round 1 (one timeout), then ask 25.54 @ 14 + a much lower rival offer + 2 verified facts (its
+  free-capacity news, the 1.4404 surcharge fall) -> 27.50 "clarify internally"; round 3 ask 26.60 -> **agreed**.
+- General lessons for the agent: (1) a supplier's first counter can be capped by the round - a held round 1 lowers it;
+  (2) "half the step now, the rest next round" = one rival step per supplier; (3) suppliers counter on a 0.50 grid
+  rounded up but agree at OUR price once it clears their line - in the last round ask ~0.40 under their grid counter,
+  not far below it. Details: analysis/cases/P05.md sections 11-13.
