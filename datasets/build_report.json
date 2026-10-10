@@ -1,18 +1,18 @@
 {
  "suppliers": 46,
- "claims": 831,
+ "claims": 915,
  "claims_by_kind": {
   "scorecard_otd": 46,
   "scorecard_ppm": 46,
   "notice_period": 4,
   "should_cost": 24,
-  "index_change": 500,
+  "index_change": 584,
   "po_prices": 75,
   "rival_quote_context": 104,
   "news": 32
  },
  "self_check": {
-  "ok": 727,
+  "ok": 811,
   "bad": 0,
   "problems": []
  }

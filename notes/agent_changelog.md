@@ -418,3 +418,11 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
 - **Cost calc cites IDs only for indices that fell/stayed flat**; rising ones in plain text (P08 v2.6: "Your figures
   confirm our case: that driver rose"). P08 refs now: AS-14404 only.
 - Tests 32 passed; offline 0.939 / 0.947; Astra P08 trial clean (10.3 s per call).
+
+### v2.7 (Parth, offline, 0 games): more verifiable data + switchable live experiments (see analysis/strategy_0.9.md)
+- Builder: per cost driver, the **fall from its 12-month peak** as an extra `index_change` claim (any window ≤ 12 m
+  ending in the data's last 12 months is checked). +84 claims, self-check 811 ok / 0 bad. P18 now cites AS-14404
+  −5.5% and PPI-C2431 −2.3%; P01/P11 energy −6.1%.
+- `NOIDEA_EXPERIMENTS=batna,ask_lever,escalate` (default off): a real alternative (leverage/routine), "which lever
+  matters to you", escalate once on a stall / authority mention. Offline unchanged 0.939 / 0.947, 32 tests pass.
+- `tools/replays/fetch_backoffice.py`: the suppliers' internal talk for every ended session (GET only, no quota).

@@ -138,6 +138,20 @@ def build(data, out):
         return {"ids": [a[0], b[0]], "from": months_back(last, months), "to": last,
                 "pct": pct_change(b[1], a[1])}
 
+    def index_since_peak(sid_series):
+        """The fall from the series' highest month in the last 12 to its latest month - a window the arena
+        checks like any other (<= 12 months apart, ending in the data's last 12 months). P18/P08: AS-14404
+        -5.5% since 2026-06, where the fixed 6-month window shows only -0.3%."""
+        last = series[sid_series]["last_month"]
+        b = idx.get((sid_series, last))
+        window = [(months_back(last, m), idx.get((sid_series, months_back(last, m)))) for m in range(1, 13)]
+        window = [(m, v) for m, v in window if v]
+        if not b or not window:
+            return None
+        peak_month, peak = max(window, key=lambda x: x[1][1])
+        return {"ids": [peak[0], b[0]], "from": peak_month, "to": last, "pct": pct_change(b[1], peak[1]),
+                "months": next(m for m in range(1, 13) if months_back(last, m) == peak_month)}
+
     A, B, C = {}, {}, []
 
     def claim(sid, kind, ids, figure, unit, sentence, use_when, part=None, checkable=True, **extra):
@@ -221,6 +235,17 @@ def build(data, out):
                           f"({ch['ids'][0]}, {ch['ids'][1]}).",
                           "counter cost-driven increases; strongest when the change is below what they ask",
                           part=pid, series=dr["series_id"], weight=num(dr["weight"]), window_months=m)
+                pk = index_since_peak(dr["series_id"])
+                std = [index_change(dr["series_id"], m) for m in (12, 6)]
+                if (pk and pk["pct"] <= -1.0 and pk["months"] not in (6, 12) and all(i in facts for i in pk["ids"])
+                        and all(not c or pk["pct"] < c["pct"] - 1.0 for c in std)):
+                    name = series[dr["series_id"]]["name"]
+                    claim(sid, "index_change", pk["ids"], pk["pct"], "%",
+                          f"{name} changed {pk['pct']:+.1f}% from {pk['from']} to {pk['to']} "
+                          f"({pk['ids'][0]}, {pk['ids'][1]}).",
+                          "a driver that has fallen from its recent peak: the cost pressure is easing now",
+                          part=pid, series=dr["series_id"], weight=num(dr["weight"]), window_months=pk["months"],
+                          since_peak=True)
             my_po = sorted([p for p in pos.get(sid, []) if p["part_id"] == pid], key=lambda r: r["order_date"])
             if len(my_po) >= 2:
                 pick = my_po[-8:]

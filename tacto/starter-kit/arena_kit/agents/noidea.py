@@ -31,6 +31,8 @@ from ..play import latest, live_threads, moves_left, standing
 
 log = logging.getLogger("arena")
 
+# Live A/B switches for untested levers (off by default): NOIDEA_EXPERIMENTS="batna,ask_lever,escalate"
+EXPERIMENTS = {x.strip() for x in os.environ.get("NOIDEA_EXPERIMENTS", "").split(",") if x.strip()}
 PLANNED_ROUNDS = 8  # P07 live: ~25 s per round, so an 8-minute wave fits ~12-15; keep a margin
 MIN_GAIN_PTS = 1.0  # never pay more than ask - 1 pt unless it is the last word
 # How far below the opening quote to anchor (src/eval/calibrate.py: best deal vs opening, practice cases)
@@ -902,6 +904,43 @@ class NoIdeaAgent:
             return best
         return None
 
+    def experiment_lines(self, case, sid, events, sheets, k):
+        """Untested levers the brief names ("signals of ... having no alternative, threats, questions ... have
+        consequences"; "bigger moves need the boss's approval"), switched on per live A/B game via EXPERIMENTS.
+        All true statements; none names a price we don't have."""
+        out, d = [], self.sup[sid]["dossier"]
+        theirs = [standing([m])[1].get("unit_price") for m in events
+                  if m.get("from") != "buyer" and m.get("term_sheets")]
+        stalled = (len(theirs) >= 3 and theirs[-1] is not None and theirs[-2] is not None
+                   and theirs[-1] >= theirs[-2] * 0.998)
+        last = (latest(events).get("body") or "").lower()
+        # 1. a credible alternative, only when one exists: another approved supplier for the part or the case's
+        #    own alternative; leverage / routine goals only (stabilise and secure_supply protect the supplier)
+        if "batna" in EXPERIMENTS and k == 1 and case["buyer"]["category_goal"] in ("leverage", "routine"):
+            other = any(p.get("other_approved_suppliers") for p in d.get("parts", []) if p["part"] in case["parts"])
+            alt = (case["buyer"].get("alternative") or {}).get("kind") not in (None, "none")
+            if other or alt or case["type"] == "rfq":
+                out.append("We have a qualified alternative for this part and will place the volume where the total "
+                           "cost is best; we would prefer to keep it with you.")
+        # 2. ask what it needs: questions go to the person in charge, who answers as openly as the company is
+        if "ask_lever" in EXPERIMENTS and k in (1, 2):
+            names = {"payment_days": "payment terms", "contract_months": "contract length",
+                     "lead_time_days": "lead time", "volume_per_year": "volume", "index_clause": "an index clause",
+                     "effective_date": "the start date", "tooling_eur": "tooling", "ppm_commitment": "a ppm commitment",
+                     "chargeback_eur_per_complaint": "chargebacks", "incoterm": "the Incoterm"}
+            levers = [names.get(f, f.replace("_", " ")) for f in case["negotiable"] if f != "unit_price"]
+            if levers:
+                out.append(f"Which of these would let you move closer to our proposal: {', '.join(levers)}? "
+                           "Tell us what matters most to you and we will look at it.")
+        # 3. escalate when the person in charge says it is at its authority, or stalls
+        if "escalate" in EXPERIMENTS and k >= 1 and (stalled or any(w in last for w in (
+                "authority", "approval", "committee", "management", "managing director"))):
+            if not self.sup[sid].get("escalated"):
+                self.sup[sid]["escalated"] = True
+                out.append("If this is beyond your authority, please take this package to your managing director "
+                           "or pricing committee for a decision; we are ready to sign on these terms.")
+        return out
+
     @staticmethod
     def plain(field, v):
         """A term in words for the e-mail body ("EUR 4.77 per unit", "90 days payment"); the term sheet binds."""
@@ -987,6 +1026,8 @@ class NoIdeaAgent:
             lines.append("We have also put our invoice processing in order and will pay reliably on the agreed day.")
         if k == 0 and case["type"] == "quality":
             lines.append("Please send us your 8D report and a binding ppm commitment.")
+        if not final:
+            lines += self.experiment_lines(case, sid, events, sheets, k)
         ask = ("We accept your alternative as you proposed it; it is attached as a term sheet for your confirmation." if final else
                f"On this basis we propose the attached term sheets ({offers}). Please let us know which option works best for you.")
         return (f"Dear {name} team,\n\n{opening}\n\n" + " ".join(lines) + f"\n\n{ask}\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke")
