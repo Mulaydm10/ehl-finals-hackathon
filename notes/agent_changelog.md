@@ -998,3 +998,12 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 ## v2.27 live P18 (22:04, r1_two_index): **0.707 = new best P18** (a09d953636747cae; was 0.677, record ours)
 - r1 price history + alloy -8.5% + cold drawing -2.3% -> 5.20 (= the best first counter, 4e24); r2 our sheet moved to 14 d -> "your proposal of 14-day payment terms allows us to offer a more competitive base price" -> 5.00 (-0.20 in one round); held 5.00; **agreed to our 4.94 @ 14 d** ("a fair balance of commercial certainty and predictable payment").
 - Lessons: P18 values FAST payment (cut 0.20 for 14 d); after it holds, a creeping ask 1.2% under its standing was agreed (like P11). Two index claims in round 1 drew no "lot of material" here.
+
+### v2.28 (offline): the P18 win made general (gate) + one more lever as experiment
+- `r1_two_index()` gate replaces the flag: round 1 may carry TWO index claims (different series) for a RAW-MATERIAL case
+  (index-priced suppliers with a fixed budget after their first counter: P08, P18) or a supplier that goes final by our 2nd
+  message; everywhere else still one ("we received a lot of material" 11/11). Opt-out `no_r1_two_index`.
+  Round-1 diff over all hosted cases: only P18 changes (forecast -> cold drawing -2.3%); P08 has a single usable index.
+  The P18 round-1 test now encodes the gated rule (the forecast it drops is the fact P18 shrugs off).
+- Experiment `r1_pay_short`: round 1 on the shortest payment term (P18 cut a full 0.20 step for 14 d in round 2).
+- Tests 64; offline 0.931 / 0.861; walk replays unchanged.

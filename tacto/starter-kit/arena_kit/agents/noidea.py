@@ -754,7 +754,7 @@ class NoIdeaAgent:
                 continue  # weak facts wait only while a strong one is left (never an empty round)
             # one index claim per e-mail: 2+ drew "we received a lot of material" 11 of 11 times (Neel)
             n_idx = sum(x["kind"] == "index_change" for x in picked)
-            if c["kind"] == "index_change" and (n_idx >= (2 if ("r1_two_index" in EXPERIMENTS and first_round) else 1)
+            if c["kind"] == "index_change" and (n_idx >= (2 if (first_round and self.r1_two_index(None, sid)) else 1)
                                                 or any(x.get("series") == c.get("series") for x in picked)):
                 continue
             picked.append(c)
@@ -1081,6 +1081,7 @@ or null, "reason": "<one sentence>"}."""
         return self.plan_check(case, threads, self._decide(case, threads))
 
     def _decide(self, case, threads):
+        self._case = case
         if case["case_id"] != self.case_id:
             self.prepare(case, threads)
         self.threads_ref = threads
@@ -1152,6 +1153,12 @@ or null, "reason": "<one sentence>"}."""
         cap = terms.get("unit_price") if sheet_id else None
         target = self.value_target(case, sid, events)
         sheets = self.sheets_at(case, sid, target, cap)
+        if k == 0 and "r1_pay_short" in EXPERIMENTS and "payment_days" in case["negotiable"]:
+            shortest = min(case.get("term_options", {}).get("payment_days") or [30])
+            short = [x for x in self.sheets_at(case, sid, target, cap, n=12, band_pct=0.2) if x[1].get("payment_days") == shortest]
+            if short:
+                sheets = short[:1]
+                s["meso"] = [short[0][1]]  # code's structure, the model only writes
         mb = self.memory_best_structure(case, sid) if "no_memory_term" not in EXPERIMENTS else None
         if mb and sheets:
             keep = [x for x in self.sheets_at(case, sid, target, cap, n=12, band_pct=0.2)
@@ -1421,7 +1428,7 @@ or null, "reason": "<one sentence>"}."""
                 c = pool[i]
                 if k == 0 and (c.get("other_part") or c.get("late")):
                     continue
-                two = "r1_two_index" in EXPERIMENTS and k == 0  # experiment: round 1 may carry 2 index claims (P18 4e24)
+                two = k == 0 and self.r1_two_index(case, sid)  # round 1 may carry 2 index claims (P18 0.707)
                 n_idx = sum(pool[j]["kind"] == "index_change" for j in out)
                 if c["kind"] == "index_change" and (n_idx >= (2 if two else 1) or any(
                         pool[j].get("series") == c.get("series") for j in out if pool[j]["kind"] == "index_change")):
@@ -1672,6 +1679,18 @@ or null, "reason": "<one sentence>"}."""
             top = max(refused)
             return [round((top + S) / 2, 2), hair] if (top + S) / 2 < hair else [hair]
         return None
+
+    def r1_two_index(self, case, sid):
+        """Round 1 may carry TWO index claims (different series) for a raw-material case - index-priced suppliers that give a
+        fixed budget after their first counter, so round 1 decides (P18: price history + alloy + cold drawing -> 5.20 first
+        counter, 0.707; P08 0.912 with path + cold drawing) - or a supplier that goes final by our 2nd message. Elsewhere 2+
+        index claims drew "we received a lot of material" (11 of 11). Opt-out `no_r1_two_index`; opt-in `r1_two_index`."""
+        if "no_r1_two_index" in EXPERIMENTS:
+            return False
+        if "r1_two_index" in EXPERIMENTS:
+            return True
+        case = case or getattr(self, "_case", None) or {}
+        return case.get("type") == "raw_material" or (sid in getattr(self, "sup", {}) and self.patience_prior(case, sid) <= 2)
 
     @staticmethod
     def mem_match(key, terms):

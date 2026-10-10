@@ -44,7 +44,10 @@ def test_round_one_carries_the_top_arguments(cid, first):
     for c in pool:
         if c.get("other_part") or c.get("late") or any(set(c["ids"]) & set(x["ids"]) for x in top):
             continue
-        if c["kind"] == "index_change" and any(x["kind"] == "index_change" for x in top):
+        # one index claim per e-mail - two (different series) in round 1 of a raw-material case (P18 0.707, rule 91)
+        n_idx = sum(x["kind"] == "index_change" for x in top)
+        if c["kind"] == "index_change" and (n_idx >= (2 if case["type"] == "raw_material" else 1)
+                                            or any(x.get("series") == c.get("series") for x in top)):
             continue
         top.append(c)
     want = {i for c in top[:3] for i in c["ids"]}
