@@ -41,7 +41,8 @@ STALL_DROP = 1 / 3    # it stalled: its last move (share of the gap) < 1/3 of th
 STALL_MIN = 0.02      # ...or < 2% of the gap
 MESO_BAND = 0.03  # round-1 MESOs: other structures within 3% of our best cost
 HAIR = 0.001  # one ask this far under a floor the supplier NAMED (P11: 45.00 -> 44.95)
-GRID_LADDER = (0.5, 0.25, 0.1, 0.04)  # probe j asks its price - grid x GRID_LADDER[j] (P11 low draw: 44.75, 44.875, 44.95, 44.98)
+GRID_LADDER = (0.5, 0.25, 0.1, 0.04)
+GRID_LADDER_LOW = (0.8, 0.6, 0.4, 0.2)  # when it keeps its limits internal (P11 high draws: agreed 45.10-45.25)  # probe j asks its price - grid x GRID_LADDER[j] (P11 low draw: 44.75, 44.875, 44.95, 44.98)
 GRID_PROBES = 4  # grid probe: asks between (its price - grid) and its price, stepping up (P11 floor hidden in the 0.50 grid)
 NEAR_CLOSE_TRY = 0.0075  # one ask this far below an OPEN offer before taking it (P11 7117d351: agreed to ours, -0.8%)
 WALK_GUARD_MOVE = 0.005  # its last move cut our cost > 0.5%: still conceding, not about to walk
@@ -1009,7 +1010,13 @@ class NoIdeaAgent:
             j = s.get("probes", 0)
             # HIGH ladder: its patience allows 1-3 probes (P11 3fa2: final after one; 37ea: after three), and its floor sat at
             # the TOP of the gap in low draws (45.00 named; 44.60-44.80 all refused) -> 50%, 25%, 10%, 4% of a grid step under it
-            ask = terms["unit_price"] - g * GRID_LADDER[min(j, len(GRID_LADDER) - 1)]
+            # its answer picks the ladder: it NAMED its floor = standing -> the hair ask above; it kept its limits internal
+            # ("Our margin and our limits stay internal") -> its floor sat LOW in the gap: the high-draw P11 games agreed to
+            # the FIRST probe at 45.10 / 45.13 / 45.25 -> start low
+            secret = s.get("asked_floor") and re.search(r"(?i)limits stay internal|margin .{0,20}internal|cannot (share|disclose)",
+                                                        " ".join(m.get("body") or "" for m in events[-4:] if m.get("from") != "buyer"))
+            ladder = GRID_LADDER_LOW if secret else GRID_LADDER
+            ask = terms["unit_price"] - g * ladder[min(j, len(ladder) - 1)]
             last = next((ts["terms"]["unit_price"] for m in reversed(events) if m.get("from") == "buyer"
                          for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get("unit_price")), 0.0)
             ask = round(min(terms["unit_price"] - 0.01, max(ask, last + 0.01)), 2)
@@ -1557,7 +1564,7 @@ class NoIdeaAgent:
                        f"paid on the due date, which brings your cash in about {rec[1]:.0f} days earlier than you are used to.")
         # 0b. ask its floor (experiment `ask_floor`): "questions go to the person in charge, who answers as openly as the
         #     company is" - once it holds, ask the one number we need
-        if "no_ask_floor" not in EXPERIMENTS and stalled and not self.sup[sid].get("asked_floor"):
+        if "no_ask_floor" not in EXPERIMENTS and (stalled or k >= 2) and not self.sup[sid].get("asked_floor"):
             self.sup[sid]["asked_floor"] = True
             out.append("What is the lowest price at which you can sign these terms today?")
         # 2. ask what it needs: questions go to the person in charge, who answers as openly as the company is

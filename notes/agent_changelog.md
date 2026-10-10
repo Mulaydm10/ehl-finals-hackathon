@@ -774,3 +774,8 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
 - Our ladder 44.60/44.70/44.80 sat far under a floor of ~45.00 while its patience is 1-3 probes. New: GRID_LADDER = 50/25/10/4% of a grid step under its price (P11 low draw 44.75, 44.88, 44.95), and when it NAMES its floor = standing, ONE hair-below ask (-0.1%, 44.95 = 0.802).
 - probe_sim: low draw floor 44.80-44.95 -> 44.95 = **0.802** (was 0.7935); high draw floor 45.10 -> 45.25 = 0.752 (was 0.777 with the low ladder), floor >= 45.30 -> 45.45 = 0.718 (was 0.71). Trade accepted: the goal is crossing 0.80.
 - Tests 38, offline 0.931, walk replays unchanged; replay 37ea72de -> 44.95 after "We can give you EUR 45.00".
+
+## v2.19b live P11 (19:46): 0.752 (e6470ce65a4681ee) - high draw; first probe 45.25 AGREED ("We accept your offer of EUR ... with ... ppm and zero chargebacks!")
+- High draws agreed to the FIRST probe 3 of 3 (45.13 7117, 45.10 b1f9, 45.25 e647) -> the floor sits LOW in the gap; low draws NAME it at the top (45.00, 37ea).
+### v2.19c (offline): the answer to the floor question picks the ladder
+- Floor question one round earlier (k >= 2, in the last data e-mail) so the answer arrives before the first probe. Named = standing -> hair (44.95); "limits stay internal" -> LOW ladder 80/60/40/20% of a step (high draw 45.10 first). Tests 38, offline 0.931, walk replays unchanged.
