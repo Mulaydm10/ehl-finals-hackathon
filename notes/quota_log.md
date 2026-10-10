@@ -215,3 +215,4 @@
 | 2026-10-10 22:37 | Dhruv | P05 | noidea v2.31 rfq_low15 / gpt-6-astra | 0.87 (70210 27.50 @ 14 d) | 0e9974d5c45ca01b |
 | 2026-10-10 22:40 | Neel | P11 | noidea_p11 / gpt-6-astra | **0.71** | b450b03546d3375e |
 | 2026-10-10 22:40 | Parth | P05 | p05_hold timeout 25.54/26.6/26.8 fcf377f / scripted | 0.965 | 27e15c33ad66fd08 |
+| 2026-10-10 22:50 | Neel | P03 | noidea_p03 / gpt-6-astra | **0.96** | 722dee8e68a4836c |

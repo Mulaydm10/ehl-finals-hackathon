@@ -102,3 +102,19 @@ Gate: every other case runs `noidea_neel.py` unchanged.
 **Decision rule after the game:**
 - Path "taken" (a cut in round 2): keep it; tell Dhruv that `year_rise_path` should not skip price-frozen suppliers.
 - Both shrugged: P03 stays at 0.9363 and "+=" keeps the record. Their 0.36 then came from something not in our data, such as wording.
+
+## 6. Live result (local, 2026-10-10 22:50, 722dee8e68a4836c): **0.9633 - beats "+=" 0.9445, new P03 best**
+| our msg | refs | its answer | price @ 90 d |
+|---:|---|---|---:|
+| 1 | should-cost, forecast +10.3%, electronic components -2.3% | 3 x verified, "all hold and we took them into account" | 431.67 (4 of 4) |
+| 2 | **order price path 400.19 -> 412.74 (po:4500013355-10, po:4500014465-10)** | **verified - "We checked the price history data you cited; it holds and we took it into account" (committee)** | **430.41 (-1.26)** |
+| 3 | quote:7300003 (its own 412.74 quote) | **irrelevant** - "The rival quote data you cite does not concern this part or our company" (read as a rival quote); price held | 430.41 |
+| 4 | copper -2.2% | verified, "impact minimal" | 430.36 (-0.05) |
+| 5 | (accept) | agreed | **430.36** |
+
+- **The rising order PRICE PATH is the biggest single cut P03 ever gave (1.26, more than should-cost's 0.79).** The flat
+  order run got 0 in 15 games; the path is a different claim to it. Rule: `year_rise_path` / `rising_price_path` must not
+  skip price-frozen suppliers.
+- The own quote by ID is **dead** on P03 (irrelevant, read as a rival quote). Next time: drop it, so labour (-0.02) fits
+  before its final -> about 430.34.
+- c_deal 3,921,418.28, EUR 324,896 saved.
