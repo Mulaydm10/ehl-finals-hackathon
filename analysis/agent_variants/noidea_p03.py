@@ -27,6 +27,8 @@ central = _base.central
 P03_CASES = {"case:P03"}
 PRICE_PATH_P03 = True  # round 2: our order price path (new kind for P03)
 OWN_QUOTE_AFTER_PATH = True  # round 3: its own quote by ID (noidea_neel puts it in round 2)
+DROP_OWN_QUOTE = True  # live 722dee8e (0.9633): quote:7300003 was "irrelevant" (read as a rival quote) - drop it so labour
+#                       fits before we accept (copper r3, labour r4)
 
 
 class NoIdeaAgent(_base.NoIdeaAgent):
@@ -46,4 +48,6 @@ class NoIdeaAgent(_base.NoIdeaAgent):
         head += [first_idx] if first_idx else []
         oq = [c for c in rest if c["kind"] == "own_past_quote"]
         tail = [c for c in rest if c not in head and c not in oq]
+        if DROP_OWN_QUOTE:
+            oq = []
         return head + pp + (oq if OWN_QUOTE_AFTER_PATH else []) + tail + ([] if OWN_QUOTE_AFTER_PATH else oq)
