@@ -270,3 +270,13 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
     "order history is flat: no path". Wrong: the path is in the older POs. Two figures in one sentence were verified here
     (5.17 and 5.45 both match POs). Port: round 1 = price path (oldest -> latest PO within 12 months) for P08-type
     suppliers.
+
+## 10. P05 (RFQ) - noidea_p05.py, a subclass of Dhruv's main agent: 0.614 -> 0.705 -> 0.755
+- **v1 (737bacd270dea248, 0.705).** Cost drivers for the RFQ part, from cost_drivers.csv; the bidders' dossiers lack the
+  new part, so no index had ever been cited in 11 games. Plus the cheapest rival at ANY lead time (70240's 31.50 @ 52 d
+  had never been cited). 70210: "you did your homework" -> first counter 30.50 (33.00 in every earlier game) -> agreed
+  at our stepped-up 29.05.
+- **v2 (ec7c2e29fdb046cd, 0.755).** Hold the ask low (creep <= 0.15/round, 6% under the market low) and show the first
+  agreement to the other bidders once before accepting. 70250 agreed 30.25 -> shown to the others -> 70210 agreed
+  28.57 @ 14 -> accepted. The auction ratchet plus verified data per round is the lever. 0.9 needs ~27.20; the record
+  is 0.924 (another team).

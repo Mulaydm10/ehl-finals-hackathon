@@ -176,3 +176,4 @@
 | 2026-10-10 21:12 | Neel | P05 | noidea_p05 / gpt-6-astra | **0.71** | 737bacd270dea248 |
 | 2026-10-10 21:13 | Dhruv | P11 | noidea v2.23 good_bad_cop / gpt-6-astra | 0.78 (high draw; 45.10 agreed) | aced3c6022d32468 |
 | 2026-10-10 21:13 | Dhruv | P11 | noidea v2.23 planner / gpt-6-astra | 0.79 (low draw; 44.90/44.95 refused) | dbf506a3e7827dae |
+| 2026-10-10 21:20 | Neel | P05 | noidea_p05 / gpt-6-astra | **0.75** | ec7c2e29fdb046cd |
