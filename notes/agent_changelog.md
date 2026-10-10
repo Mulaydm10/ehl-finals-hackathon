@@ -945,3 +945,9 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
     for non-cent prices costs nothing per api.md).
   C `account_value` - its person's currency (may_drop_small_accounts / we_are_not_strategic): we also buy the 6308 and 7309
     bearings from it, want the whole family on 36 months; its own quote of 20 Sep was EUR 4.63.
+## v2.25 live P04, three experiments in parallel (21:43) - all **0.874** (= record, 3 more times)
+- A price_path_all (24cf72ca71830fb8), C account_value (5c8773bf751a3149): first counter still 4.90 @ 45 d -> the round-1
+  value of this floor-stop supplier did not move for the price path, the account-value line, or the new forecast fact.
+- B subcent_close (0cccb38498fd407b): NOT really tested - the merge had replaced our supplier memory with a teammate copy
+  without the refusal fix, so 4.88 was not known as refused and the close asked 4.88 (held 4.89). Re-run after rebuild.
+- Process lesson: generated files (memory, reactions) must be REBUILT after a merge, not taken from either side.

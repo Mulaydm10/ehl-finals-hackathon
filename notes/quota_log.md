@@ -181,3 +181,6 @@
 | 2026-10-10 21:33 | Dhruv | P04 | noidea v2.24b floor_gamble / gpt-6-astra | 0.86 (90 d; 4.93 refused) | d94cb59807684363 |
 | 2026-10-10 21:02 | Parth | P08 | noidea c1d7678 (hedged: 3 sheets r1, lean later) / gpt-6-astra | 0.916 (agent, P08 rules complete) | 4ff01141bab9fea6 |
 | 2026-10-10 21:19 | Parth | P05 | p05_record 1e8ac31 / scripted | 0.820 | 9ce672fffbf931a7 |
+| 2026-10-10 21:43 | Dhruv | P04 | noidea v2.25 experiment / gpt-6-astra | 0.874 | 24cf72ca71830fb8 |
+| 2026-10-10 21:43 | Dhruv | P04 | noidea v2.25 experiment / gpt-6-astra | 0.874 | 0cccb38498fd407b |
+| 2026-10-10 21:43 | Dhruv | P04 | noidea v2.25 experiment / gpt-6-astra | 0.874 | 5c8773bf751a3149 |

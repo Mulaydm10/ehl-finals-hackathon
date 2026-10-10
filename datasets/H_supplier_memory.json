@@ -1,6 +1,6 @@
 {
  "sup:70110": {
-  "games": 5,
+  "games": 6,
   "scores": [
    0.78,
    0.91,
@@ -93,9 +93,9 @@
    }
   },
   "took": {
-   "index change": 2,
-   "notice period": 1,
-   "volume change": 2
+   "index change": 3,
+   "notice period": 2,
+   "volume change": 3
   }
  },
  "sup:70140": {
@@ -1065,10 +1065,13 @@
   }
  },
  "sup:70620": {
-  "games": 10,
+  "games": 13,
   "scores": [
+   0.874,
    0.0,
+   0.874,
    0.815,
+   0.874,
    0.81,
    0.0,
    0.874,
@@ -1080,8 +1083,8 @@
   ],
   "shrugged": {
    "index change": 6,
-   "price history": 3,
-   "volume change": 4
+   "price history": 4,
+   "volume change": 6
   },
   "structures": {
    "contract_months=36|payment_days=14": {
