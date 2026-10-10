@@ -1,5 +1,5 @@
 {
- "games": 206,
+ "games": 212,
  "by_kind": {
   "copper notation": {
    "taken": 1,
@@ -18,10 +18,10 @@
    "take_rate": 1.0
   },
   "index_change": {
-   "taken": 146,
+   "taken": 155,
    "no_change": 17,
    "confirm_case": 7,
-   "take_rate": 0.86
+   "take_rate": 0.87
   },
   "labour cost index": {
    "taken": 1,
@@ -32,9 +32,9 @@
    "take_rate": 0.0
   },
   "news": {
-   "taken": 3,
+   "taken": 5,
    "no_change": 1,
-   "take_rate": 0.75
+   "take_rate": 0.83
   },
   "notice_period": {
    "taken": 5,
@@ -42,21 +42,21 @@
    "take_rate": 0.83
   },
   "po_prices": {
-   "no_change": 45,
+   "no_change": 46,
    "taken": 25,
-   "take_rate": 0.36
+   "take_rate": 0.35
   },
   "rival_quote": {
-   "taken": 67,
-   "no_change": 12,
-   "take_rate": 0.85
+   "taken": 77,
+   "no_change": 13,
+   "take_rate": 0.86
   },
   "scorecard_otd": {
    "no_change": 2,
    "take_rate": 0.0
   },
   "scorecard_ppm": {
-   "taken": 42,
+   "taken": 43,
    "no_change": 3,
    "take_rate": 0.93
   },
@@ -70,7 +70,7 @@
   },
   "volume_change": {
    "no_change": 27,
-   "taken": 90,
+   "taken": 91,
    "take_rate": 0.77
   }
  },
@@ -163,25 +163,25 @@
   },
   "case:P05": {
    "index_change": {
-    "taken": 25,
+    "taken": 33,
     "no_change": 1
    },
    "rival_quote": {
-    "taken": 67,
-    "no_change": 11
+    "taken": 77,
+    "no_change": 12
    },
    "_signals": {
     "final_at_10": 3,
     "final_at_8": 2,
+    "final_at_7": 5,
     "final_at_9": 2,
     "final_at_12": 1,
-    "final_at_7": 4,
-    "final_at_6": 4,
+    "final_at_6": 5,
     "final_at_11": 1,
     "final_at_4": 1
    },
    "news": {
-    "taken": 3
+    "taken": 5
    }
   },
   "case:P07": {
@@ -248,22 +248,22 @@
   },
   "case:P11": {
    "index_change": {
-    "taken": 69
+    "taken": 70
    },
    "scorecard_ppm": {
-    "taken": 41
+    "taken": 42
    },
    "volume_change": {
-    "taken": 38
+    "taken": 39
    },
    "po_prices": {
-    "no_change": 28
+    "no_change": 29
    },
    "_signals": {
     "final_at_4": 6,
     "final_at_5": 8,
     "final_at_7": 1,
-    "final_at_6": 3,
+    "final_at_6": 4,
     "final_at_3": 2
    },
    "energy cost": {
@@ -307,10 +307,10 @@
   }
  },
  "signals": {
-  "asked_for_data": 120,
-  "already_counted": 46,
-  "padding": 46,
-  "fair_point": 55,
+  "asked_for_data": 123,
+  "already_counted": 47,
+  "padding": 47,
+  "fair_point": 61,
   "rising_index_backfired": 7
  }
 }

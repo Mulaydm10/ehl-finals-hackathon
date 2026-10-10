@@ -109,7 +109,7 @@ def simulate(Agent, case, opening, c_open, c_best, r, max_rounds=10, complete=No
         n[sid] += 1
         if show and not act:
             print(f"\n--- {case['case_id']} msg {sum(n.values())} -> {sid} | sheets "
-                  f"{[{k: v for k, v in t['terms'].items() if k in case['negotiable']} for t in msg['term_sheets']]}")
+                  f"{[{k: v for k, v in t['terms'].items() if k in case['negotiable']} for t in msg.get("term_sheets", [])]}")
             print("    " + msg["body"].replace("\n", "\n    "))
         if events[-1].get("status") == "final_offer":  # pushing after its last word: it walks (P07 v1.3 live)
             threads[sid].append({"from": sid, "status": "walked_away", "body": ""})
@@ -117,6 +117,8 @@ def simulate(Agent, case, opening, c_open, c_best, r, max_rounds=10, complete=No
             if not others:
                 c_alt = agent.c_alt
                 return (0.0 if c_alt == math.inf else max(0.0, (c_open - c_alt) / (c_open - c_best))), "walked", sum(n.values())
+            continue
+        if not msg.get("term_sheets"):  # a note without a price (api.md: answered, the quote stands) - it repeats its quote
             continue
         sheets = [complete_offer(case, t["terms"]) for t in msg["term_sheets"]]
         costs = [total_cost(case, t, std) for t in sheets]

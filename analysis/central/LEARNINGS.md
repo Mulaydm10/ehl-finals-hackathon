@@ -94,6 +94,8 @@ Text, anchor depth, our moves (20-92% of the gap) and committee requests change 
 
 | data (cited once per case) | cut per unit | note |
 |---|---:|---|
+| **our order PRICE PATH 400.19 -> 412.74 (2 POs, round 2)** | **1.26** | **722dee8e68a4836c: 431.67 -> 430.41, final 430.36 = 0.963 (new best, beats "+=" 0.944)** |
+| its own quote by ID (quote:7300003) | 0 | "irrelevant" - read as a rival quote |
 | should-cost EUR 403.21 vs its EUR 438.21 quote | 0.79 | only one ID |
 | electronic components −2.27% (2025-01 → 2025-10), 42% of its cost | 0.48 | ≈ 0.5 × weight × fall% |
 | volume forecast +10.3% (latest) | 0.14 | the June +23.3% snapshot did worse; a 2nd fc ID = "duplicate" |

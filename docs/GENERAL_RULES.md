@@ -220,3 +220,10 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
 96. **Extreme anchors make bidders walk** (Parth run 3: 21.00 -> both walked, 0.381): anchor ~10% under the market low.
 97. **RFQ asks ~10% under the market low** (6% left money: a bidder agreed to our own ask; 10% -> 0.824; 12% and below risk walks
     and slow rounds). Multi-bidder rounds run close to the 60-s reply limit - one timeout cost 0.06.
+98. **RFQ asks ~12% under the market low** (live P05 curve: 6% 0.755, 10% 0.81, 12% 0.871, 15% 0.865; an extreme anchor walks).
+99. **In an RFQ the highest opener can have the lowest floor** (P05 Fuchsreiter: opens 38.50, agrees 26.75; the low opener's floor
+    ~27.4). Judge bidders by how far they MOVE once they move, not by their opening.
+100. **A round without our move can unlock a holder** (Parth P05 0.950): it answers "without movement from your side we cannot
+    move either", then - after our deep ask + the lowest rival - "we need to clarify this internally" and its line drops about
+    one step per round; it agrees to our standing ask once that is above its line. Make ONE move after the clarification.
+    A late reply counts as "our last offer repeated" (three in a row end the thread) - prefer a no-price note to a timeout.

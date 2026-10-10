@@ -1043,3 +1043,26 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 
 ## v2.31 live P05 x2 (22:33): 0.807 / 0.807 (ceb3295e8f463b18, 51dcee25992e24f3)
 - Both: 70210 30.00 @ 14 -> AGREED to our round-1 ask 28.06 @ 14 d at once; shown to the others (70250 29.50 final, 70240 32.00) -> accepted. Consistent (v2.30: 0.824 / 0.761) but 70210 says yes at once -> its floor is LOWER. Next: rfq_low12 / rfq_low15.
+
+## v2.31 live P05 depth experiments (22:36, parallel) + Parth's hold path
+- rfq_low12 (7271fbdd0ff0e105): **0.871 = our agent best P05**: 70210 27.44 @ 14 d. rfq_low15 (0e9974d5c45ca01b): 0.865 (27.50 @ 14 d).
+  Depth curve: 6% 0.755, 10% 0.807-0.824, **12% 0.871**, 15% 0.865 -> **default now 12%**.
+- **Parth's hold path: 0.950** (83612a5b5ce32831, scripted tools/experiments/p05_hold.py; 0.924 x6 before): Fuchsreiter (70250)
+  opens HIGHEST (38.50) but has the LOWEST floor (~26.26). Round 1: hold (no move from us - a deliberate timeout = "our last
+  offer repeated"; "Without movement from your side we cannot move either"). Round 2: ask 25.54 @ 14 + the lowest rival + our
+  true late-payment record -> 28.00 + "we need to clarify this internally". Then ONE move: after the clarification its line
+  drops ~1.00 a round and it AGREES at our standing ask once that is above its line -> 26.75 @ 14 d = 0.950.
+- Parth hold path again: **P05 0.965** (27e15c33ad66fd08): Fuchsreiter agreed 26.60 @ 14 d in round 3 (team best; board record was 0.924).
+- Cloud P11 analysis (824aea0): the 0.807 record = C 740,860.50 = 44.92 @ 300/0; only 44.91 (0.8086) beats it - ~10% per low draw, ~5% per game. noidea_p11.py variant: hold the labour fact until its first hold, then one 44.91 shot.
+
+### v2.32 (offline): Parth's hold path as a GENERAL RFQ rule (noidea_rfq.py)
+- Trigger (round 1): a bidder opening >= 15% above the lowest OTHER opening (must-haves aside) - P05 Fuchsreiter 38.50 vs 31.50.
+- Step 1: our first message to it carries NO price - a short note (api.md: answered, the quote stands) instead of Parth's
+  deliberate late reply (a timeout = "our last offer repeated"; three end the thread).
+- Step 2: first priced ask 16% under the live market low (must-haves met), thresholds FROZEN there (Parth: 30.50 -> 25.54);
+  step 3: one move to 13.8% under, then hold; take any of its offers <= 11.5% under at once (Parth's 27.00 line).
+- Bugs found while checking: (a) thresholds anchored on openings filtered by must-haves -> never triggered; (b) frozen in the
+  note round (market 36.00) -> would have taken 27.50; (c) the offline harness crashed on a message without term sheets.
+- Replay of Parth's 0.965 game in real round order: r0 note -> r1 deep ask 25.16 @ 14 -> r2 it agreed 26.60 -> accept (= 0.965).
+- Tests 64; offline mean 0.942 (P05 0.95 -> 0.87 offline: the sim's bidders accept at once, a hold round cannot pay there);
+  walk replays, P11 / P01 / P04 unchanged; offline Qwen + Astra P05 OK; injection PASS.
