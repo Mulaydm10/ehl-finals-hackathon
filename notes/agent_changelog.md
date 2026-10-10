@@ -788,3 +788,5 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
 
 ## v2.19d live P11 (19:52): 0.71 (313c4e22dd0f2933) - high draw, slow (46.50 -> 46.00 -> 45.50), limits kept internal -> low ladder 45.10, 45.38 both refused -> final 45.50. Floor > 45.38 this session.
 - **P11 tally since v2.18 (play the man)**: 0.777, 0.7935, 0.7935, 0.752, 0.71 -> mean 0.765 (v2.16-2.17: mean 0.71). High-draw floors seen: <=45.10, <=45.13, <=45.25, >45.30, >45.38 -> spread over the whole gap: no ladder wins every high draw. Low draws: floor 45.00 named (2x) -> hair 44.95 untested live.
+
+- loop 1/8 (19:57): 0.71 (3608ce1410ab5cf9) - high draw 46.50/46.00/45.50, probes 45.10/45.38/45.45 refused, took 45.50 (late-round accept band fired with the 45.45 probe pending - gain would have been 0.008).
