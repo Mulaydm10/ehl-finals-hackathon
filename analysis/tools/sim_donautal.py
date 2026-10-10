@@ -45,7 +45,7 @@ R2_STEP = {"free": 0.16, "db0": 0.07, "db5": 0.07}  # db5 asks: 0 (1f27, hold) /
 # path (low: c387 0.210, cae4 0.220, 6912 0.217, a4b9 0.210, a43d 0.199; high: 1363 0.258, db7d 0.281). Round 2 takes 0.16 after
 # a ~16% step of ours, 0.11-0.12 after a 30% step (6912 at 90 d, a4b9 at 14 d: the step, not the payment term), 0.16 on the
 # high draw; a deferral round takes half of what is left, the final the rest. XSELL: an untested floor shift (cross-sell).
-BUDGET = {"low": 0.209, "high": 0.27}  # 13 games (task 14): low c387 .210 cae4 .220 6912 .217 a4b9 .210 a43d .199 ad04 .200
+BUDGET = {"low": 0.208, "high": 0.27}  # 14 games (task 15): low c387 .210 cae4 .220 6912 .217 a4b9 .210 a43d .199 ad04 .200 94e7 .200
 R2_BIG_STEP_CUT = 0.115  # low draw, our round-2 step >= 25% of the gap
 FINAL_STEP, DEFER_STEP, DEFER_BELOW, FINAL_AT = 0.05, 0.055, 0.3, 3  # deferral rounds: db7d 0.06/0.06, 6912fd89 0.049/0.049
 HOUSE = 0.752
@@ -86,7 +86,7 @@ def score(t):
 
 
 class Donautal:
-    def __init__(self, draw="low", max_defer=1, xsell=0.0, term36=0.0):
+    def __init__(self, draw="low", max_defer=1, xsell=0.0, term36=0.01):  # 94e77b7b: 36 m headline 5.40 vs 5.41/5.42
         self.draw, self.max_defer, self.xsell, self.free, self.v1, self.xs = draw, max_defer, xsell, True, None, False
         self.term36, self.months = term36, 24  # term36: untested round-1 value shift for a 36-month ask (task 14)
         self.v, self.n, self.defers, self.final, self.ours = None, 0, 0, False, []
@@ -183,7 +183,7 @@ def load(path):
     return mod.NoIdeaAgent
 
 
-def run(Agent, draw="low", max_defer=1, verbose=True, xsell=0.0, term36=0.0):
+def run(Agent, draw="low", max_defer=1, verbose=True, xsell=0.0, term36=0.01):
     threads = {sid: [dict(m) for m in ms] for sid, ms in PROBE["threads"].items()}
     sid = next(iter(threads))
     events, sup, agent, log = threads[sid], Donautal(draw, max_defer, xsell, term36), Agent(None), []

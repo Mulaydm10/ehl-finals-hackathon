@@ -60,6 +60,7 @@ MIRROR_GATE = 0.2  # from our 3rd ask: big mirror steps only while its last step
 R2_HEDGED_SHARE = 0.30  # cloud task 9: round-2 step for hedged suppliers, share of the gap (was ~0.16)
 FINAL_AT_MSG = {"raw_material": 3}  # cloud task 10: our message at which this case type's supplier goes final (P08 9/10, P18 7/10)
 DEFER_RATIO = 0.18  # ...where our step is only this share of its last step (P08 deferred at 0.19x; final at >= 0.9x, P18 at 0.53x)
+DEEP_ANCHOR_HEDGED = None  # cloud task 15: e.g. 0.26 = round-1 anchor depth for hedged raw material (all 14 P08 games ~0.22); OFF
 LONG_TERM_HEDGED = True  # cloud task 14: 36 m sheets for hedged raw-material suppliers (experiment, P08 loop run 2)
 CROSS_SELL = True  # cloud task 13: invite a hedged raw-material distributor to quote for a part we buy elsewhere (untested live)
 DEFER_TIMES = 1  # cloud task 11: small steps in a row (1 = live-tested in db7d315a; 2+ untested - sim_donautal --max-defer)
@@ -423,6 +424,8 @@ class NoIdeaAgent:
         depth = ANCHOR_DEPTH.get(kind, ANCHOR_DEPTH_BY_GOAL.get(goal, 0.05))
         if kind in ("price_increase", "renewal") and goal in ANCHOR_DEPTH_BY_GOAL:
             depth = ANCHOR_DEPTH_BY_GOAL[goal]
+        if DEEP_ANCHOR_HEDGED and self.hedged_raw(case, sid):  # cloud task 15 (P08_loop2.md): untested, sign unknown
+            depth = DEEP_ANCHOR_HEDGED
         # central: a mirroring supplier meets us in the middle (P02 ee98266bedd37231: its cut was ~half our step), so the
         # meeting point follows OUR anchor; its first answer did not depend on the anchor (374.84 for 361.96 and 364.69)
         if central.mirror_supplier(case["case_id"]):
