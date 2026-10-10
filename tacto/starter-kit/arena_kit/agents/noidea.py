@@ -322,7 +322,9 @@ class NoIdeaAgent:
         # a short-fuse supplier (final in round 1-2) never reads a round-2 fact: its flat history goes in round 1
         # (P10 probes A-E: "price history ... it holds and we took it into account", counter 31.50 vs 31.70 without)
         short = self.patience_prior(case, sid) <= 2
-        if short:  # and as the price PATH, which it takes, not the flat run it shrugs off (price_path)
+        # and as the price PATH, which it takes, not the flat run it shrugs off (price_path). Others only in the
+        # experiment `price_path_all` (upward paths: P02 +1.2%, P03 +3.1%, P04 +2.3%, P08; untested live)
+        if short or "price_path_all" in EXPERIMENTS:
             desc = {p["part"]: p["description"] for p in self.dossiers.get(sid, {}).get("parts", [])}
             pos = [(self.price_path(sid, c["part"], desc.get(c["part"], c["part"])) or c)
                    if self.po_jump(c) == 0 else c for c in pos]
@@ -487,14 +489,24 @@ class NoIdeaAgent:
         P10: [28.94, 29.89, 29.89] got "it holds and we took it into account" (probes A-E, 5/5); the flat [29.89 x 8]
         got "it holds, but it does not change our calculation" (c283f47ddedd3b53). Only if today's price was a rise."""
         rows = self.po_hist.get((sid, part)) or []
-        if len(rows) < 3:
-            return None
-        start = len(rows) - 1
-        while start > 0 and rows[start - 1][2] == rows[-1][2]:
-            start -= 1
-        if start == 0 or rows[start - 1][2] >= rows[-1][2]:
+        runs = []  # [price, first row, last row] of each run of equal prices
+        for i, (_, _, p) in enumerate(rows):
+            if runs and runs[-1][0] == p:
+                runs[-1][2] = i
+            else:
+                runs.append([p, i, i])
+        # a one-order blip is noise (P04: EUR 4.39 since Jan 2026, one order at 4.29 on 9 Jun, then 4.39 again)
+        merged = []
+        for k, r in enumerate(runs):
+            if r[2] == r[1] and k < len(runs) - 1:
+                continue
+            if merged and merged[-1][0] == r[0]:
+                merged[-1][2] = r[2]
+            else:
+                merged.append(list(r))
+        if len(rows) < 3 or len(merged) < 2 or merged[-2][0] >= merged[-1][0]:
             return None  # never changed in the data, or the last change was a cut
-        before, first, last = rows[start - 1], rows[start], rows[-1]
+        before, first, last = rows[merged[-2][2]], rows[merged[-1][1]], rows[-1]
 
         def month(d):
             return datetime.date.fromisoformat(d[:10]).strftime("%B %Y")
