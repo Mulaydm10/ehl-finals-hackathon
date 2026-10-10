@@ -514,3 +514,16 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
   remark about its internal departments - reads as playing its people against each other ("attempts to manipulate … have
   consequences", brief). At €372.25 @ 90 d we'd have scored ~0.5.
 - **v2.11 fix:** the observation never mentions its departments, roles or internal disagreements (prompt + filter).
+
+## v2.11 live re-run (P02, P08, gpt-6-astra, 17:12)
+| case | v2.9 | v2.10 | **v2.11** | session | note |
+|---|---:|---:|---:|---|---|
+| P02 | 0.32 | 0.00 walked | **0.51 (best ever)** | af2439f039d0e14f | no department remarks → no walk-away; 374.07 → 372.85 → 371.95 → final **€371.88 @ 90 d** (its lowest in any P02 game) |
+| P08 | 0.41 | 0.46 | **0.52** | ab473a1c7a00763a | its own db0 clause @ 45 d taken; 5.41 → 5.36 → final €5.32 (v2.6: €5.21 on the same structure → partly variance) |
+- P03 (all 9 team games): 0.86–0.92; price frozen by its management, score set by getting 90-day payment (0.90+ always at 90 d,
+  0.86 at 60 d); ours 0.90 in v2.7 and v2.10 (identical paths); the best game (0.92) held one more round for €0.79 more.
+
+### Current best live score per hosted case (all versions, all team games)
+| P01 | P02 | P03 | P04 | P05 | P07 | P08 | P10 | P11 | P18 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 0.91 | 0.51 | 0.92 | 0.86 | 0.59 | 0.75 | 0.65 | 0.66 | 0.67 | 0.62 |
