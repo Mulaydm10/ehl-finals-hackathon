@@ -269,6 +269,12 @@ class NoIdeaAgent:
                 est["ppm"] = real_ppm * (CASH_SHORT_RISK if "cash_short" in motives else 1.0)
             ask_pct = (open_terms["unit_price"] / cur - 1) * 100 if cur and open_terms.get("unit_price") else 0.0
             calc = self.cost_calc(case, sid, events, cur, ask_pct)
+            # a HEDGED supplier answers every claim on its covered series with "That is not our reality" (P08 5 of 5):
+            # no calculation that cites that series - its unhedged falls (PPI-C2431 -2.3%, taken) go in instead
+            hedged = {o["series"] for o in case.get("term_options", {}).get("index_clause", []) or [] if o} \
+                if "hedged_forward" in motives else set()
+            if calc and any(i.split("@")[0].removeprefix("idx:") in hedged for i in calc.get("ids", [])):
+                calc = None
             self.sup[sid] = {"dossier": d, "std": std, "est": est, "justified": justified, "cur": cur,
                              "ask_pct": ask_pct, "open_terms": open_terms, "cost_calc": calc,
                              "args": ([calc] if calc else []) + [
@@ -337,7 +343,16 @@ class NoIdeaAgent:
             desc = {p["part"]: p["description"] for p in self.dossiers.get(sid, {}).get("parts", [])}
             pos = [(self.price_path(sid, c["part"], desc.get(c["part"], c["part"])) or c)
                    if self.po_jump(c) == 0 else c for c in pos]
-        if case["type"] != "bundling" and (ask_pct <= 0 or short or any(self.po_jump(c) >= 3.0 for c in pos)):
+        # a RISE of >= 3% over the last 12 months goes in round 1 as that path, for any supplier (P08 probe A: first
+        # counter 5.41 -> 5.25, 0.912 vs house 0.752); not for kits or frozen prices (P03 +3.1%: untested there)
+        if case["type"] != "bundling" and "price_frozen" not in set(self.dossiers.get(sid, {}).get("motives", {})):
+            desc = {p["part"]: p["description"] for p in self.dossiers.get(sid, {}).get("parts", [])}
+            year = [y for c in pos if self.po_jump(c) < 3.0
+                    if (y := self.year_rise_path(sid, c["part"], desc.get(c["part"], c["part"])))]
+            if year:
+                pos = [c for c in pos if self.po_jump(c) >= 3.0] + year
+        rising = any(c.get("rise", 0) >= 3.0 for c in pos)
+        if case["type"] != "bundling" and (ask_pct <= 0 or short or rising or any(self.po_jump(c) >= 3.0 for c in pos)):
             out += pos
         elif case["type"] != "bundling" and ask_pct > 0:
             # an increase on a price our orders show flat or falling: the history is checkable data for a later round
@@ -380,6 +395,11 @@ class NoIdeaAgent:
             except Exception as e:
                 log.warning("qn claims failed (%s)", e)
         out += self.forecast_args(case)
+        # never an index the supplier has hedged: "That is not our reality: our AS-14404 is covered at fixed prices
+        # until March 2027" (P08, 5 of 5) - its unhedged falls stay (PPI-C2431 -2.3%: taken in P08 probe A)
+        if "hedged_forward" in motives:
+            hedged = {o["series"] for o in case.get("term_options", {}).get("index_clause", []) or [] if o}
+            out = [c for c in out if not (c["kind"] == "index_change" and c.get("series") in hedged)]
         # measured take-rates per data kind (Neel, 54 games: should-cost 2/2 taken, volume forecast 12/19, rising index
         # 7x "confirms our case", OTD 0/1); kinds THIS supplier already shrugged off get rate 0 and are dropped
         if central:
@@ -425,6 +445,10 @@ class NoIdeaAgent:
         if not central:
             prio = dict(ARG_PRIORITY, scorecard_ppm=1.5 if case["type"] == "quality" else ARG_PRIORITY["scorecard_ppm"])
             ranked = sorted(ranked, key=lambda c: prio.get(c["kind"], 9))
+        # an UPWARD price path leads round 1, whatever this supplier did with FLAT histories before (they share the
+        # arena's "price history" wording): taken by P10, P18 and P08 (first counter 5.41 -> 5.25, 0.912), never refused
+        ranked = [{**c, "late": False, "filler": False} for c in ranked if c.get("rise", 0) >= 3.0] + \
+                 [c for c in ranked if c.get("rise", 0) < 3.0]
         return [c for c in ranked if not c.get("other_part")] + [c for c in ranked if c.get("other_part")]
 
     # Expected round of its final_offer, by what we know before round 1 (26 practice games, src/eval/archive_runs.py):
@@ -505,6 +529,41 @@ class NoIdeaAgent:
         m = re.search(r"were at ([\d.]+(?:, [\d.]+)*) per", claim["sentence"]) if claim else None
         prices = [float(x) for x in m.group(1).split(", ")] if m else []
         return (prices[-1] / prices[0] - 1) * 100 if len(prices) > 1 and prices[0] else 0.0
+
+    def year_rise_path(self, sid, part, desc, min_rise=3.0):
+        """The RISE of the last 12 months as one price-history claim: the last order at the year's low, the first order
+        of each higher step (one-order blips skipped), the latest order. P08 probe A (44afd13): [5.17, 5.24, 5.43, 5.45]
+        -> "we took it into account", first counter 5.25 instead of 5.40-5.42 in all 16 earlier games, final 4.94 =
+        0.912 (house 0.752, team best 0.732). The flat [5.43, 5.45] of the same orders "does not change our calculation"."""
+        rows = self.po_hist.get((sid, part)) or []
+        if len(rows) < 3:
+            return None
+        last = rows[-1]
+        cutoff = f"{int(last[0][:4]) - 1}{last[0][4:]}"
+        idx = [i for i, r in enumerate(rows) if r[0] >= cutoff]
+        if not idx:
+            return None
+        lo = min(idx, key=lambda i: (rows[i][2], -i))  # the year's low price, its LAST order
+        rise = (last[2] / rows[lo][2] - 1) * 100
+        if rise < min_rise:
+            return None
+        points, i = [lo], lo + 1
+        while i < len(rows):
+            j = i
+            while j + 1 < len(rows) and rows[j + 1][2] == rows[i][2]:
+                j += 1
+            if (j > i or j == len(rows) - 1) and rows[i][2] > rows[points[-1]][2]:
+                points.append(j if j == len(rows) - 1 else i)  # the final step is cited by its latest order
+            i = j + 1
+        if points[-1] != len(rows) - 1:
+            points.append(len(rows) - 1)
+        points = points[:7] + points[-1:] if len(points) > 8 else points
+        ids = [rows[p][1] for p in points]
+        months = (int(last[0][:4]) - int(rows[lo][0][:4])) * 12 + int(last[0][5:7]) - int(rows[lo][0][5:7])
+        return {"supplier": sid, "part": part, "kind": "po_prices", "ids": ids, "figure": None, "unit": None,
+                "checked_by_arena": True, "path": True, "rise": round(rise, 1),
+                "sentence": f"Our orders for {desc} rose from EUR {rows[lo][2]:.2f} to EUR {last[2]:.2f} within "
+                            f"{months} months ({', '.join(ids)})."}
 
     def price_path(self, sid, part, desc):
         """The order history as a PATH: the last order at the earlier price, the first at today's and the latest.
