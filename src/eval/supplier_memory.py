@@ -56,8 +56,8 @@ def main():
             if x.get("status") == "agreed" and last_ask and abs(last_ask.get("unit_price", -1) - p) < 0.005 \
                     and key(last_ask) == key(t):
                 st["agreed_to_our_ask"].append([p, prev_std])  # [price it agreed to, its standing before]
-            elif last_ask and prev_std is not None and abs(p - prev_std) < 0.005 and key(last_ask) == key(t) \
-                    and last_ask.get("unit_price", 1e9) < p:
+            elif last_ask and key(last_ask) == key(t) and last_ask.get("unit_price", 1e9) < p - 0.005:
+                # any ask it answered with a HIGHER price is a refusal, whether it held or moved (P04 ffef: 4.88 -> 4.89)
                 st["refused_asks"].append([last_ask["unit_price"], p])  # [our ask, the standing it held]
             if x.get("status") == "final_offer":
                 st["finals"].append(p)

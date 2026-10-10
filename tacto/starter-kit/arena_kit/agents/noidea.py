@@ -1661,8 +1661,22 @@ or null, "reason": "<one sentence>"}."""
         if len(fin) < 2 or self.patience_prior(case, sid) > 2 or case["type"] == "rfq":
             return None
         s = self.sup[sid]
-        best = min(fin, key=lambda x: total_cost(case, complete_offer(case, {**s["open_terms"], **x[0], "unit_price": x[1]}),
-                                                  s["std"], s["est"]))
+        cost = lambda x, d=0.0: total_cost(case, complete_offer(case, {**s["open_terms"], **x[0], "unit_price": round(x[1] - d, 2)}),
+                                           s["std"], s["est"])
+        if "floor_gamble" in EXPERIMENTS:
+            # experiment: the term with the best score one cent UNDER its remembered final, among terms whose final itself
+            # is within 0.02 score of the best final (P04: 90 d - 4.93 = 1.0 if taken, 4.94 = 0.86 if refused, vs 45 d 0.874)
+            span = 0.02 * (s.get("c_span") or 1.0)
+            best_final = min(cost(x) for x in fin)
+            ok = [x for x in fin if cost(x) <= best_final + abs(best_final) * 0.0002] or fin
+            # skip terms where that one-cent-under ask was already REFUSED (memory: P04 45 d 4.88, ffef2938)
+            mem = (self.memory.get(sid) or {}).get("structures") or {}
+            def refused(x):
+                key = next((k for k in mem if all(f"{f}={v}" in k.split("|") for f, v in x[0].items())), None)
+                return key is not None and any(abs(a - (x[1] - 0.01)) < 0.005 for a, _ in mem[key].get("refused_asks", []))
+            ok = [x for x in ok if not refused(x)] or ok
+            return min(ok, key=lambda x: cost(x, 0.01))
+        best = min(fin, key=cost)
         return best
 
     def memory_note(self, sid):
