@@ -26,6 +26,17 @@ Before: 11 games, all `final_offer` in round 1 at EUR 31.70-32.00 (best 0.663). 
 **Ceiling with this engine: ~EUR 31.20 = 0.70** (= round-1 counter 31.50 - one step). 0.90 needs EUR 28.66 at lead 56
 (29.38 at lead 42); nothing seen moves it near that. Lead 42 costs a ~EUR 1.90 premium (> our EUR 0.72 late cost).
 
+## After the agent change (same evening)
+| game | what | its round 1 | its round 2 | score | session |
+|---|---|---|---|---:|---|
+| agent 2a53cb1 | credible anchor 29.57, flat price history (8 POs at 29.89) | open **31.70** (history "does not change") | final 31.50 | 0.679 | c283f47ddedd3b53 |
+| agent 87653f3 | + history as a PATH (28.94 -> 29.89) | open **31.50** (path "taken") | final 31.30 | 0.694 | 53bab007f0218897 |
+| probe F | anchor 30.50, path + should-cost, 36 m + 30.75 in round 2 | open 31.50 | final 31.30 | 0.694 | f6a3f82 commit |
+- **A flat order history is shrugged off; the path to today's price is taken.** The agent now builds it from `facts.json`.
+- The round-2 step (0.10-0.30) follows neither our anchor (28.94 -> 0.10, 29.57 -> 0.20, 29.89 -> 0.30, 30.50 -> 0.20) nor our
+  step size; B's 0.30 looks like the top of its range. Not worth more sessions.
+- **P10 result: 0.663 -> 0.694 with the agent (reliable), 0.702 best (probe B). 0.90 is not reachable with this engine.**
+
 ## For the agent (general rule, not P10-only)
 - One-shot / capacity suppliers: anchor at a **credible** level (current price backed by the price history, never at
   the floor estimate), all strong data in round 1 (price history + should-cost), keep 36 m as the round-2 move, round-2
