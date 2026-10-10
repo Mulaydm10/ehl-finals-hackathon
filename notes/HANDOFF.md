@@ -43,7 +43,7 @@ Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden supp
 | 0.91 | 0.51 | 0.93 | 0.86 | 0.59 | 0.75 | 0.65 | 0.66 | 0.67 | 0.67 |
 
 ## RUNNING when this was written (collect + record + push)
-- v2.15 live: **P02** (`/tmp/v215/P02.log` on the Mac) and **P05** (`/tmp/v215/P05.log`). Get scores with
+- v2.15 live: P02 finished **0.20** (ef17b16a03f0225d, analyse it) and **P05** (`/tmp/v215/P05.log`). Get scores with
   `grep '"score"' /tmp/v215/P0*.log`, then `archive_runs.py`, append to `notes/agent_changelog.md` + `notes/quota_log.md` +
   `notes/sessions.txt`, commit, push.
 

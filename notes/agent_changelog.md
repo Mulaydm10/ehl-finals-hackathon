@@ -585,3 +585,7 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
 | **Call-off CSV only when it explicitly asks for a schedule / documentation** | CSV only in the weak P02 games |
 - Tests 32 passed; offline 0.944 / 0.940; P02 real-game replays still accept before the walks (0.51 / 0.54 / 0.51); RFQ replay asks
   €26.93–28.73 (were €24.72–26.53).
+
+## v2.15 live (17:37)
+- **P02 v2.15: 0.20** (ef17b16a03f0225d) - still weak; analyse after the context reset with `src/eval/compare_games.py ef17b16a03f0225d:v2.15 da8d0e3d77ce091c:v2.3_0.48 af2439f039d0e14f:v2.11_0.51`.
+- P05 v2.15: was still running at handoff (`/tmp/v215/P05.log`) - record it.
