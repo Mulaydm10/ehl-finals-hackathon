@@ -142,3 +142,8 @@ Round 4 said "our best effort ... without requiring management escalation", so e
   quality notifications on the part (never cited in any game).
 - Cloud session (analysis/central/ENGINES.md, analysis/cases/*_engine.md): engine type per case. 5 of 10 suppliers
   mirror, 2 hold, 1 floor-stop, 1 one-shot, 1 auction. QNs and the supplier's own recent quote were never cited.
+- **A contradicted claim is expensive** (P02 f778b35c67ecd799, 0.607): our quality-notification sentence carried four
+  numbers ("2 notifications ... 12 months ... 4,632 ppm"); the arena checked the wrong one -> "contradicted ... That
+  costs trust". Its first answer rose from 372.52 to 373.88 and the final from 368.25 to 370.95 (-0.24 score), and it
+  asked for proof in every later round. **Rule: one number per claim sentence, the checked figure, no thousands
+  separator.** (Fixed in central.quality_notification_claims; untested live.)

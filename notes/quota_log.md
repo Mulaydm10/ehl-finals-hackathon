@@ -104,3 +104,6 @@
 | 2026-10-10 18:01 | Neel | P02 | noidea_neel / gpt-6-astra | **0.82** | ee98266bedd37231 |
 | 2026-10-10 18:07 | Dhruv | P11 | noidea v2.16b / gpt-6-astra | 0.71 (round-1 answer 0.50 higher than the 0.79 game; held twice when data ran out) | f80f4b5452fa442a |
 | 2026-10-10 18:14 | Dhruv | P11 | noidea v2.16c / gpt-6-astra | 0.71 (qn claims contradicted -> final round 3) | fa9a9d0277f372c6 |
+| 2026-10-10 18:09 | Neel | P02 | noidea_neel / gpt-6-astra | **0.85** | 552fb056e31d24d1 |
+| 2026-10-10 18:13 | Neel | P02 | noidea_neel / gpt-6-astra | **0.85** | 8d4c4d5d7dff80bb |
+| 2026-10-10 18:17 | Neel | P02 | noidea_neel / gpt-6-astra | **0.61** | f778b35c67ecd799 |

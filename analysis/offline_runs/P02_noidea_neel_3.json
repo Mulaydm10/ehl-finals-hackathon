@@ -1,0 +1,40 @@
+{
+ "case": "P02",
+ "variant": "noidea_neel",
+ "sim_score": 0.924016079929989,
+ "end": "deal {'unit_price': 368.73, 'payment_days': 90, 'index_clause': None}",
+ "rounds": 2,
+ "emails": [
+  {
+   "body": "Dear Petra Lechner,\n\nThank you for your message.\n\n1. Volume and term: we confirm a binding volume of 6,110 units per year for 12 months, 6,110 units in total.\n2. Our proposal: EUR 361.96 per unit, 90 days net, no price-adjustment clause. This amounts to about EUR 2,211,576 over the term.\n3. Basis: Our demand forecast for this part is up +11.9% (fc:350011@2026-09), and we commit 6,110 units a year. Your quality over the last 12 months was 273 ppm (sc:70510@2026Q3). Producer prices DE: basic iron and steel, ferro-alloys changed -4.3% from 2024-10 to 2025-10 (idx:PPI-C241@2024-10, idx:PPI-C241@2025-10).\n4. Next step: You told us that price changes above 2% need your pricing committee. Please put this proposal to your pricing committee: a binding 12-month agreement for 6,110 units, about EUR 2,211,576. On the committee's written confirmation we issue the order the same day, and we pay every invoice on the due date.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [
+    "fc:350011@2026-09",
+    "idx:PPI-C241@2024-10",
+    "idx:PPI-C241@2025-10",
+    "sc:70510@2026Q3"
+   ],
+   "sheets": [
+    {
+     "unit_price": 361.96,
+     "payment_days": 90,
+     "index_clause": null
+    }
+   ]
+  },
+  {
+   "body": "Dear Petra Lechner,\n\nThank you for your message.\n\n1. Volume and term: we confirm a binding volume of 6,110 units per year for 12 months, 6,110 units in total.\n2. Our proposal: EUR 362.72 per unit, 90 days net, no price-adjustment clause. This amounts to about EUR 2,216,219 over the term.\n3. Basis: Copper notation for cables and motors (derived) changed -2.2% from 2026-01 to 2026-03 (idx:CU-NOTATION@2026-01, idx:CU-NOTATION@2026-03).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [
+    "idx:CU-NOTATION@2026-01",
+    "idx:CU-NOTATION@2026-03"
+   ],
+   "sheets": [
+    {
+     "unit_price": 362.72,
+     "payment_days": 90,
+     "index_clause": null
+    }
+   ]
+  }
+ ],
+ "relationship": {}
+}

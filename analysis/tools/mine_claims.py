@@ -52,7 +52,13 @@ def main():
     general = collections.Counter()
     games = sessions()
     for sid, (case, trace) in games.items():
+        ours = 0
         for t in trace:
+            if t.get("actor") == "buyer":
+                ours += 1
+            elif ((t.get("move") or {}).get("status")) == "final_offer" and not by_case[case]["_final_seen"][sid]:
+                by_case[case]["_final_seen"][sid] = 1
+                by_case[case]["_signals"][f"final_at_{ours}"] += 1
             if t.get("actor") == "buyer":
                 continue
             for r in t.get("reasons") or []:
@@ -85,7 +91,7 @@ def main():
                     general["already_counted"] += 1
     out = {"games": len(games),
            "by_kind": {k: dict(v) for k, v in sorted(total.items())},
-           "by_case": {c: {k: dict(v) for k, v in ks.items()} for c, ks in sorted(by_case.items())},
+           "by_case": {c: {k: dict(v) for k, v in ks.items() if k != "_final_seen"} for c, ks in sorted(by_case.items())},
            "signals": dict(general)}
     for k, v in out["by_kind"].items():
         n = sum(v.values())
