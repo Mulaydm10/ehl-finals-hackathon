@@ -994,7 +994,77 @@ class NoIdeaAgent:
         return False
 
     # ---- the move ------------------------------------------------------------------------------
+    PLANNER_SYSTEM = """You are the PLANNER reviewing a buyer agent's next move in a supplier negotiation, before it is sent.
+You get: the supplier's last e-mails, our past games with this supplier (memory), our planned move, and the costly mistakes
+to avoid. Decide ONE of: "send" (the plan is fine), "accept" (take its standing offer now - only if more rounds will not get
+a lower price, e.g. it named its floor, or our memory says it goes final next), or "ask" with a price strictly between our
+last ask and its standing price (when memory shows it agreed to such a price before, or the planned ask is far below
+prices it always refused). Never push after a final offer. Answer JSON only: {"verdict": "send|accept|ask", "price": number
+or null, "reason": "<one sentence>"}."""
+
+    def plan_check(self, case, threads, d):
+        """Second agent (experiment `planner`): a model reviews the planned move; code applies only safe overrides."""
+        if "planner" not in EXPERIMENTS or not self.complete or not d:
+            return d
+        sid = d.get("supplier_id")
+        events = threads.get(sid) or []
+        if not events or latest(events).get("status") != "open" or (d.get("message") or {}).get("action"):
+            return d
+        s = self.sup.get(sid) or {}
+        sheets = (d.get("message") or {}).get("term_sheets") or []
+        if not sheets:
+            return d
+        sheet_id, terms, c_stand = self.best_sheet(case, sid, events)
+        if not sheet_id or not terms.get("unit_price"):
+            return d
+        S = terms["unit_price"]
+        plan = [x["terms"].get("unit_price") for x in sheets]
+        # ENDGAME ONLY (configured after the offline trace): while it still cuts for facts the planner pulled our ask up
+        # to 45.10 in round 2 (concedes ~1.50 too early) - so it acts only once it HOLDS (same price twice), from our 3rd
+        # e-mail, with no strong fact left
+        own = [ (m.get("term_sheets") or [{}])[0].get("terms", {}).get("unit_price") for m in events
+                if m.get("from") != "buyer" and m.get("term_sheets")]
+        k = sum(m.get("from") == "buyer" and bool(m.get("term_sheets")) for m in events)
+        holding = len(own) >= 2 and own[-1] is not None and own[-2] is not None and abs(own[-1] - own[-2]) < 1e-9
+        strong_left = any(not self.weak(c) and not any(i in self.cited for i in c["ids"]) for c in s.get("args", []))
+        if not holding or k < 2 or strong_left:
+            return d
+        last_ask = next((ts["terms"]["unit_price"] for m in reversed(events) if m.get("from") == "buyer"
+                         for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get("unit_price")), None)
+        sup_mails = [(m.get("status"), (m.get("term_sheets") or [{}])[0].get("terms", {}).get("unit_price"),
+                      " ".join((m.get("body") or "").split())[:400]) for m in events if m.get("from") != "buyer"][-3:]
+        user = (f"SUPPLIER LAST E-MAILS (status, price, text): {json.dumps(sup_mails)}\n"
+                f"ITS STANDING PRICE: {S}\nOUR LAST ASK: {last_ask}\nPLANNED SHEETS (prices): {plan}; data IDs in the "
+                f"planned e-mail: {len((d.get('message') or {}).get('refs') or [])}\n"
+                f"MEMORY:\n{self.memory_note(sid)}\n"
+                "MISTAKES TO AVOID: pushing after final_offer (walks); empty rounds without new data (it goes final); asks "
+                "far below prices it always refused (burn its patience); accepting an OPEN offer while it still moves.")
+        try:
+            raw = self.complete(self.PLANNER_SYSTEM, user)
+            v = json.loads(re.search(r"\{.*\}", raw, re.S).group(0))
+        except Exception as e:
+            log.warning("planner failed (%s) - plan kept", e)
+            return d
+        log.info("%s planner: %s", sid, json.dumps(v)[:300])
+        # no accept while a cheaper ask under its price is still untried (the trace accepted 45.00 and lost the 44.95 = 0.80)
+        untried = min((x for x in plan if x is not None), default=S) < S - 0.005
+        if v.get("verdict") == "accept" and not untried and must_haves_ok(case, terms, s.get("std", {})) \
+                and c_stand < self.c_alt:
+            return {"supplier_id": sid, "message": {"action": {"type": "accept", "term_sheet_id": sheet_id}}}
+        if v.get("verdict") == "ask" and isinstance(v.get("price"), (int, float)):
+            p = round(float(v["price"]), 2)
+            lo = max((last_ask or 0), min((x for x in plan if x is not None), default=0)) + 0.005  # never below the plan
+            if lo < p < S:
+                t = complete_offer(case, {**terms, "unit_price": p})
+                if must_haves_ok(case, t, s.get("std", {})):
+                    d["message"]["term_sheets"] = [{"terms": {f: t.get(f) for f in case["negotiable"]}}] + \
+                        [x for x in sheets if x["terms"].get("unit_price") != p][:2]
+        return d
+
     def decide(self, case, threads):
+        return self.plan_check(case, threads, self._decide(case, threads))
+
+    def _decide(self, case, threads):
         if case["case_id"] != self.case_id:
             self.prepare(case, threads)
         self.threads_ref = threads
@@ -1785,6 +1855,19 @@ class NoIdeaAgent:
                 out.append(f"We accept your price. On the chargeback: at the {ppm:.0f} ppm you commit to, EUR {cb:.0f} per "
                            f"complaint means about {n:.0f} complaints a year, around EUR {n * cb:,.0f} - it only costs you if "
                            f"quality slips below your own commitment. Alternatively the second sheet, without a chargeback.")
+        # GOOD COP / BAD COP (experiment `good_bad_cop`): the "bad cop" is real - our own Supplier Quality escalation letter
+        # (the case trigger doc: "will discuss quality commitments and cost recovery") and a real qualified second source
+        # (the case alternative); the negotiator is the good cop who offers the way out. Nothing invented, no price of the
+        # alternative (it is dearer). Once, when it stalls.
+        alt = case["buyer"].get("alternative") or {}
+        trig = case.get("trigger_doc")
+        if "good_bad_cop" in EXPERIMENTS and stalled and trig and alt.get("ref") and not self.sup[sid].get("cop_said"):
+            self.sup[sid]["cop_said"] = True
+            ask = min((t.get("unit_price") for t in sheets if t.get("unit_price")), default=None)
+            out.append(f"To be open with you: our Supplier Quality team's escalation ({trig}) asks for cost recovery after the "
+                       f"red scorecard, and a second source is already qualified for this part. I would rather keep this "
+                       f"business with you" + (f": at EUR {ask:.2f} I can sign today, with no chargebacks and every invoice "
+                                               f"paid on the due date." if ask else "."))
         # 0b. ask its floor (experiment `ask_floor`): "questions go to the person in charge, who answers as openly as the
         #     company is" - once it holds, ask the one number we need
         if "no_ask_floor" not in EXPERIMENTS and (stalled or k >= 2) and not self.sup[sid].get("asked_floor"):

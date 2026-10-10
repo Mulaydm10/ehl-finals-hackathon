@@ -879,3 +879,15 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
   Prompt rule: never sound like an accusation or a test ("prove your reliability", "earn our confidence", "documented complaints").
 - Astra round 1 OK (non-accusing opening + the line), injection PASS, tests 56.
 - v2.22 live P11 (20:55): 0.71 (605ed96c39467c97) - HIGH draw despite the fixed reassurance line (1 game: the wording hypothesis is neither confirmed nor refuted; 7 of 19 earlier high draws also had reassuring wording). Probes 45.10, floor trade 45.50+EUR 300 / 45.39, hair 45.45 all held.
+- v2.22 live P11 (21:03): 0.71 (73c7ca293b8154f0) - high draw; probe 45.10, floor trade 45.50+EUR 300 / 45.39, hair 45.45 held -> 45.50.
+
+### v2.23 (offline): two new experiments, run in parallel (user: "try bad cop good cop and also the 3rd one parallely")
+- `good_bad_cop` (honest): once it stalls - "our Supplier Quality team's escalation (doc:20260921-70140-P11) asks for cost
+  recovery after the red scorecard, and a second source is already qualified ... I would rather keep this business with you:
+  at EUR X I can sign today, with no chargebacks and every invoice paid on the due date." Our real letter + real alternative;
+  no invented authority, no price of the dearer alternative.
+- `planner` (second agent): a model reviews each planned move (thread + supplier memory + top mistakes) and may only accept
+  or move the ask between our plan and its price. **Configured after the offline trace**: unconfigured it pulled round 2's
+  ask to 45.10 (conceding ~1.50 early) and accepted 45.00 (losing the 44.95 that scored 0.80) -> offline P11 0.97 -> 0.777.
+  Now endgame only (it holds, >= 3rd e-mail, no strong fact left), no accept while a cheaper ask under its price is untried,
+  never below our plan. Re-trace: eac2 -> floor trade kept; a5ab -> 45.10 probe kept. Tests 56.

@@ -1,5 +1,5 @@
 {
- "games": 168,
+ "games": 170,
  "by_kind": {
   "copper notation": {
    "taken": 1,
@@ -18,10 +18,10 @@
    "take_rate": 1.0
   },
   "index_change": {
-   "taken": 97,
+   "taken": 103,
    "no_change": 13,
    "confirm_case": 7,
-   "take_rate": 0.83
+   "take_rate": 0.84
   },
   "labour cost index": {
    "taken": 1,
@@ -38,20 +38,20 @@
   },
   "po_prices": {
    "no_change": 39,
-   "taken": 20,
-   "take_rate": 0.34
+   "taken": 22,
+   "take_rate": 0.36
   },
   "rival_quote": {
-   "taken": 24,
-   "no_change": 7,
-   "take_rate": 0.77
+   "taken": 26,
+   "no_change": 8,
+   "take_rate": 0.76
   },
   "scorecard_otd": {
    "no_change": 2,
    "take_rate": 0.0
   },
   "scorecard_ppm": {
-   "taken": 34,
+   "taken": 35,
    "no_change": 3,
    "take_rate": 0.92
   },
@@ -60,7 +60,7 @@
    "take_rate": 1.0
   },
   "volume_change": {
-   "taken": 79,
+   "taken": 82,
    "no_change": 20,
    "take_rate": 0.8
   }
@@ -147,8 +147,8 @@
   },
   "case:P05": {
    "rival_quote": {
-    "taken": 24,
-    "no_change": 6
+    "taken": 26,
+    "no_change": 7
    },
    "_signals": {
     "final_at_10": 3,
@@ -175,20 +175,20 @@
   },
   "case:P08": {
    "index_change": {
-    "taken": 16,
+    "taken": 20,
     "no_change": 7,
     "confirm_case": 1
    },
    "volume_change": {
-    "taken": 16
+    "taken": 18
    },
    "_signals": {
     "final_at_4": 7,
-    "final_at_3": 13
+    "final_at_3": 15
    },
    "po_prices": {
     "no_change": 6,
-    "taken": 2
+    "taken": 4
    },
    "scorecard_ppm": {
     "no_change": 1
@@ -221,13 +221,13 @@
   },
   "case:P11": {
    "index_change": {
-    "taken": 53
+    "taken": 55
    },
    "scorecard_ppm": {
-    "taken": 34
+    "taken": 35
    },
    "volume_change": {
-    "taken": 31
+    "taken": 32
    },
    "po_prices": {
     "no_change": 23
@@ -276,10 +276,10 @@
   }
  },
  "signals": {
-  "already_counted": 37,
-  "padding": 39,
-  "asked_for_data": 100,
+  "already_counted": 38,
+  "padding": 40,
+  "asked_for_data": 105,
   "rising_index_backfired": 7,
-  "fair_point": 18
+  "fair_point": 19
  }
 }
