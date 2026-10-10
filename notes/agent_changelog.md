@@ -852,3 +852,11 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 ### v2.21c (offline): never an empty round - when only weak facts are left, send the next one anyway (model + code paths).
 - Conflict of rule 73 (weak facts only after a hold) with rule 40 (no round goes out empty); rule 40 wins.
 - Replays: 3cc4 round 3 now 6 refs; 7285 floor trade [(45.00, EUR 300), (44.95, 0)] with 8 refs. Tests 50, offline 0.930/0.925.
+
+## v2.21c live P11 (20:40): **0.8019 = NEW BEST P11, first above 0.80** (eac20911ec06e2d6)
+- Low draw: 46.00 (round-1 facts + late-payment admission: "Thanks for being straight about the late payments") -> 45.00
+  (electricity) -> hold at 45.00 with labour + QNs ("barely moves our costs", "old news") -> **floor trade: two sheets, 45.00 with
+  EUR 300 chargeback or 44.95 without -> it AGREED to 44.95** (0.8019). The chargeback sheet was not chosen.
+- What made it work: no empty round (v2.21c), the probe / floor pair in the same e-mail as the pending facts (v2.21b), the
+  hair-under-the-floor price (v2.19b), memory saying its price is hard at 45.00 (v2.20), the person's currency (v2.18).
+- P11 history: 0.67 (v2.7) -> 0.79 (v2.16) -> 0.8019 (v2.21c).

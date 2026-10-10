@@ -1,5 +1,5 @@
 {
- "games": 159,
+ "games": 162,
  "by_kind": {
   "copper notation": {
    "taken": 1,
@@ -18,7 +18,7 @@
    "take_rate": 1.0
   },
   "index_change": {
-   "taken": 89,
+   "taken": 93,
    "no_change": 13,
    "confirm_case": 7,
    "take_rate": 0.82
@@ -33,7 +33,7 @@
    "take_rate": 0.67
   },
   "po_prices": {
-   "no_change": 36,
+   "no_change": 37,
    "taken": 18,
    "take_rate": 0.33
   },
@@ -47,7 +47,7 @@
    "take_rate": 0.0
   },
   "scorecard_ppm": {
-   "taken": 31,
+   "taken": 32,
    "no_change": 3,
    "take_rate": 0.91
   },
@@ -56,9 +56,9 @@
    "take_rate": 1.0
   },
   "volume_change": {
-   "taken": 73,
+   "taken": 75,
    "no_change": 20,
-   "take_rate": 0.78
+   "take_rate": 0.79
   }
  },
  "by_case": {
@@ -171,15 +171,15 @@
   },
   "case:P08": {
    "index_change": {
-    "taken": 13,
+    "taken": 14,
     "no_change": 7,
     "confirm_case": 1
    },
    "volume_change": {
-    "taken": 13
+    "taken": 14
    },
    "_signals": {
-    "final_at_4": 6,
+    "final_at_4": 7,
     "final_at_3": 11
    },
    "po_prices": {
@@ -216,16 +216,16 @@
   },
   "case:P11": {
    "index_change": {
-    "taken": 48
+    "taken": 51
    },
    "scorecard_ppm": {
-    "taken": 31
+    "taken": 32
    },
    "volume_change": {
-    "taken": 28
+    "taken": 29
    },
    "po_prices": {
-    "no_change": 20
+    "no_change": 21
    },
    "_signals": {
     "final_at_4": 6,
@@ -268,8 +268,8 @@
   }
  },
  "signals": {
-  "already_counted": 32,
-  "padding": 36,
+  "already_counted": 34,
+  "padding": 37,
   "asked_for_data": 96,
   "rising_index_backfired": 7,
   "fair_point": 18

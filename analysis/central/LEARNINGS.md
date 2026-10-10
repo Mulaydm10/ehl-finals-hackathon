@@ -259,3 +259,14 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
     (b1ca, high draw, 60 d: -0.17). Its text: "Accommodating your requested 60-day payment terms, we can offer a revised
     base price". The floor trade never fired (its price stayed above every final it had given). **Suspect: 60 d in round
     2. Revert to 14 d (4 low-draw games, -0.10 to -0.17) until the cloud explains it.**
+16. **TEAMMATE BEAT THE HOUSE: live d0708ed1038995d1 = 0.912 (P08 record; house 0.752).** Deal 4.94 @ 14, db0, 24 m.
+    **The lever was the round-1 value, via an order-history PRICE PATH** (Parth's rule 76): "Our orders for this bar rose
+    from EUR 5.17 to EUR 5.45 within nine months (po:4500013278-10 2025-12, po:4500013392-10 2026-01, po:4500013795-10
+    2026-04, po:4500014455-10 2026-09)", next to its own 5.45 quote in words, PPI-C2431 -2.3% and the forecast. All three
+    claims "took it into account". **First counter 5.25 @ 90 = 5.18 (vs 5.338 in every earlier low draw: -0.16)** ->
+    our 4.80 @ 14 (no data) -> 5.00 @ 14 = 5.02 -> our 4.95 @ 14 -> final 4.94 @ 14 = 4.96. Total cut 0.22: the budget
+    model holds, and **the price path lowered the first counter, which is what the floor follows.**
+    Our agent cited only the latest FLAT orders (5.43-5.45: "does not change", 7 of 7), and the cloud's TASK 18 said
+    "order history is flat: no path". Wrong: the path is in the older POs. Two figures in one sentence were verified here
+    (5.17 and 5.45 both match POs). Port: round 1 = price path (oldest -> latest PO within 12 months) for P08-type
+    suppliers.

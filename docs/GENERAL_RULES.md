@@ -183,3 +183,5 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
 79. **Biggest live losses, never again** (MISTAKES.md, points lost): pushing after final_offer ~1.1; remarks about its departments /
     walk after repeated objection ~1.0; structure hops ~0.83; empty / data-less rounds ~0.6; small steps against a mirror ~0.37;
     contradicted claims 0.32. Coin-flip first counters (P08 50/50, P11 40/60) are NOT fixable - judge on 2+ games.
+80. **At a named / remembered hard floor, offer two sheets: the floor with a cheap-for-it term, and a hair under the floor**:
+    P11 eac20911 agreed to 44.95 (0.8019, first above 0.80) - the hair sheet, delivered in the same e-mail as its last facts.
