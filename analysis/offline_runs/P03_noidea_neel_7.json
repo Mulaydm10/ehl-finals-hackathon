@@ -1,0 +1,51 @@
+{
+ "case": "P03",
+ "variant": "noidea_neel",
+ "sim_score": 0.9758726011717828,
+ "end": "deal {'unit_price': 430.29, 'payment_days': 90, 'contract_months': 36, 'volume_per_year': 4580}",
+ "rounds": 3,
+ "emails": [
+  {
+   "body": "Dear Birgit Mayrhofer,\n\nThank you for your message.\n\n1. Volume and term: we confirm a binding volume of 4,580 units per year for 36 months, 13,740 units in total.\n2. Our proposal: EUR 427.22 per unit, 90 days net, 36-month contract, 4,580 units per year. This amounts to about EUR 5,870,003 over the term.\n3. Basis: Our should-cost estimate for Frequency converter 7.5 kW, IP55 is EUR 403.21 per unit (cost:350020). Our demand forecast for this part is up +10.3% (fc:350020@2026-09), and we commit 4,580 units a year. Producer prices DE: electronic components changed -2.3% from 2025-01 to 2025-10 (idx:PPI-C2611@2025-01, idx:PPI-C2611@2025-10).\n4. Next step: You told us that price changes above 2% need your pricing committee. Please put this proposal to your pricing committee: a binding 36-month agreement for 13,740 units, about EUR 5,870,003. On the committee's written confirmation we issue the order the same day, and we pay every invoice on the due date.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [
+    "cost:350020",
+    "fc:350020@2026-09",
+    "idx:PPI-C2611@2025-01",
+    "idx:PPI-C2611@2025-10"
+   ],
+   "sheets": [
+    {
+     "unit_price": 427.22,
+     "payment_days": 90,
+     "contract_months": 36,
+     "volume_per_year": 4580
+    }
+   ]
+  },
+  {
+   "body": "Dear Birgit Mayrhofer,\n\nThank you for your message.\n\n1. Volume and term: we confirm a binding volume of 4,580 units per year for 36 months, 13,740 units in total.\n2. Our proposal: EUR 428.12 per unit, 90 days net, 36-month contract, 4,580 units per year. This amounts to about EUR 5,882,369 over the term.\n3. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [],
+   "sheets": [
+    {
+     "unit_price": 428.12,
+     "payment_days": 90,
+     "contract_months": 36,
+     "volume_per_year": 4580
+    }
+   ]
+  },
+  {
+   "body": "Dear Birgit Mayrhofer,\n\nThank you for your message.\n\n1. Volume and term: we confirm a binding volume of 4,580 units per year for 36 months, 13,740 units in total.\n2. Our proposal: EUR 429.44 per unit, 90 days net, 36-month contract, 4,580 units per year. This amounts to about EUR 5,900,506 over the term.\n3. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [],
+   "sheets": [
+    {
+     "unit_price": 429.44,
+     "payment_days": 90,
+     "contract_months": 36,
+     "volume_per_year": 4580
+    }
+   ]
+  }
+ ],
+ "relationship": {}
+}

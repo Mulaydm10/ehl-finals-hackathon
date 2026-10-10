@@ -1,0 +1,904 @@
+{
+ "session": {
+  "session_id": "f778b35c67ecd799",
+  "case_id": "case:P02",
+  "status": "ended",
+  "end_reason": "accepted",
+  "deal": 1,
+  "score": 0.6065343932774467,
+  "rounds": 5,
+  "created_at": 1791648906.6450436
+ },
+ "detail": {
+  "session_id": "f778b35c67ecd799",
+  "case_id": "case:P02",
+  "status": "ended",
+  "end_reason": "accepted",
+  "rounds": 5,
+  "set": "practice",
+  "opening": {
+   "sup:70510": {
+    "offer_id": "offer:70510-0",
+    "round": 0,
+    "status": "open",
+    "terms": {
+     "unit_price": 370.96,
+     "payment_days": 30,
+     "index_clause": null
+    },
+    "alternatives": [],
+    "missing_fields": [],
+    "claims": [
+     {
+      "type": "index_change",
+      "refs": [
+       "idx:CU-NOTATION@2025-09",
+       "idx:CU-NOTATION@2026-09"
+      ],
+      "asserted": {
+       "change_pct": 47.7
+      }
+     },
+     {
+      "type": "index_change",
+      "refs": [
+       "idx:LCI-C@2025-06",
+       "idx:LCI-C@2026-06"
+      ],
+      "asserted": {
+       "change_pct": 2.7
+      }
+     },
+     {
+      "type": "index_change",
+      "refs": [
+       "idx:PPI-C241@2025-08",
+       "idx:PPI-C241@2026-08"
+      ],
+      "asserted": {
+       "change_pct": 6.5
+      }
+     }
+    ],
+    "claim_results": [],
+    "signals": {
+     "reply_delay_days": 1,
+     "validity_days": 30
+    },
+    "text": "Dear Sir or Madam,\n\nThank you for your enquiry. Please find our Angebot below.\n\nWe offer a price of €370.96 per unit, Zahlungsziel 30 days net, no Preisgleitklausel. \n\nRegarding our cost structure, CU-NOTATION rose 47.7 % in twelve months and is 20 % of our cost. LCI-C rose 2.7 % in twelve months and is 20 % of our cost. PPI-C241 rose 6.5 % in twelve months and is 14 % of our cost.\n\nPlease note that this offer remains valid for 30 days.\n\nMit freundlichen Grüßen\nPetra Lechner\nKey Account Manager, Antriebstechnik Nordmark AG"
+   }
+  },
+  "threads": {
+   "sup:70510": {
+    "offer_id": "offer:70510-4",
+    "status": "agreed",
+    "offers": 5,
+    "closed": null,
+    "seconds_left": null
+   }
+  },
+  "moves": [],
+  "result": {
+   "ended": true,
+   "deal": true,
+   "supplier_id": "sup:70510",
+   "offer_id": "offer:70510-4",
+   "terms": {
+    "payment_days": 90,
+    "lead_time_days": 35,
+    "volume_per_year": 6110,
+    "contract_months": 12,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "incoterm": "DAP",
+    "tooling_eur": 0.0,
+    "ppm_commitment": 250,
+    "chargeback_eur_per_complaint": 0.0,
+    "unit_price": 370.95
+   },
+   "c_open": 2282867.49,
+   "c_deal": 2254146.0,
+   "c_alt": 2604227.78,
+   "c_best": 2235514.05,
+   "score": 0.6065343932774467,
+   "must_haves_ok": true,
+   "cost_breakdown": {
+    "price": 2266504.5,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": -15110.03,
+    "freight": 0.0,
+    "late_delivery": 0.0,
+    "quality": 1191.45,
+    "tooling": 0.0,
+    "index_clause": 0.0,
+    "index_risk": 0.0,
+    "relationship": 1560.08
+   },
+   "trace": [
+    {
+     "round": 0,
+     "actor": "sup:70510",
+     "move": {
+      "offer_id": "offer:70510-0",
+      "round": 0,
+      "status": "open",
+      "terms": {
+       "unit_price": 370.96,
+       "payment_days": 30,
+       "index_clause": null
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [
+       {
+        "type": "index_change",
+        "refs": [
+         "idx:CU-NOTATION@2025-09",
+         "idx:CU-NOTATION@2026-09"
+        ],
+        "asserted": {
+         "change_pct": 47.7
+        }
+       },
+       {
+        "type": "index_change",
+        "refs": [
+         "idx:LCI-C@2025-06",
+         "idx:LCI-C@2026-06"
+        ],
+        "asserted": {
+         "change_pct": 2.7
+        }
+       },
+       {
+        "type": "index_change",
+        "refs": [
+         "idx:PPI-C241@2025-08",
+         "idx:PPI-C241@2026-08"
+        ],
+        "asserted": {
+         "change_pct": 6.5
+        }
+       }
+      ],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 1,
+       "validity_days": 30
+      },
+      "text": "Dear Sir or Madam,\n\nThank you for your enquiry. Please find our Angebot below.\n\nWe offer a price of €370.96 per unit, Zahlungsziel 30 days net, no Preisgleitklausel. \n\nRegarding our cost structure, CU-NOTATION rose 47.7 % in twelve months and is 20 % of our cost. LCI-C rose 2.7 % in twelve months and is 20 % of our cost. PPI-C241 rose 6.5 % in twelve months and is 14 % of our cost.\n\nPlease note that this offer remains valid for 30 days.\n\nMit freundlichen Grüßen\nPetra Lechner\nKey Account Manager, Antriebstechnik Nordmark AG"
+     },
+     "reasons": [
+      "CU-NOTATION rose … in twelve months and is … of our cost.",
+      "LCI-C rose … in twelve months and is … of our cost.",
+      "PPI-C241 rose … in twelve months and is … of our cost."
+     ]
+    },
+    {
+     "round": 1,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+      "body": "Dear Petra Lechner,\n\nWe have reviewed your offer and the supporting cost breakdown. We recognise that larger adjustments require management approval and ask you to revise the offer within your delegated authority, using the stated cost drivers as the basis and focusing on a later effective date and extended payment terms.\n\n1. Volume and term: we confirm a binding volume of 6,110 units per year for 12 months, 6,110 units in total.\n2. Our proposal: EUR 356.33 per unit, 90 days net, no price-adjustment clause. This amounts to about EUR 2,177,176 over the term.\n3. Basis: Our demand forecast for this part is up +11.9% (fc:350011@2026-09), and we commit 6,110 units a year. Producer prices DE: basic iron and steel, ferro-alloys changed -4.3% from 2024-10 to 2025-10 (idx:PPI-C241@2024-10, idx:PPI-C241@2025-10). On quality: we raised 2 quality notifications on this part in the last 12 months, at 4,632 ppm on average (qn:20004698, qn:20004826).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [
+       "fc:350011@2026-09",
+       "idx:PPI-C241@2024-10",
+       "idx:PPI-C241@2025-10",
+       "qn:20004698",
+       "qn:20004826"
+      ],
+      "term_sheets": [
+       {
+        "term_sheet_id": null,
+        "terms": {
+         "unit_price": 356.33,
+         "payment_days": 90,
+         "index_clause": null
+        }
+       }
+      ],
+      "interpreted": {
+       "claims": [
+        {
+         "type": "index_change",
+         "refs": [
+          "idx:PPI-C241@2024-10",
+          "idx:PPI-C241@2025-10"
+         ],
+         "asserted": {
+          "change_pct": -4.3
+         }
+        },
+        {
+         "type": "quality_record",
+         "refs": [
+          "qn:20004698",
+          "qn:20004826"
+         ],
+         "asserted": {
+          "ppm": 4.632
+         }
+        },
+        {
+         "type": "volume_change",
+         "refs": [
+          "fc:350011@2026-09"
+         ],
+         "asserted": {
+          "change_pct": 11.9
+         }
+        }
+       ]
+      },
+      "supplier_id": "sup:70510"
+     },
+     "reasons": []
+    },
+    {
+     "round": 1,
+     "actor": "sup:70510",
+     "move": {
+      "offer_id": "offer:70510-1",
+      "round": 1,
+      "status": "open",
+      "terms": {
+       "unit_price": 373.88,
+       "payment_days": 90,
+       "index_clause": null
+      },
+      "alternatives": [
+       {
+        "offer_id": "offer:70510-1-a",
+        "terms": {
+         "unit_price": 369.76,
+         "payment_days": 30,
+         "index_clause": null
+        }
+       }
+      ],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [
+       {
+        "index": 0,
+        "result": "verified"
+       },
+       {
+        "index": 1,
+        "result": "contradicted"
+       },
+       {
+        "index": 2,
+        "result": "verified"
+       }
+      ],
+      "signals": {
+       "reply_delay_days": 1,
+       "validity_days": 30
+      },
+      "text": "Dear Sir or Madam,\n\nWe have reviewed your offer and can adjust our Angebot as follows.\n\nThe quality record figures you cite do not match the records. That costs trust. We request further proof regarding the quality notifications, as the figures you provided contradict our internal records.\n\nCU-NOTATION rose 47.7 % in twelve months and is 20 % of our cost. That remains. LCI-C rose 2.7 % in twelve months and is 20 % of our cost. That remains. PPI-C241 rose 6.5 % in twelve months and is 14 % of our cost. That remains.\n\nWe have incorporated the verified volume increase and the PPI-C241 index change into our revised calculation. A binding higher volume would help us and can improve the price. Which volume can you commit to?\n\nOur Angebot is a price of €373.88 per unit, Zahlungsziel 90 days net, no Preisgleitklausel. This offer remains valid for 30 days.\n\nWe cannot accommodate the 90-day payment term without a price increase; we therefore propose returning to 30 days net to offer a reduced unit price of EUR 369.76. As an alternative at our standard terms, we offer a price of €369.76 per unit, Zahlungsziel 30 days net, no Preisgleitklausel.\n\nMit freundlichen Grüßen\nPetra Lechner\nKey Account Manager, Antriebstechnik Nordmark AG"
+     },
+     "reasons": [
+      "The quality record figures you cite do not match the records. That costs trust.",
+      "CU-NOTATION rose … in twelve months and is … of our cost. That remains.",
+      "LCI-C rose … in twelve months and is … of our cost. That remains.",
+      "PPI-C241 rose … in twelve months and is … of our cost. That remains.",
+      "We have incorporated the verified volume increase and the PPI-C241 index change into our revised calculation.",
+      "We request further proof regarding the quality notifications, as the figures you provided contradict our internal records.",
+      "We cannot accommodate the 90-day payment term without a price increase; we therefore propose returning to … days net to offer a reduced unit price of EUR ….",
+      "A binding higher volume would help us and can improve the price.",
+      "Which volume can you commit to?"
+     ]
+    },
+    {
+     "round": 2,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+      "body": "Dear Petra Lechner,\n\nWe acknowledge your revised calculation and your request for supporting evidence on the disputed quality notifications.\n\n1. Volume and term: we confirm a binding volume of 6,110 units per year for 12 months, 6,110 units in total.\n2. Our proposal: EUR 363.35 per unit, 90 days net, no price-adjustment clause. This amounts to about EUR 2,220,068 over the term.\n3. Basis: Copper notation for cables and motors (derived) changed -2.2% from 2026-01 to 2026-03 (idx:CU-NOTATION@2026-01, idx:CU-NOTATION@2026-03).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [
+       "idx:CU-NOTATION@2026-01",
+       "idx:CU-NOTATION@2026-03"
+      ],
+      "term_sheets": [
+       {
+        "term_sheet_id": null,
+        "terms": {
+         "unit_price": 363.35,
+         "payment_days": 90,
+         "index_clause": null
+        }
+       }
+      ],
+      "interpreted": {
+       "claims": [
+        {
+         "type": "index_change",
+         "refs": [
+          "idx:CU-NOTATION@2026-01",
+          "idx:CU-NOTATION@2026-03"
+         ],
+         "asserted": {
+          "change_pct": -2.2
+         }
+        }
+       ]
+      },
+      "supplier_id": "sup:70510"
+     },
+     "reasons": []
+    },
+    {
+     "round": 2,
+     "actor": "sup:70510",
+     "move": {
+      "offer_id": "offer:70510-2",
+      "round": 2,
+      "status": "open",
+      "terms": {
+       "unit_price": 372.88,
+       "payment_days": 90,
+       "index_clause": null
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [
+       {
+        "index": 0,
+        "result": "verified"
+       }
+      ],
+      "signals": {
+       "reply_delay_days": 1,
+       "validity_days": 30
+      },
+      "text": "Dear Sir or Madam,\n\nWe have reviewed your offer and can adjust our Angebot as follows. Based on your requested 90-day payment term, we can offer a revised price of EUR 372.88 per unit, a price of €372.88 per unit, Zahlungsziel 90 days net, no Preisgleitklausel. \n\nWe have verified the recent slight decrease in the CU-NOTATION index and incorporated it into our revised calculation. However, CU-NOTATION rose 47.7 % in twelve months and is 20 % of our cost. That remains. LCI-C rose 2.7 % in twelve months and is 20 % of our cost. That remains. PPI-C241 rose 6.5 % in twelve months and is 14 % of our cost. That remains. \n\nOur calculation is our property; we do not share a breakdown. Furthermore, we must reiterate our request for the supporting evidence regarding the quality notifications, as this matter remains unresolved. This Angebot remains valid for 30 days.\n\nMit freundlichen Grüßen\nPetra Lechner\nKey Account Manager, Antriebstechnik Nordmark AG"
+     },
+     "reasons": [
+      "CU-NOTATION rose … in twelve months and is … of our cost. That remains.",
+      "LCI-C rose … in twelve months and is … of our cost. That remains.",
+      "PPI-C241 rose … in twelve months and is … of our cost. That remains.",
+      "We have verified the recent slight decrease in the CU-NOTATION index and incorporated it into our revised calculation.",
+      "We must reiterate our request for the supporting evidence regarding the quality notifications, as this matter remains unresolved.",
+      "Based on your requested 90-day payment term, we can offer a revised price of EUR … per unit.",
+      "Our calculation is our property; we do not share a breakdown."
+     ]
+    },
+    {
+     "round": 3,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+      "body": "Dear Petra Lechner,\n\nWe acknowledge your revised offer incorporating the recent decrease in the copper index and your outstanding request for supporting evidence on the quality notifications.\n\n1. Volume and term: we confirm a binding volume of 6,110 units per year for 12 months, 6,110 units in total.\n2. Our proposal: EUR 367.16 per unit, 90 days net, no price-adjustment clause. This amounts to about EUR 2,243,348 over the term.\n3. Basis: Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [
+       "idx:LCI-C@2025-10",
+       "idx:LCI-C@2026-01"
+      ],
+      "term_sheets": [
+       {
+        "term_sheet_id": null,
+        "terms": {
+         "unit_price": 367.16,
+         "payment_days": 90,
+         "index_clause": null
+        }
+       }
+      ],
+      "interpreted": {
+       "claims": [
+        {
+         "type": "index_change",
+         "refs": [
+          "idx:LCI-C@2025-10",
+          "idx:LCI-C@2026-01"
+         ],
+         "asserted": {
+          "change_pct": -0.3
+         }
+        }
+       ]
+      },
+      "supplier_id": "sup:70510"
+     },
+     "reasons": []
+    },
+    {
+     "round": 3,
+     "actor": "sup:70510",
+     "move": {
+      "offer_id": "offer:70510-3",
+      "round": 3,
+      "status": "open",
+      "terms": {
+       "unit_price": 371.85,
+       "payment_days": 90,
+       "index_clause": null
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [
+       {
+        "index": 0,
+        "result": "verified"
+       }
+      ],
+      "signals": {
+       "reply_delay_days": 1,
+       "validity_days": 30
+      },
+      "text": "Dear Sir or Madam,\n\nWe have reviewed your offer and can adjust our Angebot as follows. \n\nBased on your requested 90-day payment term, we offer a revised price of EUR 371.85 per unit. Our offer includes a price of €371.85 per unit, Zahlungsziel 90 days net, no Preisgleitklausel. This offer remains valid for 30 days.\n\nWe have verified the slight decrease in the LCI-C index and incorporated it into our revised calculation. However, CU-NOTATION rose 47.7 % in twelve months and is 20 % of our cost. That remains. LCI-C rose 2.7 % in twelve months and is 20 % of our cost. That remains. PPI-C241 rose 6.5 % in twelve months and is 14 % of our cost. That remains.\n\nOur calculation is our property; we do not share a breakdown. Furthermore, we must reiterate our request for the supporting evidence regarding the quality notifications, as this matter remains unresolved.\n\nMit freundlichen Grüßen\nPetra Lechner\nKey Account Manager, Antriebstechnik Nordmark AG"
+     },
+     "reasons": [
+      "CU-NOTATION rose … in twelve months and is … of our cost. That remains.",
+      "LCI-C rose … in twelve months and is … of our cost. That remains.",
+      "PPI-C241 rose … in twelve months and is … of our cost. That remains.",
+      "We have verified the slight decrease in the LCI-C index and incorporated it into our revised calculation.",
+      "We must reiterate our request for the supporting evidence regarding the quality notifications, as this matter remains unresolved.",
+      "Based on your requested 90-day payment term, we offer a revised price of EUR … per unit.",
+      "Our calculation is our property; we do not share a breakdown."
+     ]
+    },
+    {
+     "round": 4,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+      "body": "Dear Petra Lechner,\n\nWe acknowledge your revised offer incorporating the index adjustment and requested payment terms, and your outstanding request for evidence supporting the quality notifications.\n\n1. Volume and term: we confirm a binding volume of 6,110 units per year for 12 months, 6,110 units in total.\n2. Our proposal: EUR 369.04 per unit, 90 days net, no price-adjustment clause. This amounts to about EUR 2,254,834 over the term.\n3. Basis: Your on-time delivery averaged 89.2% from 2025Q4 to 2026Q3 (sc:70510@2025Q4, sc:70510@2026Q1, sc:70510@2026Q2, sc:70510@2026Q3).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [
+       "sc:70510@2025Q4",
+       "sc:70510@2026Q1",
+       "sc:70510@2026Q2",
+       "sc:70510@2026Q3"
+      ],
+      "term_sheets": [
+       {
+        "term_sheet_id": null,
+        "terms": {
+         "unit_price": 369.04,
+         "payment_days": 90,
+         "index_clause": null
+        }
+       }
+      ],
+      "interpreted": {
+       "claims": [
+        {
+         "type": "delivery_record",
+         "refs": [
+          "sc:70510@2025Q4",
+          "sc:70510@2026Q1",
+          "sc:70510@2026Q2",
+          "sc:70510@2026Q3"
+         ],
+         "asserted": {
+          "otd_pct": 89.2
+         }
+        }
+       ]
+      },
+      "supplier_id": "sup:70510"
+     },
+     "reasons": []
+    },
+    {
+     "round": 4,
+     "actor": "sup:70510",
+     "move": {
+      "offer_id": "offer:70510-4",
+      "round": 4,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 370.95,
+       "payment_days": 90,
+       "index_clause": null
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [
+       {
+        "index": 0,
+        "result": "verified"
+       }
+      ],
+      "signals": {
+       "reply_delay_days": 2,
+       "validity_days": 7
+      },
+      "text": "Dear Sir or Madam,\n\nWe have verified the delivery performance figures you provided; however, this metric does not affect our underlying cost structure. We must reiterate our request for the supporting evidence regarding the quality notifications, as this matter remains unresolved.\n\nIn recognition of your movement, we offer a revised price of EUR 370.95 per unit, maintaining the 90-day payment term. This is our final offer (letztes Angebot). Please decide. Our Angebot remains valid for 7 days.\n\nTo summarize our Angebot: a price of €370.95 per unit, Zahlungsziel 90 days net, no Preisgleitklausel.\n\nMit freundlichen Grüßen\nPetra Lechner\nKey Account Manager, Antriebstechnik Nordmark AG"
+     },
+     "reasons": [
+      "We have verified the delivery performance figures you provided; however, this metric does not affect our underlying cost structure.",
+      "We must reiterate our request for the supporting evidence regarding the quality notifications, as this matter remains unresolved.",
+      "In recognition of your movement, we offer a revised price of EUR … per unit, maintaining the 90-day payment term."
+     ]
+    },
+    {
+     "round": 4,
+     "actor": "buyer",
+     "move": {
+      "type": "accept",
+      "offer_id": "offer:70510-4",
+      "supplier_id": "sup:70510"
+     },
+     "reasons": []
+    }
+   ]
+  },
+  "replay_url": "/replay/f778b35c67ecd799"
+ },
+ "threads": {
+  "sup:70510": {
+   "supplier_id": "sup:70510",
+   "offer_id": "offer:70510-4",
+   "status": "agreed",
+   "closed": null,
+   "messages": [
+    {
+     "thread_id": "thread:P02:70510",
+     "message_id": "msg:70510-0-0",
+     "in_reply_to": null,
+     "from": "sales@70510",
+     "from_name": "Key Account Manager, Antriebstechnik Nordmark AG",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Quote from Antriebstechnik Nordmark AG: Nordmark passes on copper for the 7.5 kW motor",
+     "body": "Dear Sir or Madam,\n\nThank you for your enquiry. Please find our Angebot below.\n\nWe offer a price of €370.96 per unit, Zahlungsziel 30 days net, no Preisgleitklausel. \n\nRegarding our cost structure, CU-NOTATION rose 47.7 % in twelve months and is 20 % of our cost. LCI-C rose 2.7 % in twelve months and is 20 % of our cost. PPI-C241 rose 6.5 % in twelve months and is 14 % of our cost.\n\nPlease note that this offer remains valid for 30 days.\n\nMit freundlichen Grüßen\nPetra Lechner\nKey Account Manager, Antriebstechnik Nordmark AG",
+     "attachments": [
+      {
+       "attachment_id": "att:70510-0-quote",
+       "name": "quote-offer-70510-0.pdf",
+       "type": "pdf",
+       "content_b64": null
+      }
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70510-0",
+       "terms": {
+        "unit_price": 370.96,
+        "payment_days": 30,
+        "index_clause": null
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": []
+    },
+    {
+     "from": "buyer",
+     "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+     "body": "Dear Petra Lechner,\n\nWe have reviewed your offer and the supporting cost breakdown. We recognise that larger adjustments require management approval and ask you to revise the offer within your delegated authority, using the stated cost drivers as the basis and focusing on a later effective date and extended payment terms.\n\n1. Volume and term: we confirm a binding volume of 6,110 units per year for 12 months, 6,110 units in total.\n2. Our proposal: EUR 356.33 per unit, 90 days net, no price-adjustment clause. This amounts to about EUR 2,177,176 over the term.\n3. Basis: Our demand forecast for this part is up +11.9% (fc:350011@2026-09), and we commit 6,110 units a year. Producer prices DE: basic iron and steel, ferro-alloys changed -4.3% from 2024-10 to 2025-10 (idx:PPI-C241@2024-10, idx:PPI-C241@2025-10). On quality: we raised 2 quality notifications on this part in the last 12 months, at 4,632 ppm on average (qn:20004698, qn:20004826).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "term_sheets": [
+      {
+       "terms": {
+        "unit_price": 356.33,
+        "payment_days": 90,
+        "index_clause": null
+       }
+      }
+     ],
+     "refs": [
+      "fc:350011@2026-09",
+      "idx:PPI-C241@2024-10",
+      "idx:PPI-C241@2025-10",
+      "qn:20004698",
+      "qn:20004826"
+     ],
+     "attachments": [
+      {
+       "name": "call_off_schedule.csv",
+       "type": "csv",
+       "content_b64": "bW9udGgscXVhbnRpdHkKMjAyNy0wMSw1MDkKMjAyNy0wMiw1MDkKMjAyNy0wMyw1MDkKMjAyNy0wNCw1MDkKMjAyNy0wNSw1MDkKMjAyNy0wNiw1MDkKMjAyNy0wNyw1MDkKMjAyNy0wOCw1MDkKMjAyNy0wOSw1MDkKMjAyNy0xMCw1MDkKMjAyNy0xMSw1MDkKMjAyNy0xMiw1MTEK"
+      }
+     ]
+    },
+    {
+     "thread_id": "thread:P02:70510",
+     "message_id": "msg:70510-1-2",
+     "in_reply_to": null,
+     "from": "sales@70510",
+     "from_name": "Key Account Manager, Antriebstechnik Nordmark AG",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+     "body": "Dear Sir or Madam,\n\nWe have reviewed your offer and can adjust our Angebot as follows.\n\nThe quality record figures you cite do not match the records. That costs trust. We request further proof regarding the quality notifications, as the figures you provided contradict our internal records.\n\nCU-NOTATION rose 47.7 % in twelve months and is 20 % of our cost. That remains. LCI-C rose 2.7 % in twelve months and is 20 % of our cost. That remains. PPI-C241 rose 6.5 % in twelve months and is 14 % of our cost. That remains.\n\nWe have incorporated the verified volume increase and the PPI-C241 index change into our revised calculation. A binding higher volume would help us and can improve the price. Which volume can you commit to?\n\nOur Angebot is a price of €373.88 per unit, Zahlungsziel 90 days net, no Preisgleitklausel. This offer remains valid for 30 days.\n\nWe cannot accommodate the 90-day payment term without a price increase; we therefore propose returning to 30 days net to offer a reduced unit price of EUR 369.76. As an alternative at our standard terms, we offer a price of €369.76 per unit, Zahlungsziel 30 days net, no Preisgleitklausel.\n\nMit freundlichen Grüßen\nPetra Lechner\nKey Account Manager, Antriebstechnik Nordmark AG\n\nQuality Management: We meet the agreed quality targets.\n\nCredit Control: We refer to our standard Zahlungsziel, which is 30 days net.",
+     "attachments": [],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70510-1",
+       "terms": {
+        "unit_price": 373.88,
+        "payment_days": 90,
+        "index_clause": null
+       }
+      },
+      {
+       "term_sheet_id": "offer:70510-1-a",
+       "terms": {
+        "unit_price": 369.76,
+        "payment_days": 30,
+        "index_clause": null
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": [
+      {
+       "index": 0,
+       "result": "verified"
+      },
+      {
+       "index": 1,
+       "result": "contradicted"
+      },
+      {
+       "index": 2,
+       "result": "verified"
+      }
+     ]
+    },
+    {
+     "from": "buyer",
+     "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+     "body": "Dear Petra Lechner,\n\nWe acknowledge your revised calculation and your request for supporting evidence on the disputed quality notifications.\n\n1. Volume and term: we confirm a binding volume of 6,110 units per year for 12 months, 6,110 units in total.\n2. Our proposal: EUR 363.35 per unit, 90 days net, no price-adjustment clause. This amounts to about EUR 2,220,068 over the term.\n3. Basis: Copper notation for cables and motors (derived) changed -2.2% from 2026-01 to 2026-03 (idx:CU-NOTATION@2026-01, idx:CU-NOTATION@2026-03).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "term_sheets": [
+      {
+       "terms": {
+        "unit_price": 363.35,
+        "payment_days": 90,
+        "index_clause": null
+       }
+      }
+     ],
+     "refs": [
+      "idx:CU-NOTATION@2026-01",
+      "idx:CU-NOTATION@2026-03"
+     ],
+     "attachments": [
+      {
+       "name": "call_off_schedule.csv",
+       "type": "csv",
+       "content_b64": "bW9udGgscXVhbnRpdHkKMjAyNy0wMSw1MDkKMjAyNy0wMiw1MDkKMjAyNy0wMyw1MDkKMjAyNy0wNCw1MDkKMjAyNy0wNSw1MDkKMjAyNy0wNiw1MDkKMjAyNy0wNyw1MDkKMjAyNy0wOCw1MDkKMjAyNy0wOSw1MDkKMjAyNy0xMCw1MDkKMjAyNy0xMSw1MDkKMjAyNy0xMiw1MTEK"
+      }
+     ]
+    },
+    {
+     "thread_id": "thread:P02:70510",
+     "message_id": "msg:70510-2-4",
+     "in_reply_to": null,
+     "from": "sales@70510",
+     "from_name": "Key Account Manager, Antriebstechnik Nordmark AG",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+     "body": "Dear Sir or Madam,\n\nWe have reviewed your offer and can adjust our Angebot as follows. Based on your requested 90-day payment term, we can offer a revised price of EUR 372.88 per unit, a price of €372.88 per unit, Zahlungsziel 90 days net, no Preisgleitklausel. \n\nWe have verified the recent slight decrease in the CU-NOTATION index and incorporated it into our revised calculation. However, CU-NOTATION rose 47.7 % in twelve months and is 20 % of our cost. That remains. LCI-C rose 2.7 % in twelve months and is 20 % of our cost. That remains. PPI-C241 rose 6.5 % in twelve months and is 14 % of our cost. That remains. \n\nOur calculation is our property; we do not share a breakdown. Furthermore, we must reiterate our request for the supporting evidence regarding the quality notifications, as this matter remains unresolved. This Angebot remains valid for 30 days.\n\nMit freundlichen Grüßen\nPetra Lechner\nKey Account Manager, Antriebstechnik Nordmark AG\n\nQuality Management: We meet the agreed quality targets.\n\nCredit Control: We refer to our standard Zahlungsziel, which is 30 days net.",
+     "attachments": [],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70510-2",
+       "terms": {
+        "unit_price": 372.88,
+        "payment_days": 90,
+        "index_clause": null
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": [
+      {
+       "index": 0,
+       "result": "verified"
+      }
+     ]
+    },
+    {
+     "from": "buyer",
+     "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+     "body": "Dear Petra Lechner,\n\nWe acknowledge your revised offer incorporating the recent decrease in the copper index and your outstanding request for supporting evidence on the quality notifications.\n\n1. Volume and term: we confirm a binding volume of 6,110 units per year for 12 months, 6,110 units in total.\n2. Our proposal: EUR 367.16 per unit, 90 days net, no price-adjustment clause. This amounts to about EUR 2,243,348 over the term.\n3. Basis: Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "term_sheets": [
+      {
+       "terms": {
+        "unit_price": 367.16,
+        "payment_days": 90,
+        "index_clause": null
+       }
+      }
+     ],
+     "refs": [
+      "idx:LCI-C@2025-10",
+      "idx:LCI-C@2026-01"
+     ]
+    },
+    {
+     "thread_id": "thread:P02:70510",
+     "message_id": "msg:70510-3-6",
+     "in_reply_to": null,
+     "from": "sales@70510",
+     "from_name": "Key Account Manager, Antriebstechnik Nordmark AG",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+     "body": "Dear Sir or Madam,\n\nWe have reviewed your offer and can adjust our Angebot as follows. \n\nBased on your requested 90-day payment term, we offer a revised price of EUR 371.85 per unit. Our offer includes a price of €371.85 per unit, Zahlungsziel 90 days net, no Preisgleitklausel. This offer remains valid for 30 days.\n\nWe have verified the slight decrease in the LCI-C index and incorporated it into our revised calculation. However, CU-NOTATION rose 47.7 % in twelve months and is 20 % of our cost. That remains. LCI-C rose 2.7 % in twelve months and is 20 % of our cost. That remains. PPI-C241 rose 6.5 % in twelve months and is 14 % of our cost. That remains.\n\nOur calculation is our property; we do not share a breakdown. Furthermore, we must reiterate our request for the supporting evidence regarding the quality notifications, as this matter remains unresolved.\n\nMit freundlichen Grüßen\nPetra Lechner\nKey Account Manager, Antriebstechnik Nordmark AG\n\nCredit Control: We refer to our standard Zahlungsziel, which is 30 days net.",
+     "attachments": [],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70510-3",
+       "terms": {
+        "unit_price": 371.85,
+        "payment_days": 90,
+        "index_clause": null
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": [
+      {
+       "index": 0,
+       "result": "verified"
+      }
+     ]
+    },
+    {
+     "from": "buyer",
+     "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+     "body": "Dear Petra Lechner,\n\nWe acknowledge your revised offer incorporating the index adjustment and requested payment terms, and your outstanding request for evidence supporting the quality notifications.\n\n1. Volume and term: we confirm a binding volume of 6,110 units per year for 12 months, 6,110 units in total.\n2. Our proposal: EUR 369.04 per unit, 90 days net, no price-adjustment clause. This amounts to about EUR 2,254,834 over the term.\n3. Basis: Your on-time delivery averaged 89.2% from 2025Q4 to 2026Q3 (sc:70510@2025Q4, sc:70510@2026Q1, sc:70510@2026Q2, sc:70510@2026Q3).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "term_sheets": [
+      {
+       "terms": {
+        "unit_price": 369.04,
+        "payment_days": 90,
+        "index_clause": null
+       }
+      }
+     ],
+     "refs": [
+      "sc:70510@2025Q4",
+      "sc:70510@2026Q1",
+      "sc:70510@2026Q2",
+      "sc:70510@2026Q3"
+     ]
+    },
+    {
+     "thread_id": "thread:P02:70510",
+     "message_id": "msg:70510-4-8",
+     "in_reply_to": null,
+     "from": "sales@70510",
+     "from_name": "Key Account Manager, Antriebstechnik Nordmark AG",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+     "body": "Dear Sir or Madam,\n\nWe have verified the delivery performance figures you provided; however, this metric does not affect our underlying cost structure. We must reiterate our request for the supporting evidence regarding the quality notifications, as this matter remains unresolved.\n\nIn recognition of your movement, we offer a revised price of EUR 370.95 per unit, maintaining the 90-day payment term. This is our final offer (letztes Angebot). Please decide. Our Angebot remains valid for 7 days.\n\nTo summarize our Angebot: a price of €370.95 per unit, Zahlungsziel 90 days net, no Preisgleitklausel.\n\nMit freundlichen Grüßen\nPetra Lechner\nKey Account Manager, Antriebstechnik Nordmark AG\n\nLogistics: Please note that our Lieferzeit is 35 days.\n\nQuality Management: We meet the agreed quality targets.",
+     "attachments": [
+      {
+       "attachment_id": "att:70510-4-quote",
+       "name": "quote-offer-70510-4.pdf",
+       "type": "pdf",
+       "content_b64": null
+      },
+      {
+       "attachment_id": "att:70510-4-delivery_schedule",
+       "name": "delivery-schedule.xlsx",
+       "type": "xlsx",
+       "content_b64": null
+      }
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70510-4",
+       "terms": {
+        "unit_price": 370.95,
+        "payment_days": 90,
+        "index_clause": null
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "final_offer",
+     "signals": {
+      "reply_delay_days": 2,
+      "validity_days": 7
+     },
+     "missing_fields": [],
+     "claim_results": [
+      {
+       "index": 0,
+       "result": "verified"
+      }
+     ]
+    },
+    {
+     "from": "buyer",
+     "action": {
+      "type": "accept",
+      "term_sheet_id": "offer:70510-4"
+     }
+    },
+    {
+     "thread_id": "thread:P02:70510",
+     "message_id": "msg:70510-4-10",
+     "in_reply_to": null,
+     "from": "sales@70510",
+     "from_name": "Key Account Manager, Antriebstechnik Nordmark AG",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+     "body": "Dear Sir or Madam,\n\nThank you for your order. Our order confirmation is attached.\n\nMit freundlichen Grüßen\nPetra Lechner\nKey Account Manager, Antriebstechnik Nordmark AG\n\nLogistics: Please note that our Lieferzeit is 35 days.\n\nQuality Management: We meet the agreed quality targets.",
+     "attachments": [
+      {
+       "attachment_id": "att:70510-4-order_confirmation",
+       "name": "order-confirmation-offer-70510-4.pdf",
+       "type": "pdf",
+       "content_b64": null
+      },
+      {
+       "attachment_id": "att:70510-4-delivery_schedule",
+       "name": "delivery-schedule.xlsx",
+       "type": "xlsx",
+       "content_b64": null
+      }
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70510-4",
+       "terms": {
+        "unit_price": 370.95,
+        "payment_days": 90,
+        "index_clause": null
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "agreed",
+     "signals": {
+      "reply_delay_days": 2,
+      "validity_days": 7
+     },
+     "missing_fields": [],
+     "claim_results": [
+      {
+       "index": 0,
+       "result": "verified"
+      }
+     ]
+    }
+   ],
+   "timeouts": []
+  }
+ }
+}

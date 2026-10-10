@@ -1,0 +1,101 @@
+{
+ "case": "P08",
+ "variant": "noidea_neel",
+ "sim_score": 0.9945171361210218,
+ "end": "deal {'unit_price': 5.07, 'index_clause': None, 'payment_days': 60, 'contract_months': 36}",
+ "rounds": 3,
+ "emails": [
+  {
+   "body": "Dear Georg Aigner,\n\nThank you for your message.\n\n1. Volume and term: we confirm a binding volume of 94,800 units per year for 36 months, 284,400 units in total.\n2. Our proposal: option A: EUR 4.73 per unit, no price-adjustment clause, 45 days net, 36-month contract; option B: EUR 4.70 per unit, no price-adjustment clause, 14 days net, 36-month contract; option C: EUR 4.78 per unit, no price-adjustment clause, 90 days net, 36-month contract. Option A amounts to about EUR 1,345,212 over the term.\n3. Basis: On 2026-09-10 you quoted us EUR 5.45 per unit for this part; your new quote is 11.0% above it. Our demand forecast for this part is up +1.9% (fc:370010@2026-09), and we commit 118,500 units a year.\n4. Next step: Please send us your cost breakdown for this part. All other terms as in your quote; on your written confirmation of one option we will issue the order.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [
+    "fc:370010@2026-09"
+   ],
+   "sheets": [
+    {
+     "unit_price": 4.73,
+     "index_clause": null,
+     "payment_days": 45,
+     "contract_months": 36
+    },
+    {
+     "unit_price": 4.7,
+     "index_clause": null,
+     "payment_days": 14,
+     "contract_months": 36
+    },
+    {
+     "unit_price": 4.78,
+     "index_clause": null,
+     "payment_days": 90,
+     "contract_months": 36
+    }
+   ]
+  },
+  {
+   "body": "Dear Georg Aigner,\n\nThank you for your message.\n\n1. Volume and term: we confirm a binding volume of 94,800 units per year for 36 months, 284,400 units in total.\n2. Our proposal: option A: EUR 4.80 per unit, no price-adjustment clause, 14 days net, 36-month contract; option B: EUR 4.85 per unit, no price-adjustment clause, 60 days net, 36-month contract; option C: EUR 4.82 per unit, no price-adjustment clause, 30 days net, 36-month contract. Option A amounts to about EUR 1,365,120 over the term.\n3. Basis: We raised quality notifications on this part over the past year (qn:20004725, qn:20004878, qn:20004895, qn:20004922, qn:20004940, qn:20004951, qn:20005016).\n4. Next step: All other terms as in your quote; on your written confirmation of one option we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [
+    "qn:20004725",
+    "qn:20004878",
+    "qn:20004895",
+    "qn:20004922",
+    "qn:20004940",
+    "qn:20004951",
+    "qn:20005016"
+   ],
+   "sheets": [
+    {
+     "unit_price": 4.8,
+     "index_clause": null,
+     "payment_days": 14,
+     "contract_months": 36
+    },
+    {
+     "unit_price": 4.85,
+     "index_clause": null,
+     "payment_days": 60,
+     "contract_months": 36
+    },
+    {
+     "unit_price": 4.82,
+     "index_clause": null,
+     "payment_days": 30,
+     "contract_months": 36
+    }
+   ]
+  },
+  {
+   "body": "Dear Georg Aigner,\n\nThank you for your message.\n\n1. Volume and term: we confirm a binding volume of 94,800 units per year for 36 months, 284,400 units in total.\n2. Our proposal: option A: EUR 5.00 per unit, no price-adjustment clause, 60 days net, 36-month contract; option B: EUR 4.95 per unit, no price-adjustment clause, 14 days net, 36-month contract; option C: EUR 4.97 per unit, no price-adjustment clause, 30 days net, 36-month contract. Option A amounts to about EUR 1,422,000 over the term.\n3. Basis: Our recent orders for Round bar 1.4404 dia 30 mm, peeled were at 5.43, 5.45 per 1 (po:4500014305-10, po:4500014391-10, po:4500014455-10).\n4. Next step: All other terms as in your quote; on your written confirmation of one option we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [
+    "po:4500014049-10",
+    "po:4500014088-10",
+    "po:4500014155-10",
+    "po:4500014284-10",
+    "po:4500014284-20",
+    "po:4500014305-10",
+    "po:4500014391-10",
+    "po:4500014455-10"
+   ],
+   "sheets": [
+    {
+     "unit_price": 5.0,
+     "index_clause": null,
+     "payment_days": 60,
+     "contract_months": 36
+    },
+    {
+     "unit_price": 4.95,
+     "index_clause": null,
+     "payment_days": 14,
+     "contract_months": 36
+    },
+    {
+     "unit_price": 4.97,
+     "index_clause": null,
+     "payment_days": 30,
+     "contract_months": 36
+    }
+   ]
+  }
+ ],
+ "relationship": {}
+}

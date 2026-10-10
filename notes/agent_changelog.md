@@ -593,3 +593,58 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
   (70210 final €31.50). The v2.15 RFQ fixes work.
 - P02 v2.15 again ended on its 30-day final (€369.45 @ 30 d) - the supplier itself switched its primary to 30 d; analyse why
   it switches in some games (v2.3/v2.11 it stayed on 90 d).
+
+- 2026-10-10 ~18:10 (Dhruv/Claude): merged Neel P03 0.936 (central.py PROVEN take-rate) + fixed rank tie (proven kinds by own take share, then prior; P18 round-1 test green again); merged Parth E2 results. 37 tests pass, offline mean 0.944.
+
+### v2.16 (offline) - P11 analysis -> general fixes (target: P11 >= 0.8; best so far 0.67 = EUR 45.50 @ 800 ppm / EUR 0)
+Evidence: 4 live P11 games + their back offices (pulled with tools/replays/fetch_backoffice.py, no quota): ONE role (Export Manager),
+no committee; its call each round is counter / hold / final; final in round 4-5. `src/eval/replay_p11.py` replays real games.
+| fix (general) | evidence |
+|---|---|
+| **Chargebacks priced at the supplier's REAL defect rate** (`est["ppm"]` = scorecard ppm, x2 when cash-short; `cost.supplier_value` already supported it) | the model treated chargebacks as free -> round 1 asked EUR 500 / 1,500 ppm (offline) and 800/150 = 800/0 at the same price live; it priced EUR 150 at +EUR 0.50-1.00/unit (worth EUR 0.12 to us) |
+| **Learn premiums of quality terms** (chargeback, ppm in LEARN_FIELDS) and count a term missing from its opening from 0 | its 800/150 @ 47.00 vs 800/0 @ 46.00 (29cbb6d6) was never learned: the opening had no chargeback field |
+| **Follow the structure it priced best for us** (one it priced next to ours, or one we offered) | 0d5bc007: it answered our 300 ppm / EUR 0 sheet with EUR 45.50 = 0.71 in ROUND 1; we went back to 800/150 -> 0.61 |
+| **Steepest checkable fall per cost driver** (Neel's `central.falling_window_claims`) in our pool | P11: iron & steel (26%) -4.3%, electricity -17.1% (we cited -6.1%); P03: electronics -2.3% = Neel's 0.936 claim |
+| **One index claim per e-mail, no ID twice** (round-1 backbone too) | 2+ index claims drew "a lot of material" 11/11 (Neel); OTD + ppm share sc: -> the forecast lost its slot |
+| **Flat/falling price history = a later-round argument on increase cases** (`late`, never in round 1) | P11 had no new data after round 1 -> holds; Neel's engine: each NEW taken kind = one more cut |
+- Round 1 P11 now: 300 ppm / EUR 0 @ 42.77 + forecast + iron & steel -4.3% + scorecard; later rounds: electricity, labour, price history.
+- Other cases' round 1: P02/P04/P05/P07/P08/P10 identical; P03 gains electronics -2.3%; P18 one steeper AS-14404 window (was 2 index claims).
+- Tests 37 passed (P18 backbone test updated to the one-index rule); offline 0.942 / 0.945.
+
+## v2.16 live P11 (18:03, gpt-6-astra): **0.79 = new best P11** (6b02b8cc94796703; was 0.67)
+- Round 1 300 ppm / EUR 0 @ 42.77 + scorecard + iron & steel -4.3% + forecast -> all three "taken", it answered **300/0 @ EUR 46.00**
+  (+ a 2500/0 @ 45.50 alternative). Round 2 electricity -17.1% + price history -> "they're right" -> **EUR 45.00 @ 300/0** (open).
+- **We accepted in round 2 while it was still conceding EUR 1.00/round**: the v2.13 walk guard fired on its repeated template line
+  "Faster payment would help us more than anything".
+### v2.16b (offline): walk guard only when it STALLS
+- `still_moving()`: its last counter cut our cost > 0.5% -> not about to walk, keep negotiating (P02's walks came after 0.16% moves).
+- Replays: P11 6b02b8cc -> round 3 asks EUR 44.90 instead of accepting 45.00; P02 walk replays unchanged (0.51 / - / 0.54 / 0.51).
+
+## v2.16b live P11 (18:07): 0.71 (f80f4b5452fa442a)
+- Same path as the 0.79 game, but its round-1 answer to the SAME first e-mail was EUR 46.50 (0.79 game: 46.00) -> noise of EUR 0.50.
+  Round 2 (electricity -17.1% + price history, "it holds and we took it into account") -> 45.50. Rounds 3-4: only labour -0.3%,
+  then nothing -> **held 45.50 twice** ("Which figures is that based on? Please send us the data.") -> accepted 45.50 @ 300/0.
+- Back office: counter, counter, hold, hold. The supplier = start - one cut per NEW verified fact (like Neel's P03 engine).
+### v2.16c (offline): more verified facts for later rounds (general)
+- **Quality notifications** (`qn:`, api.md: checked as the mean ppm when you speak of quality) as later-round claims for quality
+  cases: newest supplier-caused complaints of this part, 3 IDs per claim (P11: 18,558 / 11,070 / 11,946 ppm).
+- **Tiny index falls** (weight x fall < 0.25 pts; labour -0.3%) go last and never in round 1 (P03 measured EUR 0.02; P11 no cut).
+- P11 rounds now: r1 forecast + iron & steel + scorecard, r2 electricity, r3 price history, r4-5 complaints, then labour.
+- Note: P02/P07 round 1 now carry a falling index - Neel's new reaction data (cfce529, P02 0.824) marks index data as taken.
+- Tests 37 passed; offline 0.942 / 0.945; P02 walk replays unchanged.
+
+## v2.16c live P11 (18:14): 0.71 (fa9a9d0277f372c6) -> qn claims switched OFF (v2.16d)
+- Round 1 -> EUR 46.00 (as the 0.79 game). Round 2 electricity -17.1% ("taken", but "the energy index drop is tiny for us") + our
+  qn mean-ppm claim -> **"the quality record figures you cite do not match the records. That costs trust"** -> only -0.50 (45.50).
+  Round 3 price history + a 2nd qn claim -> "contradicted" again + "We received a lot of material" -> **final_offer in round 3**.
+- Lesson (general): **a contradicted claim costs trust and shortens its patience** - cite only data whose check we know exactly
+  (api.md: qn rows are checked as a mean ppm we could not reproduce from facts.json lot ppm). Never ship an unverified claim type
+  live without first knowing its check; `qn_claims` stays behind NOIDEA_EXPERIMENTS.
+- P11 so far on v2.16: 0.79 / 0.71 / 0.71 (mean 0.74; v2.7-2.10 mean 0.55). The ceiling it shows: ~EUR 45.00-45.50 @ 300/0.
+
+## v2.16d live P11 (18:23): 0.77 (7117d3517bedd67e) -> news framing OFF (v2.16e)
+- 46.50 -> 45.50 (electricity + price history) -> our news-framing claim: "it holds, but it does not change our calculation" +
+  "We received a lot of material" -> held 45.50 -> **it AGREED to our near-close EUR 45.13** (0.77; in f80f4b54 the same 45.13
+  got another 45.50 hold). The gain is the near-close ask, not the news. News framing -> experiment `news_frame` (off).
+- **P11 on v2.16: 0.79 / 0.71 / 0.71 / 0.77 = mean 0.745** (v2.7-v2.10: 0.67 / 0.36 / 0.61 = 0.55). Its stop ~EUR 45.00-45.50.
+- Rules consolidated in `docs/GENERAL_RULES.md` (35 rules with evidence).

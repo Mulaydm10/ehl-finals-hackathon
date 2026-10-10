@@ -14,6 +14,7 @@ Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden supp
   (`~/Dhruv/local-llm/serve-qwen`, port 8081). **Never use the Antigravity proxy.** Key in `.env.openai` (gitignored) - user must rotate after.
 
 ## Read these files (in this order)
+0. **`docs/GENERAL_RULES.md` - every general rule (35) with its live evidence. Start here.**
 1. `notes/agent_changelog.md` - EVERY version v1 → v2.15, each live result with session id, root causes, lessons. **Read the tail.**
 2. `notes/quota_log.md` - every practice game (who, case, version, score, session). ~86 of 200 used; reset 2026-10-11 12:22.
 3. `datasets/G_lessons.json` - lessons fed to the model each round (`principles` = playbook, `general`, per case type).
@@ -34,17 +35,24 @@ Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden supp
 - Every change: **offline Qwen trial → offline Astra trial → live**. Record everything; **after each turn commit + push to main**
   (changelog, quota log, sessions, archive). Keep general learnings in `G_lessons.json` and memory.
 - Merge teammates' work keeping both sides; **never `git pull --rebase` over a merge commit** (use `git pull --no-rebase`).
+- After a merge ALWAYS check `git diff --name-only --diff-filter=U` before any commit (a `commit -a` once committed conflict markers, fixed in 4c2f71d).
 - Heredocs over ssh break on apostrophes → write scripts locally and `scp` them (pattern used all session).
 - User wants general improvements (no supplier-specific overfitting) + high scores.
 
 ## Best live score per hosted case (team, all versions)
 | P01 | P02 | P03 | P04 | P05 | P07 | P08 | P10 | P11 | P18 |
 |---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 0.91 | 0.51 | 0.93 | 0.86 | **0.61** | 0.75 | 0.65 | 0.66 | 0.67 | 0.67 |
+| 0.91 | 0.51 | 0.94 (Neel) | 0.86 | **0.61** | 0.75 | 0.65 | 0.66 | **0.79** (v2.16) | 0.68 (Parth) |
 
 ## Last live results (recorded)
 - v2.15: **P05 0.61 (new best, e9eaf87e62371fdf)**; **P02 0.20** (ef17b16a03f0225d) - supplier switched its primary to 30 d and made that its final; analyse vs the 0.48/0.51 games (they stayed on 90 d).
 - Nothing is running now.
+
+## v2.16 (P11 focus, 18:00-18:10)
+- P11 0.67 -> **0.79** live: chargebacks priced at the real defect rate, follow its best-priced structure (300 ppm / EUR 0), Neel's falling-window claims, one index per e-mail, late price history. v2.16b: walk guard only when it stalls (it fired on a template line while P11 was conceding EUR 1/round). Details: changelog tail.
+
+## Merged
+- 2026-10-10 ~18:00: Parth branch parth/n1-p06-p09-p12 merged into main (be018e9): E1 experiments, round-1 argument backbone, UTF-8, parallel RFQ sends + RFQ focus choices; v2.15 walk guard kept. 37 tests pass, offline mean 0.94. Nothing running.
 
 ## (old) RUNNING note
 - v2.15 live: P02 finished **0.20** (ef17b16a03f0225d, analyse it) and **P05** (`/tmp/v215/P05.log`). Get scores with

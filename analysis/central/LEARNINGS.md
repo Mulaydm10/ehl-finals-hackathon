@@ -77,9 +77,82 @@ Consequences:
 | central layer: 1 sheet 90 d / 36 m, should-cost + volume forecast, committee in round 1, stay at 90 d (27e05be06bb4181f) | committee 432.15 @ 90 d (429.22 @ 30 d) | 0.9228 |
 | … + on-time delivery 84.6% as a 3rd claim (3091eac920857dc0) | "does not change our calculation"; 432.15 again | 0.9228 |
 | **… + electronic components −2.3% (2025-01 → 2025-10) instead of OTD (2e4bf89ac2967a45)** | **431.67 @ 90 d** | **0.9342 - beats the house** |
+| June forecast +23.3% instead of September's +10.3%, index window ending 2025-09 (d1bfa5a91489432b) | index "irrelevant - outdated timeframe"; 432.54 → 432.49 | 0.9146 |
+| **proven round 1, then one NEW index series per round: copper −2.2%, labour −0.3% (2483e3891d076863)** | **431.67 → 431.60 → 431.58** | **0.9363 - best** |
+| … + quality record 0 ppm in round 2 (14ab701cbfba6767) | 431.61 → 431.58, then "without new data … we cannot adjust" | 0.9363 |
 | house agent | – | 0.9249 (= 432.06 @ 90 d) |
 
 **The committee is deterministic:** the same claims gave exactly the same price twice (432.15). Each piece of data
 it takes into account lowers its price; data it shrugs off changes nothing. What beat the house was the **steepest
 fall of its main cost driver in any window the arena checks** (`central.falling_window_claims`): all 6- and 12-month
 windows rose, but electronic components (44% of cost) fell −2.3% from Jan to Oct 2025 → −EUR 0.48.
+
+## 6. The P03 engine, fully measured (12 live games)
+**Price = the sales person's stop (EUR 430.15 @ 30 d = 433.08 @ 90 d) − one cut per NEW verified data kind it takes.**
+Text, anchor depth, our moves (20-92% of the gap) and committee requests change nothing on their own; it says so:
+"As no new verified data or increased volume commitment has been provided, we cannot adjust our calculation further."
+
+| data (cited once per case) | cut per unit | note |
+|---|---:|---|
+| should-cost EUR 403.21 vs its EUR 438.21 quote | 0.79 | only one ID |
+| electronic components −2.27% (2025-01 → 2025-10), 42% of its cost | 0.48 | ≈ 0.5 × weight × fall% |
+| volume forecast +10.3% (latest) | 0.14 | the June +23.3% snapshot did worse; a 2nd fc ID = "duplicate" |
+| copper −2.21% (2026-01 → 2026-03), 5% | 0.07 | later rounds count too |
+| labour −0.26%, 16% | 0.02 | |
+| quality record 0 ppm | ~0 | |
+| on-time delivery 84.6%, price history | 0 | "does not change our calculation" |
+| a 2nd window of a series already cited | 0 | "duplicate" / "already taken" |
+| a window ending ≥ 12 months before the data's last month (2026-09) | 0 | "irrelevant - outdated timeframe" |
+| more volume (5,496 / yr) | – | can never pay: best possible score −1.15 |
+
+All of it used: **EUR 431.58 @ 90 d = 0.936**, above the house (0.925). 0.95 needs EUR 430.90, another EUR 0.68, and no
+data kind is left that this supplier takes into account. General rule for any supplier: **cite every verified, honest
+fact it takes, one new kind (or index series) per message, from round 1, and keep the rounds going while data is
+left**; it is the only thing a code-priced supplier rewards.
+
+## 7. P02 (Nordmark): 0.507 -> 0.824 in 3 live games (house 0.74, best of all teams 0.721)
+A different engine from P03: Nordmark **mirrors our steps** ("In response to your step, we are prepared to reduce",
+"We expect a significant step towards our position") and cuts for each NEW verified fact; it goes final when a round
+brings no new data ("it lacks new verifiable data").
+
+| game | change | its price @ 90 d by round | score |
+|---|---|---|---:|
+| de6192e39dd86084 | central layer: volume + steel index −4.3% + quality (no effect); copper; labour; then no data | 372.52, 371.45, 370.85, final 370.45 | 0.657 |
+| a1e2a4acb73dd3e9 | data spread one per round, order-price history last, no committee line | 372.52, 371.52, 370.92, final 370.32 | 0.669 |
+| **ee98266bedd37231** | **+ mirror rule: step 30% of the remaining gap** (€3.17 instead of €0.76) | **372.52, 370.85, 369.45, final 368.55** | **0.824** |
+
+Rules now in `central.py` (general, from per-case signals mined by `mine_claims.py`):
+- **Spread the data:** keep one new fact for each of the next 3 rounds; send 1 per later round.
+- **Mirroring supplier** (signal in its replies): step 30% of the remaining gap, staying a near-close below its price.
+  The deal is ITS price, so a bigger step from us costs nothing and buys a bigger one.
+- **"I hold full authority"** (P02 said it in every round): never mention a committee.
+- "Confirm our case" (a rising index) does not block a *falling* index of the same kind; a falling cost-driver index was
+  taken in every case where we cited one (P01, P02 x3, P03 x4, P18).
+Round 4 said "our best effort ... without requiring management escalation", so escalation may be the next lever.
+
+### 7b. P02, three more live games (552fb056e31d24d1, 8d4c4d5d7dff80bb: 0.847 each)
+- **Nordmark follows a fixed concession schedule once our steps are big enough.** With 30% steps, with 40% steps plus
+  a 5% deeper anchor, and with 2 extra data rounds, its path was the same to the cent: 372.52, 370.85, 369.45, 368.55,
+  final 368.25 (5th message). Small steps (EUR 0.76) bought less (cuts 1.00 / 0.60 / 0.60). Step size matters up to a
+  cap; the anchor does not (the split-the-difference model was wrong).
+- **It goes final at a fixed message count** (4th or 5th) whatever data the later rounds carry ("our service levels
+  remain within acceptable parameters" for on-time delivery, "past prices do not reflect our current cost structure" for
+  order history). Later rounds still cut, but on its schedule.
+- So the floor it approaches (~EUR 368.0 @ 90 d) is what to lower, as on P03, with data it takes **early**. Next test:
+  quality notifications on the part (never cited in any game).
+- Cloud session (analysis/central/ENGINES.md, analysis/cases/*_engine.md): engine type per case. 5 of 10 suppliers
+  mirror, 2 hold, 1 floor-stop, 1 one-shot, 1 auction. QNs and the supplier's own recent quote were never cited.
+- **A contradicted claim is expensive** (P02 f778b35c67ecd799, 0.607): our quality-notification sentence carried four
+  numbers ("2 notifications ... 12 months ... 4,632 ppm"); the arena checked the wrong one -> "contradicted ... That
+  costs trust". Its first answer rose from 372.52 to 373.88 and the final from 368.25 to 370.95 (-0.24 score), and it
+  asked for proof in every later round. **Rule: one number per claim sentence, the checked figure, no thousands
+  separator.** (Fixed in central.quality_notification_claims; untested live.)
+
+## 8. P08 (Donautal): 0.647 -> 0.732 in one live game (cae4b621695f8161; house 0.752, best of other teams 0.679)
+Plan from the cloud session (analysis/cases/P08_engine.md): hedged alloy index never cited, cold drawing -2.3% and the
+volume forecast in round 1 (both "took it into account"), its own EUR 5.45 quote in words, 24 m clause-free asks, hold
+the structure it priced. Path 5.41 @ 90 -> 5.15 @ 14 -> final 5.10 @ 14 (db0, its clause). Quality notifications and
+order history: "does not change". **Round 3 had no data -> "Which figures is that based on?" + final.**
+Fixes: every unhedged driver gets its own falling window (labour was skipped once cold drawing had one); facts it
+shrugged off are kept as LAST-round fillers (never in round 1), so no round goes out empty; data timed to its final
+(mined: P08 always at our 3rd message).
