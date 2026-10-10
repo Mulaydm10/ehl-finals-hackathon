@@ -86,7 +86,12 @@ PLAYBOOK_SECTIONS = ("What the goal means here", "Motive", "Tone")
 # ("our restructuring", "our pricing committee") or leaked our position ("our target cost") - drop such sentences
 BAD_OPENING = re.compile(r"(?i)\bour (current )?(restructuring|survival|pricing committee|committee|target|budget|cost pressure|"
                          r"capacity|liquidity|cash|bank|alternative)|\bwe (must|need to) (prioriti|close|sign)|"
-                         r"cost pressures we|we face|line.down|no alternative|urgent")
+                         r"cost pressures we|we face|line.down|no alternative|urgent|"
+                         # live P03 27e05be06bb4181f: "...to your pricing committee ... while maintaining the offered price"
+                         # (asks it to keep its price) and "within your existing approval limits" (pulls the decision
+                         # back from the committee to the sales person)
+                         r"maintain\w* (the |your )?(offered |current |quoted )?price|keep\w* (the |your )?price|"
+                         r"within (your|the) (existing |current )?(approval|authority|limits|remit)")
 
 SYSTEM = """You are a senior BUYER at Hollerau Pumpenwerke, a German pump maker, writing to one of
 your SUPPLIERS. Write ONLY the opening paragraph of the e-mail: 1-2 sentences that respond to the
@@ -217,6 +222,11 @@ class NoIdeaAgent:
         opening = (self.sup.get(sid) or {}).get("open_terms", {}).get("unit_price") or self._opening_price
         out += central.should_cost_claims(mine, sid, parts, opening)
         out += central.volume_claims(case, self.facts)
+        out += central.weak_delivery_claims(mine, sid)
+        if not best:  # no falling 6/12-month window: the steepest fall in any window the arena checks
+            drivers = [dr["series"] for p in self.dossiers.get(sid, {}).get("parts", []) if p["part"] in parts
+                       for dr in p.get("cost_drivers", [])]
+            out += central.falling_window_claims(case, drivers)
         seen, ranked = set(), []
         for c in central.rank(out, case["case_id"]):
             if c["sentence"] not in seen and central.take_rate(c["kind"], case["case_id"]) > 0:
@@ -449,7 +459,7 @@ class NoIdeaAgent:
         # sheets its KAM picked 60 d and stopped at its 2% limit in all 6 of ours)
         if committee and k == 0:
             out = out[:1]
-            s["escalate_now"] = s["committee_r1"] = True
+            s["escalate_now"] = s["committee_r1"] = s["committee_sent"] = True
             log.info("%s round 1 to the committee: %s", sid, [(t["unit_price"], t.get("payment_days")) for t in out])
         alt_prose = self.prose_alternative(case, sid, events)
         # only when it is near our ask or late in the game: it may pick any sheet (P10 lesson),
@@ -726,8 +736,12 @@ class NoIdeaAgent:
             playbook = _sections(self.playbooks.get(case["type"], ""), PLAYBOOK_SECTIONS)[:2500]
             user = (f"SUPPLIER: {name}\nCASE: {case['title']} ({case['type']}, goal {case['buyer']['category_goal']})\n"
                     f"ROUND: {k + 1}{' (its final offer - make one last small request, then we close)' if final else ''}\n"
-                    + ("OUR MOVE: our proposal is above what their key account manager may approve alone - ask them "
-                       "plainly to put it to their pricing committee.\n" if s.get("committee_r1") else
+                    + ("OUR MOVE: our price proposal is above what their key account manager may approve alone - ask "
+                       "them plainly to put OUR PRICE to their pricing committee for approval. Never suggest they keep "
+                       "or maintain their price.\n" if s.get("committee_r1") else
+                       "OUR MOVE: their pricing committee has already reviewed our proposal - ask them to take our revised "
+                       "price back to the committee. Never mention their own approval limits.\n"
+                       if s.get("committee_sent") and not s.get("escalate_now") else
                        "OUR MOVE: we keep their price and ask for a longer payment term / their best non-price term, "
                        "which needs their committee or management - ask them to put it to them.\n"
                        if s.get("escalate_now") else "")
