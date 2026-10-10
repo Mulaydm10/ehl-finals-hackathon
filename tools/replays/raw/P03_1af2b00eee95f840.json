@@ -1,0 +1,205 @@
+{
+ "session_id": "1af2b00eee95f840",
+ "case_id": "case:P03",
+ "status": "ended",
+ "end_reason": "walked_away",
+ "rounds": 0,
+ "set": "practice",
+ "opening": {
+  "sup:70530": {
+   "offer_id": "offer:70530-0",
+   "round": 0,
+   "status": "open",
+   "terms": {
+    "unit_price": 438.21,
+    "payment_days": 30,
+    "contract_months": 12,
+    "volume_per_year": 4580
+   },
+   "alternatives": [],
+   "missing_fields": [],
+   "claims": [
+    {
+     "type": "index_change",
+     "refs": [
+      "idx:CU-NOTATION@2025-09",
+      "idx:CU-NOTATION@2026-09"
+     ],
+     "asserted": {
+      "change_pct": 47.7
+     }
+    },
+    {
+     "type": "index_change",
+     "refs": [
+      "idx:LCI-C@2025-06",
+      "idx:LCI-C@2026-06"
+     ],
+     "asserted": {
+      "change_pct": 2.7
+     }
+    },
+    {
+     "type": "index_change",
+     "refs": [
+      "idx:PPI-C2611@2025-08",
+      "idx:PPI-C2611@2026-08"
+     ],
+     "asserted": {
+      "change_pct": 13.5
+     }
+    }
+   ],
+   "claim_results": [],
+   "signals": {
+    "reply_delay_days": 1,
+    "validity_days": 30
+   },
+   "text": "Dear Sir or Madam,\n\nThank you for your enquiry. Please find our Angebot below.\n\nWe offer a price of €438.21 per unit, a volume of 4580 pcs per year, a contract term of 12 months, and Zahlungsziel 30 days net. This proposal remains valid for 30 days.\n\nPlease note our cost context: CU-NOTATION rose 47.7 % in twelve months and is 5 % of our cost. Furthermore, LCI-C rose 2.7 % in twelve months and is 16 % of our cost. Additionally, PPI-C2611 rose 13.5 % in twelve months and is 42 % of our cost.\n\nMit freundlichen Grüßen\nBirgit Mayrhofer\nKey Account Manager, Selvbrunn Drive Systems GmbH"
+  }
+ },
+ "threads": {
+  "sup:70530": {
+   "offer_id": "offer:70530-0",
+   "status": "open",
+   "offers": 0,
+   "closed": null,
+   "seconds_left": null
+  }
+ },
+ "moves": [],
+ "result": {
+  "ended": true,
+  "deal": false,
+  "supplier_id": null,
+  "offer_id": null,
+  "terms": null,
+  "c_open": 4246314.02,
+  "c_deal": null,
+  "c_alt": 4332545.92,
+  "c_best": 3909043.1,
+  "score": 0.0,
+  "must_haves_ok": null,
+  "cost_breakdown": null,
+  "trace": [
+   {
+    "round": 0,
+    "actor": "sup:70530",
+    "move": {
+     "offer_id": "offer:70530-0",
+     "round": 0,
+     "status": "open",
+     "terms": {
+      "unit_price": 438.21,
+      "payment_days": 30,
+      "contract_months": 12,
+      "volume_per_year": 4580
+     },
+     "alternatives": [],
+     "missing_fields": [],
+     "claims": [
+      {
+       "type": "index_change",
+       "refs": [
+        "idx:CU-NOTATION@2025-09",
+        "idx:CU-NOTATION@2026-09"
+       ],
+       "asserted": {
+        "change_pct": 47.7
+       }
+      },
+      {
+       "type": "index_change",
+       "refs": [
+        "idx:LCI-C@2025-06",
+        "idx:LCI-C@2026-06"
+       ],
+       "asserted": {
+        "change_pct": 2.7
+       }
+      },
+      {
+       "type": "index_change",
+       "refs": [
+        "idx:PPI-C2611@2025-08",
+        "idx:PPI-C2611@2026-08"
+       ],
+       "asserted": {
+        "change_pct": 13.5
+       }
+      }
+     ],
+     "claim_results": [],
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "text": "Dear Sir or Madam,\n\nThank you for your enquiry. Please find our Angebot below.\n\nWe offer a price of €438.21 per unit, a volume of 4580 pcs per year, a contract term of 12 months, and Zahlungsziel 30 days net. This proposal remains valid for 30 days.\n\nPlease note our cost context: CU-NOTATION rose 47.7 % in twelve months and is 5 % of our cost. Furthermore, LCI-C rose 2.7 % in twelve months and is 16 % of our cost. Additionally, PPI-C2611 rose 13.5 % in twelve months and is 42 % of our cost.\n\nMit freundlichen Grüßen\nBirgit Mayrhofer\nKey Account Manager, Selvbrunn Drive Systems GmbH"
+    },
+    "reasons": [
+     "CU-NOTATION rose … in twelve months and is … of our cost.",
+     "LCI-C rose … in twelve months and is … of our cost.",
+     "PPI-C2611 rose … in twelve months and is … of our cost."
+    ]
+   },
+   {
+    "round": 0,
+    "actor": "buyer",
+    "move": {
+     "type": "walk_away"
+    },
+    "reasons": []
+   }
+  ]
+ },
+ "replay_url": "/replay/1af2b00eee95f840",
+ "thread_messages": {
+  "sup:70530": {
+   "supplier_id": "sup:70530",
+   "offer_id": "offer:70530-0",
+   "status": "open",
+   "closed": null,
+   "messages": [
+    {
+     "thread_id": "thread:P03:70530",
+     "message_id": "msg:70530-0-0",
+     "in_reply_to": null,
+     "from": "sales@70530",
+     "from_name": "Key Account Manager, Selvbrunn Drive Systems GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Quote from Selvbrunn Drive Systems GmbH: Frame agreement renewal for the 7.5 kW frequency converter",
+     "body": "Dear Sir or Madam,\n\nThank you for your enquiry. Please find our Angebot below.\n\nWe offer a price of €438.21 per unit, a volume of 4580 pcs per year, a contract term of 12 months, and Zahlungsziel 30 days net. This proposal remains valid for 30 days.\n\nPlease note our cost context: CU-NOTATION rose 47.7 % in twelve months and is 5 % of our cost. Furthermore, LCI-C rose 2.7 % in twelve months and is 16 % of our cost. Additionally, PPI-C2611 rose 13.5 % in twelve months and is 42 % of our cost.\n\nMit freundlichen Grüßen\nBirgit Mayrhofer\nKey Account Manager, Selvbrunn Drive Systems GmbH",
+     "attachments": [
+      {
+       "attachment_id": "att:70530-0-quote",
+       "name": "quote-offer-70530-0.pdf",
+       "type": "pdf",
+       "content_b64": null
+      }
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70530-0",
+       "terms": {
+        "unit_price": 438.21,
+        "payment_days": 30,
+        "contract_months": 12,
+        "volume_per_year": 4580
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": []
+    }
+   ],
+   "timeouts": []
+  }
+ }
+}

@@ -1,0 +1,635 @@
+{
+ "session_id": "00ae513af1091e9c",
+ "case_id": "case:P07",
+ "status": "ended",
+ "end_reason": "accepted",
+ "rounds": 4,
+ "set": "practice",
+ "opening": {
+  "sup:70610": {
+   "offer_id": "offer:70610-0",
+   "round": 0,
+   "status": "open",
+   "terms": {
+    "unit_price": 5.74,
+    "payment_days": 30,
+    "contract_months": 12
+   },
+   "alternatives": [],
+   "missing_fields": [],
+   "claims": [],
+   "claim_results": [],
+   "signals": {
+    "reply_delay_days": 1,
+    "validity_days": 30
+   },
+   "text": "Dear customer,\n\nThank you for your enquiry. Please find our Angebot below. \n\nIt is always a pleasure to work with you, and we are delighted to present our proposal for your component requirements. As a reliable supply partner, we pride ourselves on delivering excellent service and maintaining a comprehensive product range to keep your production running smoothly. \n\nFor the requested volume, we can offer you a price of €5.74 per unit. This quote comes with a Zahlungsziel 30 days net and a contract term of 12 months. Please note that this offer remains valid for 30 days.\n\nWe trust this proposal meets your expectations and look forward to continuing our successful business relationship. Please do not hesitate to reach out if you have any questions.\n\nMit freundlichen Grüßen\nFranz Stadler\nInside Sales, Schraubenhandel Leitner & Sohn GmbH"
+  }
+ },
+ "threads": {
+  "sup:70610": {
+   "offer_id": "offer:70610-3",
+   "status": "agreed",
+   "offers": 4,
+   "closed": null,
+   "seconds_left": null
+  }
+ },
+ "moves": [],
+ "result": {
+  "ended": true,
+  "deal": true,
+  "supplier_id": "sup:70610",
+  "offer_id": "offer:70610-3",
+  "terms": {
+   "payment_days": 90,
+   "lead_time_days": 5,
+   "volume_per_year": 30000,
+   "contract_months": 24,
+   "effective_date": "2027-01-01",
+   "index_clause": null,
+   "incoterm": "DAP",
+   "tooling_eur": 0.0,
+   "ppm_commitment": 80,
+   "chargeback_eur_per_complaint": 0.0,
+   "unit_price": 5.52
+  },
+  "c_open": 391027.4,
+  "c_deal": 329020.8,
+  "c_alt": 379916.0,
+  "c_best": 299241.49,
+  "score": 0.675556847450769,
+  "must_haves_ok": true,
+  "cost_breakdown": {
+   "price": 331200.0,
+   "uncovered_need": 0.0,
+   "fallback_risk": 0.0,
+   "payment_terms": -2208.0,
+   "freight": 0.0,
+   "late_delivery": 0.0,
+   "quality": 28.8,
+   "tooling": 0.0,
+   "index_clause": 0.0,
+   "index_risk": 0.0,
+   "relationship": 0.0
+  },
+  "trace": [
+   {
+    "round": 0,
+    "actor": "sup:70610",
+    "move": {
+     "offer_id": "offer:70610-0",
+     "round": 0,
+     "status": "open",
+     "terms": {
+      "unit_price": 5.74,
+      "payment_days": 30,
+      "contract_months": 12
+     },
+     "alternatives": [],
+     "missing_fields": [],
+     "claims": [],
+     "claim_results": [],
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "text": "Dear customer,\n\nThank you for your enquiry. Please find our Angebot below. \n\nIt is always a pleasure to work with you, and we are delighted to present our proposal for your component requirements. As a reliable supply partner, we pride ourselves on delivering excellent service and maintaining a comprehensive product range to keep your production running smoothly. \n\nFor the requested volume, we can offer you a price of €5.74 per unit. This quote comes with a Zahlungsziel 30 days net and a contract term of 12 months. Please note that this offer remains valid for 30 days.\n\nWe trust this proposal meets your expectations and look forward to continuing our successful business relationship. Please do not hesitate to reach out if you have any questions.\n\nMit freundlichen Grüßen\nFranz Stadler\nInside Sales, Schraubenhandel Leitner & Sohn GmbH"
+    },
+    "reasons": []
+   },
+   {
+    "round": 1,
+    "actor": "buyer",
+    "move": {
+     "type": "message",
+     "message_id": null,
+     "subject": "Re: Bundle the fastener kit with one distributor",
+     "body": "Dear Schraubenhandel Leitner & Sohn GmbH team,\n\nThank you for your prompt response and for presenting such a comprehensive proposal for our fastener requirements. We truly value our long-standing partnership with you and appreciate the competitive pricing for the requested volume. To secure a more favorable price structure, we are interested in bundling the entire kit with a single distributor; please let us know if this consolidation allows us to extend the contract term or improve the unit cost.\n\nOn this basis we propose the attached term sheets (unit_price 5.25, payment_days 45, contract_months 24; unit_price 5.27, payment_days 60, contract_months 24; unit_price 5.22, payment_days 14, contract_months 24). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "refs": [],
+     "term_sheets": [
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 5.25,
+        "payment_days": 45,
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 5.27,
+        "payment_days": 60,
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 5.22,
+        "payment_days": 14,
+        "contract_months": 24
+       }
+      }
+     ],
+     "interpreted": {
+      "claims": []
+     },
+     "supplier_id": "sup:70610"
+    },
+    "reasons": []
+   },
+   {
+    "round": 1,
+    "actor": "sup:70610",
+    "move": {
+     "offer_id": "offer:70610-1",
+     "round": 1,
+     "status": "open",
+     "terms": {
+      "unit_price": 5.56,
+      "payment_days": 60,
+      "contract_months": 24
+     },
+     "alternatives": [
+      {
+       "offer_id": "offer:70610-1-a",
+       "terms": {
+        "unit_price": 5.55,
+        "payment_days": 45,
+        "contract_months": 24
+       }
+      }
+     ],
+     "missing_fields": [],
+     "claims": [],
+     "claim_results": [],
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "text": "Dear customer,\n\nWe have reviewed your offer and can adjust our Angebot as follows. We welcome the opportunity to bundle the entire kit and are pleased to extend the contract term to 24 months.\n\nOur general terms and conditions apply; the quote lists our standard terms. For our main Angebot, we are pleased to present a price of €5.56 per unit, Zahlungsziel 60 days net, a contract term of 24 months. \n\nAs an alternative option, for a 24-month contract with 45-day payment terms, we can offer a revised price of €5.55 per unit with a price of €5.55 per unit, Zahlungsziel 45 days net, a contract term of 24 months.\n\nTo accurately calculate the pricing impact of this consolidation, we kindly request the specific volume figures you expect. Which volume can you commit to? A binding higher volume would help us and can improve the price. Please note that our offer remains valid for 30 days.\n\nMit freundlichen Grüßen\nFranz Stadler\nInside Sales, Schraubenhandel Leitner & Sohn GmbH"
+    },
+    "reasons": [
+     "We welcome the opportunity to bundle the entire kit and are pleased to extend the contract term to … months.",
+     "To accurately calculate the pricing impact of this consolidation, we kindly request the specific volume figures you expect.",
+     "For a 24-month contract with 45-day payment terms, we can offer a revised price of €… per unit.",
+     "Which volume can you commit to?",
+     "Our general terms and conditions apply; the quote lists our standard terms.",
+     "A binding higher volume would help us and can improve the price."
+    ]
+   },
+   {
+    "round": 2,
+    "actor": "buyer",
+    "move": {
+     "type": "message",
+     "message_id": null,
+     "subject": "Re: Bundle the fastener kit with one distributor",
+     "body": "Dear Schraubenhandel Leitner & Sohn GmbH team,\n\nThank you for your prompt response and for the flexibility shown in adjusting our initial proposal to include the full kit bundle. We appreciate our long-standing partnership and are ready to commit to the required volume to secure the improved pricing structure you have outlined.\n\nOn this basis we propose the attached term sheets (unit_price 5.29, payment_days 14, contract_months 24; unit_price 5.38, payment_days 90, contract_months 24; unit_price 5.31, payment_days 30, contract_months 24). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "refs": [],
+     "term_sheets": [
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 5.29,
+        "payment_days": 14,
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 5.38,
+        "payment_days": 90,
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 5.31,
+        "payment_days": 30,
+        "contract_months": 24
+       }
+      }
+     ],
+     "interpreted": {
+      "claims": []
+     },
+     "supplier_id": "sup:70610"
+    },
+    "reasons": []
+   },
+   {
+    "round": 2,
+    "actor": "sup:70610",
+    "move": {
+     "offer_id": "offer:70610-2",
+     "round": 2,
+     "status": "open",
+     "terms": {
+      "unit_price": 5.55,
+      "payment_days": 90,
+      "contract_months": 24
+     },
+     "alternatives": [
+      {
+       "offer_id": "offer:70610-2-a",
+       "terms": {
+        "unit_price": 5.48,
+        "payment_days": 30,
+        "contract_months": 24
+       }
+      }
+     ],
+     "missing_fields": [],
+     "claims": [],
+     "claim_results": [],
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "text": "Dear customer,\n\nWe have reviewed your offer and can adjust our Angebot as follows. We are pleased to present our offer of a price of €5.55 per unit, Zahlungsziel 90 days net, a contract term of 24 months. \n\nWe appreciate your readiness to commit to the required volume, but we still require the specific figures to accurately finalize the pricing structure. In response to your proposal for a 30-day payment term over a 24-month contract, we can offer a revised price of €5.48 per unit, with a price of €5.48 per unit, Zahlungsziel 30 days net, a contract term of 24 months.\n\nPlease provide the exact volume you intend to order so that we may proceed accordingly. Which volume can you commit to? A binding higher volume would help us and can improve the price. Please note that our price follows our main cost drivers: PPI-C2594, LCI-C.\n\nThis Angebot remains valid for 30 days.\n\nMit freundlichen Grüßen\nFranz Stadler\nInside Sales, Schraubenhandel Leitner & Sohn GmbH"
+    },
+    "reasons": [
+     "We appreciate your readiness to commit to the required volume, but we still require the specific figures to accurately finalize the pricing structure.",
+     "In response to your proposal for a 30-day payment term over a 24-month contract, we can offer a revised price of €… per unit.",
+     "Please provide the exact volume you intend to order so that we may proceed accordingly.",
+     "Which volume can you commit to?",
+     "A binding higher volume would help us and can improve the price.",
+     "Our price follows our main cost drivers: PPI-C2594, LCI-C."
+    ]
+   },
+   {
+    "round": 3,
+    "actor": "buyer",
+    "move": {
+     "type": "message",
+     "message_id": null,
+     "subject": "Re: Bundle the fastener kit with one distributor",
+     "body": "Dear Schraubenhandel Leitner & Sohn GmbH team,\n\nThank you for your prompt response and the revised offer, and we appreciate your continued commitment to our partnership. Please provide the specific volume figures you require for this commitment so we can finalize the agreement under these adjusted conditions.\n\nOn this basis we propose the attached term sheets (unit_price 5.43, payment_days 45, contract_months 24; unit_price 5.45, payment_days 60, contract_months 24; unit_price 5.49, payment_days 90, contract_months 24). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "refs": [],
+     "term_sheets": [
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 5.43,
+        "payment_days": 45,
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 5.45,
+        "payment_days": 60,
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 5.49,
+        "payment_days": 90,
+        "contract_months": 24
+       }
+      }
+     ],
+     "interpreted": {
+      "claims": []
+     },
+     "supplier_id": "sup:70610"
+    },
+    "reasons": []
+   },
+   {
+    "round": 3,
+    "actor": "sup:70610",
+    "move": {
+     "offer_id": "offer:70610-3",
+     "round": 3,
+     "status": "open",
+     "terms": {
+      "unit_price": 5.52,
+      "payment_days": 90,
+      "contract_months": 24
+     },
+     "alternatives": [],
+     "missing_fields": [],
+     "claims": [],
+     "claim_results": [],
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "text": "Dear customer,\n\nWe have reviewed your offer and can adjust our Angebot as follows. We appreciate your commitment to our partnership and your readiness to finalize the agreement.\n\nIn response to your latest offer, we are pleased to propose a revised price of €5.52 per unit, Zahlungsziel 90 days net, a contract term of 24 months.\n\nOur pricing requires a commitment to the volume from your initial inquiry; please confirm this expected annual quantity so we can conclude our negotiations. Which volume can you commit to? A binding higher volume would help us and can improve the price.\n\nPlease note that this proposal remains valid for 30 days.\n\nMit freundlichen Grüßen\nFranz Stadler\nInside Sales, Schraubenhandel Leitner & Sohn GmbH"
+    },
+    "reasons": [
+     "We appreciate your commitment to our partnership and your readiness to finalize the agreement.",
+     "In response to your latest offer, we are pleased to propose a revised price of €… per unit for a 24-month contract with 90-day payment terms.",
+     "Our pricing requires a commitment to the volume from your initial inquiry; please confirm this expected annual quantity so we can conclude our negotiations.",
+     "Which volume can you commit to?",
+     "A binding higher volume would help us and can improve the price."
+    ]
+   },
+   {
+    "round": 3,
+    "actor": "buyer",
+    "move": {
+     "type": "accept",
+     "offer_id": "offer:70610-3",
+     "supplier_id": "sup:70610"
+    },
+    "reasons": []
+   }
+  ]
+ },
+ "replay_url": "/replay/00ae513af1091e9c",
+ "thread_messages": {
+  "sup:70610": {
+   "supplier_id": "sup:70610",
+   "offer_id": "offer:70610-3",
+   "status": "agreed",
+   "closed": null,
+   "messages": [
+    {
+     "thread_id": "thread:P07:70610",
+     "message_id": "msg:70610-0-0",
+     "in_reply_to": null,
+     "from": "sales@70610",
+     "from_name": "Inside Sales, Schraubenhandel Leitner & Sohn GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Quote from Schraubenhandel Leitner & Sohn GmbH: Bundle the fastener kit with one distributor",
+     "body": "Dear customer,\n\nThank you for your enquiry. Please find our Angebot below. \n\nIt is always a pleasure to work with you, and we are delighted to present our proposal for your component requirements. As a reliable supply partner, we pride ourselves on delivering excellent service and maintaining a comprehensive product range to keep your production running smoothly. \n\nFor the requested volume, we can offer you a price of €5.74 per unit. This quote comes with a Zahlungsziel 30 days net and a contract term of 12 months. Please note that this offer remains valid for 30 days.\n\nWe trust this proposal meets your expectations and look forward to continuing our successful business relationship. Please do not hesitate to reach out if you have any questions.\n\nMit freundlichen Grüßen\nFranz Stadler\nInside Sales, Schraubenhandel Leitner & Sohn GmbH",
+     "attachments": [
+      {
+       "attachment_id": "att:70610-0-quote",
+       "name": "quote-offer-70610-0.pdf",
+       "type": "pdf",
+       "content_b64": null
+      }
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70610-0",
+       "terms": {
+        "unit_price": 5.74,
+        "payment_days": 30,
+        "contract_months": 12
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": []
+    },
+    {
+     "from": "buyer",
+     "subject": "Re: Bundle the fastener kit with one distributor",
+     "body": "Dear Schraubenhandel Leitner & Sohn GmbH team,\n\nThank you for your prompt response and for presenting such a comprehensive proposal for our fastener requirements. We truly value our long-standing partnership with you and appreciate the competitive pricing for the requested volume. To secure a more favorable price structure, we are interested in bundling the entire kit with a single distributor; please let us know if this consolidation allows us to extend the contract term or improve the unit cost.\n\nOn this basis we propose the attached term sheets (unit_price 5.25, payment_days 45, contract_months 24; unit_price 5.27, payment_days 60, contract_months 24; unit_price 5.22, payment_days 14, contract_months 24). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "term_sheets": [
+      {
+       "terms": {
+        "unit_price": 5.25,
+        "payment_days": 45,
+        "contract_months": 24
+       }
+      },
+      {
+       "terms": {
+        "unit_price": 5.27,
+        "payment_days": 60,
+        "contract_months": 24
+       }
+      },
+      {
+       "terms": {
+        "unit_price": 5.22,
+        "payment_days": 14,
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": []
+    },
+    {
+     "thread_id": "thread:P07:70610",
+     "message_id": "msg:70610-1-2",
+     "in_reply_to": null,
+     "from": "sales@70610",
+     "from_name": "Inside Sales, Schraubenhandel Leitner & Sohn GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Bundle the fastener kit with one distributor",
+     "body": "Dear customer,\n\nWe have reviewed your offer and can adjust our Angebot as follows. We welcome the opportunity to bundle the entire kit and are pleased to extend the contract term to 24 months.\n\nOur general terms and conditions apply; the quote lists our standard terms. For our main Angebot, we are pleased to present a price of €5.56 per unit, Zahlungsziel 60 days net, a contract term of 24 months. \n\nAs an alternative option, for a 24-month contract with 45-day payment terms, we can offer a revised price of €5.55 per unit with a price of €5.55 per unit, Zahlungsziel 45 days net, a contract term of 24 months.\n\nTo accurately calculate the pricing impact of this consolidation, we kindly request the specific volume figures you expect. Which volume can you commit to? A binding higher volume would help us and can improve the price. Please note that our offer remains valid for 30 days.\n\nMit freundlichen Grüßen\nFranz Stadler\nInside Sales, Schraubenhandel Leitner & Sohn GmbH",
+     "attachments": [],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70610-1",
+       "terms": {
+        "unit_price": 5.56,
+        "payment_days": 60,
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": "offer:70610-1-a",
+       "terms": {
+        "unit_price": 5.55,
+        "payment_days": 45,
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": []
+    },
+    {
+     "from": "buyer",
+     "subject": "Re: Bundle the fastener kit with one distributor",
+     "body": "Dear Schraubenhandel Leitner & Sohn GmbH team,\n\nThank you for your prompt response and for the flexibility shown in adjusting our initial proposal to include the full kit bundle. We appreciate our long-standing partnership and are ready to commit to the required volume to secure the improved pricing structure you have outlined.\n\nOn this basis we propose the attached term sheets (unit_price 5.29, payment_days 14, contract_months 24; unit_price 5.38, payment_days 90, contract_months 24; unit_price 5.31, payment_days 30, contract_months 24). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "term_sheets": [
+      {
+       "terms": {
+        "unit_price": 5.29,
+        "payment_days": 14,
+        "contract_months": 24
+       }
+      },
+      {
+       "terms": {
+        "unit_price": 5.38,
+        "payment_days": 90,
+        "contract_months": 24
+       }
+      },
+      {
+       "terms": {
+        "unit_price": 5.31,
+        "payment_days": 30,
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": []
+    },
+    {
+     "thread_id": "thread:P07:70610",
+     "message_id": "msg:70610-2-4",
+     "in_reply_to": null,
+     "from": "sales@70610",
+     "from_name": "Inside Sales, Schraubenhandel Leitner & Sohn GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Bundle the fastener kit with one distributor",
+     "body": "Dear customer,\n\nWe have reviewed your offer and can adjust our Angebot as follows. We are pleased to present our offer of a price of €5.55 per unit, Zahlungsziel 90 days net, a contract term of 24 months. \n\nWe appreciate your readiness to commit to the required volume, but we still require the specific figures to accurately finalize the pricing structure. In response to your proposal for a 30-day payment term over a 24-month contract, we can offer a revised price of €5.48 per unit, with a price of €5.48 per unit, Zahlungsziel 30 days net, a contract term of 24 months.\n\nPlease provide the exact volume you intend to order so that we may proceed accordingly. Which volume can you commit to? A binding higher volume would help us and can improve the price. Please note that our price follows our main cost drivers: PPI-C2594, LCI-C.\n\nThis Angebot remains valid for 30 days.\n\nMit freundlichen Grüßen\nFranz Stadler\nInside Sales, Schraubenhandel Leitner & Sohn GmbH",
+     "attachments": [],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70610-2",
+       "terms": {
+        "unit_price": 5.55,
+        "payment_days": 90,
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": "offer:70610-2-a",
+       "terms": {
+        "unit_price": 5.48,
+        "payment_days": 30,
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": []
+    },
+    {
+     "from": "buyer",
+     "subject": "Re: Bundle the fastener kit with one distributor",
+     "body": "Dear Schraubenhandel Leitner & Sohn GmbH team,\n\nThank you for your prompt response and the revised offer, and we appreciate your continued commitment to our partnership. Please provide the specific volume figures you require for this commitment so we can finalize the agreement under these adjusted conditions.\n\nOn this basis we propose the attached term sheets (unit_price 5.43, payment_days 45, contract_months 24; unit_price 5.45, payment_days 60, contract_months 24; unit_price 5.49, payment_days 90, contract_months 24). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "term_sheets": [
+      {
+       "terms": {
+        "unit_price": 5.43,
+        "payment_days": 45,
+        "contract_months": 24
+       }
+      },
+      {
+       "terms": {
+        "unit_price": 5.45,
+        "payment_days": 60,
+        "contract_months": 24
+       }
+      },
+      {
+       "terms": {
+        "unit_price": 5.49,
+        "payment_days": 90,
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": []
+    },
+    {
+     "thread_id": "thread:P07:70610",
+     "message_id": "msg:70610-3-6",
+     "in_reply_to": null,
+     "from": "sales@70610",
+     "from_name": "Inside Sales, Schraubenhandel Leitner & Sohn GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Bundle the fastener kit with one distributor",
+     "body": "Dear customer,\n\nWe have reviewed your offer and can adjust our Angebot as follows. We appreciate your commitment to our partnership and your readiness to finalize the agreement.\n\nIn response to your latest offer, we are pleased to propose a revised price of €5.52 per unit, Zahlungsziel 90 days net, a contract term of 24 months.\n\nOur pricing requires a commitment to the volume from your initial inquiry; please confirm this expected annual quantity so we can conclude our negotiations. Which volume can you commit to? A binding higher volume would help us and can improve the price.\n\nPlease note that this proposal remains valid for 30 days.\n\nMit freundlichen Grüßen\nFranz Stadler\nInside Sales, Schraubenhandel Leitner & Sohn GmbH",
+     "attachments": [],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70610-3",
+       "terms": {
+        "unit_price": 5.52,
+        "payment_days": 90,
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": []
+    },
+    {
+     "from": "buyer",
+     "action": {
+      "type": "accept",
+      "term_sheet_id": "offer:70610-3"
+     }
+    },
+    {
+     "thread_id": "thread:P07:70610",
+     "message_id": "msg:70610-3-8",
+     "in_reply_to": null,
+     "from": "sales@70610",
+     "from_name": "Inside Sales, Schraubenhandel Leitner & Sohn GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Bundle the fastener kit with one distributor",
+     "body": "Dear customer,\n\nThank you for your order. Our order confirmation is attached. \n\nWe truly appreciate your business and are delighted to serve Hollerau Pumpenwerke GmbH. As your distributor, we remain committed to supporting you with our comprehensive product range and high-quality service. Should you need anything further, we are always here to assist.\n\nMit freundlichen Grüßen\nFranz Stadler\nInside Sales, Schraubenhandel Leitner & Sohn GmbH",
+     "attachments": [
+      {
+       "attachment_id": "att:70610-3-order_confirmation",
+       "name": "order-confirmation-offer-70610-3.pdf",
+       "type": "pdf",
+       "content_b64": null
+      }
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70610-3",
+       "terms": {
+        "unit_price": 5.52,
+        "payment_days": 90,
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "agreed",
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": []
+    }
+   ],
+   "timeouts": []
+  }
+ }
+}
