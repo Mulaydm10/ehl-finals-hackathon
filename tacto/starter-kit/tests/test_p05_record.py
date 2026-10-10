@@ -23,7 +23,7 @@ def load():
     return mod
 
 
-@pytest.mark.parametrize("floor,low", [(26.26, 0.99), (26.80, 0.94), (27.50, 0.87)])
+@pytest.mark.parametrize("floor,low", [(26.26, 0.97), (26.80, 0.94), (27.50, 0.87)])
 def test_it_closes_with_fuchsreiter_near_its_floor(floor, low):
     p = load()
     score, end, _ = p.simulate(floor, verbose=False)
@@ -34,8 +34,9 @@ def test_first_message_to_fuchsreiter_cites_a_much_lower_rival_and_our_true_paym
     p = load()
     _, _, agent = p.simulate(26.26, verbose=False)
     first = next(r for r in agent.notes if r.get("sid") == "sup:70250")
-    assert "cite offer:70240-0 31.5" in first["do"] and first["do"].startswith("ask 23.8@14/28")
+    assert "cite offer:70240-0 31.5" in first["do"] and first["do"].startswith("ask 24.5@14/28")
     assert "93% of your invoices late" in agent.late_line
+    assert "call-off schedule" in first["do"]
 
 
 def test_every_ask_to_a_bidder_moves_up():

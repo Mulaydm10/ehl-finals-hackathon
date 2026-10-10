@@ -19,6 +19,10 @@ Evidence (all 10 archived P05 games + back offices; analysis in analysis/cases/P
 - Only its primary sheet can be accepted by id and it puts the primary on our sheet's terms -> we send 14 d only.
 - No move from us = no move from it, and an identical repeat after a hold made P04's supplier walk -> every ask
   moves up; we never resend the same price.
+- Live 9ce672fffbf931a7 (0.820): ask 23.80 without the schedule -> 30.50 -> 28.50 -> final 28.00. The one game with a
+  monthly call-off schedule attached (d9af, ask 25.54) got 28.00 at once ("Got the call-off schedule ... so I'm dropping
+  the price" - Dralveck, e9ea): it goes in every round-1 message. After round 1 it answers ~half of each move we make
+  and gives "the rest of the step" once -> bigger early moves.
 - Dralveck (70210) ends ~30.00 and Hrvelec (70240) ~32.00 @ 42 d: kept going as backups, never accepted while
   Fuchsreiter is in.
 """
@@ -44,7 +48,7 @@ TARGET, DRALVECK, HRVELEC = "sup:70250", "sup:70210", "sup:70240"
 NAMES = {TARGET: "Ms Fuchsreiter", DRALVECK: "Mr Dralveck", HRVELEC: "Ms Procházková"}
 # our asks, message by message (the last repeats +0.10 a round so we always move)
 ASKS = {
-    TARGET: [23.80, 25.70, 26.10, 26.30, 26.45, 26.60],  # first counters measured: ask 29.17 -> 31.00, 25.54 -> 28.00
+    TARGET: [24.50, 26.00, 26.50, 26.70, 26.85],  # live 9ce6: it answers ~half of each move after round 1
     DRALVECK: [27.20, 27.50, 27.80, 28.10, 28.40, 28.70],
     HRVELEC: [27.00, 27.30, 27.60, 27.90, 28.20, 28.50],
 }
@@ -72,6 +76,21 @@ def late_payment(supplier, months=12):
     ]
     late = [d for d in days if d > 0]
     return len(late) / len(days), sum(late) / len(late)
+
+
+def call_off_schedule(per_month=350, start=(2027, 1), months=24):
+    """The monthly call-off schedule the agent attached in d9af85e000ab3d4d (4,200 a year = 350 a month, 24 months)."""
+    import base64
+
+    y, m = start
+    rows = ["month,quantity"] + [
+        f"{y + (m - 1 + i) // 12}-{(m - 1 + i) % 12 + 1:02d},{per_month}" for i in range(months)
+    ]
+    return {
+        "name": "call_off_schedule.csv",
+        "type": "csv",
+        "content_b64": base64.b64encode(("\n".join(rows) + "\n").encode()).decode(),
+    }
 
 
 class P05RecordAgent:
@@ -201,11 +220,13 @@ class P05RecordAgent:
                 "do": f"ask {ask}@{days}/{LEAD[sid]}" + (f" + cite {rival[0]} {rival[1]}" if rival else ""),
             }
         )
-        body = f"Dear {NAMES[sid]},\n\n" + "\n\n".join(lines) + f"\n\n{SIGN}"
-        return {
-            "supplier_id": sid,
-            "message": {"subject": "RFQ pump shaft HX (part:320070)", "body": body, "term_sheets": [{"terms": terms}]},
-        }
+        msg = {"subject": "RFQ pump shaft HX (part:320070)", "term_sheets": [{"terms": terms}]}
+        if k == 0:  # d9af85e000ab3d4d: the only game with it - first counter 28.00 vs 30.50-31.00 without
+            lines.append("Attached: our monthly call-off schedule for the full contract term.")
+            msg["attachments"] = [call_off_schedule()]
+            self.notes[-1]["do"] += " + call-off schedule"
+        msg["body"] = f"Dear {NAMES[sid]},\n\n" + "\n\n".join(lines) + f"\n\n{SIGN}"
+        return {"supplier_id": sid, "message": msg}
 
 
 # ---------- offline: the three bidders as measured in our 10 games (no arena calls) ----------
