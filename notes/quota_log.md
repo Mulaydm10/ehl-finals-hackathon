@@ -61,3 +61,5 @@
 | 2026-10-10 16:57 | Dhruv | P10 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.66 | 5acf9fdda2e23ee2 |
 | 2026-10-10 16:57 | Dhruv | P11 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.36 | a6cb7ced9fdbae89 |
 | 2026-10-10 16:57 | Dhruv | P01 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.91 | 8bdb783a31363dfd |
+| 2026-10-10 16:27 | Neel | P03 | noidea_neel / gpt-6-astra | **0.90** | ff7b0d58330fc9f6 |
+| 2026-10-10 16:39 | Neel | P03 | noidea_neel / gpt-6-astra | **0.90** | 32c6fd9789e3dc35 |

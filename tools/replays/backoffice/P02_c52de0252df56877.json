@@ -1,0 +1,130 @@
+[
+ {
+  "round": 0,
+  "supplier_id": "sup:70510",
+  "supplier": "Antriebstechnik Nordmark AG",
+  "from": "Key Account Manager",
+  "to": "team",
+  "text": "quote attached (quote-offer-70510-0.pdf)"
+ },
+ {
+  "round": 1,
+  "supplier_id": "sup:70510",
+  "supplier": "Antriebstechnik Nordmark AG",
+  "from": "Key Account Manager",
+  "to": "team",
+  "text": "My call: counter."
+ },
+ {
+  "round": 1,
+  "supplier_id": "sup:70510",
+  "supplier": "Antriebstechnik Nordmark AG",
+  "from": "Key Account Manager",
+  "to": "team",
+  "text": "Read the buyer's e-mail: … term sheet and … cited facts to check; we answer with our offer."
+ },
+ {
+  "round": 1,
+  "supplier_id": "sup:70510",
+  "supplier": "Antriebstechnik Nordmark AG",
+  "from": "Key Account Manager",
+  "to": "Credit Control",
+  "text": "The buyer asks something for Credit Control; please answer."
+ },
+ {
+  "round": 2,
+  "supplier_id": "sup:70510",
+  "supplier": "Antriebstechnik Nordmark AG",
+  "from": "Key Account Manager",
+  "to": "team",
+  "text": "My call: counter."
+ },
+ {
+  "round": 2,
+  "supplier_id": "sup:70510",
+  "supplier": "Antriebstechnik Nordmark AG",
+  "from": "Key Account Manager",
+  "to": "team",
+  "text": "Read the buyer's e-mail: … term sheet; we answer with our offer."
+ },
+ {
+  "round": 2,
+  "supplier_id": "sup:70510",
+  "supplier": "Antriebstechnik Nordmark AG",
+  "from": "Key Account Manager",
+  "to": "Credit Control",
+  "text": "The buyer asks something for Credit Control; please answer."
+ },
+ {
+  "round": 3,
+  "supplier_id": "sup:70510",
+  "supplier": "Antriebstechnik Nordmark AG",
+  "from": "Key Account Manager",
+  "to": "team",
+  "text": "My call: counter."
+ },
+ {
+  "round": 3,
+  "supplier_id": "sup:70510",
+  "supplier": "Antriebstechnik Nordmark AG",
+  "from": "Key Account Manager",
+  "to": "team",
+  "text": "Read the buyer's e-mail: … term sheet and … cited fact to check; we answer with our offer."
+ },
+ {
+  "round": 3,
+  "supplier_id": "sup:70510",
+  "supplier": "Antriebstechnik Nordmark AG",
+  "from": "Key Account Manager",
+  "to": "Credit Control",
+  "text": "The buyer asks something for Credit Control; please answer."
+ },
+ {
+  "round": 4,
+  "supplier_id": "sup:70510",
+  "supplier": "Antriebstechnik Nordmark AG",
+  "from": "Key Account Manager",
+  "to": "team",
+  "text": "My call: counter."
+ },
+ {
+  "round": 4,
+  "supplier_id": "sup:70510",
+  "supplier": "Antriebstechnik Nordmark AG",
+  "from": "Key Account Manager",
+  "to": "team",
+  "text": "Read the buyer's e-mail: … term sheet; we answer with our final offer."
+ },
+ {
+  "round": 4,
+  "supplier_id": "sup:70510",
+  "supplier": "Antriebstechnik Nordmark AG",
+  "from": "Key Account Manager",
+  "to": "Credit Control",
+  "text": "The buyer asks something for Credit Control; please answer."
+ },
+ {
+  "round": 4,
+  "supplier_id": "sup:70510",
+  "supplier": "Antriebstechnik Nordmark AG",
+  "from": "Key Account Manager",
+  "to": "team",
+  "text": "quote attached (quote-offer-70510-4.pdf)"
+ },
+ {
+  "round": 4,
+  "supplier_id": "sup:70510",
+  "supplier": "Antriebstechnik Nordmark AG",
+  "from": "Key Account Manager",
+  "to": "Credit Control",
+  "text": "The buyer asks something for Credit Control; please answer."
+ },
+ {
+  "round": 4,
+  "supplier_id": "sup:70510",
+  "supplier": "Antriebstechnik Nordmark AG",
+  "from": "Key Account Manager",
+  "to": "team",
+  "text": "order confirmation attached (order-confirmation-offer-70510-4.pdf)"
+ }
+]

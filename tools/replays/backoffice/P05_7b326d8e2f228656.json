@@ -1,0 +1,26 @@
+[
+ {
+  "round": 0,
+  "supplier_id": "sup:70210",
+  "supplier": "Zerspanung Dralveck GmbH",
+  "from": "Owner",
+  "to": "team",
+  "text": "quote attached (quote-offer-70210-0.pdf)"
+ },
+ {
+  "round": 0,
+  "supplier_id": "sup:70240",
+  "supplier": "Strojírna Hrvelec s.r.o.",
+  "from": "Export Manager",
+  "to": "team",
+  "text": "quote attached (quote-offer-70240-0.pdf)"
+ },
+ {
+  "round": 0,
+  "supplier_id": "sup:70250",
+  "supplier": "Drehteile Fuchsreiter GmbH",
+  "from": "Owner",
+  "to": "team",
+  "text": "quote attached (quote-offer-70250-0.pdf)"
+ }
+]

@@ -87,3 +87,15 @@ for the fetch tool, HTTP 403, not in the Internet Archive). Applied:
 | deal | €426.49 / 45 d / 36 m | €427.92 / 60 d / 36 m | €426.61 / 60 d / 36 m |
 | sim score | 0.96 (round 1) | 0.96 (round 1) | **1.00** (round 2) |
 | with relationship charge (full cost €390-403) | 0.83-0.96 | 0.83-0.96 | **0.83-1.00** |
+
+## Update 4: central layer (`central.py`, `analysis/central/LEARNINGS.md`)
+Shared learnings from 54 live games + Dhruv's and Parth's notes + the simulators, read by `noidea_neel.py`:
+- **Calibrated supplier** (`analysis/tools/calibrate_suppliers.py`): hidden full cost and cash rate fitted on the
+  relationship charge of real deals (P02 EUR 367.60 / 6.6%, P03 EUR 395.30 / 6.1%, both exact to the cent). With it,
+  the "never below its full cost" guard is skipped (it pinned P02 at 0.51) and sheets rank by the exact charge.
+- **Data that suppliers take into account** (`analysis/tools/mine_claims.py`): should-cost vs its *quote* and a
+  rising volume forecast are now cited in round 1. Kinds this supplier already shrugged off (P03: price history) are
+  dropped, and rising indices are never cited.
+- **Approval ladder:** one structure to the committee in round 1, then stay on the structure it priced.
+- P03 replay supplier `analysis/tools/sim_selvbrunn.py` (rules from the 7 live games): 0.913 base, 0.906 if it
+  ignores the round-1 committee request, 0.938 if the committee goes as low as the house agent's deal.
