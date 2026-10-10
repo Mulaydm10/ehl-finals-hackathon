@@ -1,0 +1,95 @@
+{
+ "case_id": "case:P07",
+ "session_id": "fa62c5657ca8982e",
+ "threads": {
+  "sup:70610": [
+   {
+    "thread_id": "thread:P07:70610",
+    "message_id": "msg:70610-0-0",
+    "in_reply_to": null,
+    "from": "sales@70610",
+    "from_name": "Inside Sales, Schraubenhandel Leitner & Sohn GmbH",
+    "to": "Hollerau Pumpenwerke GmbH",
+    "subject": "Quote from Schraubenhandel Leitner & Sohn GmbH: Bundle the fastener kit with one distributor",
+    "body": "Dear customer,\n\nThank you for your enquiry. Please find our Angebot below. \n\nIt is always a pleasure to work with you, and we are delighted to present our proposal for your component requirements. As a reliable supply partner, we pride ourselves on delivering excellent service and maintaining a comprehensive product range to keep your production running smoothly. \n\nFor the requested volume, we can offer you a price of €5.74 per unit. This quote comes with a Zahlungsziel 30 days net and a contract term of 12 months. Please note that this offer remains valid for 30 days.\n\nWe trust this proposal meets your expectations and look forward to continuing our successful business relationship. Please do not hesitate to reach out if you have any questions.\n\nMit freundlichen Grüßen\nFranz Stadler\nInside Sales, Schraubenhandel Leitner & Sohn GmbH",
+    "attachments": [
+     {
+      "attachment_id": "att:70610-0-quote",
+      "name": "quote-offer-70610-0.pdf",
+      "type": "pdf",
+      "content_b64": null,
+      "text": "Schraubenhandel Leitner & Sohn GmbH\nTo: Hollerau Pumpenwerke GmbH\nAngebot / Quote offer:70610-0\nOffered terms\nUnit price (EUR) 5.74\nPayment terms (days net) 30\nContract term (months) 12\nOur standard terms (apply to everything not stated above)\nQuality commitment (ppm) 80\nChargeback per complaint (EUR) 0.00\nTerms fixed by your enquiry\nLead time (days) 5\nVolume per year (pcs) 30000\nPrice valid from 2027-01-01\nIndex clause none\nIncoterm DAP\nTooling (EUR) 0.00\nPart(s): part:360010, part:360011, part:360012, part:360030. Enquiry: Bundle the fastener kit with one distributor.\nValidity: 30 days."
+     }
+    ],
+    "term_sheets": [
+     {
+      "term_sheet_id": "offer:70610-0",
+      "terms": {
+       "unit_price": 5.74,
+       "payment_days": 30,
+       "contract_months": 12
+      }
+     }
+    ],
+    "refs": [],
+    "action": null,
+    "status": "open",
+    "signals": {
+     "reply_delay_days": 1,
+     "validity_days": 30
+    },
+    "missing_fields": [],
+    "claim_results": []
+   }
+  ]
+ },
+ "opening": {
+  "sup:70610": {
+   "offer_id": "offer:70610-0",
+   "round": 0,
+   "status": "open",
+   "terms": {
+    "unit_price": 5.74,
+    "payment_days": 30,
+    "contract_months": 12
+   },
+   "alternatives": [],
+   "missing_fields": [],
+   "claims": [],
+   "claim_results": [],
+   "signals": {
+    "reply_delay_days": 1,
+    "validity_days": 30
+   },
+   "text": "Dear customer,\n\nThank you for your enquiry. Please find our Angebot below. \n\nIt is always a pleasure to work with you, and we are delighted to present our proposal for your component requirements. As a reliable supply partner, we pride ourselves on delivering excellent service and maintaining a comprehensive product range to keep your production running smoothly. \n\nFor the requested volume, we can offer you a price of €5.74 per unit. This quote comes with a Zahlungsziel 30 days net and a contract term of 12 months. Please note that this offer remains valid for 30 days.\n\nWe trust this proposal meets your expectations and look forward to continuing our successful business relationship. Please do not hesitate to reach out if you have any questions.\n\nMit freundlichen Grüßen\nFranz Stadler\nInside Sales, Schraubenhandel Leitner & Sohn GmbH"
+  }
+ },
+ "quote_terms": {
+  "sup:70610": {
+   "stated": {
+    "unit_price": 5.74,
+    "payment_days": 30,
+    "contract_months": 12
+   },
+   "standard": {
+    "ppm_commitment": 80,
+    "chargeback_eur_per_complaint": 0.0
+   },
+   "fixed": {
+    "lead_time_days": 5,
+    "volume_per_year": 30000,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "incoterm": "DAP",
+    "tooling_eur": 0.0
+   }
+  }
+ },
+ "result": {
+  "c_open": 391027.4,
+  "c_deal": null,
+  "c_alt": 379916.0,
+  "c_best": 299241.49,
+  "score": 0.12105779634368738
+ }
+}

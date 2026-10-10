@@ -1,0 +1,97 @@
+{
+ "case_id": "case:P10",
+ "session_id": "03968142fec00495",
+ "threads": {
+  "sup:70410": [
+   {
+    "thread_id": "thread:P10:70410",
+    "message_id": "msg:70410-0-0",
+    "in_reply_to": null,
+    "from": "sales@70410",
+    "from_name": "Segment Manager, Dichtungswerk Ravensteiner GmbH",
+    "to": "Hollerau Pumpenwerke GmbH",
+    "subject": "Quote from Dichtungswerk Ravensteiner GmbH: Ravensteiner cuts the seal allocation",
+    "body": "Dear Sir or Madam,\n\nThank you for your enquiry. Please find our Angebot below.\n\nWe offer a volume of 19890 pcs per year at a price of €32.20 per unit. The requested contract term is 12 months, and our Lieferzeit is 54 days. \n\nPlease note that this offer remains valid for 30 days. We look forward to proceeding according to our standard commercial procedure upon receipt of your confirmation.\n\nMit freundlichen Grüßen\nMonika Zellner\nSegment Manager, Dichtungswerk Ravensteiner GmbH",
+    "attachments": [
+     {
+      "attachment_id": "att:70410-0-quote",
+      "name": "quote-offer-70410-0.pdf",
+      "type": "pdf",
+      "content_b64": null,
+      "text": "Dichtungswerk Ravensteiner GmbH\nTo: Hollerau Pumpenwerke GmbH\nAngebot / Quote offer:70410-0\nOffered terms\nUnit price (EUR) 32.20\nLead time (days) 54\nVolume per year (pcs) 19890\nContract term (months) 12\nOur standard terms (apply to everything not stated above)\nQuality commitment (ppm) 300\nChargeback per complaint (EUR) 0.00\nTerms fixed by your enquiry\nPayment terms (days net) 30\nPrice valid from 2027-01-01\nIndex clause none\nIncoterm DAP\nTooling (EUR) 0.00\nPart(s): part:340010. Enquiry: Ravensteiner cuts the seal allocation.\nValidity: 30 days."
+     }
+    ],
+    "term_sheets": [
+     {
+      "term_sheet_id": "offer:70410-0",
+      "terms": {
+       "unit_price": 32.2,
+       "lead_time_days": 54,
+       "volume_per_year": 19890,
+       "contract_months": 12
+      }
+     }
+    ],
+    "refs": [],
+    "action": null,
+    "status": "open",
+    "signals": {
+     "reply_delay_days": 2,
+     "validity_days": 30
+    },
+    "missing_fields": [],
+    "claim_results": []
+   }
+  ]
+ },
+ "opening": {
+  "sup:70410": {
+   "offer_id": "offer:70410-0",
+   "round": 0,
+   "status": "open",
+   "terms": {
+    "unit_price": 32.2,
+    "lead_time_days": 54,
+    "volume_per_year": 19890,
+    "contract_months": 12
+   },
+   "alternatives": [],
+   "missing_fields": [],
+   "claims": [],
+   "claim_results": [],
+   "signals": {
+    "reply_delay_days": 2,
+    "validity_days": 30
+   },
+   "text": "Dear Sir or Madam,\n\nThank you for your enquiry. Please find our Angebot below.\n\nWe offer a volume of 19890 pcs per year at a price of €32.20 per unit. The requested contract term is 12 months, and our Lieferzeit is 54 days. \n\nPlease note that this offer remains valid for 30 days. We look forward to proceeding according to our standard commercial procedure upon receipt of your confirmation.\n\nMit freundlichen Grüßen\nMonika Zellner\nSegment Manager, Dichtungswerk Ravensteiner GmbH"
+  }
+ },
+ "quote_terms": {
+  "sup:70410": {
+   "stated": {
+    "unit_price": 32.2,
+    "lead_time_days": 54,
+    "volume_per_year": 19890,
+    "contract_months": 12
+   },
+   "standard": {
+    "ppm_commitment": 300,
+    "chargeback_eur_per_complaint": 0.0
+   },
+   "fixed": {
+    "payment_days": 30,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "incoterm": "DAP",
+    "tooling_eur": 0.0
+   }
+  }
+ },
+ "result": {
+  "c_open": 1932492.18,
+  "c_deal": null,
+  "c_alt": null,
+  "c_best": 1328926.89,
+  "score": 0.0
+ }
+}
