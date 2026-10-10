@@ -718,3 +718,7 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
      ask instead. Checked: no duplicate function / constant names in noidea.py; final_offer still accepted before any probe;
      walk guard still precedes the probe (walk risk > probe gain).
 - Tests 38; offline 0.931 (P10 = Parth's live-validated anchor); walk + finals replays unchanged.
+
+## v2.17 live P11 (19:10): 0.71 (876705379b434d96)
+- High draw (46.50 first counter) -> 46.00 -> 45.50 -> hold -> **grid probes 45.10 / 45.20 / 45.30 all held** -> final 45.50 -> accepted. Floor this session > 45.30 (7117d351: <= 45.13). Mechanics live-verified; no walk, final came after 3 probes (patience ~4 holds).
+- Expected with the probe (cloud VARIANCE draw ~40/60): low draw (shown 45.00, floor ~44.6-45.0) -> 0.80-0.86, high draw -> 0.71-0.77.
