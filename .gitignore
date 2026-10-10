@@ -38,3 +38,6 @@ data/*
 
 # Sunday release backups (tools/sunday_release/rebuild.sh)
 backups/
+
+# final runner logs
+logs/

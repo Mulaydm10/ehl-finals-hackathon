@@ -295,6 +295,30 @@ class NoIdeaAgent:
                                  if not (calc and c["kind"] == "index_change" and c.get("series") in calc["series"]
                                          and (c.get("figure") or 0) >= 0)],
                              "kit": self.kit_calc(case, sid) if case["type"] == "bundling" else None}
+            if "case_refs" in EXPERIMENTS:
+                # experiment: the case's OWN reference facts our argument bank does not hold (their values sit on the arena, not
+                # in our package - sandbox D02: fc:SH-220@2026-09, cost:part:SH-220) cited WITHOUT a figure: the arena checks an
+                # id against its own data, so a figure-less citation cannot be contradicted (Neel's QN claims, live). D02's
+                # bidder asked twice for "actual proof of this volume"; the forecast in its case refs is that proof
+                have = {i for c in self.sup[sid]["args"] for i in c["ids"]}
+                kinds = {c["kind"] for c in self.sup[sid]["args"]}
+                extra = []
+                for ref in case.get("refs") or []:
+                    if ref in have:
+                        continue
+                    if ref.startswith("cost:") and "should_cost" not in kinds:
+                        extra.append({"kind": "should_cost", "ids": [ref], "supplier": sid, "part": part, "figure": None,
+                                      "checked_by_arena": True,
+                                      "sentence": f"Our should-cost estimate for this part is on record ({ref})."})
+                        kinds.add("should_cost")
+                    elif ref.startswith("fc:") and "forecast" not in kinds:
+                        extra.append({"kind": "forecast", "ids": [ref], "supplier": sid, "part": part, "figure": None,
+                                      "checked_by_arena": True,
+                                      "sentence": f"Our demand forecast for this part is on record ({ref})."})
+                        kinds.add("forecast")
+                if extra:
+                    self.sup[sid]["args"] = extra + self.sup[sid]["args"]
+                    log.info("%s: case refs cited without figures: %s", sid, [c["ids"][0] for c in extra])
             self.sup[sid]["k"] = self.prior_k(case, sid)
             self.sup[sid]["patience"] = self.patience_prior(case, sid)
             log.info("%s patience prior: final expected around round %d", sid, self.sup[sid]["patience"])
@@ -901,17 +925,28 @@ class NoIdeaAgent:
         # (P07, which never mentioned duration, priced 36 m higher).
         wants_term = case["type"] == "capacity" or bool({"wants_commitment", "capacity_tight", "needs_multi_year"}
                                                         & set(s["dossier"].get("motives", {})))
+        need_lt = case["buyer"].get("need_lead_time_days")
+        std_terms = s.get("std") or {}
+
         def strain(t):
             out = 0.0
             for f in case["negotiable"]:
                 o, v = opening.get(f), t.get(f)
-                if f == "unit_price" or o is None or v is None or not isinstance(v, (int, float)):
+                if f == "unit_price" or v is None or not isinstance(v, (int, float)):
+                    continue
+                if o is None:  # its quote does not state the term: its standard terms, for a lead time our need
+                    o = std_terms.get(f) if std_terms.get(f) is not None else (need_lt if f == "lead_time_days" else None)
+                if o is None or not isinstance(o, (int, float)):
                     continue
                 if f == "contract_months" and wants_term:
                     out -= v / 36  # longer = less strain for a supplier that wants security
                     continue
-                if f == "lead_time_days":  # faster than we need is pure strain; slower than need costs us anyway
-                    v = max(v, 0)
+                if f == "lead_time_days":
+                    # only FASTER than its own lead time is strain (slower is easier for it; later than our need costs us
+                    # anyway, in C). Sandbox D02 ec2806ab: we asked 21 d of a bidder quoting none (its 28 d, our need 35) -
+                    # the symmetric rule had nothing to compare and the first option won (rule 10: never ask strain we don't need)
+                    out += max(0.0, o - v) / max(abs(o), 1)
+                    continue
                 out += abs(v - o) / max(abs(o), 1)
             return out
         ranked.sort(key=lambda x: (round(x[0], 0), strain(x[1])))

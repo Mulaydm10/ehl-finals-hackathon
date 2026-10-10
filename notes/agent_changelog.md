@@ -1246,3 +1246,20 @@ games 8ccbdcc0 / 98e834e4, P02 10b624c1, P07 216f49e9, P08 00e8923e, P10 673ee89
 - Status after 4 loops (all hidden, normal mode): the single agent is at the team best on P01, P02 (0.879 record), P07, P08, P10
   (0.710), within the draw on P03 / P04; below only on P11 (0.794 vs scripted 0.885 - its first counter answers our exact words)
   and P18 (0.688 vs 0.727 - its first counter rises with our payment term, P07 the opposite). No crash, no walk since v2.34f.
+
+### v2.34g + kit: lead-time strain, RFQ timing A/B, final tooling (2026-10-11 01:05 - 01:25)
+- **Lead-time strain (general)**: on cost ties the agent prefers the term closest to the supplier's own; for lead time only FASTER
+  than its own is strain (slower is easier for it; later than our need is in our cost anyway), and a quote without the term
+  falls back to its standard terms, then our need. Sandbox D02 had asked 21 d of a bidder quoting none (its 28 d, our need 35).
+  Round-1/2 dump of all 10 hosted cases unchanged; tests 66; crash 19/19.
+- **RFQ timing**: sandbox D02 24dc3b6c lost the better bidder J1 to two timeouts - the arena runs ONE call per session at a time
+  ("busy: another call on this session is still running") and our second call to C1 jumped ahead of J1's waiting one. Kit
+  switch `ARENA_RFQ_SERIAL=1` (one call at a time, longest-waiting bidder first) A/B on the free sandbox, 3 + 3 games: parallel
+  0.558 / 0.536 / 0.515, serial 0.536 / 0.536 / 0.515, **0 timeouts in all six** -> the starvation was a one-off under arena
+  load; default stays PARALLEL (what tests/test_rfq_parallel.py encodes); the switch stays as an off-by-default fallback.
+- D02 without facts tops out at ~15.0-15.1 (0.52-0.56): its bidders stop at their finals after 3-4 replies; J1's rival (C1 EXW
+  + freight) was dearer, so citing it gave J1 no pressure.
+- **Final tooling**: `tools/final/start_final.sh` (env from the git-ignored key files, `--agent noidea --parallel 10`, nohup +
+  caffeinate, log in `logs/`, default NOIDEA_EXPERIMENTS=hidden = the validated mode), `tools/final/preflight.sh` (key, model,
+  tests, crash test, sandbox D01/D02 + P01), `tools/final/RUNBOOK.md` (08:00 / 09:00 / 11:00 / before 12:00; no pushes after
+  12:00; never feed the board to the agent). README rewritten (approach, setup, env names, commands). `logs/` git-ignored.

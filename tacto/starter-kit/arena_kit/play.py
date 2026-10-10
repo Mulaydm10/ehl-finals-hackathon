@@ -10,6 +10,7 @@ An agent is any object with `decide(case, threads) -> {"supplier_id": ..., "mess
 
 import functools
 import logging
+import os
 import re
 import threading
 import time
@@ -298,6 +299,7 @@ def play(table, case_id, agent, deadline=None):
     return table.result()
 
 
+RFQ_SERIAL = os.environ.get("ARENA_RFQ_SERIAL") == "1"  # experiment: one call per session at a time
 COOL_AFTER_5XX_S = 20  # RFQ: after a 5xx on our e-mail to a bidder (and no change there), wait before deciding for it again
 # A bidder whose reply has waited this long is answered next, whatever the agent prefers: model calls take
 # 5-20 s each and every bidder has only 60 s (live P05 d88810ba7949735b: timeouts from round 3 on).
@@ -358,6 +360,13 @@ def _play_threads(table, case, case_id, threads, agent, deadline):
                 arrived[sid] = time.monotonic()
             live = live_threads(threads)
             ready = [sid for sid in live if sid not in pending and cool.get(sid, 0) <= time.monotonic()]
+            if RFQ_SERIAL and pending:
+                # experiment ARENA_RFQ_SERIAL=1: the arena runs ONE call per session at a time ("busy: another call on this
+                # session is still running"); a second call of ours can jump the queue and starve a bidder (sandbox D02
+                # 24dc3b6c: two C1 calls went through while J1's waited 106 s -> two timeouts, J1 walked). One call at a
+                # time; the next goes to the bidder that has waited longest (urgent/focus below)
+                wait([f for _, f, _ in pending.values()], return_when=FIRST_COMPLETED)
+                continue
             if not ready and not pending and any(cool.get(sid, 0) > time.monotonic() for sid in live):
                 time.sleep(1)  # only bidders in their cool-down are left: wait, never resend a stale move at once
                 continue
@@ -368,6 +377,8 @@ def _play_threads(table, case, case_id, threads, agent, deadline):
                 continue
             urgent = [sid for sid in ready if time.monotonic() - arrived[sid] >= URGENT_S]
             focus = {max(urgent, key=lambda x: time.monotonic() - arrived[x])} if urgent else set(ready)
+            if RFQ_SERIAL:  # one call at a time: always the bidder whose reply has waited longest
+                focus = {max(ready, key=lambda x: time.monotonic() - arrived[x])}
             cap = deadline() if callable(deadline) else deadline
             if cap and time.time() > cap - max(CLOSE_BEFORE_CAP_S, slowest + ROUND_MARGIN_S):
                 log.info("%s: the wave's cap is near - closing", case_id)
