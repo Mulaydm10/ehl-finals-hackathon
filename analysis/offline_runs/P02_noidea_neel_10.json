@@ -1,0 +1,41 @@
+{
+ "case": "P02",
+ "variant": "noidea_neel",
+ "sim_score": 0.924016079929989,
+ "end": "deal {'unit_price': 368.73, 'payment_days': 90, 'index_clause': None}",
+ "rounds": 2,
+ "emails": [
+  {
+   "body": "Dear Petra Lechner,\n\nThank you for your message.\n\n1. Volume and term: we confirm a binding volume of 6,110 units per year for 12 months, 6,110 units in total.\n2. Our proposal: EUR 356.33 per unit, 90 days net, no price-adjustment clause. This amounts to about EUR 2,177,176 over the term.\n3. Basis: Our demand forecast for this part is up +11.9% (fc:350011@2026-09), and we commit 6,110 units a year. Producer prices DE: basic iron and steel, ferro-alloys changed -4.3% from 2024-10 to 2025-10 (idx:PPI-C241@2024-10, idx:PPI-C241@2025-10). On quality: we raised 2 quality notifications on this part in the last 12 months, at 4,632 ppm on average (qn:20004698, qn:20004826).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [
+    "fc:350011@2026-09",
+    "idx:PPI-C241@2024-10",
+    "idx:PPI-C241@2025-10",
+    "qn:20004698",
+    "qn:20004826"
+   ],
+   "sheets": [
+    {
+     "unit_price": 356.33,
+     "payment_days": 90,
+     "index_clause": null
+    }
+   ]
+  },
+  {
+   "body": "Dear Petra Lechner,\n\nThank you for your message.\n\n1. Volume and term: we confirm a binding volume of 6,110 units per year for 12 months, 6,110 units in total.\n2. Our proposal: EUR 361.29 per unit, 90 days net, no price-adjustment clause. This amounts to about EUR 2,207,482 over the term.\n3. Basis: Copper notation for cables and motors (derived) changed -2.2% from 2026-01 to 2026-03 (idx:CU-NOTATION@2026-01, idx:CU-NOTATION@2026-03).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [
+    "idx:CU-NOTATION@2026-01",
+    "idx:CU-NOTATION@2026-03"
+   ],
+   "sheets": [
+    {
+     "unit_price": 361.29,
+     "payment_days": 90,
+     "index_clause": null
+    }
+   ]
+  }
+ ],
+ "relationship": {}
+}

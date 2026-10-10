@@ -146,8 +146,9 @@ def quality_notification_claims(case, facts, sid):
     mean = sum(facts[k]["ppm"] for k in qns) / len(qns)
     return [{"supplier": sid, "part": facts[qns[0]]["part"], "kind": "quality_notification", "ids": qns,
              "figure": round(mean), "keep_alive": True, "checked_by_arena": True,
-             "sentence": f"On quality: we raised {len(qns)} quality notification{'s' if len(qns) > 1 else ''} on this part "
-                         f"in the last 12 months, at {mean:,.0f} ppm on average ({', '.join(qns)})."}]
+             # ONE number per claim sentence and no thousands separator: live P02 f778b35c67ecd799 wrote "2 quality
+             # notifications ... in the last 12 months, at 4,632 ppm" -> "contradicted ... That costs trust" (0.607)
+             "sentence": f"Your quality notifications on this part average {mean:.0f} ppm ({', '.join(qns)})."}]
 
 
 def delivery_year_claims(facts, sid, bar=95.0):
