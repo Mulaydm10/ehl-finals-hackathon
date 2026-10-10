@@ -1,12 +1,14 @@
 {
  "sup:70110": {
-  "games": 6,
+  "games": 8,
   "scores": [
    0.78,
    0.91,
    0.583,
    0.0,
+   1.0,
    0.853,
+   0.999,
    0.993
   ],
   "shrugged": {
@@ -37,12 +39,33 @@
     ]
    },
    "effective_date=2027-01-01|payment_days=14": {
-    "agreed_to_our_ask": [],
+    "agreed_to_our_ask": [
+     [
+      129.11,
+      129.11
+     ],
+     [
+      129.11,
+      129.9
+     ],
+     [
+      129.43,
+      129.43
+     ],
+     [
+      129.43,
+      129.9
+     ]
+    ],
     "finals": [
      133.8
     ],
     "named_floors": [],
     "refused_asks": [
+     [
+      127.31,
+      133.4
+     ],
      [
       127.89,
       134.5
@@ -53,7 +76,15 @@
      ],
      [
       128.04,
+      129.9
+     ],
+     [
+      128.04,
       131.3
+     ],
+     [
+      129.11,
+      129.9
      ],
      [
       129.11,
@@ -102,9 +133,11 @@
    }
   },
   "took": {
-   "index change": 3,
-   "notice period": 2,
-   "volume change": 3
+   "index change": 5,
+   "notice period": 4,
+   "quality record": 1,
+   "volume change": 4,
+   "volume forecast": 1
   }
  },
  "sup:70140": {

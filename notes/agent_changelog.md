@@ -986,3 +986,7 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
   labour on P01) - different IDs, different fact. Now only rising/flat windows of calc series are excluded.
 - Our rounds now: r1 notice + iron & steel -4.3%, r2 energy -17%, r3 forecast, then labour / QNs. Other cases' round 1 unchanged;
   tests 61; offline 0.931 / 0.861; walk replays unchanged.
+
+## v2.26 live P01 (21:55): **0.9987** (f01f637c3e9cb17f) - was 0.91; house 0.966, Neel 0.993, record pegasus 0.998
+- r1 notice + iron & steel -4.3% -> 133.40 (first counter, was 135.60-136.40); r2 energy -17% -> 129.90; it AGREED to our 129.11 @ 14 d Jan.
+- The falling-window fix gave round 1 the fact this data-naive owner rewards most; first counter 2-3 EUR lower than before.

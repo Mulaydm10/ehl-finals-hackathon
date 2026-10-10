@@ -204,3 +204,5 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
 88. **Check the spec before inventing a lever**: prices are EUR with 2 decimals (api.md) - a floor between two cents is out of reach.
     P04: 0.874 is the ceiling; the agent reaches it every time (5 of 5) once the TERM is chosen from memory.
 89. **Memory lookups must compare numbers as numbers** (the arena sends 45.0 where we stored 45) - a silent mismatch disabled a rule.
+90. **Never drop a checkable fact because a calculation already covers its series**: a falling window has its own IDs and is
+    the strongest fact for a data-naive owner (P01: iron & steel -4.3% in round 1 -> first counter 133.40 vs 136.40, deal 0.9987).
