@@ -1,0 +1,37 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.pnpm-store/
+.next/
+.nuxt/
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+# Venvs
+.venv/
+venv/
+env/
+# macOS
+.DS_Store
+# Env
+.env
+.env.*
+!.env.example
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+# Build
+build/
+dist/
+out/
+coverage/
+# Data
+data/*
+!data/.gitkeep
