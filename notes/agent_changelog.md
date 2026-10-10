@@ -348,3 +348,13 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
 - **v2.6 fix:** cost calc only when BOTH the 6- and 12-month totals are below its ask. Now fires on P04 and P08 only
   (not P02, P03, P18, P10). Tests 32 passed; offline 0.939 / 0.947. P02 falls back to the v2.3-style behaviour (0.48).
 - Lesson (into G_lessons): **a justified increase is not fought with numbers; trade terms instead (payment, date).**
+
+## Parallel live run, v2.6 + gpt-6-astra, 4 cases at once (16:22, no timeouts / model failures under load)
+| case | score | previous best | session | deal / note |
+|---|---:|---:|---|---|
+| P07 | **0.73** | 0.70 | 8f088ea83d5e5ca8 | **new best P07**: 5.52 @ 30 → 5.52 @ 90 → 5.48 → final **€5.44 @ 90 d**, 24 m |
+| P08 | **0.65** | first live | a43d77c01405cba4 | 5.41 → 5.26 → final **€5.21 @ 45 d, 24 m + AS-14404 clause db0** (it added the clause itself, like P18); accepted as cheapest by C |
+| P02 | 0.44 | 0.48 | d0c627ec43ba1f5d | v2.6 fix worked (0.27 → 0.44): no cherry-picked calc; 373.88 → 372.45 @ 90 d |
+| P10 | 0.64 | 0.65 | b9e6766299dada92 | final in round 1 again: €32.00 @ 56, 36 m (its floor ~€31.90) |
+- Mean of the 4: **0.61**. The full v2.6 stack (structure + dynamic + personas/RAG + Parth's features) ran 4 sessions in
+  parallel on the Mac + Astra without timeouts: the Live Final shape works.

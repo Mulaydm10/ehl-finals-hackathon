@@ -37,3 +37,7 @@
 | 2026-10-10 16:06 | Dhruv | P02 | noidea v2.5 / gpt-6-astra | 0.27 (6-month cost calc rejected: twelve-month pressure) | c52de0252df56877 |
 | 2026-10-10 16:11 | Neel | P03 | noidea_neel / gpt-6-astra | **0.86** | 78f03f1c9dcde080 |
 | 2026-10-10 16:19 | Neel | P03 | noidea_neel / gpt-6-astra | **0.86** | 47a88b4d0bb75ce3 |
+| 2026-10-10 16:22 | Dhruv | P08 | noidea v2.6 / gpt-6-astra (parallel x4) | **0.65** | a43d77c01405cba4 |
+| 2026-10-10 16:22 | Dhruv | P02 | noidea v2.6 / gpt-6-astra (parallel x4) | 0.44 | d0c627ec43ba1f5d |
+| 2026-10-10 16:22 | Dhruv | P07 | noidea v2.6 / gpt-6-astra (parallel x4) | **0.73 best P07** | 8f088ea83d5e5ca8 |
+| 2026-10-10 16:22 | Dhruv | P10 | noidea v2.6 / gpt-6-astra (parallel x4) | 0.64 | b9e6766299dada92 |
