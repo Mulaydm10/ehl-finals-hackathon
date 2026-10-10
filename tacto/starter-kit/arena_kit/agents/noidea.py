@@ -1265,6 +1265,22 @@ or null, "reason": "<one sentence>"}."""
             if short:
                 sheets = short[:1]
                 s["meso"] = [short[0][1]]  # code's structure, the model only writes
+        # experiment `trade_term`: a term the supplier values is a TRADE for round 2, not a round-1 gift - round 1 offers our
+        # best structure with the next-SHORTER contract at the same price, round 2 concedes the longer contract with the next
+        # fact (P10 Neel 59c899b9: 24 m -> 36 m + labour in round 2 = -0.40, its best round-2 step; P18 0c968aae: 30 -> 14 d
+        # in round 2 -> -0.20, the same term in round 1 drew nothing, bf56d975)
+        if k == 0 and "trade_term" in EXPERIMENTS and sheets and "contract_months" in case["negotiable"] and len(self.sup) == 1:
+            opts = sorted(case.get("term_options", {}).get("contract_months") or [])
+            best_t = sheets[0][1]
+            cm = best_t.get("contract_months")
+            shorter = [o for o in opts if cm is not None and o < cm]
+            if cm == (opts[-1] if opts else None) and shorter:
+                t1 = complete_offer(case, {**best_t, "contract_months": shorter[-1]})
+                if must_haves_ok(case, t1, s["std"]):
+                    sheets = [(total_cost(case, t1, s["std"], s["est"]), t1)]
+                    s["meso"] = [t1]  # code's structure in round 1, the model only writes
+                    s["trade_term"] = ("contract_months", cm)
+                    log.info("%s: trade term - round 1 at %s months, %s months kept for round 2", sid, shorter[-1], cm)
         mb = self.memory_best_structure(case, sid) if "no_memory_term" not in EXPERIMENTS else None
         if mb and sheets:
             keep = [x for x in self.sheets_at(case, sid, target, cap, n=12, band_pct=0.2)
@@ -2315,6 +2331,9 @@ or null, "reason": "<one sentence>"}."""
         # suppliers keep asking "Which volume can you commit to?" (P07 live): answer in code
         unit = "kits" if case["type"] == "bundling" else "units"
         lines = [f"We confirm a binding volume of {vol:,} {unit} per year" + (f" for {months} months" if months else "") + "."]
+        tt = s.get("trade_term")
+        if tt and k == 1 and sheets and sheets[0].get(tt[0]) == tt[1]:  # experiment trade_term: the concession, said once
+            lines.append(f"To meet you, we now commit to the longer contract: {tt[1]} months.")
         if case["type"] == "bundling":
             if k == 0:
                 lines.append("We want one partner for the complete kit, which bundles parts we buy from several suppliers today.")

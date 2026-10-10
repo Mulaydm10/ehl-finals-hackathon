@@ -1175,3 +1175,28 @@ Rejected: a hair-under ask with the last fact (expected +0.004; could give away 
 - Wording: games with IDENTICAL sheets + refs differ only by our model-written paragraph and draw different first counters
   (P07 5.44 / 5.53 / 5.56; P02 370.94 / 372.52; Parth's verbatim P11 opener 3 of 3 the same 45.50). No phrase pattern generalises
   -> treated as noise for unseen suppliers; no case-specific text (that would be memorising).
+
+### Loop 3 of the hidden pass (v2.34d + kit fixes), 2026-10-11 00:21 - 00:29 - and the two unseen SANDBOX cases
+| case | L1 | L2 | L3 | team best | reading |
+|---|---:|---:|---:|---:|---|
+| P01 | 0.9997 | 0.959 (bug) | **0.9987** | 0.9987 | = record again after the id-less fix |
+| P02 | 0.809 | 0.828 | 0.818 | 0.847 | stable 0.81-0.83 |
+| P03 | 0.954 | 0.954 | 0.954 | 0.963 | deterministic (3 of 3 identical) |
+| P04 | 0.815 | 0.766 | 0.815 | 0.874 | term lottery without memory |
+| P07 | 0.825 | 0.773 | 0.792 | 0.812 | wording draw (identical moves) |
+| P08 | 0.781 | 0.916 | **0.916** | 0.916 | 2 of 3 at the best |
+| P10 | 0.741 | 0.0 (kit 503) | 0.702 | 0.741 | first-counter draw (1 in 10 low, Neel) |
+| P11 | 0.794 x2, 0.752 x2 | 0.794 | 0.794 x2 | 0.885 (scripted) | high draws; steps per fact as planned |
+| P18 | 0.688 | 0.621 | 0.621 | 0.727 | first-counter draw 5.20 vs 5.30, round-1 term near-tie |
+- Hidden-mode mean over 9 cases (L3): **0.823**; no crash, no walk, every case a deal.
+- **SANDBOX (suppliers NOT in our data: no dossier, no facts, no memory)** - the closest test of a truly unseen case:
+  D01 price increase **0.910** (6df9e5bd); D02 two-bidder RFQ with negotiable incoterm **0.515** (ec2806ab): the bidder asked
+  twice for "actual proof of this volume" - the case's own refs hold a forecast (fc:SH-220), a should-cost and scorecards, but
+  their values are not in our package (demo ids), so the agent had nothing checkable to cite. For the final, hidden cases
+  cite the package + the 08:00 release, which our claim bank is built from.
+- **Sunday release tooling (new)**: `tools/sunday_release/rebuild.sh` = backup -> `arena data` -> `merge_release.py` (the
+  release is NEW ids only: facts.json union, CSV rows appended by id, new letters/memo copied; a changed id is reported, never
+  overwritten) -> rebuild A/B/C (self-check must be 0 bad) -> tests + 19-case crash test + round-1 diff -> rollback line.
+  Tested on a synthetic release against a copy of tacto/data (merge + build_abc: 46 suppliers, 915 claims, 0 bad).
+  The release is public at 2026-10-11T06:00Z = 08:00 CEST. `backups/` is git-ignored.
+- Experiment `trade_term` (contract term held for round 2) coded, OFF: round 2 kept the shorter term in the dump - not tuned.

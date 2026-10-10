@@ -249,3 +249,15 @@
 | 2026-10-11 00:06 | Neel | P10 | noidea_p10b (NOIDEA_EXPERIMENTS=hidden; r1 rubber idx instead of OTD) / gpt-6-astra | **0.69** | a9e2c0e41cc1be12 |
 | 2026-10-11 00:08 | Neel | P10 | noidea_p10b v2 (NOIDEA_EXPERIMENTS=hidden; record r1 incl. OTD, r2 labour idx) / gpt-6-astra | **0.69** | 67f3678ff842d9a8 |
 | 2026-10-11 00:18 | Neel | P10 | noidea_p10 (cloud plan: r1 24 m + path + should-cost + rubber idx; r2 36 m move + labour idx) / gpt-6-astra | **0.71** | 59c899b93ba24dec |
+| 2026-10-11 00:21 | Dhruv | P01 | v2.34d hidden L3 / gpt-6-astra | 0.9987 | 00978bd1c35aab21 |
+| 2026-10-11 00:21 | Dhruv | P02 | v2.34d hidden L3 / gpt-6-astra | 0.8184 | 934b73e42b6b2a53 |
+| 2026-10-11 00:21 | Dhruv | P07 | v2.34d hidden L3 / gpt-6-astra | 0.7924 | 40751c7b8a683f60 |
+| 2026-10-11 00:21 | Dhruv | P10 | v2.34d hidden L3 / gpt-6-astra | 0.7019 | 420cc05075f01a72 |
+| 2026-10-11 00:21 | Dhruv | P11 | v2.34d hidden L3 / gpt-6-astra | 0.7935 | c6f7cff834fdf6a6 |
+| 2026-10-11 00:25 | Dhruv | P03 | v2.34d hidden L3 / gpt-6-astra | 0.9536 | 5c74eff537726872 |
+| 2026-10-11 00:25 | Dhruv | P04 | v2.34d hidden L3 / gpt-6-astra | 0.8153 | 8519a38814914b86 |
+| 2026-10-11 00:25 | Dhruv | P08 | v2.34d hidden L3 / gpt-6-astra | 0.9156 | b8282418717996f6 |
+| 2026-10-11 00:25 | Dhruv | P18 | v2.34d hidden L3 / gpt-6-astra | 0.6207 | 3a6491c842fccaca |
+| 2026-10-11 00:26 | Dhruv | P11 | v2.34d hidden L3b / gpt-6-astra | 0.7935 | 542f9ce85b4a7482 |
+| 2026-10-11 00:26 | Dhruv | D01 | v2.34d SANDBOX unseen supplier / gpt-6-astra | 0.9098 | 6df9e5bd0a72465b |
+| 2026-10-11 00:26 | Dhruv | D02 | v2.34d SANDBOX unseen RFQ / gpt-6-astra | 0.5154 | ec2806ab3dd21e33 |

@@ -35,3 +35,6 @@ coverage/
 # Data
 data/*
 !data/.gitkeep
+
+# Sunday release backups (tools/sunday_release/rebuild.sh)
+backups/
