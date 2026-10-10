@@ -170,3 +170,4 @@
 | 2026-10-10 20:48 | Parth | P08 | noidea 544b5cd (year-rise path, no hedged index) / gpt-6-astra | 0.822 (agent with the P08 probe-A round 1) | 6701d5ddffb86dd4 |
 | 2026-10-10 20:56 | Parth | P04 | p04_record 11543a3 --probe / scripted | 0.000 | 62a17f4abde590c7 |
 | 2026-10-10 20:57 | Parth | P08 | noidea 6567650 (year-rise path, no hedged index, clause-free asks) / gpt-6-astra | 0.830 (agent, P08 rules) | 018b9519cfe7c8f4 |
+| 2026-10-10 21:02 | Parth | P08 | noidea c1d7678 (hedged: 3 sheets r1, lean later) / gpt-6-astra | 0.916 (agent, P08 rules complete) | 4ff01141bab9fea6 |
