@@ -748,3 +748,12 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
 - 46.50 (high draw) -> r2 data + our late-payment admission -> 45.50 ("We appreciate your commitment to paying on time, as cash flow is important to us right now") -> hold ("we cannot go below what you paid before") -> **grid probe 1 = 45.10 AGREED**: "We appreciate your move on the price and your firm promise to pay on time, which is crucial for our cash flow right now. We accept your offer of 45.10 EUR".
 - 7 earlier high draws all ended 0.71 (one 0.77 via a lucky near-close). The play-the-man line + grid probe beat the draw. Floor this session in (45.00, 45.10]. 0.80 needs <= 44.96: expected on a LOW draw (shown 45.00) with the same recipe.
 - Lesson (general): **pay the person in his currency, then probe** - the concession he values (cash on time) moved his floor; the probe collected it.
+
+## v2.18 live P11 (19:26): **0.7935** = ties best (37ea72dec7b6052e) - first LOW draw since 18:03
+- 46.00 -> 45.00 (data + late-payment admission: "We are really counting on your promise to pay exactly on time") -> hold ->
+  floor question "What is the lowest price at which you can sign these terms today?" -> **"We can give you a price of EUR 45.00"**
+  -> probes 44.60 / 44.70 / 44.80 held ("this is the best we can do for 300 ppm and 0 EUR chargeback") -> final 45.00.
+- **Its named floor was its real floor**: 0.7935 was the maximum of this session. 0.80 (<= 44.96) needs a lower floor itself.
+- Play-the-man games: high draw 0.777 (best of 8 high draws), low draw 0.7935 (= best). -> `own_late_pay` and `ask_floor` now
+  default ON (opt-out `no_own_late_pay` / `no_ask_floor`; triggers are narrow: we pay it late >= 50% and >= 3 days and it is
+  cash-driven / it stalls). New: when its answer to the floor question names its standing price, stop probing below it.

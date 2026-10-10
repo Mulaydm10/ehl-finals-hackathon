@@ -988,6 +988,12 @@ class NoIdeaAgent:
         probing = (near_final or holding) and status == "open" and moves_left(case, events) > 1 and ok \
             and c_stand <= best_elsewhere and not self.next_args(sid, 1) and (holding or not g)
         close_now = False
+        named = re.search(r"(?i)(?:give you|offer|do|best we can do|lowest)[^.€]{0,40}(?:€|eur\s?)\s?(\d+[.,]\d{2})",
+                          latest(events).get("body") or "") if s.get("asked_floor") else None
+        if named and abs(float(named.group(1).replace(",", ".")) - terms["unit_price"]) < 0.005:
+            # it NAMED its floor = its standing price (P11 37ea72de: "We can give you a price of EUR 45.00" -> held 45.00 x2,
+            # final 45.00): probes below a named floor only spend its patience
+            s["probes"] = GRID_PROBES
         if probing and g and s.get("probes", 0) < GRID_PROBES:
             j = s.get("probes", 0)
             ask = terms["unit_price"] - g + g * (j + 1) / (GRID_PROBES + 1)
@@ -1528,7 +1534,7 @@ class NoIdeaAgent:
         #    (the score assumes the agreed term); to a cash-short firm ~10 days of cash is worth more than the price gap.
         motives = set(d.get("motives", {}))
         rec = self.late_payment(sid)
-        if "own_late_pay" in EXPERIMENTS and k >= 1 and rec and rec[0] >= 0.5 and rec[1] >= 3 and \
+        if "no_own_late_pay" not in EXPERIMENTS and k >= 1 and rec and rec[0] >= 0.5 and rec[1] >= 3 and \
                 ({"cash_short", "wants_faster_payment"} & motives or re.search(r"pay on time|paid on time|cash", last)) \
                 and not self.sup[sid].get("owned_late"):
             self.sup[sid]["owned_late"] = True
@@ -1537,7 +1543,7 @@ class NoIdeaAgent:
                        f"paid on the due date, which brings your cash in about {rec[1]:.0f} days earlier than you are used to.")
         # 0b. ask its floor (experiment `ask_floor`): "questions go to the person in charge, who answers as openly as the
         #     company is" - once it holds, ask the one number we need
-        if "ask_floor" in EXPERIMENTS and stalled and not self.sup[sid].get("asked_floor"):
+        if "no_ask_floor" not in EXPERIMENTS and stalled and not self.sup[sid].get("asked_floor"):
             self.sup[sid]["asked_floor"] = True
             out.append("What is the lowest price at which you can sign these terms today?")
         # 2. ask what it needs: questions go to the person in charge, who answers as openly as the company is
