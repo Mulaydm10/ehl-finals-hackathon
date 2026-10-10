@@ -235,3 +235,5 @@
 | 2026-10-10 23:58 | Dhruv | P08 | v2.34b hidden / gpt-6-astra | 0.7815 | 00e8923eed8d12dc |
 | 2026-10-10 23:58 | Dhruv | P10 | v2.34b hidden / gpt-6-astra | 0.7410 | 673ee8904fe2d292 |
 | 2026-10-10 23:58 | Dhruv | P18 | v2.34b hidden / gpt-6-astra | 0.6883 | 3cb62cb905451df8 |
+| 2026-10-10 23:05 | Parth | P11 | p11_hold timeout first=0d5b 42.77/43.57/44.01 hair-0.08 bc363f2 / scripted | 0.8850 | d51e49df4d9826a4 |
+| 2026-10-10 23:09 | Parth | P11 | p11_hold timeout first=0d5b 42.77/43.57/44.01 hair-0.08 5e37c67 / scripted | 0.8770 | 8f62abf996ef150f |
