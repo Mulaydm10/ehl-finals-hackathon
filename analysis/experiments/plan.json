@@ -269,6 +269,21 @@
    "hypothesis": "control",
    "evidence": "-",
    "keep_if": "-"
+  },
+  "HOLD0_C": {
+   "title": "Round-1 hold control, P08 (rerun after the network crash)",
+   "change": "none",
+   "switches": [],
+   "games": [
+    [
+     "P08",
+     2
+    ]
+   ],
+   "parallel": 2,
+   "hypothesis": "control",
+   "evidence": "-",
+   "keep_if": "-"
   }
  }
 }

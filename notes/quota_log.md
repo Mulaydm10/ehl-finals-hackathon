@@ -212,3 +212,8 @@
 | 2026-10-11 01:40 | Parth | P08 | noidea ddb3580 HOLD_B + hold_r1 / gpt-6-astra | 0.90 (first counter None, final round None, timeouts 0) | edbe30a43154d5c9 |
 | 2026-10-11 01:39 | Parth | P10 | noidea ddb3580 HOLD_B + hold_r1 / gpt-6-astra | 0.00 (first counter None, final round None, timeouts 0) | 1e65e7addff16aca |
 | 2026-10-11 01:39 | Parth | P10 | noidea ddb3580 HOLD_B + hold_r1 / gpt-6-astra | 0.00 (first counter None, final round None, timeouts 0) | 26336719b8c2bbfb |
+| 2026-10-11 01:49 | Parth | P03 | noidea HOLD0_B (control) | 0.918 | aaa146a3d7acbbfb |
+| 2026-10-11 01:49 | Parth | P03 | noidea HOLD0_B (control) | 0.917 | 5c5e7233c865e9d4 |
+| 2026-10-11 01:49 | Parth | P08 | noidea HOLD0_B (control) | 0.0 - network crash (DNS), ended by timeout | 5c34274cf3e06a1c |
+| 2026-10-11 01:49 | Parth | P08 | noidea HOLD0_B (control) | 0.0 - network crash (DNS), ended by timeout | c5b8a87dfcc7f1db |
+| 2026-10-11 01:49 | Parth | P10 | noidea HOLD0_B (control) | 0.0 - network crash (DNS), ended by timeout | e687c5c9300f724d |
