@@ -678,8 +678,9 @@ class NoIdeaAgent:
                 break
             if any(i in self.cited for i in c["ids"]) or (first_round and (c.get("other_part") or c.get("late"))):
                 continue
-            if not first_round and not self.sup[sid].get("weak_ok", True) and self.weak(c):
-                continue
+            if not first_round and not self.sup[sid].get("weak_ok", True) and self.weak(c) and \
+                    any(not self.weak(x) and not any(i in self.cited for i in x["ids"]) for x in self.sup[sid]["args"]):
+                continue  # weak facts wait only while a strong one is left (never an empty round)
             # one index claim per e-mail: 2+ drew "we received a lot of material" 11 of 11 times (Neel)
             if c["kind"] == "index_change" and any(x["kind"] == "index_change" for x in picked):
                 continue
@@ -1191,8 +1192,13 @@ class NoIdeaAgent:
         pre-priced candidate sheets and up to 3 verified arguments, write the opening. Everything it returns is
         validated; any problem -> None (the deterministic path runs instead)."""
         s = self.sup[sid]
-        pool = [c for c in s["args"] if not any(i in self.cited for i in c["ids"])
-                and (k == 0 or s.get("weak_ok", True) or not self.weak(c))][:8]
+        fresh = [c for c in s["args"] if not any(i in self.cited for i in c["ids"])]
+        pool = [c for c in fresh if k == 0 or s.get("weak_ok", True) or not self.weak(c)][:8]
+        if not pool and fresh and k >= 1:
+            # NEVER an empty round: when only weak facts are left, send the next one anyway (P11 3cc43596: Parth's
+            # weak-facts-while-it-moves gate left round 3 with 0 facts -> "Which figures is that based on?" + final at our
+            # 3rd message on a LOW draw; a taken weak fact is a full grid step there, 77f61e47)
+            pool = fresh[:8]
         motives = s["dossier"].get("motives", {})
         levers = "; ".join(f"{m}: {v['lever']}" for m, v in motives.items())
         lines = [f"[{i}] rank {i + 1}: " + ", ".join(f"{f} {v}" for f, v in t.items() if f in case["negotiable"])
