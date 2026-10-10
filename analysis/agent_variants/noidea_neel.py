@@ -205,6 +205,8 @@ class NoIdeaAgent:
         bar = ask_pct if ask_pct > 0 else 3.0
         parts = set(case["parts"])
         best = {}
+        hedged = central.hedged_series(case, self.dossiers.get(sid, {}).get("motives", {}))
+        mine = [c for c in mine if not (c["kind"] == "index_change" and c.get("series") in hedged)]
         for c in mine:
             if c["kind"] == "index_change" and c["part"] in parts and c["figure"] < bar and c["figure"] <= 0.0:
                 k = c["series"]
@@ -232,11 +234,20 @@ class NoIdeaAgent:
                 case, self.facts, sid) + central.delivery_year_claims(self.facts, sid)
         if not best:  # no falling 6/12-month window: the steepest fall in any window the arena checks
             drivers = {dr["series"]: dr.get("weight") or 0.0 for p in self.dossiers.get(sid, {}).get("parts", [])
-                       if p["part"] in parts for dr in p.get("cost_drivers", [])}
+                       if p["part"] in parts for dr in p.get("cost_drivers", []) if dr["series"] not in hedged}
             out += central.falling_window_claims(case, drivers)
+        # quality notifications on the part (never cited before; cloud ENGINES.md: in 8 of 10 cases)
+        if not central.mirror_supplier(case["case_id"]):
+            out += central.quality_notification_claims(case, self.facts, sid)
+        # a green scorecard is not an argument ("our service levels remain within acceptable parameters", P02/P03/P08)
+        out = [c for c in out if not (c["kind"].startswith("scorecard") and c.get("colour") == "green"
+                                      and not c.get("keep_alive") and case["type"] != "quality")]
         seen, ranked = set(), []
         for c in central.rank(out, case["case_id"]):
-            if c["sentence"] not in seen and (central.take_rate(c["kind"], case["case_id"]) > 0 or c.get("keep_alive")):
+            # a FALL of a cost driver is judged on its own: P08's 5 "does not change" were all on the hedged AS-14404
+            falling = c["kind"] == "index_change" and (c.get("figure") or 0) < 0
+            if c["sentence"] not in seen and (central.take_rate(c["kind"], case["case_id"]) > 0 or c.get("keep_alive")
+                                              or falling):
                 seen.add(c["sentence"])
                 ranked.append(c)
         return ranked
@@ -327,7 +338,12 @@ class NoIdeaAgent:
             ranked.append((total_cost(case, t, s["std"], s["est"]), t))
         # on a cost tie prefer the LONGER contract: beyond the horizon it "neither costs nor earns" for us
         # (api.md) but is security for the supplier (P07: its final sat at ~EUR 5.50 on 24 m in 4 games)
-        ranked.sort(key=lambda x: (round(x[0], 0), -(x[1].get("contract_months") or 0)))
+        # P08 / cloud ENGINES.md: 36 m was priced higher than 24 m (P07, P10) at equal cost to us -> prefer the horizon
+        # length; committee suppliers keep the longest (P03: "reflecting the value of the binding 36-month contract")
+        horizon = 12 * (case["buyer"].get("horizon_years") or 1)
+        longest = central.committee_round1(s["dossier"].get("motives", {}))
+        ranked.sort(key=lambda x: (round(x[0], 0), -(x[1].get("contract_months") or 0) if longest
+                                   else abs((x[1].get("contract_months") or horizon) - horizon)))
         # approval ladder / price freeze (P03 offline run 1: we cut its EUR 438.21 by 2.7-3.3%, above the 2% its
         # pricing committee allows): among sheets of ~equal cost to us, lead with the smallest headline price cut
         if ranked and {"approval_ladder", "price_frozen"} & set(s["dossier"].get("motives", {})):
@@ -470,7 +486,7 @@ class NoIdeaAgent:
             if ok and c_stand <= sheets[0][0] * 1.0005:
                 return accept
             out = [t for _, t in sheets]
-            if committee and sheet_id:  # stay on the structure its committee priced
+            if sheet_id and case["type"] != "rfq":  # stay on the structure it priced
                 out = [t for t in out if central.same_structure(t, terms)][:1] or out[:1]
             log.info("%s round %d: new data + step %s", sid, k, [(t["unit_price"], t.get("payment_days")) for t in out])
             return self.message(case, sid, events, out, k)
@@ -492,8 +508,11 @@ class NoIdeaAgent:
                 return self.message(case, sid, events, out, k)
         # central 3c: once it priced our lead structure, stay on it (P03 47a88b4d0bb75ce3: management gave 433.08 @ 90 d,
         # we asked 60/45/30 d and its final fell back to 431.61 @ 60 d: 0.90 -> 0.86)
-        if committee and k >= 1 and sheet_id and central.same_structure(sheets[0][1], terms):
-            sheets = [x for x in sheets if central.same_structure(x[1], terms)]
+        # P08 cloud: switching structure drew "hold" (1f27ac1b2856c285); payment days were neutral for it
+        if k >= 1 and sheet_id and case["type"] != "rfq":
+            same = [x for x in sheets if central.same_structure(x[1], terms)]
+            if same and same[0][0] <= sheets[0][0] * 1.003:
+                sheets = same
         # accept when the supplier meets our current ask, or when we are within 0.3% late in the game
         if ok and k > 0 and c_stand <= best_elsewhere and not s.get("closing") and (
                 c_stand <= sheets[0][0] * 1.0005 or (k >= PLANNED_ROUNDS - 2 and c_stand <= sheets[0][0] * 1.003)):
@@ -693,7 +712,12 @@ class NoIdeaAgent:
         # fact for each of the next 3 rounds and send 1 per later round
         left = sum(not any(i in self.cited for i in c["ids"]) for c in self.sup[sid]["args"])
         reserve = 4 if central.mirror_supplier(case["case_id"]) else 3  # a mirroring supplier cuts in every data round
-        args = self.next_args(sid, max(1, min(3, left - reserve)) if k == 0 else 1)
+        if (fa := central.final_at(case["case_id"])):  # it goes final at our fa-th message: all data must land by then
+            reserve = min(reserve, max(0, fa - 1))
+        # round 1 does most of the work (P03: the committee priced round 1's data; P08 goes final at our 3rd message):
+        # up to 3 facts; only a mirroring supplier (cuts in every data round) keeps more back for later rounds
+        first = max(2, min(3, left - reserve)) if central.mirror_supplier(case["case_id"]) else min(3, left)
+        args = self.next_args(sid, first if k == 0 else 1)
         s = self.sup[sid]
         if s.get("escalate_now") and not s.get("committee_r1") and (gap := self.freeze_gap(sid, self.best_sheet(case, sid, events)[1])) > 0:
             # live P03 x4: "our base prices are strictly frozen" while charging +4.6% on today's EUR 412.74.
@@ -852,6 +876,9 @@ class NoIdeaAgent:
             basis.append(f"That is about EUR {deal:,.0f} a year, around {deal / spend:.0f} times our current business with you.")
         if rival:
             basis.append(f"We have an offer at EUR {rival[1]:.2f} per unit ({rival[0]}).")
+        # its own recent quote for this part, in words (cloud P08_engine.md: EUR 5.45 on 2026-09-10 vs its 6.05 opening)
+        if k == 0 and (oq := central.own_quote_note(self.facts, sid, set(case["parts"]), s["open_terms"].get("unit_price"))):
+            basis.insert(0, oq)
         basis += args
         nxt = []
         # ask once: skip if the LLM paragraph already asked (P04 offline: it was asked twice in one e-mail)

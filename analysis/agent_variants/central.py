@@ -72,9 +72,10 @@ def volume_claims(case, facts):
     pct = f.get("change_pct")
     if pct is None or pct <= 0:
         return []
+    # one number per claim sentence (the commitment is stated in section 1 of every e-mail). P08 offline: the old
+    # sentence said "we commit 118,500 units a year" - the forecast's volume, not the case's fixed 94,800
     return [{"supplier": None, "part": f.get("part"), "kind": "volume_change", "ids": [ref], "figure": pct,
-             "sentence": f"Our demand forecast for this part is up {pct:+.1f}% ({ref}), and we commit "
-                         f"{f.get('volume_per_year') or case['buyer']['need_per_year']:,} units a year.",
+             "sentence": f"Our demand forecast for this part is up {pct:+.1f}% ({ref}).",
              "checked_by_arena": True}]
 
 
@@ -146,9 +147,43 @@ def quality_notification_claims(case, facts, sid):
     mean = sum(facts[k]["ppm"] for k in qns) / len(qns)
     return [{"supplier": sid, "part": facts[qns[0]]["part"], "kind": "quality_notification", "ids": qns,
              "figure": round(mean), "keep_alive": True, "checked_by_arena": True,
-             # ONE number per claim sentence and no thousands separator: live P02 f778b35c67ecd799 wrote "2 quality
-             # notifications ... in the last 12 months, at 4,632 ppm" -> "contradicted ... That costs trust" (0.607)
-             "sentence": f"Your quality notifications on this part average {mean:.0f} ppm ({', '.join(qns)})."}]
+             # NO number at all: live P02 f778b35c67ecd799 wrote "2 quality notifications ... in the last 12 months, at
+             # 4,632 ppm" -> "contradicted ... That costs trust" (0.607). Without a figure the arena takes the data's own.
+             "sentence": f"We raised quality notifications on this part over the past year ({', '.join(qns)})."}]
+
+
+def hedged_series(case, motives):
+    """Series it has covered at fixed prices (motive hedged_forward): every claim on them met "That is not our reality:
+    our AS-14404 is covered at fixed prices until March 2027" (P08 5 of 5). Its index-clause series."""
+    if "hedged_forward" not in motives:
+        return set()
+    return {o["series"] for o in case.get("term_options", {}).get("index_clause", []) if o}
+
+
+def final_at(case_id, data=None):
+    """Our message number at which this supplier said final_offer in past games (most common), or None.
+    P08: always our 3rd; P02: 4th-5th."""
+    data = data or reactions()
+    sig = data.get("by_case", {}).get(case_id, {}).get("_signals", {})
+    counts = {int(k.split("_")[-1]): v for k, v in sig.items() if k.startswith("final_at_")}
+    return max(counts, key=lambda n: (counts[n], -n)) if counts else None
+
+
+def own_quote_note(facts, sid, parts, opening_price, today="2026-09-30", days=90):
+    """Its OWN recent quote for this part below its opening, in words only (no ID: a quote outside the case refs would be
+    "irrelevant"). P08: "On 2026-09-10 you quoted EUR 5.45" vs its EUR 6.05 opening (cloud: analysis/cases/P08_engine.md)."""
+    from datetime import date
+    t0 = date.fromisoformat(today)
+    best = None
+    for k, v in facts.items():
+        if k.startswith("quote:") and v.get("supplier") == sid and v.get("part") in parts and v.get("date"):
+            if (t0 - date.fromisoformat(v["date"])).days <= days and opening_price and v["unit_price"] < opening_price:
+                if best is None or v["date"] > best["date"]:
+                    best = v
+    if not best:
+        return None
+    return (f"On {best['date']} you quoted us EUR {best['unit_price']:.2f} per unit for this part; your new quote is "
+            f"{(opening_price / best['unit_price'] - 1) * 100:.1f}% above it.")
 
 
 def delivery_year_claims(facts, sid, bar=95.0):
