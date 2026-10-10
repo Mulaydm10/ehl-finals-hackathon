@@ -67,3 +67,17 @@ Longer payment beats 14 d only if Werdenfels charges < EUR 0.033/kg per 30 days 
 4. Accept its final; if it offers db5 at +0.10, take db5. Expected: 4.90 @ 14 d (0.733) without the move cut; 4.80 (0.80) if
    the move cuts like on P10. Beats the record only if the 36-month move (or a lucky agree-at-ask) gives one extra grid step.
 Tools: exact scorer = `total_cost(case, complete_offer(case, terms), std, est)` (no relationship charge on P18).
+
+## 7. Live (local, 2026-10-11 01:09, fd5b66b1c9f06fc0, `analysis/agent_variants/noidea_p18.py`): **0.621 - the 36-month move is worth 0 on Werdenfels**
+| our msg | sheet | its answer |
+|---:|---|---|
+| 1 | main: ONE sheet 4.77 @ 45 d / 24 m (the model picked 1 of 3) + AS-14404, PPI-C2431, price path (3 verified) | 5.30 @ 45 d (the high round-1 draw) |
+| 2 | 4.85 @ 45 d (main's 4.93 shifted -0.08), forecast (shrugged) | 5.20 @ 45 d (-0.10) |
+| 3 | **36 m** + labour index, ask 4.89 @ 45 d (the beat price on 45 d) | **5.20 held**: "We can extend the contract term to 36 months at our lowest possible price of EUR 5.20" |
+| 4 | main 5.07 | final 5.10 @ 45 d -> accepted, 0.621 |
+- **36-month move: 0** on P18 (unlike P10's -0.10 to -0.30). Werdenfels prices contract length in already ("continuity ... already
+  reflected").
+- **Main missed the 14-day switch** here (it stayed on its 45-d primary); in 0c968aae the switch to 14 d in round 2 was worth -0.20.
+- A smaller round-2 step (+0.08) drew a smaller mirror step (-0.10).
+- Next design (not run): main's round 1, round 2 = 14 d at an ask <= 4.84 (so a 4.86 ask stays monotone), round 3 = labour
+  index at 4.86 @ 14 d - it agreed at our ask 4.91 in 0c968aae (line <= 4.91); 4.86 needs its line 5 cents lower.

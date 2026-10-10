@@ -290,3 +290,4 @@
 | 2026-10-11 00:55 | Dhruv | P10 | v2.34f LOAD L4b / gpt-6-astra | 0.7019 | - |
 | 2026-10-11 00:55 | Dhruv | P11 | v2.34f LOAD L4b / gpt-6-astra | 0.7935 | - |
 | 2026-10-11 00:55 | Dhruv | P18 | v2.34f LOAD L4b (no walk) / gpt-6-astra | 0.6883 | - |
+| 2026-10-11 01:10 | Neel | P18 | noidea_p18 (r2 ask cap 4.85, r3 36-month move + labour at the beat price) / gpt-6-astra | **0.62** | fd5b66b1c9f06fc0 |
