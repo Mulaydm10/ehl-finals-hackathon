@@ -18,6 +18,7 @@ rank versions, not to predict arena scores. It ignores arguments, tone and the r
 | probe (Neel) | 9 cases | 0–0.12 | see quota_log | walk-away probes for exact C_open/C_best |
 | v1.1 | P07 | 0.68 | 00ae513af1091e9c | 24 m won (+0.48); price stalled at €5.52; volume question unanswered 3× |
 | v1.7 / gpt-6-astra | P18 | 0.43 | 6833e98fbbe5ebdf | final_offer €5.40, 60 d, 24 m + AS-14404 db0 in round 3; its db5 alternative sheet was 0.485 (see "P18 live 1") |
+| v2.4 (branch) / gpt-6-astra | P18 | **0.62** | a99d02eb41cafa66 | round-1 counter €5.30 (game 1: €5.60); 422 on its alternative's id, proposed back, agreed: €5.20, 30 d, 24 m + AS db5 (see "P18 live 2") |
 
 ## Versions
 
@@ -280,3 +281,25 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
 | play.py: a `422` on accepting an alternative's id (the brief says accept takes the *standing* sheet; arena-sim only knows `offer_id`) clears that id, keeps its terms and decides again | 422 = "nothing happens, no round is used" (api.md) | new test `test_an_alternative_the_arena_refuses_is_kept_without_its_id` |
 | `refused_alternative()`: such a sheet is proposed back once at `final_offer` ("We accept your alternative as you proposed it"), the v1.8 prose-alternative path | P10 live: its own alternative came back `agreed` | replay: proposes €5.40 / 30 d / AS db5 (C 259,970) |
 - Offline unchanged: mean **0.937 / 0.944** (the offline supplier never sends alternatives), 32 tests pass, ruff clean on the changed lines.
+
+### P18 live 2 (Parth, v2.4 on the branch / gpt-6-astra, session a99d02eb41cafa66): 0.62 (game 1: 0.43)
+| round | supplier sheet (primary / alternative) | C primary / alt | score primary / alt |
+|---|---|---:|---:|
+| 0 open | €6.10, 30 d, 12 m, no clause | 295,173 | 0.000 |
+| 1 open | €5.30, 30 d, AS db0 / €5.40, 30 d, AS db5 | 260,808 / 259,970 | 0.474 / 0.485 |
+| 2 open | €5.20, 30 d, AS db0 | 255,887 | 0.542 |
+| 3 final_offer | €5.10, 30 d, AS db0 / €5.20, 30 d, AS db5 | 250,966 / **250,342** | 0.610 / **0.618** |
+| 4 agreed | €5.20, 30 d, AS db5 (our sheet = its alternative) | **250,342** (accepted) | **0.618** |
+- **Round 1 did the work: €5.30 vs €5.60 in game 1.** All 3 claims **verified**: AS-14404 −0.3%, the PO price history
+  (8 POs, 5.26 → 5.84), forecast +1.9%. Its reason: "your commitment to a 24-month contract … allows us to reduce our price".
+- **The arena refuses an alternative's id**: `422 not a standing offer in this session` (as in arena-sim). The fallback
+  proposed it back ("We accept your alternative as you proposed it") and it came back `agreed` in one round: +0.008 here.
+  `best_sheet()`'s first accept of an alternative will always 422; harmless (no round used), could go straight to proposing.
+- **The model's argument pick dropped v2.3's new lines live**: `args [0, 1, 2]` (index, PO history, forecast); the 80%-vs-38%
+  clause sentence, the €5.45 market line and the committee request never reached the supplier (offline they did).
+- **Risk in the final message**: the writer added "please consider one final modest base-price reduction within your
+  approval authority" next to "We accept your alternative as you proposed it" after a final_offer (P07 v1.3 walked on an
+  extra ask). It agreed anyway. Suggest: no asks from the model when `final=True`.
+- Clause still mandatory for it; our sheets stayed clause-free in rounds 2–3 although the model logged the refusal.
+  Next lever (P18.md §8): offer AS db5 ourselves for a base-price step. Rounds 2–3 cited nothing; it asked
+  "Which figures is that based on? Please send us the data." (round 2) and refused the cost breakdown twice.
