@@ -45,7 +45,8 @@ A rule belongs here only if its reason applies to any supplier. State: 2026-10-1
 19. **Don't fight a JUSTIFIED increase with a cherry-picked calculation** ("our pricing must reflect the full twelve-month cost
     pressure", P02 0.27). Use a cost calc only when both 6- and 12-month windows are below the ask.
 20. **A cash-stressed supplier: cite its verified news to frame what we give for free** (no chargebacks, payment on the agreed
-    day, binding volume) - interests over positions (v2.16d, P11 under test). Never threaten a fragile supplier.
+    day, binding volume)? Tested live: "holds, but does not change our calculation" + counts as material (P11 7117d351) -
+    OFF (`news_frame`). Never threaten a fragile supplier either.
 
 ## D. Pace and concessions
 21. **Suppliers mirror our concession SPEED**: fast steps -> tiny moves (P02 0.17 total vs 0.98 when slow). Concede in

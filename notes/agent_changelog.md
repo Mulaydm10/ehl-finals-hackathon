@@ -641,3 +641,10 @@ no committee; its call each round is counter / hold / final; final in round 4-5.
   (api.md: qn rows are checked as a mean ppm we could not reproduce from facts.json lot ppm). Never ship an unverified claim type
   live without first knowing its check; `qn_claims` stays behind NOIDEA_EXPERIMENTS.
 - P11 so far on v2.16: 0.79 / 0.71 / 0.71 (mean 0.74; v2.7-2.10 mean 0.55). The ceiling it shows: ~EUR 45.00-45.50 @ 300/0.
+
+## v2.16d live P11 (18:23): 0.77 (7117d3517bedd67e) -> news framing OFF (v2.16e)
+- 46.50 -> 45.50 (electricity + price history) -> our news-framing claim: "it holds, but it does not change our calculation" +
+  "We received a lot of material" -> held 45.50 -> **it AGREED to our near-close EUR 45.13** (0.77; in f80f4b54 the same 45.13
+  got another 45.50 hold). The gain is the near-close ask, not the news. News framing -> experiment `news_frame` (off).
+- **P11 on v2.16: 0.79 / 0.71 / 0.71 / 0.77 = mean 0.745** (v2.7-v2.10: 0.67 / 0.36 / 0.61 = 0.55). Its stop ~EUR 45.00-45.50.
+- Rules consolidated in `docs/GENERAL_RULES.md` (35 rules with evidence).

@@ -299,7 +299,9 @@ class NoIdeaAgent:
         # interests over positions). api.md checks only "that it is about this supplier", so it cannot be contradicted.
         # P11: rounds 3+ had no new fact left -> it held and went final
         motives = set(self.dossiers.get(sid, {}).get("motives", {}))
-        if {"cash_short", "news_restructuring"} & motives:
+        # OFF by default (experiment `news_frame`): live P11 7117d3517bedd67e "it holds, but it does not change our calculation"
+        # + "we received a lot of material" - no cut, counts as padding
+        if "news_frame" in EXPERIMENTS and {"cash_short", "news_restructuring"} & motives:
             gives = ["no chargebacks" if "chargeback_eur_per_complaint" in case["negotiable"] else None,
                      "payment of every invoice on the agreed day", "a binding volume for the full term"]
             gives = [g for g in gives if g]
