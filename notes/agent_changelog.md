@@ -990,3 +990,7 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 ## v2.26 live P01 (21:55): **0.9987** (f01f637c3e9cb17f) - was 0.91; house 0.966, Neel 0.993, record pegasus 0.998
 - r1 notice + iron & steel -4.3% -> 133.40 (first counter, was 135.60-136.40); r2 energy -17% -> 129.90; it AGREED to our 129.11 @ 14 d Jan.
 - The falling-window fix gave round 1 the fact this data-naive owner rewards most; first counter 2-3 EUR lower than before.
+
+### v2.27 (offline): P18 - budget supplier, the first counter decides (same part as P08)
+- P18 total cut after round 1 is fixed ~0.20 (5.20 -> 5.00; 5.30 -> 5.10) whatever our steps (gap steps neutral, 0.666). First counter 5.20 when round 1 had price history + alloy -5.5% + cold drawing -2.3% (4e24, 0.677); 5.40 with price history only (9d4d).
+- Our current round 1 drops the cold-drawing fall (one index claim per e-mail). Experiment `r1_two_index`: round 1 may carry 2 index claims of different series. P18 round 1 then: price history + alloy -8.5% + cold drawing -2.3%. Off by default; other cases unchanged; tests 64.

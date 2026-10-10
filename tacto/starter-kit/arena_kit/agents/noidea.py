@@ -753,7 +753,9 @@ class NoIdeaAgent:
                     any(not self.weak(x) and not any(i in self.cited for i in x["ids"]) for x in self.sup[sid]["args"]):
                 continue  # weak facts wait only while a strong one is left (never an empty round)
             # one index claim per e-mail: 2+ drew "we received a lot of material" 11 of 11 times (Neel)
-            if c["kind"] == "index_change" and any(x["kind"] == "index_change" for x in picked):
+            n_idx = sum(x["kind"] == "index_change" for x in picked)
+            if c["kind"] == "index_change" and (n_idx >= (2 if ("r1_two_index" in EXPERIMENTS and first_round) else 1)
+                                                or any(x.get("series") == c.get("series") for x in picked)):
                 continue
             picked.append(c)
         return picked
@@ -1419,7 +1421,10 @@ or null, "reason": "<one sentence>"}."""
                 c = pool[i]
                 if k == 0 and (c.get("other_part") or c.get("late")):
                     continue
-                if c["kind"] == "index_change" and any(pool[j]["kind"] == "index_change" for j in out):
+                two = "r1_two_index" in EXPERIMENTS and k == 0  # experiment: round 1 may carry 2 index claims (P18 4e24)
+                n_idx = sum(pool[j]["kind"] == "index_change" for j in out)
+                if c["kind"] == "index_change" and (n_idx >= (2 if two else 1) or any(
+                        pool[j].get("series") == c.get("series") for j in out if pool[j]["kind"] == "index_change")):
                     continue
                 if any(set(c["ids"]) & set(pool[j]["ids"]) for j in out):  # same ID twice = one claim (OTD + ppm: sc:)
                     continue
