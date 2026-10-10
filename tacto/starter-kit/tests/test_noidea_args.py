@@ -39,7 +39,15 @@ def test_round_one_carries_the_top_arguments(cid, first):
     sid = next(iter(threads))
     pool = agent.sup[sid]["args"]
     assert pool[0]["kind"] == first
-    want = {i for c in pool[:3] for i in c["ids"]}
+    # the top 3 that can share one e-mail: one index claim per e-mail (2+ drew "a lot of material" 11/11), no ID twice
+    top = []
+    for c in pool:
+        if c.get("other_part") or c.get("late") or any(set(c["ids"]) & set(x["ids"]) for x in top):
+            continue
+        if c["kind"] == "index_change" and any(x["kind"] == "index_change" for x in top):
+            continue
+        top.append(c)
+    want = {i for c in top[:3] for i in c["ids"]}
     assert want <= set(msg["refs"]), (sorted(want - set(msg["refs"])), msg["refs"])
 
 
