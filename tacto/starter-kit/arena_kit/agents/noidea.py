@@ -1338,8 +1338,16 @@ class NoIdeaAgent:
             chosen = list(s["meso"])
         if s.pop("send_all", False):  # the floor trade: both sheets go out (with chargeback at its price / hair without)
             chosen = [t for _, t in cands]
+        hedged = "hedged_forward" in s["dossier"].get("motives", {})
+        if k == 0 and hedged and len(cands) > 1:
+            # a HEDGED supplier puts its counter on the payment term of our highest-priced sheet: all code sheets go out
+            # (45 / 14 / 90 d, 90 d priced highest) - P08 probe A 0.912 had its round 1 at 5.25 @ 90 d; the model's
+            # single 30-day sheet drew 5.20 @ 30 d and 0.82-0.83 (6701d5ddffb86dd4, 018b9519cfe7c8f4)
+            chosen = [t for _, t in cands][:3]
         args = [pool[i] for i in aidx]
         opening = self.clean_opening(case, str(d.get("opening") or ""))
+        if k >= 1 and hedged:  # later rounds stay lean (probe A: one line, cuts 0.25 / 0.06 vs the model's 0.09 / 0.08)
+            opening = "Thank you for your revised offer. We move towards you."
         return self.message(case, sid, events, chosen, k, args=args, opening=opening)
 
     def clean_opening(self, case, text):
