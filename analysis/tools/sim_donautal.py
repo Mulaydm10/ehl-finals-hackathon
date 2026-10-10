@@ -41,7 +41,12 @@ STD = {"payment_days": 30, "incoterm": "DAP", "ppm_commitment": 50, "chargeback_
 RATE, DB_PT, FREE_RISK = 0.08, 0.024, 0.14
 HEADLINE = {"low": 5.41, "high": 5.53}
 R2_STEP = {"free": 0.16, "db0": 0.07, "db5": 0.07}  # db5 asks: 0 (1f27, hold) / -0.15 (586a) / -0.06 (9bfa) -> the mean
-R2_STAY90 = 0.118  # task 12: clause-free but STAYING on its 90-day headline (6912fd89, n=1) vs 0.150-0.170 in the 5 others
+# task 13 (analysis/cases/P08_floor.md): FLOOR-BOUND. With clause-free asks its final = round-1 value - BUDGET, whatever the
+# path (low: c387 0.210, cae4 0.220, 6912 0.217, a4b9 0.210, a43d 0.199; high: 1363 0.258, db7d 0.281). Round 2 takes 0.16 after
+# a ~16% step of ours, 0.11-0.12 after a 30% step (6912 at 90 d, a4b9 at 14 d: the step, not the payment term), 0.16 on the
+# high draw; a deferral round takes half of what is left, the final the rest. XSELL: an untested floor shift (cross-sell).
+BUDGET = {"low": 0.212, "high": 0.27}
+R2_BIG_STEP_CUT = 0.115  # low draw, our round-2 step >= 25% of the gap
 FINAL_STEP, DEFER_STEP, DEFER_BELOW, FINAL_AT = 0.05, 0.055, 0.3, 3  # deferral rounds: db7d 0.06/0.06, 6912fd89 0.049/0.049
 HOUSE = 0.752
 
@@ -81,14 +86,16 @@ def score(t):
 
 
 class Donautal:
-    def __init__(self, draw="low", max_defer=1):
-        self.draw, self.max_defer = draw, max_defer
+    def __init__(self, draw="low", max_defer=1, xsell=0.0):
+        self.draw, self.max_defer, self.xsell, self.free, self.v1, self.xs = draw, max_defer, xsell, True, None, False
         self.v, self.n, self.defers, self.final, self.ours = None, 0, 0, False, []
         self.its_steps, self.last_prim, self.head_days = [], None, None
 
     def reply(self, sheets, refs):
         """Our message (term sheets, refs) -> (status, primary, alternative, body)."""
         self.n += 1
+        self.last_v_before = self.v
+        self.xs = self.xs or any("invite you to quote" in (r or "") for r in [getattr(self, "body_in", "")])
         if self.final:
             return "walked_away", None, None, "We withdraw our offer."
         best = max(value(t) for t in sheets)  # it answers on the sheet of ours worth most to it (ties: the longest)
@@ -96,23 +103,31 @@ class Donautal:
         if self.n == 1:
             days = self.head_days = first["payment_days"]
             h = HEADLINE[self.draw]
-            self.v = h * f(days)
+            self.v = self.v1 = h * f(days)
             prim = {"unit_price": h, "payment_days": days, "index_clause": clause(0), "contract_months": 24}
             status, step = "open", None
         else:
             db = db_of(first)
+            self.free = self.free and db is None
+            floor = self.v1 - BUDGET[self.draw] - (self.xsell if self.xs else 0)
             if self.n == 2:
                 kind = "free" if db is None else ("db0" if db < 2.5 else "db5")
                 step = R2_STEP[kind]
-                if kind == "free" and first["payment_days"] == 90 and self.head_days == 90:
-                    step = R2_STAY90
+                gap = self.last_v_before - plain_value(self.ours[-1])
+                share = (plain_value(first) - plain_value(self.ours[-1])) / gap if gap > 0 else 0
+                if kind == "free" and self.draw == "low" and share >= 0.25:
+                    step = R2_BIG_STEP_CUT
             elif self.n >= FINAL_AT:
                 ours = plain_value(first) - plain_value(self.ours[-1])
                 last = self.its_steps[-1] if self.its_steps else 0
                 if self.n == FINAL_AT + self.defers and self.defers < self.max_defer and last > 0 and ours < DEFER_BELOW * last:
                     step, self.defers = DEFER_STEP, self.defers + 1
+                    if self.free:
+                        step = (self.v - floor) / 2
                 else:
                     step = DEFER_STEP if self.defers else FINAL_STEP
+                    if self.free:
+                        step = self.v - floor
                     self.final = True
             self.its_steps.append(step)
             self.v -= step
@@ -166,10 +181,10 @@ def load(path):
     return mod.NoIdeaAgent
 
 
-def run(Agent, draw="low", max_defer=1, verbose=True):
+def run(Agent, draw="low", max_defer=1, verbose=True, xsell=0.0):
     threads = {sid: [dict(m) for m in ms] for sid, ms in PROBE["threads"].items()}
     sid = next(iter(threads))
-    events, sup, agent, log = threads[sid], Donautal(draw, max_defer), Agent(None), []
+    events, sup, agent, log = threads[sid], Donautal(draw, max_defer, xsell), Agent(None), []
     for n in range(1, 11):
         d = agent.decide(CASE, threads)
         msg = d["message"]
@@ -185,6 +200,7 @@ def run(Agent, draw="low", max_defer=1, verbose=True):
             return s, f"deal {t['unit_price']} @ {t['payment_days']} d db{db_of(t)}", n - 1, log
         sheets = [x["terms"] for x in msg["term_sheets"]]
         refs = msg.get("refs") or []
+        sup.body_in = msg.get("body") or ""
         status, prim, alt, body = sup.reply(sheets, refs)
         row = {"n": n, "ours": [(t["unit_price"], t["payment_days"], db_of(t)) for t in sheets],
                "ours_value": round(value(sheets[0]), 3), "refs": refs, "body": msg.get("body"), "status": status,
@@ -217,11 +233,13 @@ def validate():
         if not s1:
             continue
         sup, n = Donautal("low" if s1["terms"]["unit_price"] < 5.47 else "high"), 0
+        sup.body_in = ""
         for t in trace:
             m = t["move"]
             if t["actor"] == "buyer":
                 if m.get("type") == "message":
                     ours = [x["terms"] for x in m["term_sheets"]]
+                    sup.body_in = m.get("body") or ""
                     st, prim, _, _ = sup.reply(ours, m.get("refs") or [])
                     n += 1
                 continue
