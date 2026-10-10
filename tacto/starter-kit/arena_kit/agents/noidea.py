@@ -146,6 +146,8 @@ class NoIdeaAgent:
                              "args": self.rank_args(case, sid, ask_pct),
                              "kit": self.kit_calc(case, sid) if case["type"] == "bundling" else None}
             self.sup[sid]["k"] = self.prior_k(case, sid)
+            self.sup[sid]["patience"] = self.patience_prior(case, sid)
+            log.info("%s patience prior: final expected around round %d", sid, self.sup[sid]["patience"])
             log.info("prep %s: ask %+.1f%%, justified %+.1f%%, full_cost~%.2f, cash_rate %.2f, motives %s",
                      sid, ask_pct, justified, full_cost, rate, list(motives))
 
@@ -188,6 +190,39 @@ class NoIdeaAgent:
                 seen.add(c["sentence"])
                 ranked.append(c)
         return ranked
+
+    # Expected round of its final_offer, by what we know before round 1 (26 practice games, src/eval/archive_runs.py):
+    # capacity P10 round 1 (5/5), renewal P04 round 3, bundling P07 round 4 (6/6), stabilise price increase P01
+    # never within 4-5 rounds. Hidden suppliers come from the same generator; these are estimates, not rules.
+    PATIENCE_BY_TYPE = {"capacity": 1, "renewal": 3, "bundling": 4, "rfq": 4, "raw_material": 4, "quality": 4,
+                        "price_increase": 7}
+    SHORT_FUSE_MOTIVES = {"capacity_tight", "news_allocation", "news_full_order_book", "we_are_not_strategic"}
+
+    def patience_prior(self, case, sid):
+        d = self.dossiers.get(sid, {})
+        p = self.PATIENCE_BY_TYPE.get(case["type"], 4)
+        if case["type"] == "price_increase" and case["buyer"]["category_goal"] != "stabilise":
+            p = 4
+        if self.SHORT_FUSE_MOTIVES & set(d.get("motives", {})):
+            p = min(p, 2)
+        return p
+
+    def update_patience(self, case, sid, events):
+        """Warning signs that its final is near: validity drops below the opening's (30 -> 7 days in the P07/P10
+        finals) or its concessions shrink to under 40% of the previous one (P07: 0.18 -> 0.00 -> 0.04 -> 0.03)."""
+        s = self.sup[sid]
+        k = sum(m.get("from") == "buyer" for m in events)
+        sup_msgs = [m for m in events if m.get("from") != "buyer"]
+        val = [int(v.group(1)) for m in sup_msgs
+               if (v := re.search(r"(?i)valid (?:for )?(\d{1,3}) days", m.get("body") or ""))]
+        prices = [standing([m])[1].get("unit_price") for m in sup_msgs if m.get("term_sheets")]
+        steps = [a - b for a, b in zip(prices, prices[1:]) if a and b]
+        soon = (len(val) >= 2 and val[-1] < val[0]) or (
+            len(steps) >= 2 and steps[-2] > 0 and steps[-1] < 0.4 * steps[-2])
+        if soon and s["patience"] > k + 1:
+            log.info("%s: final looks near (validity %s, steps %s) -> patience %d -> %d",
+                     sid, val[-2:], [round(x, 3) for x in steps[-2:]], s["patience"], k + 1)
+            s["patience"] = k + 1
 
     def kit_calc(self, case, sid):
         """Bundling: the kit priced at the supplier's OWN current prices, plus today's best price for the
@@ -344,13 +379,17 @@ class NoIdeaAgent:
         if not hist:
             hist.append(anchor)
             return anchor
-        f = min(1.0, k / max(1, PLANNED_ROUNDS - 1)) ** 1.3
+        # NOT paced to patience: conceding faster to match an early final lost value offline (mean 0.937 -> 0.869,
+        # P04 0.59) and the live finals didn't depend on our pace (P07 5.49-5.50 in every version). Patience is used
+        # only to be readier to accept near its expected final (decide()).
+        rounds = PLANNED_ROUNDS
+        f = min(1.0, k / max(1, rounds - 1)) ** 1.3
         scheduled = anchor + (limit - anchor) * f
         # reciprocity (P07 live: it moved 5.56 -> 5.52 while a fixed schedule took us 5.25 -> 5.43)
         stand = [standing([m])[1] for m in events if m.get("from") != "buyer" and m.get("term_sheets")]
         vals = [supplier_value(case, complete_offer(case, t), s["est"]) for t in stand[-2:]]
         theirs = max(0.0, vals[0] - vals[1]) if len(vals) == 2 else (limit - anchor) / PLANNED_ROUNDS
-        step = min(scheduled - hist[-1], max(theirs, (limit - anchor) / (2 * PLANNED_ROUNDS)))
+        step = min(scheduled - hist[-1], max(theirs, (limit - anchor) / (2 * rounds)))
         hist.append(min(limit, hist[-1] + max(0.0, step)))
         return hist[-1]
 
@@ -391,14 +430,16 @@ class NoIdeaAgent:
                 return accept
         if k > 0:  # premiums are measured against its OPENING terms (fixed), like the value targets
             self.learn(case, sid, events)
+            self.update_patience(case, sid, events)
         cap = terms.get("unit_price") if sheet_id else None
         target = self.value_target(case, sid, events)
         sheets = self.sheets_at(case, sid, target, cap)
         if not sheets:
             return accept if ok else walk
         # accept when the supplier meets our current ask, or when we are within 0.3% late in the game
+        near_final = k >= max(1, s.get("patience", PLANNED_ROUNDS) - 1)
         if ok and k > 0 and c_stand <= best_elsewhere and (
-                c_stand <= sheets[0][0] * 1.0005 or (k >= PLANNED_ROUNDS - 2 and c_stand <= sheets[0][0] * 1.003)):
+                c_stand <= sheets[0][0] * 1.0005 or ((k >= PLANNED_ROUNDS - 2 or near_final) and c_stand <= sheets[0][0] * 1.003)):
             return accept
         log.info("%s round %d: our best C %.0f vs standing %.0f (alt %.0f)", sid, k, sheets[0][0], c_stand, self.c_alt)
         if self.complete:  # dynamic: the model reads its e-mail and picks among pre-priced candidates

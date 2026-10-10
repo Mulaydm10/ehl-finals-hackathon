@@ -235,3 +235,18 @@ Code still does all maths and safety checks; at runtime the agent now reads, lea
   arguments, model (Qwen/Astra) or dynamic reading moved it below €31.90.
 - Untested: a small first ask (≤ 3% below its opening) to avoid the round-1 final; the cross-game data does not
   support the approval-ladder idea, so it's a long shot. **P10 parked at 0.65; next: untested case types (P05, P11, …).**
+
+### v2.3 (offline): patience estimate, used for accept-readiness only
+- Prior for the round of its final_offer (26 games): capacity 1, renewal 3, bundling/RFQ/raw material/quality 4,
+  stabilise price increase 7 (leverage 4); capacity_tight / allocation / full order book / "not strategic" motives cap it at 2.
+- Updated each round from warning signs: validity drops below the opening's (30 → 7 days at the P07/P10 finals),
+  or its concession shrinks to < 40% of the previous one.
+- **Pacing concessions to it HURT offline** (mean 0.937 → 0.869, P04 0.59): conceding faster just gives value to
+  suppliers that would keep moving, and live finals didn't depend on our pace (P07 €5.49–5.50 in every version).
+  → used only to be readier to accept near the expected final (within 0.3% of our ask). Offline back to 0.937 / 0.944.
+
+### After a final_offer (src/eval/after_final.py, 13 finals in the archive)
+- 11× accepted; 1× proposed its OWN prose alternative back verbatim → `agreed` (P10 2d91214cf7693eff, €31.90 @ 56);
+  1× asked for something new (90 instead of 30 days at €5.40) → `walked_away` (P07 c5d845883158676c, 0.12).
+- **Suppliers never concede after final_offer; pushing ends the deal.** Rule since v1.4: accept, or send back its own
+  cheaper alternative. (Neel played a 2nd P04: 5f80eb75c793f352, accepted final €4.91.)
