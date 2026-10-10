@@ -113,3 +113,17 @@ July's 5.26 -> 5.84 and Oct 2023's 6.45 -> 6.10 exactly; its October value is 5.
 **v3 live:** 4.76 @ 30 d -> 5.20; 4.86 @ 14 d + forecast -> 5.10; hold 4.86 + labour -> final 5.10 -> 0.598.
 **Conclusion:** the record needs its line at <= 4.86 @ 14 d; in 26 normal-mode games its line never went below ~4.90 @ 14 d.
 Keep the best path (0c968aae) for the final agent; stop spending practice sessions on P18.
+
+## 10. Live v4 (local, 2026-10-11 01:34, 6a0a9bfdc4273cba): **0.666 - high first-counter draw**
+Mirror model (all 26 games): its hidden target moves ~0.85 x our step in its value (14 d = +1.07% to it vs 30 d) and it agrees
+when our ask crosses the target, so the deal sits near M = (m x opening + T1) / (1 + m). v4 lowered the opening to 4.69 @ 30 d
+(score-1.0 line for these terms: 4.66) to pull M under 4.86 @ 14 d.
+| our msg | ask | its answer |
+|---:|---|---|
+| 1 | 4.69 @ 30 d / 24 m, no clause + path, AS-14404, PPI-C2431, committee, XLSX request | **5.30 @ 30 d** (the high draw: 3 of 10 at 30 d) |
+| 2 | 4.80 @ 14 d + its clause + forecast | 5.10 @ 14 d (**-0.20**, as the step model predicts) |
+| 3 | 4.84 + labour | 5.00 (-0.10) |
+| 4 | 4.86 (no fact left) | **final 5.00 @ 14 d** -> 0.666 |
+- The step pattern worked (-0.20, -0.10), but from 5.30 the meeting point is ~0.10 higher; the final came at our 4th message.
+- Not separable: whether the 4.69 opening raised its first counter, or the 5.30 was the per-session draw (it came 3 of 9 times
+  with the 4.76 opening at 30 d).

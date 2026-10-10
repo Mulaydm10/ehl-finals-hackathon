@@ -293,3 +293,4 @@
 | 2026-10-11 01:10 | Neel | P18 | noidea_p18 (r2 ask cap 4.85, r3 36-month move + labour at the beat price) / gpt-6-astra | **0.62** | fd5b66b1c9f06fc0 |
 | 2026-10-11 01:20 | Neel | P18 | noidea_p18 v2 (contract-clause October 5.74 argument; r2 4.84 @ 14 d; r3 4.97 db5) / gpt-6-astra | **0.61** | a55d2e8917f705d4 |
 | 2026-10-11 01:24 | Neel | P18 | noidea_p18 v3 (best path 4.76@30 -> 4.86@14 -> hold 4.86 + labour) / gpt-6-astra | **0.60** | ed9a881a0a93d1c5 |
+| 2026-10-11 01:35 | Neel | P18 | noidea_p18 v4 (mirror model: opening 4.69 @ 30 d, then 4.80 / 4.84 / 4.86 @ 14 d) / gpt-6-astra | **0.67** | 6a0a9bfdc4273cba |
