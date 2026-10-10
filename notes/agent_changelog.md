@@ -1052,3 +1052,5 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
   offer repeated"; "Without movement from your side we cannot move either"). Round 2: ask 25.54 @ 14 + the lowest rival + our
   true late-payment record -> 28.00 + "we need to clarify this internally". Then ONE move: after the clarification its line
   drops ~1.00 a round and it AGREES at our standing ask once that is above its line -> 26.75 @ 14 d = 0.950.
+- Parth hold path again: **P05 0.965** (27e15c33ad66fd08): Fuchsreiter agreed 26.60 @ 14 d in round 3 (team best; board record was 0.924).
+- Cloud P11 analysis (824aea0): the 0.807 record = C 740,860.50 = 44.92 @ 300/0; only 44.91 (0.8086) beats it - ~10% per low draw, ~5% per game. noidea_p11.py variant: hold the labour fact until its first hold, then one 44.91 shot.
