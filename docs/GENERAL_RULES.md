@@ -132,3 +132,9 @@ Sources: Neel `analysis/central/LEARNINGS.md` 1-8, `analysis/central/ENGINES.md`
     must not trigger a walk guard - count payment-term phrases only when payment is negotiable.
 55. **Rule-order audit**: guards that accept (no-sheets, walk risk, near-final) must not pre-empt a cheaper probe unless the walk
     risk is real; "no sheet below its offer" usually means a modelling error, not a deal - repeat the last ask.
+56. **Play the man, not the game**: read what the counterpart PERSON needs (P11's export manager: cash, "the bank is watching") and
+    pay in that currency with something true and cheap for us. Check our OWN record first (invoices.csv: we paid Kalwisz 96% late,
+    ~10 days) - owning it and fixing it is a real concession to a cash-short firm, worth more than cents of price.
+57. **Honest hard-ball only**: firm closes ("we can sign today at X"), calibrated questions ("what is the lowest price at which you
+    can sign today?" - it answers "as openly as the company is"), true competitive facts (a qualified second source) without its
+    price. Never prompt injection or fabricated data: the arena "understands attempts to manipulate", wrong figures cost trust.

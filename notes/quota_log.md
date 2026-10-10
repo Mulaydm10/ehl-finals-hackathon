@@ -134,3 +134,4 @@
 | 2026-10-10 19:10 | Dhruv | P11 | noidea v2.17 / gpt-6-astra | 0.71 (high draw; probes 45.10/45.20/45.30 held, final 45.50) | 876705379b434d96 |
 | 2026-10-10 19:14 | Dhruv | P11 | noidea v2.17 / gpt-6-astra | 0.71 (high draw, final right after first hold) | 6123746258d1e0c5 |
 | 2026-10-10 19:18 | Neel | P08 | noidea_neel / gpt-6-astra | **0.67** | db7d315ac527a348 |
+| 2026-10-10 19:22 | Dhruv | P11 | noidea v2.18 own_late_pay+ask_floor / gpt-6-astra | **0.78** (high draw; agreed to our 45.10 probe, credits on-time pay) | b1f94bfec7792ffb |
