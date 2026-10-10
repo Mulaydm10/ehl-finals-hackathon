@@ -610,3 +610,12 @@ no committee; its call each round is counter / hold / final; final in round 4-5.
 - Round 1 P11 now: 300 ppm / EUR 0 @ 42.77 + forecast + iron & steel -4.3% + scorecard; later rounds: electricity, labour, price history.
 - Other cases' round 1: P02/P04/P05/P07/P08/P10 identical; P03 gains electronics -2.3%; P18 one steeper AS-14404 window (was 2 index claims).
 - Tests 37 passed (P18 backbone test updated to the one-index rule); offline 0.942 / 0.945.
+
+## v2.16 live P11 (18:03, gpt-6-astra): **0.79 = new best P11** (6b02b8cc94796703; was 0.67)
+- Round 1 300 ppm / EUR 0 @ 42.77 + scorecard + iron & steel -4.3% + forecast -> all three "taken", it answered **300/0 @ EUR 46.00**
+  (+ a 2500/0 @ 45.50 alternative). Round 2 electricity -17.1% + price history -> "they're right" -> **EUR 45.00 @ 300/0** (open).
+- **We accepted in round 2 while it was still conceding EUR 1.00/round**: the v2.13 walk guard fired on its repeated template line
+  "Faster payment would help us more than anything".
+### v2.16b (offline): walk guard only when it STALLS
+- `still_moving()`: its last counter cut our cost > 0.5% -> not about to walk, keep negotiating (P02's walks came after 0.16% moves).
+- Replays: P11 6b02b8cc -> round 3 asks EUR 44.90 instead of accepting 45.00; P02 walk replays unchanged (0.51 / - / 0.54 / 0.51).

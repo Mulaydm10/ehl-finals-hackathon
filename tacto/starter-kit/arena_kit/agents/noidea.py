@@ -38,6 +38,7 @@ CLOSE_STEP = 0.0008   # near-close: ask 0.08% below its standing value (live P04
 CLOSE_GAP = 0.015     # ...only when our last ask is within 1.5% of its standing value
 STALL_DROP = 1 / 3    # it stalled: its last move (share of the gap) < 1/3 of the previous one...
 STALL_MIN = 0.02      # ...or < 2% of the gap
+WALK_GUARD_MOVE = 0.005  # its last move cut our cost > 0.5%: still conceding, not about to walk
 CASH_SHORT_RISK = 2.0  # a cash-short supplier prices uncertain cash outflows (chargebacks) ~2x their expectation
 STALL_NOISE = 0.10    # a big move UP (structure switch) is not a stall
 TIE_BAND = 0.0001     # committee tie-break: sheets within 0.01% of our best cost (0.015%/0.05% made P02 worse)
@@ -782,7 +783,7 @@ class NoIdeaAgent:
         # standard 30-day payment term" + a 30-day '-a' sheet in rounds 2 and 3, we kept 90 d, it walked in round 4
         # "our general terms dictate this position"; 372.15 @ 90 d would have scored ~0.50) -> take its best sheet
         if ok and k >= 2 and c_stand <= best_elsewhere and self.repeats_objection(events) and \
-                c_stand <= sheets[0][0] * 1.015:
+                c_stand <= sheets[0][0] * 1.015 and not self.still_moving(case, sid, events):
             log.info("%s: it repeats its objection - taking its best sheet before it walks", sid)
             return accept
         if ok and k > 0 and c_stand <= best_elsewhere and not s.get("closing") and (
@@ -1071,6 +1072,14 @@ class NoIdeaAgent:
     OBJECTION_RX = re.compile(r"(?i)(return(ing)? to our standard|our standard (terms|\d+-day|zahlungsziel)|"
                               r"restrict(s|ing)? our (pricing )?flexibility|financing costs|cannot (go|move) (any )?further|"
                               r"unable to (reduce|lower|accommodate)|must maintain|strictly (fixed|frozen)|maximum flexibility)")
+
+    def still_moving(self, case, sid, events, min_move=WALK_GUARD_MOVE):
+        """Its last counter cut our cost by more than `min_move` (share of C): a supplier still conceding is not about to
+        walk, whatever template objection it repeats (P11 v2.16 6b02b8cc94796703: 46.00 -> 45.00 = 2.2%, the repeated
+        "Faster payment would help us" fired the walk guard and we took 0.79 in round 2; P02's walks came after 0.16% moves)"""
+        cs = [total_cost(case, complete_offer(case, standing([m])[1]), self.sup[sid]["std"], self.sup[sid]["est"])
+              for m in events if m.get("from") != "buyer" and m.get("term_sheets")][-2:]
+        return len(cs) == 2 and cs[0] - cs[1] > min_move * cs[0]
 
     def repeats_objection(self, events):
         """Its last two e-mails carry the same kind of objection / standard-terms counter-proposal."""

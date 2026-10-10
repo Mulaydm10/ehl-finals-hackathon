@@ -98,3 +98,4 @@
 | 2026-10-10 17:41 | Parth | P02 | noidea dac5e97 E2 / gpt-6-astra | 0.49 (first counter 0.264, final round 4, timeouts 0) | 466f3cb54614635f |
 | 2026-10-10 17:46 | Parth | P18 | noidea 0b9ee8b E3 + all_parts_po / gpt-6-astra | 0.54 (first counter 0.485, final round 3, timeouts 0) | 928a3878c58f7dc3 |
 | 2026-10-10 17:46 | Parth | P18 | noidea 0b9ee8b E3 + all_parts_po / gpt-6-astra | 0.68 (first counter 0.552, final round 3, timeouts 0) | 4e244819e8b9207b |
+| 2026-10-10 18:03 | Dhruv | P11 | noidea v2.16 / gpt-6-astra | **0.79 best P11** (accepted 45.00 @ 300/0 in round 2 - walk guard) | 6b02b8cc94796703 |
