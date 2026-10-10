@@ -45,7 +45,10 @@ def take_rate(kind, case_id, data=None):
     data = data or reactions()
     seen = data.get("by_case", {}).get(case_id, {}).get(kind)
     if seen and seen.get("taken"):
-        return PROVEN  # this very supplier took this kind before: cite it first
+        # this very supplier took this kind before: cite it first - among proven kinds by its own take share, then
+        # the prior (P18: index 4 taken / 1 "confirms our case" must not outrank price history 6 / 6)
+        share = seen["taken"] / max(1, sum(v for v in seen.values() if isinstance(v, (int, float))))
+        return PROVEN + share + 0.01 * PRIOR_TAKE.get(kind, 0.0)
     if seen and not seen.get("taken") and (seen.get("no_change") or seen.get("confirm_case")):
         return 0.0
     k = data.get("by_kind", {}).get(kind)
