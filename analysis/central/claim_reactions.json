@@ -1,5 +1,5 @@
 {
- "games": 189,
+ "games": 191,
  "by_kind": {
   "copper notation": {
    "taken": 1,
@@ -18,14 +18,18 @@
    "take_rate": 1.0
   },
   "index_change": {
-   "taken": 122,
-   "no_change": 14,
+   "taken": 124,
+   "no_change": 16,
    "confirm_case": 7,
-   "take_rate": 0.85
+   "take_rate": 0.84
   },
   "labour cost index": {
    "taken": 1,
    "take_rate": 1.0
+  },
+  "lci-c": {
+   "no_change": 1,
+   "take_rate": 0.0
   },
   "news": {
    "no_change": 1,
@@ -37,9 +41,9 @@
    "take_rate": 0.83
   },
   "po_prices": {
-   "no_change": 43,
-   "taken": 23,
-   "take_rate": 0.35
+   "no_change": 44,
+   "taken": 25,
+   "take_rate": 0.36
   },
   "rival_quote": {
    "taken": 41,
@@ -51,7 +55,7 @@
    "take_rate": 0.0
   },
   "scorecard_ppm": {
-   "taken": 39,
+   "taken": 40,
    "no_change": 3,
    "take_rate": 0.93
   },
@@ -64,9 +68,9 @@
    "take_rate": 1.0
   },
   "volume_change": {
-   "no_change": 25,
-   "taken": 87,
-   "take_rate": 0.78
+   "no_change": 27,
+   "taken": 88,
+   "take_rate": 0.77
   }
  },
  "by_case": {
@@ -237,16 +241,16 @@
   },
   "case:P11": {
    "index_change": {
-    "taken": 64
+    "taken": 66
    },
    "scorecard_ppm": {
-    "taken": 38
+    "taken": 39
    },
    "volume_change": {
-    "taken": 35
+    "taken": 36
    },
    "po_prices": {
-    "no_change": 26
+    "no_change": 27
    },
    "_signals": {
     "final_at_4": 6,
@@ -275,27 +279,30 @@
    "index_change": {
     "taken": 10,
     "confirm_case": 1,
-    "no_change": 1
+    "no_change": 3
    },
    "po_prices": {
-    "taken": 12
+    "taken": 14
    },
    "volume_change": {
-    "no_change": 6,
+    "no_change": 8,
     "taken": 6
    },
    "_signals": {
     "mirror": 5,
-    "final_at_4": 2,
+    "final_at_4": 3,
     "final_at_3": 8,
     "final_at_2": 2
+   },
+   "lci-c": {
+    "no_change": 1
    }
   }
  },
  "signals": {
-  "asked_for_data": 112,
-  "already_counted": 42,
-  "padding": 43,
+  "asked_for_data": 113,
+  "already_counted": 43,
+  "padding": 44,
   "fair_point": 36,
   "rising_index_backfired": 7
  }

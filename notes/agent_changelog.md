@@ -1007,3 +1007,7 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
   The P18 round-1 test now encodes the gated rule (the forecast it drops is the fact P18 shrugs off).
 - Experiment `r1_pay_short`: round 1 on the shortest payment term (P18 cut a full 0.20 step for 14 d in round 2).
 - Tests 64; offline 0.931 / 0.861; walk replays unchanged.
+
+## v2.28 live P18 (22:10), two games in parallel
+- **Default agent (gate on): 0.727 = new best P18** (0c968aae64401bb1): 5.20 @ 30 -> our 14-d sheet in r2 -> 5.00 @ 14 -> **agreed 4.91 @ 14 d**. Confirms the round-1 gate without any flag.
+- `r1_pay_short` (bf56d9758ff4bd7c): **0.688** - first counter 5.20 on 14 d too (it answered the same nominal), then it moved to 45 d and finalled 5.00. Fast payment buys a step only as a TRADE in round 2, not as the opening term -> stays OFF.

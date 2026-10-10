@@ -208,3 +208,5 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
     the strongest fact for a data-naive owner (P01: iron & steel -4.3% in round 1 -> first counter 133.40 vs 136.40, deal 0.9987).
 91. **Budget / short-fuse suppliers: load round 1 with every strong fact** (2 index claims of different series allowed there):
     P18 first counter 5.20 vs 5.40 with history only; a supplier that values fast payment cuts a whole step for 14 d (0.707).
+92. **A term the supplier values buys a step as a TRADE, not as an opening**: P18 cut 0.20 when we moved to 14 d in round 2
+    (0.727), but answered the same nominal 5.20 when 14 d came in round 1 (0.688). Open on its terms, trade the term later.
