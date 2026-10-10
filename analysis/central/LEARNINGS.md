@@ -109,3 +109,23 @@ All of it used: **EUR 431.58 @ 90 d = 0.936**, above the house (0.925). 0.95 nee
 data kind is left that this supplier takes into account. General rule for any supplier: **cite every verified, honest
 fact it takes, one new kind (or index series) per message, from round 1, and keep the rounds going while data is
 left**; it is the only thing a code-priced supplier rewards.
+
+## 7. P02 (Nordmark): 0.507 -> 0.824 in 3 live games (house 0.74, best of all teams 0.721)
+A different engine from P03: Nordmark **mirrors our steps** ("In response to your step, we are prepared to reduce",
+"We expect a significant step towards our position") and cuts for each NEW verified fact; it goes final when a round
+brings no new data ("it lacks new verifiable data").
+
+| game | change | its price @ 90 d by round | score |
+|---|---|---|---:|
+| de6192e39dd86084 | central layer: volume + steel index −4.3% + quality (no effect); copper; labour; then no data | 372.52, 371.45, 370.85, final 370.45 | 0.657 |
+| a1e2a4acb73dd3e9 | data spread one per round, order-price history last, no committee line | 372.52, 371.52, 370.92, final 370.32 | 0.669 |
+| **ee98266bedd37231** | **+ mirror rule: step 30% of the remaining gap** (€3.17 instead of €0.76) | **372.52, 370.85, 369.45, final 368.55** | **0.824** |
+
+Rules now in `central.py` (general, from per-case signals mined by `mine_claims.py`):
+- **Spread the data:** keep one new fact for each of the next 3 rounds; send 1 per later round.
+- **Mirroring supplier** (signal in its replies): step 30% of the remaining gap, staying a near-close below its price.
+  The deal is ITS price, so a bigger step from us costs nothing and buys a bigger one.
+- **"I hold full authority"** (P02 said it in every round): never mention a committee.
+- "Confirm our case" (a rising index) does not block a *falling* index of the same kind; a falling cost-driver index was
+  taken in every case where we cited one (P01, P02 x3, P03 x4, P18).
+Round 4 said "our best effort ... without requiring management escalation", so escalation may be the next lever.

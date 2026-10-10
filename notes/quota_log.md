@@ -98,3 +98,6 @@
 | 2026-10-10 17:41 | Parth | P02 | noidea dac5e97 E2 / gpt-6-astra | 0.49 (first counter 0.264, final round 4, timeouts 0) | 466f3cb54614635f |
 | 2026-10-10 17:46 | Parth | P18 | noidea 0b9ee8b E3 + all_parts_po / gpt-6-astra | 0.54 (first counter 0.485, final round 3, timeouts 0) | 928a3878c58f7dc3 |
 | 2026-10-10 17:46 | Parth | P18 | noidea 0b9ee8b E3 + all_parts_po / gpt-6-astra | 0.68 (first counter 0.552, final round 3, timeouts 0) | 4e244819e8b9207b |
+| 2026-10-10 17:54 | Neel | P02 | noidea_neel / gpt-6-astra | **0.66** | de6192e39dd86084 |
+| 2026-10-10 17:58 | Neel | P02 | noidea_neel / gpt-6-astra | **0.67** | a1e2a4acb73dd3e9 |
+| 2026-10-10 18:01 | Neel | P02 | noidea_neel / gpt-6-astra | **0.82** | ee98266bedd37231 |
