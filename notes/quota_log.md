@@ -271,3 +271,4 @@
 | 2026-10-11 00:41 | Dhruv | P10 | v2.34d LOAD / gpt-6-astra | 0.7019 | see notes/analysis_v234 LOAD log |
 | 2026-10-11 00:41 | Dhruv | P11 | v2.34d LOAD / gpt-6-astra | 0.7935 | see notes/analysis_v234 LOAD log |
 | 2026-10-11 00:41 | Dhruv | P18 | v2.34d LOAD / gpt-6-astra | 0.6658 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:54 | Neel | P03 | noidea_p03 v2 (cloud P03_deep: asks 0.60 under line, rival quote 7100051 in msg 5) / gpt-6-astra | **0.96** | 45943af6907388d6 |
