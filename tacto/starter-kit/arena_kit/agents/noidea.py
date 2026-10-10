@@ -562,9 +562,11 @@ class NoIdeaAgent:
 
     def complaint_args(self, sid, parts, per_claim=3, max_claims=3):
         """Its recent quality notifications on this part, as checkable data for LATER rounds (api.md: `qn:` rows are
-        checked as the mean ppm when you speak of quality; each ID counts once, so each group is a NEW fact). P11 v2.16
-        f80f4b5452fa442a: after round 2 we had no new data left, it held EUR 45.50 twice and asked "Which figures is that
-        based on? Please send us the data." Newest first, supplier-caused only."""
+        checked as the mean ppm when you speak of quality). P11 v2.16 f80f4b5452fa442a: after round 2 we had no new data
+        left, it held EUR 45.50 twice and asked "Which figures is that based on? Please send us the data." Newest first.
+        No thousands separator: the arena read our "18,558 ppm" as 18.558 -> `contradicted` (fa9a9d0277f372c6); written
+        "18558" it verifies, but after a scorecard ppm claim it is `duplicate` - the quality record counts once per case
+        (P11 probe A 7e21be9: "we already factored the quality issues into our last price drop")."""
         qn = sorted(((k, v) for k, v in self.facts.items() if k.startswith("qn:") and v.get("supplier") == sid
                      and v.get("part") in parts and v.get("ppm")), key=lambda kv: kv[1].get("date") or "", reverse=True)
         out = []
@@ -577,7 +579,7 @@ class NoIdeaAgent:
             out.append({"supplier": sid, "part": grp[0][1]["part"], "kind": "quality_notification", "ids": ids,
                         "figure": round(ppm), "checked_by_arena": True, "late": True,
                         "sentence": f"Your complaints on this part from {grp[-1][1]['date'][:7]} to {grp[0][1]['date'][:7]} "
-                                    f"ran at a mean of {ppm:,.0f} ppm on the affected deliveries ({', '.join(ids)})."})
+                                    f"ran at a mean of {ppm:.0f} ppm on the affected deliveries ({', '.join(ids)})."})
         return out
 
     def next_args(self, sid, n, first_round=False):
