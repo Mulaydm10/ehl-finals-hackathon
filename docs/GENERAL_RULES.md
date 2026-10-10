@@ -196,3 +196,6 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
 84. **Never ask again after its final - reconfirmed**: P04 last-cent ask 4.93 @ 90 d after its final -> walked, 0.000 (39d795e).
 85. **The floor trade (rule 66) generalises**: Neel ported it to P08 (its own clause structure one cent under the expected final,
     gated by supplier memory to low draws).
+86. **Words matter where the numbers are equal: name the fear you remove, never accuse.** P11 (28 games, same data and sheet):
+    openings that told the cash-short owner "no penalties / no chargebacks" drew the low first counter 7 of 9 vs 7 of 19;
+    "prove your reliability" / "earn our confidence" / "documented complaints" leaned high. Put the reassurance in code, not luck.

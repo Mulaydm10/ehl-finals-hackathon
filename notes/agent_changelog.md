@@ -868,3 +868,13 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 - Round 1 change only for P08: order-price path (4 po IDs) + cold-drawing index lead; P11 / all others identical. Tests 50,
   offline 0.930 / 0.925, walk replays unchanged. Rules 81-85 + 2 lessons for the model.
 - Parth: **our agent with the P08 price path scored 0.822 live** (6785420; the 0.912 was scripted probe A). P04 probe experiment (pay-on-time promise + probe sheets beating 0.874).
+
+### v2.22 (offline): WORDING - name the fear we remove, no accusing openings (user: "is there a problem with wording?")
+- `/tmp/wording.py` over 28 P11 games with the identical 300/0 @ 42.77 sheet and data: "not punitive / no penalties" in round 1
+  7/9 low draws vs 7/19 high; the word "chargeback" (as "we won't ask for chargebacks") 3/9 vs 0/19; "earning our confidence"
+  2/9 vs 8/19; "documented complaints" 1/9 vs 6/19; "prove your reliability" 7/9 vs 19/19. The model wrote the reassurance only
+  by chance. Suggestive (n=28), cheap to act on.
+- Code line in round 1 for a cash-driven supplier when our sheets carry no chargeback: "We will not ask you for chargebacks or
+  any penalties: we want a binding quality commitment and your corrective-action plan, not cash out of your business."
+  Prompt rule: never sound like an accusation or a test ("prove your reliability", "earn our confidence", "documented complaints").
+- Astra round 1 OK (non-accusing opening + the line), injection PASS, tests 56.
