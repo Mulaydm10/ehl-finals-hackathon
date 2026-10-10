@@ -60,6 +60,7 @@ MIRROR_GATE = 0.2  # from our 3rd ask: big mirror steps only while its last step
 R2_HEDGED_SHARE = 0.30  # cloud task 9: round-2 step for hedged suppliers, share of the gap (was ~0.16)
 FINAL_AT_MSG = {"raw_material": 3}  # cloud task 10: our message at which this case type's supplier goes final (P08 9/10, P18 7/10)
 DEFER_RATIO = 0.18  # ...where our step is only this share of its last step (P08 deferred at 0.19x; final at >= 0.9x, P18 at 0.53x)
+CROSS_SELL = True  # cloud task 13: invite a hedged raw-material distributor to quote for a part we buy elsewhere (untested live)
 DEFER_TIMES = 1  # cloud task 11: small steps in a row (1 = live-tested in db7d315a; 2+ untested - sim_donautal --max-defer)
 DEFER_FLOOR = 0.002  # ...but at least 0.2% of its price (a zero step reads as a repeat)
 DEFER_MIN_GAP = 0.02  # ...and only while the gap is still >= 2% of its price (< 0.35% left defers by itself: P01/P02 4 of 4)
@@ -995,6 +996,11 @@ class NoIdeaAgent:
         # its own recent quote for this part, in words (cloud P08_engine.md: EUR 5.45 on 2026-09-10 vs its 6.05 opening)
         if k == 0 and (oq := central.own_quote_note(self.facts, sid, set(case["parts"]), s["open_terms"].get("unit_price"))):
             basis.insert(0, oq)
+        # cloud task 13 (analysis/cases/P08_floor.md): P08's concession budget is fixed (final = round-1 value - 0.21 on the
+        # low draw, whatever data, steps or rounds); only its person's currency is untested: more items on its order
+        if CROSS_SELL and self.hedged_raw(case, sid) and k in (0, FINAL_AT_MSG.get(case["type"], 0) - 1):
+            if (xs := central.cross_sell_note(self.facts, sid, s["dossier"], set(case["parts"]))):
+                basis.append(xs if k == 0 else "Our invitation to quote for the other part stands once this agreement is signed.")
         basis += args
         nxt = []
         # ask once: skip if the LLM paragraph already asked (P04 offline: it was asked twice in one e-mail)

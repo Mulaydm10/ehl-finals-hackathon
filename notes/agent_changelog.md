@@ -774,3 +774,20 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
 - Our ladder 44.60/44.70/44.80 sat far under a floor of ~45.00 while its patience is 1-3 probes. New: GRID_LADDER = 50/25/10/4% of a grid step under its price (P11 low draw 44.75, 44.88, 44.95), and when it NAMES its floor = standing, ONE hair-below ask (-0.1%, 44.95 = 0.802).
 - probe_sim: low draw floor 44.80-44.95 -> 44.95 = **0.802** (was 0.7935); high draw floor 45.10 -> 45.25 = 0.752 (was 0.777 with the low ladder), floor >= 45.30 -> 45.45 = 0.718 (was 0.71). Trade accepted: the goal is crossing 0.80.
 - Tests 38, offline 0.931, walk replays unchanged; replay 37ea72de -> 44.95 after "We can give you EUR 45.00".
+
+## v2.19b live P11 (19:46): 0.752 (e6470ce65a4681ee) - high draw; first probe 45.25 AGREED ("We accept your offer of EUR ... with ... ppm and zero chargebacks!")
+- High draws agreed to the FIRST probe 3 of 3 (45.13 7117, 45.10 b1f9, 45.25 e647) -> the floor sits LOW in the gap; low draws NAME it at the top (45.00, 37ea).
+### v2.19c (offline): the answer to the floor question picks the ladder
+- Floor question one round earlier (k >= 2, in the last data e-mail) so the answer arrives before the first probe. Named = standing -> hair (44.95); "limits stay internal" -> LOW ladder 80/60/40/20% of a step (high draw 45.10 first). Tests 38, offline 0.931, walk replays unchanged.
+
+### v2.19d (offline) - conflicts found and fixed while checking the ladder
+1. Hair / probe on a supplier WITHOUT a price grid re-offered its own (worse-for-us) sheet: offline P08 stubborn 0.92 -> 0.32. Now: hair only with a detected grid, and any probe only when its sheet has OUR structure (same_structure).
+2. The named-floor regex matched its standard sentence "Our offer stands at a price of EUR X" (e647 -> hair at 45.45). Now only answer phrases (can give you / best we can do / lowest we can / floor / meet you at).
+3. After the probes, the next ask could fall BELOW our previous ask (37ea replay 44.95 -> 44.72): now we hold our last ask (no backtracking).
+- Offline back to 0.931 / 0.930, tests 38, walk replays unchanged.
+
+## v2.19d live P11 (19:52): 0.71 (313c4e22dd0f2933) - high draw, slow (46.50 -> 46.00 -> 45.50), limits kept internal -> low ladder 45.10, 45.38 both refused -> final 45.50. Floor > 45.38 this session.
+- **P11 tally since v2.18 (play the man)**: 0.777, 0.7935, 0.7935, 0.752, 0.71 -> mean 0.765 (v2.16-2.17: mean 0.71). High-draw floors seen: <=45.10, <=45.13, <=45.25, >45.30, >45.38 -> spread over the whole gap: no ladder wins every high draw. Low draws: floor 45.00 named (2x) -> hair 44.95 untested live.
+
+- loop 1/8 (19:57): 0.71 (3608ce1410ab5cf9) - high draw 46.50/46.00/45.50, probes 45.10/45.38/45.45 refused, took 45.50 (late-round accept band fired with the 45.45 probe pending - gain would have been 0.008).
+- loop 2/8 (20:01): 0.71 (f70d7a6ed006d68c) - high draw, final_offer 45.50 at its 4th message (no probe window).
