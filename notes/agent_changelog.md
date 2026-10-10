@@ -742,3 +742,5 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
   P18 neutral (0.666, fixed 0.10 steps). Offline: P01/P02/P11 unchanged; P07/P08 offline dips are simulator artifacts.
 **3. P18:** 90 d + AS db5 is priced in (+0.25-0.30/kg vs our 0.18 value): probe 0.598; ceiling ~0.68.
 **4. P11:** holds at 45.00 (margin floor, payment fixed); QN after scorecard ppm = duplicate; its own quote = irrelevant.
+- Update: gap steps now exclude hedged (P08) and price-frozen (P03) suppliers too. P08 live with them (89259de630143206):
+  +0.20 step -> -0.06, final in round 3, 0.528; its round-2 cut is a per-session draw (good games -0.25 after +0.07).
