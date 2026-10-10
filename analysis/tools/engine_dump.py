@@ -28,7 +28,7 @@ def load_games(case_id):
             games[d["session_id"]] = d
     for f in sorted(glob.glob(str(ROOT / "tools/replays/raw/*.json"))):
         s = json.loads(Path(f).read_text(encoding="utf-8"))
-        if s.get("case_id") == case_id and s.get("session_id") and s["session_id"] not in games:
+        if s.get("case_id") == case_id and s.get("session_id") and not (games.get(s["session_id"]) or {}).get("result"):
             games[s["session_id"]] = s
     return games
 
