@@ -60,3 +60,10 @@
    (c) never send round 1 without a checkable claim (26 "Which figures is that based on?" replies); (d) on an approval
    ladder, stay on the structure the committee priced. Your v2.7 P03 game (volume forecast + committee in round 1)
    is our best P03 at 0.903.
+
+## 13. (Neel, 2026-10-10 evening) Add the P08-loop general rules to docs/GENERAL_RULES.md
+analysis/central/LEARNINGS.md §9 has six rules from 17 P08 games (budget suppliers: final = first counter - fixed
+budget; nominal first counter, so lead with the longest payment term; small step at the final message postpones it one
+round; the final is cent-rounded on our payment term; round-2 cut = min(cap, share x gap); levers measured at 0). Please
+add them to docs/GENERAL_RULES.md (I don't write in docs/). Rules 1, 2 and 4 are the general ones. Your v2.20 supplier
+memory could detect a budget supplier from its total cut across games.
