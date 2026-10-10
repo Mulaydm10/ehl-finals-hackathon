@@ -1,5 +1,5 @@
 {
- "games": 176,
+ "games": 177,
  "by_kind": {
   "copper notation": {
    "taken": 1,
@@ -141,7 +141,7 @@
     "no_change": 4
    },
    "_signals": {
-    "final_at_2": 4,
+    "final_at_2": 5,
     "final_at_3": 2
    }
   },
@@ -282,7 +282,7 @@
  "signals": {
   "already_counted": 41,
   "padding": 42,
-  "asked_for_data": 107,
+  "asked_for_data": 108,
   "rising_index_backfired": 7,
   "fair_point": 24
  }

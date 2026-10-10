@@ -918,3 +918,4 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 ### v2.24b (offline): `floor_gamble` experiment for 0.88+ on P04 + memory refusal fix
 - Memory builder: any ask answered with a HIGHER price is a refusal (it moved 4.90 -> 4.89 after our 4.88: was not recorded).
 - floor_gamble: among terms whose remembered final is within 0.02% of the best, the one with the best score one cent UNDER its final, skipping asks already refused. P04: 45 d 4.88 refused -> 90 d: open 4.88, close 4.93 (1.0) / fallback its 4.94 (0.86, -0.014 vs the record). Break-even acceptance chance 10%. Experiment only - ships only if it wins.
+- v2.24b live P04 (21:33) floor_gamble: **0.860** (d94cb59807684363) - 90 d: open 4.94, close 4.93 refused -> final 4.94. One-cent-under refused on 45 d AND 90 d: P04 stops are hard -> **0.874 (45 d) is its ceiling** (Parth was right). floor_gamble stays OFF.

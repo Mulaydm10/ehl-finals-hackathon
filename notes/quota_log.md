@@ -178,3 +178,4 @@
 | 2026-10-10 21:13 | Dhruv | P11 | noidea v2.23 planner / gpt-6-astra | 0.79 (low draw; 44.90/44.95 refused) | dbf506a3e7827dae |
 | 2026-10-10 21:20 | Neel | P05 | noidea_p05 / gpt-6-astra | **0.75** | ec7c2e29fdb046cd |
 | 2026-10-10 21:22 | Dhruv | P04 | noidea v2.24 / gpt-6-astra | **0.874** (= record; memory term 45 d) | ffef2938ad0d18a5 |
+| 2026-10-10 21:33 | Dhruv | P04 | noidea v2.24b floor_gamble / gpt-6-astra | 0.86 (90 d; 4.93 refused) | d94cb59807684363 |
