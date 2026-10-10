@@ -1077,3 +1077,19 @@ timeouts, no deal). The hold path code (v2.32) stays in, untested live.
   (2) "half the step now, the rest next round" = one rival step per supplier; (3) suppliers counter on a 0.50 grid
   rounded up but agree at OUR price once it clears their line - in the last round ask ~0.40 under their grid counter,
   not far below it. Details: analysis/cases/P05.md sections 11-13.
+
+## v2.33 (offline) - STEP 1 of the single-agent build: gap audit against the team-best variants (src/eval/gap_replay.py)
+Replayed each team-best game through OUR agent (the final's `--agent noidea`) and ported only general mechanisms:
+- **A. should-cost against its QUOTE** (not only today's price): P03 8.7% under the quote, 2.4% under today's price - never cited
+  by us, in 5 of 5 top P03 games. (Bug on the way: rank_args ran before the quote was known -> `_open_price` set first.)
+- **B. rising order-price path also for price-frozen suppliers** (Neel request 14: P03 0.963, 431.67 -> 430.41 in one round).
+- **C. objection guard** (walk risk): a phrase from its OPENING e-mail is template; a payment / standard-terms phrase counts only
+  when its sheets really propose another payment term than ours. (P02 0.847 game: the guard took 370.85 while it went to
+  368.25; the real P02 walks still trigger it - walk replays unchanged.)
+- **D. big mirror steps when the supplier SAYS it mirrors** ("in response to your step") - live words, not the classifier.
+- **E. facts left + offer open: no accept at our own ask** - the next fact with an ask a hair under its price (CLOSE_STEP) on its
+  sheet. P03 replay: 431.67 -> next fact 431.32 instead of accepting (Neel reached 430.36).
+- Result: P03 round 1 now should-cost + electronics fall + price path; all other cases' round 1 identical; P11 / P01 / P04 /
+  P18 / P05 replays unchanged; tests 64; offline 0.940 / 0.872.
+- Not ported (case-tuned, would overfit): Neel's P08 deferral/hair switches keyed to "hedged raw material", per-case
+  `mirror_supplier(case_id)` (memory of practice cases), FINAL_AT_MSG table by case type.
