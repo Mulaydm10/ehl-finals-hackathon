@@ -892,3 +892,11 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
   in round 2 drew "We appreciate your acceptance of the AS-14404 index clause" and ~0.07); round 1 all code sheets; plain
   later openings. Offline: the other 9 cases unchanged. House 0.752.
 - P04: 0.874 confirmed as the ceiling (3 tests, incl. Claude's --probe: walked after the repeated probe).
+
+### Parth (branch), ~23:30: P05 0.820 -> **0.965** (scripted `tools/experiments/p05_hold.py`; board's best 0.92)
+- Hold Fuchsreiter's round 1 (one timeout), then ask 25.54 @ 14 + a much lower rival offer + 2 verified facts (its
+  free-capacity news, the 1.4404 surcharge fall) -> 27.50 "clarify internally"; round 3 ask 26.60 -> **agreed**.
+- General lessons for the agent: (1) a supplier's first counter can be capped by the round - a held round 1 lowers it;
+  (2) "half the step now, the rest next round" = one rival step per supplier; (3) suppliers counter on a 0.50 grid
+  rounded up but agree at OUR price once it clears their line - in the last round ask ~0.40 under their grid counter,
+  not far below it. Details: analysis/cases/P05.md sections 11-13.
