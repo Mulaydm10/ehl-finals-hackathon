@@ -24,7 +24,7 @@ import logging
 from pathlib import Path
 
 from arena_kit.agents.noidea import NoIdeaAgent as _Main
-from arena_kit.cost import complete_offer, supplier_value
+from arena_kit.cost import complete_offer, must_haves_ok, supplier_value
 from arena_kit.play import latest, live_threads, standing
 
 log = logging.getLogger("arena")
@@ -63,8 +63,62 @@ if "rfq_low12" in _EXP:
     RFQ_BELOW_LOW = 0.12
 
 
+# HOLD PATH (Parth tools/experiments/p05_hold.py: P05 0.924 x6, 0.950, 0.965 - Fuchsreiter opened 38.50, agreed 26.60):
+# a bidder opening far above the market gets ONE round without a price from us ("without movement from your side we cannot
+# move either"), then a deep ask + the lowest rival ("we need to clarify this internally"), then ONE move; it then drops about
+# a step a round and agrees to our standing ask. Parth held with a late reply (= a timeout); we hold with a no-price note
+# (api.md: "a message without a term sheet is answered and the quote stands") - no timeout risk. Opt-out `no_hold_path`.
+HOLD_HIGH = 1.15   # a bidder opening >= 15% above the lowest offer of the others is a high opener
+HOLD_DEEP = 0.16   # first priced ask: 16% under the market low (Parth 25.54 vs 30.50)
+HOLD_MOVE = 0.138  # the one move: 13.8% under (Parth 26.30)
+HOLD_TAKE = 0.115  # take any of its offers at or under 11.5% below the market low at once (Parth 27.00)
+
+
 class NoIdeaAgent(_Main):
+    def _market_low_price(self, case, sid, opening=False):
+        """Lowest PRICE of the OTHER bidders: their OPENING quotes, must-haves aside (the high-opener trigger in round 1),
+        or their live standing offers that meet our must-haves (the hold thresholds, frozen at our first priced ask - in
+        Parth's 0.965 that was 70210's first counter 30.50 -> 25.54 / 26.30 / 27.00)."""
+        best = None
+        for other in (self.threads_ref if opening else live_threads(self.threads_ref)):
+            if other == sid or other not in self.sup:
+                continue
+            ev = self.threads_ref[other]
+            t = complete_offer(case, (standing(ev[:1])[1] if opening else standing(ev)[1]) or {})
+            if t.get("unit_price") and (opening or must_haves_ok(case, t, self.sup[other]["std"])):
+                best = t["unit_price"] if best is None else min(best, t["unit_price"])
+        return best
+
+    def _high_opener(self, case, sid):
+        if case["type"] != "rfq" or "no_hold_path" in EXPERIMENTS_RFQ or sid not in self.sup:
+            return False
+        if "hold_high" in self.sup[sid]:
+            return self.sup[sid]["hold_high"]
+        own = (self.sup[sid].get("open_terms") or {}).get("unit_price")
+        low = self._market_low_price(case, sid, opening=True)
+        self.sup[sid]["hold_high"] = bool(own and low and own >= low * HOLD_HIGH)
+        if self.sup[sid]["hold_high"]:
+            log.info("%s: high opener (%.2f vs market low %.2f) - hold path", sid, own, low)
+        return self.sup[sid]["hold_high"]
+
     def value_target(self, case, sid, events):
+        if self._high_opener(case, sid) and not self.sup[sid].get("hold_sent"):
+            return self._value_target_rfq(case, sid, events)  # the note round: nothing priced goes out, freeze nothing
+        if self._high_opener(case, sid):
+            s = self.sup[sid]
+            # thresholds frozen at our FIRST PRICED ask, after the note (Parth 0.965: the market low was 70210's 30.50 then)
+            low = s.setdefault("hold_low", self._market_low_price(case, sid))
+            hist = s.setdefault("ours", [])
+            base = complete_offer(case, s["open_terms"])
+            frac = HOLD_DEEP if not hist else HOLD_MOVE
+            v = supplier_value(case, {**base, "unit_price": round(low * (1 - frac), 2)}, s["est"])
+            v = max(v, hist[-1]) if hist else v
+            hist.append(v)
+            log.info("%s hold path ask: %.2f (%s)", sid, low * (1 - frac), "deep" if len(hist) == 1 else "the one move / hold")
+            return v
+        return self._value_target_rfq(case, sid, events)
+
+    def _value_target_rfq(self, case, sid, events):
         """5. RFQ asks: data moves these bidders, our steps only hand them a deal. Live 737bacd270dea248: 70210 went
         36.00 -> 30.50 on the alloy fall + a rival, then AGREED to our 29.05 when we stepped up from 28.61 (0.705) -
         its floor was below our ask. Hold low, creep slowly, stay under the market low."""
@@ -95,6 +149,34 @@ class NoIdeaAgent(_Main):
         return nxt
 
     def decide(self, case, threads):
+        if case["type"] == "rfq" and case["case_id"] == getattr(self, "case_id", None):
+            self.threads_ref = threads
+            for sid in [x for x in live_threads(threads) if x in self.sup and self._high_opener(case, x)]:
+                ev = threads[sid]
+                st = latest(ev).get("status")
+                t = complete_offer(case, standing(ev)[1] or {})
+                low = self.sup[sid].get("hold_low")  # no take before the thresholds are frozen
+                if st in ("open", "agreed", "final_offer") and t.get("unit_price") and low and \
+                        t["unit_price"] <= low * (1 - HOLD_TAKE) and must_haves_ok(case, t, self.sup[sid]["std"]):
+                    sh = standing(ev)[0]
+                    if sh:
+                        log.info("%s: hold path - its %.2f is under the take line %.2f: accept", sid, t["unit_price"],
+                                 low * (1 - HOLD_TAKE))
+                        return {"supplier_id": sid, "message": {"action": {"type": "accept", "term_sheet_id": sh}}}
+        d = self._decide_rfq(case, threads)
+        sid = d.get("supplier_id")
+        if case["type"] == "rfq" and sid and self._high_opener(case, sid) and not self.sup[sid].get("hold_sent") \
+                and not ((d.get("message") or {}).get("action")):
+            self.sup[sid]["hold_sent"] = True
+            self.sup[sid].pop("ours", None)  # the priced path starts with the deep ask next round
+            log.info("%s: hold path - a note without a price this round", sid)
+            return {"supplier_id": sid, "message": {
+                "subject": f"Re: {case['title']}"[:300],
+                "body": ("Dear team,\n\nThank you for your quote. We are comparing all offers for this part and will come "
+                         "back to you with our terms.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke")}}
+        return d
+
+    def _decide_rfq(self, case, threads):
         """6. The first agreement is not accepted at once while another live bidder sits above it and has not seen it:
         that bidder gets it as a rival offer for one round (back office: "The buyer shows a much lower rival quote. I give
         half the step now and check the rest"); then the cheapest closing bidder is taken (P05_engine.md plan)."""
