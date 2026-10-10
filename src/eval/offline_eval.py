@@ -11,6 +11,8 @@ probes, analysis/cases/openings/*.json) and the EXACT C_open / C_best of the cas
 charge, so it ranks strategies; it does not predict arena scores. Validate the winners live.
 
     cd tacto/starter-kit && .venv/bin/python ../../src/eval/offline_eval.py [--agent-file F] [cases...]
+    # trial run with the real model writing (LLM_* from the environment / .env), every e-mail printed:
+    set -a; . ./.env; set +a; .venv/bin/python ../../src/eval/offline_eval.py --llm --show --only stubborn P05
 """
 import argparse
 import importlib.util
@@ -49,9 +51,9 @@ def price_for(case, terms, std, c_target):
     return 100.0 + (c_target - a) / ((b - a) / 100.0)
 
 
-def simulate(Agent, case, opening, c_open, c_best, r, max_rounds=10):
+def simulate(Agent, case, opening, c_open, c_best, r, max_rounds=10, complete=None, show=False):
     threads = {sid: [dict(m) for m in ms] for sid, ms in opening.items()}
-    agent, n = Agent(None), {sid: 0 for sid in threads}
+    agent, n = Agent(complete), {sid: 0 for sid in threads}
     for _ in range(max_rounds * len(threads) + 2):
         d = agent.decide(case, threads)
         sid, msg = d["supplier_id"], d["message"]
@@ -69,6 +71,10 @@ def simulate(Agent, case, opening, c_open, c_best, r, max_rounds=10):
             c = total_cost(case, sheet, std)
             return max(0.0, min(1.0, (c_open - c) / (c_open - c_best))), "deal", sum(n.values())
         n[sid] += 1
+        if show and not act:
+            print(f"\n--- {case['case_id']} msg {sum(n.values())} -> {sid} | sheets "
+                  f"{[{k: v for k, v in t['terms'].items() if k in case['negotiable']} for t in msg['term_sheets']]}")
+            print("    " + msg["body"].replace("\n", "\n    "))
         if events[-1].get("status") == "final_offer":  # pushing after its last word: it walks (P07 v1.3 live)
             threads[sid].append({"from": sid, "status": "walked_away", "body": ""})
             others = [s for s in threads if threads[s][-1].get("status") not in ("walked_away",)]
@@ -91,7 +97,7 @@ def simulate(Agent, case, opening, c_open, c_best, r, max_rounds=10):
                      "terms": {**t, "unit_price": round(p, 2)}}
         events += [{**msg, "from": "buyer"},
                    {"from": f"sales@{sid}", "status": reply["status"], "body": "",
-                    "term_sheets": [{"term_sheet_id": f"offer:{sid}-{n[sid]}", "terms": reply["terms"]}]}]
+                    "term_sheets": [{"term_sheet_id": f"offer:{sid.split(':')[-1]}-{n[sid]}", "terms": reply["terms"]}]}]
     return 0.0, "timeout", sum(n.values())
 
 
@@ -99,9 +105,23 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("cases", nargs="*")
     ap.add_argument("--agent-file")
+    ap.add_argument("--llm", action="store_true", help="the configured LLM writes the openings (LLM_* env)")
+    ap.add_argument("--show", action="store_true", help="print every e-mail and its term sheets")
+    ap.add_argument("--only", choices=["responsive", "stubborn"], help="one simulated supplier type")
     a = ap.parse_args()
     logging.basicConfig(level=logging.WARNING)
     Agent = load_agent(a.agent_file)
+    complete = None
+    if a.llm:
+        import time
+        from arena_kit.agents.llm import llm_from_env
+        raw, calls = llm_from_env(), []
+        def complete(system, user):
+            t = time.time()
+            try:
+                return raw(system, user)
+            finally:
+                calls.append(time.time() - t)
     cases = {c["case_id"][5:]: c for c in json.loads((ROOT / "datasets/cases_practice.json").read_text())}
     probes = {f.stem: json.loads(f.read_text()) for f in (ROOT / "analysis/cases/openings").glob("*.json")}
     probes["P01"] = P01
@@ -110,11 +130,16 @@ def main():
     for cid in names:
         p = probes[cid]
         res = p.get("result", p)
-        out = [simulate(Agent, cases[cid], p["threads"], res["c_open"], res["c_best"], r) for r in (0.30, 0.10)]
+        rs = {"responsive": (0.30,), "stubborn": (0.10,)}.get(a.only, (0.30, 0.10))
+        out = [simulate(Agent, cases[cid], p["threads"], res["c_open"], res["c_best"], r, complete=complete, show=a.show)
+               for r in rs]
+        out = out if len(out) == 2 else out * 2
         rows.append((cid, out))
         print(f"{cid}  responsive {out[0][0]:.2f} ({out[0][1]}, {out[0][2]} msgs)   stubborn {out[1][0]:.2f} ({out[1][1]}, {out[1][2]} msgs)")
     mean = lambda i: sum(o[i][0] for _, o in rows) / len(rows)
     print(f"MEAN responsive {mean(0):.3f}   stubborn {mean(1):.3f}   (n={len(rows)})")
+    if complete:
+        print(f"LLM calls {len(calls)}, mean {sum(calls) / max(1, len(calls)):.1f}s, max {max(calls, default=0):.1f}s")
 
 
 if __name__ == "__main__":

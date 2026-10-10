@@ -123,3 +123,22 @@ rank versions, not to predict arena scores. It ignores arguments, tone and the r
   ID (spend isn't in facts.json), and the supplier asked 3x for "the exact figures behind" it. Candidate: drop the
   multiple, keep the € value (not done yet).
 - **Decision: stop iterating on P07, test v1.6 on the other case types (task C).**
+
+## Testing workflow (team rule from 2026-10-10 ~15:00)
+1. **Offline trial on the Mac with Qwen**: `set -a; . ./.env; set +a; .venv/bin/python ../../src/eval/offline_eval.py --llm --show --only stubborn <cases>`
+   (full agent incl. real e-mails vs our simulated supplier; 0 practice games). Read every e-mail.
+2. **Offline trial with gpt-6-astra**: same command with `LLM_PROVIDER=openai LLM_BASE_URL=https://api.openai.com/v1 LLM_MODEL=gpt-6-astra LLM_API_KEY=$OPENAI_API_KEY` (key in `.env.openai`).
+3. **Live** (1 practice game per case) only when 1 and 2 are clean.
+The simulated supplier is **ours** (`src/eval/offline_eval.py`), built from Neel's probe data (real openings, exact
+C_open/C_best). The arena's suppliers are hidden; Tacto's `arena-sim` is only a plumbing check.
+
+### v1.7 (offline stage 1, Qwen): P05 / P10 / P11 trials
+| case | issue found in the e-mails | fix |
+|---|---|---|
+| P05 (RFQ) | cited a rival offer that was **dearer** than the bidder's own price ("We have an offer at EUR 38.50" to a bidder at ~31.5) | cite a rival only if it's cheaper than this bidder's standing price (playbooks/rfq.md) |
+| P10 (capacity) | cited labour +1.7% / rubber +3.2% as bare facts (P07: "your figures confirm our case: that driver rose") | a positive index is cited only against the ask: "…, well below the +7.7% you ask for." |
+| P10 | Qwen: "Given **our need to secure full supply coverage**…" (urgency) | BAD_OPENING catches need/urgency phrases |
+| P11 (quality) | Qwen offered "faster payment terms… propose a payment schedule" in 3/5 e-mails; payment is **not negotiable** in P11 | Qwen gets the NEGOTIABLE list; sentences about off-table levers (payment, contract length) are dropped |
+- After the fixes: no off-table promises, no urgency, comparisons in place; offline scores P05 0.76, P10 0.98, P11 0.98;
+  full eval unchanged 0.936 / 0.944; Qwen 5.8 s mean, 6.8 s max.
+- Simulator fix: offer IDs now look like the arena's (`offer:70210-1`, was `offer:sup:70210-1`).

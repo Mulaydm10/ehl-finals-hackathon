@@ -42,7 +42,8 @@ PLAYBOOK_SECTIONS = ("What the goal means here", "Motive", "Tone")
 # ("our restructuring", "our pricing committee") or leaked our position ("our target cost") - drop such sentences
 BAD_OPENING = re.compile(r"(?i)\bour (current )?(restructuring|survival|pricing committee|committee|target|budget|cost pressure|"
                          r"capacity|liquidity|cash|bank|alternative)|\bwe (must|need to) (prioriti|close|sign)|"
-                         r"cost pressures we|we face|line.down|no alternative|urgent")
+                         r"cost pressures we|we face|line.down|no alternative|urgent|our need to|we (urgently )?need|secure (our|full) supply|"
+                         r"we depend|we cannot (afford|wait)")
 
 SYSTEM = """You are a senior BUYER at Hollerau Pumpenwerke, a German pump maker, writing to one of
 your SUPPLIERS. Write ONLY the opening paragraph of the e-mail: 2-3 sentences that respond to the
@@ -146,7 +147,10 @@ class NoIdeaAgent:
                 k = c["series"]
                 if k not in best or c["figure"] < best[k]["figure"]:
                     best[k] = c
-        out += sorted(best.values(), key=lambda c: (c["figure"] - ask_pct) * (c.get("weight") or 0))
+        for c in sorted(best.values(), key=lambda c: (c["figure"] - ask_pct) * (c.get("weight") or 0)):
+            if c["figure"] > 0:  # a rise alone "confirms their case" (P07 live): set it against the ask
+                c = {**c, "sentence": c["sentence"].rstrip(".") + f", well below the {ask_pct:+.1f}% you ask for."}
+            out.append(c)
         out += [c for c in mine if c["kind"] == "should_cost" and c["part"] in parts
                 and c.get("price_vs_should_cost_pct", -1) > 3]
         # flat price history is the argument when there's no increase to fight - but not for kits:
@@ -431,6 +435,11 @@ class NoIdeaAgent:
             if sh and t.get("unit_price") and must_haves_ok(case, t, s["std"]):
                 if best is None or t["unit_price"] < best[1]:
                     best = (sh, t["unit_price"])
+        # only a rival BETTER than this bidder's own standing price (playbooks/rfq.md: "don't show the
+        # leader its rivals' worse prices"; P05 offline trial cited EUR 38.50 to a bidder at ~31.5)
+        own = standing(self.threads_ref[sid])[1].get("unit_price") if sid in self.threads_ref else None
+        if best and own and best[1] >= own:
+            return None
         if best and (sid, best[0]) not in self.cited:
             self.cited.add((sid, best[0]))
             return best
@@ -448,14 +457,19 @@ class NoIdeaAgent:
             playbook = _sections(self.playbooks.get(case["type"], ""), PLAYBOOK_SECTIONS)[:2500]
             user = (f"SUPPLIER: {name}\nCASE: {case['title']} ({case['type']}, goal {case['buyer']['category_goal']})\n"
                     f"ROUND: {k + 1}{' (its final offer - make one last small request, then we close)' if final else ''}\n"
+                    f"NEGOTIABLE TERMS (mention ONLY these levers; never offer anything else, e.g. payment if it "
+                    f"is not listed): {', '.join(case['negotiable'])}\n"
                     f"SUPPLIER SITUATION (about THEM, not us) and how we respond: {levers or 'n/a'}\n"
                     f"PLAYBOOK (our negotiation guidance):\n{playbook}\n"
                     f"THEIR LAST E-MAIL:\n{latest(events).get('body', '')[:900]}\n")
             try:
                 text = " ".join(self.complete(SYSTEM, user).split())
                 # the model must not carry figures (those come from code and are checked)
+                off_table = [] if "payment_days" in case["negotiable"] else [r"payment", r"cash flow", r"liquidity", r"disburse"]
+                off_table += [] if "contract_months" in case["negotiable"] else [r"longer contract", r"contract term"]
                 text = " ".join(x for x in re.split(r"(?<=[.!?])\s+", text)
-                                if not any(ch.isdigit() for ch in x) and not BAD_OPENING.search(x))
+                                if not any(ch.isdigit() for ch in x) and not BAD_OPENING.search(x)
+                                and not any(re.search(o, x, re.I) for o in off_table))
                 if 30 < len(text) < 700:
                     opening = text
                 else:
