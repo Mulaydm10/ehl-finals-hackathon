@@ -1,3 +1,6 @@
+STATUS: SUPERSEDED by analysis/cases/P04_deep.md (2026-10-11 ~02:30): 0.8737 is now PROVEN to be the ceiling. Floor =
+the arena's 1.0 line; cash rate 7.28-7.69% from its own quotes. The shot in section 4 could never clear it. Live 1992e28a was a
+path effect (term hop), not a new floor.
 STATUS: DONE (P04 deep lever analysis) - 2026-10-11 ~01:30, cloud session, offline only (0 arena sessions, no LLM calls).
 Verdict: **0.874 is a hard ceiling under the arena rules: nobody can beat it unless the supplier's floor falls.** It never fell in 13 games. Agent: `analysis/agent_variants/noidea_p04.py` (`P04_SHOT`, default OFF = main).
 

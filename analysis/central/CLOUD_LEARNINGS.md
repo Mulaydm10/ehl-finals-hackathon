@@ -1,4 +1,4 @@
-STATUS: index of every cloud-session learning (tasks 1-19), 2026-10-10 ~21:00. Offline only: 0 arena sessions, no paid LLM calls.
+STATUS: index of every cloud-session learning (tasks 1-21 + P03/P04 deep studies), updated 2026-10-11 ~02:30. Offline only: 0 arena sessions, no paid LLM calls.
 Branch `claude/wizardly-albattani-t7jmh3` (mirrored to `cloud/p02-p08-engine`). Agent copy: `analysis/agent_variants/noidea_neel_cloud.py`
 + `central_cloud.py` (= main `noidea_neel.py` + everything below). Each line points to the file with the evidence.
 
@@ -44,3 +44,14 @@ on real supplier messages), `sim_donautal.py` (P08 replay supplier, `--validate`
 Task 17 (P03 own-quote-by-ID plan) was cancelled by the teammate session. Its commit 8114929 is reverted on this branch (a9a2dc4) and
 never reached main. The idea itself stands if P03 is played again: its own quote:7300003 (412.74, 5 Sep) is the one data kind never
 cited in 15 P03 games.
+
+## F. Since task 19 (P11, P03, P04 deep studies)
+| # | learning | evidence |
+|---:|---|---|
+| 17 | **Decode a record from the board's EUR saved**: C_deal = C_open - saved; scan price x term for an exact C match (P03 "+=" = 431.22 @ 90 d; P04 makeAnother.md = 4.89 @ 45 d; P11 TakeTheMoneyAndRun = 44.92) | `cases/P03_lever.md`, `P04_deep.md`, `P11_beat807.md` |
+| 18 | **The arena's relationship charge reveals the supplier's full cost and cash rate exactly** (P03: 395.30, 6.10%, 7 deals to the cent) | `cases/P03_lever.md` |
+| 19 | **Our rising ORDER PRICE PATH is the biggest cut a committee supplier gives** (P03: 431.67 -> 430.41 in one round, live 0.9633 beats "+=" 0.944); its own quote by ID was read as a rival quote ("irrelevant") | `cases/P03_lever.md` §6 |
+| 20 | **C_best = the deal at the supplier's floor**: no deal in any case ever crossed it (P01 got within EUR 0.01). So F = value of the C_best price on the term worth most to it | `cases/P04_deep.md` §3 |
+| 21 | **Cent-grid ceiling proof** (P04): cash rate from its own two-sheet quotes (≤ 7.69%) + C_best floor -> no whole-cent deal above 0.8737; the record can only be tied | `tools/p04_floor_fit.py` |
+| 22 | **Never hop payment terms after a floor-stop supplier's first counter** (P04 1992e28a: one hop = one cent = -0.17); after a refused probe take its standing sheet | `cases/P04_deep.md` §5 |
+| 23 | P11 high draw: holding the labour index back to its first hold did not repeat 77f6's cut (0 of 2 live: 23cf3ecd, b450b035; 1 of 3 overall) | `cases/P11_lever.md` |
