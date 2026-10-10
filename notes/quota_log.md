@@ -54,3 +54,10 @@
 | 2026-10-10 16:30 | Dhruv | P10 | noidea v2.7 / gpt-6-astra (full pass, 2x5 parallel) | 0.64 | 396a494d88001ce8 |
 | 2026-10-10 16:30 | Dhruv | P11 | noidea v2.7 / gpt-6-astra (full pass, 2x5 parallel) | 0.67 | 29cbb6d69fe5e642 |
 | 2026-10-10 16:30 | Dhruv | P18 | noidea v2.7 / gpt-6-astra (full pass, 2x5 parallel) | 0.54 | c4599331a4ed849b |
+| 2026-10-10 16:57 | Dhruv | P05 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.59 | 7a89bc8fb36043f1 |
+| 2026-10-10 16:57 | Dhruv | P08 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.41 | 9bfa86104bcbdd30 |
+| 2026-10-10 16:57 | Dhruv | P02 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.32 | 3326d83651ba5cfc |
+| 2026-10-10 16:57 | Dhruv | P18 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.61 | 92616dfb9cccf039 |
+| 2026-10-10 16:57 | Dhruv | P10 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.66 | 5acf9fdda2e23ee2 |
+| 2026-10-10 16:57 | Dhruv | P11 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.36 | a6cb7ced9fdbae89 |
+| 2026-10-10 16:57 | Dhruv | P01 | noidea v2.9 / gpt-6-astra (weak re-run, 4+3 parallel) | 0.91 | 8bdb783a31363dfd |
