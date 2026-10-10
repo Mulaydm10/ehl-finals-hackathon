@@ -11,11 +11,11 @@ pace. C_best ≈ €5.00. Untested levers, one live game each, offline-check fir
 2. **Bring in its boss / committee** (approval_ladder: changes > 2% need the pricing committee):
    explicitly ask for a bundle price above the KAM's authority, with the strategic reason.
 3. **Hold longer** before its final: smaller concessions (we reach €5.08 by round 4).
-4. **Astra vs Qwen** effect on the same case (game 17 running).
+4. ~~Astra vs Qwen~~: tested, no difference on P07 (both 0.70).
 
 ## B. Model decision for the final (D)
 - Offline benchmark (9 openings): **gpt-6-astra** 5.2 s mean / 0 role errors / tone fits the goal, vs Qwen
-  6.5 s / 0 errors after the fix but generic. Live P07 with Astra: game 17, result pending.
+  6.5 s / 0 errors after the fix but generic. Live P07 with Astra (game 17, c819aac1445eb5d0): **0.70, identical to Qwen** (same supplier moves). Prose quality didn't move this supplier.
 - Next: a **parallel-load test** (10 sessions at once, as in a Live Final wave), offline: latency, rate
   limits, errors. Then decide: Astra for the final, Qwen as fallback (`LLM failed → plain opening` already in code).
 - Security: the OpenAI key is in the chat transcript → **rotate after the hackathon**. Lives only in

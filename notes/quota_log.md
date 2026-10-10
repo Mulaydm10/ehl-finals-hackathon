@@ -18,3 +18,4 @@
 | 2026-10-10 14:08 | Dhruv | P07 | noidea v1.2 (playbooks, calibrated anchor) / qwen local | **0.69** | 33e48d99ea640a6a |
 | 2026-10-10 14:38 | Dhruv | P07 | noidea v1.3 (kit calc; final extra ask) / qwen local | **0.12 no deal** (walked after final push; final_offer was 5.40) | c5d845883158676c |
 | 2026-10-10 14:42 | Dhruv | P07 | noidea v1.4 (accept final_offer) / qwen local | **0.70** | 0d480561d4703cde |
+| 2026-10-10 14:46 | Dhruv | P07 | noidea v1.4 / gpt-6-astra (OpenAI) | **0.70** (same as Qwen) | c819aac1445eb5d0 |

@@ -87,3 +87,7 @@ rank versions, not to predict arena scores. It ignores arguments, tone and the r
   our anchor, arguments or pace: **the price path is no longer the bottleneck**. Reaching C_best (~€5.00) needs a
   lever we haven't pulled: e.g. 36 months instead of 24 (same C for us on a 2-year horizon, but security for it),
   or asking for its boss (approval ladder: a bigger move needs the committee). To explore, not proven.
+
+- **P07 with gpt-6-astra (c819aac1445eb5d0): 0.70, identical to Qwen** (same moves, same final). Offline Astra writes
+  better and faster (5.2 s, goal-fitting tone), but on this case the words didn't change the outcome. Points again
+  at the levers (36 m, committee) rather than the prose.
