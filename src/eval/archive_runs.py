@@ -25,8 +25,8 @@ games = []
 for s in c.get("/v1/sessions").json():
     sid = s["session_id"]
     f = OUT / f"{sid}.json"
-    if f.exists() and json.loads(f.read_text()).get("session", {}).get("status") == "ended":
-        games.append(json.loads(f.read_text()))
+    if f.exists() and json.loads(f.read_text(encoding="utf-8")).get("session", {}).get("status") == "ended":
+        games.append(json.loads(f.read_text(encoding="utf-8")))
         continue
     sess = c.get(f"/v1/sessions/{sid}").json()
     threads = {sup: c.get(f"/v1/sessions/{sid}/threads/{sup}").json() for sup in (sess.get("threads") or {})}

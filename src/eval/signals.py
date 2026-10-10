@@ -92,7 +92,7 @@ def main():
             for x in sentences((t.get("move") or {}).get("body")):
                 items.append((s["case_id"], s["session_id"], t.get("round"), "email", x))
     for f in (ROOT / "analysis/cases/openings").glob("*.json"):
-        for sid, ms in json.loads(f.read_text())["threads"].items():
+        for sid, ms in json.loads(f.read_text(encoding="utf-8"))["threads"].items():
             for m in ms:
                 for x in sentences(m.get("body")):
                     items.append((f"case:{f.stem}", "probe", 0, "opening", x))
