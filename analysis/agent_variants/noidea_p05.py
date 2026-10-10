@@ -15,12 +15,16 @@ Four changes, each from the 11 archived P05 games (analysis/tools/p05_bidders.py
 4. A bidder quoting a lead time above our must-have whose own frame contract sets one inside it (70240: quoted 52 d,
    ctr:4600070240 #5.1 = 42 d, and it charges EUR 2 for "42 days is too tight"): we say so, in prose, without the
    clause ID (a lone ctr ID is only checked for notice periods).
+5. (v2) Hold the RFQ ask low: after round 1 it creeps at most EUR 0.15 a round and stays 6% under the market low. Live
+   737bacd270dea248 (v1, 0.705): 70210 went 36.00 -> 30.50 on data, then agreed to our 29.05 once we stepped up from 28.61.
+6. (v2) The first agreement is shown to the other live bidders above it for one round before it is accepted.
 """
 import csv
 import logging
 from pathlib import Path
 
 from arena_kit.agents.noidea import NoIdeaAgent as _Main
+from arena_kit.cost import complete_offer, supplier_value
 from arena_kit.play import latest, live_threads, standing
 
 log = logging.getLogger("arena")
@@ -44,7 +48,64 @@ def _contract_days(facts, sid, kind):
     return None
 
 
+RFQ_CREEP = 0.15  # 5. after round 1 our ask creeps at most EUR 0.15 (value) a round ...
+RFQ_BELOW_LOW = 0.06  # ... and stays at least 6% under the lowest standing offer of any live bidder
+
+
 class NoIdeaAgent(_Main):
+    def value_target(self, case, sid, events):
+        """5. RFQ asks: data moves these bidders, our steps only hand them a deal. Live 737bacd270dea248: 70210 went
+        36.00 -> 30.50 on the alloy fall + a rival, then AGREED to our 29.05 when we stepped up from 28.61 (0.705) -
+        its floor was below our ask. Hold low, creep slowly, stay under the market low."""
+        if case["type"] != "rfq":
+            return super().value_target(case, sid, events)
+        s = self.sup[sid]
+        hist = s.get("ours")
+        if not hist:
+            return super().value_target(case, sid, events)  # round 1: the market anchor
+        lows = []  # every live bidder's standing offer, valued with THIS bidder's cash rate (our asks are values)
+        for other in live_threads(self.threads_ref):
+            if other in self.sup:
+                t = standing(self.threads_ref[other])[1] or {}
+                if t.get("unit_price"):
+                    lows.append(supplier_value(case, complete_offer(case, t), s["est"]))
+        cap = min(lows) * (1 - RFQ_BELOW_LOW) if lows else hist[-1] + RFQ_CREEP
+        nxt = max(hist[-1], min(hist[-1] + RFQ_CREEP, cap))
+        hist.append(nxt)
+        log.info("%s RFQ ask: %.2f (creep %.2f, cap %.2f = %.0f%% under the market low)", sid, nxt, RFQ_CREEP, cap,
+                 RFQ_BELOW_LOW * 100)
+        return nxt
+
+    def decide(self, case, threads):
+        """6. The first agreement is not accepted at once while another live bidder sits above it and has not seen it:
+        that bidder gets it as a rival offer for one round (back office: "The buyer shows a much lower rival quote. I give
+        half the step now and check the rest"); then the cheapest closing bidder is taken (P05_engine.md plan)."""
+        if case["type"] == "rfq" and case["case_id"] == getattr(self, "case_id", None):
+            self.threads_ref = threads
+            live = [x for x in live_threads(threads) if x in self.sup]
+            closing = [x for x in live if latest(threads[x]).get("status") in ("agreed", "final_offer")]
+            if closing and len(live) > 1:
+                price = {x: (standing(threads[x])[1] or {}).get("unit_price") for x in live}
+                cb = min(closing, key=lambda x: price[x] or 1e9)
+                # once per (other bidder, closing bidder) - never per sheet id: an unanswered bidder re-sends its offer
+                # with a new id ("haven't heard back"), and the floor-stop sim looped 11 rounds on that (timeout)
+                shown = self.__dict__.setdefault("_shown", set())
+                pending = [x for x in live if x not in closing and price.get(x) and price[cb]
+                           and price[x] > price[cb] and (x, cb) not in shown]
+                if pending:
+                    log.info("RFQ: %s closed at %.2f - showing it to %s before accepting", cb, price[cb], pending)
+                    saved = self.focus
+                    self.focus = set(pending)
+                    try:
+                        d = super().decide(case, threads)
+                    finally:
+                        self.focus = saved
+                    shown.add((d.get("supplier_id"), cb))
+                    if d.get("supplier_id") not in pending:  # the base turned elsewhere: don't block the close
+                        shown.update((x, cb) for x in pending)
+                    return d
+        return super().decide(case, threads)
+
     def rank_args(self, case, sid, ask_pct):
         if case["type"] == "rfq":  # 1. cost drivers for the RFQ part
             d = self.dossiers.setdefault(sid, {})
