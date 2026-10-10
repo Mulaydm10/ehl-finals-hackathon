@@ -122,3 +122,4 @@
 | 2026-10-10 18:48 | Dhruv | P11 | noidea v2.16h / gpt-6-astra | 0.71 (near-close ask held) | e662af62eb9341a4 |
 | 2026-10-10 18:49 | Neel | P08 | noidea_neel / gpt-6-astra | **0.72** | c387f78034601d57 |
 | 2026-10-10 18:53 | Dhruv | P11 | noidea v2.16i / gpt-6-astra | 0.54 (MESO + premium-extrapolation bug -> accepted r2) | f5157e0d3ca6b113 |
+| 2026-10-10 18:56 | Dhruv | P11 | noidea v2.16j / gpt-6-astra | 0.71 (held 45.50 four rounds) | 3d85f13947660729 |

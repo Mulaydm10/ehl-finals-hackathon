@@ -695,3 +695,7 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
   no-sheets guard accepted. Fix: `learn()` records each premium's observed range, `premium()` clamps into it.
   Replay f5157e0d: now 43.07 / 43.31 instead of accepting.
 - MESOs -> experiment `meso` (off): n=1 for (0d5b), n=1 against (f5157e0d).
+
+## v2.16j live P11 (18:56): 0.71 (3d85f13947660729)
+- 46.50 -> 46.00 -> 45.50, then held 45.50 for FOUR rounds (near-close ask included) -> accepted. With a 46.50 round-1 answer (7 of 10 games) its stop is 45.50.
+- **P11 summary, 10 games on v2.16.x: 0.79 / 0.71 / 0.71 / 0.77 / 0.71 / 0.71 / 0.71 / 0.54 (bug, fixed) / 0.71** - median 0.71, best 0.79 (was 0.67 best, 0.55 mean on v2.7-2.10). The ceiling is set by its round-1 answer (46.00 in 2 of 10 -> 0.77-0.79). Stop spending P11 games; the general fixes stay.
