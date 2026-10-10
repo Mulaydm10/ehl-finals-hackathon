@@ -182,3 +182,8 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
 4. **Final at our 3rd message: -0.03 to -0.06** (once -0.10, with quality notifications in round 3).
 5. Expected outcome of the current agent: low mode 5.08-5.13 (**0.73-0.78, beats the house about half the time**); high
    mode 5.20-5.25 (0.59-0.64). The rest is noise of a few cents. No message we can write changes the draw.
+6. **Offline run after the cloud regression fixes (28a2791): `analysis/offline_runs/P08_noidea_neel_7.json`, sim 0.99.**
+   The floor-stop sim isn't P08's engine: no mandatory 24-month clause, no bimodal first counter, and its floor sits at
+   C_best. Treat 0.99 as "no crash, data placed right", not as a forecast. Its three e-mails carry the same sheets and
+   refs as live 136352b4a3a9f752 (r1 forecast + drawing -2.3% + own quote in words; r2 labour -0.3%; r3 QNs). So the
+   fixes leave P08 untouched, and the live forecast stays 0.73-0.78 on the low draw and 0.59-0.64 on the high one.
