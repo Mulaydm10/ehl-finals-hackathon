@@ -272,3 +272,21 @@
 | 2026-10-11 00:41 | Dhruv | P11 | v2.34d LOAD / gpt-6-astra | 0.7935 | see notes/analysis_v234 LOAD log |
 | 2026-10-11 00:41 | Dhruv | P18 | v2.34d LOAD / gpt-6-astra | 0.6658 | see notes/analysis_v234 LOAD log |
 | 2026-10-11 00:54 | Neel | P03 | noidea_p03 v2 (cloud P03_deep: asks 0.60 under line, rival quote 7100051 in msg 5) / gpt-6-astra | **0.96** | 45943af6907388d6 |
+| 2026-10-11 00:49 | Dhruv | P01 | v2.34e LOAD L4a / gpt-6-astra | 0.9987 | 096983aa556e5d68 |
+| 2026-10-11 00:49 | Dhruv | P02 | v2.34e LOAD L4a (held 90 d, agreed our ask) NEW BEST / gpt-6-astra | 0.8790 | 9b8414c10d44f574 |
+| 2026-10-11 00:49 | Dhruv | P03 | v2.34e LOAD L4a / gpt-6-astra | 0.9872 | 20d7859253cae541 |
+| 2026-10-11 00:49 | Dhruv | P04 | v2.34e LOAD L4a / gpt-6-astra | 0.7661 | 1e3b5d95e56a30d3 |
+| 2026-10-11 00:49 | Dhruv | P07 | v2.34e LOAD L4a / gpt-6-astra | 0.8119 | a0c0077c9fbd75d1 |
+| 2026-10-11 00:49 | Dhruv | P08 | v2.34e LOAD L4a / gpt-6-astra | 0.9156 | 708a9d7e218b68b3 |
+| 2026-10-11 00:49 | Dhruv | P10 | v2.34e LOAD L4a / gpt-6-astra | 0.7019 | b4c0d2b291783cad |
+| 2026-10-11 00:49 | Dhruv | P11 | v2.34e LOAD L4a / gpt-6-astra | 0.7935 | af941ab2c6381ee4 |
+| 2026-10-11 00:49 | Dhruv | P18 | v2.34e LOAD L4a (empty repeat -> WALKED) / gpt-6-astra | 0.0000 | fe806698b5d96eb1 |
+| 2026-10-11 00:55 | Dhruv | P01 | v2.34f LOAD L4b / gpt-6-astra | 0.9987 | - |
+| 2026-10-11 00:55 | Dhruv | P02 | v2.34f LOAD L4b (its floor draw: final 369.42) / gpt-6-astra | 0.7519 | 02925a6c2448f3c7 |
+| 2026-10-11 00:55 | Dhruv | P03 | v2.34f LOAD L4b / gpt-6-astra | 0.9536 | - |
+| 2026-10-11 00:55 | Dhruv | P04 | v2.34f LOAD L4b / gpt-6-astra | 0.8153 | - |
+| 2026-10-11 00:55 | Dhruv | P07 | v2.34f LOAD L4b / gpt-6-astra | 0.8119 | - |
+| 2026-10-11 00:55 | Dhruv | P08 | v2.34f LOAD L4b / gpt-6-astra | 0.9156 | - |
+| 2026-10-11 00:55 | Dhruv | P10 | v2.34f LOAD L4b / gpt-6-astra | 0.7019 | - |
+| 2026-10-11 00:55 | Dhruv | P11 | v2.34f LOAD L4b / gpt-6-astra | 0.7935 | - |
+| 2026-10-11 00:55 | Dhruv | P18 | v2.34f LOAD L4b (no walk) / gpt-6-astra | 0.6883 | - |

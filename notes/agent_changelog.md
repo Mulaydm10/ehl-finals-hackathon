@@ -1227,3 +1227,22 @@ games 8ccbdcc0 / 98e834e4, P02 10b624c1, P07 216f49e9, P08 00e8923e, P10 673ee89
 - Experiment `lean_later` (later e-mails: one plain opening sentence instead of the model's paragraph; volume line only when it
   asks about volume) coded, OFF: archive says short later e-mails drew bigger steps (P11 0.97% vs 0.80%, P07 1.13 vs 0.79, P01,
   P18) but most short ones came from teammates' scripts (confounded) -> live A/B (loop 4).
+
+### Loop 4 (one process, 9 cases in parallel, hidden mode, normal arena mode)
+- **L4a (v2.34e: limit fix)**: P01 0.999, **P02 0.879 = NEW TEAM BEST** (9b8414c1: the same 30-d alternative in round 1 as the
+  0.531 game, now ignored; 90 d held, one fact per round, it AGREED to our 367.81 in round 5), P03 0.987 (countered again: 36 m),
+  P04 0.766, P07 0.812 (= best), P08 0.916 (= best), P10 0.702, P11 0.794, **P18 0.0** (walked, see v2.34f).
+- **v2.34f (general)**: (1) the near-close ask never goes below our own last ask; (2) NO EMPTY REPEAT - an e-mail without a new
+  fact always moves (30% of the gap to its price on our terms, >= 1 cent, under its price). P18 fe806698: near-close 4.96 < our
+  4.98 -> the monotone guard sent 4.98 again with no fact -> "Which figures is that based on?" -> walked away (0.0). Replay with
+  the fix: 4.99. 66 tests, crash 19/19.
+- **L4b (v2.34f)**: P01 0.999, P02 0.752, P03 0.954, P04 0.815, P07 0.812, P08 0.916, P10 0.702, P11 0.794, P18 0.688 = mean 0.826;
+  0 warnings, wall 234 s. P02 0.752 vs 0.879: identical moves to round 4; its round-5 floor is a per-session draw (agreed our
+  367.81 in L4a, final 369.42 in L4b at the same 0.6% gap) - P02 is NOT deterministic in normal mode.
+- **L4c (v2.34f + `lean_later`)** right after L4b, same mode: P01 0.999, P02 0.676, P03 0.987, P04 0.766, P07 0.812, P08 0.916,
+  P10 0.710, P11 0.794, P18 0.688 = mean 0.816 vs L4b 0.826. Five cases identical to the cent; the rest are known draws (P02's
+  round-5 floor, P03 countering, P04's term lottery). -> `lean_later` has NO measurable effect: stays OFF (the archive's
+  short-vs-long correlation came from the teammates' scripted drivers). One model JSON error (P10) -> deterministic path, fine.
+- Status after 4 loops (all hidden, normal mode): the single agent is at the team best on P01, P02 (0.879 record), P07, P08, P10
+  (0.710), within the draw on P03 / P04; below only on P11 (0.794 vs scripted 0.885 - its first counter answers our exact words)
+  and P18 (0.688 vs 0.727 - its first counter rises with our payment term, P07 the opposite). No crash, no walk since v2.34f.

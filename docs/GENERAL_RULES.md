@@ -275,3 +275,5 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
      structure; a term counts as refused only when its PRIMARY sheet moved away from ours twice (rule 8), then we adopt it for good.
 120. **An instant agreement to our first ask means the anchor left room** (P03: agreed at once 3 of 3 = 0.954; the one game where
      it countered went to 0.989 via its own 36-month alternative). Look for the term the supplier pays for in its counters.
+121. **Never send an e-mail without movement or a new fact** (P18 walked on one; P02 went final after one). If no fact is left,
+     move a real step toward its price; never repeat our last ask word for word.
