@@ -76,3 +76,5 @@
 | 2026-10-10 17:12 | Dhruv | P08 | noidea v2.11 / gpt-6-astra (parallel x2) | 0.52 | ab473a1c7a00763a |
 | 2026-10-10 17:18 | Neel | P02 | noidea_neel / gpt-6-astra | **0.22** | 6e7579c3ce8fb63c |
 | 2026-10-10 17:21 | Neel | P05 | noidea_neel / gpt-6-astra | **0.53** | 993222d5d55e7d40 |
+| 2026-10-10 17:28 | Parth | P05 | noidea e5926b8 E1 / gpt-6-astra | 0.00 (crashed: 422 not a standing offer in this session; ended timeout, all bidders walked; timeouts 6) | d88810ba7949735b |
+| 2026-10-10 17:28 | Parth | P05 | noidea e5926b8 E1 / gpt-6-astra | 0.00 (crashed: 422 not a standing offer in this session; ended no_deal, all bidders walked; timeouts 6) | d9af85e000ab3d4d |
