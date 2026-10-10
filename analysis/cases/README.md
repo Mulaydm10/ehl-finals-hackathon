@@ -18,9 +18,20 @@ Score = (C_open − C) / (C_open − C_best). Tools: `analysis/tools/case_dump.p
 | [P11](P11.md) | quality | quality_first | 70140 | 817,578 | 722,500 | €951 | ppm ≤ 1,500 (must), then price | €43.50 @ 800 ppm, €0 chargeback |
 | [P18](P18.md) | raw_material | leverage | 70740 | 295,173 | 222,651 | €725 | price; 24 m | €4.75, 24 m, 90 d, no clause |
 
+**Non-hosted cases (no probe: lever € values exact, C_open / C_best estimated, see each file):**
+
+| case | type | goal | supplier | C_alt | 0.01 score ≈ | biggest lever | target package |
+|---|---|---|---|---:|---:|---|---|
+| [P06](P06.md) | rfq | stabilise | 70120 / 70150 | none (no deal = 0) | ~€1.3k | price; 14 d pay for cash-short Tarsevi near its floor; tooling 0 | ≤ €200, 0 tooling, lead ≤ 56 |
+| [P09](P09.md) | capacity | secure_supply | 70220 | 310,669 | ~€640 | volume 15,600 (+€20k/step), lead 28 (€1,800/day); 1% price = €1.9k | €15.80–16.02, 15,600, lead 28 |
+| [P12](P12.md) | quality | quality_first | 70310 | 906,877 | ~€830 | price (1% = €9k); whole quality term ≤ €5.5k | €97.00, ppm 800, chargeback 150, lead 23 |
+
 Cross-case lessons:
 - **Contract length vs horizon** decides many cases: with horizon 2 y, a 12-month deal leaves year 2 at the fallback price
   (+ fallback risk). It's a big win when fallback > deal price (P03, P07, P10), and a **loss** when fallback < price (P04, P08 at the opening).
 - **Index clauses cost us whenever `index_paths` is positive** (P02 CU +5%, P08/P18 AS +6%). Only accept for a price cut ≥ the clause's € cost.
 - **Effective date** (P01) and **payment days** are worth more than they look; compute, don't guess.
 - C_best ⇒ the supplier's cash floor; in leverage cases it's far below today's price (P05 −27%, P18 −20%, P08 −8%).
+- **Chargeback ≥ cost_per_defect zeroes the quality term** (P12: €300 ≥ €275), so ppm stops mattering in C. Without a ppm must-have, quality data is leverage for price.
+- **Relationship charge flips the cash lever near a supplier's floor** (P06, P09): for a cash-short supplier, paying in 14 d can beat a lower price at 60 d.
+- **Price at should-cost + sustainable margin = no price room** (P09: €16.02 vs €15.40 at a 4% margin): win on volume and lead instead.
