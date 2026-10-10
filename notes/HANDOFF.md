@@ -42,7 +42,7 @@ Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden supp
 ## Best live score per hosted case (team, all versions)
 | P01 | P02 | P03 | P04 | P05 | P07 | P08 | P10 | P11 | P18 |
 |---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| **1.00** (v2.34 hidden 0.9997) | **0.85** (Neel; hidden 0.809) | **0.963** (Neel; hidden 0.954) | **0.874** (ceiling; hidden 0.815) | **0.965** (Parth scripted; agent 0.87) | **0.825** (v2.34b HIDDEN) | **0.916** (Parth; hidden 0.781) | **0.741** (v2.34b HIDDEN) | **0.885** (Parth scripted; agent 0.80, hidden 0.79) | **0.727** (v2.28; hidden 0.688) |
+| **1.00** (v2.34 hidden 0.9997) | **0.85** (Neel; hidden 0.809) | **0.963** (Neel; hidden 0.954) | **0.874** (ceiling; hidden 0.815) | **0.965** (Parth scripted; agent 0.87) | **0.812** (Parth; our 0.825 was ENGINE-TEMPLATE mode, normal 0.77-0.79) | **0.916** (Parth; hidden 0.781) | **0.710** normal (Neel; 0.741 ENGINE-TEMPLATE mode 673ee890; ours normal 0.702) | **0.885** (Parth scripted; agent 0.80, hidden 0.79) | **0.727** (v2.28; hidden 0.688) |
 
 **Single-agent hidden pass (memory off, v2.34b):** see changelog tail. Validation mode: `NOIDEA_EXPERIMENTS=hidden`.
 
@@ -91,3 +91,17 @@ Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden supp
 - **Never push after final_offer**; accept its **primary** sheet ('-a' ids are refused by the arena).
 - Never cite an index that rose; don't fight a justified increase with a cherry-picked window; take its clause if it insists;
   adopt a term it refuses repeatedly; never comment on its internal departments; repeated objection → take its best offer.
+
+## NEXT STEPS (2026-10-11 ~00:40, after loop 3 of the hidden single-agent pass)
+1. 08:00 CEST: `bash tools/sunday_release/rebuild.sh` (backup, arena data, merge release, rebuild A/B/C, tests + crash test + round-1 diff; rollback line printed). Commit + push.
+2. 09:00 pre-flight: `NOIDEA_EXPERIMENTS= arena run --set practice --agent noidea --parallel 10` (load test: 60-s limit, 503 handling).
+3. Open idea (NOT built): payment terms are near-ties in our model (P18/P04/P08/P07 within 0.05-0.12% of C); P18 opened at its
+   standard 30 d scored 0.700 mean (n=3) vs 0.51-0.65 at 45 d. Candidate tie-break: open on the suppliers standard term, keep
+## NEXT STEPS (2026-10-11 ~00:40, after loop 3 of the hidden single-agent pass)
+1. 08:00 CEST: `bash tools/sunday_release/rebuild.sh` (backup, arena data, merge release, rebuild A/B/C, tests + crash test + round-1 diff; rollback line printed). Commit + push.
+2. 09:00 pre-flight: `arena run --set practice --agent noidea --parallel 10` (load test: 60-s limit, 503 handling).
+3. Open idea (NOT built): payment terms are near-ties in our model (P18/P04/P08/P07 within 0.05-0.12% of C); P18 opened at the
+   supplier standard 30 d scored 0.700 mean (n=3) vs 0.51-0.65 at 45 d. Candidate tie-break: open on the standard term, keep the
+   shorter term as a round-2 trade (P18 0c968aae, P10 Neel). Needs an A/B in NORMAL mode before any default change.
+4. Hidden-mode pass L3 (all normal mode): P01 0.999, P02 0.818, P03 0.954, P04 0.815, P07 0.792, P08 0.916, P10 0.702, P11 0.794, P18 0.621 = mean 0.823.
+5. 12:00 freeze: start `arena run --set final --agent noidea --parallel 10` before 12:00.

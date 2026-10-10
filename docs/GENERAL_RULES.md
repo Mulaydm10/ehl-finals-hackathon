@@ -268,3 +268,6 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
      known case structure (19 practice cases, 9 never hosted) before the final.
 117. **The supplier reads our exact words** (identical text -> identical counter; identical moves with different paragraphs ->
      different counters, P07 5.44-5.56). For an unseen supplier this is noise: judge changes on several games, not one.
+118. **Check the arena's MODE before crediting a change** (Neel): in engine-template mode (its model off, 23:51-23:58 on
+     10 Oct) every reply is fixed engine sentences and results differ (P10 31.00 vs 31.50). Two of our "new bests" came from
+     that window. A/B only within one mode; `analysis/tools/supplier_mode_scan.py` tells them apart.

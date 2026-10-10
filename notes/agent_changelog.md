@@ -1200,3 +1200,14 @@ Rejected: a hair-under ask with the last fact (expected +0.004; could give away 
   Tested on a synthetic release against a copy of tacto/data (merge + build_abc: 46 suppliers, 915 claims, 0 bad).
   The release is public at 2026-10-11T06:00Z = 08:00 CEST. `backups/` is git-ignored.
 - Experiment `trade_term` (contract term held for round 2) coded, OFF: round 2 kept the shorter term in the dump - not tuned.
+
+### CORRECTION (Neel's cloud scan `analysis/tools/supplier_mode_scan.py`, analysis/cases/P10_draw.md)
+Every session created 23:51:08-23:58:06 CEST got replies from the arena's ENGINE-TEMPLATE mode (its model off): our P11 decoy
+games 8ccbdcc0 / 98e834e4, P02 10b624c1, P07 216f49e9, P08 00e8923e, P10 673ee890, P18 3cb62cb9. So:
+- "P07 0.825 / P10 0.741 new bests without memory" are TEMPLATE-MODE results, not agent gains (normal-mode bests stay P07 0.812,
+  P10 0.710; ours in normal mode: P07 0.773 / 0.792, P10 0.702).
+- The decoy A/B (0.752 x2) is INCONCLUSIVE (template mode); decoy in normal mode: 3 games, 0.794 each (46.50 / 46.00 draws).
+- The P02 one-fact-per-later-e-mail fix still holds in NORMAL mode: 0.56 (407b3d1a) -> 0.828 / 0.818 (b09861f7, 934b73e4).
+- Template mode follows pure engine rules ("We value our cooperation and have made a step towards you"; the approval ladder:
+  "Any further step needs approval from our management" -> after we RAISE our ask, "Our management has approved a further step").
+  It can return under load in the final; the agent has now been played in both modes. Not triggerable, never to be provoked.
