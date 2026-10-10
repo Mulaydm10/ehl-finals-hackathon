@@ -891,3 +891,10 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
   ask to 45.10 (conceding ~1.50 early) and accepted 45.00 (losing the 44.95 that scored 0.80) -> offline P11 0.97 -> 0.777.
   Now endgame only (it holds, >= 3rd e-mail, no strong fact left), no accept while a cheaper ask under its price is untried,
   never below our plan. Re-trace: eac2 -> floor trade kept; a5ab -> 45.10 probe kept. Tests 56.
+## v2.23 live P11, two experiments in parallel (21:13)
+- `good_bad_cop` (aced3c6022d32468): high draw 46.50 -> 45.50 hold -> probe 45.10 + the Supplier Quality / second-source line
+  -> **AGREED 45.10 = 0.777** (= best high-draw result, 3rd time; 6 other high draws 0.71). n=1, not separable from the probe.
+- `planner` (dbf506a3e7827dae): LOW draw 46.00 -> 45.00 hold -> floor trade [44.90, 45.00 + EUR 300] refused -> hair 44.95
+  refused -> final 45.00 = 0.7935. The planner said "accept" twice; the guard (no accept while a cheaper ask is untried) held,
+  so it changed nothing - correct here, it would have cost nothing either.
+- Low-draw floor varies per session: 44.95 agreed (eac2) vs refused (dbf5); 44.90 refused 2 of 2.

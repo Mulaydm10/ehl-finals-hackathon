@@ -63,7 +63,7 @@
   }
  },
  "sup:70140": {
-  "games": 36,
+  "games": 38,
   "scores": [
    0.672,
    0.609,
@@ -92,8 +92,10 @@
    0.71,
    0.358,
    0.777,
+   0.777,
    0.71,
    0.71,
+   0.794,
    0.752,
    0.71,
    0.802,
@@ -106,7 +108,7 @@
    "labour cost index and the old pos you cited, and we took them into account. we checked the price history": 1,
    "news": 1,
    "old order prices you mentioned, and they are correct, but our situation is different now. we checked the price history": 1,
-   "price history": 20
+   "price history": 22
   },
   "structures": {
    "chargeback_eur_per_complaint=0.0|ppm_commitment=300": {
@@ -151,6 +153,10 @@
      ],
      [
       44.9,
+      45.0
+     ],
+     [
+      44.95,
       45.0
      ],
      [
@@ -205,10 +211,10 @@
    "energy cost": 1,
    "energy index": 7,
    "index and price history": 1,
-   "index change": 55,
+   "index change": 61,
    "labour cost index": 1,
-   "quality record": 33,
-   "volume change": 30
+   "quality record": 35,
+   "volume change": 32
   }
  },
  "sup:70410": {
