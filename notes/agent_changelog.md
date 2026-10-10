@@ -540,3 +540,18 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
   0.86 at 60 d; the tie-break had picked 60 d). P03 lead back to €430.81 @ 90 d.
 - Tests 32 passed; offline **0.944 / 0.940**; finals replay +0.029; P05 bad-accept replay still "send".
 - Comparison so far (live, Astra): Neel's variant P02 **0.22** (6e7579c3ce8fb63c) vs ours v2.11 0.51; ours v2.11 P05 0.53.
+
+## v2.12 live (P02, P05, gpt-6-astra, 17:21) + comparison with Neel's central variant
+| case | Neel's variant | ours v2.11 | **ours v2.12** | session | note |
+|---|---:|---:|---:|---|---|
+| P02 | 0.22 (6e7579c3ce8fb63c) | 0.51 | **0.00 walked** | 150fb1c103141538 | 373.97 → 372.76 → 372.15 @ 90 d, then walked in round 4 |
+| P05 | 0.53 (993222d5d55e7d40) | 0.53 (798c7367160898ba) | 0.53 | 26c6afc937d25c36 | RFQ logic now right: accepted the cheapest (70250 agreed €30.83); C_best ≈ €26.5 → auction tactics are the gap |
+- **P02 walk pattern (both walks, round 4):** in rounds 2 and 3 it repeated "returning to our standard 30-day payment term"
+  (+ a 30-day '-a' sheet), we kept 90 d, round 4: "We are withdrawing … our general terms dictate this position".
+
+### v2.13 (offline): walk-risk guard
+- When its last two e-mails repeat the same objection / standard-terms counter-proposal (`repeats_objection`) and its best
+  sheet is within 1.5% of our ask (k ≥ 2, beats the alternative and other bidders): accept its best sheet before it walks.
+- Replay of the real P02 games (`src/eval/replay_walks.py`): 150fb1c1 walk → **accept €372.15 @ 90 d = 0.51**; af2439f0 0.51 →
+  0.54 (one round earlier); da8d0e3d 0.48 → 0.51. Tests 32 passed; offline 0.944 / 0.940; finals replay +0.028 (17 finals).
+- General lesson: **a supplier repeating the same objection is running out of patience - take its best offer if close.**

@@ -681,6 +681,13 @@ class NoIdeaAgent:
             return accept if ok else walk
         # accept when the supplier meets our current ask, or when we are within 0.3% late in the game
         near_final = k >= max(1, s.get("patience", PLANNED_ROUNDS) - 1)
+        # walk-risk: it repeats the same objection / counter-proposal in its last two e-mails (P02 x2: "returning to our
+        # standard 30-day payment term" + a 30-day '-a' sheet in rounds 2 and 3, we kept 90 d, it walked in round 4
+        # "our general terms dictate this position"; 372.15 @ 90 d would have scored ~0.50) -> take its best sheet
+        if ok and k >= 2 and c_stand <= best_elsewhere and self.repeats_objection(events) and \
+                c_stand <= sheets[0][0] * 1.015:
+            log.info("%s: it repeats its objection - taking its best sheet before it walks", sid)
+            return accept
         if ok and k > 0 and c_stand <= best_elsewhere and not s.get("closing") and (
                 c_stand <= sheets[0][0] * 1.0005 or ((k >= PLANNED_ROUNDS - 2 or near_final) and c_stand <= sheets[0][0] * 1.003)):
             return accept
@@ -939,6 +946,18 @@ class NoIdeaAgent:
             log.info("%s: prose alternative %s is cheaper - putting it in a term sheet", sid, best[1])
             return best
         return None
+
+    OBJECTION_RX = re.compile(r"(?i)(return(ing)? to our standard|our standard (terms|\d+-day|zahlungsziel)|"
+                              r"restrict(s|ing)? our (pricing )?flexibility|financing costs|cannot (go|move) (any )?further|"
+                              r"unable to (reduce|lower|accommodate)|must maintain|strictly (fixed|frozen)|maximum flexibility)")
+
+    def repeats_objection(self, events):
+        """Its last two e-mails carry the same kind of objection / standard-terms counter-proposal."""
+        sup = [m.get("body") or "" for m in events if m.get("from") != "buyer"][-2:]
+        if len(sup) < 2:
+            return False
+        a, b = ({x.group(0).lower() for x in self.OBJECTION_RX.finditer(t)} for t in sup)
+        return bool(a & b)
 
     def events_for(self, sid):
         return (getattr(self, "threads_ref", {}) or {}).get(sid, [])
