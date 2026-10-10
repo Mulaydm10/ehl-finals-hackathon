@@ -3,11 +3,8 @@
   "session_id": "27e15c33ad66fd08",
   "case_id": "case:P05",
   "status": "ended",
-  "end_reason": "accepted",
-  "deal": 1,
-  "score": 0.9651201601932959,
-  "rounds": 8,
-  "created_at": 1791664776.7188232
+  "set": "practice",
+  "created_at": 1791664853.612743
  },
  "detail": {
   "session_id": "27e15c33ad66fd08",
