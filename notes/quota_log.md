@@ -190,3 +190,4 @@
 | 2026-10-10 21:55 | Dhruv | P01 | noidea v2.26 / gpt-6-astra | **1.00** (0.9987; agreed 129.11 @ 14 d Jan) | f01f637c3e9cb17f |
 | 2026-10-10 21:46 | Parth | P05 | p05_record e8666ae / scripted | 0.820 | 1ebd6e0eb14313c8 |
 | 2026-10-10 22:04 | Dhruv | P18 | noidea v2.27 r1_two_index / gpt-6-astra | **0.71 BEST P18** (agreed 4.94 @ 14 d) | a09d953636747cae |
+| 2026-10-10 22:03 | Neel | P11 | noidea / gpt-6-astra | **0.79** | 38c77b7d0dcd49cd |
