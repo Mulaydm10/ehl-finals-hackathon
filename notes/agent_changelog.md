@@ -1011,3 +1011,13 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 ## v2.28 live P18 (22:10), two games in parallel
 - **Default agent (gate on): 0.727 = new best P18** (0c968aae64401bb1): 5.20 @ 30 -> our 14-d sheet in r2 -> 5.00 @ 14 -> **agreed 4.91 @ 14 d**. Confirms the round-1 gate without any flag.
 - `r1_pay_short` (bf56d9758ff4bd7c): **0.688** - first counter 5.20 on 14 d too (it answered the same nominal), then it moved to 45 d and finalled 5.00. Fast payment buys a step only as a TRADE in round 2, not as the opening term -> stays OFF.
+
+### v2.29 (offline): RFQ layer in the kit (Neel's noidea_p05 0.755 + Parth's round-1 call-off)
+- `arena_kit/agents/noidea_rfq.py` subclasses the main agent; `--agent noidea` (the final's command) now loads it, with a
+  fallback to the plain agent if the layer fails to import. Every override is gated on case type "rfq":
+  RFQ-part cost drivers from cost_drivers.csv (the bidders' dossiers lack the new part - no index ever cited in 11 games),
+  rival offers at ANY lead time (70240's 31.50 @ 52 d was never cited), no walk-guard accept while another bidder is live,
+  its own frame-contract lead time named, asks held low (creep <= 0.15/round, 6% under the market low), the first agreement
+  shown once to the other live bidders before accepting.
+- Parth: call-off schedule in RFQ round 1 (first counter 28.00 vs 30.50).
+- Offline P05 0.76 -> 0.95; all other cases unchanged; tests 64.

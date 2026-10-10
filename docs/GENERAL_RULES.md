@@ -210,3 +210,11 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
     P18 first counter 5.20 vs 5.40 with history only; a supplier that values fast payment cuts a whole step for 14 d (0.707).
 92. **A term the supplier values buys a step as a TRADE, not as an opening**: P18 cut 0.20 when we moved to 14 d in round 2
     (0.727), but answered the same nominal 5.20 when 14 d came in round 1 (0.688). Open on its terms, trade the term later.
+
+## L. RFQ (Neel noidea_p05 0.755, Parth's scripted 0.82, record 0.924)
+93. **Give every bidder data on the RFQ part itself** (cost drivers of the part, not of the bidder's catalogue): "Which figures
+    is that based on?" was answered for the first time - 70210 "you did your homework", first counter 36.00 -> 30.50.
+94. **Cite the cheapest rival offer at any lead time**, not only offers meeting our must-haves ("I give half the step now").
+95. **Hold RFQ asks low and show the first agreement to the others once before accepting** - the auction ratchet
+    (70250 agreed 30.25 -> shown -> 70210 agreed 28.57 @ 14 d). Never a walk-guard accept while another bidder is live.
+96. **Extreme anchors make bidders walk** (Parth run 3: 21.00 -> both walked, 0.381): anchor ~10% under the market low.

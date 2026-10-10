@@ -56,7 +56,10 @@
   "P04 (routine, Neel's games): final in round 3; 90-day payment and a small price step scored 0.86."
  ],
  "rfq": [
-  "Cite only rival offers that are cheaper than the bidder's own price; never show the leader worse prices."
+  "Cite only rival offers that are cheaper than the bidder's own price; never show the leader worse prices.",
+  "Give every bidder verified cost data for the RFQ part itself, and cite the cheapest rival offer whatever its lead time.",
+  "When one bidder agrees, show that price to the other bidders once before accepting - they often beat it.",
+  "Never anchor far below the market: an extreme anchor made both bidders walk; about 10% under the lowest offer works."
  ],
  "quality": [
   "Ask for the 8D report and a binding ppm commitment within the must-have; cash-short suppliers react badly to heavy chargebacks.",

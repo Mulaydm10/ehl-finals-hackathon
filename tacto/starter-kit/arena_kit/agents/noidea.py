@@ -1878,7 +1878,8 @@ or null, "reason": "<one sentence>"}."""
         asked = re.search(r"(?i)release schedule|call-?off|delivery schedule|expected volumes|volume figures|"
                           r"documentation supporting|send us the (data|schedule)", latest(events).get("body") or "")
         cash = {"cash_short", "wants_faster_payment"} & set(s["dossier"].get("motives", {}))
-        if not (asked or (k == 0 and cash)) or s.get("schedule_sent"):
+        # ... and in round 1 of an RFQ (Parth e8666ae: the call-off schedule took the first counter to 28.00 vs 30.50)
+        if not (asked or (k == 0 and (cash or case["type"] == "rfq"))) or s.get("schedule_sent"):
             return None
         t0 = {**case.get("fixed_terms", {}), **sheets[0]}
         vol = t0.get("volume_per_year") or case["buyer"]["need_per_year"]
