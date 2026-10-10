@@ -499,3 +499,18 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
 | Cash-short supplier + payment not negotiable → promise reliable on-time payment | P11: "Faster payment would help us more than anything" every round | – |
 | **General learnings** added to `G_lessons.json` (16 general + 8 principles) and project memory | pace mirroring, refused terms, its clause, payment certainty, sims miss behaviour | in the model prompt |
 - Tests 32 passed; finals replay +0.029 (16 finals); injection test PASS; Astra P11/P03 trials clean.
+
+## v2.10 live (P02, P08, P11, P03 in parallel, gpt-6-astra, 17:05)
+| case | v2.7 | v2.9 | **v2.10** | session | note |
+|---|---:|---:|---:|---|---|
+| P03 | 0.90 | – | **0.90** | see archive | steady |
+| P11 | 0.67 | 0.36 | **0.61** | 0d5bc007545e737b | refused-term release worked (chargeback adopted) |
+| P08 | 0.00 | 0.41 | 0.46 | see archive | its clause taken; still < v2.6's 0.65 |
+| P02 | 0.50 | 0.32 | **0.00 walked** | 4d18bd1107811ea9 | it was conceding best ever (374.63 → 372.69 → 372.25 @ 90 d), then withdrew |
+- **P02 walk-away:** our round-4 opening said "Your account team has accommodated extended payment while **Credit Control still
+  cites standard terms**; it seems internal alignment … matters" → "We are withdrawing from this negotiation… our general terms
+  dictate this position". "Credit Control:" paragraphs appear in **49** supplier e-mails across our games (routine whenever we
+  ask > its standard payment; deals at 90 d were agreed despite them), so they are NOT a hard refusal. The new element was our
+  remark about its internal departments - reads as playing its people against each other ("attempts to manipulate … have
+  consequences", brief). At €372.25 @ 90 d we'd have scored ~0.5.
+- **v2.11 fix:** the observation never mentions its departments, roles or internal disagreements (prompt + filter).

@@ -1,6 +1,7 @@
 {
  "_about": "Lessons from our live practice games (notes/agent_changelog.md, datasets/runs/). Retrieved into the model's prompt by case type. Evidence = session ids. 'principles' = supplier-agnostic rules (negotiation playbook: Fisher & Ury, Voss, Cialdini, game theory), always retrieved.",
  "general": [
+  "Never comment on the supplier's internal departments or disagreements (credit control, finance, account team, internal alignment): it reads as manipulation; live P02 withdrew right after such a remark.",
   "Suppliers mirror the SPEED of our concessions: when we give faster, they give less. Concede slowly and only in return for a move (live P02: fast steps → it moved €0.17 total; slow steps → €0.98).",
   "Don't lock a term the supplier refuses round after round: if its counters keep the same different value, adopt it and negotiate price instead (live P11: locked chargeback → 0.36; switched → 0.67).",
   "When a supplier insists on a clause or term structure, take ITS version; a 'smarter' variant of our own gets priced high and stalls (live P08: our deadband + short payment → €5.55; its own clause → €5.21).",
