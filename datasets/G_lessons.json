@@ -1,6 +1,10 @@
 {
  "_about": "Lessons from our live practice games (notes/agent_changelog.md, datasets/runs/). Retrieved into the model's prompt by case type. Evidence = session ids. 'principles' = supplier-agnostic rules (negotiation playbook: Fisher & Ury, Voss, Cialdini, game theory), always retrieved.",
  "general": [
+  "In an RFQ, anchor moderately below the market (≈10%); a much deeper ask made the best bidder walk. If a bidder walks, secure the best remaining offer.",
+  "Only a supplier's main term sheet can be accepted; its alternative sheets are information - propose them as your own sheet in an open round, never after its final offer (two walk-aways).",
+  "Hold ONE offer structure through the negotiation; switching structure (e.g. payment term) lets the supplier re-price and often ends worse (live P02: held 90 d → 0.48–0.51; switched to 30 d → 0.20).",
+  "A supplier that repeats the same objection or counter-proposal in consecutive e-mails is running out of patience: if its best offer is within ~1.5% of our ask, accept it rather than push again (live P02 walked away twice in round 4 after repeating 'return to our standard payment term').",
   "Never comment on the supplier's internal departments or disagreements (credit control, finance, account team, internal alignment): it reads as manipulation; live P02 withdrew right after such a remark.",
   "Suppliers mirror the SPEED of our concessions: when we give faster, they give less. Concede slowly and only in return for a move (live P02: fast steps → it moved €0.17 total; slow steps → €0.98).",
   "Don't lock a term the supplier refuses round after round: if its counters keep the same different value, adopt it and negotiate price instead (live P11: locked chargeback → 0.36; switched → 0.67).",

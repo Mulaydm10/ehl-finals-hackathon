@@ -26,7 +26,8 @@ CALIBRATION = ROOT / "analysis" / "central" / "calibration.json"
 # account" vs "it holds, but it does not change our calculation" vs "Your figures confirm our case" (a rising
 # index, 7x). Prior take-rates used when the mined file is missing.
 PRIOR_TAKE = {"should_cost": 1.0, "scorecard_ppm": 1.0, "rival_quote": 0.75, "volume_change": 0.63,
-              "notice_period": 0.5, "po_prices": 0.44, "index_change": 0.31, "scorecard_otd": 0.0}
+              "notice_period": 0.5, "po_prices": 0.44, "index_change": 0.31, "scorecard_otd": 0.3}
+MIN_SEEN = 3  # fewer observations than this: the prior decides (OTD: 1 game, P10, a supplier that took no data at all)
 MIN_TAKE = 0.3  # below this a kind is only cited when nothing better is left
 
 
@@ -45,7 +46,7 @@ def take_rate(kind, case_id, data=None):
     if seen and not seen.get("taken") and (seen.get("no_change") or seen.get("confirm_case")):
         return 0.0
     k = data.get("by_kind", {}).get(kind)
-    return k["take_rate"] if k and sum(v for x, v in k.items() if x != "take_rate") >= 2 else PRIOR_TAKE.get(kind, 0.3)
+    return k["take_rate"] if k and sum(v for x, v in k.items() if x != "take_rate") >= MIN_SEEN else PRIOR_TAKE.get(kind, 0.3)
 
 
 def volume_claims(case, facts):
@@ -73,6 +74,50 @@ def should_cost_claims(claims, sid, parts, opening_price, min_gap=0.03):
     return [{**c, "sentence": c["sentence"].replace(" per 1 (", " per unit (")} for c in claims
             if c["kind"] == "should_cost" and c["supplier"] == sid and c["part"] in parts
             and opening_price and opening_price > c["figure"] * (1 + min_gap)]
+
+
+def falling_window_claims(case, parts_drivers, max_claims=1, min_fall=-0.5):
+    """The steepest FALL of each cost driver in any window the arena checks (<= 12 months, ending within the last 12
+    months of the data), as a checkable index claim - only falls, one claim (2+ index claims drew "a lot of material"
+    11 of 11 times). P03: every 6/12-month window rose, but copper fell -1.2% from 2026-01 to 2026-02. Index data was
+    "taken into account" when it fell (P01 energy, P18 AS-14404)."""
+    import csv
+    data = ROOT / "tacto/data/data"
+    names = {r["id"]: r["name"] for r in csv.DictReader((data / "index_series.csv").open(encoding="utf-8"))}
+    vals = {}
+    for r in csv.DictReader((data / "index_values.csv").open(encoding="utf-8")):
+        vals.setdefault(r["series_id"], {})[r["month"]] = float(r["value"])
+    last = max(m for v in vals.values() for m in v)
+    ly, lm = int(last[:4]), int(last[5:7])
+    earliest_end = f"{ly - 1 + (lm // 12)}-{lm % 12 + 1:02d}"  # 12 months back from the last month of the data
+
+    def months_apart(a, b):
+        return (int(b[:4]) - int(a[:4])) * 12 + int(b[5:7]) - int(a[5:7])
+    out = []
+    for series in parts_drivers:
+        v = vals.get(series, {})
+        best = None
+        for b in v:
+            if b < earliest_end:
+                continue
+            for a in v:
+                if 0 < months_apart(a, b) <= 12:
+                    pct = (v[b] / v[a] - 1) * 100
+                    if pct <= min_fall and (best is None or pct < best[0]):
+                        best = (pct, a, b)
+        if best:
+            pct, a, b = best
+            out.append({"supplier": None, "part": None, "kind": "index_change", "series": series, "figure": round(pct, 1),
+                        "ids": [f"idx:{series}@{a}", f"idx:{series}@{b}"], "checked_by_arena": True,
+                        "sentence": f"{names.get(series, series)} changed {pct:+.1f}% from {a} to {b} "
+                                    f"(idx:{series}@{a}, idx:{series}@{b})."})
+    return sorted(out, key=lambda c: c["figure"])[:max_claims]
+
+
+def weak_delivery_claims(claims, sid, bar=90.0):
+    """Its on-time delivery below `bar`% (P03: 84.6%) - a third, different kind of data for round 1. Mixed kinds never
+    drew "We received a lot of material" (P10 / P18: three kinds, no padding); two+ index claims always did."""
+    return [c for c in claims if c["kind"] == "scorecard_otd" and c["supplier"] == sid and (c.get("figure") or 100) < bar]
 
 
 def rank(claims, case_id, data=None):

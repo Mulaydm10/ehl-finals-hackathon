@@ -540,3 +540,56 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
   0.86 at 60 d; the tie-break had picked 60 d). P03 lead back to €430.81 @ 90 d.
 - Tests 32 passed; offline **0.944 / 0.940**; finals replay +0.029; P05 bad-accept replay still "send".
 - Comparison so far (live, Astra): Neel's variant P02 **0.22** (6e7579c3ce8fb63c) vs ours v2.11 0.51; ours v2.11 P05 0.53.
+
+## v2.12 live (P02, P05, gpt-6-astra, 17:21) + comparison with Neel's central variant
+| case | Neel's variant | ours v2.11 | **ours v2.12** | session | note |
+|---|---:|---:|---:|---|---|
+| P02 | 0.22 (6e7579c3ce8fb63c) | 0.51 | **0.00 walked** | 150fb1c103141538 | 373.97 → 372.76 → 372.15 @ 90 d, then walked in round 4 |
+| P05 | 0.53 (993222d5d55e7d40) | 0.53 (798c7367160898ba) | 0.53 | 26c6afc937d25c36 | RFQ logic now right: accepted the cheapest (70250 agreed €30.83); C_best ≈ €26.5 → auction tactics are the gap |
+- **P02 walk pattern (both walks, round 4):** in rounds 2 and 3 it repeated "returning to our standard 30-day payment term"
+  (+ a 30-day '-a' sheet), we kept 90 d, round 4: "We are withdrawing … our general terms dictate this position".
+
+### v2.13 (offline): walk-risk guard
+- When its last two e-mails repeat the same objection / standard-terms counter-proposal (`repeats_objection`) and its best
+  sheet is within 1.5% of our ask (k ≥ 2, beats the alternative and other bidders): accept its best sheet before it walks.
+- Replay of the real P02 games (`src/eval/replay_walks.py`): 150fb1c1 walk → **accept €372.15 @ 90 d = 0.51**; af2439f0 0.51 →
+  0.54 (one round earlier); da8d0e3d 0.48 → 0.51. Tests 32 passed; offline 0.944 / 0.940; finals replay +0.028 (17 finals).
+- General lesson: **a supplier repeating the same objection is running out of patience - take its best offer if close.**
+
+### v2.14 (offline): RFQ asks anchored on the MARKET, not each bidder's own opening
+- P05 live (26c6afc937d25c36, 7a89bc8fb36043f1): bidders react to cited rival offers ("it holds and we took it into
+  account", "I will match that price", "I can beat that if we trade for 14 days payment"), but our ask per bidder was set
+  from ITS opening: 70250 opened at €38.50 → our ask €30.25–30.83, above the €31.00 the others already offered → it just
+  "agreed" to our own price (0.53–0.59; C_best ≈ €26.50).
+- Fix: `market_low()` = lowest valid price any other bidder currently offers; anchor = min(own, market × (1 − 20%)),
+  limit = min(own, market) (never concede above the best rival). Replay of the real game (`src/eval/replay_rfq.py`):
+  asks now €24.72 / 26.53 / 25.54 with the €31.00 rival cited (were €28.70 / 26.57 / 30.25). Tests 32 passed; offline
+  0.944 / 0.940 (the simulator's bidders accept in round 1, so P05's gain only shows live).
+
+## v2.13 / v2.14 live (17:27-17:33) and the P02 comparison → v2.15
+| case | version | score | session | what happened |
+|---|---|---:|---|---|
+| P02 | v2.13 | 0.20 | dc1d4fd8a7cd47cb | the model switched our sheets to 30 d in round 3 → it made €369.45 @ 30 d its final (worse for us than ~€372 @ 90 d) |
+| P05 | v2.14 | **0.00** | d9af85e000ab3d4d | market anchor 20% below → the best bidder 70250 (€28.00) **walked**; then we tried to accept 70210's '-a' sheet → arena: "not a standing offer … cannot be accepted by its id"; the fallback sent it back after its final → 70210 walked too → no deal |
+- **P02 good vs weak games** (`src/eval/compare_games.py`): the good ones (0.48 v2.3, 0.51 v2.11) held **one structure (90 d) every
+  round**, short e-mails, 0–1 data IDs, **no attachment**, small steps; the weak ones switched structure (v2.13 → 30 d), or sent
+  the call-off CSV and kept arguing until it walked (v2.12).
+
+### v2.15 (offline) - general fixes
+| fix | evidence |
+|---|---|
+| **Accept only the supplier's PRIMARY sheet id**; '-a' alternatives only as our own sheet in open rounds | arena refuses '-a' ids (P05 now; Parth P18) - the finals-replay "+0.03" for '-a' sheets was never real (now +0.000) |
+| **At final_offer accept the primary; never send anything back** (`PROPOSE_ALT_AFTER_FINAL = False`) | sending its alternative back after final: walked 2× (P08 v2.7, P05 v2.14), worked 1× (P10) |
+| **RFQ market anchor 10%** below the lowest valid offer (was 20%); **a bidder walked → secure the best remaining** at agreed/final | 70250 walked at the 20% gap; playbook: keep one valid offer standing |
+| **The model may not change the structure after round 1** (only sheets with code's lead structure) | P02 v2.13: model-driven switch to 30 d → 0.20 |
+| **Call-off CSV only when it explicitly asks for a schedule / documentation** | CSV only in the weak P02 games |
+- Tests 32 passed; offline 0.944 / 0.940; P02 real-game replays still accept before the walks (0.51 / 0.54 / 0.51); RFQ replay asks
+  €26.93–28.73 (were €24.72–26.53).
+
+## v2.15 live (17:37)
+- **P02 v2.15: 0.20** (ef17b16a03f0225d) - still weak; analyse after the context reset with `src/eval/compare_games.py ef17b16a03f0225d:v2.15 da8d0e3d77ce091c:v2.3_0.48 af2439f039d0e14f:v2.11_0.51`.
+- P05 v2.15: was still running at handoff (`/tmp/v215/P05.log`) - record it.
+- **P05 v2.15: 0.61 = new best P05** (e9eaf87e62371fdf): 10% market anchor, no walk-aways; accepted 70250's final €30.00 @ lead 28 / 14 d
+  (70210 final €31.50). The v2.15 RFQ fixes work.
+- P02 v2.15 again ended on its 30-day final (€369.45 @ 30 d) - the supplier itself switched its primary to 30 d; analyse why
+  it switches in some games (v2.3/v2.11 it stayed on 90 d).

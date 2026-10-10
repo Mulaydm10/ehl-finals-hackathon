@@ -62,6 +62,8 @@ def _central():
         return None
 
 
+PROPOSE_ALT_AFTER_FINAL = False  # sending its alternative back after final_offer: walked 2x, worked 1x -> off
+RFQ_MARKET_DEPTH = 0.10  # RFQ ask vs the market's lowest valid offer (20% made the best bidder walk: P05 d9af85e000ab3d4d)
 PLANNED_ROUNDS = 8  # P07 live: ~25 s per round, so an 8-minute wave fits ~12-15; keep a margin
 MIN_GAIN_PTS = 1.0  # never pay more than ask - 1 pt unless it is the last word
 # How far below the opening quote to anchor (src/eval/calibrate.py: best deal vs opening, practice cases)
@@ -602,6 +604,13 @@ class NoIdeaAgent:
         if kind == "price_increase":  # the cost-justified change (EDA 3) when it is lower
             anchor_price = min(anchor_price, s["cur"] * (1 + s["justified"] / 100))
         limit_price = s["cur"] * (1 + (s["ask_pct"] - MIN_GAIN_PTS) / 100)
+        market = self.market_low(case, sid)
+        if market:
+            # RFQ: anchor and limit against the MARKET, not this bidder's own opening (P05 live 26c6afc937d25c36: 70250
+            # opened at EUR 38.50, our ask ~30.83 was above the EUR 31.00 the others already offered, so it simply agreed;
+            # bidders "match" the rival price we cite; C_best ~EUR 26.50)
+            anchor_price = min(anchor_price, market * (1 - RFQ_MARKET_DEPTH))
+            limit_price = min(limit_price, market)
         anchor, limit = v(anchor_price), v(min(limit_price, opening))
         if goal in ("stabilise", "secure_supply"):  # the relationship charge: never ask below its full cost
             anchor = max(anchor, min(s["est"]["full_cost"], limit))
@@ -648,6 +657,17 @@ class NoIdeaAgent:
         choices = [s for s in live if not self.focus or s in self.focus] or live
         # talk to the supplier whose thread is furthest behind (RFQ round-robin)
         sid = min(choices, key=lambda s: sum(m.get("from") == "buyer" for m in threads[s]))
+        walked = [x for x in threads if x in self.sup and latest(threads[x]).get("status") in ("walked_away", "no_bid")]
+        if walked and live and len(self.sup) > 1:
+            # a bidder walked: keep at least one valid offer standing (playbooks/rfq.md) - take the best remaining one if it
+            # is at agreed / final_offer or already within 3% of our ask (P05 v2.14: 70250 walked, then we lost 70210 too)
+            cs = {x: self.best_sheet(case, x, threads[x]) for x in live}
+            okx = [x for x in live if cs[x][0] and cs[x][2] < self.c_alt and must_haves_ok(case, cs[x][1], self.sup[x]["std"])]
+            if okx:
+                bx = min(okx, key=lambda x: cs[x][2])
+                st = latest(threads[bx]).get("status")
+                if st in ("agreed", "final_offer"):
+                    return {"supplier_id": bx, "message": {"action": {"type": "accept", "term_sheet_id": cs[bx][0]}}}
         if len(live) > 1:
             # P05 v2.7 live (f8604d43d3fbf92f): 70250 had agreed at EUR 30.83 and 70210 made a final EUR 30.00, but the
             # turn went to 70240 and we accepted its EUR 32.00 - the dearest bid. Closing bidders first, cheapest first.
@@ -678,8 +698,10 @@ class NoIdeaAgent:
             # accept it. The prose route only applies when there is no structured alternative. P08 v2.7 live
             # (1f27ac1b2856c285): the prose parse of "€5.35 … Preisgleitklausel" filled in OUR 5% deadband (its -a
             # sheet had 0%), looked cheaper, went out as a counter with new asks -> it walked away, 0.0
+            # at final_offer we never send anything back - not even its own alternative: that walked twice (P08 v2.7,
+            # P05 v2.14: it walked after its alternative went back as a counter) and worked once (P10)
             ided = [ts for ts in latest(events).get("term_sheets") or [] if ts.get("term_sheet_id")]
-            if status == "final_offer" and len(ided) < 2 and sid not in self.final_asked and moves_left(case, events) > 1:
+            if PROPOSE_ALT_AFTER_FINAL and status == "final_offer" and len(ided) < 2 and sid not in self.final_asked and moves_left(case, events) > 1:
                 alts = [a for a in (self.refused_alternative(case, sid, events),
                                     self.prose_alternative(case, sid, events)) if a]
                 alt_p = min(alts, key=lambda a: a[0]) if alts else None
@@ -707,12 +729,26 @@ class NoIdeaAgent:
             return accept if ok else walk
         # accept when the supplier meets our current ask, or when we are within 0.3% late in the game
         near_final = k >= max(1, s.get("patience", PLANNED_ROUNDS) - 1)
+        # walk-risk: it repeats the same objection / counter-proposal in its last two e-mails (P02 x2: "returning to our
+        # standard 30-day payment term" + a 30-day '-a' sheet in rounds 2 and 3, we kept 90 d, it walked in round 4
+        # "our general terms dictate this position"; 372.15 @ 90 d would have scored ~0.50) -> take its best sheet
+        if ok and k >= 2 and c_stand <= best_elsewhere and self.repeats_objection(events) and \
+                c_stand <= sheets[0][0] * 1.015:
+            log.info("%s: it repeats its objection - taking its best sheet before it walks", sid)
+            return accept
         if ok and k > 0 and c_stand <= best_elsewhere and not s.get("closing") and (
                 c_stand <= sheets[0][0] * 1.0005 or ((k >= PLANNED_ROUNDS - 2 or near_final) and c_stand <= sheets[0][0] * 1.003)):
             return accept
         log.info("%s round %d: our best C %.0f vs standing %.0f (alt %.0f)", sid, k, sheets[0][0], c_stand, self.c_alt)
         if self.complete:  # dynamic: the model reads its e-mail and picks among pre-priced candidates
             cands = self.sheets_at(case, sid, target, cap, n=8)
+            # the backbone (structure) is code's: after round 1 the model may only pick sheets with the structure code
+            # leads with (P02 v2.13 dc1d4fd8a7cd47cb: the model moved us to 30 d, it made 30 d its final -> 0.20; the
+            # good P02 games held 90 d every round)
+            if k >= 1 and sheets and cands:
+                lead = sheets[0][1]
+                keep = [x for x in cands if all(x[1].get(f) == lead.get(f) for f in case["negotiable"] if f != "unit_price")]
+                cands = keep or cands[:1]
             pick = self.decide_with_model(case, sid, events, cands, k)
             if pick:
                 return pick
@@ -968,6 +1004,18 @@ class NoIdeaAgent:
             return best
         return None
 
+    OBJECTION_RX = re.compile(r"(?i)(return(ing)? to our standard|our standard (terms|\d+-day|zahlungsziel)|"
+                              r"restrict(s|ing)? our (pricing )?flexibility|financing costs|cannot (go|move) (any )?further|"
+                              r"unable to (reduce|lower|accommodate)|must maintain|strictly (fixed|frozen)|maximum flexibility)")
+
+    def repeats_objection(self, events):
+        """Its last two e-mails carry the same kind of objection / standard-terms counter-proposal."""
+        sup = [m.get("body") or "" for m in events if m.get("from") != "buyer"][-2:]
+        if len(sup) < 2:
+            return False
+        a, b = ({x.group(0).lower() for x in self.OBJECTION_RX.finditer(t)} for t in sup)
+        return bool(a & b)
+
     def events_for(self, sid):
         return (getattr(self, "threads_ref", {}) or {}).get(sid, [])
 
@@ -978,7 +1026,9 @@ class NoIdeaAgent:
         47 supplier messages in our archive carry such '-a' sheets (P07 finals 5.49 / -a 5.42)."""
         s = self.sup[sid]
         best = None
-        for ts in latest(events).get("term_sheets") or []:
+        # only its PRIMARY sheet can be accepted by id: the arena refuses '-a' alternatives ("not a standing offer in
+        # this session - offer:70210-3-a cannot be accepted by its id", P05 v2.14 d9af85e000ab3d4d; Parth P18)
+        for ts in (latest(events).get("term_sheets") or [])[:1]:
             t = ts.get("terms") or {}
             if ts.get("term_sheet_id") and t.get("unit_price") is not None and must_haves_ok(case, t, s["std"]):
                 c = total_cost(case, t, s["std"], s["est"])
@@ -1036,9 +1086,11 @@ class NoIdeaAgent:
         """Monthly call-off schedule as CSV (the arena reads csv attachments) - Neel. Suppliers keep asking "Which volume
         can you commit to?" / "release schedule"; sent in round 1 and again whenever asked."""
         s = self.sup[sid]
-        asked = re.search(r"(?i)release schedule|call-?off|which volume|expected volume|volume figures|"
-                          r"documentation supporting", latest(events).get("body") or "")
-        if (s.get("schedule_sent") and not asked) or (k > 0 and not asked):
+        # only when it explicitly asks for a schedule / documentation ("Which volume can you commit to?" is answered in the
+        # text; the CSV appeared only in the two weak P02 games, the good ones had short e-mails with 0-1 data IDs)
+        asked = re.search(r"(?i)release schedule|call-?off|delivery schedule|expected volumes|volume figures|"
+                          r"documentation supporting|send us the (data|schedule)", latest(events).get("body") or "")
+        if not asked or s.get("schedule_sent"):
             return None
         t0 = {**case.get("fixed_terms", {}), **sheets[0]}
         vol = t0.get("volume_per_year") or case["buyer"]["need_per_year"]
@@ -1054,6 +1106,21 @@ class NoIdeaAgent:
         import base64
         return {"name": "call_off_schedule.csv", "type": "csv",
                 "content_b64": base64.b64encode(("\n".join(rows) + "\n").encode()).decode()}
+
+    def market_low(self, case, sid):
+        """RFQ: the lowest valid unit price any OTHER bidder currently offers (its best sheet), else None."""
+        if len(self.sup) < 2:
+            return None
+        best = None
+        for other, s2 in self.sup.items():
+            ev = (getattr(self, "threads_ref", {}) or {}).get(other)
+            if other == sid or not ev:
+                continue
+            for ts in latest(ev).get("term_sheets") or []:
+                t = ts.get("terms") or {}
+                if t.get("unit_price") and must_haves_ok(case, t, s2["std"]):
+                    best = t["unit_price"] if best is None else min(best, t["unit_price"])
+        return best
 
     def rival_offer(self, case, sid):
         """RFQ: the best competing standing offer, citable once per supplier (playbooks/rfq.md)."""
