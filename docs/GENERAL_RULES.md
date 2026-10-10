@@ -258,3 +258,13 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
      P04 (rejected). Accept the lottery; memory helps only if a supplier comes back.
 112. **The first counter of P11 is mostly a draw** (46.00 / 46.50; 45.50 in 3 games): wording labels and the payment promise do
      not separate the draws over 51 games. What we control is the rest: one held fact = one step, from either draw.
+113. **Never send an argument twice; after round 1 an argument without data IDs never takes the round's fact slot** (P01
+     hidden: an id-less cost calc repeated every round, 0 checkable facts, "please provide the specific data", 0.959 vs 0.9997).
+114. **Concessions are monotone**: on the structure we hold, never ask below our own previous ask - a step back reads as taking a
+     concession back ("Without movement from your side we cannot move either" -> its final, P02).
+115. **A server error is not a reason to resend**: a 503 on our e-mail + a blind retry landed a round late, after the supplier's
+     final, and it walked (P10 0.0). Re-sync with the arena and decide on what the thread says now.
+116. **The agent must never crash a case**: one exception = no deal. Every decision path ends in a safe move; crash-test every
+     known case structure (19 practice cases, 9 never hosted) before the final.
+117. **The supplier reads our exact words** (identical text -> identical counter; identical moves with different paragraphs ->
+     different counters, P07 5.44-5.56). For an unseen supplier this is noise: judge changes on several games, not one.

@@ -69,7 +69,8 @@ class RemoteTable:
         except ArenaError as e:
             # a server error on our e-mail (live P07: a 19-ID quality claim -> HTTP 500 on every retry, the case was
             # abandoned): send it once more without data IDs - the term sheets still bind, the round is not lost
-            if e.status < 500 or not (message.get("refs") or IDS_IN_BODY.search(message.get("body") or "")):
+            # only a plain 500 can be our content; 502/503/504 are the server's - those go to play.settle_after_error
+            if e.status != 500 or not (message.get("refs") or IDS_IN_BODY.search(message.get("body") or "")):
                 raise
             log.warning("%s: HTTP %s on our e-mail - resending it without data IDs", supplier_id, e.status)
             body = IDS_IN_BODY.sub("", message.get("body") or "")
@@ -184,6 +185,41 @@ def resync(table, threads, sid, detail=""):
     return True
 
 
+RESEND_WITHIN_S = 30  # a failed e-mail is sent again only this early in its round (each round has MOVE_LIMIT_S)
+SETTLE_POLL_S, SETTLE_MAX_S = 5, 100
+
+
+def settle_after_error(table, threads, sid, msg, error, t0):
+    """Our e-mail drew a server error (5xx). Live P10 8134c6d18ce18953: a 503 22 s into the round, the client's retry of
+    the SAME move was held by the arena and applied 83 s later as the NEXT round - after the supplier's final offer, so
+    our counter made it walk away (0.0 instead of 0.70). Never resend a stale move: re-sync; if the thread moved on (our
+    e-mail landed and was answered, a timeout round, its final), return None and the agent decides again on its new
+    state; if nothing changed and the round is still young, send once more; otherwise wait for the arena's own timeout
+    round and decide then. Returns the reply, {"result": ...} if the case ended, or None."""
+    log.warning("%s: HTTP %s on our e-mail - re-syncing instead of retrying blindly", sid, error.status)
+    resent = False
+    while time.monotonic() - t0 < SETTLE_MAX_S:
+        try:
+            changed = resync(table, threads, sid, f"HTTP {error.status}")
+        except ArenaError as e2:  # the arena is still struggling: wait and look again
+            log.warning("%s: re-sync failed (HTTP %s)", sid, e2.status)
+            changed = False
+        if isinstance(changed, dict):
+            return changed
+        if changed:
+            return None
+        if not resent and time.monotonic() - t0 < RESEND_WITHIN_S:
+            resent = True
+            try:
+                return table.send(sid, msg)
+            except ArenaError as e2:
+                if e2.status < 500:
+                    raise
+                error = e2
+        time.sleep(SETTLE_POLL_S)
+    return None
+
+
 def recover_close(table, threads, sid, msg, error):
     """An accept the arena refused (422) or found late (409): never crash the case. Its alternatives ('-a') cannot be
     accepted by id - keep their terms without the id so the agent proposes them back; otherwise resync the thread and,
@@ -240,7 +276,14 @@ def play(table, case_id, agent, deadline=None):
                 if ended:
                     return ended["result"]
                 continue
-            if e.status != 409:
+            if e.status >= 500:  # a server error on our e-mail: never let a stale move land late, never crash
+                settled = settle_after_error(table, threads, sid, msg, e, t0)
+                if settled is None:  # the thread moved on (a timeout round, its final): decide again on what it says
+                    continue
+                if "result" in settled:
+                    return settled["result"]
+                reply = settled
+            elif e.status != 409:
                 raise
             log.info("%s: %s", sid, e.detail)
             reply = table.missed(sid, e)  # e.g. late, or the thread or the case has ended
@@ -255,6 +298,7 @@ def play(table, case_id, agent, deadline=None):
     return table.result()
 
 
+COOL_AFTER_5XX_S = 20  # RFQ: after a 5xx on our e-mail to a bidder (and no change there), wait before deciding for it again
 # A bidder whose reply has waited this long is answered next, whatever the agent prefers: model calls take
 # 5-20 s each and every bidder has only 60 s (live P05 d88810ba7949735b: timeouts from round 3 on).
 URGENT_S = 30
@@ -272,6 +316,7 @@ def _play_threads(table, case, case_id, threads, agent, deadline):
     pool = ThreadPoolExecutor(max_workers=len(threads))
     pending = {}  # supplier_id -> (message, future, sent at)
     arrived = {sid: time.monotonic() for sid in threads}  # when its latest reply came in
+    cool = {}  # supplier_id -> do not decide for it before this time (after a 5xx on our e-mail to it)
     slowest = 0.0
 
     def send(sid, msg):
@@ -286,13 +331,17 @@ def _play_threads(table, case, case_id, threads, agent, deadline):
                 try:
                     reply = fut.result()
                 except ArenaError as e:
-                    if e.status not in (409, 422):
+                    if e.status not in (409, 422) and e.status < 500:
                         raise
-                    log.info("%s: %s", sid, e.detail)  # e.g. late: not delivered - take the arena's state
+                    # 409/422: late, not delivered; 5xx: never resend the stale move (see settle_after_error) - take the
+                    # arena's state; if nothing changed, the overdue check below re-syncs once its timeout round has run
+                    log.info("%s: %s", sid, e.detail)
                     changed = resync(table, threads, sid, str(e.detail))
                     if isinstance(changed, dict):
                         return changed["result"]
                     arrived[sid] = time.monotonic()
+                    if e.status >= 500 and not changed:
+                        cool[sid] = time.monotonic() + COOL_AFTER_5XX_S
                     continue
                 if "result" in reply:  # the reply ended the case
                     return reply["result"]
@@ -308,7 +357,10 @@ def _play_threads(table, case, case_id, threads, agent, deadline):
                     return changed["result"]
                 arrived[sid] = time.monotonic()
             live = live_threads(threads)
-            ready = [sid for sid in live if sid not in pending]
+            ready = [sid for sid in live if sid not in pending and cool.get(sid, 0) <= time.monotonic()]
+            if not ready and not pending and any(cool.get(sid, 0) > time.monotonic() for sid in live):
+                time.sleep(1)  # only bidders in their cool-down are left: wait, never resend a stale move at once
+                continue
             if not ready:
                 if not pending:
                     return table.result()

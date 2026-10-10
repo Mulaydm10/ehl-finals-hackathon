@@ -375,3 +375,53 @@ def test_a_server_error_on_our_email_is_resent_once_without_data_ids():
     assert table.send("sup:1", msg) == {"status": "open"}
     assert sent[1]["refs"] == [] and sent[1]["body"] == "Your complaints ran high. Kit at EUR 5.95 (per kit)."
     assert sent[1]["term_sheets"] == msg["term_sheets"]
+
+
+def test_a_503_on_our_email_resyncs_and_never_counters_after_its_final(monkeypatch):
+    """Live P10 8134c6d18ce18953: a 503 on our counter; the arena ran a timeout round meanwhile (its final offer). The
+    stale counter must not go out again - the agent decides on the final and accepts (it walked when we countered)."""
+    import importlib
+
+    P = importlib.import_module("arena_kit.play")  # the package exports a function named play
+    monkeypatch.setattr(P, "SETTLE_POLL_S", 0)
+    monkeypatch.setattr(P, "RESEND_WITHIN_S", -1)  # the round is too old to resend
+    sent, closed = [], []
+    final = {"offer_id": "offer:1-2", "status": "final_offer", "closed": False,
+             "timeouts": [{"offer_id": "offer:1-2", "status": "final_offer", "terms": {"unit_price": 5.0}}]}
+
+    class Client:
+        def session(self, session_id):
+            return {"status": "open"}
+
+        def thread(self, session_id, supplier_id):
+            return final
+
+    class Table:
+        client, session_id = Client(), "s1"
+
+        def open(self, case_id):
+            first = {"from": "sales@1", "status": "open",
+                     "term_sheets": [{"term_sheet_id": "offer:1-1", "terms": {"unit_price": 5.2}}]}
+            return {"case_id": case_id}, {"sup:1": [first]}
+
+        def send(self, supplier_id, message):
+            sent.append(message)
+            raise ArenaError(503, "Service Unavailable")
+
+        def close(self, supplier_id, message):
+            closed.append(message["action"])
+            return {"deal": True}
+
+        def result(self):
+            return {"deal": False}
+
+    class Agent:  # counters an open offer, accepts a final one
+        def decide(self, case, threads):
+            last = threads["sup:1"][-1]
+            if last.get("status") == "final_offer":
+                sheet = last["term_sheets"][0]["term_sheet_id"]
+                return {"supplier_id": "sup:1", "message": {"action": {"type": "accept", "term_sheet_id": sheet}}}
+            return {"supplier_id": "sup:1", "message": {"body": "x", "term_sheets": [{"terms": {"unit_price": 4.9}}]}}
+
+    assert play(Table(), "case:X", Agent()) == {"deal": True}
+    assert len(sent) == 1 and closed == [{"type": "accept", "term_sheet_id": "offer:1-2"}]

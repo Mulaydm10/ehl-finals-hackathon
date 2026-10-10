@@ -244,6 +244,7 @@ class NoIdeaAgent:
     def prepare(self, case, threads):
         b = case["buyer"]
         self.case_id, self.sup, self.cited, self.final_asked = case["case_id"], {}, set(), set()
+        self.said = set()  # argument sentences already sent (an argument WITHOUT ids is never marked by `cited`)
         alt = b.get("alternative") or {}
         self.c_alt = total_cost(case, alt["terms"]) if (alt.get("terms") or {}).get("unit_price") else math.inf
         part = case["parts"][0]
@@ -808,7 +809,8 @@ class NoIdeaAgent:
         for c in pool:
             if len(picked) == n:
                 break
-            if any(i in self.cited for i in c["ids"]) or (first_round and (c.get("other_part") or c.get("late"))):
+            if any(i in self.cited for i in c["ids"]) or (first_round and (c.get("other_part") or c.get("late"))) \
+                    or c["sentence"] in getattr(self, "said", set()) or (not first_round and not c["ids"]):
                 continue
             if not first_round and not self.sup[sid].get("weak_ok", True) and self.weak(c) and \
                     any(not self.weak(x) and not any(i in self.cited for i in x["ids"]) for x in self.sup[sid]["args"]):
@@ -1141,7 +1143,48 @@ or null, "reason": "<one sentence>"}."""
         return d
 
     def decide(self, case, threads):
-        return self.plan_check(case, threads, self._decide(case, threads))
+        try:
+            return self.plan_check(case, threads, self._decide(case, threads))
+        except Exception:  # a broken rule on an unseen structure must never cost the case (a crash ends it without a deal)
+            log.exception("decide failed - safe move instead")
+            return self.safe_move(case, threads)
+
+    def safe_move(self, case, threads):
+        """The move when our logic fails: take a closing offer (agreed / final_offer) that keeps the must-haves and beats
+        the alternative; else repeat our last ask to the thread furthest behind; else (no ask yet) counter 3% under its
+        standing price; on the last move, play.py's closing logic (cheapest acceptable standing offer, else walk)."""
+        from ..play import closing_move
+        live = live_threads(threads) or list(threads)
+        focus = [x for x in live if not getattr(self, "focus", None) or x in self.focus] or live
+        try:
+            alt = case["buyer"].get("alternative") or {}
+            c_alt = total_cost(case, alt["terms"]) if (alt.get("terms") or {}).get("unit_price") else math.inf
+        except Exception:
+            c_alt = math.inf
+        best = None
+        for sid in focus:
+            ev = threads[sid]
+            sheet_id, terms = standing(ev)
+            std = standard_terms(ev)
+            if sheet_id and latest(ev).get("status") in ("agreed", "final_offer") and must_haves_ok(case, terms, std):
+                c = total_cost(case, terms, std)
+                if c < c_alt and (best is None or c < best[0]):
+                    best = (c, sid, sheet_id)
+        if best:
+            return {"supplier_id": best[1], "message": {"action": {"type": "accept", "term_sheet_id": best[2]}}}
+        sid = min(focus, key=lambda x: sum(m.get("from") == "buyer" for m in threads[x]))
+        ev = threads[sid]
+        prev = ((getattr(self, "sup", None) or {}).get(sid) or {}).get("last_main")
+        if not prev:
+            _, terms = standing(ev)
+            if terms.get("unit_price"):
+                prev = complete_offer(case, {**terms, "unit_price": round(terms["unit_price"] * 0.97, 2)})
+        if not prev or moves_left(case, ev) <= 1:
+            return closing_move(case, threads)
+        return {"supplier_id": sid, "message": {
+            "subject": f"Re: {case['title']}"[:300], "term_sheets": [{"terms": prev}],
+            "body": "Dear team,\n\nThank you for your message. We propose the attached term sheet.\n\n"
+                    "Kind regards,\nPurchasing, Hollerau Pumpenwerke"}}
 
     def _decide(self, case, threads):
         self._case = case
@@ -1462,7 +1505,11 @@ or null, "reason": "<one sentence>"}."""
         pre-priced candidate sheets and up to 3 verified arguments, write the opening. Everything it returns is
         validated; any problem -> None (the deterministic path runs instead)."""
         s = self.sup[sid]
-        fresh = [c for c in s["args"] if not any(i in self.cited for i in c["ids"])]
+        # never the same argument twice, and after round 1 only arguments the arena can check (ids): an id-less cost calc
+        # took the one-fact slot of every later round on P01 (hidden a1acdb54: refs 0 from round 2, "please provide the
+        # specific data", 0.959 vs 0.9997) - its figure is restated by write() anyway
+        fresh = [c for c in s["args"] if not any(i in self.cited for i in c["ids"])
+                 and c["sentence"] not in getattr(self, "said", set()) and (k == 0 or c["ids"])]
         pool = [c for c in fresh if k == 0 or s.get("weak_ok", True) or not self.weak(c)][:8]
         if not pool and fresh and k >= 1:
             # NEVER an empty round: when only weak facts are left, send the next one anyway (P11 3cc43596: Parth's
@@ -1977,6 +2024,22 @@ or null, "reason": "<one sentence>"}."""
         return d if must_haves_ok(case, d, self.sup[sid]["std"]) and d.get("unit_price") == t.get("unit_price") else None
 
     def message(self, case, sid, events, sheets, k, final=False, args=None, opening=None):
+        prev = self.sup[sid].get("last_main")
+        if sheets and not final and prev and prev.get("unit_price") is not None and case["type"] != "rfq" \
+                and "no_monotone" not in EXPERIMENTS:
+            # MONOTONE CONCESSIONS: on the structure we hold, never ask below our own previous ask - a step back reads as
+            # taking a concession back ("Without movement from your side we cannot move either" -> its final: P02 hidden
+            # 10b624c1, the facts-left hair ask 368.63 then the schedule's 365.97, final 368.74). RFQs excluded: there an
+            # ask follows the market low.
+            same = lambda t: all(t.get(f) == prev.get(f) for f in case["negotiable"] if f != "unit_price")
+            held = []
+            for t in sheets:
+                if same(t) and t.get("unit_price") is not None and t["unit_price"] < prev["unit_price"] - 1e-9:
+                    log.info("%s: ask %.2f below our last %.2f on the same terms - holding %.2f", sid, t["unit_price"],
+                             prev["unit_price"], prev["unit_price"])
+                    t = {**t, "unit_price": prev["unit_price"]}
+                held.append(t)
+            sheets = held
         if sheets and not final:
             self.sup[sid]["last_main"] = dict(sheets[0])  # our real ask stays the structure we hold (never the decoy)
             decoy = self.decoy_sheet(case, sid, sheets, k)
@@ -1995,6 +2058,7 @@ or null, "reason": "<one sentence>"}."""
         rival = self.rival_offer(case, sid) if case["type"] == "rfq" else None
         refs = sorted({i for c in args for i in c["ids"]} | ({rival[0]} if rival else set()))
         self.cited.update(refs)
+        self.__dict__.setdefault("said", set()).update(c["sentence"] for c in args)
         msg = {"subject": f"Re: {case['title']}"[:300],
                "body": self.write(case, sid, events, sheets, k, [c["sentence"] for c in args], rival, final, opening),
                "term_sheets": [{"terms": t} for t in sheets],

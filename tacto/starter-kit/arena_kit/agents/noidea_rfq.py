@@ -149,6 +149,13 @@ class NoIdeaAgent(_Main):
         return nxt
 
     def decide(self, case, threads):
+        try:
+            return self._decide_layer(case, threads)
+        except Exception:  # never crash a case: a crash ends it without a deal
+            log.exception("RFQ layer failed - safe move instead")
+            return self.safe_move(case, threads)
+
+    def _decide_layer(self, case, threads):
         if case["type"] == "rfq" and case["case_id"] == getattr(self, "case_id", None):
             self.threads_ref = threads
             for sid in [x for x in live_threads(threads) if x in self.sup and self._high_opener(case, x)]:

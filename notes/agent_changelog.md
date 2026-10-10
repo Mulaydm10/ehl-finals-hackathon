@@ -1144,3 +1144,34 @@ Rejected: a hair-under ask with the last fact (expected +0.004; could give away 
 - P04 without memory is a cent-rounding lottery: our cost ranks its real finals right (45 d > 90 d > 14 d > 60 d > 30 d), the
   agent's supplier model sees all terms as equal (cash 8% = ours). Experiment `rate07` (normal supplier's cash at 7%, fitted
   P03 6.1% / P04 6.8-8.4%) changed round 1 on SIX cases and still not P04's term -> rejected, stays off.
+
+### Loop 2 of the hidden pass (v2.34c = + monotone asks), 2026-10-11 00:06 - 00:14, and the fixes it forced
+| case | loop 1 | loop 2 | best | why |
+|---|---:|---:|---:|---|
+| P01 | 0.9997 | 0.959 | 0.9987 | BUG (fixed v2.34d): the id-less cost calc took the one-fact slot of every later round - refs 0 from round 2 |
+| P02 | 0.809 | **0.828** | 0.847 | monotone asks helped |
+| P03 | 0.954 | 0.954 | 0.963 | stable |
+| P04 | 0.815 | 0.766 | 0.874 | term lottery (30 d this time) |
+| P07 | 0.825 | 0.773 | 0.812 | IDENTICAL moves; its counters 5.44 vs 5.53 - its model reads our model-written paragraph |
+| P08 | 0.781 | **0.9156** | 0.916 | = best (its draw) |
+| P10 | 0.741 | **0.000** | 0.741 | KIT BUG (fixed): 503 on our e-mail, the client's retry was applied 83 s later after its final -> walked |
+| P11 | 0.794 | 0.794 | 0.885 | 6 of 6 high first counters tonight |
+| P18 | 0.688 | 0.621 | 0.727 | round-1 term near-tie (45 d), draws |
+- **v2.34c MONOTONE ASKS**: on the structure we hold, never ask below our previous ask (P02 loop 1: the facts-left hair ask 368.63,
+  then the schedule's 365.97 -> "Without movement from your side we cannot move either" -> final). RFQs excluded (market moves).
+- **v2.34d NO REPEATS, NO ID-LESS FACT SLOT**: an argument is never sent twice (`said`), and after round 1 an argument without
+  data IDs never takes the round's fact (P01: the cost calc has no IDs, so `cited` never marked it; with one fact per e-mail it
+  blocked energy, notice period, forecast in every later round: "please provide the specific data"). Replay: one ID'd fact per
+  round again (energy, notice, forecast, price history, labour, QNs). Also makes "facts left" honest (E-rule misfired on P01).
+- **SAFETY NET**: `decide()` (main + RFQ layer) never raises - any exception -> `safe_move()` (accept a closing offer that keeps
+  the must-haves and beats the alternative, else repeat our last ask, else counter 3% under; last move: play.closing_move).
+  A crash ends a case without a deal. Crash test `notes/analysis_v234/crash_test.py`: all 19 practice cases (9 never hosted:
+  P06 RFQ+tooling, P09, P12-P17, P19) play through, 0 crashes.
+- **KIT (play.py / client.py) - server errors on our e-mail**: the client no longer retries a 5xx on a message (the arena held
+  the retry and applied it a round late); `settle_after_error()` re-syncs: thread moved on -> decide again on its new state
+  (e.g. accept its final); unchanged and the round young (< 30 s) -> send once more; else wait for the arena's timeout round.
+  RFQ path: 5xx no longer crashes the case, the bidder gets a 20 s cool-down. Only a plain 500 strips data IDs (P07's case).
+  Test `test_a_503_on_our_email_resyncs_and_never_counters_after_its_final`; 65 tests pass.
+- Wording: games with IDENTICAL sheets + refs differ only by our model-written paragraph and draw different first counters
+  (P07 5.44 / 5.53 / 5.56; P02 370.94 / 372.52; Parth's verbatim P11 opener 3 of 3 the same 45.50). No phrase pattern generalises
+  -> treated as noise for unseen suppliers; no case-specific text (that would be memorising).

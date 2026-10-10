@@ -237,3 +237,12 @@
 | 2026-10-10 23:58 | Dhruv | P18 | v2.34b hidden / gpt-6-astra | 0.6883 | 3cb62cb905451df8 |
 | 2026-10-10 23:05 | Parth | P11 | p11_hold timeout first=0d5b 42.77/43.57/44.01 hair-0.08 bc363f2 / scripted | 0.8850 | d51e49df4d9826a4 |
 | 2026-10-10 23:09 | Parth | P11 | p11_hold timeout first=0d5b 42.77/43.57/44.01 hair-0.08 5e37c67 / scripted | 0.8770 | 8f62abf996ef150f |
+| 2026-10-11 00:06 | Dhruv | P01 | v2.34c hidden L2 (id-less calc bug) / gpt-6-astra | 0.9590 | a1acdb54026e17cb |
+| 2026-10-11 00:06 | Dhruv | P02 | v2.34c hidden L2 / gpt-6-astra | 0.8278 | b09861f722d92ee7 |
+| 2026-10-11 00:06 | Dhruv | P03 | v2.34c hidden L2 / gpt-6-astra | 0.9536 | f8082c20d710299c |
+| 2026-10-11 00:06 | Dhruv | P04 | v2.34c hidden L2 / gpt-6-astra | 0.7661 | aeb8c56737b24742 |
+| 2026-10-11 00:06 | Dhruv | P11 | v2.34c hidden L2 (decoy) / gpt-6-astra | 0.7935 | c897726495188647 |
+| 2026-10-11 00:11 | Dhruv | P07 | v2.34c hidden L2 / gpt-6-astra | 0.7730 | 88c1d97f8a118a35 |
+| 2026-10-11 00:11 | Dhruv | P08 | v2.34c hidden L2 / gpt-6-astra | 0.9156 | 2bfced14e95b42d6 |
+| 2026-10-11 00:11 | Dhruv | P10 | v2.34c hidden L2 (503 -> stale retry after its final -> walk) / gpt-6-astra | 0.0000 | 8134c6d18ce18953 |
+| 2026-10-11 00:11 | Dhruv | P18 | v2.34c hidden L2 / gpt-6-astra | 0.6207 | 77b16b90ff3c91b7 |
