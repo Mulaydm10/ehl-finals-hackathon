@@ -236,3 +236,20 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
     **P08 summary (17 games):** low draw 0.710-0.732 (floor = round-1 value - 0.21 +- 0.01), high draw 0.642-0.677. Record
     0.732 (cae4, budget at the top of its spread). The house's 0.752 (5.08 @ 14) is 2 cents below anything we've seen.
     The agent loses no cents to mistakes (cloud loop reports 1-3). The rest is the per-session draw and cent rounding.
+
+## 9. General rules from the P08 loop (17 games, cloud reports P08_floor.md, P08_loop1-3.md, FINAL_TRIGGER.md)
+1. **Budget suppliers: final = first counter - a fixed budget.** P08's total cut is 0.21 +- 0.01 (low draw) and 0.27-0.29
+   (high draw) whatever data, steps, payment term or number of rounds we use. Test any supplier for this first: compare the
+   total cut over games. If it holds, only the FIRST COUNTER matters. Spend effort there (sheet set, payment term of
+   the headline, contract length), not on later rounds.
+2. **The first counter can be a nominal price on whichever sheet it picks.** P08 answered 5.41 on our 45-day AND our
+   90-day sheet. Lead with the sheet worth least to it at equal nominal price (longest payment term): -0.054 in value,
+   proven.
+3. **A small step at the supplier's final message postpones the final by one round** (P08 5 of 6 at 0.18-0.19x its last
+   step). It only spreads the budget, and fails when less than about one final step of budget is left.
+4. **The final is cent-rounded on OUR payment term.** At a fixed value floor, the term decides where the price lands
+   (P08: 5.10 @ 14 = 0.7323 vs 5.15 @ 60 = 0.7329). Pick the term whose cent grid lands lowest at the expected floor.
+5. **A round-2 cut is min(cap, share x gap).** Asking lower makes round 2 bigger, but leaves less for later rounds. The
+   total doesn't change.
+6. Levers measured at 0 on a budget supplier: data after round 1 (taken or not), cross-sell invitation, deeper first
+   anchor, payment days, step size. 36 m: -0.01 once (kept, costs nothing).
