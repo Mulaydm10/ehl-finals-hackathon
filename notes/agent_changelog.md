@@ -555,3 +555,13 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
 - Replay of the real P02 games (`src/eval/replay_walks.py`): 150fb1c1 walk → **accept €372.15 @ 90 d = 0.51**; af2439f0 0.51 →
   0.54 (one round earlier); da8d0e3d 0.48 → 0.51. Tests 32 passed; offline 0.944 / 0.940; finals replay +0.028 (17 finals).
 - General lesson: **a supplier repeating the same objection is running out of patience - take its best offer if close.**
+
+### v2.14 (offline): RFQ asks anchored on the MARKET, not each bidder's own opening
+- P05 live (26c6afc937d25c36, 7a89bc8fb36043f1): bidders react to cited rival offers ("it holds and we took it into
+  account", "I will match that price", "I can beat that if we trade for 14 days payment"), but our ask per bidder was set
+  from ITS opening: 70250 opened at €38.50 → our ask €30.25–30.83, above the €31.00 the others already offered → it just
+  "agreed" to our own price (0.53–0.59; C_best ≈ €26.50).
+- Fix: `market_low()` = lowest valid price any other bidder currently offers; anchor = min(own, market × (1 − 20%)),
+  limit = min(own, market) (never concede above the best rival). Replay of the real game (`src/eval/replay_rfq.py`):
+  asks now €24.72 / 26.53 / 25.54 with the €31.00 rival cited (were €28.70 / 26.57 / 30.25). Tests 32 passed; offline
+  0.944 / 0.940 (the simulator's bidders accept in round 1, so P05's gain only shows live).

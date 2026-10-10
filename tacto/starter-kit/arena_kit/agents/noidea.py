@@ -578,6 +578,13 @@ class NoIdeaAgent:
         if kind == "price_increase":  # the cost-justified change (EDA 3) when it is lower
             anchor_price = min(anchor_price, s["cur"] * (1 + s["justified"] / 100))
         limit_price = s["cur"] * (1 + (s["ask_pct"] - MIN_GAIN_PTS) / 100)
+        market = self.market_low(case, sid)
+        if market:
+            # RFQ: anchor and limit against the MARKET, not this bidder's own opening (P05 live 26c6afc937d25c36: 70250
+            # opened at EUR 38.50, our ask ~30.83 was above the EUR 31.00 the others already offered, so it simply agreed;
+            # bidders "match" the rival price we cite; C_best ~EUR 26.50)
+            anchor_price = min(anchor_price, market * (1 - depth))
+            limit_price = min(limit_price, market)
         anchor, limit = v(anchor_price), v(min(limit_price, opening))
         if goal in ("stabilise", "secure_supply"):  # the relationship charge: never ask below its full cost
             anchor = max(anchor, min(s["est"]["full_cost"], limit))
@@ -1045,6 +1052,21 @@ class NoIdeaAgent:
         import base64
         return {"name": "call_off_schedule.csv", "type": "csv",
                 "content_b64": base64.b64encode(("\n".join(rows) + "\n").encode()).decode()}
+
+    def market_low(self, case, sid):
+        """RFQ: the lowest valid unit price any OTHER bidder currently offers (its best sheet), else None."""
+        if len(self.sup) < 2:
+            return None
+        best = None
+        for other, s2 in self.sup.items():
+            ev = (getattr(self, "threads_ref", {}) or {}).get(other)
+            if other == sid or not ev:
+                continue
+            for ts in latest(ev).get("term_sheets") or []:
+                t = ts.get("terms") or {}
+                if t.get("unit_price") and must_haves_ok(case, t, s2["std"]):
+                    best = t["unit_price"] if best is None else min(best, t["unit_price"])
+        return best
 
     def rival_offer(self, case, sid):
         """RFQ: the best competing standing offer, citable once per supplier (playbooks/rfq.md)."""
