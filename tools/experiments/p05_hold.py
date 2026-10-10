@@ -260,7 +260,9 @@ class Game:
                     "Producer prices for cold drawing of bars changed -3.77% from 2024-09 to 2025-09 "
                     "(idx:PPI-C2431@2024-09, idx:PPI-C2431@2025-09)."
                 )
-        lines.append(f"We propose EUR {price:.2f} per piece, 14 days net, 28 days lead time (term sheet attached).")
+        lines.append(
+            f"We propose EUR {price:.2f} per piece, 14 days net, {LEAD[TARGET]} days lead time (term sheet attached)."
+        )
         msg = {"subject": SUBJECT, "term_sheets": [sheet(self.case, price, TARGET)]}
         if k == 0:
             lines.append("Attached: our monthly call-off schedule for the full contract term.")
@@ -331,7 +333,7 @@ class Game:
         self.note(
             sid=TARGET,
             k="ask1",
-            do=f"ask {a.ask2}@14/28 + cite {rivals}{' + news + AS-14404' if a.facts else ''} + late-pay + shift",
+            do=f"ask {a.ask2}@14/{LEAD[TARGET]} + cite {rivals}{' + news + AS-14404' if a.facts else ''} + late-pay",
         )
         show(f"{TARGET} reply", reply)
         if "result" in reply:
@@ -356,7 +358,7 @@ class Game:
                 sid=TARGET,
                 k=f"ask{k + 1}",
                 its=price,
-                do=f"ask {ask}@14/28 (move +{ask - ([a.ask2] + asks)[k - 1]:.2f})",
+                do=f"ask {ask}@14/{LEAD[TARGET]} (move +{ask - ([a.ask2] + asks)[k - 1]:.2f})",
             )
             show(f"{TARGET} reply", reply)
             if "result" in reply:
@@ -374,10 +376,12 @@ def main():
     ap.add_argument(
         "--facts", action="store_true", help="first ask also cites its free-capacity news + the 1.4404 surcharge fall"
     )
+    ap.add_argument("--lead", type=int, default=28, choices=[28, 35, 42], help="lead time in Fuchsreiter's sheets")
     ap.add_argument("--facts3", action="store_true", help="the move after its first counter cites two new index falls")
     ap.add_argument("--reserve", type=int, default=40)
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
+    LEAD[TARGET] = args.lead
     case = next(
         c
         for c in json.loads((ROOT / "datasets/cases_practice.json").read_text(encoding="utf-8"))
