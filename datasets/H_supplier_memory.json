@@ -1,0 +1,968 @@
+{
+ "sup:70110": {
+  "games": 5,
+  "scores": [
+   0.78,
+   0.91,
+   0.583,
+   0.0,
+   0.853
+  ],
+  "shrugged": {
+   "rival quote": 1
+  },
+  "structures": {
+   "effective_date=2026-11-01|payment_days=60": {
+    "agreed_to_our_ask": [],
+    "finals": [],
+    "named_floors": [],
+    "refused_asks": [
+     [
+      134.82,
+      135.4
+     ]
+    ]
+   },
+   "effective_date=2027-01-01|payment_days=14": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     133.8
+    ],
+    "named_floors": [],
+    "refused_asks": [
+     [
+      130.97,
+      133.8
+     ],
+     [
+      131.74,
+      132.2
+     ]
+    ]
+   },
+   "effective_date=2027-01-01|payment_days=60": {
+    "agreed_to_our_ask": [
+     [
+      142.5,
+      138.55
+     ],
+     [
+      142.5,
+      142.5
+     ]
+    ],
+    "finals": [],
+    "named_floors": [],
+    "refused_asks": []
+   }
+  },
+  "took": {
+   "index change": 2,
+   "notice period": 1,
+   "volume change": 2
+  }
+ },
+ "sup:70140": {
+  "games": 29,
+  "scores": [
+   0.672,
+   0.609,
+   0.672,
+   0.71,
+   0.71,
+   0.71,
+   0.794,
+   0.71,
+   0.794,
+   0.794,
+   0.71,
+   0.794,
+   0.772,
+   0.794,
+   0.777,
+   0.794,
+   0.71,
+   0.71,
+   0.0,
+   0.71,
+   0.358,
+   0.777,
+   0.71,
+   0.752,
+   0.71,
+   0.543,
+   0.71,
+   0.71,
+   0.71
+  ],
+  "shrugged": {
+   "labour cost index and the old pos you cited, and we took them into account. we checked the price history": 1,
+   "news": 1,
+   "old order prices you mentioned, and they are correct, but our situation is different now. we checked the price history": 1,
+   "price history": 15
+  },
+  "structures": {
+   "chargeback_eur_per_complaint=0.0|ppm_commitment=300": {
+    "agreed_to_our_ask": [
+     [
+      45.1,
+      45.1
+     ],
+     [
+      45.1,
+      45.5
+     ],
+     [
+      45.25,
+      45.25
+     ],
+     [
+      45.25,
+      45.5
+     ]
+    ],
+    "finals": [
+     45.0,
+     45.5
+    ],
+    "named_floors": [
+     45.0,
+     45.5
+    ],
+    "refused_asks": [
+     [
+      44.6,
+      45.0
+     ],
+     [
+      44.7,
+      45.0
+     ],
+     [
+      44.8,
+      45.0
+     ],
+     [
+      45.1,
+      45.5
+     ],
+     [
+      45.16,
+      45.5
+     ],
+     [
+      45.2,
+      45.5
+     ],
+     [
+      45.3,
+      45.5
+     ],
+     [
+      45.38,
+      45.5
+     ]
+    ]
+   },
+   "chargeback_eur_per_complaint=0.0|ppm_commitment=800": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     45.5
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   },
+   "chargeback_eur_per_complaint=150.0|ppm_commitment=800": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     46.0,
+     47.5
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   }
+  },
+  "took": {
+   "energy cost": 1,
+   "energy index": 6,
+   "index and price history": 1,
+   "index change": 43,
+   "quality record": 27,
+   "volume change": 24
+  }
+ },
+ "sup:70410": {
+  "games": 19,
+  "scores": [
+   0.0,
+   0.686,
+   0.647,
+   0.647,
+   0.639,
+   0.694,
+   0.639,
+   0.663,
+   0.461,
+   0.694,
+   0.663,
+   0.702,
+   0.694,
+   0.539,
+   0.639,
+   0.679,
+   0.674,
+   0.686,
+   0.647
+  ],
+  "shrugged": {
+   "delivery record": 1,
+   "price history": 1,
+   "quality record": 1,
+   "volume change": 11
+  },
+  "structures": {
+   "contract_months=24|lead_time_days=35|volume_per_year=23400": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     35.0
+    ],
+    "named_floors": [],
+    "refused_asks": [
+     [
+      27.69,
+      35.0
+     ]
+    ]
+   },
+   "contract_months=24|lead_time_days=42|volume_per_year=23400": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     33.8,
+     34.0
+    ],
+    "named_floors": [],
+    "refused_asks": [
+     [
+      27.69,
+      34.0
+     ]
+    ]
+   },
+   "contract_months=24|lead_time_days=56|volume_per_year=23400": {
+    "agreed_to_our_ask": [
+     [
+      31.56,
+      32.2
+     ],
+     [
+      31.9,
+      31.9
+     ],
+     [
+      31.9,
+      33.8
+     ]
+    ],
+    "finals": [
+     31.9
+    ],
+    "named_floors": [],
+    "refused_asks": [
+     [
+      27.38,
+      31.9
+     ]
+    ]
+   },
+   "contract_months=36|lead_time_days=56|volume_per_year=23400": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     31.2,
+     31.3,
+     31.4,
+     31.5,
+     31.7,
+     31.9,
+     32.0
+    ],
+    "named_floors": [],
+    "refused_asks": [
+     [
+      27.38,
+      31.7
+     ],
+     [
+      27.38,
+      31.9
+     ],
+     [
+      27.38,
+      32.0
+     ],
+     [
+      29.09,
+      31.4
+     ],
+     [
+      29.79,
+      31.4
+     ],
+     [
+      30.11,
+      31.3
+     ],
+     [
+      30.18,
+      31.5
+     ],
+     [
+      30.4,
+      31.2
+     ],
+     [
+      30.75,
+      31.3
+     ],
+     [
+      30.9,
+      31.3
+     ]
+    ]
+   }
+  },
+  "took": {
+   "price history": 6,
+   "should cost": 7
+  }
+ },
+ "sup:70510": {
+  "games": 21,
+  "scores": [
+   0.0,
+   0.338,
+   0.318,
+   0.491,
+   0.0,
+   0.847,
+   0.223,
+   0.847,
+   0.0,
+   0.669,
+   0.499,
+   0.507,
+   0.268,
+   0.441,
+   0.476,
+   0.196,
+   0.657,
+   0.0,
+   0.824,
+   0.196,
+   0.607
+  ],
+  "shrugged": {
+   "price history": 1,
+   "quality record": 1
+  },
+  "structures": {
+   "index_clause=None|payment_days=30": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     369.45
+    ],
+    "named_floors": [],
+    "refused_asks": [
+     [
+      361.4,
+      369.45
+     ]
+    ]
+   },
+   "index_clause=None|payment_days=45": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     369.55
+    ],
+    "named_floors": [],
+    "refused_asks": [
+     [
+      363.03,
+      369.55
+     ]
+    ]
+   },
+   "index_clause=None|payment_days=90": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     368.25,
+     368.55,
+     370.32,
+     370.45,
+     370.95,
+     371.88,
+     371.95,
+     372.02,
+     372.15,
+     372.45,
+     373.46,
+     373.85,
+     374.2
+    ],
+    "named_floors": [],
+    "refused_asks": [
+     [
+      363.76,
+      374.2
+     ],
+     [
+      364.32,
+      370.32
+     ],
+     [
+      364.39,
+      370.45
+     ],
+     [
+      366.29,
+      373.85
+     ],
+     [
+      366.43,
+      371.95
+     ],
+     [
+      366.43,
+      372.15
+     ],
+     [
+      366.55,
+      372.02
+     ],
+     [
+      366.58,
+      372.45
+     ],
+     [
+      367.11,
+      371.88
+     ],
+     [
+      367.39,
+      373.46
+     ],
+     [
+      367.86,
+      368.25
+     ],
+     [
+      367.9,
+      368.25
+     ],
+     [
+      367.9,
+      368.55
+     ],
+     [
+      369.04,
+      370.95
+     ]
+    ]
+   }
+  },
+  "took": {
+   "index change": 6,
+   "volume change": 7
+  }
+ },
+ "sup:70530": {
+  "games": 15,
+  "scores": [
+   0.936,
+   0.0,
+   0.9,
+   0.936,
+   0.923,
+   0.934,
+   0.923,
+   0.9,
+   0.862,
+   0.862,
+   0.903,
+   0.915,
+   0.903,
+   0.862,
+   0.9
+  ],
+  "shrugged": {
+   "delivery record": 1,
+   "price history": 2
+  },
+  "structures": {
+   "contract_months=24|payment_days=90|volume_per_year=4580": {
+    "agreed_to_our_ask": [],
+    "finals": [],
+    "named_floors": [],
+    "refused_asks": [
+     [
+      431.54,
+      432.94
+     ]
+    ]
+   },
+   "contract_months=36|payment_days=60|volume_per_year=4580": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     431.61
+    ],
+    "named_floors": [],
+    "refused_asks": [
+     [
+      426.61,
+      431.61
+     ],
+     [
+      429.83,
+      431.61
+     ],
+     [
+      431.26,
+      431.61
+     ],
+     [
+      431.27,
+      431.61
+     ]
+    ]
+   },
+   "contract_months=36|payment_days=90|volume_per_year=4580": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     431.58,
+     432.15,
+     433.09
+    ],
+    "named_floors": [],
+    "refused_asks": [
+     [
+      428.12,
+      431.67
+     ],
+     [
+      428.12,
+      432.15
+     ],
+     [
+      431.26,
+      431.58
+     ],
+     [
+      431.27,
+      431.58
+     ],
+     [
+      431.32,
+      431.58
+     ],
+     [
+      431.32,
+      431.67
+     ],
+     [
+      431.33,
+      431.67
+     ],
+     [
+      431.61,
+      433.08
+     ],
+     [
+      431.61,
+      433.09
+     ],
+     [
+      431.8,
+      432.15
+     ],
+     [
+      431.81,
+      432.15
+     ],
+     [
+      432.15,
+      432.49
+     ]
+    ]
+   }
+  },
+  "took": {
+   "index change": 3,
+   "should cost": 4,
+   "volume change": 6
+  }
+ },
+ "sup:70610": {
+  "games": 19,
+  "scores": [
+   0.676,
+   0.695,
+   0.65,
+   0.747,
+   0.792,
+   0.689,
+   0.812,
+   0.667,
+   0.812,
+   0.792,
+   0.812,
+   0.667,
+   0.753,
+   0.728,
+   0.121,
+   0.695,
+   0.695,
+   0.121,
+   0.728
+  ],
+  "shrugged": {
+   "price history": 3
+  },
+  "structures": {
+   "contract_months=24|payment_days=30": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     5.24,
+     5.4
+    ],
+    "named_floors": [],
+    "refused_asks": [
+     [
+      4.88,
+      5.46
+     ],
+     [
+      5.18,
+      5.24
+     ]
+    ]
+   },
+   "contract_months=24|payment_days=90": {
+    "agreed_to_our_ask": [
+     [
+      5.31,
+      5.31
+     ],
+     [
+      5.31,
+      5.34
+     ]
+    ],
+    "finals": [
+     5.34,
+     5.4,
+     5.41,
+     5.44,
+     5.49,
+     5.5
+    ],
+    "named_floors": [],
+    "refused_asks": [
+     [
+      5.01,
+      5.52
+     ],
+     [
+      5.13,
+      5.44
+     ],
+     [
+      5.15,
+      5.4
+     ],
+     [
+      5.3,
+      5.41
+     ],
+     [
+      5.31,
+      5.34
+     ]
+    ]
+   },
+   "contract_months=36|payment_days=90": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     5.56
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   }
+  },
+  "took": {
+   "index change": 6,
+   "volume change": 5
+  }
+ },
+ "sup:70620": {
+  "games": 5,
+  "scores": [
+   0.0,
+   0.815,
+   0.81,
+   0.86
+  ],
+  "shrugged": {
+   "volume change": 1
+  },
+  "structures": {
+   "contract_months=36|payment_days=14": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     4.86
+    ],
+    "named_floors": [],
+    "refused_asks": [
+     [
+      4.8,
+      4.86
+     ]
+    ]
+   },
+   "contract_months=36|payment_days=60": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     4.91
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   },
+   "contract_months=36|payment_days=90": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     4.94
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   }
+  },
+  "took": {}
+ },
+ "sup:70710": {
+  "games": 17,
+  "scores": [
+   0.642,
+   0.0,
+   0.0,
+   0.46,
+   0.493,
+   0.726,
+   0.721,
+   0.528,
+   0.721,
+   0.405,
+   0.647,
+   0.71,
+   0.524,
+   0.71,
+   0.721,
+   0.732,
+   0.666
+  ],
+  "shrugged": {
+   "index change": 7,
+   "price history": 5,
+   "quality record": 1
+  },
+  "structures": {
+   "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}|payment_days=14": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     5.1,
+     5.11,
+     5.12,
+     5.18
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   },
+   "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}|payment_days=30": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     5.3,
+     5.36
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   },
+   "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}|payment_days=45": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     5.21,
+     5.32
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   },
+   "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}|payment_days=60": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     5.21
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   },
+   "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}|payment_days=90": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     5.19
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   },
+   "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 5.0, 'base_month': '2026-08'}|payment_days=14": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     5.43,
+     5.44,
+     5.51
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   },
+   "contract_months=36|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}|payment_days=14": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     5.11
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   }
+  },
+  "took": {
+   "index change": 12,
+   "volume change": 8
+  }
+ },
+ "sup:70740": {
+  "games": 13,
+  "scores": [
+   0.53,
+   0.0,
+   0.677,
+   0.43,
+   0.61,
+   0.606,
+   0.542,
+   0.673,
+   0.666,
+   0.618,
+   0.441,
+   0.539,
+   0.598
+  ],
+  "shrugged": {
+   "volume change": 5
+  },
+  "structures": {
+   "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}|payment_days=14": {
+    "agreed_to_our_ask": [
+     [
+      5.2,
+      5.2
+     ],
+     [
+      5.2,
+      5.3
+     ]
+    ],
+    "finals": [
+     5.0
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   },
+   "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}|payment_days=30": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     5.0,
+     5.1,
+     5.2,
+     5.3
+    ],
+    "named_floors": [
+     5.1
+    ],
+    "refused_asks": []
+   },
+   "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}|payment_days=60": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     5.4
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   },
+   "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 3.0, 'base_month': '2026-08'}|payment_days=14": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     5.4
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   },
+   "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 5.0, 'base_month': '2026-08'}|payment_days=14": {
+    "agreed_to_our_ask": [
+     [
+      5.3,
+      5.3
+     ],
+     [
+      5.3,
+      5.4
+     ]
+    ],
+    "finals": [
+     5.1,
+     5.2
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   },
+   "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 5.0, 'base_month': '2026-08'}|payment_days=30": {
+    "agreed_to_our_ask": [
+     [
+      5.2,
+      5.1
+     ],
+     [
+      5.2,
+      5.2
+     ]
+    ],
+    "finals": [],
+    "named_floors": [],
+    "refused_asks": []
+   },
+   "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 5.0, 'base_month': '2026-08'}|payment_days=45": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     5.4
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   },
+   "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 5.0, 'base_month': '2026-08'}|payment_days=90": {
+    "agreed_to_our_ask": [],
+    "finals": [
+     5.3
+    ],
+    "named_floors": [],
+    "refused_asks": []
+   }
+  },
+  "took": {
+   "index change": 8,
+   "price history": 10,
+   "volume change": 5
+  }
+ }
+}
