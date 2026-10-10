@@ -1263,3 +1263,15 @@ games 8ccbdcc0 / 98e834e4, P02 10b624c1, P07 216f49e9, P08 00e8923e, P10 673ee89
   caffeinate, log in `logs/`, default NOIDEA_EXPERIMENTS=hidden = the validated mode), `tools/final/preflight.sh` (key, model,
   tests, crash test, sandbox D01/D02 + P01), `tools/final/RUNBOOK.md` (08:00 / 09:00 / 11:00 / before 12:00; no pushes after
   12:00; never feed the board to the agent). README rewritten (approach, setup, env names, commands). `logs/` git-ignored.
+
+### v2.34h (general, RFQ + unseen data), 2026-10-11 01:20 - 01:35
+- **Facts per SUPPLIER, not per case** (`seen(sid)` / `heard(sid)`): each RFQ bidder is its own negotiation - with one case-wide
+  "cited" set the facts ran out after the first bidder (P05 0e9974d5: bidder 70250 never got a fact; sandbox D02: C1 never got
+  the forecast). One supplier = exactly as before (9 single-supplier cases byte-identical in rounds 1-2; P05's 2nd bidder now
+  gets the alloy -8.5% instead of the leftover cold drawing -2.3%).
+- **Case refs cited without a figure** (default, opt-out `no_case_refs`): a forecast / should-cost id in the case's own refs that
+  our argument bank does not hold (values on the arena, not in our package) -> "Our demand forecast for this part is on record
+  (fc:...)." The arena checks the id against its own data, so it cannot be contradicted (Neel's QN pattern). Sandbox D02 (free):
+  0.579, 0.579, 0.600, then 0.579 x3 with per-supplier facts vs 0.515-0.558 without (every claim "verified"; J1's first counter
+  15.40 vs 15.80 after "We checked the volume change data you cited; it holds and we took it into account"). D01 neutral
+  (0.876 / 0.914 vs 0.869-0.910). The 10 hosted cases unchanged (their refs are in our bank). Tests 66, crash 19/19.

@@ -277,3 +277,8 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
      it countered went to 0.989 via its own 36-month alternative). Look for the term the supplier pays for in its counters.
 121. **Never send an e-mail without movement or a new fact** (P18 walked on one; P02 went final after one). If no fact is left,
      move a real step toward its price; never repeat our last ask word for word.
+122. **In an RFQ every bidder is its own negotiation**: a fact told to one bidder is new to the others - track what EACH
+     supplier has seen (P05: one bidder never got a fact under a case-wide set).
+123. **Cite the case's own evidence even without its value**: a forecast / should-cost id the case lists can be cited without a
+     figure - the arena checks it against its own data (never contradicted; D02 +0.05 in 6 of 6 games). An unanswered "send us
+     proof of the volume" is a lost step.

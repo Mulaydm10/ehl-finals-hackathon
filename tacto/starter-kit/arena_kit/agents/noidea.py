@@ -245,6 +245,7 @@ class NoIdeaAgent:
         b = case["buyer"]
         self.case_id, self.sup, self.cited, self.final_asked = case["case_id"], {}, set(), set()
         self.said = set()  # argument sentences already sent (an argument WITHOUT ids is never marked by `cited`)
+        self.cited_by, self.said_by = {}, {}  # per supplier (seen / heard)
         alt = b.get("alternative") or {}
         self.c_alt = total_cost(case, alt["terms"]) if (alt.get("terms") or {}).get("unit_price") else math.inf
         part = case["parts"][0]
@@ -295,8 +296,9 @@ class NoIdeaAgent:
                                  if not (calc and c["kind"] == "index_change" and c.get("series") in calc["series"]
                                          and (c.get("figure") or 0) >= 0)],
                              "kit": self.kit_calc(case, sid) if case["type"] == "bundling" else None}
-            if "case_refs" in EXPERIMENTS:
-                # experiment: the case's OWN reference facts our argument bank does not hold (their values sit on the arena, not
+            if "no_case_refs" not in EXPERIMENTS:
+                # (default since v2.34h: sandbox D02 0.579 / 0.579 / 0.600 / 0.579 x3 vs 0.515-0.558 without, every claim
+                # verified; D01 neutral; the 10 hosted cases unchanged - only kinds missing from our bank) the case's OWN reference facts our argument bank does not hold (their values sit on the arena, not
                 # in our package - sandbox D02: fc:SH-220@2026-09, cost:part:SH-220) cited WITHOUT a figure: the arena checks an
                 # id against its own data, so a figure-less citation cannot be contradicted (Neel's QN claims, live). D02's
                 # bidder asked twice for "actual proof of this volume"; the forecast in its case refs is that proof
@@ -809,6 +811,16 @@ class NoIdeaAgent:
                     and ({"cash_short", "wants_faster_payment"} & motives or re.search(r"pay on time|paid on time|cash", last))
                     and not self.sup[sid].get("owned_late"))
 
+    def seen(self, sid):
+        """Data ids THIS supplier has been shown. Each bidder of an RFQ is its own negotiation: a fact told to one bidder is
+        new to the others (one case-wide set starved the rest: P05 0e9974d5 bidder 70250 never got a fact; sandbox D02 C1
+        never got the forecast). For one supplier this is exactly the case-wide set."""
+        return self.__dict__.setdefault("cited_by", {}).setdefault(sid, set())
+
+    def heard(self, sid):
+        """Argument sentences THIS supplier has been sent (see seen)."""
+        return self.__dict__.setdefault("said_by", {}).setdefault(sid, set())
+
     @staticmethod
     def impact(c):
         """Points a fact is worth to its cost (weight x fall for an index; other kinds count as strong)."""
@@ -833,11 +845,11 @@ class NoIdeaAgent:
         for c in pool:
             if len(picked) == n:
                 break
-            if any(i in self.cited for i in c["ids"]) or (first_round and (c.get("other_part") or c.get("late"))) \
-                    or c["sentence"] in getattr(self, "said", set()) or (not first_round and not c["ids"]):
+            if any(i in self.seen(sid) for i in c["ids"]) or (first_round and (c.get("other_part") or c.get("late"))) \
+                    or c["sentence"] in self.heard(sid) or (not first_round and not c["ids"]):
                 continue
             if not first_round and not self.sup[sid].get("weak_ok", True) and self.weak(c) and \
-                    any(not self.weak(x) and not any(i in self.cited for i in x["ids"]) for x in self.sup[sid]["args"]):
+                    any(not self.weak(x) and not any(i in self.seen(sid) for i in x["ids"]) for x in self.sup[sid]["args"]):
                 continue  # weak facts wait only while a strong one is left (never an empty round)
             # one index claim per e-mail: 2+ drew "we received a lot of material" 11 of 11 times (Neel)
             n_idx = sum(x["kind"] == "index_change" for x in picked)
@@ -1161,7 +1173,7 @@ or null, "reason": "<one sentence>"}."""
                 if m.get("from") != "buyer" and m.get("term_sheets")]
         k = sum(m.get("from") == "buyer" and bool(m.get("term_sheets")) for m in events)
         holding = len(own) >= 2 and own[-1] is not None and own[-2] is not None and abs(own[-1] - own[-2]) < 1e-9
-        strong_left = any(not self.weak(c) and not any(i in self.cited for i in c["ids"]) for c in s.get("args", []))
+        strong_left = any(not self.weak(c) and not any(i in self.seen(sid) for i in c["ids"]) for c in s.get("args", []))
         if not holding or k < 2 or strong_left:
             return d
         last_ask = next((ts["terms"]["unit_price"] for m in reversed(events) if m.get("from") == "buyer"
@@ -1583,8 +1595,8 @@ or null, "reason": "<one sentence>"}."""
         # never the same argument twice, and after round 1 only arguments the arena can check (ids): an id-less cost calc
         # took the one-fact slot of every later round on P01 (hidden a1acdb54: refs 0 from round 2, "please provide the
         # specific data", 0.959 vs 0.9997) - its figure is restated by write() anyway
-        fresh = [c for c in s["args"] if not any(i in self.cited for i in c["ids"])
-                 and c["sentence"] not in getattr(self, "said", set()) and (k == 0 or c["ids"])]
+        fresh = [c for c in s["args"] if not any(i in self.seen(sid) for i in c["ids"])
+                 and c["sentence"] not in self.heard(sid) and (k == 0 or c["ids"])]
         pool = [c for c in fresh if k == 0 or s.get("weak_ok", True) or not self.weak(c)][:8]
         if not pool and fresh and k >= 1:
             # NEVER an empty round: when only weak facts are left, send the next one anyway (P11 3cc43596: Parth's
@@ -2161,6 +2173,8 @@ or null, "reason": "<one sentence>"}."""
         refs = sorted({i for c in args for i in c["ids"]} | ({rival[0]} if rival else set()))
         self.cited.update(refs)
         self.__dict__.setdefault("said", set()).update(c["sentence"] for c in args)
+        self.seen(sid).update(refs)
+        self.heard(sid).update(c["sentence"] for c in args)
         msg = {"subject": f"Re: {case['title']}"[:300],
                "body": self.write(case, sid, events, sheets, k, [c["sentence"] for c in args], rival, final, opening),
                "term_sheets": [{"terms": t} for t in sheets],
