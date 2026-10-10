@@ -38,7 +38,8 @@ from arena_kit.play import RemoteTable, play, quota_used_up  # noqa: E402
 def measure(case, result):
     """What we compare across games: score, first counter (in score units), final round, timeouts, claims."""
     sc = result.get("score")
-    out = {"score": round(sc, 3) if sc is not None else None, "deal": result.get("deal"), "first_counter": None, "final_round": None,
+    out = {"score": round(sc, 3) if sc is not None else None, "deal": result.get("deal"), "first_counter": None,
+           "final_round": None,
            "timeouts": 0, "claims": {}, "took": 0, "confirms": 0}
     if not result.get("c_open") or result.get("c_best") is None:
         return out
@@ -84,6 +85,19 @@ def archive(client, sid, case_id):
                                                                    encoding="utf-8")
     except ArenaError:
         pass  # the back office shows only after the case has ended
+
+
+def wait_for_end(client, sid, limit_s=900):
+    """After a crash the session ends by itself (timeouts, walk-aways): wait for it, return its result."""
+    import time
+
+    t0 = time.monotonic()
+    while time.monotonic() - t0 < limit_s:
+        state = client.session(sid)
+        if state.get("status") == "ended":
+            return state.get("result") or {"deal": False, "end_reason": state.get("end_reason")}
+        time.sleep(15)
+    return {"deal": False, "end_reason": "still open after the crash"}
 
 
 def quota_left(client):
@@ -137,15 +151,20 @@ def main(argv=None):
         left = quota_left(client)
         if left is not None and left <= reserve:
             return {"case": cid, "skipped": f"quota left {left} <= reserve {reserve}"}
-        table = RemoteTable(client)
+        table, error = RemoteTable(client), None
         try:
             result = play(table, f"case:{cid}", noidea.NoIdeaAgent(complete))
-        except ArenaError as e:
-            return {"case": cid, "skipped": "practice quota used up" if quota_used_up(e) else str(e)}
+        except Exception as e:  # never lose the game: record OUR session (the team key is shared - E1 once logged a
+            if isinstance(e, ArenaError) and quota_used_up(e):  # teammate's concurrent P05 session as ours)
+                return {"case": cid, "skipped": "practice quota used up"}
+            if not table.session_id:
+                return {"case": cid, "skipped": f"no session opened: {e}"}
+            error, result = f"{type(e).__name__}: {e}", wait_for_end(client, table.session_id)
         archive(client, table.session_id, f"case:{cid}")
         m = measure(cases[f"case:{cid}"], result)
-        return {"exp": args.experiment, "case": cid, "session": table.session_id, "switches": switches,
-                "commit": commit, "model": model, "time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"), **m}
+        row = {"exp": args.experiment, "case": cid, "session": table.session_id, "switches": switches,
+               "commit": commit, "model": model, "time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"), **m}
+        return {**row, "error": error, "end_reason": result.get("end_reason")} if error else row
 
     with ThreadPoolExecutor(max_workers=max(1, min(exp.get("parallel", 1), 10))) as pool:
         rows = list(pool.map(one, games))
@@ -158,6 +177,8 @@ def main(argv=None):
     with (ROOT / "notes" / "quota_log.md").open("a", encoding="utf-8") as f:
         for r in played:
             sc = f"{r['score']:.2f}" if r["score"] is not None else "no score"
+            if r.get("error"):
+                sc += f" - CRASHED: {r['error'][:80]}"
             f.write(f"| {r['time']} | Parth | {r['case']} | noidea {commit} {args.experiment}"
                     f"{' + ' + ','.join(switches) if switches else ''} / {model} | {sc} (first counter "
                     f"{r['first_counter']}, final round {r['final_round']}, timeouts {r['timeouts']}) "
