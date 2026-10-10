@@ -18,6 +18,7 @@ the primary sheet's id, so alternatives are always proposed back, never accepted
 """
 
 import argparse
+import base64
 import datetime
 import json
 import sys
@@ -108,6 +109,10 @@ def main(argv=None):
         body = r["body"].replace("{price}", f"{ask:.2f}" if ask is not None else "")
         msg = {"subject": subject, "body": body, "term_sheets": [{"terms": t} for t in sheets],
                "refs": r.get("refs", [])}
+        if r.get("attachments"):  # [{"name", "type": "csv"|"md"|"json", "text"}] - the arena reads md/csv/json
+            msg["attachments"] = [{"name": a["name"], "type": a["type"],
+                                   "content_b64": base64.b64encode(a["text"].encode("utf-8")).decode("ascii")}
+                                  for a in r["attachments"]]
         reply = send(msg)
         if "result" in reply:
             result = reply["result"]
