@@ -722,3 +722,10 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
 ## v2.17 live P11 (19:10): 0.71 (876705379b434d96)
 - High draw (46.50 first counter) -> 46.00 -> 45.50 -> hold -> **grid probes 45.10 / 45.20 / 45.30 all held** -> final 45.50 -> accepted. Floor this session > 45.30 (7117d351: <= 45.13). Mechanics live-verified; no walk, final came after 3 probes (patience ~4 holds).
 - Expected with the probe (cloud VARIANCE draw ~40/60): low draw (shown 45.00, floor ~44.6-45.0) -> 0.80-0.86, high draw -> 0.71-0.77.
+
+## v2.17 live P11 (19:14): 0.71 (6123746258d1e0c5)
+- High draw again (46.50) -> 46.00 -> 45.50 -> final_offer at its 4th message (right after the first hold, no probe window) -> accepted.
+- **Round-1 draw check** (/tmp/r1body.py): our round-1 e-mails in the 46.00 games (6b02, fa9a) and the 46.50 games (7117, 6123, ...) are
+  identical in facts, sheet, price and all 3 claims verified; only the model-written opening varies. 7 high draws in a row since
+  18:07 (p ~3% at 40/60) - possibly a time/state effect of the arena, not controllable. **Stop spending P11 games**: the probe pays
+  only on a low draw (sim 0.80-0.86); high draws end 0.71-0.77.
