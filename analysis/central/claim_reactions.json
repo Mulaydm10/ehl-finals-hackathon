@@ -1,5 +1,5 @@
 {
- "games": 212,
+ "games": 216,
  "by_kind": {
   "copper notation": {
    "taken": 1,
@@ -18,10 +18,10 @@
    "take_rate": 1.0
   },
   "index_change": {
-   "taken": 155,
-   "no_change": 17,
+   "taken": 157,
+   "no_change": 18,
    "confirm_case": 7,
-   "take_rate": 0.87
+   "take_rate": 0.86
   },
   "labour cost index": {
    "taken": 1,
@@ -32,9 +32,9 @@
    "take_rate": 0.0
   },
   "news": {
-   "taken": 5,
+   "taken": 7,
    "no_change": 1,
-   "take_rate": 0.83
+   "take_rate": 0.88
   },
   "notice_period": {
    "taken": 5,
@@ -47,7 +47,7 @@
    "take_rate": 0.35
   },
   "rival_quote": {
-   "taken": 77,
+   "taken": 81,
    "no_change": 13,
    "take_rate": 0.86
   },
@@ -163,17 +163,17 @@
   },
   "case:P05": {
    "index_change": {
-    "taken": 33,
-    "no_change": 1
+    "taken": 35,
+    "no_change": 2
    },
    "rival_quote": {
-    "taken": 77,
+    "taken": 81,
     "no_change": 12
    },
    "_signals": {
     "final_at_10": 3,
+    "final_at_7": 7,
     "final_at_8": 2,
-    "final_at_7": 5,
     "final_at_9": 2,
     "final_at_12": 1,
     "final_at_6": 5,
@@ -181,7 +181,7 @@
     "final_at_4": 1
    },
    "news": {
-    "taken": 5
+    "taken": 7
    }
   },
   "case:P07": {
@@ -310,7 +310,7 @@
   "asked_for_data": 123,
   "already_counted": 47,
   "padding": 47,
-  "fair_point": 61,
+  "fair_point": 63,
   "rising_index_backfired": 7
  }
 }

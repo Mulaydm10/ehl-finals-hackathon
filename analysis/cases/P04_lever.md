@@ -82,3 +82,18 @@ How far the floor would have to fall for each one-cent-under ask (over the 562 f
 2. If the team wants the one free lottery ticket: play ONE game with `P04_SHOT = True`.
 3. Then stop: a second refusal of 4.87 @ 30 d confirms the floor is fixed for good.
 4. **Better use of quota: cases where a data kind still cuts.** P03's order price path was the lever (0.963). Next, check every committee / holder supplier for a rising order path we never sent.
+
+## 7. Live result (local, 2026-10-10 22:59, 1992e28afb6e7f4b, `P04_SHOT = True`): **0.700 - shot refused, and the fallback lost a cent**
+| our msg | sheet | its answer |
+|---:|---|---|
+| 1 | 4.83 @ 45 d / 36 m + forecast | open 4.90 @ 45 d ("does not change our calculation") - as always |
+| 2 | **4.87 @ 30 d alone** | open **4.88 @ 30 d** - refused for the 2nd time (= its 30-d floor, as in af58df7 / 62a17f4a) |
+| 3 | 4.89 @ 45 d alone | **final_offer 4.90 @ 45 d** ("our lowest possible price is EUR 4.90") - NOT the 4.89 it gave in 4 games |
+| - | accept primary | agreed 4.90 @ 45 d = **0.700** |
+
+- **The floor is fixed: 4.87 @ 30 d refused twice.** P04 stays at 0.874 (board best unchanged; ours ties the record).
+- **New: going back to 45 d after a 30-d detour cost a cent** (4.90, not 4.89). Its final at our 3rd message rounds up on the
+  term we just left / the round it is in; 4.89 @ 45 d only came when 45 d was held throughout. Never hop payment terms on a
+  floor-stop supplier (same as LEARNINGS §3: hopping costs).
+- Its 30-d counter 4.88 @ 30 d (0.766) was still open after msg 2; accepting it would have scored 0.766 > 0.700.
+- Stop P04: no lever left. Do not play it again.

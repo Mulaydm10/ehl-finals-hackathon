@@ -256,6 +256,7 @@ class NoIdeaAgent:
             justified = sum((dr["weight"] or 0) * self.ch.get((dr["series"], 12), (0.0, None))[0]
                             for dr in pinfo.get("cost_drivers", []))
             open_terms = standing(events)[1]
+            self.__dict__.setdefault("_open_price", {})[sid] = open_terms.get("unit_price")  # its quote, for rank_args
             cur = b.get("current_unit_price") or open_terms.get("unit_price")
             should = [c for c in self.claims if c["kind"] == "should_cost" and c["part"] == part and c["supplier"] == sid]
             ref = min(x for x in (cur, open_terms.get("unit_price")) if x)  # the quote can be below today's price
@@ -334,8 +335,11 @@ class NoIdeaAgent:
         # only indices that FELL or stayed flat: a rise "confirms their case: that driver rose" even when
         # framed as "well below the ask" (P07 v1.5 and P10 live)
         out += [c for c in sorted(best.values(), key=lambda c: c["figure"] * (c.get("weight") or 0)) if c["figure"] <= 0]
+        # should-cost against the price it ASKS (its quote), not only today's price (P03: 2.4% under today's price, 8.7%
+        # under its quote - never cited by us, in 5 of 5 of the team's top P03 games; Neel central.should_cost_claims)
+        quote = getattr(self, "_open_price", {}).get(sid)
         out += [c for c in mine if c["kind"] == "should_cost" and c["part"] in parts
-                and c.get("price_vs_should_cost_pct", -1) > 3]
+                and (c.get("price_vs_should_cost_pct", -1) > 3 or (quote and c.get("figure") and quote > c["figure"] * 1.03))]
         # flat price history is the argument when there's no increase to fight - but not for kits:
         # P07 live, part-level history "does not change our calculation" for a bundle (kit_calc instead)
         # ... and when the price already jumped (P18: an index clause took it 5.26 -> 5.84 in July, +11%,
@@ -352,7 +356,9 @@ class NoIdeaAgent:
                    if (self.po_jump(c) == 0 or ("price_path_all" in EXPERIMENTS and self.po_jump(c) < 3.0)) else c for c in pos]
         # a RISE of >= 3% over the last 12 months goes in round 1 as that path, for any supplier (P08 probe A: first
         # counter 5.41 -> 5.25, 0.912 vs house 0.752); not for kits or frozen prices (P03 +3.1%: untested there)
-        if case["type"] != "bundling" and "price_frozen" not in set(self.dossiers.get(sid, {}).get("motives", {})):
+        # ... also for price-frozen suppliers (Neel request 14: P03 committee took the path in round 2, 431.67 -> 430.41, the
+        # biggest cut P03 ever gave, 0.963) - a frozen price still moves for a verified fact
+        if case["type"] != "bundling":
             desc = {p["part"]: p["description"] for p in self.dossiers.get(sid, {}).get("parts", [])}
             year = [y for c in pos if self.po_jump(c) < 3.0
                     if (y := self.year_rise_path(sid, c["part"], desc.get(c["part"], c["part"])))]
@@ -973,7 +979,9 @@ class NoIdeaAgent:
         # remaining gap, staying a near-close below its price (Neel P02 ee98266bedd37231: 0.67 -> 0.82). Gated on the
         # live signal only - against non-mirroring suppliers big steps give value away (stubborn sim 0.98 -> 0.86,
         # analysis/central/REGRESSION.md); holders (P03, P11) cut for data, not for our steps
-        if sv and "mirror_step" in EXPERIMENTS and self.mirroring(events):
+        mirror_words = any(MIRROR_RX.search(m.get("body") or "") for m in events[-4:] if m.get("from") != "buyer")
+        if sv and (mirror_words or ("mirror_step" in EXPERIMENTS and self.mirroring(events))):
+            # (its words "in response to your step / movement": P02 0.67 -> 0.847 with 30-40% steps; Parth P07 0.81)
             gap = sv[-1] - hist[-1]
             hist.append(min(limit, hist[-1] + max(0.0, min(max(step, MIRROR_SHARE * gap), gap - sv[-1] * CLOSE_STEP))))
             return hist[-1]
@@ -1341,7 +1349,19 @@ or null, "reason": "<one sentence>"}."""
                 c_stand <= sheets[0][0] * 1.015 and not self.still_moving(case, sid, events):
             log.info("%s: it repeats its objection - taking its best sheet before it walks", sid)
             return accept
-        if ok and k > 0 and c_stand <= best_elsewhere and not s.get("closing") and (
+        # E. FACTS LEFT, OFFER OPEN: don't take it at our own ask - send the next fact with an ask a hair under its price on
+        #    ITS sheet (top runs: one more round while facts are left; P03 0.963 431.67 -> 430.41 on the next fact, we had
+        #    accepted 431.67). Final offers, walk risk (above) and its agreement are unaffected.
+        if ok and k > 0 and status == "open" and c_stand <= best_elsewhere and k < PLANNED_ROUNDS and not close_now \
+                and c_stand <= sheets[0][0] * 1.003 and self.next_args(sid, 1) and "no_facts_hold" not in EXPERIMENTS:
+            t_k = complete_offer(case, {**terms, "unit_price": round(terms["unit_price"] * (1 - CLOSE_STEP), 2)})
+            if t_k["unit_price"] < terms["unit_price"] and must_haves_ok(case, t_k, s["std"]):
+                close_now = True
+                sheets = [(total_cost(case, t_k, s["std"], s["est"]), t_k)]
+                target = supplier_value(case, t_k, s["est"]) + self.premium(sid, t_k)
+                log.info("%s: facts left - next fact with %.2f a hair under its open %.2f (no accept yet)", sid,
+                         t_k["unit_price"], terms["unit_price"])
+        if ok and k > 0 and c_stand <= best_elsewhere and not s.get("closing") and not close_now and (
                 c_stand <= sheets[0][0] * 1.0005 or ((k >= PLANNED_ROUNDS - 2 or near_final) and c_stand <= sheets[0][0] * 1.003)):
             return accept
         log.info("%s round %d: our best C %.0f vs standing %.0f (alt %.0f)", sid, k, sheets[0][0], c_stand, self.c_alt)
@@ -1796,6 +1816,22 @@ or null, "reason": "<one sentence>"}."""
         if len(sup) < 2:
             return False
         a, b = ({x.group(0).lower() for x in self.OBJECTION_RX.finditer(t)} for t in sup)
+        # a phrase it already wrote in its OPENING e-mail is its template, not an objection (P02 0.847: "Zahlungsziel ...
+        # net" in every e-mail fired the guard and took 370.85 while it went on to 368.25; the real P02 walks repeated
+        # objections that first appeared mid-game: "returning to our standard 30-day", "restrict our pricing flexibility")
+        first = next((m.get("body") or "" for m in events if m.get("from") != "buyer"), "")
+        template = {x.group(0).lower() for x in self.OBJECTION_RX.finditer(first)}
+        a, b = a - template, b - template
+        # ... and a payment / standard-terms phrase only when its sheets REALLY propose another payment term than ours (the
+        # P02 walks: back to 30 d + a 30-day sheet; P02 0.847: the phrase while it stayed on our 90 d)
+        mine = next((ts["terms"] for m in reversed(events) if m.get("from") == "buyer"
+                     for ts in (m.get("term_sheets") or [])[:1] if ts.get("terms")), {})
+        its = [ts["terms"] for m in [x for x in events if x.get("from") != "buyer"][-1:] for ts in (m.get("term_sheets") or [])]
+        pushes = any(t.get("payment_days") is not None and mine.get("payment_days") is not None
+                     and abs(float(t["payment_days"]) - float(mine["payment_days"])) > 0.5 for t in its)
+        if not pushes:
+            pay = lambda x: any(w in x for w in ("zahlungsziel", "financing", "-day", "standard terms", "standard 30", "standard 60"))
+            a, b = {x for x in a if not pay(x)}, {x for x in b if not pay(x)}
         common = a & b
         if case is not None and "payment_days" not in case.get("negotiable", []):
             common = {x for x in common if "zahlungsziel" not in x and "financing" not in x and "-day" not in x}

@@ -216,3 +216,7 @@
 | 2026-10-10 22:40 | Neel | P11 | noidea_p11 / gpt-6-astra | **0.71** | b450b03546d3375e |
 | 2026-10-10 22:40 | Parth | P05 | p05_hold timeout 25.54/26.6/26.8 fcf377f / scripted | 0.965 | 27e15c33ad66fd08 |
 | 2026-10-10 22:50 | Neel | P03 | noidea_p03 / gpt-6-astra | **0.96** | 722dee8e68a4836c |
+| 2026-10-10 22:42 | Parth | P05 | p05_hold timeout 25.54/26.55/26.8 ff9b808 / scripted | 0.924 | 39a1476d7ccab4ca |
+| 2026-10-10 22:44 | Parth | P05 | p05_hold timeout 25.54/26.55/26.8 4526d07 / scripted | 0.924 | 63b709605318ba51 |
+| 2026-10-10 22:53 | Parth | P11 | p11_hold timeout 42.77/43.57/44.01 hair-0.08 56d39b7 / scripted | 0.7230 | c67d7cd1300143fb |
+| 2026-10-10 22:59 | Neel | P04 | noidea_p04 (P04_SHOT=True) / gpt-6-astra | **0.70** | 1992e28afb6e7f4b |

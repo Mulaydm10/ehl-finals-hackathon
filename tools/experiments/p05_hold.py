@@ -257,8 +257,8 @@ class Game:
                     "(idx:PPI-D351@2025-02, idx:PPI-D351@2026-02)."
                 )
                 lines.append(
-                    "Producer prices for cold drawing of bars changed -3.77% from 2024-09 to 2025-09 "
-                    "(idx:PPI-C2431@2024-09, idx:PPI-C2431@2025-09)."
+                    "Producer prices for cold drawing of bars changed -2.27% from 2026-06 to 2026-08 "
+                    "(idx:PPI-C2431@2026-06, idx:PPI-C2431@2026-08)."
                 )
         lines.append(
             f"We propose EUR {price:.2f} per piece, 14 days net, {LEAD[TARGET]} days lead time (term sheet attached)."
