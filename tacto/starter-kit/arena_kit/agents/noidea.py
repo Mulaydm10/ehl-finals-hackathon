@@ -181,8 +181,9 @@ class NoIdeaAgent:
             log.warning("signal catalogue not loaded (%s)", e)
             self.signal_rx = {}
         facts = root / "tacto/data/facts.json"
-        self.fc = ({k: v for k, v in json.loads(facts.read_text(encoding="utf-8")).items() if k.startswith("fc:")}
-                   if facts.exists() else {})
+        _facts = json.loads(facts.read_text(encoding="utf-8")) if facts.exists() else {}
+        self.fc = {k: v for k, v in _facts.items() if k.startswith("fc:")}
+        self.facts = {k: v for k, v in _facts.items() if k.startswith("qn:")}  # quality notifications (complaint_args)
         # today's price of every part at every supplier (for kit calculations)
         self.part_prices = {}
         for sid, d in self.dossiers.items():
@@ -293,6 +294,8 @@ class NoIdeaAgent:
             out += [{**c, "late": True} for c in pos if self.po_jump(c) <= 0]
         if case["type"] in ("capacity", "price_increase"):
             out += [c for c in mine if c["kind"] == "scorecard_otd" and (c["figure"] or 100) < 85]
+        if case["type"] == "quality" or case["buyer"].get("category_goal") == "quality_first":
+            out += self.complaint_args(sid, parts)
         out += self.forecast_args(case)
         # measured take-rates per data kind (Neel, 54 games: should-cost 2/2 taken, volume forecast 12/19, rising index
         # 7x "confirms our case", OTD 0/1); kinds THIS supplier already shrugged off get rate 0 and are dropped
@@ -314,7 +317,12 @@ class NoIdeaAgent:
         if "all_parts_po" in EXPERIMENTS:
             ranked += [{**c, "other_part": True} for c in mine if c["kind"] == "po_prices" and c["part"] not in parts
                        and self.po_jump(c) >= 3.0 and c["sentence"] not in seen]
-        ranked = [c for c in ranked if not c.get("late")] + [c for c in ranked if c.get("late")]  # later rounds' data last
+        # an index fall too small to matter (weight x fall < 0.25 points: P03 labour -0.26% x 16% -> EUR 0.02, P11 labour
+        # -0.3% -> no cut) comes after every other fact; then later rounds' data
+        tiny = lambda c: c["kind"] == "index_change" and abs((c.get("figure") or 0) * (c.get("weight") or 0)) < 0.25 \
+            and c.get("weight") is not None
+        ranked = [c for c in ranked if not c.get("late") and not tiny(c)] + [c for c in ranked if c.get("late")] + \
+                 [{**c, "late": True} for c in ranked if tiny(c) and not c.get("late")]  # never in round 1
         # the arena counts a volume trend once per case: a 2nd forecast (another part) came back `duplicate` (P07 x4)
         fc = [c for c in ranked if c["kind"] == "forecast"]
         ranked = [c for c in ranked if c["kind"] != "forecast" or c is fc[0]]
@@ -495,6 +503,26 @@ class NoIdeaAgent:
                 out.append({"kind": "forecast", "ids": [ks[-1]], "figure": ch, "part": part,
                             "sentence": f"Our demand forecast for {desc.split(',')[0]} is up {ch:+.1f}% ({ks[-1]})."})
         return sorted(out, key=lambda c: -c["figure"])[:2]
+
+    def complaint_args(self, sid, parts, per_claim=3, max_claims=3):
+        """Its recent quality notifications on this part, as checkable data for LATER rounds (api.md: `qn:` rows are
+        checked as the mean ppm when you speak of quality; each ID counts once, so each group is a NEW fact). P11 v2.16
+        f80f4b5452fa442a: after round 2 we had no new data left, it held EUR 45.50 twice and asked "Which figures is that
+        based on? Please send us the data." Newest first, supplier-caused only."""
+        qn = sorted(((k, v) for k, v in self.facts.items() if k.startswith("qn:") and v.get("supplier") == sid
+                     and v.get("part") in parts and v.get("ppm")), key=lambda kv: kv[1].get("date") or "", reverse=True)
+        out = []
+        for i in range(0, min(len(qn), per_claim * max_claims), per_claim):
+            grp = qn[i:i + per_claim]
+            if not grp:
+                break
+            ppm = sum(v["ppm"] for _, v in grp) / len(grp)
+            ids = [k for k, _ in grp]
+            out.append({"supplier": sid, "part": grp[0][1]["part"], "kind": "quality_notification", "ids": ids,
+                        "figure": round(ppm), "checked_by_arena": True, "late": True,
+                        "sentence": f"Your complaints on this part from {grp[-1][1]['date'][:7]} to {grp[0][1]['date'][:7]} "
+                                    f"ran at a mean of {ppm:,.0f} ppm on the affected deliveries ({', '.join(ids)})."})
+        return out
 
     def next_args(self, sid, n, first_round=False):
         """The next `n` arguments whose IDs were not cited yet (re-citing reads as padding). Round 1 is about this

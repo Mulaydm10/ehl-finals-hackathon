@@ -619,3 +619,16 @@ no committee; its call each round is counter / hold / final; final in round 4-5.
 ### v2.16b (offline): walk guard only when it STALLS
 - `still_moving()`: its last counter cut our cost > 0.5% -> not about to walk, keep negotiating (P02's walks came after 0.16% moves).
 - Replays: P11 6b02b8cc -> round 3 asks EUR 44.90 instead of accepting 45.00; P02 walk replays unchanged (0.51 / - / 0.54 / 0.51).
+
+## v2.16b live P11 (18:07): 0.71 (f80f4b5452fa442a)
+- Same path as the 0.79 game, but its round-1 answer to the SAME first e-mail was EUR 46.50 (0.79 game: 46.00) -> noise of EUR 0.50.
+  Round 2 (electricity -17.1% + price history, "it holds and we took it into account") -> 45.50. Rounds 3-4: only labour -0.3%,
+  then nothing -> **held 45.50 twice** ("Which figures is that based on? Please send us the data.") -> accepted 45.50 @ 300/0.
+- Back office: counter, counter, hold, hold. The supplier = start - one cut per NEW verified fact (like Neel's P03 engine).
+### v2.16c (offline): more verified facts for later rounds (general)
+- **Quality notifications** (`qn:`, api.md: checked as the mean ppm when you speak of quality) as later-round claims for quality
+  cases: newest supplier-caused complaints of this part, 3 IDs per claim (P11: 18,558 / 11,070 / 11,946 ppm).
+- **Tiny index falls** (weight x fall < 0.25 pts; labour -0.3%) go last and never in round 1 (P03 measured EUR 0.02; P11 no cut).
+- P11 rounds now: r1 forecast + iron & steel + scorecard, r2 electricity, r3 price history, r4-5 complaints, then labour.
+- Note: P02/P07 round 1 now carry a falling index - Neel's new reaction data (cfce529, P02 0.824) marks index data as taken.
+- Tests 37 passed; offline 0.942 / 0.945; P02 walk replays unchanged.
