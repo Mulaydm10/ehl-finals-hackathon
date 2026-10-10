@@ -56,3 +56,32 @@ def test_every_offer_keeps_both_sheets_below_its_floor_and_the_primary_on_our_hi
             assert high[1] == high_days and high[0] > low[0]
             for price, days in (high, low):
                 assert price < {45: 4.89, 30: 4.87}[days]
+
+
+@pytest.mark.parametrize(
+    "rate,cut,want",
+    [(0.0720, 0.0, 0.8737), (0.0760, 0.0, 0.9399), (0.0720, 0.003, 1.0), (0.0693, 0.002, 1.0), (0.0752, 0.002, 0.9399)],
+)
+def test_probe_takes_a_record_sheet_when_one_clears_its_floor_else_closes_on_the_45_day_floor_price(rate, cut, want):
+    """--probe: a supplier agrees to a sheet below its standing offer when the sheet clears its floor (P11
+    b1f94bfec7792ffb) and takes the one worth most to it; `cut` = what our pay-on-time promise could take off that
+    floor. 4.93 @ 90 d needs only 0.002: its 90-day floor price is 4.9319."""
+    p = load()
+    score, end, agent = p.simulate(
+        rate,
+        share=0.3,
+        verbose=False,
+        agent=p.P04RecordAgent(True, p.PLAN_PROBE, probe=True),
+        floor_agree=True,
+        patience=3,
+        cut=cut,
+    )
+    assert score == pytest.approx(want, abs=1e-4), end
+    for r in agent.notes:  # never the 45-day floor price next to the probe: it would take the sheet worth more to it
+        assert not ("probe" in (r.get("do") or "") and "4.89@45" in r["do"])
+
+
+def test_the_late_payment_line_is_our_true_record():
+    p = load()
+    line = p.late_payment_line()
+    assert "84% of your invoices late" in line and "due date" in line

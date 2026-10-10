@@ -161,9 +161,12 @@
 | 2026-10-10 20:24 | Neel | P08 | noidea_neel / gpt-6-astra | **0.68** | b1ca37903c477636 |
 | 2026-10-10 20:24 | Dhruv | P11 | noidea v2.21 loop 8/8 / gpt-6-astra | 0.71 (high draw; final after first probe) | bdff469fc8661110 |
 | 2026-10-10 20:23 | Parth | P04 | p04_record 21698a7 --main30 / scripted | 0.766 | 6ed05f043e2164b0 |
+| 2026-10-10 20:32 | Parth | P04 | p04_last_cent f525fc5 (ask 4.93 @ 90 d after its final) / scripted | 0.000 | bd2eabf99b0705bd |
+| 2026-10-10 20:43 | Parth | P08 | probe P08_A upward price path in round 1 (best low-draw path, lean later rounds) (scripted, no model) | 0.912 (unit_price=4.94, index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, payment_days=14, contract_months=24) | d0708ed1038995d1 |
 | 2026-10-10 20:33 | Dhruv | P11 | noidea v2.21b (merged) / gpt-6-astra | 0.79 (LOW draw; empty round 3 -> final at msg 3) | 3cc43596599ab8f4 |
 | 2026-10-10 20:40 | Dhruv | P11 | noidea v2.21c / gpt-6-astra | **0.80 BEST P11** (floor trade: agreed 44.95 @ 300/0) | eac20911ec06e2d6 |
 | 2026-10-10 20:41 | Neel | P08 | noidea_neel / gpt-6-astra | **0.63** | 81ee4b1e4096514b |
 | 2026-10-10 20:46 | Dhruv | P11 | noidea v2.21d / gpt-6-astra | 0.71 (high draw; floor > 45.45) | 11e2d8727fc045a1 |
 | 2026-10-10 20:32 | Parth | P04 | p04_last_cent f525fc5 (ask 4.93 @ 90 d after its final) / scripted | 0.000 | bd2eabf99b0705bd |
 | 2026-10-10 20:43 | Parth | P08 | probe P08_A upward price path in round 1 (best low-draw path, lean later rounds) (scripted, no model) | 0.912 (unit_price=4.94, index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, payment_days=14, contract_months=24) | d0708ed1038995d1 |
+| 2026-10-10 20:48 | Parth | P08 | noidea 544b5cd (year-rise path, no hedged index) / gpt-6-astra | 0.822 (agent with the P08 probe-A round 1) | 6701d5ddffb86dd4 |

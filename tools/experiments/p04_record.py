@@ -5,6 +5,7 @@
     uv run python ../../tools/experiments/p04_record.py              # one live P04 game (archives + logs it)
     uv run python ../../tools/experiments/p04_record.py --safe       # never send its alternative back after final
     uv run python ../../tools/experiments/p04_record.py --main30     # its primary on 30 d (after a game showed 4.87)
+    uv run python ../../tools/experiments/p04_record.py --probe      # pay-on-time promise, then probe 4.87 @ 30 d
 
 Why (evidence: analysis/cases/P04.md section 9 - live games d3050f951dc2c45b, 53f2239cea14a247, 5f80eb75c793f352):
 - One cent is 0.17 score here (span EUR 2,317 on 40,000 pieces), so the cent rounding decides the score.
@@ -22,6 +23,17 @@ Plan: one new verified fact per round, +2-3 cents per round; accept its primary 
 0.874). A 30-day sheet <= EUR 4.87 (0.940): its primary -> accept; its alternative in an open round -> send exactly
 that sheet (it agrees); its alternative in its final -> one clean "we accept your alternative" message, no new
 asks (agreed 4 of 5 in our games; the one walk came with new asks and data, P08 1f27ac1b2856c285).
+
+--probe (after 6ecd1862cf32d939 = 0.874 and 6ed05f043e2164b0 = 0.766): we never once SENT 4.87 @ 30 d in an open round -
+we only read its own counters. A supplier agrees to a sheet below its standing offer when the sheet clears its floor
+(P11 b1f94bfec7792ffb: standing 45.50, our probe 45.10 agreed). Round 1: no data (5 of 5 "does not change our
+calculation", and data in round 2 brought its final a round earlier: 53f2, 6ecd, 6ed0 vs d305, 5f80), but our own
+record, true and from invoices.csv: we paid 84 % of its invoices late (3.6 days) - promised on time from now, worth
+~EUR 0.003 a piece to it. Rounds 2 and 3: probe every sheet that beats 0.874, each one cent under its floor price on
+that term - 4.93 @ 90 d (1.0; its 90-day floor price is 4.9319, so a cut of 0.002 is enough), 4.90 @ 60 d (0.982),
+4.87 @ 30 d (0.940). Not taken: ask for 4.89 @ 45 (its own 45-day floor price, 0.874). Never 4.89 @ 45 next to the
+probe: it would pick the sheet worth more to it. Risk: a final during the probe holds its primary on 90 d (4.94 =
+0.860 or worse) - the board keeps our 0.874 either way.
 """
 
 import argparse
@@ -54,6 +66,34 @@ FACTS = {
     "(idx:LCI-C@2025-10, idx:LCI-C@2026-01).",
     "quote": "Your own quotation of 20 September for this bearing is at EUR 4.63 (quote:7200019).",
 }
+
+
+def late_payment_line(supplier=SUPPLIER, months=12):
+    """Our own payment record with the supplier (invoices.csv, last `months` before its latest invoice): true, checked
+    here, not a data claim (invoices are not citable facts)."""
+    import csv
+
+    rows = [
+        r
+        for r in csv.DictReader((ROOT / "tacto/data/data/invoices.csv").open(encoding="utf-8"))
+        if r.get("supplier_id") == supplier and r.get("paid_date") and r.get("due_date")
+    ]
+    last = max(datetime.date.fromisoformat(r["invoice_date"]) for r in rows)
+    since = last - datetime.timedelta(days=round(months * 30.44))
+    days = [
+        (datetime.date.fromisoformat(r["paid_date"]) - datetime.date.fromisoformat(r["due_date"])).days
+        for r in rows
+        if datetime.date.fromisoformat(r["invoice_date"]) >= since
+    ]
+    late = [d for d in days if d > 0]
+    return (
+        f"Straight talk: over the last {months} months we paid {100 * len(late) / len(days):.0f}% of your invoices "
+        f"late, on average {sum(late) / len(late):.1f} days after the due date. That is on us, and it ends with this "
+        "contract: every invoice paid on the due date."
+    )
+
+
+FACTS["latepay"] = late_payment_line()
 # per message we send: ((price, days) of the sheet we price HIGHER - its primary goes there -, (price, days) of the
 # other sheet, facts); the last line repeats. Every sheet stays below its floor price on that term (4.89 / 4.87).
 PLAN = [
@@ -71,13 +111,19 @@ PLAN_MAIN30 = [
     ((4.83, 30), (4.82, 45), []),
     ((4.84, 30), (4.83, 45), []),
 ]
+# --probe: no data, our pay-on-time promise in round 1; rounds 2-3 the probe (see docstring)
+PLAN_PROBE = [((4.84, 90), (4.80, 30), ["latepay"])]
+# every sheet that beats 0.874, each one cent under its floor price on that term: 4.93 @ 90 d = 1.0 (0.19 cents
+# under its 90-day floor price 4.9319), 4.90 @ 60 d = 0.982, 4.87 @ 30 d = 0.940. The highest price (90 d) carries
+# its primary.
+PROBE = [(4.93, 90), (4.90, 60), (4.87, 30)]
 LOCK_FROM = 6  # from our 6th message on, take its primary if it is at least the 45-day floor price
 SIGN = "Kind regards\nPurchasing, Hollerau Pumpenwerke"
 
 
 class P04RecordAgent:
-    def __init__(self, send_alternative_back=True, plan=PLAN):
-        self.send_alternative_back, self.plan = send_alternative_back, plan
+    def __init__(self, send_alternative_back=True, plan=PLAN, probe=False):
+        self.send_alternative_back, self.plan, self.probe, self.probes = send_alternative_back, plan, probe, 0
         self.asked = None  # the sheet we asked for after its final_offer (asked once)
         self.notes = []
 
@@ -137,10 +183,38 @@ class P04RecordAgent:
         if record:  # its 30-day alternative is at the record price in an open round: ask for exactly it
             self.asked = record["terms"]
             return self.ask_for(case, sid, record["terms"], final=False)
-        if k + 1 >= LOCK_FROM and primary and cost(primary["terms"]) <= c_floor45 + 0.01:
+        at_floor45 = primary and cost(primary["terms"]) <= c_floor45 + 0.01
+        if (
+            self.probe and k >= 1
+        ):  # from our 2nd message: the record sheets, twice; then close on the 45-day floor price
+            if self.probes < 2:
+                self.probes += 1
+                return self.probe_offer(case, sid)
+            if at_floor45:
+                return accept("probe not taken - its primary is the 45-day floor price")
+            self.asked = self.sheet(case, *FLOOR_45)  # it can take 4.89 @ 45 d (its own floor price): ask for it
+            return self.ask_for(case, sid, self.asked, final=False)
+        if k + 1 >= LOCK_FROM and at_floor45:
             return accept("lock the 45-day floor price")
         high, low, facts = self.plan[min(k, len(self.plan) - 1)]
         return self.offer(case, sid, k, high, low, facts)
+
+    def probe_offer(self, case, sid):
+        opts = "; ".join(f"EUR {p:.2f} with {d} days net" for p, d in PROBE)
+        body = (
+            f"Dear Mr Gruber,\n\nthank you - we are close. We can sign today on any of these: {opts} - each for 36 "
+            f"months and 20,000 pieces a year, every invoice paid on the due date. The term sheets are attached."
+            f"\n\n{SIGN}"
+        )
+        self.notes[-1]["do"] = "probe " + " / ".join(f"{p}@{d}" for p, d in PROBE)
+        return {
+            "supplier_id": sid,
+            "message": {
+                "subject": "Renewal of framework agreement 4600070620 - 6306-2Z C3",
+                "body": body,
+                "term_sheets": [{"terms": self.sheet(case, p, d)} for p, d in PROBE],
+            },
+        }
 
     def offer(self, case, sid, k, high, low, facts):
         lines = [FACTS[f] for f in facts]
@@ -193,11 +267,13 @@ class P04RecordAgent:
 
 
 # ---------- offline: the supplier as fitted on the three live games (no arena calls) ----------
-def simulate(rate, share=0.57, walk_after_final=0.0, verbose=True, agent=None):
+def simulate(rate, share=0.57, walk_after_final=0.0, verbose=True, agent=None, floor_agree=False, patience=1, cut=0.0):
     """The P04 supplier as measured: one value target T (cash at 30 d, money at `rate`), every sheet = T priced at
     its term and rounded UP to the cent; T_new = max(S, T - share x (T - our best value)); final_offer when it
     reaches S or moves less than a cent; agrees when one of our sheets is worth >= T_new; after final_offer it
-    agrees to a sheet worth >= S (or walks with probability `walk_after_final`). S = the C_best floor."""
+    agrees to a sheet worth >= S (or walks with probability `walk_after_final`). S = the C_best floor.
+    floor_agree: in open rounds it agrees to any sheet worth >= S (P11's probe). patience: no final_offer before that
+    round. cut: what our pay-on-time promise takes off its floor (EUR a piece, value at 30 d)."""
     import random
 
     probe = json.loads((ROOT / "analysis/cases/openings/P04.json").read_text(encoding="utf-8"))
@@ -209,7 +285,7 @@ def simulate(rate, share=0.57, walk_after_final=0.0, verbose=True, agent=None):
     res = probe["result"]
     c_open, c_best = res["c_open"], res["c_best"]
     fac = lambda d: 1 - rate * (d - 30) / 360  # noqa: E731
-    S = (c_best - 570) / 40000 / (1 + 0.08 * (60 - 90) / 360) * fac(90)  # the floor, 90 d optimal for rate < 8 %
+    S = (c_best - 570) / 40000 / (1 + 0.08 * (60 - 90) / 360) * fac(90) - cut  # the floor (90 d optimal, rate < 8 %)
     value = lambda t: t["unit_price"] * fac(t["payment_days"])  # noqa: E731
     price = lambda T, d: math.ceil(round(T / fac(d) * 100, 6)) / 100  # noqa: E731
     events = [dict(m) for m in probe["threads"][SUPPLIER]]
@@ -227,7 +303,7 @@ def simulate(rate, share=0.57, walk_after_final=0.0, verbose=True, agent=None):
                 for s in latest(events)["term_sheets"]
                 if s["term_sheet_id"] == msg["action"]["term_sheet_id"]
             )
-            sc = (c_open - total_cost(case, t, std)) / (c_open - c_best)
+            sc = min(1.0, max(0.0, (c_open - total_cost(case, t, std)) / (c_open - c_best)))
             return round(sc, 4), f"deal {t['unit_price']} @ {t['payment_days']} d", agent
         n += 1
         ours = [complete_offer(case, s["terms"]) for s in msg["term_sheets"]]
@@ -239,11 +315,11 @@ def simulate(rate, share=0.57, walk_after_final=0.0, verbose=True, agent=None):
             reply = {"status": "agreed", "sheets": [max(ok, key=value)]}
         else:
             T_new = max(S, T - share * (T - value(best)))
-            ok = [t for t in ours if value(t) >= T_new - 1e-9]
+            ok = [t for t in ours if value(t) >= (S if floor_agree else T_new) - 1e-9]
             if ok:
                 reply = {"status": "agreed", "sheets": [max(ok, key=value)]}
             else:
-                final = T_new <= S + 1e-9 or T - T_new < 0.01 * fac(30) * 0.5
+                final = n >= patience and (T_new <= S + 1e-9 or T - T_new < 0.01 * fac(30) * 0.5)
                 T = T_new
                 main = max(ours, key=lambda t: t["unit_price"])
                 rest = [t for t in ours if t["payment_days"] != main["payment_days"]][:1]
@@ -282,7 +358,9 @@ def play_live(args):
         sys.exit(f"practice quota left {left} <= reserve {args.reserve}: not playing")
     cases = {c["case_id"]: c for c in client.cases("practice")}
     table, error = RemoteTable(client), None
-    agent = P04RecordAgent(not args.safe, PLAN_MAIN30 if args.main30 else PLAN)
+    agent = P04RecordAgent(
+        not args.safe, PLAN_PROBE if args.probe else PLAN_MAIN30 if args.main30 else PLAN, args.probe
+    )
     try:
         result = play(table, CASE_ID, agent)
     except Exception as e:  # never lose the game: record our own session
@@ -291,7 +369,7 @@ def play_live(args):
         error, result = f"{type(e).__name__}: {e}", run_plan.wait_for_end(client, table.session_id)
     run_plan.archive(client, table.session_id, CASE_ID)
     m = run_plan.measure(cases[CASE_ID], result)
-    flags = [f for f in ("safe", "main30") if getattr(args, f)]
+    flags = [f for f in ("safe", "main30", "probe") if getattr(args, f)]
     row = {
         "exp": "P04-record",
         "case": "P04",
@@ -328,12 +406,22 @@ if __name__ == "__main__":
     ap.add_argument("--sim", action="store_true", help="offline, against the fitted supplier at several cash rates")
     ap.add_argument("--safe", action="store_true", help="never send its alternative back after final_offer")
     ap.add_argument("--main30", action="store_true", help="its primary on 30 days (once a game showed 4.87 @ 30 d)")
+    ap.add_argument(
+        "--probe", action="store_true", help="pay-on-time promise, then probe 4.87 @ 30 d at its 45-day floor"
+    )
     ap.add_argument("--reserve", type=int, default=40)
     a = ap.parse_args()
     if a.sim:
         for rate in (0.0693, 0.0720, 0.0752, 0.0760, 0.0769):
             print(f"supplier cash rate {rate:.4f}:")
-            sc, end, _ = simulate(rate, agent=P04RecordAgent(not a.safe, PLAN_MAIN30 if a.main30 else PLAN))
+            plan = PLAN_PROBE if a.probe else PLAN_MAIN30 if a.main30 else PLAN
+            sc, end, _ = simulate(
+                rate,
+                share=0.3,
+                agent=P04RecordAgent(not a.safe, plan, a.probe),
+                floor_agree=a.probe,
+                patience=3 if a.probe else 1,
+            )
             print(f"  -> score {sc}  ({end})\n")
     else:
         sys.path.insert(0, str(Path(__file__).resolve().parent))
