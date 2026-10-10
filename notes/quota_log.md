@@ -194,3 +194,4 @@
 | 2026-10-10 22:00 | Parth | P05 | p05_record 3c6c292 / scripted | 0.381 | 8e94b127db1e6eaa |
 | 2026-10-10 22:10 | Dhruv | P18 | noidea v2.28 (gate) / gpt-6-astra | **0.73 BEST P18** (agreed 4.91 @ 14 d) | 0c968aae64401bb1 |
 | 2026-10-10 22:10 | Dhruv | P18 | noidea v2.28 r1_pay_short / gpt-6-astra | 0.69 (14 d in round 1: no gain) | bf56d9758ff4bd7c |
+| 2026-10-10 22:12 | Neel | P11 | noidea / gpt-6-astra | **0.79** | 1d97f0e2306bab63 |
