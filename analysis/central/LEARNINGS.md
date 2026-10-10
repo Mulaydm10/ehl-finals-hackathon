@@ -253,3 +253,9 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
    total doesn't change.
 6. Levers measured at 0 on a budget supplier: data after round 1 (taken or not), cross-sell invitation, deeper first
    anchor, payment days, step size. 36 m: -0.01 once (kept, costs nothing).
+15. **Live 81ee4b1e4096514b = 0.633 (LOW draw), agent 0bb9fad (36 m, 60 d from round 2, floor-trade pair).** 5.41 @ 90 =
+    5.338 -> our 4.94 @ 60 -> **5.34 @ 60 = 5.30 (-0.04 only)** -> 5.29 (-0.05, open) -> final 5.24 @ 60 = 5.21 (-0.05).
+    **Total cut -0.13, not the -0.21 budget: the budget model broke.** The one new input was 60 d in round 2 on a low draw
+    (b1ca, high draw, 60 d: -0.17). Its text: "Accommodating your requested 60-day payment terms, we can offer a revised
+    base price". The floor trade never fired (its price stayed above every final it had given). **Suspect: 60 d in round
+    2. Revert to 14 d (4 low-draw games, -0.10 to -0.17) until the cloud explains it.**
