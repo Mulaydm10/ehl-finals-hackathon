@@ -6,7 +6,7 @@
   "end_reason": null,
   "deal": null,
   "score": null,
-  "rounds": 0,
+  "rounds": 3,
   "created_at": 1791646804.4636135
  },
  "detail": {
@@ -14,7 +14,7 @@
   "case_id": "case:P11",
   "status": "open",
   "end_reason": null,
-  "rounds": 2,
+  "rounds": 3,
   "set": "practice",
   "opening": {
    "sup:70140": {
@@ -40,11 +40,11 @@
   },
   "threads": {
    "sup:70140": {
-    "offer_id": "offer:70140-2",
+    "offer_id": "offer:70140-3",
     "status": "open",
-    "offers": 2,
+    "offers": 3,
     "closed": null,
-    "seconds_left": 51.6
+    "seconds_left": 38.1
    }
   },
   "moves": []
@@ -52,7 +52,7 @@
  "threads": {
   "sup:70140": {
    "supplier_id": "sup:70140",
-   "offer_id": "offer:70140-2",
+   "offer_id": "offer:70140-3",
    "status": "open",
    "closed": null,
    "messages": [
@@ -215,6 +215,65 @@
        "term_sheet_id": "offer:70140-2",
        "terms": {
         "unit_price": 46.5,
+        "ppm_commitment": 800,
+        "chargeback_eur_per_complaint": 0.0
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 4,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": []
+    },
+    {
+     "from": "buyer",
+     "subject": "Re: Kalwisz: bearing brackets in red",
+     "body": "Dear Odlewnia Kalwisz Sp. z o.o. team,\n\nYour request for concrete forecasts alongside your emphasis on partnership suggests that dependable demand matters to you. We want a lasting relationship built on measurable quality improvement and clear accountability, and acknowledge the corrective-action report you have attached. How will those corrective actions ensure you consistently meet a binding quality commitment?\n\nWe confirm a binding volume of 15,900 units per year for 12 months.\n\nOn this basis we propose the attached term sheets (800 ppm, EUR 0 per complaint, EUR 43.31 per unit). Please let us know which option works best for you.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "term_sheets": [
+      {
+       "terms": {
+        "ppm_commitment": 800,
+        "chargeback_eur_per_complaint": 0,
+        "unit_price": 43.31
+       }
+      }
+     ],
+     "refs": [],
+     "attachments": [
+      {
+       "name": "call_off_schedule.csv",
+       "type": "csv",
+       "content_b64": "bW9udGgscXVhbnRpdHkKMjAyNy0wMSwxMzI1CjIwMjctMDIsMTMyNQoyMDI3LTAzLDEzMjUKMjAyNy0wNCwxMzI1CjIwMjctMDUsMTMyNQoyMDI3LTA2LDEzMjUKMjAyNy0wNywxMzI1CjIwMjctMDgsMTMyNQoyMDI3LTA5LDEzMjUKMjAyNy0xMCwxMzI1CjIwMjctMTEsMTMyNQoyMDI3LTEyLDEzMjUK"
+      }
+     ]
+    },
+    {
+     "thread_id": "thread:P11:70140",
+     "message_id": "msg:70140-3-6",
+     "in_reply_to": null,
+     "from": "sales@70140",
+     "from_name": "Export Manager, Odlewnia Kalwisz Sp. z o.o.",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Kalwisz: bearing brackets in red",
+     "body": "Hello,\n\nWe have reviewed your offer and can adjust our Angebot as follows. We can drop the price to 46.00 EUR, but we really need you to actually pay on time like you promised, cash is tight here. Thanks for the call-off schedule, it helps us plan. Our quality guys confirm the corrective actions in the report will fix the root cause so we can hit the 800 ppm. \n\nOur current Angebot is a price of €46.00 per unit, a quality commitment of 800 ppm, a chargeback of €0.00 per complaint. Our standard Zahlungsziel is 60 days net. Faster payment is welcome; we can reflect it in the price. \n\nThis proposal remains valid for 30 days. We look forward to working together.\n\nKind regards\nMarek Lis\nExport Manager, Odlewnia Kalwisz Sp. z o.o.\n\nQuality: We take the complaints seriously; our 8D report is attached.",
+     "attachments": [
+      {
+       "attachment_id": "att:70140-3-eight_d",
+       "name": "8d-report.pdf",
+       "type": "pdf",
+       "content_b64": null
+      }
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70140-3",
+       "terms": {
+        "unit_price": 46.0,
         "ppm_commitment": 800,
         "chargeback_eur_per_complaint": 0.0
        }

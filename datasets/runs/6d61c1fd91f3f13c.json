@@ -6,7 +6,7 @@
   "end_reason": null,
   "deal": null,
   "score": null,
-  "rounds": 0,
+  "rounds": 4,
   "created_at": 1791646804.3548112
  },
  "detail": {
@@ -14,7 +14,7 @@
   "case_id": "case:P18",
   "status": "open",
   "end_reason": null,
-  "rounds": 2,
+  "rounds": 4,
   "set": "practice",
   "opening": {
    "sup:70740": {
@@ -71,11 +71,11 @@
   },
   "threads": {
    "sup:70740": {
-    "offer_id": "offer:70740-2",
-    "status": "open",
-    "offers": 2,
+    "offer_id": "offer:70740-4",
+    "status": "final_offer",
+    "offers": 4,
     "closed": null,
-    "seconds_left": 43.1
+    "seconds_left": 57.1
    }
   },
   "moves": []
@@ -83,8 +83,8 @@
  "threads": {
   "sup:70740": {
    "supplier_id": "sup:70740",
-   "offer_id": "offer:70740-2",
-   "status": "open",
+   "offer_id": "offer:70740-4",
+   "status": "final_offer",
    "closed": null,
    "messages": [
     {
@@ -323,6 +323,127 @@
        "result": "verified"
       }
      ]
+    },
+    {
+     "from": "buyer",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar (Werdenfels)",
+     "body": "Dear Blankstahl Werdenfels GmbH team,\n\nYou credit the index clause with providing stability while saying the verified volume data leaves your calculation unchanged; it sounds like predictable cost recovery is your priority. We can support that predictability through a longer commitment if you reciprocate on the base price. What scope for that reduction can you demonstrate with an XLSX cost breakdown separating the base price from the costs covered by indexation?\n\nWe confirm a binding volume of 23,700 units per year for 24 months.\n\nOn this basis we propose the attached term sheets (EUR 4.96 per unit, AS-14404 index clause (45% share, 0% deadband), 30 days payment, 24 months). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "term_sheets": [
+      {
+       "terms": {
+        "unit_price": 4.96,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 0,
+         "base_month": "2026-08"
+        },
+        "payment_days": 30,
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": []
+    },
+    {
+     "thread_id": "thread:P18:70740",
+     "message_id": "msg:70740-3-6",
+     "in_reply_to": null,
+     "from": "sales@70740",
+     "from_name": "Inside Sales, Blankstahl Werdenfels GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar (Werdenfels)",
+     "body": "Dear customer,\n\nWe have reviewed your offer and can adjust our Angebot as follows. We appreciate your revised offer and your commitment to a 24-month agreement with indexation. In response to your movement, we can reduce our price to €5.10 per unit. \n\nFor our full arrangement, our offer is a price of €5.10 per unit, Zahlungsziel 30 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404. Please note that this offer stays valid for 30 days.\n\nRegarding your request for a cost breakdown, please understand that our detailed internal calculations remain confidential. Material accounts for about 45 % of our cost; more detail we do not share. Which figures is that based on? Please send us the data. \n\nWe always value our relationship and look forward to working together.\n\nMit freundlichen Grüßen\nFranz Seidl\nInside Sales, Blankstahl Werdenfels GmbH",
+     "attachments": [],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70740-3",
+       "terms": {
+        "unit_price": 5.1,
+        "payment_days": 30,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 0.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 2,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": []
+    },
+    {
+     "from": "buyer",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar (Werdenfels)",
+     "body": "Dear Blankstahl Werdenfels GmbH team,\n\nYou explicitly link your price reduction to our longer-term commitment and indexation; it seems continuity and shared cost risk are what make movement possible for you. We want to close on a defensible base price using the material share you disclosed, without asking you to release confidential calculations. What further price movement can you support in return for contractual certainty?\n\nWe confirm a binding volume of 23,700 units per year for 24 months.\n\nOn this basis we propose the attached term sheets (EUR 5.06 per unit, AS-14404 index clause (45% share, 0% deadband), 30 days payment, 24 months). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "term_sheets": [
+      {
+       "terms": {
+        "unit_price": 5.06,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 0,
+         "base_month": "2026-08"
+        },
+        "payment_days": 30,
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": []
+    },
+    {
+     "thread_id": "thread:P18:70740",
+     "message_id": "msg:70740-4-8",
+     "in_reply_to": null,
+     "from": "sales@70740",
+     "from_name": "Inside Sales, Blankstahl Werdenfels GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar (Werdenfels)",
+     "body": "Dear customer,\n\nThank you for reaching out to us. We appreciate your continued movement and your commitment to a 24-month agreement. It is always a pleasure working with Hollerau Pumpenwerke GmbH, and we value our strong relationship.\n\nWe have already factored the contractual certainty into our previous reductions, bringing us to the best possible price we can offer. Therefore, a price of €5.10 per unit is our final offer for these terms. This is our final offer (letztes Angebot). Please decide.\n\nOur current Angebot stands at a price of €5.10 per unit, Zahlungsziel 30 days net, a contract term of 24 months, and a Preisgleitklausel on AS-14404. We can offer a Preisgleitklausel on AS-14404, AS-14404, AS-14404. Our price follows our main cost drivers: AS-14404, PPI-C2431, LCI-C.\n\nPlease note that this offer stays valid for 7 days.\n\nMit freundlichen Grüßen\nFranz Seidl\nInside Sales, Blankstahl Werdenfels GmbH",
+     "attachments": [
+      {
+       "attachment_id": "att:70740-4-quote",
+       "name": "quote-offer-70740-4.pdf",
+       "type": "pdf",
+       "content_b64": null
+      }
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70740-4",
+       "terms": {
+        "unit_price": 5.1,
+        "payment_days": 30,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 0.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "final_offer",
+     "signals": {
+      "reply_delay_days": 3,
+      "validity_days": 7
+     },
+     "missing_fields": [],
+     "claim_results": []
     }
    ],
    "timeouts": []

@@ -589,3 +589,7 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
 ## v2.15 live (17:37)
 - **P02 v2.15: 0.20** (ef17b16a03f0225d) - still weak; analyse after the context reset with `src/eval/compare_games.py ef17b16a03f0225d:v2.15 da8d0e3d77ce091c:v2.3_0.48 af2439f039d0e14f:v2.11_0.51`.
 - P05 v2.15: was still running at handoff (`/tmp/v215/P05.log`) - record it.
+- **P05 v2.15: 0.61 = new best P05** (e9eaf87e62371fdf): 10% market anchor, no walk-aways; accepted 70250's final €30.00 @ lead 28 / 14 d
+  (70210 final €31.50). The v2.15 RFQ fixes work.
+- P02 v2.15 again ended on its 30-day final (€369.45 @ 30 d) - the supplier itself switched its primary to 30 d; analyse why
+  it switches in some games (v2.3/v2.11 it stayed on 90 d).
