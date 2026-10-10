@@ -41,7 +41,7 @@ log = logging.getLogger("arena")
 
 
 def _central():
-    """analysis/agent_variants/central_cloud.py (cloud copy of central.py) - the team's shared learnings (loaded by path: this file is loaded by path)."""
+    """analysis/agent_variants/central.py - the team's shared learnings (loaded by path: this file is loaded by path)."""
     import importlib.util
     import sys
     if "noidea_central_cloud" in sys.modules:
@@ -55,7 +55,9 @@ def _central():
 
 central = _central()
 
-ALT_BAND = 1.003  # cloud fix #3: alternative sheets within 0.3% of our best C
+ALT_BAND = 1.003  # alternative sheets within 0.3% of our best C (cloud REGRESSION_FIX.md #3)
+MIRROR_GATE = 0.2  # from our 3rd ask: big mirror steps only while its last step >= 0.2x ours (cloud #4; P02 live 0.26-0.76x)
+R2_HEDGED_SHARE = 0.30  # cloud task 9: round-2 step for hedged suppliers, share of the gap (was ~0.16)
 PLANNED_ROUNDS = 8  # P07 live: ~25 s per round, so an 8-minute wave fits ~12-15; keep a margin
 MIN_GAIN_PTS = 1.0  # never pay more than ask - 1 pt unless it is the last word
 CLOSE_STEP = 0.0008  # near-close: ask for 0.08% below its standing cash value. Live P04 5f80eb75c793f352: 0.2% below
@@ -76,7 +78,10 @@ LIMIT_HIT = re.compile(r"(?i)maximum (flexibility|extension)|within (our|my) (de
 # is also behavioural: its price did not move between its last two replies (see decide)
 EDGE_PLUS = 0.0004  # edge sheet: its approval threshold + 0.04% (P03: 2.04% beats the house agent, 2.00% scores 0.919)
 FREEZE_CUT = 0.01  # escalation under a price freeze: also offer its own structure 1% lower
-CLOSE_GAP = 0.005  # cloud fix #5 (was 0.015): near-close only within 0.5% of its standing value; a stop 0.6% above its floor is still worth creeping to (live P04: 1.0% gap)
+CLOSE_GAP = 0.005  # ...and our last ask is within 0.5% of its standing value (cloud REGRESSION_FIX.md #5, was 1.5%:
+#                     near-closing at 1-1.5% accepted stops a few more small steps would have beaten; P04 sim 0.81 -> 0.86)
+CLOSE_GAP_LADDER = 0.015  # approval-ladder suppliers keep 1.5%: P03's holder sits at its committee price, and our
+#                     near-close at 0.8% below it in round 3 (431.27 vs 431.61) is part of the 0.936 recipe
 # How far below the opening quote to anchor (src/eval/calibrate.py: best deal vs opening, practice cases)
 ANCHOR_DEPTH = {"rfq": 0.20, "bundling": 0.15, "raw_material": 0.22, "capacity": 0.14, "quality": 0.09}
 ANCHOR_DEPTH_BY_GOAL = {"stabilise": 0.035,  # 0.03 in v1.5; 0.035 best offline for P02/P03 (3 sims; 0.04+ worse)
@@ -181,9 +186,8 @@ class NoIdeaAgent:
             if (cal := central.calibrated(case["case_id"], sid)):
                 full_cost, rate = cal["full_cost"], cal["interest_rate"]
             est = {"standard": std, "interest_rate": rate, "usual_rate": rate if cal else 0.08, "full_cost": full_cost}
-            # cloud fix (REGRESSION_FIX.md #2, ported from noidea.py v2.16): a chargeback is cash out at the defect rate it
-            # REALLY runs (scorecard ppm), x2 for a cash-short supplier; without this the sheet search treats chargebacks
-            # as free, asks the EUR 500 maximum and the supplier prices it in (P11 floor-stop sim 0.99 -> 0.80)
+            # a chargeback is cash out at the defect rate it REALLY runs (scorecard ppm), x2 for a cash-short supplier
+            # (noidea.py v2.16; cloud REGRESSION_FIX.md #2: without it the variant asked EUR 500 and P11 priced it in, 0.80)
             real_ppm = next((c["figure"] for c in self.claims if c["kind"] == "scorecard_ppm" and c["supplier"] == sid
                              and c.get("figure")), None)
             if real_ppm and "chargeback_eur_per_complaint" in case["negotiable"]:
@@ -240,17 +244,20 @@ class NoIdeaAgent:
         if central.mirror_supplier(case["case_id"]):  # keep its rounds going with verified facts (P02)
             out = [c for c in out if c["kind"] != "scorecard_otd"] + central.quality_notification_claims(
                 case, self.facts, sid) + central.delivery_year_claims(self.facts, sid)
-        if not best:  # no falling 6/12-month window: the steepest fall in any window the arena checks
-            drivers = {dr["series"]: dr.get("weight") or 0.0 for p in self.dossiers.get(sid, {}).get("parts", [])
-                       if p["part"] in parts for dr in p.get("cost_drivers", []) if dr["series"] not in hedged}
-            out += central.falling_window_claims(case, drivers)
+        # every unhedged cost driver without a falling 6/12-month window: its steepest fall in any window the arena
+        # checks (P08 cae4b621695f8161: labour -0.3% was never built because cold drawing already had one -> round 3
+        # went out empty: "Which figures is that based on?" and final)
+        drivers = {dr["series"]: dr.get("weight") or 0.0 for p in self.dossiers.get(sid, {}).get("parts", [])
+                   if p["part"] in parts for dr in p.get("cost_drivers", []) if dr["series"] not in hedged
+                   and dr["series"] not in best}
+        out += central.falling_window_claims(case, drivers)
         # quality notifications on the part (never cited before; cloud ENGINES.md: in 8 of 10 cases)
         if not central.mirror_supplier(case["case_id"]):
             out += central.quality_notification_claims(case, self.facts, sid)
         # a green scorecard is not an argument ("our service levels remain within acceptable parameters", P02/P03/P08)
         out = [c for c in out if not (c["kind"].startswith("scorecard") and c.get("colour") == "green"
                                       and not c.get("keep_alive") and case["type"] != "quality")]
-        seen, ranked = set(), []
+        seen, ranked, fillers = set(), [], []
         for c in central.rank(out, case["case_id"]):
             # a FALL of a cost driver is judged on its own: P08's 5 "does not change" were all on the hedged AS-14404
             falling = c["kind"] == "index_change" and (c.get("figure") or 0) < 0
@@ -258,7 +265,12 @@ class NoIdeaAgent:
                                               or falling):
                 seen.add(c["sentence"])
                 ranked.append(c)
-        return ranked
+            elif c["sentence"] not in seen and not (c["kind"] == "index_change" and (c.get("figure") or 0) > 0):
+                seen.add(c["sentence"])
+                fillers.append({**c, "filler": True})
+        # verified facts it shrugged off before go LAST, so no round goes out empty: a round without data drew "Which
+        # figures is that based on?" and a final (P02, P08); P02's "does not change" order history still came with a cut
+        return ranked + fillers
 
     def kit_calc(self, case, sid):
         """Bundling: the kit priced at the supplier's OWN current prices, plus today's best price for the
@@ -314,6 +326,8 @@ class NoIdeaAgent:
             # one index claim per e-mail: two or more drew "We received a lot of material" 11 of 11 times
             if c["kind"] == "index_change" and any(x["kind"] == "index_change" for x in picked):
                 continue
+            if (c.get("filler") or c.get("keep_alive")) and len(self.cited) == 0:  # round 1: only data that moves it
+                continue
             if not any(i in self.cited for i in c["ids"]):
                 picked.append(c)
         return picked
@@ -360,9 +374,7 @@ class NoIdeaAgent:
         out = []
         # the supplier may pick ANY sheet we send: only offer ones we'd be glad to have accepted
         # (offline eval P10: a 12-month sheet at equal supplier value cost us +33% and got picked)
-        # cloud fix (REGRESSION_FIX.md #3): alternatives within 0.3% of our best C, not 1%. With chargebacks priced at the
-        # real defect rate, P11 filled slot 2 with 800 ppm at the same price: same value to it, +EUR 4.7k to us (0.98 -> 0.93)
-        band = ranked[0][0] * ALT_BAND if ranked else 0
+        band = ranked[0][0] * ALT_BAND if ranked else 0  # 1% let P11 fill slot 2 with 800 ppm at its price (+EUR 4.7k)
         for c, t in ranked:  # 3 genuinely different options: same-cost duplicates waste a slot
             if c > band:
                 break
@@ -415,7 +427,8 @@ class NoIdeaAgent:
               if sv[j - 1] - hist[j - 1] > 1e-9]
         # a big move UP (it switched to a structure worth more to it) is not a stall (offline_eval stubborn P04: 0.98 -> 0.37)
         stalled = len(fr) >= 2 and fr[-1] > -STALL_NOISE and fr[-2] > 0 and (fr[-1] < STALL_DROP * fr[-2] or fr[-1] < STALL_MIN)
-        if stalled and sv[-1] - hist[-1] <= CLOSE_GAP * sv[-1]:
+        gap_ok = CLOSE_GAP_LADDER if central.committee_round1(s["dossier"].get("motives", {})) else CLOSE_GAP
+        if stalled and sv[-1] - hist[-1] <= gap_ok * sv[-1]:
             s["closing"] = True
             hist.append(max(hist[-1], min(sv[-2:]) * (1 - CLOSE_STEP)))
             return hist[-1]
@@ -423,17 +436,23 @@ class NoIdeaAgent:
         step = min(scheduled - hist[-1], max(theirs, (limit - anchor) / (2 * PLANNED_ROUNDS)))
         # central: a mirroring supplier answers our step with its own - step a share of the remaining gap, but stay a
         # near-close below its standing value (the deal is its price; our ask only has to pull it down)
-        # cloud fix (REGRESSION_FIX.md #4): keep stepping big only while it answers in kind. From our 3rd ask on, if its
-        # last step was < 0.3x our last step (in value), it is not mirroring here: back to the schedule. Round 2 (the P02
-        # recipe) is unchanged; a non-mirroring supplier now costs at most one big step.
-        answered = True
-        if len(hist) >= 2 and len(sv) >= 2 and hist[-1] - hist[-2] > 1e-9:
-            answered = (sv[-2] - sv[-1]) >= 0.3 * (hist[-1] - hist[-2])
-        if sv and answered and (central.mirror_supplier(case["case_id"]) or central.MIRROR.search(latest(events).get("body") or "")):
+        # ...only while it answers in kind (cloud #4): a non-mirroring supplier now costs at most one big step
+        answered = not (len(hist) >= 2 and len(sv) >= 2 and hist[-1] - hist[-2] > 1e-9
+                        and sv[-2] - sv[-1] < MIRROR_GATE * (hist[-1] - hist[-2]))
+        if sv and answered and (central.mirror_supplier(case["case_id"])
+                                or central.MIRROR.search(latest(events).get("body") or "")):
             gap = sv[-1] - hist[-1]
             step = max(step, central.MIRROR_SHARE * gap)
             hist.append(min(limit, hist[-1] + max(0.0, min(step, gap - sv[-1] * CLOSE_STEP))))
             return hist[-1]
+        # cloud task 9 (analysis/cases/P08_round2.md): a hedged supplier that goes final at our 3rd message gives its one
+        # real step in round 2 (P08: -0.15 to -0.17 in value on all 4 clause-free games) and only ~0.05 at its final,
+        # whatever we do. All its round-2 answers so far followed a 16%-of-gap step from us; the pooled mirror fit
+        # (132 steps, P01/P02/P07/P08/P18: its share = 0.08 + 0.19 x ours) says a 30% step buys ~2-3 cents more.
+        # Round 2 only, hedged_forward suppliers only (P08 among the practice cases).
+        if k == 1 and sv and "hedged_forward" in s["dossier"].get("motives", {}):
+            gap = sv[-1] - hist[-1]
+            step = max(step, R2_HEDGED_SHARE * gap)
         hist.append(min(limit, hist[-1] + max(0.0, step)))
         return hist[-1]
 
@@ -445,9 +464,8 @@ class NoIdeaAgent:
         live = [s for s in live_threads(threads) if s in self.sup]
         # talk to the supplier whose thread is furthest behind (RFQ round-robin)
         sid = min(live, key=lambda s: sum(m.get("from") == "buyer" for m in threads[s]))
-        # cloud fix (REGRESSION_FIX.md #1, ported from noidea.py v2.9): in an RFQ a bidder that says agreed / final_offer
-        # is handled first, the cheapest of them - not whoever's turn it is (live P05 f8604d43d3fbf92f accepted the
-        # dearest bid; floor-stop sim P05 0.76 -> 0.00: an agreed bidder was never answered)
+        # RFQ: a bidder at agreed / final_offer is answered first, the cheapest of them (noidea.py v2.9; cloud #1: the
+        # round-robin never answered a bidder that agreed in round 1 -> timeout, P05 floor-stop sim 0.76 -> 0.00)
         if len(live) > 1:
             closing = [x for x in live if latest(threads[x]).get("status") in ("agreed", "final_offer")]
             if closing:
