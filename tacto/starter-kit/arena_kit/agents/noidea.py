@@ -286,7 +286,10 @@ class NoIdeaAgent:
         # ... and when the price already jumped (P18: an index clause took it 5.26 -> 5.84 in July, +11%,
         # more than the 12-month driver change): the history shows the rise is already paid for
         pos =[c for c in mine if c["kind"] == "po_prices" and c["part"] in parts]
-        if case["type"] != "bundling" and (ask_pct <= 0 or any(self.po_jump(c) >= 3.0 for c in pos)):
+        # a short-fuse supplier (final in round 1-2) never reads a round-2 fact: its flat history goes in round 1
+        # (P10 probes A-E: "price history ... it holds and we took it into account", counter 31.50 vs 31.70 without)
+        short = self.patience_prior(case, sid) <= 2
+        if case["type"] != "bundling" and (ask_pct <= 0 or short or any(self.po_jump(c) >= 3.0 for c in pos)):
             out += pos
         elif case["type"] != "bundling" and ask_pct > 0:
             # an increase on a price our orders show flat or falling: the history is checkable data for a later round
@@ -699,6 +702,11 @@ class NoIdeaAgent:
         anchor_price = opening * (1 - depth)
         if kind == "price_increase":  # the cost-justified change (EDA 3) when it is lower
             anchor_price = min(anchor_price, s["cur"] * (1 + s["justified"] / 100))
+        if self.patience_prior(case, sid) <= 2 and kind != "rfq" and s["cur"] and opening > s["cur"]:
+            # a short-fuse supplier answers an anchor at its floor with its final at once (P10 x11: EUR 27.38 = C_best's
+            # price at lead 56, "your target price is unrealistic", final 31.70-32.00); the price we pay today, backed
+            # by the order history, keeps it negotiating (P10 probes B-E: open in round 1, final in round 2, 0.70)
+            anchor_price = max(anchor_price, s["cur"])
         limit_price = s["cur"] * (1 + (s["ask_pct"] - MIN_GAIN_PTS) / 100)
         market = self.market_low(case, sid)
         if market:
@@ -731,6 +739,11 @@ class NoIdeaAgent:
         # near-close (Neel; live P04 d3050f951dc2c45b: it moved 55% of the gap, then 5%, then final at that price while
         # we were ~1% lower): when it stalls close to us, ask a hair below its standing value instead of creeping
         sv = [supplier_value(case, complete_offer(case, t), s["est"]) for t in stand]
+        if k == 1 and sv and self.patience_prior(case, sid) <= 1:
+            # a capacity supplier goes final in round 2 (P10 probes B-E): one real step, a third of the gap to its
+            # standing value, drew its largest move (+0.51 -> -0.30; +0.15 -> -0.10; +1.01 -> -0.20)
+            hist.append(min(limit, hist[-1] + max(0.0, (sv[-1] - hist[-1]) / 3)))
+            return hist[-1]
         fr = [(sv[j - 1] - sv[j]) / (sv[j - 1] - hist[j - 1]) for j in range(1, min(len(sv), len(hist) + 1))
               if sv[j - 1] - hist[j - 1] > 1e-9]
         stalled = len(fr) >= 2 and fr[-1] > -STALL_NOISE and fr[-2] > 0 and (fr[-1] < STALL_DROP * fr[-2] or fr[-1] < STALL_MIN)
