@@ -137,3 +137,4 @@
 | 2026-10-10 19:32 | Parth | P07 | noidea 6d41238 + gap_steps / gpt-6-astra | 0.667 (arena HTTP 500 on our round-2 message (4 retries); closed by accepting its round-1 standing 5.46/30 d - not a test of the switch) | 79b7b274b6a77470 |
 | 2026-10-10 19:34 | Parth | P07 | noidea 6d41238 + gap_steps / gpt-6-astra | 0.667 (arena HTTP 500 again on round 2: central.py QN claim with 19 IDs (kit parts); closed by accepting its round-1 standing) | 55db9b3de85aa78d |
 | 2026-10-10 19:39 | Parth | P07 | noidea cb1dc6c + gap_steps / gpt-6-astra | 0.747 (agent with 30%-gap steps, QN claim capped) | 1dd6ecf10880bece |
+| 2026-10-10 19:42 | Parth | P07 | probe P07_A one 90 d sheet + bigger mirrored steps (scripted, no model) | 0.812 (unit_price=5.31, payment_days=90, contract_months=24) | 44f5c5da31a47e9e |
