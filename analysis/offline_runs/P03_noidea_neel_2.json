@@ -1,0 +1,51 @@
+{
+ "case": "P03",
+ "variant": "noidea_neel",
+ "sim_score": 0.962331054215999,
+ "end": "deal {'unit_price': 427.92, 'payment_days': 60, 'contract_months': 36, 'volume_per_year': 4580}",
+ "rounds": 1,
+ "emails": [
+  {
+   "body": "Dear Selvbrunn Drive Systems GmbH team,\n\nThank you for your proposal and for explaining the context behind it. We suggest focusing the renewal discussion on contract duration, extended payment terms and greater call-off flexibility, starting with adjustments within your approval remit and allowing time for any points requiring further approval.\n\nWe confirm a binding volume of 4,580 units per year for 36 months.\n\nOn this basis we propose three alternatives - option A: EUR 427.92 per unit, 60 days net, 36-month contract, 4,580 units per year; option B: EUR 426.49 per unit, 45 days net, 36-month contract, 4,580 units per year; option C: EUR 425.06 per unit, 30 days net, 36-month contract, 4,580 units per year. Please let us know which option works best for you.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [],
+   "sheets": [
+    {
+     "unit_price": 427.92,
+     "payment_days": 60,
+     "contract_months": 36,
+     "volume_per_year": 4580
+    },
+    {
+     "unit_price": 426.49,
+     "payment_days": 45,
+     "contract_months": 36,
+     "volume_per_year": 4580
+    },
+    {
+     "unit_price": 425.06,
+     "payment_days": 30,
+     "contract_months": 36,
+     "volume_per_year": 4580
+    }
+   ]
+  }
+ ],
+ "relationship": {
+  "390.0": {
+   "relationship_eur": 0.0,
+   "score": 0.962331054215999
+  },
+  "395.0": {
+   "relationship_eur": 4868.680505594523,
+   "score": 0.94789553751032
+  },
+  "400.0": {
+   "relationship_eur": 25079.497912049435,
+   "score": 0.8879709522540509
+  },
+  "403.2": {
+   "relationship_eur": 46251.72069644897,
+   "score": 0.8251958395938791
+  }
+ }
+}

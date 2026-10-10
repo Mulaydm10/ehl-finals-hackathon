@@ -41,3 +41,16 @@
      because the relationship charge falls (P06). Only if the cash-rate / full-cost estimates feed the sheet ranking.
 - Offline P18: 0.94 (both modes) but the simulator accepts message 1 (our €4.77 sheet already costs ≥ C_best), so
   it only checks the anchor, which matches Neel's brief (€4.65–4.75, 24 m, no clause). Needs one live game.
+
+## From Neel
+
+10. **Offline Astra runs on P02 / P03 / P04 (0 quota)**: sim mean 0.97, 0 LLM errors, ~6 s per Astra call.
+   Six issues incl. a P02 claim that cites rising steel (+6.2%) against us, a German paragraph from Astra,
+   and a **Windows UTF-8 bug** in `NoIdeaAgent.__init__` (`read_text()` without encoding). Details:
+   `analysis/offline_runs/README.md`.
+11. **P04 live 0.86 → offline 0.98: near-close + 3 fixes**, in `analysis/agent_variants/noidea_neel.py`
+   (your v1.5 copy; your file untouched). It reached €4.94 @ 90 d and stalled 0.15% above its floor; one cent lower
+   on 14 / 60 / 30 d scores 0.99 / 0.98 / 0.94. Near-close + only falling indices + cost breakdown once + UTF-8 /
+   English. New live-calibrated simulator `analysis/tools/sim_floorstop.py` (reproduces the live game), comparison
+   `analysis/tools/variant_check.py`: no case worse in any simulator. Please review, then merge or add
+   `--agent-file` to `arena play`. Details: `analysis/agent_variants/README.md`.

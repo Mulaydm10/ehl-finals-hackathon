@@ -1,0 +1,921 @@
+{
+ "session_id": "6833e98fbbe5ebdf",
+ "case_id": "case:P18",
+ "status": "ended",
+ "end_reason": "accepted",
+ "rounds": 4,
+ "set": "practice",
+ "opening": {
+  "sup:70740": {
+   "offer_id": "offer:70740-0",
+   "round": 0,
+   "status": "open",
+   "terms": {
+    "unit_price": 6.1,
+    "payment_days": 30,
+    "index_clause": null,
+    "contract_months": 12
+   },
+   "alternatives": [],
+   "missing_fields": [],
+   "claims": [
+    {
+     "type": "index_change",
+     "refs": [
+      "idx:AS-14404@2025-09",
+      "idx:AS-14404@2026-09"
+     ],
+     "asserted": {
+      "change_pct": 5.9
+     }
+    },
+    {
+     "type": "index_change",
+     "refs": [
+      "idx:LCI-C@2025-06",
+      "idx:LCI-C@2026-06"
+     ],
+     "asserted": {
+      "change_pct": 2.7
+     }
+    },
+    {
+     "type": "index_change",
+     "refs": [
+      "idx:PPI-C2431@2025-08",
+      "idx:PPI-C2431@2026-08"
+     ],
+     "asserted": {
+      "change_pct": 12.3
+     }
+    }
+   ],
+   "claim_results": [],
+   "signals": {
+    "reply_delay_days": 2,
+    "validity_days": 30
+   },
+   "text": "Dear customer,\n\nThank you for your enquiry. Please find our Angebot below. We are pleased to present our pricing and standard terms for your requirements.\n\nFor this item, we can offer a price of €6.10 per unit, with a Zahlungsziel 30 days net, a contract term of 12 months, and no Preisgleitklausel. Please note that this offer remains valid for 30 days.\n\nTo give you some background on our current cost structure, AS-14404 rose 5.9 % in twelve months and is 45 % of our cost. Furthermore, LCI-C rose 2.7 % in twelve months and is 5 % of our cost, while PPI-C2431 rose 12.3 % in twelve months and is 38 % of our cost.\n\nWe value our business relationship and look forward to serving you from our extensive product range.\n\nMit freundlichen Grüßen\nFranz Seidl\nInside Sales, Blankstahl Werdenfels GmbH"
+  }
+ },
+ "threads": {
+  "sup:70740": {
+   "offer_id": "offer:70740-3",
+   "status": "agreed",
+   "offers": 4,
+   "closed": null,
+   "seconds_left": null
+  }
+ },
+ "moves": [],
+ "result": {
+  "ended": true,
+  "deal": true,
+  "supplier_id": "sup:70740",
+  "offer_id": "offer:70740-3",
+  "terms": {
+   "payment_days": 60,
+   "lead_time_days": 14,
+   "volume_per_year": 23700,
+   "contract_months": 24,
+   "effective_date": "2027-01-01",
+   "index_clause": {
+    "series": "AS-14404",
+    "material_share": 0.45,
+    "deadband_pct": 0.0,
+    "base_month": "2026-08"
+   },
+   "incoterm": "DAP",
+   "tooling_eur": 0.0,
+   "ppm_commitment": 70,
+   "chargeback_eur_per_complaint": 0.0,
+   "unit_price": 5.4
+  },
+  "c_open": 295173.23,
+  "c_deal": 264022.74,
+  "c_alt": 301087.96,
+  "c_best": 222651.27,
+  "score": 0.4295318273251301,
+  "must_haves_ok": true,
+  "cost_breakdown": {
+   "price": 255960.0,
+   "uncovered_need": 0.0,
+   "fallback_risk": 0.0,
+   "payment_terms": 0.0,
+   "freight": 0.0,
+   "late_delivery": 0.0,
+   "quality": 0.0,
+   "tooling": 0.0,
+   "index_clause": 6910.92,
+   "index_risk": 1151.82,
+   "relationship": 0.0
+  },
+  "trace": [
+   {
+    "round": 0,
+    "actor": "sup:70740",
+    "move": {
+     "offer_id": "offer:70740-0",
+     "round": 0,
+     "status": "open",
+     "terms": {
+      "unit_price": 6.1,
+      "payment_days": 30,
+      "index_clause": null,
+      "contract_months": 12
+     },
+     "alternatives": [],
+     "missing_fields": [],
+     "claims": [
+      {
+       "type": "index_change",
+       "refs": [
+        "idx:AS-14404@2025-09",
+        "idx:AS-14404@2026-09"
+       ],
+       "asserted": {
+        "change_pct": 5.9
+       }
+      },
+      {
+       "type": "index_change",
+       "refs": [
+        "idx:LCI-C@2025-06",
+        "idx:LCI-C@2026-06"
+       ],
+       "asserted": {
+        "change_pct": 2.7
+       }
+      },
+      {
+       "type": "index_change",
+       "refs": [
+        "idx:PPI-C2431@2025-08",
+        "idx:PPI-C2431@2026-08"
+       ],
+       "asserted": {
+        "change_pct": 12.3
+       }
+      }
+     ],
+     "claim_results": [],
+     "signals": {
+      "reply_delay_days": 2,
+      "validity_days": 30
+     },
+     "text": "Dear customer,\n\nThank you for your enquiry. Please find our Angebot below. We are pleased to present our pricing and standard terms for your requirements.\n\nFor this item, we can offer a price of €6.10 per unit, with a Zahlungsziel 30 days net, a contract term of 12 months, and no Preisgleitklausel. Please note that this offer remains valid for 30 days.\n\nTo give you some background on our current cost structure, AS-14404 rose 5.9 % in twelve months and is 45 % of our cost. Furthermore, LCI-C rose 2.7 % in twelve months and is 5 % of our cost, while PPI-C2431 rose 12.3 % in twelve months and is 38 % of our cost.\n\nWe value our business relationship and look forward to serving you from our extensive product range.\n\nMit freundlichen Grüßen\nFranz Seidl\nInside Sales, Blankstahl Werdenfels GmbH"
+    },
+    "reasons": [
+     "AS-14404 rose … in twelve months and is … of our cost.",
+     "LCI-C rose … in twelve months and is … of our cost.",
+     "PPI-C2431 rose … in twelve months and is … of our cost."
+    ]
+   },
+   {
+    "round": 1,
+    "actor": "buyer",
+    "move": {
+     "type": "message",
+     "message_id": null,
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar (Werdenfels)",
+     "body": "Dear Blankstahl Werdenfels GmbH team,\n\nThank you for your offer and the cost-structure explanation; the index movements alone do not justify the proposed unit price. Please send your cost breakdown in XLSX format so we can examine the index-linked elements and establish scope for a materially lower unit price. A longer contract term can form part of that discussion; meanwhile, please identify the price reductions you can approve within your own authority.\n\nWe confirm a binding volume of 23,700 units per year for 24 months. Alloy surcharge 1.4404, Isartal Edelstahlwerk (fictional mill, derived) changed -0.3% from 2026-03 to 2026-09 (idx:AS-14404@2026-03, idx:AS-14404@2026-09). Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed +1.7% from 2025-12 to 2026-06 (idx:LCI-C@2025-12, idx:LCI-C@2026-06), well below the +4.5% you ask for. Our demand forecast for Round bar 1.4404 dia 30 mm is up +1.9% (fc:370010@2026-09). Could you share your cost breakdown for this part, so we can understand the drivers together?\n\nOn this basis we propose the attached term sheets (unit_price 4.77, index_clause None, payment_days 45, contract_months 24; unit_price 4.82, index_clause None, payment_days 90, contract_months 24; unit_price 4.74, index_clause None, payment_days 14, contract_months 24). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "refs": [
+      "fc:370010@2026-09",
+      "idx:AS-14404@2026-03",
+      "idx:AS-14404@2026-09",
+      "idx:LCI-C@2025-12",
+      "idx:LCI-C@2026-06"
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 4.77,
+        "index_clause": null,
+        "payment_days": 45,
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 4.82,
+        "index_clause": null,
+        "payment_days": 90,
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 4.74,
+        "index_clause": null,
+        "payment_days": 14,
+        "contract_months": 24
+       }
+      }
+     ],
+     "interpreted": {
+      "claims": [
+       {
+        "type": "index_change",
+        "refs": [
+         "idx:AS-14404@2026-03",
+         "idx:AS-14404@2026-09"
+        ],
+        "asserted": {
+         "change_pct": -0.3
+        }
+       },
+       {
+        "type": "index_change",
+        "refs": [
+         "idx:LCI-C@2025-12",
+         "idx:LCI-C@2026-06"
+        ],
+        "asserted": {
+         "change_pct": 1.7
+        }
+       },
+       {
+        "type": "volume_change",
+        "refs": [
+         "fc:370010@2026-09"
+        ],
+        "asserted": {
+         "change_pct": 1.9
+        }
+       }
+      ]
+     },
+     "supplier_id": "sup:70740"
+    },
+    "reasons": []
+   },
+   {
+    "round": 1,
+    "actor": "sup:70740",
+    "move": {
+     "offer_id": "offer:70740-1",
+     "round": 1,
+     "status": "open",
+     "terms": {
+      "unit_price": 5.6,
+      "payment_days": 90,
+      "index_clause": {
+       "series": "AS-14404",
+       "material_share": 0.45,
+       "deadband_pct": 0.0,
+       "base_month": "2026-08"
+      },
+      "contract_months": 24
+     },
+     "alternatives": [
+      {
+       "offer_id": "offer:70740-1-a",
+       "terms": {
+        "unit_price": 5.6,
+        "payment_days": 45,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 5.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      }
+     ],
+     "missing_fields": [],
+     "claims": [],
+     "claim_results": [
+      {
+       "index": 0,
+       "result": "verified"
+      },
+      {
+       "index": 1,
+       "result": "verified"
+      },
+      {
+       "index": 2,
+       "result": "verified"
+      }
+     ],
+     "signals": {
+      "reply_delay_days": 2,
+      "validity_days": 30
+     },
+     "text": "Dear customer,\n\nWe have reviewed your offer and can adjust our Angebot as follows. We checked the volume change data you cited; it holds and we took it into account. \n\nAS-14404 rose 5.9 % in twelve months and is 45 % of our cost. That remains. LCI-C rose 2.7 % in twelve months and is 5 % of our cost. That remains. PPI-C2431 rose 12.3 % in twelve months and is 38 % of our cost. That remains. \n\nThank you for confirming the volume for a 24-month period; however, please note that our detailed cost breakdown is proprietary and cannot be shared. Material accounts for about 45 % of our cost; more detail we do not share. Our price follows our main cost drivers: AS-14404, PPI-C2431, LCI-C. We can offer a Preisgleitklausel on AS-14404, AS-14404, AS-14404. We are agreeable to extending the contract to 24 months with 45-day payment terms, provided we implement the AS-14404 index clause to manage material price volatility. \n\nReflecting the verified index movements and the new contract parameters, we are pleased to offer a revised price of €5.60 per unit. Our current Angebot stands at a price of €5.60 per unit, Zahlungsziel 90 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404. Alternatively, with Zahlungsziel 45 days net and a Preisgleitklausel on AS-14404: €5.60 per unit, under a price of €5.60 per unit, Zahlungsziel 45 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404.\n\nPlease note that this offer remains valid for 30 days.\n\nMit freundlichen Grüßen\nFranz Seidl\nInside Sales, Blankstahl Werdenfels GmbH"
+    },
+    "reasons": [
+     "We checked the volume change data you cited; it holds and we took it into account.",
+     "AS-14404 rose … in twelve months and is … of our cost. That remains.",
+     "LCI-C rose … in twelve months and is … of our cost. That remains.",
+     "PPI-C2431 rose … in twelve months and is … of our cost. That remains.",
+     "Thank you for confirming the volume for a 24-month period; however, please note that our detailed cost breakdown is proprietary and cannot be shared.",
+     "We are agreeable to extending the contract to … months with 45-day payment terms, provided we implement the AS-14404 index clause to manage material price volatility.",
+     "Reflecting the verified index movements and the new contract parameters, we are pleased to offer a revised price of €… per unit.",
+     "Alternatively, with Zahlungsziel … days net and a Preisgleitklausel on AS-14404: €… per unit.",
+     "Material accounts for about … of our cost; more detail we do not share.",
+     "We can offer a Preisgleitklausel on AS-14404, AS-14404, AS-14404.",
+     "Our price follows our main cost drivers: AS-14404, PPI-C2431, LCI-C."
+    ]
+   },
+   {
+    "round": 2,
+    "actor": "buyer",
+    "move": {
+     "type": "message",
+     "message_id": null,
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar (Werdenfels)",
+     "body": "Dear Blankstahl Werdenfels GmbH team,\n\nThank you for revising your offer and recognising the confirmed commitment; an index clause must be matched by a lower base price and an appropriate deadband, not simply added to the proposed terms. While we note your confidentiality concerns, please provide a suitably redacted cost breakdown in XLSX format so we can assess the individual cost elements against the cited indices and avoid overlapping adjustments. Please also identify the further price reduction available within your current approval authority while any broader adjustment is considered.\n\nWe confirm a binding volume of 23,700 units per year for 24 months.\n\nOn this basis we propose the attached term sheets (unit_price 4.84, index_clause None, payment_days 14, contract_months 24; unit_price 4.89, index_clause None, payment_days 60, contract_months 24; unit_price 4.86, index_clause None, payment_days 30, contract_months 24). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "refs": [],
+     "term_sheets": [
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 4.84,
+        "index_clause": null,
+        "payment_days": 14,
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 4.89,
+        "index_clause": null,
+        "payment_days": 60,
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 4.86,
+        "index_clause": null,
+        "payment_days": 30,
+        "contract_months": 24
+       }
+      }
+     ],
+     "interpreted": {
+      "claims": []
+     },
+     "supplier_id": "sup:70740"
+    },
+    "reasons": []
+   },
+   {
+    "round": 2,
+    "actor": "sup:70740",
+    "move": {
+     "offer_id": "offer:70740-2",
+     "round": 2,
+     "status": "open",
+     "terms": {
+      "unit_price": 5.5,
+      "payment_days": 60,
+      "index_clause": {
+       "series": "AS-14404",
+       "material_share": 0.45,
+       "deadband_pct": 0.0,
+       "base_month": "2026-08"
+      },
+      "contract_months": 24
+     },
+     "alternatives": [
+      {
+       "offer_id": "offer:70740-2-a",
+       "terms": {
+        "unit_price": 5.5,
+        "payment_days": 30,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 5.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      }
+     ],
+     "missing_fields": [],
+     "claims": [],
+     "claim_results": [],
+     "signals": {
+      "reply_delay_days": 2,
+      "validity_days": 30
+     },
+     "text": "Dear customer,\n\nWe have reviewed your offer and can adjust our Angebot as follows. \n\nAs previously stated, our detailed cost breakdown is proprietary and we cannot provide the requested file. Material accounts for about 45 % of our cost; more detail we do not share. Which figures is that based on? Please send us the data. \n\nWe cannot accept a fixed price for a 24-month term; the AS-14404 index clause is mandatory to manage material volatility. We can offer a Preisgleitklausel on AS-14404, AS-14404, AS-14404. Adopting your proposed 30-day payment term alongside the required index clause, we can offer a reduced base price of €5.50 per unit.\n\nOur current Angebot is a price of €5.50 per unit, Zahlungsziel 60 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404. \n\nAlternatively, with Zahlungsziel 30 days net and a Preisgleitklausel on AS-14404: €5.50 per unit. This alternative package offers a price of €5.50 per unit, Zahlungsziel 30 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404.\n\nThis offer is valid for 30 days.\n\nMit freundlichen Grüßen\nFranz Seidl\nInside Sales, Blankstahl Werdenfels GmbH"
+    },
+    "reasons": [
+     "As previously stated, our detailed cost breakdown is proprietary and we cannot provide the requested file.",
+     "We cannot accept a fixed price for a 24-month term; the AS-14404 index clause is mandatory to manage material volatility.",
+     "Adopting your proposed 30-day payment term alongside the required index clause, we can offer a reduced base price of €… per unit.",
+     "Alternatively, with Zahlungsziel … days net and a Preisgleitklausel on AS-14404: €… per unit.",
+     "Which figures is that based on? Please send us the data.",
+     "Material accounts for about … of our cost; more detail we do not share.",
+     "We can offer a Preisgleitklausel on AS-14404, AS-14404, AS-14404."
+    ]
+   },
+   {
+    "round": 3,
+    "actor": "buyer",
+    "move": {
+     "type": "message",
+     "message_id": null,
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar (Werdenfels)",
+     "body": "Dear Blankstahl Werdenfels GmbH team,\n\nThank you for revising your offer; any acceptance of an index clause would need to be matched by a further base-price reduction and a deadband. We note your confidentiality concerns, but ask for a suitably redacted cost breakdown in XLSX format so we can assess the material component against the proposed index. Please also identify the further price improvement available within your approval authority in connection with a longer contract term.\n\nWe confirm a binding volume of 23,700 units per year for 24 months.\n\nOn this basis we propose the attached term sheets (unit_price 4.97, index_clause None, payment_days 60, contract_months 24; unit_price 4.92, index_clause None, payment_days 14, contract_months 24; unit_price 4.94, index_clause None, payment_days 30, contract_months 24). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "refs": [],
+     "term_sheets": [
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 4.97,
+        "index_clause": null,
+        "payment_days": 60,
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 4.92,
+        "index_clause": null,
+        "payment_days": 14,
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": null,
+       "terms": {
+        "unit_price": 4.94,
+        "index_clause": null,
+        "payment_days": 30,
+        "contract_months": 24
+       }
+      }
+     ],
+     "interpreted": {
+      "claims": []
+     },
+     "supplier_id": "sup:70740"
+    },
+    "reasons": []
+   },
+   {
+    "round": 3,
+    "actor": "sup:70740",
+    "move": {
+     "offer_id": "offer:70740-3",
+     "round": 3,
+     "status": "final_offer",
+     "terms": {
+      "unit_price": 5.4,
+      "payment_days": 60,
+      "index_clause": {
+       "series": "AS-14404",
+       "material_share": 0.45,
+       "deadband_pct": 0.0,
+       "base_month": "2026-08"
+      },
+      "contract_months": 24
+     },
+     "alternatives": [
+      {
+       "offer_id": "offer:70740-3-a",
+       "terms": {
+        "unit_price": 5.4,
+        "payment_days": 30,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 5.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      }
+     ],
+     "missing_fields": [],
+     "claims": [],
+     "claim_results": [],
+     "signals": {
+      "reply_delay_days": 3,
+      "validity_days": 7
+     },
+     "text": "Dear customer,\n\nThank you for reaching out to us again. We appreciate your revised offer and your willingness to consider an index clause in exchange for a base price reduction. Please understand that our detailed pricing breakdown is strictly proprietary, so we cannot provide the requested XLSX file. Material accounts for about 45 % of our cost; more detail we do not share. Our price follows our main cost drivers: AS-14404, PPI-C2431, LCI-C. We can offer a Preisgleitklausel on AS-14404, AS-14404, AS-14404. \n\nA binding higher volume would help us and can improve the price. Which volume can you commit to?\n\nWe are pleased to reduce our base price to €5.40 per unit for a 24-month contract with 30-day payment terms and the AS-14404 index clause. This is our final offer (letztes Angebot). Please decide. Our Angebot presents a price of €5.40 per unit, Zahlungsziel 60 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404. Alternatively, with Zahlungsziel 30 days net and a Preisgleitklausel on AS-14404: €5.40 per unit. This Angebot remains valid for 7 days.\n\nMit freundlichen Grüßen\nFranz Seidl\nInside Sales, Blankstahl Werdenfels GmbH"
+    },
+    "reasons": [
+     "We appreciate your revised offer and your willingness to consider an index clause in exchange for a base price reduction.",
+     "Please understand that our detailed pricing breakdown is strictly proprietary, so we cannot provide the requested XLSX file.",
+     "We are pleased to reduce our base price to €… per unit for a 24-month contract with 30-day payment terms and the AS-14404 index clause.",
+     "Alternatively, with Zahlungsziel … days net and a Preisgleitklausel on AS-14404: €… per unit.",
+     "Material accounts for about … of our cost; more detail we do not share.",
+     "We can offer a Preisgleitklausel on AS-14404, AS-14404, AS-14404.",
+     "Our price follows our main cost drivers: AS-14404, PPI-C2431, LCI-C.",
+     "A binding higher volume would help us and can improve the price.",
+     "Which volume can you commit to?"
+    ]
+   },
+   {
+    "round": 3,
+    "actor": "buyer",
+    "move": {
+     "type": "accept",
+     "offer_id": "offer:70740-3",
+     "supplier_id": "sup:70740"
+    },
+    "reasons": []
+   }
+  ]
+ },
+ "replay_url": "/replay/6833e98fbbe5ebdf",
+ "thread_messages": {
+  "sup:70740": {
+   "supplier_id": "sup:70740",
+   "offer_id": "offer:70740-3",
+   "status": "agreed",
+   "closed": null,
+   "messages": [
+    {
+     "thread_id": "thread:P18:70740",
+     "message_id": "msg:70740-0-0",
+     "in_reply_to": null,
+     "from": "sales@70740",
+     "from_name": "Inside Sales, Blankstahl Werdenfels GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Quote from Blankstahl Werdenfels GmbH: Alloy surcharge and base price for 1.4404 bar (Werdenfels)",
+     "body": "Dear customer,\n\nThank you for your enquiry. Please find our Angebot below. We are pleased to present our pricing and standard terms for your requirements.\n\nFor this item, we can offer a price of €6.10 per unit, with a Zahlungsziel 30 days net, a contract term of 12 months, and no Preisgleitklausel. Please note that this offer remains valid for 30 days.\n\nTo give you some background on our current cost structure, AS-14404 rose 5.9 % in twelve months and is 45 % of our cost. Furthermore, LCI-C rose 2.7 % in twelve months and is 5 % of our cost, while PPI-C2431 rose 12.3 % in twelve months and is 38 % of our cost.\n\nWe value our business relationship and look forward to serving you from our extensive product range.\n\nMit freundlichen Grüßen\nFranz Seidl\nInside Sales, Blankstahl Werdenfels GmbH",
+     "attachments": [
+      {
+       "attachment_id": "att:70740-0-quote",
+       "name": "quote-offer-70740-0.pdf",
+       "type": "pdf",
+       "content_b64": null
+      }
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70740-0",
+       "terms": {
+        "unit_price": 6.1,
+        "payment_days": 30,
+        "index_clause": null,
+        "contract_months": 12
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 2,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": []
+    },
+    {
+     "from": "buyer",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar (Werdenfels)",
+     "body": "Dear Blankstahl Werdenfels GmbH team,\n\nThank you for your offer and the cost-structure explanation; the index movements alone do not justify the proposed unit price. Please send your cost breakdown in XLSX format so we can examine the index-linked elements and establish scope for a materially lower unit price. A longer contract term can form part of that discussion; meanwhile, please identify the price reductions you can approve within your own authority.\n\nWe confirm a binding volume of 23,700 units per year for 24 months. Alloy surcharge 1.4404, Isartal Edelstahlwerk (fictional mill, derived) changed -0.3% from 2026-03 to 2026-09 (idx:AS-14404@2026-03, idx:AS-14404@2026-09). Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed +1.7% from 2025-12 to 2026-06 (idx:LCI-C@2025-12, idx:LCI-C@2026-06), well below the +4.5% you ask for. Our demand forecast for Round bar 1.4404 dia 30 mm is up +1.9% (fc:370010@2026-09). Could you share your cost breakdown for this part, so we can understand the drivers together?\n\nOn this basis we propose the attached term sheets (unit_price 4.77, index_clause None, payment_days 45, contract_months 24; unit_price 4.82, index_clause None, payment_days 90, contract_months 24; unit_price 4.74, index_clause None, payment_days 14, contract_months 24). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "term_sheets": [
+      {
+       "terms": {
+        "unit_price": 4.77,
+        "index_clause": null,
+        "payment_days": 45,
+        "contract_months": 24
+       }
+      },
+      {
+       "terms": {
+        "unit_price": 4.82,
+        "index_clause": null,
+        "payment_days": 90,
+        "contract_months": 24
+       }
+      },
+      {
+       "terms": {
+        "unit_price": 4.74,
+        "index_clause": null,
+        "payment_days": 14,
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [
+      "fc:370010@2026-09",
+      "idx:AS-14404@2026-03",
+      "idx:AS-14404@2026-09",
+      "idx:LCI-C@2025-12",
+      "idx:LCI-C@2026-06"
+     ]
+    },
+    {
+     "thread_id": "thread:P18:70740",
+     "message_id": "msg:70740-1-2",
+     "in_reply_to": null,
+     "from": "sales@70740",
+     "from_name": "Inside Sales, Blankstahl Werdenfels GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar (Werdenfels)",
+     "body": "Dear customer,\n\nWe have reviewed your offer and can adjust our Angebot as follows. We checked the volume change data you cited; it holds and we took it into account. \n\nAS-14404 rose 5.9 % in twelve months and is 45 % of our cost. That remains. LCI-C rose 2.7 % in twelve months and is 5 % of our cost. That remains. PPI-C2431 rose 12.3 % in twelve months and is 38 % of our cost. That remains. \n\nThank you for confirming the volume for a 24-month period; however, please note that our detailed cost breakdown is proprietary and cannot be shared. Material accounts for about 45 % of our cost; more detail we do not share. Our price follows our main cost drivers: AS-14404, PPI-C2431, LCI-C. We can offer a Preisgleitklausel on AS-14404, AS-14404, AS-14404. We are agreeable to extending the contract to 24 months with 45-day payment terms, provided we implement the AS-14404 index clause to manage material price volatility. \n\nReflecting the verified index movements and the new contract parameters, we are pleased to offer a revised price of €5.60 per unit. Our current Angebot stands at a price of €5.60 per unit, Zahlungsziel 90 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404. Alternatively, with Zahlungsziel 45 days net and a Preisgleitklausel on AS-14404: €5.60 per unit, under a price of €5.60 per unit, Zahlungsziel 45 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404.\n\nPlease note that this offer remains valid for 30 days.\n\nMit freundlichen Grüßen\nFranz Seidl\nInside Sales, Blankstahl Werdenfels GmbH",
+     "attachments": [],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70740-1",
+       "terms": {
+        "unit_price": 5.6,
+        "payment_days": 90,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 0.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": "offer:70740-1-a",
+       "terms": {
+        "unit_price": 5.6,
+        "payment_days": 45,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 5.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 2,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": [
+      {
+       "index": 0,
+       "result": "verified"
+      },
+      {
+       "index": 1,
+       "result": "verified"
+      },
+      {
+       "index": 2,
+       "result": "verified"
+      }
+     ]
+    },
+    {
+     "from": "buyer",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar (Werdenfels)",
+     "body": "Dear Blankstahl Werdenfels GmbH team,\n\nThank you for revising your offer and recognising the confirmed commitment; an index clause must be matched by a lower base price and an appropriate deadband, not simply added to the proposed terms. While we note your confidentiality concerns, please provide a suitably redacted cost breakdown in XLSX format so we can assess the individual cost elements against the cited indices and avoid overlapping adjustments. Please also identify the further price reduction available within your current approval authority while any broader adjustment is considered.\n\nWe confirm a binding volume of 23,700 units per year for 24 months.\n\nOn this basis we propose the attached term sheets (unit_price 4.84, index_clause None, payment_days 14, contract_months 24; unit_price 4.89, index_clause None, payment_days 60, contract_months 24; unit_price 4.86, index_clause None, payment_days 30, contract_months 24). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "term_sheets": [
+      {
+       "terms": {
+        "unit_price": 4.84,
+        "index_clause": null,
+        "payment_days": 14,
+        "contract_months": 24
+       }
+      },
+      {
+       "terms": {
+        "unit_price": 4.89,
+        "index_clause": null,
+        "payment_days": 60,
+        "contract_months": 24
+       }
+      },
+      {
+       "terms": {
+        "unit_price": 4.86,
+        "index_clause": null,
+        "payment_days": 30,
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": []
+    },
+    {
+     "thread_id": "thread:P18:70740",
+     "message_id": "msg:70740-2-4",
+     "in_reply_to": null,
+     "from": "sales@70740",
+     "from_name": "Inside Sales, Blankstahl Werdenfels GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar (Werdenfels)",
+     "body": "Dear customer,\n\nWe have reviewed your offer and can adjust our Angebot as follows. \n\nAs previously stated, our detailed cost breakdown is proprietary and we cannot provide the requested file. Material accounts for about 45 % of our cost; more detail we do not share. Which figures is that based on? Please send us the data. \n\nWe cannot accept a fixed price for a 24-month term; the AS-14404 index clause is mandatory to manage material volatility. We can offer a Preisgleitklausel on AS-14404, AS-14404, AS-14404. Adopting your proposed 30-day payment term alongside the required index clause, we can offer a reduced base price of €5.50 per unit.\n\nOur current Angebot is a price of €5.50 per unit, Zahlungsziel 60 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404. \n\nAlternatively, with Zahlungsziel 30 days net and a Preisgleitklausel on AS-14404: €5.50 per unit. This alternative package offers a price of €5.50 per unit, Zahlungsziel 30 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404.\n\nThis offer is valid for 30 days.\n\nMit freundlichen Grüßen\nFranz Seidl\nInside Sales, Blankstahl Werdenfels GmbH",
+     "attachments": [],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70740-2",
+       "terms": {
+        "unit_price": 5.5,
+        "payment_days": 60,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 0.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": "offer:70740-2-a",
+       "terms": {
+        "unit_price": 5.5,
+        "payment_days": 30,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 5.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 2,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": []
+    },
+    {
+     "from": "buyer",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar (Werdenfels)",
+     "body": "Dear Blankstahl Werdenfels GmbH team,\n\nThank you for revising your offer; any acceptance of an index clause would need to be matched by a further base-price reduction and a deadband. We note your confidentiality concerns, but ask for a suitably redacted cost breakdown in XLSX format so we can assess the material component against the proposed index. Please also identify the further price improvement available within your approval authority in connection with a longer contract term.\n\nWe confirm a binding volume of 23,700 units per year for 24 months.\n\nOn this basis we propose the attached term sheets (unit_price 4.97, index_clause None, payment_days 60, contract_months 24; unit_price 4.92, index_clause None, payment_days 14, contract_months 24; unit_price 4.94, index_clause None, payment_days 30, contract_months 24). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "term_sheets": [
+      {
+       "terms": {
+        "unit_price": 4.97,
+        "index_clause": null,
+        "payment_days": 60,
+        "contract_months": 24
+       }
+      },
+      {
+       "terms": {
+        "unit_price": 4.92,
+        "index_clause": null,
+        "payment_days": 14,
+        "contract_months": 24
+       }
+      },
+      {
+       "terms": {
+        "unit_price": 4.94,
+        "index_clause": null,
+        "payment_days": 30,
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": []
+    },
+    {
+     "thread_id": "thread:P18:70740",
+     "message_id": "msg:70740-3-6",
+     "in_reply_to": null,
+     "from": "sales@70740",
+     "from_name": "Inside Sales, Blankstahl Werdenfels GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar (Werdenfels)",
+     "body": "Dear customer,\n\nThank you for reaching out to us again. We appreciate your revised offer and your willingness to consider an index clause in exchange for a base price reduction. Please understand that our detailed pricing breakdown is strictly proprietary, so we cannot provide the requested XLSX file. Material accounts for about 45 % of our cost; more detail we do not share. Our price follows our main cost drivers: AS-14404, PPI-C2431, LCI-C. We can offer a Preisgleitklausel on AS-14404, AS-14404, AS-14404. \n\nA binding higher volume would help us and can improve the price. Which volume can you commit to?\n\nWe are pleased to reduce our base price to €5.40 per unit for a 24-month contract with 30-day payment terms and the AS-14404 index clause. This is our final offer (letztes Angebot). Please decide. Our Angebot presents a price of €5.40 per unit, Zahlungsziel 60 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404. Alternatively, with Zahlungsziel 30 days net and a Preisgleitklausel on AS-14404: €5.40 per unit. This Angebot remains valid for 7 days.\n\nMit freundlichen Grüßen\nFranz Seidl\nInside Sales, Blankstahl Werdenfels GmbH",
+     "attachments": [
+      {
+       "attachment_id": "att:70740-3-quote",
+       "name": "quote-offer-70740-3.pdf",
+       "type": "pdf",
+       "content_b64": null
+      }
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70740-3",
+       "terms": {
+        "unit_price": 5.4,
+        "payment_days": 60,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 0.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": "offer:70740-3-a",
+       "terms": {
+        "unit_price": 5.4,
+        "payment_days": 30,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 5.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "final_offer",
+     "signals": {
+      "reply_delay_days": 3,
+      "validity_days": 7
+     },
+     "missing_fields": [],
+     "claim_results": []
+    },
+    {
+     "from": "buyer",
+     "action": {
+      "type": "accept",
+      "term_sheet_id": "offer:70740-3"
+     }
+    },
+    {
+     "thread_id": "thread:P18:70740",
+     "message_id": "msg:70740-3-8",
+     "in_reply_to": null,
+     "from": "sales@70740",
+     "from_name": "Inside Sales, Blankstahl Werdenfels GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar (Werdenfels)",
+     "body": "Dear customer,\n\nThank you for your order. Our order confirmation is attached. \n\nIt is always a pleasure working with you, and we truly appreciate your continued business. Please let us know whenever you need anything else from our extensive range of high-quality steel products.\n\nMit freundlichen Grüßen\nFranz Seidl\nInside Sales, Blankstahl Werdenfels GmbH",
+     "attachments": [
+      {
+       "attachment_id": "att:70740-3-order_confirmation",
+       "name": "order-confirmation-offer-70740-3.pdf",
+       "type": "pdf",
+       "content_b64": null
+      }
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70740-3",
+       "terms": {
+        "unit_price": 5.4,
+        "payment_days": 60,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 0.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": "offer:70740-3-a",
+       "terms": {
+        "unit_price": 5.4,
+        "payment_days": 30,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 5.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "agreed",
+     "signals": {
+      "reply_delay_days": 3,
+      "validity_days": 7
+     },
+     "missing_fields": [],
+     "claim_results": []
+    }
+   ],
+   "timeouts": []
+  }
+ }
+}

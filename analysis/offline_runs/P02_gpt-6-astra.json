@@ -1,0 +1,313 @@
+[
+ {
+  "case": "P02",
+  "model": "gpt-6-astra",
+  "supplier_r": 0.3,
+  "sim_score": 0.9429914701022722,
+  "end": "deal",
+  "messages": 5,
+  "llm": {
+   "n": 5,
+   "seconds": 32.36275911331177,
+   "errors": 0
+  },
+  "emails": [
+   {
+    "to": "sup:70510",
+    "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+    "body": "Dear Antriebstechnik Nordmark AG team,\n\nThank you for your offer and for explaining the cost drivers behind it; we appreciate this transparency as a basis for a fair, stable agreement. Please review whether a modest adjustment within your approval authority, or flexibility on payment terms, would be possible in light of the cost changes outlined. We are happy to work through this step by step in the spirit of our partnership.\n\nWe confirm a binding volume of 6,110 units per year for 12 months. Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed +1.7% from 2025-12 to 2026-06 (idx:LCI-C@2025-12, idx:LCI-C@2026-06). Producer prices DE: basic iron and steel, ferro-alloys changed +6.2% from 2026-02 to 2026-08 (idx:PPI-C241@2026-02, idx:PPI-C241@2026-08).\n\nOn this basis we propose the attached term sheets (unit_price 358.56, payment_days 14, index_clause None; unit_price 359.83, payment_days 30, index_clause None; unit_price 361.03, payment_days 45, index_clause None). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 358.56,
+      "payment_days": 14,
+      "index_clause": null
+     },
+     {
+      "unit_price": 359.83,
+      "payment_days": 30,
+      "index_clause": null
+     },
+     {
+      "unit_price": 361.03,
+      "payment_days": 45,
+      "index_clause": null
+     }
+    ],
+    "refs": [
+     "idx:LCI-C@2025-12",
+     "idx:LCI-C@2026-06",
+     "idx:PPI-C241@2026-02",
+     "idx:PPI-C241@2026-08"
+    ],
+    "action": null
+   },
+   {
+    "to": "sup:70510",
+    "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+    "body": "Dear Antriebstechnik Nordmark AG team,\n\nUns ist an einer partnerschaftlichen Lösung gelegen, die für beide Seiten sachlich nachvollziehbar ist. Bitte prüfen Sie, welche kleineren Anpassungen innerhalb Ihres Entscheidungsrahmens möglich sind; für gegebenenfalls erforderliche interne Abstimmungen haben wir Verständnis.\n\nWe confirm a binding volume of 6,110 units per year for 12 months.\n\nOn this basis we propose the attached term sheets (unit_price 359.16, payment_days 14, index_clause None; unit_price 360.44, payment_days 30, index_clause None; unit_price 361.65, payment_days 45, index_clause None). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 359.16,
+      "payment_days": 14,
+      "index_clause": null
+     },
+     {
+      "unit_price": 360.44,
+      "payment_days": 30,
+      "index_clause": null
+     },
+     {
+      "unit_price": 361.65,
+      "payment_days": 45,
+      "index_clause": null
+     }
+    ],
+    "refs": [],
+    "action": null
+   },
+   {
+    "to": "sup:70510",
+    "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+    "body": "Dear Antriebstechnik Nordmark AG team,\n\nWe value our partnership with Nordmark and would like to work towards a fair, transparently justified adjustment together. Could you explore what modest flexibility on timing or terms is available within your existing approval authority, so that we can make progress step by step without unnecessary escalation?\n\nWe confirm a binding volume of 6,110 units per year for 12 months.\n\nOn this basis we propose the attached term sheets (unit_price 360.05, payment_days 14, index_clause None; unit_price 361.33, payment_days 30, index_clause None; unit_price 362.54, payment_days 45, index_clause None). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 360.05,
+      "payment_days": 14,
+      "index_clause": null
+     },
+     {
+      "unit_price": 361.33,
+      "payment_days": 30,
+      "index_clause": null
+     },
+     {
+      "unit_price": 362.54,
+      "payment_days": 45,
+      "index_clause": null
+     }
+    ],
+    "refs": [],
+    "action": null
+   },
+   {
+    "to": "sup:70510",
+    "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+    "body": "Dear Antriebstechnik Nordmark AG team,\n\nThank you for continuing the constructive dialogue; we value a fair and transparent outcome that supports our partnership. Could you explore a modest adjustment within your existing approval authority, including flexibility on timing or terms, so we can work through the remaining points step by step?\n\nWe confirm a binding volume of 6,110 units per year for 12 months.\n\nOn this basis we propose the attached term sheets (unit_price 361.09, payment_days 14, index_clause None; unit_price 362.37, payment_days 30, index_clause None). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 361.09,
+      "payment_days": 14,
+      "index_clause": null
+     },
+     {
+      "unit_price": 362.37,
+      "payment_days": 30,
+      "index_clause": null
+     }
+    ],
+    "refs": [],
+    "action": null
+   },
+   {
+    "to": "sup:70510",
+    "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+    "body": "Dear Antriebstechnik Nordmark AG team,\n\nWe value our partnership and would like to work towards a fair, clearly explained adjustment that supports a stable relationship. Please consider what flexibility on timing or terms you can offer within your approval authority; we are happy to explore manageable steps together rather than press for a larger move.\n\nWe confirm a binding volume of 6,110 units per year for 12 months.\n\nOn this basis we propose the attached term sheets (unit_price 361.78, payment_days 14, index_clause None). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 361.78,
+      "payment_days": 14,
+      "index_clause": null
+     }
+    ],
+    "refs": [],
+    "action": null
+   },
+   {
+    "to": "sup:70510",
+    "subject": null,
+    "body": null,
+    "term_sheets": [],
+    "refs": null,
+    "action": {
+     "type": "accept",
+     "term_sheet_id": "offer:sup:70510-5"
+    }
+   }
+  ]
+ },
+ {
+  "case": "P02",
+  "model": "gpt-6-astra",
+  "supplier_r": 0.1,
+  "sim_score": 0.976440993515992,
+  "end": "deal",
+  "messages": 6,
+  "llm": {
+   "n": 6,
+   "seconds": 36.249945878982544,
+   "errors": 0
+  },
+  "emails": [
+   {
+    "to": "sup:70510",
+    "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+    "body": "Dear Antriebstechnik Nordmark AG team,\n\nThank you for your offer and for explaining the cost drivers behind it; we appreciate this transparency as a basis for a fair and stable agreement. Please review whether a modest adjustment within your approval authority, or flexibility on payment terms, could help align the offer with the cost impact you have outlined. We are happy to work through this with you step by step in the spirit of a lasting partnership.\n\nWe confirm a binding volume of 6,110 units per year for 12 months. Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed +1.7% from 2025-12 to 2026-06 (idx:LCI-C@2025-12, idx:LCI-C@2026-06). Producer prices DE: basic iron and steel, ferro-alloys changed +6.2% from 2026-02 to 2026-08 (idx:PPI-C241@2026-02, idx:PPI-C241@2026-08).\n\nOn this basis we propose the attached term sheets (unit_price 358.56, payment_days 14, index_clause None; unit_price 359.83, payment_days 30, index_clause None; unit_price 361.03, payment_days 45, index_clause None). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 358.56,
+      "payment_days": 14,
+      "index_clause": null
+     },
+     {
+      "unit_price": 359.83,
+      "payment_days": 30,
+      "index_clause": null
+     },
+     {
+      "unit_price": 361.03,
+      "payment_days": 45,
+      "index_clause": null
+     }
+    ],
+    "refs": [
+     "idx:LCI-C@2025-12",
+     "idx:LCI-C@2026-06",
+     "idx:PPI-C241@2026-02",
+     "idx:PPI-C241@2026-08"
+    ],
+    "action": null
+   },
+   {
+    "to": "sup:70510",
+    "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+    "body": "Dear Antriebstechnik Nordmark AG team,\n\nWe value our partnership with Nordmark and would welcome a transparent explanation of any proposed adjustment so we can work towards a fair, stable arrangement. Please explore what flexibility on timing or terms is available within your approval authority; we are happy to work through this step by step.\n\nWe confirm a binding volume of 6,110 units per year for 12 months.\n\nOn this basis we propose the attached term sheets (unit_price 359.03, payment_days 14, index_clause None; unit_price 360.31, payment_days 30, index_clause None; unit_price 361.51, payment_days 45, index_clause None). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 359.03,
+      "payment_days": 14,
+      "index_clause": null
+     },
+     {
+      "unit_price": 360.31,
+      "payment_days": 30,
+      "index_clause": null
+     },
+     {
+      "unit_price": 361.51,
+      "payment_days": 45,
+      "index_clause": null
+     }
+    ],
+    "refs": [],
+    "action": null
+   },
+   {
+    "to": "sup:70510",
+    "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+    "body": "Dear Antriebstechnik Nordmark AG team,\n\nWe value our partnership and would welcome a fair, clearly explained basis for any adjustment. Please explore whether a modest revision or flexibility in timing and terms is possible within your existing approval authority; we are happy to work through this patiently together.\n\nWe confirm a binding volume of 6,110 units per year for 12 months.\n\nOn this basis we propose the attached term sheets (unit_price 360.05, payment_days 14, index_clause None; unit_price 361.33, payment_days 30, index_clause None; unit_price 362.54, payment_days 45, index_clause None). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 360.05,
+      "payment_days": 14,
+      "index_clause": null
+     },
+     {
+      "unit_price": 361.33,
+      "payment_days": 30,
+      "index_clause": null
+     },
+     {
+      "unit_price": 362.54,
+      "payment_days": 45,
+      "index_clause": null
+     }
+    ],
+    "refs": [],
+    "action": null
+   },
+   {
+    "to": "sup:70510",
+    "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+    "body": "Dear Antriebstechnik Nordmark AG team,\n\nWe value our partnership and would like to find a fair, transparent way forward together. Could you explore modest adjustments to timing or terms within your authority, so we can work through the possibilities step by step?\n\nWe confirm a binding volume of 6,110 units per year for 12 months.\n\nOn this basis we propose the attached term sheets (unit_price 360.91, payment_days 14, index_clause None; unit_price 362.19, payment_days 30, index_clause None; unit_price 363.41, payment_days 45, index_clause None). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 360.91,
+      "payment_days": 14,
+      "index_clause": null
+     },
+     {
+      "unit_price": 362.19,
+      "payment_days": 30,
+      "index_clause": null
+     },
+     {
+      "unit_price": 363.41,
+      "payment_days": 45,
+      "index_clause": null
+     }
+    ],
+    "refs": [],
+    "action": null
+   },
+   {
+    "to": "sup:70510",
+    "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+    "body": "Dear Antriebstechnik Nordmark AG team,\n\nWe value our partnership and would like to find a fair, transparent way forward together. Could you explore modest adjustments to timing or terms within your approval authority, leaving room for internal review where needed?\n\nWe confirm a binding volume of 6,110 units per year for 12 months.\n\nOn this basis we propose the attached term sheets (unit_price 361.6, payment_days 14, index_clause None; unit_price 362.89, payment_days 30, index_clause None; unit_price 364.1, payment_days 45, index_clause None). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 361.6,
+      "payment_days": 14,
+      "index_clause": null
+     },
+     {
+      "unit_price": 362.89,
+      "payment_days": 30,
+      "index_clause": null
+     },
+     {
+      "unit_price": 364.1,
+      "payment_days": 45,
+      "index_clause": null
+     }
+    ],
+    "refs": [],
+    "action": null
+   },
+   {
+    "to": "sup:70510",
+    "subject": "Re: Nordmark passes on copper for the 7.5 kW motor",
+    "body": "Dear Antriebstechnik Nordmark AG team,\n\nWe value our partnership and would like to find a fair, well-supported way forward together. Please explore what flexibility on timing or terms is available within your existing approval authority, so we can work through the options constructively without seeking a larger change at this stage.\n\nWe confirm a binding volume of 6,110 units per year for 12 months.\n\nOn this basis we propose the attached term sheets (unit_price 362.15, payment_days 14, index_clause None; unit_price 363.44, payment_days 30, index_clause None; unit_price 364.65, payment_days 45, index_clause None). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+    "term_sheets": [
+     {
+      "unit_price": 362.15,
+      "payment_days": 14,
+      "index_clause": null
+     },
+     {
+      "unit_price": 363.44,
+      "payment_days": 30,
+      "index_clause": null
+     },
+     {
+      "unit_price": 364.65,
+      "payment_days": 45,
+      "index_clause": null
+     }
+    ],
+    "refs": [],
+    "action": null
+   },
+   {
+    "to": "sup:70510",
+    "subject": null,
+    "body": null,
+    "term_sheets": [],
+    "refs": null,
+    "action": {
+     "type": "accept",
+     "term_sheet_id": "offer:sup:70510-6"
+    }
+   }
+  ]
+ }
+]
