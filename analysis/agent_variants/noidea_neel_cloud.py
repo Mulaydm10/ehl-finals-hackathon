@@ -118,6 +118,8 @@ Rules:
   their committee, their capacity, their restructuring) - never describe it as ours.
 - Never reveal our position: no targets, budgets, urgency, alternatives or weaknesses.
 - Do not mention materials, costs or facts that are not in their e-mail.
+- Never comment on their departments, colleagues or internal processes (credit control, finance, sales,
+  management disagreements) - P02 walked away twice after such remarks.
 - Do NOT write any number, price, percentage, date or data ID - the facts and offers are added
   below your paragraph automatically. No greeting line, no sign-off, no placeholders.
 Write in English only.
@@ -338,17 +340,23 @@ class NoIdeaAgent:
         return picked
 
     # ---- term sheets ---------------------------------------------------------------------------
-    def combos(self, case, base):
+    def combos(self, case, base, motives=()):
         opts = case.get("term_options", {})
         fields = [f for f in case["negotiable"] if f != "unit_price" and opts.get(f) and f != "index_clause"]
+        # cloud task 11 (MISTAKES.md L2): a capacity-tight supplier prices a lead time below its own quote as overtime it
+        # does not have - supplier_value has no lead-time premium, so lead 35 tied and went out (P10 675fc6b9: lead 35
+        # "technically unfeasible", final 35.00 = 0.46; every 0.67-0.70 game asked >= its quoted 54 d)
+        min_lead = (base.get("lead_time_days") or 0) if "capacity_tight" in motives else 0
         for values in itertools.product(*(opts[f] for f in fields)):
-            yield {**base, **dict(zip(fields, values))}
+            t = {**base, **dict(zip(fields, values))}
+            if (t.get("lead_time_days") or min_lead) >= min_lead:
+                yield t
 
     def sheets_at(self, case, sid, value, cap_price=None):
         """The 3 different term sheets that give the supplier `value` per unit at the lowest cost to us."""
         s = self.sup[sid]
         ranked = []
-        for t in self.combos(case, dict(s["open_terms"])):
+        for t in self.combos(case, dict(s["open_terms"]), s["dossier"].get("motives", {})):
             t = complete_offer(case, {**t, "unit_price": 100.0})
             v1 = supplier_value(case, t, s["est"])
             slope = (supplier_value(case, {**t, "unit_price": 200.0}, s["est"]) - v1) / 100.0
@@ -368,7 +376,9 @@ class NoIdeaAgent:
         # P08 / cloud ENGINES.md: 36 m was priced higher than 24 m (P07, P10) at equal cost to us -> prefer the horizon
         # length; committee suppliers keep the longest (P03: "reflecting the value of the binding 36-month contract")
         horizon = 12 * (case["buyer"].get("horizon_years") or 1)
-        longest = central.committee_round1(s["dossier"].get("motives", {}))
+        longest = central.committee_round1(s["dossier"].get("motives", {})) and case["type"] not in ("bundling", "raw_material")
+        # cloud task 11 (MISTAKES.md L3): 36 m was priced higher at P07 (0f754b13 0.65 vs 0.695-0.70 at 24 m); P18 is raw
+        # material like P08, where 36 m buys nothing on a 2-year horizon
         ranked.sort(key=lambda x: (round(x[0], 0), -(x[1].get("contract_months") or 0) if longest
                                    else abs((x[1].get("contract_months") or horizon) - horizon)))
         # approval ladder / price freeze (P03 offline run 1: we cut its EUR 438.21 by 2.7-3.3%, above the 2% its
@@ -408,6 +418,11 @@ class NoIdeaAgent:
         if central.mirror_supplier(case["case_id"]):
             depth = max(depth, central.MIRROR_ANCHOR)
         anchor_price = opening * (1 - depth)
+        # cloud task 11 (MISTAKES.md row 12): a capacity-tight supplier goes final in its first answer (P10 10 of 10), so a
+        # deep anchor is answered at its floor-level price (31.90-32.00 = 0.64-0.65); a credible ask at today's price kept
+        # round 1 open and closed at 31.20-31.56 (Parth's probes B-F, live 0.674-0.702)
+        if "capacity_tight" in s["dossier"].get("motives", {}) and s.get("cur"):
+            anchor_price = max(anchor_price, s["cur"])
         if kind == "price_increase":  # the cost-justified change (EDA 3) when it is lower
             anchor_price = min(anchor_price, s["cur"] * (1 + s["justified"] / 100))
         limit_price = s["cur"] * (1 + (s["ask_pct"] - MIN_GAIN_PTS) / 100)
@@ -639,6 +654,11 @@ class NoIdeaAgent:
         sheets = latest(events).get("term_sheets") or []
         if not sheets:
             return None, {}
+        # cloud task 11 (MISTAKES.md L1): only an id the arena accepts. Its alternatives ('-a') get "422 not a standing offer"
+        # (P05 d9af85e0); play.recover_close then strips the id, the stripped sheet stayed the cheapest, sheet_id = None and
+        # the final_offer branch WALKED (offline replay of 75 archived finals: 8 walks, e.g. P18 a99d02eb, P04 d3050f95).
+        # All 112 archived deals were on the primary. Alternatives still reach us via prose_alternative().
+        sheets = [x for x in sheets if x.get("term_sheet_id") and not str(x["term_sheet_id"]).endswith("-a")] or sheets[:1]
         ok = [x for x in sheets if must_haves_ok(case, x["terms"], s["std"])] or sheets
         best = min(ok, key=lambda x: total_cost(case, x["terms"], s["std"], s["est"]))
         return best["term_sheet_id"], best["terms"]
@@ -854,6 +874,11 @@ class NoIdeaAgent:
             if sh and t.get("unit_price") and must_haves_ok(case, t, s["std"]):
                 if best is None or t["unit_price"] < best[1]:
                     best = (sh, t["unit_price"])
+        # cloud task 11 (MISTAKES.md row 13): a dearer rival is no argument (P05 993222d5: "does not change our
+        # calculation" twice; 38.50 cited to a bidder at 36.00)
+        mine = standing(self.threads_ref.get(sid) or [])[1].get("unit_price") if sid in self.threads_ref else None
+        if best and mine and best[1] >= mine:
+            return None
         if best and (sid, best[0]) not in self.cited:
             self.cited.add((sid, best[0]))
             return best
