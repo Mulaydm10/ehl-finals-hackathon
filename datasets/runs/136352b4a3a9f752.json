@@ -1,0 +1,920 @@
+{
+ "session": {
+  "session_id": "136352b4a3a9f752",
+  "case_id": "case:P08",
+  "status": "ended",
+  "end_reason": "accepted",
+  "deal": 1,
+  "score": 0.6423512747471988,
+  "rounds": 4,
+  "created_at": 1791649725.4847293
+ },
+ "detail": {
+  "session_id": "136352b4a3a9f752",
+  "case_id": "case:P08",
+  "status": "ended",
+  "end_reason": "accepted",
+  "rounds": 4,
+  "set": "practice",
+  "opening": {
+   "sup:70710": {
+    "offer_id": "offer:70710-0",
+    "round": 0,
+    "status": "open",
+    "terms": {
+     "unit_price": 6.05,
+     "payment_days": 30,
+     "index_clause": null,
+     "contract_months": 12
+    },
+    "alternatives": [],
+    "missing_fields": [],
+    "claims": [
+     {
+      "type": "index_change",
+      "refs": [
+       "idx:AS-14404@2025-09",
+       "idx:AS-14404@2026-09"
+      ],
+      "asserted": {
+       "change_pct": 5.9
+      }
+     },
+     {
+      "type": "index_change",
+      "refs": [
+       "idx:LCI-C@2025-06",
+       "idx:LCI-C@2026-06"
+      ],
+      "asserted": {
+       "change_pct": 2.7
+      }
+     },
+     {
+      "type": "index_change",
+      "refs": [
+       "idx:PPI-C2431@2025-08",
+       "idx:PPI-C2431@2026-08"
+      ],
+      "asserted": {
+       "change_pct": 12.3
+      }
+     }
+    ],
+    "claim_results": [],
+    "signals": {
+     "reply_delay_days": 1,
+     "validity_days": 30
+    },
+    "text": "Dear customer,\n\nThank you for your enquiry. Please find our Angebot below. We are pleased to present our offer for a price of €6.05 per unit, with a Zahlungsziel 30 days net, a contract term of 12 months, and no Preisgleitklausel. \n\nTo give you some background on our current situation and market conditions, AS-14404 rose 5.9 % in twelve months and is 45 % of our cost. Furthermore, LCI-C rose 2.7 % in twelve months and is 5 % of our cost. Lastly, PPI-C2431 rose 12.3 % in twelve months and is 38 % of our cost. \n\nPlease note that this offer remains valid for 30 days. We look forward to continuing our partnership with your team and supplying your needs from our extensive inventory.\n\nMit freundlichen Grüßen\nGeorg Aigner\nInside Sales, Edelstahl-Service Donautal GmbH"
+   }
+  },
+  "threads": {
+   "sup:70710": {
+    "offer_id": "offer:70710-3",
+    "status": "agreed",
+    "offers": 4,
+    "closed": null,
+    "seconds_left": null
+   }
+  },
+  "moves": [],
+  "result": {
+   "ended": true,
+   "deal": true,
+   "supplier_id": "sup:70710",
+   "offer_id": "offer:70710-3",
+   "terms": {
+    "payment_days": 14,
+    "lead_time_days": 10,
+    "volume_per_year": 94800,
+    "contract_months": 24,
+    "effective_date": "2027-01-01",
+    "index_clause": {
+     "series": "AS-14404",
+     "material_share": 0.45,
+     "deadband_pct": 0.0,
+     "base_month": "2026-08"
+    },
+    "incoterm": "DAP",
+    "tooling_eur": 0.0,
+    "ppm_commitment": 50,
+    "chargeback_eur_per_complaint": 0.0,
+    "unit_price": 5.18
+   },
+   "c_open": 1135887.28,
+   "c_deal": 1023104.56,
+   "c_alt": 1157019.84,
+   "c_best": 960309.33,
+   "score": 0.6423512747471988,
+   "must_haves_ok": true,
+   "cost_breakdown": {
+    "price": 982128.0,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": 10039.53,
+    "freight": 0.0,
+    "late_delivery": 0.0,
+    "quality": 0.0,
+    "tooling": 0.0,
+    "index_clause": 26517.46,
+    "index_risk": 4419.58,
+    "relationship": 0.0
+   },
+   "trace": [
+    {
+     "round": 0,
+     "actor": "sup:70710",
+     "move": {
+      "offer_id": "offer:70710-0",
+      "round": 0,
+      "status": "open",
+      "terms": {
+       "unit_price": 6.05,
+       "payment_days": 30,
+       "index_clause": null,
+       "contract_months": 12
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [
+       {
+        "type": "index_change",
+        "refs": [
+         "idx:AS-14404@2025-09",
+         "idx:AS-14404@2026-09"
+        ],
+        "asserted": {
+         "change_pct": 5.9
+        }
+       },
+       {
+        "type": "index_change",
+        "refs": [
+         "idx:LCI-C@2025-06",
+         "idx:LCI-C@2026-06"
+        ],
+        "asserted": {
+         "change_pct": 2.7
+        }
+       },
+       {
+        "type": "index_change",
+        "refs": [
+         "idx:PPI-C2431@2025-08",
+         "idx:PPI-C2431@2026-08"
+        ],
+        "asserted": {
+         "change_pct": 12.3
+        }
+       }
+      ],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 1,
+       "validity_days": 30
+      },
+      "text": "Dear customer,\nThank you for your enquiry. Please find our Angebot below.\nOur terms: a price of €6.05 per unit, Zahlungsziel 30 days net, a contract term of 12 months, no Preisgleitklausel.\nHere is the background.\nAS-14404 rose 5.9 % in twelve months and is 45 % of our cost.\nLCI-C rose 2.7 % in twelve months and is 5 % of our cost.\nPPI-C2431 rose 12.3 % in twelve months and is 38 % of our cost.\nAnd while we are at it: our whole range is at your disposal, so if there is anything else on your list, just send it over - we are happy to quote.\nMit freundlichen Grüßen\nGeorg Aigner\nInside Sales, Edelstahl-Service Donautal GmbH"
+     },
+     "reasons": [
+      "AS-14404 rose … in twelve months and is … of our cost.",
+      "LCI-C rose … in twelve months and is … of our cost.",
+      "PPI-C2431 rose … in twelve months and is … of our cost."
+     ]
+    },
+    {
+     "round": 1,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "Re: Alloy surcharge and base price for 1.4404 bar",
+      "body": "Dear Georg Aigner,\n\nWe note your offer without a price adjustment clause and the index movements you cite. We do not accept the quoted price; please provide your cost breakdown in XLSX format, showing the actual cost impact of those movements, so we can negotiate reductions component by component.\n\n1. Volume and term: we confirm a binding volume of 94,800 units per year for 24 months, 189,600 units in total.\n2. Our proposal: option A: EUR 4.73 per unit, no price-adjustment clause, 45 days net, 24-month contract; option B: EUR 4.70 per unit, no price-adjustment clause, 14 days net, 24-month contract; option C: EUR 4.78 per unit, no price-adjustment clause, 90 days net, 24-month contract. Option A amounts to about EUR 896,808 over the term.\n3. Basis: On 2026-09-10 you quoted us EUR 5.45 per unit for this part; your new quote is 11.0% above it. Our demand forecast for this part is up +1.9% (fc:370010@2026-09). Producer prices DE: cold drawing of bars changed -2.3% from 2026-06 to 2026-08 (idx:PPI-C2431@2026-06, idx:PPI-C2431@2026-08).\n4. Next step: All other terms as in your quote; on your written confirmation of one option we will issue the order.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [
+       "fc:370010@2026-09",
+       "idx:PPI-C2431@2026-06",
+       "idx:PPI-C2431@2026-08"
+      ],
+      "term_sheets": [
+       {
+        "term_sheet_id": null,
+        "terms": {
+         "unit_price": 4.73,
+         "index_clause": null,
+         "payment_days": 45,
+         "contract_months": 24
+        }
+       },
+       {
+        "term_sheet_id": null,
+        "terms": {
+         "unit_price": 4.7,
+         "index_clause": null,
+         "payment_days": 14,
+         "contract_months": 24
+        }
+       },
+       {
+        "term_sheet_id": null,
+        "terms": {
+         "unit_price": 4.78,
+         "index_clause": null,
+         "payment_days": 90,
+         "contract_months": 24
+        }
+       }
+      ],
+      "interpreted": {
+       "claims": [
+        {
+         "type": "index_change",
+         "refs": [
+          "idx:PPI-C2431@2026-06",
+          "idx:PPI-C2431@2026-08"
+         ],
+         "asserted": {
+          "change_pct": -2.3
+         }
+        },
+        {
+         "type": "volume_change",
+         "refs": [
+          "fc:370010@2026-09"
+         ],
+         "asserted": {
+          "change_pct": 1.9
+         }
+        }
+       ]
+      },
+      "supplier_id": "sup:70710"
+     },
+     "reasons": []
+    },
+    {
+     "round": 1,
+     "actor": "sup:70710",
+     "move": {
+      "offer_id": "offer:70710-1",
+      "round": 1,
+      "status": "open",
+      "terms": {
+       "unit_price": 5.53,
+       "payment_days": 90,
+       "index_clause": {
+        "series": "AS-14404",
+        "material_share": 0.45,
+        "deadband_pct": 0.0,
+        "base_month": "2026-08"
+       },
+       "contract_months": 24
+      },
+      "alternatives": [
+       {
+        "offer_id": "offer:70710-1-a",
+        "terms": {
+         "unit_price": 5.45,
+         "payment_days": 14,
+         "index_clause": {
+          "series": "AS-14404",
+          "material_share": 0.45,
+          "deadband_pct": 0.0,
+          "base_month": "2026-08"
+         },
+         "contract_months": 24
+        }
+       }
+      ],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [
+       {
+        "index": 0,
+        "result": "verified"
+       },
+       {
+        "index": 1,
+        "result": "verified"
+       }
+      ],
+      "signals": {
+       "reply_delay_days": 1,
+       "validity_days": 30
+      },
+      "text": "Dear customer,\nMany thanks for your e-mail, and great to hear from you; I went through it right away with our team.\nWe have reviewed your offer and can adjust our Angebot as follows.\nOur terms: a price of €5.53 per unit, Zahlungsziel 90 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404.\nA few words on this from our side.\nWe checked the index change data you cited; it holds and we took it into account.\nWe checked the volume change data you cited; it holds and we took it into account.\nAS-14404 rose 5.9 % in twelve months and is 45 % of our cost. That remains.\nLCI-C rose 2.7 % in twelve months and is 5 % of our cost. That remains.\nPPI-C2431 rose 12.3 % in twelve months and is 38 % of our cost. That remains.\nWe have verified the recent decrease in PPI-C2431 and adjusted our pricing accordingly.\nWhile we welcome the 24-month volume commitment, a contract of this duration requires an AS-14404 index clause.\nBuilding on your 14-day payment option, we propose €5.45 per unit with the index clause applied.\nMaterial accounts for about 45 % of our cost; more detail we do not share.\nWe look forward to doing good business together, and our team is always there for you.\nMit freundlichen Grüßen\nGeorg Aigner\nInside Sales, Edelstahl-Service Donautal GmbH"
+     },
+     "reasons": [
+      "We checked the index change data you cited; it holds and we took it into account.",
+      "We checked the volume change data you cited; it holds and we took it into account.",
+      "AS-14404 rose … in twelve months and is … of our cost. That remains.",
+      "LCI-C rose … in twelve months and is … of our cost. That remains.",
+      "PPI-C2431 rose … in twelve months and is … of our cost. That remains.",
+      "We have verified the recent decrease in PPI-C2431 and adjusted our pricing accordingly.",
+      "While we welcome the 24-month volume commitment, a contract of this duration requires an AS-14404 index clause.",
+      "Building on your 14-day payment option, we propose €… per unit with the index clause applied.",
+      "Material accounts for about … of our cost; more detail we do not share."
+     ]
+    },
+    {
+     "round": 2,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "Re: Alloy surcharge and base price for 1.4404 bar",
+      "body": "Dear Georg Aigner,\n\nYou have adjusted your pricing to reflect the verified index decrease and made the proposed contract term conditional on an alloy surcharge index clause. We require a lower base price in exchange for that clause, a defined deadband, and no index-driven increases before the corresponding changes affect your actual costs.\n\n1. Volume and term: we confirm a binding volume of 94,800 units per year for 24 months, 189,600 units in total.\n2. Our proposal: EUR 4.80 per unit, no price-adjustment clause, 14 days net, 24-month contract. This amounts to about EUR 910,080 over the term.\n3. Basis: Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [
+       "idx:LCI-C@2025-10",
+       "idx:LCI-C@2026-01"
+      ],
+      "term_sheets": [
+       {
+        "term_sheet_id": null,
+        "terms": {
+         "unit_price": 4.8,
+         "index_clause": null,
+         "payment_days": 14,
+         "contract_months": 24
+        }
+       }
+      ],
+      "interpreted": {
+       "claims": [
+        {
+         "type": "index_change",
+         "refs": [
+          "idx:LCI-C@2025-10",
+          "idx:LCI-C@2026-01"
+         ],
+         "asserted": {
+          "change_pct": -0.3
+         }
+        }
+       ]
+      },
+      "supplier_id": "sup:70710"
+     },
+     "reasons": []
+    },
+    {
+     "round": 2,
+     "actor": "sup:70710",
+     "move": {
+      "offer_id": "offer:70710-2",
+      "round": 2,
+      "status": "open",
+      "terms": {
+       "unit_price": 5.28,
+       "payment_days": 14,
+       "index_clause": {
+        "series": "AS-14404",
+        "material_share": 0.45,
+        "deadband_pct": 0.0,
+        "base_month": "2026-08"
+       },
+       "contract_months": 24
+      },
+      "alternatives": [
+       {
+        "offer_id": "offer:70710-2-a",
+        "terms": {
+         "unit_price": 5.39,
+         "payment_days": 14,
+         "index_clause": {
+          "series": "AS-14404",
+          "material_share": 0.45,
+          "deadband_pct": 5.0,
+          "base_month": "2026-08"
+         },
+         "contract_months": 24
+        }
+       }
+      ],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [
+       {
+        "index": 0,
+        "result": "verified"
+       }
+      ],
+      "signals": {
+       "reply_delay_days": 1,
+       "validity_days": 30
+      },
+      "text": "Dear customer,\nThank you very much for your message - it is always a pleasure to hear from you, and we are glad to help wherever we can.\nWe have reviewed your offer and can adjust our Angebot as follows.\nOur terms: a price of €5.28 per unit, Zahlungsziel 14 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404.\nA few words on this from our side.\nAS-14404 rose 5.9 % in twelve months and is 45 % of our cost. That remains.\nLCI-C rose 2.7 % in twelve months and is 5 % of our cost. That remains.\nPPI-C2431 rose 12.3 % in twelve months and is 38 % of our cost. That remains.\nWe have verified the slight decrease in the labour cost index you cited and adjusted our price accordingly.\nA 24-month contract requires the AS-14404 index clause to manage long-term material risks.\nBuilding on your 14-day payment term and the required index clause, we can offer €5.39 per unit.\nAlternatively, with a Preisgleitklausel on AS-14404: €5.39 per unit.\nOur price follows our main cost drivers: AS-14404, PPI-C2431, LCI-C.\nWe can offer a Preisgleitklausel on AS-14404, AS-14404, AS-14404.\nAnd while we are at it: our whole range is at your disposal, so if there is anything else on your list, just send it over - we are happy to quote.\nMit freundlichen Grüßen\nGeorg Aigner\nInside Sales, Edelstahl-Service Donautal GmbH"
+     },
+     "reasons": [
+      "AS-14404 rose … in twelve months and is … of our cost. That remains.",
+      "LCI-C rose … in twelve months and is … of our cost. That remains.",
+      "PPI-C2431 rose … in twelve months and is … of our cost. That remains.",
+      "We have verified the slight decrease in the labour cost index you cited and adjusted our price accordingly.",
+      "A 24-month contract requires the AS-14404 index clause to manage long-term material risks.",
+      "Building on your 14-day payment term and the required index clause, we can offer €… per unit.",
+      "Alternatively, with a Preisgleitklausel on AS-14404: €… per unit.",
+      "Our price follows our main cost drivers: AS-14404, PPI-C2431, LCI-C.",
+      "We can offer a Preisgleitklausel on AS-14404, AS-14404, AS-14404."
+     ]
+    },
+    {
+     "round": 3,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "Re: Alloy surcharge and base price for 1.4404 bar",
+      "body": "Dear Georg Aigner,\n\nWe acknowledge your price adjustment following the labour cost index review and your requirement for an alloy surcharge index clause. Any agreement on that clause requires a lower base price and a deadband, with current pricing held until the clause takes effect.\n\n1. Volume and term: we confirm a binding volume of 94,800 units per year for 24 months, 189,600 units in total.\n2. Our proposal: EUR 4.95 per unit, no price-adjustment clause, 14 days net, 24-month contract. This amounts to about EUR 938,520 over the term.\n3. Basis: We raised quality notifications on this part over the past year (qn:20004725, qn:20004878, qn:20004895, qn:20004922, qn:20004940, qn:20004951, qn:20005016).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [
+       "qn:20004725",
+       "qn:20004878",
+       "qn:20004895",
+       "qn:20004922",
+       "qn:20004940",
+       "qn:20004951",
+       "qn:20005016"
+      ],
+      "term_sheets": [
+       {
+        "term_sheet_id": null,
+        "terms": {
+         "unit_price": 4.95,
+         "index_clause": null,
+         "payment_days": 14,
+         "contract_months": 24
+        }
+       }
+      ],
+      "interpreted": {
+       "claims": [
+        {
+         "type": "quality_record",
+         "refs": [
+          "qn:20004725",
+          "qn:20004878",
+          "qn:20004895",
+          "qn:20004922",
+          "qn:20004940",
+          "qn:20004951",
+          "qn:20005016"
+         ],
+         "asserted": {
+          "ppm": 237.57142857142858
+         }
+        }
+       ]
+      },
+      "supplier_id": "sup:70710"
+     },
+     "reasons": []
+    },
+    {
+     "round": 3,
+     "actor": "sup:70710",
+     "move": {
+      "offer_id": "offer:70710-3",
+      "round": 3,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 5.18,
+       "payment_days": 14,
+       "index_clause": {
+        "series": "AS-14404",
+        "material_share": 0.45,
+        "deadband_pct": 0.0,
+        "base_month": "2026-08"
+       },
+       "contract_months": 24
+      },
+      "alternatives": [
+       {
+        "offer_id": "offer:70710-3-a",
+        "terms": {
+         "unit_price": 5.3,
+         "payment_days": 14,
+         "index_clause": {
+          "series": "AS-14404",
+          "material_share": 0.45,
+          "deadband_pct": 5.0,
+          "base_month": "2026-08"
+         },
+         "contract_months": 24
+        }
+       }
+      ],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [
+       {
+        "index": 0,
+        "result": "verified"
+       }
+      ],
+      "signals": {
+       "reply_delay_days": 2,
+       "validity_days": 7
+      },
+      "text": "Dear customer,\nMany thanks for your e-mail, and great to hear from you; I went through it right away with our team.\nThis is our final offer (letztes Angebot). Please decide.\nOur terms: a price of €5.18 per unit, Zahlungsziel 14 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404.\nHere is the background.\nWe have reviewed the quality notifications you cited; while we take quality seriously, they do not warrant a price reduction.\nA 24-month contract requires the AS-14404 index clause to manage long-term material risks.\nAlternatively, with a Preisgleitklausel on AS-14404: €5.30 per unit.\nOur current defect rate for you is about 50 ppm.\nWe can offer a Preisgleitklausel on AS-14404, AS-14404, AS-14404.\nOur conditions follow our Preisliste and discount tiers.\nWe look forward to doing good business together, and our team is always there for you.\nMit freundlichen Grüßen\nGeorg Aigner\nInside Sales, Edelstahl-Service Donautal GmbH"
+     },
+     "reasons": [
+      "We have reviewed the quality notifications you cited; while we take quality seriously, they do not warrant a price reduction.",
+      "A 24-month contract requires the AS-14404 index clause to manage long-term material risks.",
+      "Alternatively, with a Preisgleitklausel on AS-14404: €… per unit.",
+      "Our current defect rate for you is about … ppm.",
+      "We can offer a Preisgleitklausel on AS-14404, AS-14404, AS-14404."
+     ]
+    },
+    {
+     "round": 3,
+     "actor": "buyer",
+     "move": {
+      "type": "accept",
+      "offer_id": "offer:70710-3",
+      "supplier_id": "sup:70710"
+     },
+     "reasons": []
+    }
+   ]
+  },
+  "replay_url": "/replay/136352b4a3a9f752"
+ },
+ "threads": {
+  "sup:70710": {
+   "supplier_id": "sup:70710",
+   "offer_id": "offer:70710-3",
+   "status": "agreed",
+   "closed": null,
+   "messages": [
+    {
+     "thread_id": "thread:P08:70710",
+     "message_id": "msg:70710-0-0",
+     "in_reply_to": null,
+     "from": "sales@70710",
+     "from_name": "Inside Sales, Edelstahl-Service Donautal GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Quote from Edelstahl-Service Donautal GmbH: Alloy surcharge and base price for 1.4404 bar",
+     "body": "Dear customer,\n\nThank you for your enquiry. Please find our Angebot below. We are pleased to present our offer for a price of €6.05 per unit, with a Zahlungsziel 30 days net, a contract term of 12 months, and no Preisgleitklausel. \n\nTo give you some background on our current situation and market conditions, AS-14404 rose 5.9 % in twelve months and is 45 % of our cost. Furthermore, LCI-C rose 2.7 % in twelve months and is 5 % of our cost. Lastly, PPI-C2431 rose 12.3 % in twelve months and is 38 % of our cost. \n\nPlease note that this offer remains valid for 30 days. We look forward to continuing our partnership with your team and supplying your needs from our extensive inventory.\n\nMit freundlichen Grüßen\nGeorg Aigner\nInside Sales, Edelstahl-Service Donautal GmbH",
+     "attachments": [
+      {
+       "attachment_id": "att:70710-0-quote",
+       "name": "quote-offer-70710-0.pdf",
+       "type": "pdf",
+       "content_b64": null
+      }
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70710-0",
+       "terms": {
+        "unit_price": 6.05,
+        "payment_days": 30,
+        "index_clause": null,
+        "contract_months": 12
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": []
+    },
+    {
+     "from": "buyer",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar",
+     "body": "Dear Georg Aigner,\n\nWe note your offer without a price adjustment clause and the index movements you cite. We do not accept the quoted price; please provide your cost breakdown in XLSX format, showing the actual cost impact of those movements, so we can negotiate reductions component by component.\n\n1. Volume and term: we confirm a binding volume of 94,800 units per year for 24 months, 189,600 units in total.\n2. Our proposal: option A: EUR 4.73 per unit, no price-adjustment clause, 45 days net, 24-month contract; option B: EUR 4.70 per unit, no price-adjustment clause, 14 days net, 24-month contract; option C: EUR 4.78 per unit, no price-adjustment clause, 90 days net, 24-month contract. Option A amounts to about EUR 896,808 over the term.\n3. Basis: On 2026-09-10 you quoted us EUR 5.45 per unit for this part; your new quote is 11.0% above it. Our demand forecast for this part is up +1.9% (fc:370010@2026-09). Producer prices DE: cold drawing of bars changed -2.3% from 2026-06 to 2026-08 (idx:PPI-C2431@2026-06, idx:PPI-C2431@2026-08).\n4. Next step: All other terms as in your quote; on your written confirmation of one option we will issue the order.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "term_sheets": [
+      {
+       "terms": {
+        "unit_price": 4.73,
+        "index_clause": null,
+        "payment_days": 45,
+        "contract_months": 24
+       }
+      },
+      {
+       "terms": {
+        "unit_price": 4.7,
+        "index_clause": null,
+        "payment_days": 14,
+        "contract_months": 24
+       }
+      },
+      {
+       "terms": {
+        "unit_price": 4.78,
+        "index_clause": null,
+        "payment_days": 90,
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [
+      "fc:370010@2026-09",
+      "idx:PPI-C2431@2026-06",
+      "idx:PPI-C2431@2026-08"
+     ],
+     "attachments": [
+      {
+       "name": "call_off_schedule.csv",
+       "type": "csv",
+       "content_b64": "bW9udGgscXVhbnRpdHkKMjAyNy0wMSw3OTAwCjIwMjctMDIsNzkwMAoyMDI3LTAzLDc5MDAKMjAyNy0wNCw3OTAwCjIwMjctMDUsNzkwMAoyMDI3LTA2LDc5MDAKMjAyNy0wNyw3OTAwCjIwMjctMDgsNzkwMAoyMDI3LTA5LDc5MDAKMjAyNy0xMCw3OTAwCjIwMjctMTEsNzkwMAoyMDI3LTEyLDc5MDAKMjAyOC0wMSw3OTAwCjIwMjgtMDIsNzkwMAoyMDI4LTAzLDc5MDAKMjAyOC0wNCw3OTAwCjIwMjgtMDUsNzkwMAoyMDI4LTA2LDc5MDAKMjAyOC0wNyw3OTAwCjIwMjgtMDgsNzkwMAoyMDI4LTA5LDc5MDAKMjAyOC0xMCw3OTAwCjIwMjgtMTEsNzkwMAoyMDI4LTEyLDc5MDAK"
+      }
+     ]
+    },
+    {
+     "thread_id": "thread:P08:70710",
+     "message_id": "msg:70710-1-2",
+     "in_reply_to": null,
+     "from": "sales@70710",
+     "from_name": "Inside Sales, Edelstahl-Service Donautal GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar",
+     "body": "Dear customer,\n\nWe have reviewed your offer and can adjust our Angebot as follows.\n\nWe checked the index change data you cited; it holds and we took it into account. We checked the volume change data you cited; it holds and we took it into account. AS-14404 rose 5.9 % in twelve months and is 45 % of our cost. That remains. LCI-C rose 2.7 % in twelve months and is 5 % of our cost. That remains. PPI-C2431 rose 12.3 % in twelve months and is 38 % of our cost. That remains. We have verified the recent decrease in PPI-C2431 and adjusted our pricing accordingly. While we welcome the 24-month volume commitment, a contract of this duration requires an AS-14404 index clause. Material accounts for about 45 % of our cost; more detail we do not share.\n\nOur adjusted Angebot is a price of €5.53 per unit, Zahlungsziel 90 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404. Building on your 14-day payment option, we propose a price of €5.45 per unit, Zahlungsziel 14 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404.\n\nThis offer is valid for 30 days.\n\nMit freundlichen Grüßen\nGeorg Aigner\nInside Sales, Edelstahl-Service Donautal GmbH",
+     "attachments": [],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70710-1",
+       "terms": {
+        "unit_price": 5.53,
+        "payment_days": 90,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 0.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": "offer:70710-1-a",
+       "terms": {
+        "unit_price": 5.45,
+        "payment_days": 14,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 0.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": [
+      {
+       "index": 0,
+       "result": "verified"
+      },
+      {
+       "index": 1,
+       "result": "verified"
+      }
+     ]
+    },
+    {
+     "from": "buyer",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar",
+     "body": "Dear Georg Aigner,\n\nYou have adjusted your pricing to reflect the verified index decrease and made the proposed contract term conditional on an alloy surcharge index clause. We require a lower base price in exchange for that clause, a defined deadband, and no index-driven increases before the corresponding changes affect your actual costs.\n\n1. Volume and term: we confirm a binding volume of 94,800 units per year for 24 months, 189,600 units in total.\n2. Our proposal: EUR 4.80 per unit, no price-adjustment clause, 14 days net, 24-month contract. This amounts to about EUR 910,080 over the term.\n3. Basis: Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "term_sheets": [
+      {
+       "terms": {
+        "unit_price": 4.8,
+        "index_clause": null,
+        "payment_days": 14,
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [
+      "idx:LCI-C@2025-10",
+      "idx:LCI-C@2026-01"
+     ]
+    },
+    {
+     "thread_id": "thread:P08:70710",
+     "message_id": "msg:70710-2-4",
+     "in_reply_to": null,
+     "from": "sales@70710",
+     "from_name": "Inside Sales, Edelstahl-Service Donautal GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar",
+     "body": "Dear customer,\n\nWe have reviewed your offer and can adjust our Angebot as follows. We have verified the slight decrease in the labour cost index you cited and adjusted our price accordingly. Our price follows our main cost drivers: AS-14404, PPI-C2431, LCI-C. Specifically, AS-14404 rose 5.9 % in twelve months and is 45 % of our cost. That remains. LCI-C rose 2.7 % in twelve months and is 5 % of our cost. That remains. Furthermore, PPI-C2431 rose 12.3 % in twelve months and is 38 % of our cost. That remains.\n\nA 24-month contract requires the AS-14404 index clause to manage long-term material risks. We can offer a Preisgleitklausel on AS-14404, AS-14404, AS-14404. Building on your 14-day payment term and the required index clause, we can offer €5.39 per unit. Alternatively, with a Preisgleitklausel on AS-14404: €5.39 per unit.\n\nFor our current offer, we can present a price of €5.28 per unit, Zahlungsziel 14 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404. This offer stays valid for 30 days.\n\nMit freundlichen Grüßen\nGeorg Aigner\nInside Sales, Edelstahl-Service Donautal GmbH",
+     "attachments": [],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70710-2",
+       "terms": {
+        "unit_price": 5.28,
+        "payment_days": 14,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 0.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": "offer:70710-2-a",
+       "terms": {
+        "unit_price": 5.39,
+        "payment_days": 14,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 5.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "open",
+     "signals": {
+      "reply_delay_days": 1,
+      "validity_days": 30
+     },
+     "missing_fields": [],
+     "claim_results": [
+      {
+       "index": 0,
+       "result": "verified"
+      }
+     ]
+    },
+    {
+     "from": "buyer",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar",
+     "body": "Dear Georg Aigner,\n\nWe acknowledge your price adjustment following the labour cost index review and your requirement for an alloy surcharge index clause. Any agreement on that clause requires a lower base price and a deadband, with current pricing held until the clause takes effect.\n\n1. Volume and term: we confirm a binding volume of 94,800 units per year for 24 months, 189,600 units in total.\n2. Our proposal: EUR 4.95 per unit, no price-adjustment clause, 14 days net, 24-month contract. This amounts to about EUR 938,520 over the term.\n3. Basis: We raised quality notifications on this part over the past year (qn:20004725, qn:20004878, qn:20004895, qn:20004922, qn:20004940, qn:20004951, qn:20005016).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+     "term_sheets": [
+      {
+       "terms": {
+        "unit_price": 4.95,
+        "index_clause": null,
+        "payment_days": 14,
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [
+      "qn:20004725",
+      "qn:20004878",
+      "qn:20004895",
+      "qn:20004922",
+      "qn:20004940",
+      "qn:20004951",
+      "qn:20005016"
+     ]
+    },
+    {
+     "thread_id": "thread:P08:70710",
+     "message_id": "msg:70710-3-6",
+     "in_reply_to": null,
+     "from": "sales@70710",
+     "from_name": "Inside Sales, Edelstahl-Service Donautal GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar",
+     "body": "Dear customer,\n\nIt is always a pleasure working with you, and we truly value our ongoing business relationship. We have reviewed the quality notifications you cited; while we take quality seriously, they do not warrant a price reduction. In fact, our current defect rate for you is about 50 ppm, reflecting our high standards across our extensive stock and distributor services. \n\nTo support your long-term planning, a 24-month contract requires the AS-14404 index clause to manage long-term material risks. We can offer a Preisgleitklausel on AS-14404, AS-14404, AS-14404. \n\nThis is our final offer (letztes Angebot). Please decide. Our current Angebot is a price of €5.18 per unit, Zahlungsziel 14 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404. Alternatively, with a Preisgleitklausel on AS-14404: €5.30 per unit, Zahlungsziel 14 days net, a contract term of 24 months, a Preisgleitklausel on AS-14404. This offer remains valid for 7 days.\n\nMit freundlichen Grüßen\nGeorg Aigner\nInside Sales, Edelstahl-Service Donautal GmbH",
+     "attachments": [
+      {
+       "attachment_id": "att:70710-3-quote",
+       "name": "quote-offer-70710-3.pdf",
+       "type": "pdf",
+       "content_b64": null
+      }
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70710-3",
+       "terms": {
+        "unit_price": 5.18,
+        "payment_days": 14,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 0.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": "offer:70710-3-a",
+       "terms": {
+        "unit_price": 5.3,
+        "payment_days": 14,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 5.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "final_offer",
+     "signals": {
+      "reply_delay_days": 2,
+      "validity_days": 7
+     },
+     "missing_fields": [],
+     "claim_results": [
+      {
+       "index": 0,
+       "result": "verified"
+      }
+     ]
+    },
+    {
+     "from": "buyer",
+     "action": {
+      "type": "accept",
+      "term_sheet_id": "offer:70710-3"
+     }
+    },
+    {
+     "thread_id": "thread:P08:70710",
+     "message_id": "msg:70710-3-8",
+     "in_reply_to": null,
+     "from": "sales@70710",
+     "from_name": "Inside Sales, Edelstahl-Service Donautal GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: Alloy surcharge and base price for 1.4404 bar",
+     "body": "Dear customer,\n\nThank you for your order. Our order confirmation is attached. \n\nWe truly appreciate your business and are delighted to serve Hollerau Pumpenwerke GmbH. As a dedicated distributor, we always take great pride in supporting you with our comprehensive inventory and dependable service for all your industrial supply needs. \n\nMit freundlichen Grüßen\nGeorg Aigner\nInside Sales, Edelstahl-Service Donautal GmbH",
+     "attachments": [
+      {
+       "attachment_id": "att:70710-3-order_confirmation",
+       "name": "order-confirmation-offer-70710-3.pdf",
+       "type": "pdf",
+       "content_b64": null
+      }
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70710-3",
+       "terms": {
+        "unit_price": 5.18,
+        "payment_days": 14,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 0.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      },
+      {
+       "term_sheet_id": "offer:70710-3-a",
+       "terms": {
+        "unit_price": 5.3,
+        "payment_days": 14,
+        "index_clause": {
+         "series": "AS-14404",
+         "material_share": 0.45,
+         "deadband_pct": 5.0,
+         "base_month": "2026-08"
+        },
+        "contract_months": 24
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "agreed",
+     "signals": {
+      "reply_delay_days": 2,
+      "validity_days": 7
+     },
+     "missing_fields": [],
+     "claim_results": [
+      {
+       "index": 0,
+       "result": "verified"
+      }
+     ]
+    }
+   ],
+   "timeouts": []
+  }
+ }
+}

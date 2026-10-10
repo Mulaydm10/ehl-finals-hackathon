@@ -641,3 +641,26 @@ no committee; its call each round is counter / hold / final; final in round 4-5.
   (api.md: qn rows are checked as a mean ppm we could not reproduce from facts.json lot ppm). Never ship an unverified claim type
   live without first knowing its check; `qn_claims` stays behind NOIDEA_EXPERIMENTS.
 - P11 so far on v2.16: 0.79 / 0.71 / 0.71 (mean 0.74; v2.7-2.10 mean 0.55). The ceiling it shows: ~EUR 45.00-45.50 @ 300/0.
+
+## v2.16d live P11 (18:23): 0.77 (7117d3517bedd67e) -> news framing OFF (v2.16e)
+- 46.50 -> 45.50 (electricity + price history) -> our news-framing claim: "it holds, but it does not change our calculation" +
+  "We received a lot of material" -> held 45.50 -> **it AGREED to our near-close EUR 45.13** (0.77; in f80f4b54 the same 45.13
+  got another 45.50 hold). The gain is the near-close ask, not the news. News framing -> experiment `news_frame` (off).
+- **P11 on v2.16: 0.79 / 0.71 / 0.71 / 0.77 = mean 0.745** (v2.7-v2.10: 0.67 / 0.36 / 0.61 = 0.55). Its stop ~EUR 45.00-45.50.
+- Rules consolidated in `docs/GENERAL_RULES.md` (35 rules with evidence).
+
+## v2.16f live P11 (18:31): 0.71 (352bdb0495fc67e4) -> v2.16g
+v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one fact per later round + mirror step (gated).
+- 46.50 -> electricity alone 46.00 (-0.50) -> QNs "we already looked at those quality notifications before, so they don't
+  change our calculation" but 45.50 (-0.50) -> **we accepted an OPEN 45.50 in round 3** (near-final band) with facts unused.
+- **P11 cut per round = EUR 0.50 per accepted fact**: 2 facts in round 2 cut 1.00 three times (6b02b8cc, f80f4b54, 7117d351),
+  1 fact cut 0.50 (352bdb04, fa9a9d02 with one contradicted). A HOLDER cuts per fact and goes final at a fixed message count.
+### v2.16g (offline) - general
+| fix | why |
+|---|---|
+| later rounds: **1 fact for a mirroring supplier, 2 for the rest** (code-forced) | mirror cuts per round (Neel P02 spread); holder per fact before a fixed final |
+| kinds it shrugged off = **last-round fillers**, not dropped (Neel e27b6f0) | P11 price history: "does not change" alone in r3, but part of the -1.00 pair in r2 |
+| **no near-final accept of an OPEN offer while unused facts remain** | 352bdb04 accepted 45.50 in round 3 with facts left |
+| **mirror step (30% of gap) behind `mirror_step`** (off): gate = its words or classifier + a cut after a fact-free e-mail of ours | offline it cost P04 0.99 -> 0.82, P08 0.92 -> 0.86; live evidence only P02 (Neel) - test on P07 first |
+- P11 plan now: r1 forecast + steel + scorecard, r2 electricity + QNs, r3 labour + price history. Tests 38 passed; offline 0.945 / 0.945.
+- P11 v2.16 series: 0.79 / 0.71 / 0.71 / 0.77 / 0.71.

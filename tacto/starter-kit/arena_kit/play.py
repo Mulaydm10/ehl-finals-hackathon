@@ -139,6 +139,62 @@ def closing_move(case, threads):
     return {"supplier_id": best[1], "message": {"action": {"type": "accept", "term_sheet_id": best[2]}}}
 
 
+def resync(table, threads, sid, detail=""):
+    """Bring our copy of a thread in line with the arena after a 409/422 or a missed 60 s. A timeout round there
+    re-issues the supplier's offer under a NEW id (live P05 d88810ba7949735b: we accepted the old id -> 422 ->
+    crash -> every bidder walked). Appends the arena's standing offer when it differs from ours. Returns
+    {"result": ...} if the case has ended, True if our copy changed, else False."""
+    state = table.client.session(table.session_id)
+    if state.get("status") == "ended":
+        return {"result": state.get("result") or {"deal": False, "end_reason": state.get("end_reason")}}
+    t = table.client.thread(table.session_id, sid)
+    ours = latest(threads[sid])
+    if t.get("closed"):
+        if ours.get("status") not in ENDED:
+            threads[sid].append({"from": "arena", "status": "walked_away", "term_sheets": [], "attachments": [],
+                                 "body": f"({detail or t['closed']})"})
+            return True
+        return False
+    if t.get("offer_id") in [ts.get("term_sheet_id") for ts in ours.get("term_sheets") or []]:
+        return False  # nothing changed there
+    last = next((x for x in reversed(t.get("timeouts") or []) if x.get("offer_id") == t.get("offer_id")), None)
+    if last is None:  # its own last e-mail carries the standing offer
+        mine = [m for m in t.get("messages") or [] if m.get("from") != "buyer"]
+        if not mine or mine[-1] is ours:
+            return False
+        threads[sid].append(fetch_documents(table, mine[-1]))
+        return True
+    sheets = [{"term_sheet_id": t["offer_id"], "terms": last.get("terms") or {}}]
+    sheets += [{"term_sheet_id": a.get("offer_id"), "terms": a.get("terms") or {}}
+               for a in last.get("alternatives") or []]
+    threads[sid].append({"from": "arena", "status": last.get("status") or t.get("status"), "term_sheets": sheets,
+                         "missing_fields": last.get("missing_fields", []), "attachments": [],
+                         "body": f"({detail or 'timeout'}: its offer stands as {t['offer_id']})"})
+    return True
+
+
+def recover_close(table, threads, sid, msg, error):
+    """An accept the arena refused (422) or found late (409): never crash the case. Its alternatives ('-a') cannot be
+    accepted by id - keep their terms without the id so the agent proposes them back; otherwise resync the thread and,
+    if nothing changed, retire the refused id the same way. Returns {"result": ...} if the case ended, else None."""
+    alt = (msg.get("action") or {}).get("term_sheet_id")
+    refused = [ts for ts in latest(threads[sid]).get("term_sheets") or [] if alt and ts.get("term_sheet_id") == alt]
+    if error.status not in (409, 422):
+        raise error
+    log.info("%s: %s (%s)", sid, error.detail, alt)
+    if error.status == 422 and refused and alt != standing(threads[sid])[0]:
+        for ts in refused:
+            ts["term_sheet_id"] = None
+        return None
+    changed = resync(table, threads, sid, str(error.detail))
+    if isinstance(changed, dict):
+        return changed
+    if not changed and error.status == 422:  # refused although it is still the standing id: don't loop on it
+        for ts in refused:
+            ts["term_sheet_id"] = None
+    return None  # 409 (late): the offer stands - decide again
+
+
 def play(table, case_id, agent, deadline=None):
     """Play one case to its end. `deadline` (time.time(), or a function returning it): a Live Final
     wave's cap - shortly before it, `closing_move` closes the case so it does not end without a deal."""
@@ -168,15 +224,10 @@ def play(table, case_id, agent, deadline=None):
                 return table.close(sid, msg)
             reply = table.send(sid, msg)
         except ArenaError as e:
-            alt = (msg.get("action") or {}).get("term_sheet_id")
-            refused = [ts for ts in latest(threads[sid]).get("term_sheets") or []
-                       if alt and ts.get("term_sheet_id") == alt]
-            if e.status == 422 and refused and alt != standing(threads[sid])[0]:
-                # the arena may take only the standing sheet (a 422 changes nothing): keep the alternative's
-                # terms without its id, so the agent can propose them back, and decide again
-                log.info("%s: %s - %s cannot be accepted by its id", sid, e.detail, alt)
-                for ts in refused:
-                    ts["term_sheet_id"] = None
+            if msg.get("action"):  # a refused or late accept: resync and decide again, never crash the case
+                ended = recover_close(table, threads, sid, msg, e)
+                if ended:
+                    return ended["result"]
                 continue
             if e.status != 409:
                 raise
@@ -193,9 +244,9 @@ def play(table, case_id, agent, deadline=None):
     return table.result()
 
 
-# Before accepting while other bidders' replies are still out, wait for them this long after the
-# accepted supplier's own reply (its 60 s keep running), then decide again with everything in.
-WAIT_FOR_BIDS_S = 30
+# A bidder whose reply has waited this long is answered next, whatever the agent prefers: model calls take
+# 5-20 s each and every bidder has only 60 s (live P05 d88810ba7949735b: timeouts from round 3 on).
+URGENT_S = 30
 
 
 def _play_threads(table, case, case_id, threads, agent, deadline):
@@ -204,7 +255,9 @@ def _play_threads(table, case, case_id, threads, agent, deadline):
     A send blocks until that supplier replies - up to about a minute. Answering bidders one after
     the other therefore made the next bidder wait past its 60 s (live P05 f8604d43d3fbf92f: six
     timeouts, a thread lost). Here sends run in parallel; the agent decides for the threads whose
-    reply is in (`agent.focus`, if it has one) while the others are still out."""
+    reply is in (`agent.focus`, if it has one) while the others are still out - the longest-waiting
+    first once one has waited URGENT_S. An accept goes out at once (waiting for other bids starved the
+    bidders that were due an answer), and a refused or late one is resynced, never fatal."""
     pool = ThreadPoolExecutor(max_workers=len(threads))
     pending = {}  # supplier_id -> (message, future, sent at)
     arrived = {sid: time.monotonic() for sid in threads}  # when its latest reply came in
@@ -222,16 +275,27 @@ def _play_threads(table, case, case_id, threads, agent, deadline):
                 try:
                     reply = fut.result()
                 except ArenaError as e:
-                    if e.status != 409:
+                    if e.status not in (409, 422):
                         raise
-                    log.info("%s: %s", sid, e.detail)
-                    reply = table.missed(sid, e)
+                    log.info("%s: %s", sid, e.detail)  # e.g. late: not delivered - take the arena's state
+                    changed = resync(table, threads, sid, str(e.detail))
+                    if isinstance(changed, dict):
+                        return changed["result"]
+                    arrived[sid] = time.monotonic()
+                    continue
                 if "result" in reply:  # the reply ended the case
                     return reply["result"]
                 threads[sid] += [{**msg, "from": "buyer"}, reply]
                 arrived[sid] = time.monotonic()
                 slowest = max(slowest, arrived[sid] - t0)
                 log.info("%s %s %s", sid, reply.get("status"), standing(threads[sid])[1])
+            now = time.monotonic()
+            for sid in [s for s in live_threads(threads) if s not in pending and now - arrived[s] > MOVE_LIMIT_S]:
+                # we missed its 60 s: the arena has run a timeout round and may have re-issued its offer
+                changed = resync(table, threads, sid, "missed its 60 s")
+                if isinstance(changed, dict):
+                    return changed["result"]
+                arrived[sid] = time.monotonic()
             live = live_threads(threads)
             ready = [sid for sid in live if sid not in pending]
             if not ready:
@@ -239,42 +303,28 @@ def _play_threads(table, case, case_id, threads, agent, deadline):
                     return table.result()
                 wait([f for _, f, _ in pending.values()], return_when=FIRST_COMPLETED)
                 continue
+            urgent = [sid for sid in ready if time.monotonic() - arrived[sid] >= URGENT_S]
+            focus = {max(urgent, key=lambda x: time.monotonic() - arrived[x])} if urgent else set(ready)
             cap = deadline() if callable(deadline) else deadline
             if cap and time.time() > cap - max(CLOSE_BEFORE_CAP_S, slowest + ROUND_MARGIN_S):
                 log.info("%s: the wave's cap is near - closing", case_id)
                 decision = closing_move(case, threads)
             else:
                 if hasattr(agent, "focus"):
-                    agent.focus = set(ready)
+                    agent.focus = focus
                 decision = agent.decide(case, threads)
             sid, msg = decision["supplier_id"], decision["message"]
             if sid in pending:  # it chose a bidder whose reply is still out: wait for one
                 wait([f for _, f, _ in pending.values()], return_when=FIRST_COMPLETED)
                 continue
             if msg.get("action"):
-                left = WAIT_FOR_BIDS_S - (time.monotonic() - arrived.get(sid, 0.0))
-                if pending and left > 0 and not (cap and time.time() > cap - CLOSE_BEFORE_CAP_S):
-                    wait([f for _, f, _ in pending.values()], timeout=left, return_when=FIRST_COMPLETED)
-                    continue  # decide again with the new bids in
                 log.info("%s %s", sid, msg["action"])
                 try:
                     return table.close(sid, msg)
                 except ArenaError as e:
-                    alt = (msg.get("action") or {}).get("term_sheet_id")
-                    refused = [ts for ts in latest(threads[sid]).get("term_sheets") or []
-                               if alt and ts.get("term_sheet_id") == alt]
-                    if e.status == 422 and refused and alt != standing(threads[sid])[0]:
-                        log.info("%s: %s - %s cannot be accepted by its id", sid, e.detail, alt)
-                        for ts in refused:
-                            ts["term_sheet_id"] = None
-                        continue
-                    if e.status != 409:
-                        raise
-                    log.info("%s: %s", sid, e.detail)
-                    reply = table.missed(sid, e)
-                    if "result" in reply:
-                        return reply["result"]
-                    threads[sid].append(fetch_documents(table, reply))
+                    ended = recover_close(table, threads, sid, msg, e)
+                    if ended:
+                        return ended["result"]
                     arrived[sid] = time.monotonic()
                     continue
             pending[sid] = (msg, pool.submit(send, sid, msg), time.monotonic())

@@ -1,0 +1,43 @@
+{
+ "case": "P02",
+ "variant": "noidea_neel",
+ "sim_score": 0.924016079929989,
+ "end": "deal {'unit_price': 368.73, 'payment_days': 90, 'index_clause': None}",
+ "rounds": 2,
+ "emails": [
+  {
+   "body": "Dear Petra Lechner,\n\nThank you for your message.\n\n1. Volume and term: we confirm a binding volume of 6,110 units per year for 12 months, 6,110 units in total.\n2. Our proposal: EUR 356.33 per unit, 90 days net, no price-adjustment clause. This amounts to about EUR 2,177,176 over the term.\n3. Basis: Our demand forecast for this part is up +11.9% (fc:350011@2026-09). Producer prices DE: basic iron and steel, ferro-alloys changed -4.3% from 2024-10 to 2025-10 (idx:PPI-C241@2024-10, idx:PPI-C241@2025-10). Your on-time delivery averaged 89.2% from 2025Q4 to 2026Q3 (sc:70510@2025Q4, sc:70510@2026Q1, sc:70510@2026Q2, sc:70510@2026Q3).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [
+    "fc:350011@2026-09",
+    "idx:PPI-C241@2024-10",
+    "idx:PPI-C241@2025-10",
+    "sc:70510@2025Q4",
+    "sc:70510@2026Q1",
+    "sc:70510@2026Q2",
+    "sc:70510@2026Q3"
+   ],
+   "sheets": [
+    {
+     "unit_price": 356.33,
+     "payment_days": 90,
+     "index_clause": null
+    }
+   ]
+  },
+  {
+   "body": "Dear Petra Lechner,\n\nThank you for your message.\n\n1. Volume and term: we confirm a binding volume of 6,110 units per year for 12 months, 6,110 units in total.\n2. Our proposal: EUR 361.29 per unit, 90 days net, no price-adjustment clause. This amounts to about EUR 2,207,482 over the term.\n3. Basis: Copper notation for cables and motors (derived) changed -2.2% from 2026-01 to 2026-03 (idx:CU-NOTATION@2026-01, idx:CU-NOTATION@2026-03).\n4. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [
+    "idx:CU-NOTATION@2026-01",
+    "idx:CU-NOTATION@2026-03"
+   ],
+   "sheets": [
+    {
+     "unit_price": 361.29,
+     "payment_days": 90,
+     "index_clause": null
+    }
+   ]
+  }
+ ],
+ "relationship": {}
+}

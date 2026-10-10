@@ -44,6 +44,10 @@ def take_rate(kind, case_id, data=None):
     """Chance this kind of verified claim moves the supplier. A kind that only ever got "does not change our
     calculation" from THIS case's supplier (P03: price history, 2 of 2) counts as 0."""
     data = data or reactions()
+    if kind == "quality_notification":  # the arena words both as "quality record" (P08 cae4b621695f8161: no change)
+        q = data.get("by_case", {}).get(case_id, {}).get("scorecard_ppm") or {}
+        if q.get("no_change") and not q.get("taken"):
+            return 0.0
     seen = data.get("by_case", {}).get(case_id, {}).get(kind)
     if seen and seen.get("taken"):
         # this very supplier took this kind before: cite it first - among proven kinds by its own take share, then

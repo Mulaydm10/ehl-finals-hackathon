@@ -142,6 +142,27 @@ Rules:
   prices, dates or IDs (code adds them), English only, no greeting line, no sign-off."""
 
 
+def _engine():
+    """Neel's live engine classifier (analysis/central/engine_rules.py: mirror / holder / floor_stop / one_shot / auction from
+    the thread alone, 87% right at thread end). None if missing."""
+    global _ENGINE
+    if "_ENGINE" not in globals():
+        try:
+            import importlib.util
+            f = Path(__file__).resolve().parents[4] / "analysis/central/engine_rules.py"
+            spec = importlib.util.spec_from_file_location("engine_rules", f)
+            _ENGINE = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(_ENGINE)
+        except Exception as e:
+            log.warning("engine classifier not loaded (%s)", e)
+            _ENGINE = None
+    return _ENGINE
+
+
+MIRROR_RX = re.compile(r"(?i)in response to your (step|movement|adjustment)|significant step towards our position")
+MIRROR_SHARE = 0.30  # a MIRRORING supplier: step 30% of the remaining gap (Neel P02 0.67 -> 0.82; 40% gave the same path)
+
+
 def _repo():
     return Path(os.environ.get("NOIDEA_REPO") or Path(__file__).resolve().parents[4])
 
@@ -184,6 +205,7 @@ class NoIdeaAgent:
         _facts = json.loads(facts.read_text(encoding="utf-8")) if facts.exists() else {}
         self.fc = {k: v for k, v in _facts.items() if k.startswith("fc:")}
         self.facts = {k: v for k, v in _facts.items() if k.startswith("qn:")}  # quality notifications (complaint_args)
+        self.all_facts = _facts
         # today's price of every part at every supplier (for kit calculations)
         self.part_prices = {}
         for sid, d in self.dossiers.items():
@@ -294,10 +316,35 @@ class NoIdeaAgent:
             out += [{**c, "late": True} for c in pos if self.po_jump(c) <= 0]
         if case["type"] in ("capacity", "price_increase"):
             out += [c for c in mine if c["kind"] == "scorecard_otd" and (c["figure"] or 100) < 85]
+        # a supplier under cash stress (news of restructuring / cash-short dossier): the verified news frames what we give
+        # that costs us nothing - no chargebacks, payment on the agreed day, a binding volume - in ITS currency (playbook:
+        # interests over positions). api.md checks only "that it is about this supplier", so it cannot be contradicted.
+        # P11: rounds 3+ had no new fact left -> it held and went final
+        motives = set(self.dossiers.get(sid, {}).get("motives", {}))
+        # OFF by default (experiment `news_frame`): live P11 7117d3517bedd67e "it holds, but it does not change our calculation"
+        # + "we received a lot of material" - no cut, counts as padding
+        if "news_frame" in EXPERIMENTS and {"cash_short", "news_restructuring"} & motives:
+            gives = ["no chargebacks" if "chargeback_eur_per_complaint" in case["negotiable"] else None,
+                     "payment of every invoice on the agreed day", "a binding volume for the full term"]
+            gives = [g for g in gives if g]
+            for c in mine:
+                if c["kind"] == "news" and c["ids"]:
+                    out.append({**c, "late": True,
+                                "sentence": f"We are aware of your current situation ({c['ids'][0]}), which is why our offer "
+                                            f"is built on {', '.join(gives[:-1])} and {gives[-1]}."})
         # OFF by default: live P11 fa9a9d0277f372c6 the arena marked our qn mean-ppm claims CONTRADICTED ("do not match the
         # records. That costs trust") and the supplier went final one round early. How it averages qn rows is unknown.
         if "qn_claims" in EXPERIMENTS and (case["type"] == "quality" or case["buyer"].get("category_goal") == "quality_first"):
             out += self.complaint_args(sid, parts)
+        # Neel's version (central.quality_notification_claims): the supplier-caused QNs on this part in the last 12 months,
+        # cited WITHOUT a figure - the arena then takes the data's own value, so it cannot be contradicted (our mean-ppm
+        # sentence and Neel's "at 4,632 ppm" both came back contradicted). Never cited in 8 of 10 cases (ENGINES.md).
+        # A later-round fact for any case with such QNs (holder engines cut once per new fact: P11 plan msg 3).
+        elif central and "qn_claims" not in EXPERIMENTS:
+            try:
+                out += [{**c, "late": True} for c in central.quality_notification_claims(case, self.all_facts, sid)]
+            except Exception as e:
+                log.warning("qn claims failed (%s)", e)
         out += self.forecast_args(case)
         # measured take-rates per data kind (Neel, 54 games: should-cost 2/2 taken, volume forecast 12/19, rising index
         # 7x "confirms our case", OTD 0/1); kinds THIS supplier already shrugged off get rate 0 and are dropped
@@ -305,7 +352,10 @@ class NoIdeaAgent:
             try:
                 ordered = central.rank(out, case["case_id"])
                 kept = [c for c in ordered if central.take_rate(c["kind"], case["case_id"]) > 0]
-                out = kept or ordered
+                # kinds this supplier shrugged off before are LAST-round fillers, never dropped and never round 1 (Neel
+                # e27b6f0): P11 price history "does not change" alone in round 3, but in round 2 with the electricity
+                # fall the pair cut EUR 1.00 (3 games) vs 0.50 for one fact
+                out = (kept + [{**c, "late": True, "filler": True} for c in ordered if c not in kept]) if kept else ordered
             except Exception as e:
                 log.warning("central.rank failed (%s)", e)
         seen, ranked = set(), []
@@ -724,8 +774,45 @@ class NoIdeaAgent:
             return hist[-1]
         theirs = max(0.0, vals[0] - vals[1]) if len(vals) == 2 else (limit - anchor) / PLANNED_ROUNDS
         step = min(scheduled - hist[-1], max(theirs, (limit - anchor) / (2 * rounds)))
+        # a MIRRORING supplier answers our step with its own and goes final at a fixed message count: step 30% of the
+        # remaining gap, staying a near-close below its price (Neel P02 ee98266bedd37231: 0.67 -> 0.82). Gated on the
+        # live signal only - against non-mirroring suppliers big steps give value away (stubborn sim 0.98 -> 0.86,
+        # analysis/central/REGRESSION.md); holders (P03, P11) cut for data, not for our steps
+        if sv and "mirror_step" in EXPERIMENTS and self.mirroring(events):
+            gap = sv[-1] - hist[-1]
+            hist.append(min(limit, hist[-1] + max(0.0, min(max(step, MIRROR_SHARE * gap), gap - sv[-1] * CLOSE_STEP))))
+            return hist[-1]
         hist.append(min(limit, hist[-1] + max(0.0, step)))
         return hist[-1]
+
+    def mirroring(self, events):
+        if MIRROR_RX.search(latest(events).get("body") or ""):
+            return True
+        eng = _engine()
+        if not eng:
+            return False
+        try:
+            if eng.classify(events).get("type") != "mirror":
+                return False
+        except Exception as e:
+            log.warning("engine classify failed (%s)", e)
+            return False
+        # ... and proof it moves for our STEP, not for data: a cut after one of our e-mails that carried no new fact.
+        # A holder never does (P11: 0 of 7 rounds), and P11 reads "mirror" to the classifier in 5 of 8 games.
+        seen, prev = set(), None
+        for m in events:
+            if m.get("from") == "buyer":
+                ids = set(m.get("refs") or []) | set(re.findall(r"\b(?:idx|fc|cost|sc|po|qn|quote|news|doc|ctr):[\w@.\-]+", m.get("body") or ""))
+                new_fact, seen = bool(ids - seen), seen | ids
+                continue
+            sh = (m.get("term_sheets") or [{}])[0].get("terms") or {}
+            price = sh.get("unit_price")
+            if price is not None and prev is not None and m is not events[0] and not new_fact and price < prev[0] * 0.999 \
+                    and all(sh.get(f) == prev[1].get(f) for f in sh if f != "unit_price"):
+                return True
+            if price is not None:
+                prev = (price, sh)
+        return False
 
     # ---- the move ------------------------------------------------------------------------------
     def decide(self, case, threads):
@@ -809,6 +896,10 @@ class NoIdeaAgent:
             return accept if ok else walk
         # accept when the supplier meets our current ask, or when we are within 0.3% late in the game
         near_final = k >= max(1, s.get("patience", PLANNED_ROUNDS) - 1)
+        # keep the rounds going while verified facts are left: a holder cuts once per new fact (P11 352bdb04: we took an
+        # OPEN EUR 45.50 in round 3 with facts unused; with one more fact it cut EUR 0.50 each time)
+        if near_final and status not in ("final_offer", "agreed") and self.next_args(sid, 1):
+            near_final = False
         # walk-risk: it repeats the same objection / counter-proposal in its last two e-mails (P02 x2: "returning to our
         # standard 30-day payment term" + a 30-day '-a' sheet in rounds 2 and 3, we kept 90 d, it walked in round 4
         # "our general terms dictate this position"; 372.15 @ 90 d would have scored ~0.50) -> take its best sheet
@@ -905,8 +996,12 @@ class NoIdeaAgent:
                     break
             return out
         own = [i for i, c in enumerate(pool) if not c.get("other_part")]
-        must = fit(own, 3) if k == 0 else fit(range(len(pool)), 1)
-        aidx = fit(must + aidx, 3 if k == 0 else 2)
+        per_round = 3 if k == 0 else 1 if self.mirroring(events) else 2  # mirror: spread; holder: pack (see below)
+        must = fit(own, 3) if k == 0 else fit(range(len(pool)), per_round)
+        # after round 1 ONE new fact per e-mail: a supplier cuts once per new fact and holds without one, so spreading the
+        # facts keeps every round productive until its final (Neel P02 0.51 -> 0.82/0.85 "data spread over rounds")
+        # (P11 holder: 2 facts in round 2 cut EUR 1.00 three times, 1 fact cut 0.50) - mirror: spread, holder: pack
+        aidx = fit(must + aidx, per_round)
         notes = d.get("notes") or {}
         for r in notes.get("refusals") or []:  # remember its stated limits for the next rounds
             f = r.get("field")

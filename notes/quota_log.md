@@ -82,6 +82,8 @@
 | 2026-10-10 17:17 | Dhruv (comparison) | P05 | neel_P05 / gpt-6-astra | 0.53 | 993222d5d55e7d40 |
 | 2026-10-10 17:17 | Dhruv (comparison) | P05 | ours_P05 / gpt-6-astra | 0.53 | 798c7367160898ba |
 | 2026-10-10 17:19 | Neel | P03 | noidea_neel / gpt-6-astra | **0.92** | 3091eac920857dc0 |
+| 2026-10-10 17:21 | Dhruv | P02 | noidea v2.12 / gpt-6-astra | 0.00 | 150fb1c103141538 |
+| 2026-10-10 17:21 | Dhruv | P05 | noidea v2.12 / gpt-6-astra | 0.53 | 26c6afc937d25c36 |
 | 2026-10-10 17:22 | Neel | P03 | noidea_neel / gpt-6-astra | **0.93** | 2e4bf89ac2967a45 |
 | 2026-10-10 17:27 | Dhruv | P02 | noidea v2.13 / gpt-6-astra | 0.20 | dc1d4fd8a7cd47cb |
 | 2026-10-10 17:27 | Dhruv | P05 | noidea v2.14 / gpt-6-astra | 0.00 | d9af85e000ab3d4d |
@@ -92,10 +94,14 @@
 | 2026-10-10 17:34 | Neel | P03 | noidea_neel / gpt-6-astra | **0.91** | d1bfa5a91489432b |
 | 2026-10-10 17:39 | Neel | P03 | noidea_neel / gpt-6-astra | **0.94** | 2483e3891d076863 |
 | 2026-10-10 17:42 | Neel | P03 | noidea_neel / gpt-6-astra | **0.94** | 14ab701cbfba6767 |
+| 2026-10-10 17:28 | Parth | P05 | noidea e5926b8 E1 / gpt-6-astra | 0.00 (crashed: 422 not a standing offer in this session; ended timeout, all bidders walked; timeouts 6) | d88810ba7949735b |
+| 2026-10-10 17:28 | Parth | P05 | noidea e5926b8 E1 / gpt-6-astra | 0.00 (crashed: 422 not a standing offer in this session; ended no_deal, all bidders walked; timeouts 6) | d9af85e000ab3d4d |
+| 2026-10-10 17:37 | Dhruv | P02 | noidea v2.15 / gpt-6-astra | 0.20 | ef17b16a03f0225d |
+| 2026-10-10 17:37 | Dhruv | P05 | noidea v2.15 / gpt-6-astra | **0.61 best P05** | e9eaf87e62371fdf |
 | 2026-10-10 17:40 | Parth | P10 | noidea dac5e97 E2 / gpt-6-astra | 0.66 (first counter 0.663, final round 1, timeouts 0) | 7e8bb04ad08893d3 |
+| 2026-10-10 17:41 | Parth | P02 | noidea dac5e97 E2 / gpt-6-astra | 0.49 (first counter 0.264, final round 4, timeouts 0) | 466f3cb54614635f |
 | 2026-10-10 17:42 | Parth | P18 | noidea dac5e97 E2 / gpt-6-astra | 0.61 (first counter 0.485, final round 4, timeouts 0) | 6d61c1fd91f3f13c |
 | 2026-10-10 17:43 | Parth | P11 | noidea dac5e97 E2 / gpt-6-astra | 0.67 (first counter 0.505, final round 5, timeouts 0) | 03a3beee7e64f5b3 |
-| 2026-10-10 17:41 | Parth | P02 | noidea dac5e97 E2 / gpt-6-astra | 0.49 (first counter 0.264, final round 4, timeouts 0) | 466f3cb54614635f |
 | 2026-10-10 17:46 | Parth | P18 | noidea 0b9ee8b E3 + all_parts_po / gpt-6-astra | 0.54 (first counter 0.485, final round 3, timeouts 0) | 928a3878c58f7dc3 |
 | 2026-10-10 17:46 | Parth | P18 | noidea 0b9ee8b E3 + all_parts_po / gpt-6-astra | 0.68 (first counter 0.552, final round 3, timeouts 0) | 4e244819e8b9207b |
 | 2026-10-10 18:03 | Dhruv | P11 | noidea v2.16 / gpt-6-astra | **0.79 best P11** (accepted 45.00 @ 300/0 in round 2 - walk guard) | 6b02b8cc94796703 |
@@ -107,3 +113,8 @@
 | 2026-10-10 18:09 | Neel | P02 | noidea_neel / gpt-6-astra | **0.85** | 552fb056e31d24d1 |
 | 2026-10-10 18:13 | Neel | P02 | noidea_neel / gpt-6-astra | **0.85** | 8d4c4d5d7dff80bb |
 | 2026-10-10 18:17 | Neel | P02 | noidea_neel / gpt-6-astra | **0.61** | f778b35c67ecd799 |
+| 2026-10-10 18:23 | Dhruv | P11 | noidea v2.16d / gpt-6-astra | 0.77 (agreed to our near-close 45.13; news claim no effect) | 7117d3517bedd67e |
+| 2026-10-10 18:25 | Parth | P10 | probe P10_A 2%-ladder (scripted, no model) | 0.674 (unit_price=31.56, volume_per_year=23400, contract_months=24, lead_time_days=56) | e479da115f89e76a |
+| 2026-10-10 18:25 | Neel | P08 | noidea_neel / gpt-6-astra | **0.73** | cae4b621695f8161 |
+| 2026-10-10 18:31 | Dhruv | P11 | noidea v2.16f / gpt-6-astra | 0.71 (1 fact/round; accepted open 45.50 in r3) | 352bdb0495fc67e4 |
+| 2026-10-10 18:30 | Neel | P08 | noidea_neel / gpt-6-astra | **0.64** | 136352b4a3a9f752 |

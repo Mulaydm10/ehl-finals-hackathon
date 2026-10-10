@@ -75,3 +75,27 @@ def test_every_rfq_bidder_is_answered_in_time(slow_sim):
     timeouts = {sup: th["timeouts"] for sup, th in s["threads"].items()}
     assert result["ended"] and result["deal"], result
     assert sum(timeouts.values()) == 0, f"bidders timed out: {timeouts}"
+
+
+def test_a_reissued_offer_id_is_resynced_not_fatal(sim):
+    """Live: a timeout round re-issued the supplier's offer under a new id; our accept of the old id got 422 and
+    crashed the case (every bidder then walked). Now the loop resyncs and accepts the standing id."""
+    url, state, _ = sim
+    client = ArenaClient(url, ArenaClient(url).register("reissue", "sim")["api_key"], rate=1000)
+    table = RemoteTable(client)
+    real_close, done = table.close, []
+
+    def close(supplier_id, message):
+        if not done:  # the arena re-issues its offer (as after a timeout round) just before our accept lands
+            done.append(1)
+            s = state.sessions[table.session_id]
+            th = s["threads"][supplier_id]
+            new = f"{th['offer_id']}-t"
+            s["offers"][new] = th["stated"]
+            th["late"].append({"offer_id": new, "status": th["status"], "terms": th["stated"]})
+            th["offer_id"] = new
+        return real_close(supplier_id, message)
+
+    table.close = close
+    result = play(table, "case:S02", NoIdeaAgent(None))
+    assert done and result["ended"] and result["deal"], result
