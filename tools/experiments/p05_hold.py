@@ -222,19 +222,18 @@ class Game:
             "attachments": [call_off_schedule()],
         }
 
-    def lowest_rival(self):
-        best = ("offer:70240-0", 31.50)
+    def rival_offers(self):
+        """(offer id, price) per rival bidder: its lowest offer so far (Hrvelec's 31.50 opening is always there),
+        cheapest first. Each rival's quote counts once per supplier we cite it to."""
+        best = {HRVELEC: ("offer:70240-0", 31.50)}
         for sup in (DRALVECK, HRVELEC):
-            for m in reversed(self.threads.get(sup) or []):
-                if m.get("from") == "buyer":
-                    continue
-                p = primary(m)
-                if p and p["terms"].get("unit_price") and p["terms"]["unit_price"] < best[1]:
-                    best = (p["term_sheet_id"], p["terms"]["unit_price"])
-                break
-        return best
+            for m in self.threads.get(sup) or []:
+                p = primary(m) if m.get("from") != "buyer" else None
+                if p and p["terms"].get("unit_price") and (sup not in best or p["terms"]["unit_price"] < best[sup][1]):
+                    best[sup] = (p["term_sheet_id"], p["terms"]["unit_price"])
+        return sorted(best.values(), key=lambda x: x[1])
 
-    def target_ask(self, price, k, rival=None):
+    def target_ask(self, price, k, rivals=()):
         if k == 0:
             lines = [
                 "thank you for your offer. We are awarding the HX pump shaft (part:320070) for the series start "
@@ -242,8 +241,8 @@ class Game:
                 self.late_line,
                 "It is steady work for the second shift you told us has been on hold since spring.",
             ]
-            if rival:
-                lines.append(f"We have an offer at EUR {rival[1]:.2f} per piece ({rival[0]}).")
+            for i, (oid, price_r) in enumerate(rivals):
+                lines.append(f"We have {'another' if i else 'an'} offer at EUR {price_r:.2f} per piece ({oid}).")
         else:
             lines = ["thank you for your reply. We move again."]
         lines.append(f"We propose EUR {price:.2f} per piece, 14 days net, 28 days lead time (term sheet attached).")
@@ -312,10 +311,10 @@ class Game:
                 except Exception as e:  # a backup is insurance only
                     print(f"  {s}: {e}", flush=True)
         # 2. the one real ask while it still stands where it opened
-        rival = self.lowest_rival()
-        reply = self.send(TARGET, self.target_ask(a.ask2, 0, rival))
+        rivals = self.rival_offers()[: a.rivals]
+        reply = self.send(TARGET, self.target_ask(a.ask2, 0, rivals))
         self.note(
-            sid=TARGET, k="ask1", do=f"ask {a.ask2}@14/28 + cite {rival[0]} {rival[1]} + late-pay + shift + schedule"
+            sid=TARGET, k="ask1", do=f"ask {a.ask2}@14/28 + cite {rivals} + late-pay + shift + schedule"
         )
         show(f"{TARGET} reply", reply)
         if "result" in reply:
@@ -354,6 +353,7 @@ def main():
     ap.add_argument("--ask2", type=float, default=25.54, help="the first real ask, after the hold")
     ap.add_argument("--ask3", type=float, default=26.30, help="the one move after its 'clarify internally'")
     ap.add_argument("--ask4", type=float, default=26.80, help="only if it is still open above 27.00 after ask3")
+    ap.add_argument("--rivals", type=int, default=1, help="rival bidders' offers cited in the first ask (1-2)")
     ap.add_argument("--reserve", type=int, default=40)
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
@@ -372,7 +372,8 @@ def main():
         if args.hold == "note":
             print(f"--- {TARGET} r1 hold note\n{g.HOLD_NOTE}\n")
         for k, price in enumerate([args.ask2, args.ask3, args.ask4]):
-            m = g.target_ask(price, k, ("offer:70240-0", 31.50) if k == 0 else None)
+            demo = [("offer:70210-2", 28.00), ("offer:70240-0", 31.50)][: args.rivals]
+            m = g.target_ask(price, k, demo if k == 0 else ())
             terms = [x["terms"] for x in m["term_sheets"]]
             print(f"--- {TARGET} ask {k + 1} {terms} att={len(m.get('attachments') or [])}\n{m['body']}\n")
         return
