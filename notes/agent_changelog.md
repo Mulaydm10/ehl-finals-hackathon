@@ -372,3 +372,13 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
 - Replay of both real P18 games: round 2 now sends €4.84–4.89 with AS db5 (was €4.88 no clause); finals unchanged
   (accepts `-a` db5 0.618 > db0 0.610). Offline mean unchanged **0.939 / 0.947** (= main v2.5), 32 tests pass,
   no new lint errors. Needs one live P18 game.
+
+### P18 live 4 (Parth, v2.6 / gpt-6-astra, session bf73ee394e5b7e2c): 0.44 (v2.4 live 2: 0.62)
+- **Round 2 did send AS sheets**: €4.84 / 14 d / db5, €4.86 / 30 d / db5 and €4.84 / 14 d / **db3**. It took the db3
+  structure at €5.40 / 14 d and repeated exactly that as `final_offer` in round 3 (our €4.92 / 14 d / db5 did not move it).
+  Offering the clause gave it the clause without a price step; offering db3 let it pick db3.
+- Price path €6.10 → 5.50 (db0; alt 5.60 db5) → 5.40 (14 d, db3) → 5.40 final, accepted. Live 2: 6.10 → 5.30 → 5.20 → 5.10 / 5.20 db5.
+- Round 1's own-cost-share calculation cited **PPI-C2431 +9.7%** → "Your figures confirm our case: that driver rose."
+  (also "We received a lot of material"). Its round-1 counter was €5.50 (live 2: €5.30).
+- `ctr:4600070740#3.2` was in the round-1 body but got no claim result (not read as a claim); the 3 index claims, the
+  PO history (round 2) and the forecast (round 3) were all verified; nothing contradicted.

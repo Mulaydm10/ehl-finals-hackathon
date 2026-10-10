@@ -32,3 +32,4 @@
 | 2026-10-10 15:58 | Parth | P18 | noidea v2.4 (branch: v2.3 args + cheapest sheet / 422 fallback) / gpt-6-astra | **0.62** (agreed: its alternative 5.20, 30 d, 24 m + AS-14404 db5, proposed back after a 422) | a99d02eb41cafa66 |
 | 2026-10-10 16:00 | Dhruv | P02 | noidea v2.4 merged / gpt-6-astra | 0.34 (no cost calc sent, payment hops) | 159def0f5e514b40 |
 | 2026-10-10 16:05 | Parth | P18 | noidea v2.3 (+ v2.4 sheet fix, branch a73e390) / gpt-6-astra | 0.53 (agreed 5.20, 14 d, 24 m + AS-14404 db0; ctr:4600070740#3.2 not cited live) | 06f8f4f5a7689632 |
+| 2026-10-10 16:12 | Parth | P18 | noidea v2.6 / gpt-6-astra | 0.44 (final 5.40, 14 d, 24 m + AS-14404 db3) | bf73ee394e5b7e2c |
