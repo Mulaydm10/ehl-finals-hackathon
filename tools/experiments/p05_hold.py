@@ -251,6 +251,15 @@ class Game:
                 )
         else:
             lines = ["thank you for your reply. We move again."]
+            if k == 1 and self.args.facts3:  # two new checked facts for its last round (each ID counts once per case)
+                lines.append(
+                    "Electricity producer prices changed -17.15% from 2025-02 to 2026-02 "
+                    "(idx:PPI-D351@2025-02, idx:PPI-D351@2026-02)."
+                )
+                lines.append(
+                    "Producer prices for cold drawing of bars changed -3.77% from 2024-09 to 2025-09 "
+                    "(idx:PPI-C2431@2024-09, idx:PPI-C2431@2025-09)."
+                )
         lines.append(f"We propose EUR {price:.2f} per piece, 14 days net, 28 days lead time (term sheet attached).")
         msg = {"subject": SUBJECT, "term_sheets": [sheet(self.case, price, TARGET)]}
         if k == 0:
@@ -365,6 +374,7 @@ def main():
     ap.add_argument(
         "--facts", action="store_true", help="first ask also cites its free-capacity news + the 1.4404 surcharge fall"
     )
+    ap.add_argument("--facts3", action="store_true", help="the move after its first counter cites two new index falls")
     ap.add_argument("--reserve", type=int, default=40)
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
