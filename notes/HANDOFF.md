@@ -40,7 +40,7 @@ Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden supp
 ## Best live score per hosted case (team, all versions)
 | P01 | P02 | P03 | P04 | P05 | P07 | P08 | P10 | P11 | P18 |
 |---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 0.91 | 0.51 | 0.93 | 0.86 | **0.61** | 0.75 | 0.65 | 0.66 | 0.67 | 0.67 |
+| 0.91 | 0.51 | 0.94 (Neel) | 0.86 | **0.61** | 0.75 | 0.65 | 0.66 | 0.67 | 0.67 |
 
 ## Last live results (recorded)
 - v2.15: **P05 0.61 (new best, e9eaf87e62371fdf)**; **P02 0.20** (ef17b16a03f0225d) - supplier switched its primary to 30 d and made that its final; analyse vs the 0.48/0.51 games (they stayed on 90 d).
