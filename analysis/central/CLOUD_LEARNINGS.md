@@ -1,4 +1,4 @@
-STATUS: index of every cloud-session learning (tasks 1-18), 2026-10-10 ~21:00. Offline only: 0 arena sessions, no paid LLM calls.
+STATUS: index of every cloud-session learning (tasks 1-19), 2026-10-10 ~21:00. Offline only: 0 arena sessions, no paid LLM calls.
 Branch `claude/wizardly-albattani-t7jmh3` (mirrored to `cloud/p02-p08-engine`). Agent copy: `analysis/agent_variants/noidea_neel_cloud.py`
 + `central_cloud.py` (= main `noidea_neel.py` + everything below). Each line points to the file with the evidence.
 
@@ -16,6 +16,8 @@ Branch `claude/wizardly-albattani-t7jmh3` (mirrored to `cloud/p02-p08-engine`). 
 | 7 | **Round-2 cut = min(cap, share x gap)**: asking lower makes round 2 bigger but leaves less for later; deep anchors also ate P08's deferral | `cases/P08_loop3.md` |
 | 8 | **The final is cent-rounded on OUR payment term**: at a fixed value floor the term decides the score (P08: 5.10 @ 14 = 0.7323 vs 5.15 @ 60 = 0.7329) | `cases/P08_loop3.md` |
 | 9 | Supplier cash rate from same-round primary/alternative pairs at different payment days (P08: 6.5-8.7%) | `cases/P08_round2_payment.md` |
+| 9b | **The first counter moves with a verified rising PRICE PATH of our own orders** (P08: "Our orders for this bar rose from EUR 5.17 to EUR 5.45 within nine months (4 PO IDs)" -> "took it into account", headline 5.41 -> 5.25, final 4.94 @ 14 = **0.912**, beat the house; teammate's d0708ed1). The flat last-8-orders run had been shrugged off 6 of 6. Next candidates: P04 (+2.3%), P03 (+3.1%) | `cases/P08_run81ee.md`; `central_cloud.rising_price_path()` |
+| 9c | Round 2 on 60 d (low draw, with an opening that named "the current level" as acceptable) raised P08's floor by 0.08 (81ee 0.633): stay on 14 d; never name an acceptable price level | `cases/P08_run81ee.md` |
 | 10 | Read the trace reasons: the supplier's own repeated lines tell its currency (P08: "anything else on your list" 21x) - but a stated currency did not move P08's budget (cross-sell measured 0 twice) | `cases/P08_floor.md`, `P08_loop1-2.md` |
 
 ## B. Mistakes and their fixes (all ported to main unless marked)
@@ -28,7 +30,7 @@ Branch `claude/wizardly-albattani-t7jmh3` (mirrored to `cloud/p02-p08-engine`). 
 | 15 | Regression fixes: RFQ closing bidder first, chargeback at the real ppm, 0.3% alternative band, mirror gate, 0.5% near-close | `REGRESSION_FIX.md` |
 | 16 | No thousands separators in any e-mail; one number per claim sentence; never call another payment term an increase | `P08_offline_review.md`, `P08_loop1.md` |
 
-## C. P08 recipe in the agent (sim `analysis/tools/sim_donautal.py`, fitted to 18 games)
+## C. P08 recipe in the agent (task 19: + round-1 price path, round 2 back on 14 d; sim 0.901 low) (sim `analysis/tools/sim_donautal.py`, fitted to 18 games)
 90-day first sheet (+1 cent) on 36 m, clause-free; 30% round-2 step at 60 d; deferral at 0.18x; normal step; accept the final's
 primary. **New (task 18, not yet live):** floor-trade pair at our 4th message after a deferral: its own clause structure one cent
 under its expected final, only when that beats every final in supplier memory (low draws). P(beat 0.7323) ≈ 21% per run if its floor is
