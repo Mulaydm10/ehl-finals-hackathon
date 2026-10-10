@@ -172,3 +172,5 @@
 | 2026-10-10 20:48 | Parth | P08 | noidea 544b5cd (year-rise path, no hedged index) / gpt-6-astra | 0.822 (agent with the P08 probe-A round 1) | 6701d5ddffb86dd4 |
 | 2026-10-10 20:55 | Dhruv | P11 | noidea v2.22 (wording) / gpt-6-astra | 0.71 (high draw) | 605ed96c39467c97 |
 | 2026-10-10 21:03 | Dhruv | P11 | noidea v2.22 / gpt-6-astra | 0.71 (high draw) | 73c7ca293b8154f0 |
+| 2026-10-10 21:00 | Neel | P05 | noidea / gpt-6-astra | **0.51** | f60b3c3a6a65593f |
+| 2026-10-10 21:12 | Neel | P05 | noidea_p05 / gpt-6-astra | **0.71** | 737bacd270dea248 |
