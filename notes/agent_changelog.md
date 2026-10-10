@@ -222,3 +222,16 @@ Code still does all maths and safety checks; at runtime the agent now reads, lea
 - Alternatives appear in most multi-round games (P07 1–4 per game, P10 2/4): free better terms.
 - P10 floor seen twice: €31.90 @ 56, €33.80–34.00 @ 42. Beating 0.69 needs ≤ €31.35 @ 56.
 - Note: Neel played P04 (d3050f951dc2c45b, 0.86); quota count now 24 of 200.
+| v2.2 live | P10 | 0.65 | f0a505fc3669a3b9 | round 1 **36 m** @ lead 56 @ €27.38 → final_offer **€31.90 @ 56, 36 m** in round 1: identical to 24 m. Contract length beyond 24 m is not rewarded |
+
+### v2.2: longer contract on ties for commitment-seeking suppliers (kept, neutral)
+- Rule: capacity cases or `wants_commitment` / `capacity_tight` / `needs_multi_year` motives → on cost ties prefer the
+  longer contract; others keep closest-to-its-terms (P07). Offline: P10 → 36 m, P07 stays 24 m, eval unchanged 0.937 / 0.944.
+- Live P10: no effect (same €31.90 @ 56). Kept because it's free for us and harmless here; revisit if a live case shows harm.
+
+### P10 conclusion after 5 live games (house agent 0.69, ours 0.65)
+- Its final comes in round 1 every time, at a fixed price per structure: €35.00 @ 35, €33.80–34.00 @ 42, **€31.90 @ 54–56**
+  (24 m or 36 m alike). Beating 0.69 needs ≤ €31.35 @ 56; none of anchor depth, lead time, contract length,
+  arguments, model (Qwen/Astra) or dynamic reading moved it below €31.90.
+- Untested: a small first ask (≤ 3% below its opening) to avoid the round-1 final; the cross-game data does not
+  support the approval-ladder idea, so it's a long shot. **P10 parked at 0.65; next: untested case types (P05, P11, …).**

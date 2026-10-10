@@ -290,11 +290,19 @@ class NoIdeaAgent:
         # P10 live (675fc6b9c1c8c291): lead 35 instead of our need 42 (same cost for us) was "technically
         # unfeasible" -> final_offer EUR 35.00 in round 1; P07 live: 36 m (vs its 24 m) was priced higher
         opening = s["open_terms"]
+        # suppliers that want commitment price contract length as security (P10 live x2: "to reflect the increased
+        # volume and extended contract duration"): on ties, the LONGER contract. Others keep closest-to-its-terms
+        # (P07, which never mentioned duration, priced 36 m higher).
+        wants_term = case["type"] == "capacity" or bool({"wants_commitment", "capacity_tight", "needs_multi_year"}
+                                                        & set(s["dossier"].get("motives", {})))
         def strain(t):
             out = 0.0
             for f in case["negotiable"]:
                 o, v = opening.get(f), t.get(f)
                 if f == "unit_price" or o is None or v is None or not isinstance(v, (int, float)):
+                    continue
+                if f == "contract_months" and wants_term:
+                    out -= v / 36  # longer = less strain for a supplier that wants security
                     continue
                 if f == "lead_time_days":  # faster than we need is pure strain; slower than need costs us anyway
                     v = max(v, 0)

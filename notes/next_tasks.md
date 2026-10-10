@@ -1,7 +1,7 @@
 # Next tasks: focus list (2026-10-10 ~14:50)
 
 State: agent **v1.4** (`--agent noidea`). Live: P01 **0.85**, P07 **0.70** (best of 4). Offline mean 0.94
-(simulator, optimistic). Practice games: **22 of 200** (resets Sun 12:22). History: `notes/agent_changelog.md`,
+(simulator, optimistic). Practice games: **26 of 200** (incl. Neel's P04) (resets Sun 12:22). History: `notes/agent_changelog.md`,
 `notes/quota_log.md`. Owners: **D** = Dhruv (+ Claude), **N** = Neel (+ Claude).
 
 ## A. Close the P07 gap (0.70 → toward 1.0) (D)
@@ -24,7 +24,7 @@ pace. C_best ≈ €5.00. Untested levers, one live game each, offline-check fir
 - No Antigravity proxy (user decision).
 
 ## C. Test v1.4 on every case type live (D) - workflow: Qwen offline → Astra offline → live
-P05/P10/P11: stage 1 (Qwen) done, 4 bugs fixed (v1.7); stage 2 (Astra) done, 1 fix (English only). **Ready for live.** P10 live: 0.46 (v1.7) → **0.65 (v1.8)** with Astra. v2.0 dynamic live 0.54 (final in round 1, no alt). v2.1 offline: round-1 prior → lead 56 @ €27.38. Target: beat the house agent 0.69.
+P05/P10/P11: stage 1 (Qwen) done, 4 bugs fixed (v1.7); stage 2 (Astra) done, 1 fix (English only). **Ready for live.** P10 live: 0.46 (v1.7) → **0.65 (v1.8)** with Astra. v2.0 dynamic live 0.54 (final in round 1, no alt). v2.1 offline: round-1 prior → lead 56 @ €27.38. Target: beat the house agent 0.69. v2.1 live 0.65; v2.2 (36 m) live 0.65. **P10 parked at 0.65** (floor €31.90 @ 56 in 3 games).
 Only P01 (price_increase) and P07 (bundling) have been played by our agent. Still unplayed:
 P02 P03 (stabilise), P04 (routine renewal), **P05 (RFQ)**, P08 P18 (raw material), **P10 (capacity)**,
 P11 (quality). ~8 games. Order: P05, P10, P11 first (most different from what we've tested).
