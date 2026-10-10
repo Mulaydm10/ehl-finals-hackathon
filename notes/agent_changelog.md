@@ -17,6 +17,7 @@ rank versions, not to predict arena scores. It ignores arguments, tone and the r
 | v1 | P01 | **0.85** | e3e0b7be271e9371 | €135.70, Apr 2027, 14 d in 3 rounds; "we did not know that, a fair point" |
 | probe (Neel) | 9 cases | 0–0.12 | see quota_log | walk-away probes for exact C_open/C_best |
 | v1.1 | P07 | 0.68 | 00ae513af1091e9c | 24 m won (+0.48); price stalled at €5.52; volume question unanswered 3× |
+| v1.2 | P07 | 0.69 | 33e48d99ea640a6a | anchor €4.94; supplier 5.56 → 5.56 → 5.52 → **final_offer 5.50** in round 4. All claims verified but "it does not change our calculation": single-part PO history is irrelevant to a kit price. Final reason: "please share the specific data or calculations you are basing [the kit target] on" → next: a kit-level calculation argument |
 
 ## Versions
 
