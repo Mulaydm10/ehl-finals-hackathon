@@ -125,3 +125,15 @@ Switches: `PRICE_PATH_P03 = True`, `PATH_IN_ROUND1 = False`, `DROP_OWN_QUOTE = T
 - **Its reply to the 5th e-mail takes the rival quote "into account" with a lower price:** keep v2, and record the cut.
 - **"Does not change" or "irrelevant":** the normal-mode ceiling on P03 is 430.32-430.35 (0.9635-0.9642), our new best. "+=" 0.9735 came in the template window and cannot be beaten in normal mode with any known fact, so stop spending quota on P03.
 - **First reply in engine sentences** ("We value our cooperation and have made a step towards you", "Any further step needs approval from our management"): template mode. Play the plan as is and expect an approved step on top.
+
+## 10. Live result (local, 2026-10-11 00:52, 45943af6907388d6, noidea_p03 v2, normal mode): **0.96394 = 430.33 @ 90 d - new team best (was 0.96331), "+=" 0.9735 stands**
+| our msg | data | its price @ 90 d |
+|---:|---|---:|
+| 1 | should-cost, forecast, electronics + committee request | 431.67 (5 of 5) |
+| 2 | order price path | 430.41 (2 of 2) |
+| 3 | copper | 430.35 |
+| 4 | labour | 430.33 |
+| 5 | rival quote quote:7100051 (EUR 429.18, Feb 2025) | **"irrelevant"**: "it does not pertain to this case, so please provide the relevant documentation"; **final 430.33** -> accepted |
+- The sim's prediction to the cent (430.33). Normal-mode Selvbrunn is fully deterministic; every measured kind is now used.
+- **A quote outside the case refs is "irrelevant" whoever made it** (own quotes and now a rival's old quote: 6 of 6 across P03/P04/P11).
+- Decision rule (section 9): stop spending quota on P03. "+=" 0.9735 came in the template window.
