@@ -96,3 +96,7 @@
 | 2026-10-10 17:46 | Parth | P18 | noidea 0b9ee8b E3 + all_parts_po / gpt-6-astra | 0.54 (first counter 0.485, final round 3, timeouts 0) | 928a3878c58f7dc3 |
 | 2026-10-10 17:46 | Parth | P18 | noidea 0b9ee8b E3 + all_parts_po / gpt-6-astra | 0.68 (first counter 0.552, final round 3, timeouts 0) | 4e244819e8b9207b |
 | 2026-10-10 18:25 | Parth | P10 | probe P10_A 2%-ladder (scripted, no model) | 0.674 (unit_price=31.56, volume_per_year=23400, contract_months=24, lead_time_days=56) | e479da115f89e76a |
+| 2026-10-10 18:27 | Parth | P10 | probe P10_B current-price anchor (scripted, no model) | 0.702 (unit_price=31.2, volume_per_year=23400, contract_months=36, lead_time_days=56) | 991ff7c420b037fc |
+| 2026-10-10 18:30 | Parth | P10 | probe P10_C bigger round-2 step + quality data (scripted, no model) | 0.694 (unit_price=31.3, volume_per_year=23400, contract_months=36, lead_time_days=56) | 7a9294b8466a475d |
+| 2026-10-10 18:32 | Parth | P10 | probe P10_D 2023-price anchor + small round-2 move (scripted, no model) | 0.686 (unit_price=31.4, volume_per_year=23400, contract_months=36, lead_time_days=56) | e61c28186f958320 |
+| 2026-10-10 18:35 | Parth | P10 | probe P10_E 3 round-1 claims + optimal step (scripted, no model) | 0.686 (unit_price=31.4, volume_per_year=23400, contract_months=36, lead_time_days=56) | 0b29bc23bb8ed5e4 |

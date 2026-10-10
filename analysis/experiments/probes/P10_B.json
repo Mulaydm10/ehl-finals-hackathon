@@ -1,0 +1,25 @@
+{
+  "case": "P10",
+  "label": "P10_B current-price anchor",
+  "hypothesis": "Probe A: an ask of 31.56 was agreed at once ('My call: counter' -> 'we agree'), so its round-1 counter with price history + should-cost is <= 31.56. Asking the price we have paid since 2024 (29.89, a reasoned anchor, not the 'unrealistic' 27.38 of earlier games) reveals that counter: agreed at 29.89, or final/open at its counter.",
+  "on_agreed": "accept",
+  "on_open": "next",
+  "on_final": "alternative",
+  "rounds": [
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for your offer and for being open about your capacity situation.\n\nWe are ready to give you the firm commitment you asked for: a binding 23,400 pieces per year for 24 months, and we accept a longer lead time of 56 days so you can plan production.\n\nOur orders for the 24 mm mechanical seal were at EUR 28.94 in 2023 and have been at EUR 29.89 since January 2024 (po:4500010364-10, po:4500010407-10, po:4500014436-10).\nOur should-cost estimate for this seal is EUR 24.31 per piece (cost:340010).\n\nWe therefore propose to keep EUR 29.89 per piece, the price we have paid since January 2024.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 29.89, "volume_per_year": 23400, "contract_months": 24, "lead_time_days": 56}],
+      "refs": ["po:4500010364-10", "po:4500010407-10", "po:4500014436-10", "cost:340010"]
+    },
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for your answer. We move towards you: we extend the commitment to 36 months, 70,200 pieces in total, and propose EUR 30.40 per piece.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 30.4, "volume_per_year": 23400, "contract_months": 36, "lead_time_days": 56}],
+      "refs": []
+    },
+    {
+      "body": "Dear Ms Zellner,\n\nThank you. To close, we propose EUR 30.90 per piece on the same 36-month, 56-day terms.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 30.9, "volume_per_year": 23400, "contract_months": 36, "lead_time_days": 56}],
+      "refs": []
+    }
+  ]
+}

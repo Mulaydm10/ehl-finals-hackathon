@@ -94,9 +94,19 @@ def main(argv=None):
     def cost(t):
         return total_cost(case, {**case.get("fixed_terms", {}), "ppm_commitment": 300, **t})
 
-    reply, result = first, None
+    reply, result, ask = first, None, None
     for k, r in enumerate(design["rounds"], 1):
-        msg = {"subject": subject, "body": r["body"], "term_sheets": [{"terms": t} for t in r["sheets"]],
+        sheets = [dict(t) for t in r.get("sheets", [])]
+        if "step_frac" in r and ask is not None:  # move a share of the gap to its standing price
+            theirs = ((reply.get("term_sheets") or [{}])[0].get("terms") or {}).get("unit_price")
+            if theirs:
+                ask = round(ask + r["step_frac"] * (theirs - ask), 2)
+                for t in sheets:
+                    t["unit_price"] = ask
+        elif sheets:
+            ask = sheets[0]["unit_price"]
+        body = r["body"].replace("{price}", f"{ask:.2f}" if ask is not None else "")
+        msg = {"subject": subject, "body": body, "term_sheets": [{"terms": t} for t in sheets],
                "refs": r.get("refs", [])}
         reply = send(msg)
         if "result" in reply:
