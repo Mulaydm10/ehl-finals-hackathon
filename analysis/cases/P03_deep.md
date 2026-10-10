@@ -1,4 +1,5 @@
 STATUS: DONE (P03 deep v2, user request + peer task) - 2026-10-11, cloud session, offline only (0 arena sessions, no LLM
+LIVE (§10): 45943af6 = 0.96394 (430.33), the sim's figure to the cent; the 2025 quote was "irrelevant" (not in the case refs). P03 stopped; "+=" 0.9735 (template window) stands.
 calls). Ready: `analysis/agent_variants/noidea_p03.py` v2 (gate case:P03; other cases run `noidea_neel.py` unchanged).
 Sim: `analysis/tools/sim_selvbrunn_ladder.py`. Sources: all 18 P03 sessions (datasets/runs + tools/replays/raw), the P03
 case file, dossier sup_70530, facts.json, the data tables (POs, quotes, RFQs, negotiation history), p03_calib.py.
