@@ -200,3 +200,9 @@
 | 2026-10-11 01:27 | Parth | P07 | noidea 5ed7745 HOLD + hold_r1 / gpt-6-astra | 0.81 (first counter None, final round None, timeouts 0) | ee12529129c86ddc |
 | 2026-10-11 01:28 | Parth | P18 | noidea 5ed7745 HOLD + hold_r1 / gpt-6-astra | 0.67 (first counter None, final round None, timeouts 0) | b45bea5357c4619d |
 | 2026-10-11 01:29 | Parth | P18 | noidea 5ed7745 HOLD + hold_r1 / gpt-6-astra | 0.60 (first counter None, final round None, timeouts 0) | 099a64a306ff72b8 |
+| 2026-10-11 01:31 | Parth | P02 | noidea ce783d5 HOLD0 / gpt-6-astra | 0.48 (first counter None, final round None, timeouts 0) | 9077b9e7865eb4ee |
+| 2026-10-11 01:31 | Parth | P02 | noidea ce783d5 HOLD0 / gpt-6-astra | 0.55 (first counter None, final round None, timeouts 0) | 87dadf0fa1da2c4b |
+| 2026-10-11 01:31 | Parth | P07 | noidea ce783d5 HOLD0 / gpt-6-astra | 0.81 (first counter None, final round None, timeouts 0) | 1ceb4e54d325b347 |
+| 2026-10-11 01:33 | Parth | P07 | noidea ce783d5 HOLD0 / gpt-6-astra | 0.81 (first counter None, final round None, timeouts 0) | d9c2e5f46df3b6d8 |
+| 2026-10-11 01:34 | Parth | P18 | noidea ce783d5 HOLD0 / gpt-6-astra | 0.67 (first counter None, final round None, timeouts 0) | 1958398e9514078b |
+| 2026-10-11 01:34 | Parth | P18 | noidea ce783d5 HOLD0 / gpt-6-astra | 0.67 (first counter None, final round None, timeouts 0) | 5ce0441666462a18 |
