@@ -932,3 +932,16 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
   in round 2 drew "We appreciate your acceptance of the AS-14404 index clause" and ~0.07); round 1 all code sheets; plain
   later openings. Offline: the other 9 cases unchanged. House 0.752.
 - P04: 0.874 confirmed as the ceiling (3 tests, incl. Claude's --probe: walked after the repeated probe).
+
+### v2.25 (offline): P04 levers to squeeze past 0.874 (user: "try all those different and check all levers")
+- **Bug fixed (general):** a cost calculation dropped every other argument ("it uses 3 claims") even when it cites NO IDs -
+  P04's round 1, the round a floor-stop supplier pins its value on, went out with ZERO checkable facts in every game. Now it
+  only displaces claims when it has IDs; P04 round 1 carries the +4.2% forecast. No other case's round 1 changed.
+- Found in the data: its OWN quote:7200019 EUR 4.63 (20 Sep, valid 90 d; not in case refs -> "irrelevant" as an ID, used in words)
+  and quote:7300004 EUR 4.39 (6 Sep, list price, stock only).
+- Experiments, one lever each, run in parallel live:
+  A `price_path_all` - our order path 4.29 -> 4.39 in ROUND 1 (P08: path moved the first counter 5.41 -> 5.25).
+  B `subcent_close` - memory shows 4.88 refused / 4.89 final on 45 d: ask 4.885 (floor between cents, benchmark ~4.883; a 422
+    for non-cent prices costs nothing per api.md).
+  C `account_value` - its person's currency (may_drop_small_accounts / we_are_not_strategic): we also buy the 6308 and 7309
+    bearings from it, want the whole family on 36 months; its own quote of 20 Sep was EUR 4.63.

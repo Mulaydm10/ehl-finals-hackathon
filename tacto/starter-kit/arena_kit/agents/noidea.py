@@ -345,7 +345,7 @@ class NoIdeaAgent:
         if short or "price_path_all" in EXPERIMENTS:
             desc = {p["part"]: p["description"] for p in self.dossiers.get(sid, {}).get("parts", [])}
             pos = [(self.price_path(sid, c["part"], desc.get(c["part"], c["part"])) or c)
-                   if self.po_jump(c) == 0 else c for c in pos]
+                   if (self.po_jump(c) == 0 or ("price_path_all" in EXPERIMENTS and self.po_jump(c) < 3.0)) else c for c in pos]
         # a RISE of >= 3% over the last 12 months goes in round 1 as that path, for any supplier (P08 probe A: first
         # counter 5.41 -> 5.25, 0.912 vs house 0.752); not for kits or frozen prices (P03 +3.1%: untested there)
         if case["type"] != "bundling" and "price_frozen" not in set(self.dossiers.get(sid, {}).get("motives", {})):
@@ -360,7 +360,9 @@ class NoIdeaAgent:
         elif case["type"] != "bundling" and ask_pct > 0:
             # an increase on a price our orders show flat or falling: the history is checkable data for a later round
             # (Neel's engine: every NEW verified kind it takes is one more cut; P11 had nothing left after round 1)
-            out += [{**c, "late": True} for c in pos if self.po_jump(c) <= 0]
+            # (experiment `price_path_all`: a PATH claim leads round 1 instead - a floor-stop supplier pins its value on the
+            # first counter, so a later-round fact never counts there; P08 path 5.41 -> 5.25 in round 1)
+            out += [{**c, "late": not (c.get("path") and "price_path_all" in EXPERIMENTS)} for c in pos if self.po_jump(c) <= 0]
         if case["type"] in ("capacity", "price_increase"):
             out += [c for c in mine if c["kind"] == "scorecard_otd" and (c["figure"] or 100) < 85]
         # a supplier under cash stress (news of restructuring / cash-short dossier): the verified news frames what we give
@@ -440,6 +442,9 @@ class NoIdeaAgent:
             except Exception:
                 pass
         ranked = [c for c in ranked if not c.get("late") and not tiny(c)] + late  # tiny falls never in round 1
+        if "price_path_all" in EXPERIMENTS:  # experiment: a price PATH leads round 1 even if flat history was shrugged off
+            paths = [{**c, "late": False, "filler": False} for c in ranked if c.get("path")]
+            ranked = paths + [c for c in ranked if not c.get("path")]
         # the arena counts a volume trend once per case: a 2nd forecast (another part) came back `duplicate` (P07 x4)
         fc = [c for c in ranked if c["kind"] == "forecast"]
         ranked = [c for c in ranked if c["kind"] != "forecast" or c is fc[0]]
@@ -1291,7 +1296,18 @@ or null, "reason": "<one sentence>"}."""
                 and all(terms.get(f) == v for f, v in (self.memory_best_structure(case, sid) or ({}, 0))[0].items()):
             # MEMORY CLOSE: it usually goes final at mf on this structure; ask one cent UNDER that, while its offer is still
             # open (after its final it walked: Parth 4.93 @ 90 d -> 0.00). Refused -> its final at mf (P04 45 d: 0.874).
-            t_mc = complete_offer(case, {**terms, "unit_price": round(mf - 0.01, 2)})
+            close_p = round(mf - 0.01, 2)
+            if "subcent_close" in EXPERIMENTS:
+                mem = (self.memory.get(sid) or {}).get("structures") or {}
+                key = next((kk for kk in mem if all(f"{f}={terms.get(f)}" in kk.split("|") for f in case["negotiable"]
+                                                    if f != "unit_price")), None)
+                ref = [a for a, _ in (mem.get(key) or {}).get("refused_asks", [])] if key else []
+                if any(abs(a - close_p) < 0.0005 for a in ref):
+                    # its floor lies BETWEEN the refused cent and its final (P04 45 d: 4.88 refused, 4.89 final; the case
+                    # benchmark puts it near 4.883) -> half a cent under its final. A 422 (if only cents are allowed) costs
+                    # nothing: "nothing happens, no round is used" (api.md)
+                    close_p = round(mf - 0.005, 3)
+            t_mc = complete_offer(case, {**terms, "unit_price": close_p})
             if must_haves_ok(case, t_mc, s["std"]):
                 s["mem_close"], close_now, near_final = True, True, False
                 sheets = [(total_cost(case, t_mc, s["std"], s["est"]), t_mc)]
@@ -1790,7 +1806,9 @@ or null, "reason": "<one sentence>"}."""
         if sheets and not final:
             self.sup[sid]["last_main"] = dict(sheets[0])
         args = self.next_args(sid, 3 if k == 0 else 1, first_round=k == 0) if args is None else args
-        if any(a["kind"] == "cost_calc" for a in args):  # it uses 3 claims: the arena checks at most 3 per e-mail
+        # a cost calc uses the claim slots only when it cites IDs: P04's has none, and dropping every other argument for it
+        # sent round 1 - the round a floor-stop supplier pins its value on - with ZERO checkable facts
+        if any(a["kind"] == "cost_calc" and a.get("ids") for a in args):  # it uses 3 claims: the arena checks at most 3
             args = [a for a in args if a["kind"] == "cost_calc"]
         rival = self.rival_offer(case, sid) if case["type"] == "rfq" else None
         refs = sorted({i for c in args for i in c["ids"]} | ({rival[0]} if rival else set()))
@@ -1932,6 +1950,26 @@ or null, "reason": "<one sentence>"}."""
                 out.append(f"We accept your price. On the chargeback: at the {ppm:.0f} ppm you commit to, EUR {cb:.0f} per "
                            f"complaint means about {n:.0f} complaints a year, around EUR {n * cb:,.0f} - it only costs you if "
                            f"quality slips below your own commitment. Alternatively the second sheet, without a chargeback.")
+        # ACCOUNT VALUE (experiment `account_value`): a supplier that "may drop small accounts" / sees us as not strategic
+        # fears we are a small account - name what we really buy from it (other parts in its own order history) and its own
+        # still-valid quote, in words (P04: 6308 + 7309 bearings; quote of 20 Sep EUR 4.63, valid 90 d). Round 1, once.
+        mot = set(d.get("motives", {}))
+        if "account_value" in EXPERIMENTS and k == 0 and {"may_drop_small_accounts", "we_are_not_strategic"} & mot \
+                and not self.sup[sid].get("acct_said"):
+            others = sorted({(pp[3].split(",")[0]) for part, rows in self.part_prices.items() if part not in case["parts"]
+                             for pp in rows if pp[0] == sid} if hasattr(self, "part_prices") else [])
+            qs = [(k2, v) for k2, v in self.all_facts.items() if k2.startswith("quote:") and v.get("supplier") == sid
+                  and v.get("part") in case["parts"] and (v.get("date") or "") >= "2026-09-01"]
+            own_q = max(qs, key=lambda kv: kv[1].get("date") or "", default=None)
+            self.sup[sid]["acct_said"] = True
+            line = "We are not a small account for you"
+            if others:
+                line += f": we also buy the {' and '.join(others[:2])} from you, and we want the whole family on the same " \
+                        "36-month footing"
+            line += "."
+            if own_q:
+                line += f" Your own quote of {own_q[1].get('date')} was EUR {own_q[1]['unit_price']:.2f} per unit."
+            out.append(line)
         # GOOD COP / BAD COP (experiment `good_bad_cop`): the "bad cop" is real - our own Supplier Quality escalation letter
         # (the case trigger doc: "will discuss quality commitments and cost recovery") and a real qualified second source
         # (the case alternative); the negotiator is the good cop who offers the way out. Nothing invented, no price of the
@@ -1973,7 +2011,7 @@ or null, "reason": "<one sentence>"}."""
     def plain(field, v):
         """A term in words for the e-mail body ("EUR 4.77 per unit", "90 days payment"); the term sheet binds."""
         if field == "unit_price":
-            return f"EUR {v:.2f} per unit"
+            return f"EUR {v:.3f} per unit" if abs(v * 100 - round(v * 100)) > 1e-6 else f"EUR {v:.2f} per unit"
         if field == "index_clause":
             return (f"{v['series']} index clause ({v['material_share']:.0%} share, {v['deadband_pct']:g}% deadband)"
                     if v else "no index clause")
