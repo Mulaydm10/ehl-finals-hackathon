@@ -96,3 +96,20 @@ July's 5.26 -> 5.84 and Oct 2023's 6.45 -> 6.10 exactly; its October value is 5.
 - **Switching to its db5 alternative is not a move** for it (priced db0 + 0.10, no cut) and drew its final.
 - Over 24 games no lever has moved its line below ~4.90 @ 14 d (5.00 @ 45 d) in normal mode; Codacabana's 4.90 @ 45 d is one
   grid step under it. Best known path stays 0c968aae (0.727): 4.76 -> 4.87 @ 14 d (+0.11) -> 4.91 + labour, agreed.
+
+## 9. Why our P18 scores fell, and live v3 (local, 2026-10-11 01:23, ed9a881a0a93d1c5): **0.598**
+**Why recent games scored worse (all 26 P18 games):**
+| path | games | scores |
+|---|---|---|
+| main v2.27/v2.28: r1 ONE sheet @ 30 d, r2 switch to 14 d at 4.87 (+0.11) -> 5.00, r3 4.91/4.94 agreed | 0c968aae, a09d9536 | **0.727, 0.707** |
+| main v2.34+: r1 three sheets led by 45 d -> its primary on 45 d; never switches to 14 d | ff6a, bf56, 3cb6, 0371, c4bc, 77b1, 3a64 | 0.62-0.69 |
+| noidea_p18 v1/v2/v3 (ours) | fd5b66b1, a55d2e89, ed9a881a | 0.621, 0.606, 0.598 |
+1. **Main's round-1 term choice moved to 45 d** (v2.34 single-agent build): Werdenfels charges ~0.10/kg per 30 days, and the 14-day
+   switch (-0.20 in 0c968aae) never happens. Request to Dhruv: P18-type suppliers (it prices payment at ~24%/yr) should open at 30 d
+   and switch to 14 d in round 2.
+2. **Its round-2 step is a draw around our step**: +0.11 drew -0.20 twice (0c96, a09d) and -0.10 once (a665); +0.10 (ed9a) and +0.08
+   (a55d) drew -0.10. Every gamble on a smaller step lost a grid step.
+3. **It gives nothing without a move from us** (brief): holding our ask with a new fact (v3 r3) drew its final at once.
+**v3 live:** 4.76 @ 30 d -> 5.20; 4.86 @ 14 d + forecast -> 5.10; hold 4.86 + labour -> final 5.10 -> 0.598.
+**Conclusion:** the record needs its line at <= 4.86 @ 14 d; in 26 normal-mode games its line never went below ~4.90 @ 14 d.
+Keep the best path (0c968aae) for the final agent; stop spending practice sessions on P18.
