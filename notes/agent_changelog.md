@@ -722,3 +722,23 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
 ## v2.17 live P11 (19:10): 0.71 (876705379b434d96)
 - High draw (46.50 first counter) -> 46.00 -> 45.50 -> hold -> **grid probes 45.10 / 45.20 / 45.30 all held** -> final 45.50 -> accepted. Floor this session > 45.30 (7117d351: <= 45.13). Mechanics live-verified; no walk, final came after 3 probes (patience ~4 holds).
 - Expected with the probe (cloud VARIANCE draw ~40/60): low draw (shown 45.00, floor ~44.6-45.0) -> 0.80-0.86, high draw -> 0.71-0.77.
+
+### Parth (branch parth/n1-p06-p09-p12), evening: crash fix + P07 0.81 + mirror rules - PLEASE MERGE
+**1. Crash (HTTP 500) - affects main.** `central.quality_notification_claims` cited every QN of the case's parts in one
+sentence: on P07 (4-part kit) 19 IDs -> the arena answered HTTP 500 on every retry and the agent died mid-game (twice,
+79b7b274b6a77470, 55db9b3de85aa78d; in the final = abandoned case, no deal). Fixed: one part, newest 8 IDs (central.py +
+central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with data IDs is resent once without the IDs.
+**2. P07 0.753 -> 0.812 (agent, 6f360ce484bb3f30; probe 0.812 x2).** Leitner is deterministic (same messages = same replies):
+| probe | rounds 2-4 | final | score |
+|---|---|---|---:|
+| A | lean, steps +0.12 / +0.15 / +0.10 | agreed 5.31 | **0.812** (x2) |
+| B | A + 8 QNs in round 2 | final 5.34 | 0.792 |
+| C | A + labour -0.3% in round 2 | final 5.34 | 0.792 |
+- **Weak facts hurt a supplier that is moving** ("factored it in ... while we appreciate your movement, we ca[nnot]"):
+  fillers / QNs / tiny index falls now only from round 3 after a reply in which it did NOT move (holders like P11).
+- **QN claims only for amber/red scorecards or quality cases** (P07 is green: "they do not alter our price").
+- **Gap steps (default ON, `no_gap_steps` turns off):** for patience prior 3-4, not cash-short, not RFQ, later asks move
+  30% of the gap to its standing value (the 8-round schedule gave +0.07 steps and starved the mirror). Live: P07 0.812,
+  P18 neutral (0.666, fixed 0.10 steps). Offline: P01/P02/P11 unchanged; P07/P08 offline dips are simulator artifacts.
+**3. P18:** 90 d + AS db5 is priced in (+0.25-0.30/kg vs our 0.18 value): probe 0.598; ceiling ~0.68.
+**4. P11:** holds at 45.00 (margin floor, payment fixed); QN after scorecard ppm = duplicate; its own quote = irrelevant.
