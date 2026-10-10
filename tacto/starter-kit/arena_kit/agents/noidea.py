@@ -284,9 +284,12 @@ class NoIdeaAgent:
             return None
         total, w, moves = best
         price = cur * (1 + total / 100)
-        ids = [i for _, _, m in moves for i in m[1]["ids"]]
+        # IDs (= arena-checked claims) only for series that fell or stayed flat: a cited rise is answered "Your
+        # figures confirm our case: that driver rose" even inside a calculation (P08 v2.6 live a43d77c01405cba4)
+        ids = [i for _, _, m in moves if m[0] <= 0 for i in m[1]["ids"]]
         shares_txt = ", ".join(f"{sr} {sh * 100:.0f}%" for sr, sh, _ in moves)
-        moves_txt = ", ".join(f"{sr} {m[0]:+.1f}% ({m[1]['ids'][0]}, {m[1]['ids'][1]})" for sr, _, m in moves)
+        moves_txt = ", ".join(f"{sr} {m[0]:+.1f}%" + (f" ({m[1]['ids'][0]}, {m[1]['ids'][1]})" if m[0] <= 0 else "")
+                              for sr, _, m in moves)
         window = "six" if w == 6 else "twelve"
         sentence = (f"Using your own cost shares ({shares_txt}) and the latest {window}-month index moves ({moves_txt}), "
                     f"your cost increase comes to about {total:+.1f}% of the price, not {ask_pct:+.1f}%.")
@@ -405,9 +408,13 @@ class NoIdeaAgent:
     # ---- term sheets ---------------------------------------------------------------------------
     def combos(self, case, base):
         opts = case.get("term_options", {})
-        fields = [f for f in case["negotiable"] if f != "unit_price" and opts.get(f) and f != "index_clause"]
+        fields = [f for f in case["negotiable"] if f != "unit_price" and opts.get(f)]
+        s = self.sup.get(getattr(self, "_combo_sid", None), {})
         for values in itertools.product(*(opts[f] for f in fields)):
-            yield {**base, **dict(zip(fields, values))}
+            t = {**base, **dict(zip(fields, values))}
+            if "index_clause" in t and t["index_clause"] is None and s.get("clause_required"):
+                continue  # it insists on a clause (P08/P18: added one to every sheet after round 0)
+            yield t
 
     def sheets_at(self, case, sid, value, cap_price=None, n=3):
         """The `n` different term sheets that give the supplier `value` per unit at the lowest cost to us,
@@ -415,6 +422,7 @@ class NoIdeaAgent:
         s = self.sup[sid]
         ranked = []
         lim = s.get("limits", {})
+        self._combo_sid = sid
         for t in self.combos(case, dict(s["open_terms"])):
             if any((lo is not None and (t.get(f) or 0) < lo) or (hi is not None and (t.get(f) or 0) > hi)
                    for f, (lo, hi) in lim.items() if t.get(f) is not None):
@@ -730,6 +738,19 @@ class NoIdeaAgent:
                 if len(diff) == 1 and diff[0] in self.LEARN_FIELDS:
                     f = diff[0]
                     slopes.setdefault(f, []).append((b["unit_price"] - a["unit_price"]) / (b[f] - a[f]))
+        # index clause: its sheets carry a clause we didn't ask for -> required; the deadband is priced
+        # (P08 a43d77c01405cba4: EUR 5.26 @ db0 vs 5.38 @ db5, same 45 d; P18 5.30 vs 5.40)
+        for m in events:
+            if m.get("from") == "buyer":
+                continue
+            sheets = [ts["terms"] for ts in (m.get("term_sheets") or []) if (ts.get("terms") or {}).get("unit_price")]
+            if sheets and all(t.get("index_clause") for t in sheets) and "index_clause" in case["negotiable"]:
+                s["clause_required"] = True
+            for a, b in itertools.combinations(sheets, 2):
+                ca, cb = a.get("index_clause"), b.get("index_clause")
+                if ca and cb and ca.get("deadband_pct") != cb.get("deadband_pct") and a.get("payment_days") == b.get("payment_days"):
+                    slopes.setdefault("_deadband", []).append(
+                        (b["unit_price"] - a["unit_price"]) / (cb["deadband_pct"] - ca["deadband_pct"]))
         s["k"] = {**self.prior_k(case, sid), **{f: sum(v) / len(v) for f, v in slopes.items()}}
         if s["k"]:
             log.info("%s learned premiums (EUR/unit per unit of term): %s", sid, {f: round(v, 3) for f, v in s["k"].items()})
@@ -745,8 +766,12 @@ class NoIdeaAgent:
         """Value adjustment for the learned premiums, relative to the supplier's latest standing terms."""
         s = self.sup[sid]
         ref = s["open_terms"]  # fixed baseline: a moving one made the price jump (offline P10: 25.81 -> 28.52)
-        return -sum(k * ((t.get(f) or 0) - (ref.get(f) or 0)) for f, k in (s.get("k") or {}).items()
-                    if t.get(f) is not None and ref.get(f) is not None)
+        adj = -sum(k * ((t.get(f) or 0) - (ref.get(f) or 0)) for f, k in (s.get("k") or {}).items()
+                   if not f.startswith("_") and t.get(f) is not None and ref.get(f) is not None)
+        kd = (s.get("k") or {}).get("_deadband")
+        if kd and t.get("index_clause"):  # a wider deadband costs it kd per point (baseline: db 0)
+            adj -= kd * (t["index_clause"].get("deadband_pct") or 0)
+        return adj
 
     def prose_alternative(self, case, sid, events):
         """Signal 'prose_alternative' (src/eval/signals.py; P01 live: "Alternatively, with valid from

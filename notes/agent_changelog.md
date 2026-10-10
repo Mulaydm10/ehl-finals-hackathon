@@ -358,3 +358,14 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
 | P10 | 0.64 | 0.65 | b9e6766299dada92 | final in round 1 again: €32.00 @ 56, 36 m (its floor ~€31.90) |
 - Mean of the 4: **0.61**. The full v2.6 stack (structure + dynamic + personas/RAG + Parth's features) ran 4 sessions in
   parallel on the Mac + Astra without timeouts: the Live Final shape works.
+
+### v2.7 (offline): index-clause lever + no checked rises inside the cost calc
+- **Clause lever**: `index_clause` options are part of the search; once the supplier adds a clause to every sheet
+  unasked (P08/P18: always after round 0, 8/8 games incl. teammates') → `clause_required`; the deadband premium is
+  learned from its own sheets (P08: €5.26 @ db0 vs €5.38 @ db5, same 45 d → **€0.024/kg per deadband point**; P18 alike)
+  and `total_cost` picks the deadband cheapest for us. Replay of the real P08 game: after its clause the agent offers
+  db5 at €4.80–5.07. **Honest finding:** at its own deadband prices db0/db3/db5 are worth ~the same to us
+  (0.647 / 0.644 / 0.643): the €31k clause cost in P08 was mostly unavoidable once it insisted.
+- **Cost calc cites IDs only for indices that fell/stayed flat**; rising ones in plain text (P08 v2.6: "Your figures
+  confirm our case: that driver rose"). P08 refs now: AS-14404 only.
+- Tests 32 passed; offline 0.939 / 0.947; Astra P08 trial clean (10.3 s per call).
