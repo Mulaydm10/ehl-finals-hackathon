@@ -141,7 +141,7 @@
   }
  },
  "sup:70140": {
-  "games": 43,
+  "games": 47,
   "scores": [
    0.672,
    0.609,
@@ -161,9 +161,11 @@
    0.71,
    0.71,
    0.794,
+   0.877,
    0.772,
    0.794,
    0.71,
+   0.877,
    0.794,
    0.777,
    0.794,
@@ -177,6 +179,7 @@
    0.71,
    0.71,
    0.71,
+   0.723,
    0.794,
    0.794,
    0.752,
@@ -214,6 +217,7 @@
      ]
     ],
     "finals": [
+     44.5,
      45.0,
      45.5
     ],
@@ -302,10 +306,10 @@
    "energy cost": 1,
    "energy index": 7,
    "index and price history": 1,
-   "index change": 70,
+   "index change": 74,
    "labour cost index": 1,
-   "quality record": 39,
-   "volume change": 37
+   "quality record": 42,
+   "volume change": 39
   }
  },
  "sup:70410": {
@@ -815,6 +819,7 @@
    0.923,
    0.9,
    0.862,
+   0.963,
    0.862,
    0.903,
    0.915,
@@ -917,6 +922,10 @@
       430.41
      ],
      [
+      430.07,
+      430.36
+     ],
+     [
       431.26,
       431.58
      ],
@@ -964,7 +973,7 @@
    }
   },
   "took": {
-   "index change": 3,
+   "index change": 4,
    "price history": 1,
    "should cost": 4,
    "volume change": 6
@@ -1129,9 +1138,10 @@
   }
  },
  "sup:70620": {
-  "games": 14,
+  "games": 15,
   "scores": [
    0.874,
+   0.7,
    0.0,
    0.874,
    0.815,
@@ -1149,7 +1159,7 @@
   "shrugged": {
    "index change": 6,
    "price history": 4,
-   "volume change": 7
+   "volume change": 8
   },
   "structures": {
    "contract_months=36|payment_days=14": {
@@ -1179,6 +1189,10 @@
      [
       4.8,
       4.88
+     ],
+     [
+      4.87,
+      4.88
      ]
     ]
    },
@@ -1190,7 +1204,8 @@
      ]
     ],
     "finals": [
-     4.89
+     4.89,
+     4.9
     ],
     "named_floors": [],
     "refused_asks": [
@@ -1209,6 +1224,10 @@
      [
       4.88,
       4.89
+     ],
+     [
+      4.89,
+      4.9
      ]
     ]
    },
