@@ -565,3 +565,23 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
   limit = min(own, market) (never concede above the best rival). Replay of the real game (`src/eval/replay_rfq.py`):
   asks now €24.72 / 26.53 / 25.54 with the €31.00 rival cited (were €28.70 / 26.57 / 30.25). Tests 32 passed; offline
   0.944 / 0.940 (the simulator's bidders accept in round 1, so P05's gain only shows live).
+
+## v2.13 / v2.14 live (17:27-17:33) and the P02 comparison → v2.15
+| case | version | score | session | what happened |
+|---|---|---:|---|---|
+| P02 | v2.13 | 0.20 | dc1d4fd8a7cd47cb | the model switched our sheets to 30 d in round 3 → it made €369.45 @ 30 d its final (worse for us than ~€372 @ 90 d) |
+| P05 | v2.14 | **0.00** | d9af85e000ab3d4d | market anchor 20% below → the best bidder 70250 (€28.00) **walked**; then we tried to accept 70210's '-a' sheet → arena: "not a standing offer … cannot be accepted by its id"; the fallback sent it back after its final → 70210 walked too → no deal |
+- **P02 good vs weak games** (`src/eval/compare_games.py`): the good ones (0.48 v2.3, 0.51 v2.11) held **one structure (90 d) every
+  round**, short e-mails, 0–1 data IDs, **no attachment**, small steps; the weak ones switched structure (v2.13 → 30 d), or sent
+  the call-off CSV and kept arguing until it walked (v2.12).
+
+### v2.15 (offline) - general fixes
+| fix | evidence |
+|---|---|
+| **Accept only the supplier's PRIMARY sheet id**; '-a' alternatives only as our own sheet in open rounds | arena refuses '-a' ids (P05 now; Parth P18) - the finals-replay "+0.03" for '-a' sheets was never real (now +0.000) |
+| **At final_offer accept the primary; never send anything back** (`PROPOSE_ALT_AFTER_FINAL = False`) | sending its alternative back after final: walked 2× (P08 v2.7, P05 v2.14), worked 1× (P10) |
+| **RFQ market anchor 10%** below the lowest valid offer (was 20%); **a bidder walked → secure the best remaining** at agreed/final | 70250 walked at the 20% gap; playbook: keep one valid offer standing |
+| **The model may not change the structure after round 1** (only sheets with code's lead structure) | P02 v2.13: model-driven switch to 30 d → 0.20 |
+| **Call-off CSV only when it explicitly asks for a schedule / documentation** | CSV only in the weak P02 games |
+- Tests 32 passed; offline 0.944 / 0.940; P02 real-game replays still accept before the walks (0.51 / 0.54 / 0.51); RFQ replay asks
+  €26.93–28.73 (were €24.72–26.53).

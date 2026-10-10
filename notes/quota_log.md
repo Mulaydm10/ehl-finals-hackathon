@@ -79,3 +79,5 @@
 | 2026-10-10 17:17 | Dhruv (comparison) | P05 | ours_P05 / gpt-6-astra | 0.53 | 798c7367160898ba |
 | 2026-10-10 17:19 | Neel | P03 | noidea_neel / gpt-6-astra | **0.92** | 3091eac920857dc0 |
 | 2026-10-10 17:22 | Neel | P03 | noidea_neel / gpt-6-astra | **0.93** | 2e4bf89ac2967a45 |
+| 2026-10-10 17:27 | Dhruv | P02 | noidea v2.13 / gpt-6-astra | 0.20 | dc1d4fd8a7cd47cb |
+| 2026-10-10 17:27 | Dhruv | P05 | noidea v2.14 / gpt-6-astra | 0.00 | d9af85e000ab3d4d |
