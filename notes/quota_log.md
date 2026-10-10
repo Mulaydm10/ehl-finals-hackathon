@@ -198,3 +198,4 @@
 | 2026-10-10 22:15 | Dhruv | P05 | noidea v2.29 (RFQ layer) / gpt-6-astra | 0.75 (70210 agreed 28.57 @ 14 d) | f841e57158853b8d |
 | 2026-10-10 22:18 | Dhruv | P05 | noidea v2.29b rfq_low10 / gpt-6-astra | **0.82 agent best P05** (28.00 @ 30 d) | 62a9e69f67fc482a |
 | 2026-10-10 22:18 | Dhruv | P05 | noidea v2.29b rfq_low12 / gpt-6-astra | 0.76 (timeout with 70240) | c88d676f208af3c0 |
+| 2026-10-10 22:28 | Neel | P11 | noidea_p11 / gpt-6-astra | **0.79** | d310d9bf515ba560 |
