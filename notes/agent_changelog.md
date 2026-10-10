@@ -743,3 +743,8 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
   (the score assumes the agreed term); ~10 days of cash at a cash-short firm's rate ~EUR 0.30/unit > the gap to 0.80.
 - `ask_floor`: once it stalls, ask the one number we need: "What is the lowest price at which you can sign these terms today?"
 - Offline Astra: line renders as above; injection PASS. Live test pending.
+
+## v2.18 live P11 (19:22, own_late_pay + ask_floor + grid probe): **0.777** (b1f94bfec7792ffb) - best ever on a HIGH draw
+- 46.50 (high draw) -> r2 data + our late-payment admission -> 45.50 ("We appreciate your commitment to paying on time, as cash flow is important to us right now") -> hold ("we cannot go below what you paid before") -> **grid probe 1 = 45.10 AGREED**: "We appreciate your move on the price and your firm promise to pay on time, which is crucial for our cash flow right now. We accept your offer of 45.10 EUR".
+- 7 earlier high draws all ended 0.71 (one 0.77 via a lucky near-close). The play-the-man line + grid probe beat the draw. Floor this session in (45.00, 45.10]. 0.80 needs <= 44.96: expected on a LOW draw (shown 45.00) with the same recipe.
+- Lesson (general): **pay the person in his currency, then probe** - the concession he values (cash on time) moved his floor; the probe collected it.
