@@ -129,3 +129,16 @@ Rules now in `central.py` (general, from per-case signals mined by `mine_claims.
 - "Confirm our case" (a rising index) does not block a *falling* index of the same kind; a falling cost-driver index was
   taken in every case where we cited one (P01, P02 x3, P03 x4, P18).
 Round 4 said "our best effort ... without requiring management escalation", so escalation may be the next lever.
+
+### 7b. P02, three more live games (552fb056e31d24d1, 8d4c4d5d7dff80bb: 0.847 each)
+- **Nordmark follows a fixed concession schedule once our steps are big enough.** With 30% steps, with 40% steps plus
+  a 5% deeper anchor, and with 2 extra data rounds, its path was the same to the cent: 372.52, 370.85, 369.45, 368.55,
+  final 368.25 (5th message). Small steps (EUR 0.76) bought less (cuts 1.00 / 0.60 / 0.60). Step size matters up to a
+  cap; the anchor does not (the split-the-difference model was wrong).
+- **It goes final at a fixed message count** (4th or 5th) whatever data the later rounds carry ("our service levels
+  remain within acceptable parameters" for on-time delivery, "past prices do not reflect our current cost structure" for
+  order history). Later rounds still cut, but on its schedule.
+- So the floor it approaches (~EUR 368.0 @ 90 d) is what to lower, as on P03, with data it takes **early**. Next test:
+  quality notifications on the part (never cited in any game).
+- Cloud session (analysis/central/ENGINES.md, analysis/cases/*_engine.md): engine type per case. 5 of 10 suppliers
+  mirror, 2 hold, 1 floor-stop, 1 one-shot, 1 auction. QNs and the supplier's own recent quote were never cited.

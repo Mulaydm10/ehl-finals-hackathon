@@ -1,5 +1,5 @@
 {
- "games": 96,
+ "games": 99,
  "by_kind": {
   "copper notation": {
    "taken": 1,
@@ -10,10 +10,10 @@
    "take_rate": 1.0
   },
   "index_change": {
-   "taken": 20,
+   "taken": 22,
    "confirm_case": 7,
    "no_change": 6,
-   "take_rate": 0.61
+   "take_rate": 0.63
   },
   "notice_period": {
    "taken": 2,
@@ -22,8 +22,8 @@
   },
   "po_prices": {
    "taken": 9,
-   "no_change": 5,
-   "take_rate": 0.64
+   "no_change": 6,
+   "take_rate": 0.6
   },
   "rival_quote": {
    "taken": 24,
@@ -75,9 +75,12 @@
    },
    "index_change": {
     "confirm_case": 1,
-    "taken": 4
+    "taken": 6
    },
    "scorecard_ppm": {
+    "no_change": 1
+   },
+   "po_prices": {
     "no_change": 1
    }
   },
