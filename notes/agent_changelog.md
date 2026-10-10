@@ -911,3 +911,7 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 - Live-calibrated sim (analysis/tools/offline_round.py P04): 4.83 @ 45 -> 4.90; close 4.88 -> 4.89; agreed 4.89 = **0.874**
   (was 0.81 with our old 14-d lead). Other cases' round 1 unchanged; tests 56; offline mean 0.931 (P04 stubborn generic sim
   0.35 - that sim is not a floor-stop model; the calibrated one is).
+
+## v2.24 live P04 (21:22): **0.874** (ffef2938ad0d18a5) - crosses 0.87, ties the record with the AGENT (was 0.82)
+- 4.83 @ 45 d / 36 m -> open 4.90 -> memory close 4.88 -> held 4.89 -> agreed 4.89 = 0.8737. Exactly the calibrated sim path. 4.88 @ 45 d refused: its stop on 45 d is 4.89 (= floor there).
+- Above 0.874 needs it to take one cent under its stop on a term where floor < stop (14 d 4.85 = 0.99 / 60 d 4.90 = 0.98 at its floor); a 60-d near-close at that level was refused once (Neel 5f80, MISTAKES #17) -> not worth the risk (fallback 0.81-0.815 < 0.874).

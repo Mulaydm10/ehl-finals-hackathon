@@ -729,7 +729,7 @@
   }
  },
  "sup:70620": {
-  "games": 8,
+  "games": 9,
   "scores": [
    0.0,
    0.815,
@@ -738,7 +738,8 @@
    0.874,
    0.766,
    0.0,
-   0.86
+   0.86,
+   0.874
   ],
   "shrugged": {
    "index change": 6,
@@ -773,7 +774,12 @@
     ]
    },
    "contract_months=36|payment_days=45": {
-    "agreed_to_our_ask": [],
+    "agreed_to_our_ask": [
+     [
+      4.89,
+      4.89
+     ]
+    ],
     "finals": [
      4.89
     ],

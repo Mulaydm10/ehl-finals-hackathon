@@ -199,3 +199,5 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
 86. **Words matter where the numbers are equal: name the fear you remove, never accuse.** P11 (28 games, same data and sheet):
     openings that told the cash-short owner "no penalties / no chargebacks" drew the low first counter 7 of 9 vs 7 of 19;
     "prove your reliability" / "earn our confidence" / "documented complaints" leaned high. Put the reassurance in code, not luck.
+87. **Floor-stop suppliers stop at a fixed price per term: choose the TERM from memory** (P04: 45 d = 0.874 vs 14 d = 0.815, the
+    same supplier); then one ask one cent under its usual final BEFORE its final (free: refused -> its final). Agent 0.82 -> 0.874.
