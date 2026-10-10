@@ -23,6 +23,11 @@ Evidence (all 10 archived P05 games + back offices; analysis in analysis/cases/P
   monthly call-off schedule attached (d9af, ask 25.54) got 28.00 at once ("Got the call-off schedule ... so I'm dropping
   the price" - Dralveck, e9ea): it goes in every round-1 message. After round 1 it answers ~half of each move we make
   and gives "the rest of the step" once -> bigger early moves.
+- Live 1ebd6e0eb14313c8 (0.820, schedule attached, asks 24.50 -> 26.00 -> 26.50): the SAME path, 30.50 -> 28.50 ->
+  28.00 final - the schedule was not it. Both runs fit one rule: first counter ~30.50 whatever we ask, then -1.00 (the
+  rest of the step) and ~0.75 x each move we make, final at its 3rd reply. Final ~ 29.50 - 0.75 x (our total move) ->
+  a low anchor and ONE big move: 21.00 -> 26.40 meets its floor (~26.26) at our price. Dralveck followed the same path
+  (36.00 -> 30.50 -> 28.00) and WALKED after two +0.30 moves: never tiny moves.
 - Dralveck (70210) ends ~30.00 and Hrvelec (70240) ~32.00 @ 42 d: kept going as backups, never accepted while
   Fuchsreiter is in.
 """
@@ -48,9 +53,9 @@ TARGET, DRALVECK, HRVELEC = "sup:70250", "sup:70210", "sup:70240"
 NAMES = {TARGET: "Ms Fuchsreiter", DRALVECK: "Mr Dralveck", HRVELEC: "Ms Procházková"}
 # our asks, message by message (the last repeats +0.10 a round so we always move)
 ASKS = {
-    TARGET: [24.50, 26.00, 26.50, 26.70, 26.85],  # live 9ce6: it answers ~half of each move after round 1
-    DRALVECK: [27.20, 27.50, 27.80, 28.10, 28.40, 28.70],
-    HRVELEC: [27.00, 27.30, 27.60, 27.90, 28.20, 28.50],
+    TARGET: [21.00, 26.40, 26.80, 26.95],  # live: first counter ~30.50 whatever we ask; then -1.00 + ~0.75 x our move
+    DRALVECK: [21.50, 26.60, 26.90, 27.10],  # same play; +0.30 moves made it walk (1ebd6e0eb14313c8)
+    HRVELEC: [24.00, 27.50, 28.50, 29.50],
 }
 LEAD = {TARGET: 28, DRALVECK: 28, HRVELEC: 42}  # its standard 28 d; Hrvelec's 52 d breaks our must-have (<= 42)
 TAKE_AT = 26.95  # the board's best is 0.92 = 27.00 @ 14 d: any open price below it at 14 d we take at once
@@ -136,19 +141,28 @@ class P05RecordAgent:
         live = live_threads(threads)
         target_live = TARGET in live
         ready = [s for s in (self.focus or live) if s in live] or live
-        # 1. close as soon as Fuchsreiter has agreed, said final, or stands at our take-price
-        if target_live:
-            ev = threads[TARGET]
+        # 1. close: any bidder that agreed, said final or stands at the take-price (14 d) - take the cheapest of those,
+        #    once Fuchsreiter is among them or one of them beats Fuchsreiter at the take-price
+        closable = []
+        for sid in live:
+            ev = threads[sid]
             st, p = latest(ev).get("status"), self.primary(ev)
-            if p and (
-                st in ("agreed", "final_offer")
-                or (p["terms"]["unit_price"] <= TAKE_AT and p["terms"].get("payment_days") == 14)
-            ):
-                best = self.best_valid(case, threads, live)
-                if best and best[1] == TARGET or best is None:
-                    return self.accept(TARGET, p, f"Fuchsreiter {st} {p['terms']}")
-                return self.accept(best[1], best[2], "a rival is cheaper than Fuchsreiter's close")
-        else:  # it has gone: take the cheapest valid standing sheet before the others go too
+            if not p or not must_haves_ok(case, complete_offer(case, p["terms"]), standard_terms(ev)):
+                continue
+            at_take = p["terms"]["unit_price"] <= TAKE_AT and p["terms"].get("payment_days") == 14
+            if st in ("agreed", "final_offer") or at_take:
+                closable.append((self.cost(case, sid, ev, p["terms"]), sid, p, st))
+        if closable:
+            c_take = self.cost(
+                case,
+                TARGET,
+                threads[TARGET],
+                {"unit_price": TAKE_AT, "payment_days": 14, "lead_time_days": LEAD[TARGET]},
+            )
+            best = min(closable, key=lambda x: x[0])
+            if not target_live or any(x[1] == TARGET for x in closable) or best[0] <= c_take:
+                return self.accept(best[1], best[2], f"{best[3]} {best[2]['terms']} - cheapest of {len(closable)}")
+        if not target_live:  # it has gone: take the cheapest valid standing sheet before the others go too
             best = self.best_valid(case, threads, live)
             if best:
                 return self.accept(best[1], best[2], "Fuchsreiter gone - cheapest valid backup")
@@ -229,11 +243,13 @@ class P05RecordAgent:
         return {"supplier_id": sid, "message": msg}
 
 
-# ---------- offline: the three bidders as measured in our 10 games (no arena calls) ----------
-def simulate(floor_target=26.26, verbose=True, agent=None, patience=4):
-    """Each bidder: price p (its 0.50 grid), floor f. Its counter: p - 0.7 x (p - our ask) in round 1, then
-    0.5 x our move; a cited rival <= 90 % of p adds a step of 2.00 - half now, the rest next round. It agrees when our
-    ask >= max(f, its next counter); final_offer at its floor or after `patience` of its replies."""
+# ---------- offline: the bidders as measured live (9ce672fffbf931a7, 1ebd6e0eb14313c8; no arena calls) ----------
+def simulate(floor_target=26.26, mirror=0.75, verbose=True, agent=None, patience=3):
+    """Each bidder keeps an internal price p (shown on its 0.50 grid, rounded up). Round 1 with a much lower rival
+    cited: p = 30.50 (Fuchsreiter and Dralveck alike, whatever we ask). Round 2: -1.00 (the rest of the step) and
+    `mirror` x our move; later rounds: `mirror` x our move; never below its floor. It agrees when our ask >= p; final
+    at its `patience`-th reply; it walks if our moves since round 1 add up to less than 1.00 by then (Dralveck).
+    Fits both live runs exactly (mirror 0.75): 30.50 -> 28.50 -> 28.00."""
     probe = json.loads((ROOT / "analysis/cases/openings/P05.json").read_text(encoding="utf-8"))
     case = next(
         c
@@ -242,14 +258,13 @@ def simulate(floor_target=26.26, verbose=True, agent=None, patience=4):
     )
     res = probe["result"]
     threads = {sid: [dict(m) for m in ev] for sid, ev in probe["threads"].items()}
-    state = {
-        TARGET: {"p": 38.5, "f": floor_target, "rest": 0.0, "n": 0, "ask": None},
-        DRALVECK: {"p": 36.0, "f": 30.0, "rest": 0.0, "n": 0, "ask": None},
-        HRVELEC: {"p": 33.0, "f": 32.0, "rest": 0.0, "n": 0, "ask": None},
-    }
+    floors = {TARGET: floor_target, DRALVECK: floor_target + 0.30, HRVELEC: 31.50}
+    state = {sid: {"p": None, "n": 0, "ask": None, "first": None, "rival": False} for sid in threads}
     lead = {TARGET: 28, DRALVECK: 28, HRVELEC: 42}
     agent = agent or P05RecordAgent()
-    for _ in range(40):
+    grid = lambda x: math.ceil(round(x * 2, 6)) / 2  # noqa: E731
+    for _ in range(60):
+        agent.focus = set(live_threads(threads))
         d = agent.decide(case, threads)
         sid, msg = d["supplier_id"], d["message"]
         if msg.get("action"):
@@ -261,48 +276,44 @@ def simulate(floor_target=26.26, verbose=True, agent=None, patience=4):
             c = total_cost(case, complete_offer(case, t), standard_terms(threads[sid]))
             sc = min(1.0, max(0.0, (res["c_open"] - c) / (res["c_open"] - res["c_best"])))
             return round(sc, 4), f"deal {sid} {t}", agent
-        s = state[sid]
-        s["n"] += 1
+        st = state[sid]
+        st["n"] += 1
         sheets = msg.get("term_sheets") or []
-        if not sheets:
-            reply = {"status": latest(threads[sid]).get("status"), "price": s["p"]}
-        else:
+        status, price = latest(threads[sid]).get("status"), None
+        if sheets:
             ask = sheets[0]["terms"]["unit_price"]
-            moved = 0 if s["ask"] is None else ask - s["ask"]
-            step = 0.7 * (s["p"] - ask) if s["ask"] is None else 0.5 * max(moved, 0)
-            cites = [r for r in (msg.get("refs") or []) if r.startswith("offer:")]
-            body_cites = [w.strip("().,") for w in msg["body"].split() if w.startswith("(offer:")]
-            rival = bool(cites or body_cites)
-            step += s["rest"]
-            s["rest"] = 1.0 if rival else 0.0
-            step += 1.0 if rival else 0.0
-            nxt = max(s["f"], math.ceil((s["p"] - step) * 2) / 2)  # its 0.50 grid, never below its floor
-            s["ask"] = ask
-            if ask >= max(s["f"], nxt - 1e-9) or ask >= s["p"]:
-                reply = {"status": "agreed", "price": ask}
+            cited = "(offer:" in msg["body"]
+            if st["p"] is None:  # its first counter
+                st["p"], st["first"], st["rival"] = (30.50 if cited else 31.00), ask, cited
+                if sid == HRVELEC:
+                    st["p"] = 33.0
             else:
-                s["p"] = nxt
-                final = nxt <= s["f"] + 0.49 or s["n"] >= patience
-                reply = {"status": "final_offer" if final else "open", "price": nxt}
-        oid = f"offer:{sid.split(':')[1]}-{s['n']}"
-        reply_msg = {
+                move = max(0.0, ask - st["ask"])
+                st["p"] -= (1.0 if st["rival"] and st["n"] == 2 else 0.0) + mirror * move
+            st["p"] = max(st["p"], floors[sid])
+            st["ask"] = ask
+            if ask >= st["p"] - 1e-9:
+                status, price = "agreed", ask
+            elif st["n"] >= patience and ask - st["first"] < 1.0:
+                status = "walked_away"
+            else:
+                status, price = ("final_offer" if st["n"] >= patience else "open"), grid(st["p"])
+        else:
+            price = latest(threads[sid])["term_sheets"][0]["terms"]["unit_price"]
+        oid = f"offer:{sid.split(':')[1]}-{st['n']}"
+        reply = {
             "from": f"sales@{sid}",
-            "status": reply["status"],
+            "status": status,
             "body": "",
-            "term_sheets": [
-                {
-                    "term_sheet_id": oid,
-                    "terms": {"unit_price": reply["price"], "payment_days": 14, "lead_time_days": lead[sid]},
-                }
+            "term_sheets": []
+            if status == "walked_away"
+            else [
+                {"term_sheet_id": oid, "terms": {"unit_price": price, "payment_days": 14, "lead_time_days": lead[sid]}}
             ],
         }
         if verbose:
-            print(
-                f"  {sid}: ours {[x['terms']['unit_price'] for x in sheets] or 'note'} -> {reply['status']} "
-                f"{reply['price']}"
-            )
-        threads[sid] += [{**msg, "from": "buyer"}, reply_msg]
-        agent.focus = {sid2 for sid2 in threads if latest(threads[sid2]).get("status") not in ("walked_away",)}
+            print(f"  {sid}: ours {[x['terms']['unit_price'] for x in sheets] or 'note'} -> {status} {price}")
+        threads[sid] += [{**msg, "from": "buyer"}, reply]
     return 0.0, "no end", agent
 
 
@@ -366,9 +377,9 @@ if __name__ == "__main__":
     ap.add_argument("--reserve", type=int, default=40)
     a = ap.parse_args()
     if a.sim:
-        for floor in (26.26, 26.80, 27.50):
-            print(f"Fuchsreiter floor {floor}:")
-            sc, end, _ = simulate(floor)
+        for floor, mirror in ((26.26, 0.75), (26.26, 0.5), (26.26, 1.0), (27.00, 0.75), (26.26, 0.4)):
+            print(f"Fuchsreiter floor {floor}, mirror {mirror}:")
+            sc, end, _ = simulate(floor, mirror)
             print(f"  -> score {sc} ({end})\n")
     else:
         sys.path.insert(0, str(Path(__file__).resolve().parent))
