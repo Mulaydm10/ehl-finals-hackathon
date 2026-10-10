@@ -267,3 +267,17 @@ Code still does all maths and safety checks; at runtime the agent now reads, lea
   +47.7% over 12 m; Neel: 6-month driver mix ≈ +4.6% vs its +6.5% ask) - the calculation it asks for, like the kit calc.
 - Web app: manual play can't meet 60 s per message → add a countdown + "Ask NoIdea then edit" flow.
 - Patience prior for group/stabilise price increases is too high (7; this one went final in round 4).
+
+### v2.4 (offline): own-cost-share calculation, negotiator personas + "Patrick Jane" reading, RAG, all sheets judged
+| change | evidence | offline check |
+|---|---|---|
+| **Cost calculation from the supplier's OWN stated shares** ("X rose N% … is M% of our cost") × our 6- or 12-month index moves (arena-checked idx IDs) → "your cost increase comes to about +4.4%, not +6.5%"; the only argument in that round (3 claims); "That supports a price of about EUR …" only if ≤ our own ask | P02 live: "without additional verified data to substantiate your target price, our flexibility remains highly restricted" | fires on P02 (+4.4% vs +6.5%), P03, P04, P08, P18; not P10 (no shares stated) |
+| **Personas**: Chris Voss (labels, calibrated how/what questions, never split the difference), Fisher & Ury (interests, objective criteria), **Patrick Jane** (one sharp, true observation from what its e-mail repeats/stresses/avoids, grounded only in its e-mail, signals or notes); stance per goal | user request; playbooks | Astra: "You have linked additional volume to a binding commitment; it sounds like confirmed demand… is what supports your capacity allocation… How can we structure that commitment so you can confirm the full volume?" |
+| **RAG** into the model prompt: signals detected in its e-mail (25-pattern catalogue, with what works), our notes on this supplier verbatim ranked by overlap with its e-mail, lessons from our games by case type (`datasets/G_lessons.json`) | P10 retrieval: lead-time-premium signal, committee note, capacity e-mail, "final in round 1" lesson | Astra 8.3 s per call |
+| Opening rules: never say the volume isn't binding, never describe/compare the sheets' terms (filtered too) | Astra P02 trial: "this proposal does not include a binding volume commitment"; "keeping your payment terms unchanged" (we asked 90 d) | – |
+| "around N times our current business" dropped (keep the € value) | P07: 3 requests for "the exact figures behind" it | – |
+| **Accept the cheapest of ALL its term sheets**, not `term_sheets[0]` (credit: **Parth**, P18 6833e98fbbe5ebdf) | 47 supplier messages in our archive carry '-a' alternative sheets | `src/eval/replay_finals.py` on 9 real finals: **+0.028 mean**, P10 game 20 0.470 → 0.656, P18 0.430 → 0.485, P04 +0.014 |
+- Deterministic offline eval unchanged 0.937 / 0.944.
+- Parth's branch `parth/n1-p06-p09-p12` (not merged yet): P06/P09/P12 deep dives; P18 live 0.43; v2.3 ideas (PO
+  price-jump argument, contract-clause share vs its stated share, market line, committee request, plain-word sheets),
+  P18 "the AS-14404 index clause is mandatory on 24 months". It edits noidea.py → needs a merge with v2.4.

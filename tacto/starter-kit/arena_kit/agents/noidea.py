@@ -43,7 +43,9 @@ PLAYBOOK_SECTIONS = ("What the goal means here", "Motive", "Tone")
 BAD_OPENING = re.compile(r"(?i)\bour (current )?(restructuring|survival|pricing committee|committee|target|budget|cost pressure|"
                          r"capacity|liquidity|cash|bank|alternative)|\bwe (must|need to) (prioriti|close|sign)|"
                          r"cost pressures we|we face|line.down|no alternative|urgent|our need to|we (urgently )?need|secure (our|full) supply|"
-                         r"we depend|we cannot (afford|wait)|above all else|prioriti[sz]e (a )?reliable supply|critical for us|our production depends")
+                         r"we depend|we cannot (afford|wait)|above all else|prioriti[sz]e (a )?reliable supply|critical for us|our production depends|"
+                         r"not (include )?a binding|rather than a binding|non-binding|keeping your (proposed |requested )?payment|"
+                         r"retain(ing)? your (proposed |requested )?(payment|contract)")
 
 SYSTEM = """You are a senior BUYER at Hollerau Pumpenwerke, a German pump maker, writing to one of
 your SUPPLIERS. Write ONLY the opening paragraph of the e-mail: 2-3 sentences that respond to the
@@ -59,9 +61,19 @@ Rules:
 Reply with the paragraph only."""
 
 
-DECIDE_SYSTEM = """You are a senior BUYER at Hollerau Pumpenwerke, a German pump maker, negotiating by e-mail with
-one of your SUPPLIERS. Code has already priced every option; you READ the supplier's last e-mail, CHOOSE
-what to send, and write the OPENING paragraph. Reply with ONE JSON object and nothing else:
+DECIDE_SYSTEM = """You are the lead BUYER of Hollerau Pumpenwerke, a German pump maker, negotiating by e-mail with one
+of your SUPPLIERS. You negotiate like the best in the world:
+- Chris Voss: tactical empathy. Label what they feel or fear ("It sounds like…", "It seems that…"), ask calibrated
+  how/what questions, never split the difference, never sound needy.
+- Fisher & Ury: interests over positions; anchor on objective criteria (the verified facts and calculations below).
+- Patrick Jane (The Mentalist): read the supplier like a mentalist. Notice what its e-mail repeats, stresses,
+  softens or avoids, and what the SIGNALS and NOTES reveal. Open with ONE sharp, true observation that shows you see
+  its real situation ("You mention capacity twice and price only once - it seems lead time is what really costs
+  you"). Ground it ONLY in its e-mail, the signals or the notes; never invent, never manipulate, never mock.
+Stance by goal: stabilise = respected long-term partner; secure_supply = commitment first, calm, never desperate;
+quality_first = firm accountability; leverage = cool, factual, competitive; routine = brief and efficient.
+Code has already priced every option. You READ the supplier's last e-mail, CHOOSE what to send, and write the OPENING
+paragraph. Reply with ONE JSON object and nothing else:
 {"notes": {"questions": ["what the supplier asked us"],
            "refusals": [{"field": "<negotiable field>", "min": <number or null>, "max": <number or null>, "why": "..."}],
            "wants": "what the supplier wants most, in a few words"},
@@ -75,9 +87,11 @@ Rules:
 - args: pick the facts that answer its questions or objections. Never more than 3.
 - refusals: only what it explicitly says it cannot or will not do (e.g. "lead time below 54 days is unfeasible"
   -> {"field": "lead_time_days", "min": 54}).
-- opening: respond to its e-mail, set the tone the PLAYBOOK asks for, never reveal targets, budgets, urgency or
-  alternatives, only mention NEGOTIABLE levers, write NO numbers, prices, dates or IDs (code adds them), English
-  only, no greeting line, no sign-off."""
+- opening: 2-4 sentences: the observation (label), then the interest we serve and one calibrated question. Follow
+  the LESSONS. Code states our BINDING volume and lists the term sheets right below your paragraph: never say the
+  volume is not binding, never offer a different volume, and never describe what the sheets contain or compare them
+  with its terms ("keeping your payment terms" etc.) - talk about interests, not terms. Never reveal targets, budgets, urgency or alternatives, only mention NEGOTIABLE levers, write NO numbers,
+  prices, dates or IDs (code adds them), English only, no greeting line, no sign-off."""
 
 
 def _repo():
@@ -105,6 +119,17 @@ class NoIdeaAgent:
         pb = root / "playbooks"
         self.playbooks = {p.stem: p.read_text() for p in pb.glob("*.md")} if pb.exists() else {}
         self.correspondence = root / "tacto/data/correspondence"
+        les = root / "datasets/G_lessons.json"
+        self.lessons = json.loads(les.read_text()) if les.exists() else {}
+        try:  # the signal catalogue (src/eval/signals.py): category -> (regex, what works)
+            import importlib.util
+            spec = importlib.util.spec_from_file_location("noidea_signals", root / "src/eval/signals.py")
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            self.signal_rx = {k: (re.compile(rx, re.I), act) for k, (rx, act) in mod.SIGNALS.items() if k != "boilerplate"}
+        except Exception as e:
+            log.warning("signal catalogue not loaded (%s)", e)
+            self.signal_rx = {}
         facts = root / "tacto/data/facts.json"
         self.fc = {k: v for k, v in json.loads(facts.read_text()).items() if k.startswith("fc:")} if facts.exists() else {}
         # today's price of every part at every supplier (for kit calculations)
@@ -141,9 +166,12 @@ class NoIdeaAgent:
             rate = 0.25 if "cash_short" in motives else 0.14 if "wants_faster_payment" in motives else 0.08
             est = {"standard": std, "interest_rate": rate, "usual_rate": 0.08, "full_cost": full_cost}
             ask_pct = (open_terms["unit_price"] / cur - 1) * 100 if cur and open_terms.get("unit_price") else 0.0
+            calc = self.cost_calc(case, sid, events, cur, ask_pct)
             self.sup[sid] = {"dossier": d, "std": std, "est": est, "justified": justified, "cur": cur,
-                             "ask_pct": ask_pct, "open_terms": open_terms,
-                             "args": self.rank_args(case, sid, ask_pct),
+                             "ask_pct": ask_pct, "open_terms": open_terms, "cost_calc": calc,
+                             "args": ([calc] if calc else []) + [
+                                 c for c in self.rank_args(case, sid, ask_pct)
+                                 if not (calc and c["kind"] == "index_change" and c.get("series") in calc["series"])],
                              "kit": self.kit_calc(case, sid) if case["type"] == "bundling" else None}
             self.sup[sid]["k"] = self.prior_k(case, sid)
             self.sup[sid]["patience"] = self.patience_prior(case, sid)
@@ -223,6 +251,40 @@ class NoIdeaAgent:
             log.info("%s: final looks near (validity %s, steps %s) -> patience %d -> %d",
                      sid, val[-2:], [round(x, 3) for x in steps[-2:]], s["patience"], k + 1)
             s["patience"] = k + 1
+
+    SHARE_RX = re.compile(r"([A-Z][A-Z0-9-]+) rose (-?\d+(?:[.,]\d+)?) ?% in twelve months and is (\d+(?:[.,]\d+)?) ?% of our cost")
+
+    def cost_calc(self, case, sid, events, cur, ask_pct):
+        """The cost calculation a supplier asks for, from ITS OWN stated cost shares. P02 live (da8d0e3d77ce091c):
+        its opening said "CU-NOTATION rose 47.7 % in twelve months and is 20 % of our cost…", its final: "without
+        additional verified data to substantiate your target price, our flexibility remains highly restricted".
+        Shares x our index moves (6 or 12 months, whichever totals lower; arena-checked idx IDs) -> justified %.
+        Returned as an argument (kind cost_calc) only when it justifies less than the ask."""
+        body = next((m.get("body") or "" for m in events if m.get("from") != "buyer"), "")
+        shares = [(sr, float(sh.replace(",", ".")) / 100) for sr, _, sh in self.SHARE_RX.findall(body)]
+        if not shares or not cur or ask_pct <= 0:
+            return None
+        best = None
+        for w in (6, 12):
+            moves = [(sr, sh, self.ch.get((sr, w))) for sr, sh in shares]
+            if any(m is None for _, _, m in moves):
+                continue
+            total = sum(sh * m[0] for _, sh, m in moves)
+            if best is None or total < best[0]:
+                best = (total, w, moves)
+        if not best or best[0] >= ask_pct - 0.5:
+            return None
+        total, w, moves = best
+        price = cur * (1 + total / 100)
+        ids = [i for _, _, m in moves for i in m[1]["ids"]]
+        shares_txt = ", ".join(f"{sr} {sh * 100:.0f}%" for sr, sh, _ in moves)
+        moves_txt = ", ".join(f"{sr} {m[0]:+.1f}% ({m[1]['ids'][0]}, {m[1]['ids'][1]})" for sr, _, m in moves)
+        window = "six" if w == 6 else "twelve"
+        sentence = (f"Using your own cost shares ({shares_txt}) and the latest {window}-month index moves ({moves_txt}), "
+                    f"your cost increase comes to about {total:+.1f}% of the price, not {ask_pct:+.1f}%.")
+        log.info("%s cost calc from its own shares: %+.1f%% (%d-month) vs ask %+.1f%% -> EUR %.2f", sid, total, w, ask_pct, price)
+        return {"kind": "cost_calc", "ids": ids, "sentence": sentence, "figure": total, "series": [sr for sr, _ in shares],
+                "window": w, "price": round(price, 2), "checked_by_arena": True, "supplier": sid, "part": case["parts"][0]}
 
     def kit_calc(self, case, sid):
         """Bundling: the kit priced at the supplier's OWN current prices, plus today's best price for the
@@ -402,10 +464,9 @@ class NoIdeaAgent:
         # talk to the supplier whose thread is furthest behind (RFQ round-robin)
         sid = min(live, key=lambda s: sum(m.get("from") == "buyer" for m in threads[s]))
         events, s = threads[sid], self.sup[sid]
-        sheet_id, terms = standing(events)
+        sheet_id, terms, c_stand = self.best_sheet(case, sid, events)  # cheapest of ALL its sheets, not just [0]
         status = latest(events).get("status")
         k = sum(m.get("from") == "buyer" and bool(m.get("term_sheets")) for m in events)
-        c_stand = total_cost(case, terms, s["std"], s["est"]) if sheet_id else math.inf
         ok = bool(sheet_id) and must_haves_ok(case, terms, s["std"]) and c_stand < self.c_alt
         accept = {"supplier_id": sid, "message": {"action": {"type": "accept", "term_sheet_id": sheet_id}}}
         walk = {"supplier_id": sid, "message": {"action": {"type": "walk_away"}}}
@@ -456,6 +517,19 @@ class NoIdeaAgent:
             out = out[:2] + [alt_prose[1]]
         return self.message(case, sid, events, out, k)
 
+    def retrieve(self, case, sid, body):
+        """RAG for the model: (1) signals detected in its latest e-mail with what worked, (2) our notes on this supplier,
+        verbatim, ranked by word overlap with its e-mail, (3) lessons from our past games for this case type."""
+        sig = [f"- {k}: {act}" for k, (rx, act) in self.signal_rx.items() if rx.search(body)]
+        words = set(re.findall(r"[a-zäöüß]{5,}", body.lower()))
+        docs = self.sup[sid]["dossier"].get("documents", [])
+        ranked = sorted(docs, key=lambda d: -len(words & set(re.findall(r"[a-zäöüß]{5,}", d["text"].lower()))))
+        notes = [f"- {d['date']} {d['kind']}: {' '.join(d['text'].split())[:260]}" for d in ranked[:4]]
+        lessons = [f"- {x}" for x in self.lessons.get(case["type"], []) + self.lessons.get("general", [])]
+        return ("SIGNALS IN ITS E-MAIL (and what works):\n" + ("\n".join(sig) or "- none") +
+                "\nOUR NOTES ON THIS SUPPLIER (verbatim, most relevant first):\n" + ("\n".join(notes) or "- none") +
+                "\nLESSONS FROM OUR PAST NEGOTIATIONS:\n" + "\n".join(lessons[:12]))
+
     def decide_with_model(self, case, sid, events, cands, k):
         """One model call per round: read the supplier's e-mail (questions, refusals, wants), choose 1-3 of the
         pre-priced candidate sheets and up to 3 verified arguments, write the opening. Everything it returns is
@@ -471,6 +545,7 @@ class NoIdeaAgent:
                 f"SUPPLIER SITUATION (theirs): {levers or 'n/a'}\n"
                 f"PLAYBOOK:\n{_sections(self.playbooks.get(case['type'], ''), PLAYBOOK_SECTIONS)[:1800]}\n"
                 f"THEIR LAST E-MAIL:\n{latest(events).get('body', '')[:1800]}\n\n"
+                f"{self.retrieve(case, sid, latest(events).get('body', ''))}\n\n"
                 f"CANDIDATES (all acceptable for us; rank 1 = cheapest for us):\n" + "\n".join(lines) +
                 "\n\nARGUMENTS (verified facts, each usable once):\n" +
                 "\n".join(f"[{i}] {c['sentence']}" for i, c in enumerate(pool)))
@@ -508,7 +583,7 @@ class NoIdeaAgent:
                         if not any(ch.isdigit() for ch in x) and not BAD_OPENING.search(x)
                         and not any(re.search(o, x, re.I) for o in off_table))
         german = len(re.findall(r"(?i)\b(wir|sie|und|der|die|das|nicht|bitte|ihre?n?|mit|für)\b", text))
-        return text if 30 < len(text) < 700 and german < 3 else None
+        return text if 30 < len(text) < 900 and german < 3 else None
 
     def final_tweak(self, case, sid, terms):
         """Its final offer with the one non-price option that helps us most (same price)."""
@@ -581,6 +656,8 @@ class NoIdeaAgent:
             if m.get("from") == "buyer":
                 continue
             pk = self.parse_packages(case, m.get("body") or "")
+            pk += [{**ts["terms"], "alternative": i > 0} for i, ts in enumerate(m.get("term_sheets") or [])
+                   if (ts.get("terms") or {}).get("unit_price") is not None]
             for a, b in itertools.combinations(pk, 2):
                 diff = [f for f in self.LEARN_FIELDS + ("payment_days", "effective_date")
                         if a.get(f) is not None and b.get(f) is not None and a.get(f) != b.get(f)]
@@ -656,18 +733,38 @@ class NoIdeaAgent:
             return best
         return None
 
+    def best_sheet(self, case, sid, events):
+        """(term_sheet_id, terms, C) of the cheapest-for-us sheet in its latest message that keeps the must-haves.
+        Suppliers often send their alternative as a SECOND term sheet with its own ID (offer:70740-3-a): Parth's
+        P18 live (6833e98fbbe5ebdf) accepted term_sheets[0] and left a cheaper alternative on the table (+0.055);
+        47 supplier messages in our archive carry such '-a' sheets (P07 finals 5.49 / -a 5.42)."""
+        s = self.sup[sid]
+        best = None
+        for ts in latest(events).get("term_sheets") or []:
+            t = ts.get("terms") or {}
+            if ts.get("term_sheet_id") and t.get("unit_price") is not None and must_haves_ok(case, t, s["std"]):
+                c = total_cost(case, t, s["std"], s["est"])
+                if best is None or c < best[2]:
+                    best = (ts["term_sheet_id"], t, c)
+        if best is None:
+            sid0, t0 = standing(events)
+            return sid0, t0, (total_cost(case, t0, s["std"], s["est"]) if sid0 else math.inf)
+        return best
+
     def best_standing(self, case, threads, skip=None):
         out = [math.inf]
         for sid in live_threads(threads):
             if sid in self.sup and sid != skip:
-                sh, t = standing(threads[sid])
+                sh, _, c = self.best_sheet(case, sid, threads[sid])
                 if sh:
-                    out.append(total_cost(case, t, self.sup[sid]["std"], self.sup[sid]["est"]))
+                    out.append(c)
         return out
 
     # ---- the words -----------------------------------------------------------------------------
     def message(self, case, sid, events, sheets, k, final=False, args=None, opening=None):
         args = self.next_args(sid, 3 if k == 0 else 1) if args is None else args
+        if any(a["kind"] == "cost_calc" for a in args):  # it uses 3 claims: the arena checks at most 3 per e-mail
+            args = [a for a in args if a["kind"] == "cost_calc"]
         rival = self.rival_offer(case, sid) if case["type"] == "rfq" else None
         refs = sorted({i for c in args for i in c["ids"]} | ({rival[0]} if rival else set()))
         self.cited.update(refs)
@@ -745,10 +842,18 @@ class NoIdeaAgent:
         spend = (d.get("spend_by_fy") or [[None, 0]])[-1][1]
         deal = vol * (s["cur"] or 0)
         if spend and deal > 1.5 * spend and ({"needs_volume", "bundle", "wants_commitment"} & set(motives)):
-            lines.append(f"That is about EUR {deal:,.0f} a year, around {deal / spend:.0f} times our current business with you.")
+            # no "N times our business" multiple: it can't be backed by a checkable ID and drew 3 requests for
+            # "the exact figures behind" it (P07 d67da0a2d2360134)
+            lines.append(f"That is a contract worth about EUR {deal:,.0f} a year.")
         if rival:
             lines.append(f"We have an offer at EUR {rival[1]:.2f} per unit ({rival[0]}).")
         lines += args
+        calc = s.get("cost_calc")
+        if calc and calc["sentence"] in args and sheets and sheets[0].get("unit_price") and \
+                calc["price"] <= sheets[0]["unit_price"] * 1.001:  # never justify a price above our own ask
+            lines.append(f"That supports a price of about EUR {calc['price']:.2f}.")
+        if calc and k > 0 and not any(a is calc["sentence"] for a in args):
+            lines.append(f"As calculated from your own cost shares, the cost-justified change is about {calc['figure']:+.1f}%.")
         if k == 0 and "open_book" in motives:
             what = "the kit" if case["type"] == "bundling" else "this part"
             lines.append(f"Could you share your cost breakdown for {what}, so we can understand the drivers together?")
