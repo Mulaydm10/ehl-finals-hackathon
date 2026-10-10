@@ -355,13 +355,18 @@ class NoIdeaAgent:
                                             f"is built on {', '.join(gives[:-1])} and {gives[-1]}."})
         # OFF by default: live P11 fa9a9d0277f372c6 the arena marked our qn mean-ppm claims CONTRADICTED ("do not match the
         # records. That costs trust") and the supplier went final one round early. How it averages qn rows is unknown.
+        last_sc = (self.dossiers.get(sid, {}).get("scorecards_last4") or [{}])[-1]
         if "qn_claims" in EXPERIMENTS and (case["type"] == "quality" or case["buyer"].get("category_goal") == "quality_first"):
             out += self.complaint_args(sid, parts)
         # Neel's version (central.quality_notification_claims): the supplier-caused QNs on this part in the last 12 months,
         # cited WITHOUT a figure - the arena then takes the data's own value, so it cannot be contradicted (our mean-ppm
         # sentence and Neel's "at 4,632 ppm" both came back contradicted). Never cited in 8 of 10 cases (ENGINES.md).
         # A later-round fact for any case with such QNs (holder engines cut once per new fact: P11 plan msg 3).
-        elif central and "qn_claims" not in EXPERIMENTS:
+        # ... and only for a supplier whose quality IS a problem (last scorecard amber/red) or in a quality case: green
+        # Leitner (P07 probe B 68092e5) answered "we take them seriously ... they do not alter" and cut less all game
+        elif central and "qn_claims" not in EXPERIMENTS and (
+                case["type"] == "quality" or case["buyer"].get("category_goal") == "quality_first"
+                or (last_sc.get("colour") or "green") != "green"):
             try:
                 out += [{**c, "late": True} for c in central.quality_notification_claims(case, self.all_facts, sid)]
             except Exception as e:
@@ -632,6 +637,22 @@ class NoIdeaAgent:
                                     f"ran at a mean of {ppm:.0f} ppm on the affected deliveries ({', '.join(ids)})."})
         return out
 
+    @staticmethod
+    def weak(c):
+        """A filler, a quality complaint or an index fall too small to matter (weight x fall < 0.25 points)."""
+        return bool(c.get("filler")) or c["kind"] == "quality_notification" or (
+            c["kind"] == "index_change" and c.get("weight") is not None
+            and abs((c.get("figure") or 0) * (c.get("weight") or 0)) < 0.25)
+
+    @staticmethod
+    def weak_ok(events):
+        """Weak facts only for a HOLDER: from round 3, after a reply in which it did not move (P11 cuts only for a new
+        fact). A supplier that is moving answers them with the fact's tiny value instead of mirroring our step: P07
+        probes A / B / C (68092e5, 20a3ae4) 0.812 lean vs 0.792 with QNs or labour -0.3% in round 2."""
+        prices = [standing([m])[1].get("unit_price") for m in events
+                  if m.get("from") != "buyer" and m.get("term_sheets")]
+        return len(prices) >= 3 and None not in prices[-2:] and prices[-1] >= prices[-2] - 1e-9
+
     def next_args(self, sid, n, first_round=False):
         """The next `n` arguments whose IDs were not cited yet (re-citing reads as padding). Round 1 is about this
         part only: other parts' price histories (experiment `all_parts_po`) wait for round 2."""
@@ -640,6 +661,8 @@ class NoIdeaAgent:
             if len(picked) == n:
                 break
             if any(i in self.cited for i in c["ids"]) or (first_round and (c.get("other_part") or c.get("late"))):
+                continue
+            if not first_round and not self.sup[sid].get("weak_ok", True) and self.weak(c):
                 continue
             # one index claim per e-mail: 2+ drew "we received a lot of material" 11 of 11 times (Neel)
             if c["kind"] == "index_change" and any(x["kind"] == "index_change" for x in picked):
@@ -917,6 +940,7 @@ class NoIdeaAgent:
                 if cs[best] <= min(cs.values()) + 1:
                     sid = best
         events, s = threads[sid], self.sup[sid]
+        s["weak_ok"] = self.weak_ok(events)  # weak facts only for a supplier that held last round (a holder)
         sheet_id, terms, c_stand = self.best_sheet(case, sid, events)  # cheapest of ALL its sheets, not just [0]
         status = latest(events).get("status")
         k = sum(m.get("from") == "buyer" and bool(m.get("term_sheets")) for m in events)
@@ -1082,7 +1106,8 @@ class NoIdeaAgent:
         pre-priced candidate sheets and up to 3 verified arguments, write the opening. Everything it returns is
         validated; any problem -> None (the deterministic path runs instead)."""
         s = self.sup[sid]
-        pool = [c for c in s["args"] if not any(i in self.cited for i in c["ids"])][:8]
+        pool = [c for c in s["args"] if not any(i in self.cited for i in c["ids"])
+                and (k == 0 or s.get("weak_ok", True) or not self.weak(c))][:8]
         motives = s["dossier"].get("motives", {})
         levers = "; ".join(f"{m}: {v['lever']}" for m, v in motives.items())
         lines = [f"[{i}] rank {i + 1}: " + ", ".join(f"{f} {v}" for f, v in t.items() if f in case["negotiable"])
