@@ -219,3 +219,6 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
     spreads the same cut: the round-2 cut shrinks from -0.16 to -0.11/-0.12 when 4 rounds follow. Low-draw floor ~5.12-5.14
     (0.71-0.73), high ~5.18-5.20. The house's 5.10 is below every low-draw game we've played. Only a lever that moves the
     FLOOR can beat it (Dhruv's rule 58 "ask the floor", rule 59 "the person's currency moves the floor"), or a lucky draw.
+11. **Loop run 1: live ad0427655e885fc1 = 0.710 (low draw), agent 288ce7f (cross-sell invitation, TASK 13).** 5.41 @ 90 =
+    5.338 -> 5.22 @ 14 = 5.238 (-0.10) -> 5.17 (-0.05, deferral 4 of 4) -> final 5.12 @ 14 = 5.138. Total cut -0.20,
+    the same as a4b9: **the cross-sell did not move the floor.** Next untested floor lever (P08_floor.md): 36 m.
