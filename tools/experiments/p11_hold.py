@@ -139,6 +139,16 @@ class Game:
         "Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three "
         "months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01)."
     )
+    # second windows of the same drivers under new IDs (each ID counts once per case; a window must end within the
+    # last 12 months of the data - one ending 2025-09 came back 'irrelevant' on P05)
+    STEEL2 = (
+        "Producer prices DE: basic iron and steel, ferro-alloys also changed -4.0% from 2024-11 to 2025-11 "
+        "(idx:PPI-C241@2024-11, idx:PPI-C241@2025-11)."
+    )
+    ENERGY2 = (
+        "Producer prices DE: electric power generation, transmission and distribution also changed -14.8% from "
+        "2025-01 to 2026-01 (idx:PPI-D351@2025-01, idx:PPI-D351@2026-01)."
+    )
 
     def replay_first(self, session):
         """Our first e-mail of an archived game, verbatim (subject, body, sheets, refs)."""
@@ -169,22 +179,23 @@ class Game:
                     ]
                 ),
             ]
+            asks = [float(x) for x in a.asks.split(",")]
             return [
                 (a.ask1, first, True),
-                (a.ask2, ["Thank you for moving. " + self.ENERGY], False),
-                (a.ask3, ["Thank you. " + self.LABOUR], False),
+                (asks[0], ["Thank you for moving. " + self.ENERGY], False),
+                (asks[1], ["Thank you. " + self.LABOUR], False),
             ]
         replay = {"0d5b": "0d5bc007545e737b", "4d6c": "4d6c9a1396e4d0a0"}[a.first]
         out = [self.replay_first(replay)]
         cited = " ".join(out[0]["refs"]) + out[0]["body"]
-        out.append((a.ask2, ["Thank you for moving. " + self.ENERGY, self.late_line], False))
-        later = [
-            fact
-            for fact, key in ((self.STEEL, "PPI-C241"), (self.FORECAST, "fc:310020"), (self.LABOUR, "LCI-C"))
-            if key not in cited
-        ]
+        asks = [float(x) for x in a.asks.split(",")]
+        out.append((asks[0], ["Thank you for moving. " + self.ENERGY, self.late_line], False))
+        later = [fact for fact, key in ((self.STEEL, "PPI-C241"),) if key not in cited]
+        if a.extra:  # second windows of steel and energy, one per round
+            later += [self.STEEL2, self.ENERGY2]
+        later += [fact for fact, key in ((self.FORECAST, "fc:310020"), (self.LABOUR, "LCI-C")) if key not in cited]
         for i, fact in enumerate(later):
-            out.append(([a.ask3, a.ask4, a.ask5][i], ["Thank you. " + fact], False))
+            out.append((asks[min(i + 1, len(asks) - 1)], ["Thank you. " + fact], False))
         return out
 
     def message(self, price, lines, attach):
@@ -269,15 +280,21 @@ class Game:
             wait = HOLD_S - (time.monotonic() - t_open)
             self.note(k="r1", do=f"silence {max(wait, 0):.0f}s more (a timeout round)")
             time.sleep(max(wait, 0))
-        reply, last_price, held = None, None, 0
+        reply, last_price, held, prev_ask = None, None, 0, None
         for k, item in enumerate(self.rounds()):
             if isinstance(item, dict):  # a replayed first e-mail, verbatim
                 msg = item
                 desc = f"replay {self.args.first}: {[tuple(x['terms'].values()) for x in msg['term_sheets']]}"
+                prev_ask = min(x["terms"]["unit_price"] for x in msg["term_sheets"])
             else:
                 ask, lines, attach = item
+                if last_price is not None:
+                    ask = min(ask, round(last_price - 0.10, 2))  # always under its counter
+                if prev_ask is not None and ask <= prev_ask:  # no room left for a forward move: go to the hair
+                    break
                 msg = self.message(ask, lines, attach)
                 desc = f"ask {ask}@300/0 + {re.findall(r'idx:[A-Z0-9-]+|sc:[^ )]+|fc:[^ )]+', ' '.join(lines))}"
+                prev_ask = ask
             reply = self.send(msg)
             self.note(k=f"ask{k + 1}", do=desc)
             show("reply", reply)
@@ -295,6 +312,10 @@ class Game:
                 break
         # the hair: one ask just under its grid counter (it agrees at our price once that clears its line)
         hair = round(last_price - a.hair, 2)
+        if prev_ask is not None and hair <= prev_ask:
+            hair = round(prev_ask + 0.01, 2)  # never a step back
+        if hair >= last_price:
+            return self.close(reply, f"its {last_price} is at our next ask")
         reply = self.send(self.message(hair, ["Thank you. We are ready to sign today on these terms."], False))
         self.note(k="hair", its=last_price, do=f"ask {hair}@300/0 (its counter - {a.hair:.2f})")
         show("reply", reply)
@@ -310,10 +331,12 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--hold", choices=["timeout", "none"], default="timeout")
     ap.add_argument("--ask1", type=float, default=42.77)
-    ap.add_argument("--ask2", type=float, default=43.57)
-    ap.add_argument("--ask3", type=float, default=44.01)
-    ap.add_argument("--ask4", type=float, default=44.30)
-    ap.add_argument("--ask5", type=float, default=44.50)
+    ap.add_argument(
+        "--asks",
+        default="43.57,44.01,44.30,44.45,44.55,44.65",
+        help="our asks after the opener, one per round (each capped 0.10 under its counter, always a forward move)",
+    )
+    ap.add_argument("--extra", action="store_true", help="add second steel and energy windows (new IDs), one per round")
     ap.add_argument(
         "--first",
         choices=["eac2", "0d5b", "4d6c"],
@@ -331,7 +354,9 @@ def main():
     )
     if args.dry_run:
         g = Game(None, case, args)
-        print(f"hold={args.hold} asks={args.ask1}/{args.ask2}/{args.ask3} hair=-{args.hair}\n")
+        print(
+            f"hold={args.hold} first={args.first} extra={args.extra} asks={args.ask1}/{args.asks} hair=-{args.hair}\n"
+        )
         for k, item in enumerate(g.rounds()):
             m = item if isinstance(item, dict) else g.message(*item)
             print(f"--- ask {k + 1} {[x['terms'] for x in m['term_sheets']]} att={len(m.get('attachments') or [])}")
@@ -360,7 +385,7 @@ def main():
     run_plan.archive(client, game.sid, CASE_ID)
     final = client.session(game.sid).get("result") or result or {}
     m = run_plan.measure(cases[CASE_ID], final)
-    label = f"p11_hold {args.hold} first={args.first} {args.ask1}/{args.ask2}/{args.ask3} hair-{args.hair}"
+    label = f"p11_hold {args.hold} first={args.first}{' extra' if args.extra else ''} {args.asks} hair-{args.hair}"
     row = {
         "exp": "P11-hold",
         "case": "P11",

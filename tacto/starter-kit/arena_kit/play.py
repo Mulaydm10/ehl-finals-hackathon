@@ -28,6 +28,10 @@ MOVE_LIMIT_S = 60
 # In the Live Final, close this long before the wave's cap - or the slowest round of the case so far
 # (your decision plus a supplier reply of up to about a minute) plus a margin, if that is longer.
 CLOSE_BEFORE_CAP_S, ROUND_MARGIN_S = 90, 15
+# An agent with `hold_first = True` (noidea experiment `hold_r1`, OFF by default) sends its first e-mail only after one
+# timeout round: the supplier's patience drops and it concedes faster (P05 Parth: first counter 28.00 / 27.50 after a
+# round-1 timeout vs 30.00 after a no-price note and 30.50 without a hold; record 0.965). Single-supplier cases only.
+HOLD_FIRST_S = 65
 RUNNING = re.compile(r"one session per case in the final: (\S+)")
 # "(idx:..., idx:...)" / "(po:...)" lists of data IDs in an e-mail body (the arena checks IDs written in the body too)
 IDS_IN_BODY = re.compile(r"\s*\((?:[a-z]+:[^()\s,]+(?:,\s*)?)+\)")
@@ -247,6 +251,7 @@ def play(table, case_id, agent, deadline=None):
     """Play one case to its end. `deadline` (time.time(), or a function returning it): a Live Final
     wave's cap - shortly before it, `closing_move` closes the case so it does not end without a deal."""
     case, threads = table.open(case_id)
+    t_open = time.monotonic()
     if getattr(table, "done", None):  # resumed a case that had already ended
         return table.done
     for events in threads.values():
@@ -270,6 +275,11 @@ def play(table, case_id, agent, deadline=None):
             if msg.get("action"):
                 log.info("%s %s", sid, msg["action"])
                 return table.close(sid, msg)
+            if getattr(agent, "hold_first", False) and not any(m.get("from") == "buyer" for m in threads[sid]):
+                wait_s = HOLD_FIRST_S - (time.monotonic() - t_open)
+                if wait_s > 0:
+                    log.info("%s: hold - first e-mail after one timeout round (%.0f s)", sid, wait_s)
+                    time.sleep(wait_s)
             reply = table.send(sid, msg)
         except ArenaError as e:
             if msg.get("action"):  # a refused or late accept: resync and decide again, never crash the case
@@ -446,6 +456,9 @@ def play_all(new_table, case_ids, new_agent, parallel=8):
         return dict(pool.map(one, case_ids))
 
 
+START_RETRY_S = 3  # a final case that cannot open yet: try again this often
+
+
 def play_waves(client, new_agent, waves=5, parallel=10, poll=5.0):
     """The Live Final: wait for each wave, play its cases in parallel within the wave's cap, wait
     for the next. Keep it running from before the first wave until the last has closed; it returns
@@ -453,19 +466,36 @@ def play_waves(client, new_agent, waves=5, parallel=10, poll=5.0):
     started, closed, caps = {}, set(), {}  # caps: wave -> its cap as time.time()
 
     def one(case, deadline):
-        try:
-            return play(RemoteTable(client, case), case["case_id"], new_agent(), deadline)
-        except Exception as e:  # one broken case must not stop the others
-            log.exception("%s failed", case["case_id"])
-            return e
+        # a case that cannot open YET (429 "at most 10 open sessions per key" while other sessions close, a 5xx, a network
+        # drop) is retried until shortly before its wave's cap - giving up meant 0 for that case (live load test 01:33: P01
+        # never started). A session that did open is resumed by RemoteTable.open (409 names it). Never the practice quota.
+        import httpx
+        tries = 0
+        while True:
+            try:
+                return play(RemoteTable(client, case), case["case_id"], new_agent(), deadline)
+            except Exception as e:  # one broken case must not stop the others
+                tries += 1
+                cap = deadline() if callable(deadline) else deadline
+                transient = isinstance(e, httpx.TransportError) or (
+                    isinstance(e, ArenaError) and (e.status >= 500 or (e.status == 429 and not quota_used_up(e))))
+                if transient and tries <= 40 and (not cap or time.time() < cap - CLOSE_BEFORE_CAP_S):
+                    log.warning("%s: %s - retrying in %ss (try %d)", case["case_id"], e, START_RETRY_S, tries)
+                    time.sleep(START_RETRY_S)
+                    continue
+                log.exception("%s failed", case["case_id"])
+                return e
 
     with ThreadPoolExecutor(max_workers=parallel) as pool:
         while len(closed) < waves or not all(f.done() for f in started.values()):
             try:
                 cases = client.cases("final")
             except ArenaError as e:
-                if e.status != 403:  # 403: no wave has started yet
-                    raise
+                if e.status != 403:  # 403: no wave has started yet; anything else: keep polling, never stop the runner
+                    log.warning("final case list failed (%s) - polling again", e)
+                cases = []
+            except Exception as e:  # e.g. a network drop: the runner must outlive it (no human in the loop)
+                log.warning("final case list failed (%r) - polling again", e)
                 cases = []
             for case in cases:
                 if not case.get("open"):

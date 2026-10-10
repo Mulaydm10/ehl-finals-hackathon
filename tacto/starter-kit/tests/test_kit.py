@@ -425,3 +425,71 @@ def test_a_503_on_our_email_resyncs_and_never_counters_after_its_final(monkeypat
 
     assert play(Table(), "case:X", Agent()) == {"deal": True}
     assert len(sent) == 1 and closed == [{"type": "accept", "term_sheet_id": "offer:1-2"}]
+
+
+def test_a_final_case_that_cannot_open_yet_is_retried(monkeypatch):
+    """Load test 01:33: "HTTP 429: at most 10 open sessions per key" - the case was given up (0 in a final). Retry it."""
+    import importlib
+
+    P = importlib.import_module("arena_kit.play")
+    calls = []
+
+    def fake_play(table, case_id, agent, deadline=None):
+        calls.append(case_id)
+        if len(calls) < 3:
+            raise ArenaError(429, "at most 10 open sessions per key")
+        return {"deal": True, "score": 0.9}
+
+    monkeypatch.setattr(P, "play", fake_play)
+    monkeypatch.setattr(P, "START_RETRY_S", 0)
+
+    class Client:
+        n = 0
+
+        def cases(self, set_):
+            Client.n += 1
+            if Client.n == 1:
+                return [{"case_id": "case:F01", "wave": 1, "open": True, "seconds_left": 480}]
+            if Client.n == 2:
+                raise ArenaError(502, "bad gateway")  # a transient error while polling must not stop the runner
+            return [{"case_id": "case:F01", "wave": w, "open": False} for w in range(1, 6)]
+
+    out = P.play_waves(Client(), lambda: None, waves=5, parallel=2, poll=0)
+    assert out == {"case:F01": {"deal": True, "score": 0.9}} and len(calls) == 3
+
+
+def test_an_agent_that_holds_sends_its_first_email_after_one_timeout_round(monkeypatch):
+    import importlib
+
+    P = importlib.import_module("arena_kit.play")  # the module (the package re-exports the play() function)
+    slept, sent = [], []
+    monkeypatch.setattr(P.time, "sleep", lambda s: slept.append(s))
+
+    class Table:
+        def open(self, case_id):
+            return {"case_id": case_id}, {"sup:1": [{"from": "sales@1", "status": "open", "term_sheets": []}]}
+
+        def send(self, supplier_id, message):
+            sent.append(message)
+            return {"from": "sales@1", "status": "final_offer", "term_sheets": []}
+
+        def close(self, supplier_id, message):
+            return {"deal": False}
+
+        def result(self):
+            return {"deal": False}
+
+    class Holder:
+        hold_first = True
+
+        def decide(self, case, threads):
+            if threads["sup:1"][-1]["status"] == "final_offer":
+                return {"supplier_id": "sup:1", "message": {"action": {"type": "walk_away"}}}
+            return {"supplier_id": "sup:1", "message": {"subject": "s", "body": "b"}}
+
+    P.play(Table(), "case:X", Holder())
+    assert len(sent) == 1 and len(slept) == 1 and 60 < slept[0] <= P.HOLD_FIRST_S  # one wait, before the first e-mail
+    slept.clear()
+    Holder.hold_first = False
+    P.play(Table(), "case:X", Holder())
+    assert not slept  # off by default: no wait

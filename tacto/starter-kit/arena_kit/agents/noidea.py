@@ -193,6 +193,9 @@ class NoIdeaAgent:
     def __init__(self, complete=None):
         self.complete = complete
         self.focus = None  # RFQs: the bidders play.py lets us answer now (their replies are in)
+        # experiment `hold_r1` (OFF): play.py sends our first e-mail after one timeout round - the supplier's patience
+        # drops and it concedes faster (P05 record path; analysis/experiments/signals/SIGNALS.md). A/B before any use.
+        self.hold_first = "hold_r1" in EXPERIMENTS
         root = _repo()
         self.dossiers = json.loads((root / "datasets/A_dossiers.json").read_text(encoding="utf-8"))
         claims = (root / "datasets/C_arguments.jsonl").read_text(encoding="utf-8")
