@@ -527,3 +527,16 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
 | P01 | P02 | P03 | P04 | P05 | P07 | P08 | P10 | P11 | P18 |
 |---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | 0.91 | 0.51 | 0.92 | 0.86 | 0.59 | 0.75 | 0.65 | 0.66 | 0.67 | 0.62 |
+
+### v2.12 (offline): Neel's central-layer features ported into our agent
+| ported from `analysis/agent_variants/` (Neel) | evidence | offline check |
+|---|---|---|
+| **Claim-reaction ranking** via `central.rank()` / `take_rate()`: arguments ordered by measured take-rate (54 games: should-cost 2/2, volume forecast 12/19, rising index 7× "confirms our case", OTD 0/1); kinds THIS supplier shrugged off dropped | mined from all live traces | P03 drops price history (0/2), forecast leads |
+| **Committee tie-break**: approval-ladder / price-frozen → among sheets within 0.01% of our best C, lead with the smallest headline cut | P03 0.92 (committee price in round 1) | – |
+| **Near-close**: when it stalls (last move < 1/3 of the previous, or < 2% of the gap) within 1.5% of our ask, ask 0.08% below its standing value; no early accept during that round | P04 live / sim 0.86 → 0.98 (live 0.81 at 0.2%, so step now 0.08%) | eval 0.944 / 0.940 |
+| **Call-off schedule CSV** attachment in round 1 and whenever it asks for volumes | "Which volume can you commit to?" in most games | attached in P02/P03/P07 round 1 |
+| **NOT ported**: `calibrated()` exact supplier costs (practice suppliers only → overfits the hidden final); German-style e-mails (A/B later) | | |
+- Added (ours): **price-frozen suppliers lead with the longest payment within 1% of our best C** (P03: 0.90+ always at 90 d,
+  0.86 at 60 d; the tie-break had picked 60 d). P03 lead back to €430.81 @ 90 d.
+- Tests 32 passed; offline **0.944 / 0.940**; finals replay +0.029; P05 bad-accept replay still "send".
+- Comparison so far (live, Astra): Neel's variant P02 **0.22** (6e7579c3ce8fb63c) vs ours v2.11 0.51; ours v2.11 P05 0.53.

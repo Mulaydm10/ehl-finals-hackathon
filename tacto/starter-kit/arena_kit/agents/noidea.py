@@ -33,6 +33,35 @@ log = logging.getLogger("arena")
 
 # Live A/B switches for untested levers (off by default): NOIDEA_EXPERIMENTS="batna,ask_lever,escalate"
 EXPERIMENTS = {x.strip() for x in os.environ.get("NOIDEA_EXPERIMENTS", "").split(",") if x.strip()}
+# Ported from Neel's central variant (analysis/agent_variants/noidea_neel.py, central.py), see notes/agent_changelog.md v2.12
+CLOSE_STEP = 0.0008   # near-close: ask 0.08% below its standing value (live P04: 0.2% was refused)
+CLOSE_GAP = 0.015     # ...only when our last ask is within 1.5% of its standing value
+STALL_DROP = 1 / 3    # it stalled: its last move (share of the gap) < 1/3 of the previous one...
+STALL_MIN = 0.02      # ...or < 2% of the gap
+STALL_NOISE = 0.10    # a big move UP (structure switch) is not a stall
+TIE_BAND = 0.0001     # committee tie-break: sheets within 0.01% of our best cost (0.015%/0.05% made P02 worse)
+
+
+def _central():
+    """Neel's shared learnings module (analysis/agent_variants/central.py): claim take-rates etc. None if missing."""
+    import importlib.util
+    import sys as _sys
+    if "noidea_central" in _sys.modules:
+        return _sys.modules["noidea_central"]
+    path = _repo() / "analysis/agent_variants/central.py"
+    if not path.exists():
+        return None
+    try:
+        spec = importlib.util.spec_from_file_location("noidea_central", path)
+        mod = importlib.util.module_from_spec(spec)
+        _sys.modules["noidea_central"] = mod
+        spec.loader.exec_module(mod)
+        return mod
+    except Exception as e:  # never let a teammate's module break the agent
+        log.warning("central module not loaded (%s)", e)
+        return None
+
+
 PLANNED_ROUNDS = 8  # P07 live: ~25 s per round, so an 8-minute wave fits ~12-15; keep a margin
 MIN_GAIN_PTS = 1.0  # never pay more than ask - 1 pt unless it is the last word
 # How far below the opening quote to anchor (src/eval/calibrate.py: best deal vs opening, practice cases)
@@ -226,6 +255,16 @@ class NoIdeaAgent:
         if case["type"] in ("capacity", "price_increase"):
             out += [c for c in mine if c["kind"] == "scorecard_otd" and (c["figure"] or 100) < 85]
         out += self.forecast_args(case)
+        # measured take-rates per data kind (Neel, 54 games: should-cost 2/2 taken, volume forecast 12/19, rising index
+        # 7x "confirms our case", OTD 0/1); kinds THIS supplier already shrugged off get rate 0 and are dropped
+        central = _central()
+        if central:
+            try:
+                ordered = central.rank(out, case["case_id"])
+                kept = [c for c in ordered if central.take_rate(c["kind"], case["case_id"]) > 0]
+                out = kept or ordered
+            except Exception as e:
+                log.warning("central.rank failed (%s)", e)
         seen, ranked = set(), []
         for c in out:
             if c["sentence"] not in seen:
@@ -505,6 +544,16 @@ class NoIdeaAgent:
             if keep and keep[0][0] <= ranked[0][0] * 1.01:
                 ranked = keep + [x for x in ranked if not same(x[1]) and x[0] < keep[0][0] * 0.99]
                 ranked.sort(key=lambda x: (not same(x[1]), x[0]))
+        # committee / price freeze (Neel, P03: a cut above the 2% its committee allows stalls): among sheets of ~equal
+        # cost to us, lead with the smallest headline price cut
+        if ranked and {"approval_ladder", "price_frozen"} & set(s["dossier"].get("motives", {})):
+            tight = [x for x in ranked if x[0] <= ranked[0][0] * (1 + TIE_BAND)]
+            ranked = sorted(tight, key=lambda x: -x[1]["unit_price"]) + ranked[len(tight):]
+        # price frozen (its dossier: "price will not move: negotiate payment terms"): the payment term is the lever - lead
+        # with the longest payment within 1% of our best cost (P03, 9 team games: 0.90+ always at 90 d, 0.86 at 60 d)
+        if ranked and "price_frozen" in s["dossier"].get("motives", {}) and "payment_days" in case["negotiable"]:
+            near = [x for x in ranked if x[0] <= ranked[0][0] * 1.01]
+            ranked = sorted(near, key=lambda x: (-(x[1].get("payment_days") or 0), x[0])) + ranked[len(near):]
         band = ranked[0][0] * (1.01 if n <= 3 else 1.015) if ranked else 0
         for c, t in ranked:  # 3 genuinely different options: same-cost duplicates waste a slot
             if c > band:
@@ -550,6 +599,16 @@ class NoIdeaAgent:
         # reciprocity (P07 live: it moved 5.56 -> 5.52 while a fixed schedule took us 5.25 -> 5.43)
         stand = [standing([m])[1] for m in events if m.get("from") != "buyer" and m.get("term_sheets")]
         vals = [supplier_value(case, complete_offer(case, t), s["est"]) for t in stand[-2:]]
+        # near-close (Neel; live P04 d3050f951dc2c45b: it moved 55% of the gap, then 5%, then final at that price while
+        # we were ~1% lower): when it stalls close to us, ask a hair below its standing value instead of creeping
+        sv = [supplier_value(case, complete_offer(case, t), s["est"]) for t in stand]
+        fr = [(sv[j - 1] - sv[j]) / (sv[j - 1] - hist[j - 1]) for j in range(1, min(len(sv), len(hist) + 1))
+              if sv[j - 1] - hist[j - 1] > 1e-9]
+        stalled = len(fr) >= 2 and fr[-1] > -STALL_NOISE and fr[-2] > 0 and (fr[-1] < STALL_DROP * fr[-2] or fr[-1] < STALL_MIN)
+        if stalled and sv and sv[-1] - hist[-1] <= CLOSE_GAP * sv[-1]:
+            s["closing"] = True
+            hist.append(max(hist[-1], min(sv[-2:]) * (1 - CLOSE_STEP)))
+            return hist[-1]
         theirs = max(0.0, vals[0] - vals[1]) if len(vals) == 2 else (limit - anchor) / PLANNED_ROUNDS
         step = min(scheduled - hist[-1], max(theirs, (limit - anchor) / (2 * rounds)))
         hist.append(min(limit, hist[-1] + max(0.0, step)))
@@ -622,7 +681,7 @@ class NoIdeaAgent:
             return accept if ok else walk
         # accept when the supplier meets our current ask, or when we are within 0.3% late in the game
         near_final = k >= max(1, s.get("patience", PLANNED_ROUNDS) - 1)
-        if ok and k > 0 and c_stand <= best_elsewhere and (
+        if ok and k > 0 and c_stand <= best_elsewhere and not s.get("closing") and (
                 c_stand <= sheets[0][0] * 1.0005 or ((k >= PLANNED_ROUNDS - 2 or near_final) and c_stand <= sheets[0][0] * 1.003)):
             return accept
         log.info("%s round %d: our best C %.0f vs standing %.0f (alt %.0f)", sid, k, sheets[0][0], c_stand, self.c_alt)
@@ -935,12 +994,38 @@ class NoIdeaAgent:
         rival = self.rival_offer(case, sid) if case["type"] == "rfq" else None
         refs = sorted({i for c in args for i in c["ids"]} | ({rival[0]} if rival else set()))
         self.cited.update(refs)
-        return {"supplier_id": sid, "message": {
-            "subject": f"Re: {case['title']}"[:300],
-            "body": self.write(case, sid, events, sheets, k, [c["sentence"] for c in args], rival, final, opening),
-            "term_sheets": [{"terms": t} for t in sheets],
-            "refs": refs[:20],
-        }}
+        msg = {"subject": f"Re: {case['title']}"[:300],
+               "body": self.write(case, sid, events, sheets, k, [c["sentence"] for c in args], rival, final, opening),
+               "term_sheets": [{"terms": t} for t in sheets],
+               "refs": refs[:20]}
+        if not final and sheets and (att := self.call_off(case, sid, events, sheets, k)):
+            msg["attachments"] = [att]
+            msg["body"] = msg["body"].replace("\n\nKind regards", "\n\nAttached: our monthly call-off schedule for the "
+                                              "full contract term.\n\nKind regards")
+        return {"supplier_id": sid, "message": msg}
+
+    def call_off(self, case, sid, events, sheets, k):
+        """Monthly call-off schedule as CSV (the arena reads csv attachments) - Neel. Suppliers keep asking "Which volume
+        can you commit to?" / "release schedule"; sent in round 1 and again whenever asked."""
+        s = self.sup[sid]
+        asked = re.search(r"(?i)release schedule|call-?off|which volume|expected volume|volume figures|"
+                          r"documentation supporting", latest(events).get("body") or "")
+        if (s.get("schedule_sent") and not asked) or (k > 0 and not asked):
+            return None
+        t0 = {**case.get("fixed_terms", {}), **sheets[0]}
+        vol = t0.get("volume_per_year") or case["buyer"]["need_per_year"]
+        months = min(int(t0.get("contract_months") or 12) or 12, 36)
+        start = t0.get("effective_date") or min(case.get("term_options", {}).get("effective_date") or ["2027-01-01"])
+        y, m = int(start[:4]), int(start[5:7])
+        rows, left = ["month,quantity"], vol * months // 12
+        for i in range(months):
+            q = round(vol / 12) if i < months - 1 else left
+            left -= q
+            rows.append(f"{y + (m - 1 + i) // 12}-{(m - 1 + i) % 12 + 1:02d},{q}")
+        s["schedule_sent"] = True
+        import base64
+        return {"name": "call_off_schedule.csv", "type": "csv",
+                "content_b64": base64.b64encode(("\n".join(rows) + "\n").encode()).decode()}
 
     def rival_offer(self, case, sid):
         """RFQ: the best competing standing offer, citable once per supplier (playbooks/rfq.md)."""
