@@ -35,7 +35,7 @@ A rule belongs here only if its reason applies to any supplier. State: 2026-10-1
 13. **Never cite an index that rose** - "Your figures confirm our case" (P07, P10). Cite the **steepest fall of each cost
     driver in any window the arena checks** (<= 12 months, ending in the last 12 months) - P03 electronics -2.3% beat the house.
 14. **One index claim per e-mail**: 2+ drew "we received a lot of material" 11/11 (Neel).
-15. **Tiny falls (weight x fall < 0.25 pts) are not arguments** (labour -0.3%: EUR 0.02 / no cut) - last, never round 1.
+15. **Tiny falls (weight x fall < 0.25 pts) are weak on PRICE-CONTINUOUS suppliers (P03: EUR 0.02) - but on a GRID supplier a taken tiny fall is a full step (P11 labour -0.3%% -> -0.50, 77f61e47)** (labour -0.3%: EUR 0.02 / no cut) - last, never round 1.
 16. **Answer its questions with checkable data** (it asked "Which volume can you commit to?" 3x until we stated it, P07; "Which
     figures is that based on? Please send us the data." = it wants a new fact).
 17. **Only cite data whose check we can reproduce exactly. A CONTRADICTED claim costs trust and makes it close early**

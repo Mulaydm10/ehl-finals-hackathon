@@ -60,6 +60,7 @@ MIRROR_GATE = 0.2  # from our 3rd ask: big mirror steps only while its last step
 R2_HEDGED_SHARE = 0.30  # cloud task 9: round-2 step for hedged suppliers, share of the gap (was ~0.16)
 FINAL_AT_MSG = {"raw_material": 3}  # cloud task 10: our message at which this case type's supplier goes final (P08 9/10, P18 7/10)
 DEFER_RATIO = 0.18  # ...where our step is only this share of its last step (P08 deferred at 0.19x; final at >= 0.9x, P18 at 0.53x)
+LONG_TERM_HEDGED = True  # cloud task 14: 36 m sheets for hedged raw-material suppliers (experiment, P08 loop run 2)
 CROSS_SELL = True  # cloud task 13: invite a hedged raw-material distributor to quote for a part we buy elsewhere (untested live)
 DEFER_TIMES = 1  # cloud task 11: small steps in a row (1 = live-tested in db7d315a; 2+ untested - sim_donautal --max-defer)
 DEFER_FLOOR = 0.002  # ...but at least 0.2% of its price (a zero step reads as a repeat)
@@ -119,6 +120,8 @@ Rules:
   their committee, their capacity, their restructuring) - never describe it as ours.
 - Never reveal our position: no targets, budgets, urgency, alternatives or weaknesses.
 - Do not mention materials, costs or facts that are not in their e-mail.
+- Never call a price for different payment days or a different clause an increase; compare only like for like
+  (P08 ad0427655e885fc1: "We reject a price increase for shorter payment terms" - it had raised nothing).
 - Never comment on their departments, colleagues or internal processes (credit control, finance, sales,
   management disagreements) - P02 walked away twice after such remarks.
 - Do NOT write any number, price, percentage, date or data ID - the facts and offers are added
@@ -380,6 +383,10 @@ class NoIdeaAgent:
         # length; committee suppliers keep the longest (P03: "reflecting the value of the binding 36-month contract")
         horizon = 12 * (case["buyer"].get("horizon_years") or 1)
         longest = central.committee_round1(s["dossier"].get("motives", {})) and case["type"] not in ("bundling", "raw_material")
+        # cloud task 14 (analysis/cases/P08_loop1.md): P08's final = round-1 value - 0.20-0.22 (13 games), so only a lower
+        # round-1 headline moves the deal. 36 m costs us nothing on the 2-year horizon (score 0.7886 at 5.05 @ 14 for 24 and
+        # 36 m) and it says "The contract term is reflected in the price" (a43d, 9bfa) - untested in P08
+        longest = longest or (LONG_TERM_HEDGED and self.hedged_raw(case, sid))
         # cloud task 11 (MISTAKES.md L3): 36 m was priced higher at P07 (0f754b13 0.65 vs 0.695-0.70 at 24 m); P18 is raw
         # material like P08, where 36 m buys nothing on a 2-year horizon
         ranked.sort(key=lambda x: (round(x[0], 0), -(x[1].get("contract_months") or 0) if longest
