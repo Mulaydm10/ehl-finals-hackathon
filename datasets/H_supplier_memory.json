@@ -63,7 +63,7 @@
   }
  },
  "sup:70140": {
-  "games": 31,
+  "games": 32,
   "scores": [
    0.672,
    0.609,
@@ -71,6 +71,7 @@
    0.71,
    0.71,
    0.71,
+   0.794,
    0.794,
    0.71,
    0.794,
@@ -192,8 +193,8 @@
    "energy cost": 1,
    "energy index": 6,
    "index and price history": 1,
-   "index change": 47,
-   "quality record": 29,
+   "index change": 48,
+   "quality record": 30,
    "volume change": 26
   }
  },
@@ -709,19 +710,20 @@
   }
  },
  "sup:70620": {
-  "games": 6,
+  "games": 7,
   "scores": [
    0.0,
    0.815,
    0.81,
    0.874,
    0.766,
+   0.0,
    0.86
   ],
   "shrugged": {
-   "index change": 4,
-   "price history": 2,
-   "volume change": 3
+   "index change": 6,
+   "price history": 3,
+   "volume change": 4
   },
   "structures": {
    "contract_months=36|payment_days=14": {

@@ -844,3 +844,11 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 - In: gap steps for mirror suppliers (P07 live 0.81, was 0.75), weak facts only after a hold, QNs only when quality is a problem, QN crash fix (<= 8 IDs, resend without IDs on HTTP 5xx), price path ignores one-order blips, P04 0.874 ceiling analysis, P07/P18/P10 probes.
 - **Conflict found:** Parth weak-facts-after-a-hold kept one fact pending exactly at the hold, while our probe / floor trade waited for no facts left -> no probe ever went out on P11 (replay 7285b182: accepted 45.00). Fix: a grid holder that holds gets the probe AND its next fact in the same e-mail. Replays: low draw -> [(45.00, EUR 300), (44.95, 0)] + 6 refs; high draw -> 45.10 + facts.
 - Tests 50 (Parth +12), offline 0.931 / 0.925 (P07 stubborn 0.91: gap steps, live 0.81), walk replays unchanged.
+
+## v2.21b live P11 (20:33, merged agent with all teammate learnings): 0.7935 (3cc43596599ab8f4) - LOW draw, wasted
+- 46.00 -> (electricity) 45.00 -> our round 3 had **0 facts**: Parth's weak-facts-while-it-moves gate (it had just moved
+  46 -> 45) held back labour / QNs, the only facts left -> "Which figures is that based on? Please send us the data." +
+  final_offer at our 3rd message (usually 4-5). No round for the floor trade.
+### v2.21c (offline): never an empty round - when only weak facts are left, send the next one anyway (model + code paths).
+- Conflict of rule 73 (weak facts only after a hold) with rule 40 (no round goes out empty); rule 40 wins.
+- Replays: 3cc4 round 3 now 6 refs; 7285 floor trade [(45.00, EUR 300), (44.95, 0)] with 8 refs. Tests 50, offline 0.930/0.925.

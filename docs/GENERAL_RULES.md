@@ -168,7 +168,7 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
 72. **Mirror suppliers: bigger steps** (30% of the gap to its standing) - P07 0.75 -> **0.81** (Parth gap_steps); NOT for
     patient suppliers (patience prior >= 5: P01/P02 concede on their own, offline 0.99 -> 0.88), cash-short holders (P11),
     hedged (P08: -0.20 -> 0.53) or price-frozen (P03).
-73. **Weak facts (QNs, tiny index falls, fillers) only for a supplier that HOLDS** - a supplier that is moving answers them with
+73. **Weak facts (QNs, tiny index falls, fillers) only for a supplier that HOLDS - but never at the price of an EMPTY round (rule 40 wins: P11 3cc43596 empty round 3 -> final at msg 3)** - a supplier that is moving answers them with
     the fact's tiny value instead of mirroring our step (P07 0.812 lean vs 0.792 with QN / labour in round 2). On a grid holder
     send the pending fact WITH the probe in the same e-mail (conflict found when merging - rule 61 needs its round).
 74. **QNs only when its quality is a problem** (last scorecard amber/red, or a quality case): a green supplier answered "we take
