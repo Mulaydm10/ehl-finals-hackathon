@@ -119,3 +119,4 @@
 | 2026-10-10 18:31 | Dhruv | P11 | noidea v2.16f / gpt-6-astra | 0.71 (1 fact/round; accepted open 45.50 in r3) | 352bdb0495fc67e4 |
 | 2026-10-10 18:37 | Dhruv | P11 | noidea v2.16g / gpt-6-astra | 0.71 (data budget used by r3; accepted open 45.50) | c0d6894ce2cf586a |
 | 2026-10-10 18:30 | Neel | P08 | noidea_neel / gpt-6-astra | **0.64** | 136352b4a3a9f752 |
+| 2026-10-10 18:49 | Neel | P08 | noidea_neel / gpt-6-astra | **0.72** | c387f78034601d57 |
