@@ -71,6 +71,7 @@ def _central():
 PROPOSE_ALT_AFTER_FINAL = False  # sending its alternative back after final_offer: walked 2x, worked 1x -> off
 RFQ_MARKET_DEPTH = 0.10  # RFQ ask vs the market's lowest valid offer (20% made the best bidder walk: P05 d9af85e000ab3d4d)
 PLANNED_ROUNDS = 8  # P07 live: ~25 s per round, so an 8-minute wave fits ~12-15; keep a margin
+GAP_STEP = 0.3  # experiment gap_steps: each later ask moves this share of the gap to its standing value
 MIN_GAIN_PTS = 1.0  # never pay more than ask - 1 pt unless it is the last word
 # How far below the opening quote to anchor (src/eval/calibrate.py: best deal vs opening, practice cases)
 # Round-1 argument order = what moved suppliers' FIRST counters live (score units, 58 practice games):
@@ -829,6 +830,12 @@ class NoIdeaAgent:
             # a capacity supplier goes final in round 2 (P10 probes B-E): one real step, a third of the gap to its
             # standing value, drew its largest move (+0.51 -> -0.30; +0.15 -> -0.10; +1.01 -> -0.20)
             hist.append(min(limit, hist[-1] + max(0.0, (sv[-1] - hist[-1]) / 3)))
+            return hist[-1]
+        if "gap_steps" in EXPERIMENTS and k >= 1 and sv and kind != "rfq" and self.patience_prior(case, sid) >= 3:
+            # a MIRROR supplier answers our step with 0.5-0.9x of it and goes final at a fixed round, so the 8-round
+            # schedule (+0.07/round) starves it: P07 probe A 58bf025d01aa1275 +0.12 -> -0.11, +0.15 -> -0.08,
+            # then agreed at our 5.31 = 0.812 (best 0.753 with +0.07 steps). Not for holders/frozen prices (P11, P03)
+            hist.append(min(limit, hist[-1] + max(0.0, GAP_STEP * (sv[-1] - hist[-1]))))
             return hist[-1]
         fr = [(sv[j - 1] - sv[j]) / (sv[j - 1] - hist[j - 1]) for j in range(1, min(len(sv), len(hist) + 1))
               if sv[j - 1] - hist[j - 1] > 1e-9]
