@@ -100,3 +100,15 @@ rank versions, not to predict arena scores. It ignores arguments, tone and the r
   0.936 / 0.944 (no regression on the other 9 cases; the tie-break only fires on equal cost).
 - **Not measurable offline**: the arena's margin formula ignores contract length ("security, not cash") and the
   simulator only models cost. Whether the supplier moves below €5.49 for 36 m needs one live P07 game.
+
+### v1.6 (offline): revert 36 m, only falling indices, forecast evidence
+- **P07 v1.5 live (0f754b1368387b8e): 0.65, worse.** 36 months was priced higher (opened €5.60 vs €5.56, final €5.56 vs €5.49).
+  One game (replies vary), but no sign of a reward → **tie-break reverted** (plain cost order, 24 m).
+- **Our "no cost push" indices backfired:** citing drivers that ROSE < 3% got "Your figures confirm our case: that
+  driver rose." → with no increase to fight, only indices that **fell or stayed flat** (bar 0%, was 3%).
+- **New signal, volume evidence:** "please provide documentation supporting the binding volume… Which figures is
+  that based on? Please send us the data" (rounds 2–4), and "your targeted savings would require a significantly
+  higher volume commitment". → cite the latest positive **demand forecast** per part (`fc:` IDs, arena-checked on
+  change_pct), top 2: P07 M16 bolt +15.3% (fc:360011@2026-09), nut +9.0% (fc:360012@2026-09).
+- Offline: P07 round 1 = volume + kit calc + deal size + 2 forecasts, no rising index; eval unchanged 0.936 / 0.944.
+- P07 so far (live): 0.68, 0.69, 0.12 (walked), **0.70**, 0.70 (Astra), 0.65 (36 m). Best = v1.4 on 24 m.

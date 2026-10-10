@@ -54,6 +54,9 @@ SIGNALS = {
                               "reciprocity works: keep small, steady steps"),
     "absorb_pushback": (r"cannot simply absorb|verified cost increases", "its story is firm: trade terms, not data"),
     "eager_new_business": (r"eager to show you|what we can do", "new or hungry supplier: push price, it wants the deal"),
+    "data_supports_supplier": (r"figures confirm our case|that driver rose", "never cite an index that rose (it supports its price)"),
+    "asks_volume_evidence": (r"documentation supporting|which figures is that based on|send us the data", "cite demand forecasts (fc:) as volume evidence"),
+    "needs_more_volume": (r"significantly higher volume commitment|higher volume would", "volume is its price lever; offer more only if the need allows"),
     "boilerplate": (r"thank you for your enquiry|find our angebot|mit freundlichen|dear sir or madam|do not hesitate|any questions|look forward|inside sales|export manager|zahlungsziel",
                     "ignore"),
 }

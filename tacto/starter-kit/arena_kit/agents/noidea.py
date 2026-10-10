@@ -82,6 +82,8 @@ class NoIdeaAgent:
         pb = root / "playbooks"
         self.playbooks = {p.stem: p.read_text() for p in pb.glob("*.md")} if pb.exists() else {}
         self.correspondence = root / "tacto/data/correspondence"
+        facts = root / "tacto/data/facts.json"
+        self.fc = {k: v for k, v in json.loads(facts.read_text()).items() if k.startswith("fc:")} if facts.exists() else {}
         # today's price of every part at every supplier (for kit calculations)
         self.part_prices = {}
         for sid, d in self.dossiers.items():
@@ -134,7 +136,9 @@ class NoIdeaAgent:
         # When the quote is already below today's price (bundles, RFQs, renewals at a cut), the ask is
         # negative and the useful comparison is "no cost push": drivers that moved < 3% (P07 live: the
         # supplier said "our price follows our main cost drivers" and we had cited nothing)
-        bar = ask_pct if ask_pct > 0 else 3.0
+        # v1.5 live P07: citing drivers that rose < 3% got "Your figures confirm our case: that driver rose."
+        # -> with no increase to fight, only indices that fell or stayed flat
+        bar = ask_pct if ask_pct > 0 else 0.0
         parts = set(case["parts"])
         best = {}
         for c in mine:
@@ -151,6 +155,7 @@ class NoIdeaAgent:
             out += [c for c in mine if c["kind"] == "po_prices" and c["part"] in parts]
         if case["type"] in ("capacity", "price_increase"):
             out += [c for c in mine if c["kind"] == "scorecard_otd" and (c["figure"] or 100) < 85]
+        out += self.forecast_args(case)
         seen, ranked = set(), []
         for c in out:
             if c["sentence"] not in seen:
@@ -203,6 +208,19 @@ class NoIdeaAgent:
                     f" on a multi-year single-source volume; we consider EUR {ask_price:.2f} a fair kit price.")
         return txt
 
+    def forecast_args(self, case):
+        """Checked volume evidence: the latest positive demand forecast per part (`fc:` IDs, checked on
+        change_pct). P07 v1.5 live asked three times for "documentation supporting the binding volume…
+        Which figures is that based on? Please send us the data." """
+        out = []
+        for part in case["parts"]:
+            ks = sorted(k for k in self.fc if k.startswith(f"fc:{part.split(':')[1]}@"))
+            if ks and (ch := self.fc[ks[-1]].get("change_pct")) and ch > 0:
+                desc = next((p[3] for p in self.part_prices.get(part, [])), part)
+                out.append({"kind": "forecast", "ids": [ks[-1]], "figure": ch, "part": part,
+                            "sentence": f"Our demand forecast for {desc.split(',')[0]} is up {ch:+.1f}% ({ks[-1]})."})
+        return sorted(out, key=lambda c: -c["figure"])[:2]
+
     def next_args(self, sid, n):
         """The next `n` arguments whose IDs were not cited yet (re-citing reads as padding)."""
         picked = []
@@ -236,9 +254,9 @@ class NoIdeaAgent:
             if cap_price and t["unit_price"] > cap_price:  # never above its standing price (P01, score 0)
                 continue
             ranked.append((total_cost(case, t, s["std"], s["est"]), t))
-        # on a cost tie prefer the LONGER contract: beyond the horizon it "neither costs nor earns" for us
-        # (api.md) but is security for the supplier (P07: its final sat at ~EUR 5.50 on 24 m in 4 games)
-        ranked.sort(key=lambda x: (round(x[0], 0), -(x[1].get("contract_months") or 0)))
+        # v1.5 preferred the longer contract on cost ties; P07 live (0f754b1368387b8e) priced 36 m HIGHER
+        # (opened 5.60 vs 5.56, final 5.56 vs 5.49): reverted to plain cost order
+        ranked.sort(key=lambda x: x[0])
         out = []
         # the supplier may pick ANY sheet we send: only offer ones we'd be glad to have accepted
         # (offline eval P10: a 12-month sheet at equal supplier value cost us +33% and got picked)
