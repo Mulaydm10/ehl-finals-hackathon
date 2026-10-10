@@ -294,6 +294,20 @@ class NoIdeaAgent:
             out += [{**c, "late": True} for c in pos if self.po_jump(c) <= 0]
         if case["type"] in ("capacity", "price_increase"):
             out += [c for c in mine if c["kind"] == "scorecard_otd" and (c["figure"] or 100) < 85]
+        # a supplier under cash stress (news of restructuring / cash-short dossier): the verified news frames what we give
+        # that costs us nothing - no chargebacks, payment on the agreed day, a binding volume - in ITS currency (playbook:
+        # interests over positions). api.md checks only "that it is about this supplier", so it cannot be contradicted.
+        # P11: rounds 3+ had no new fact left -> it held and went final
+        motives = set(self.dossiers.get(sid, {}).get("motives", {}))
+        if {"cash_short", "news_restructuring"} & motives:
+            gives = ["no chargebacks" if "chargeback_eur_per_complaint" in case["negotiable"] else None,
+                     "payment of every invoice on the agreed day", "a binding volume for the full term"]
+            gives = [g for g in gives if g]
+            for c in mine:
+                if c["kind"] == "news" and c["ids"]:
+                    out.append({**c, "late": True,
+                                "sentence": f"We are aware of your current situation ({c['ids'][0]}), which is why our offer "
+                                            f"is built on {', '.join(gives[:-1])} and {gives[-1]}."})
         # OFF by default: live P11 fa9a9d0277f372c6 the arena marked our qn mean-ppm claims CONTRADICTED ("do not match the
         # records. That costs trust") and the supplier went final one round early. How it averages qn rows is unknown.
         if "qn_claims" in EXPERIMENTS and (case["type"] == "quality" or case["buyer"].get("category_goal") == "quality_first"):
