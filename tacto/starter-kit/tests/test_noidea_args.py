@@ -80,3 +80,35 @@ def test_other_parts_price_history_comes_last_and_only_as_an_experiment(monkeypa
     assert others, [c["kind"] for c in args]
     assert not any(i in msg["refs"] for j in others for i in args[j]["ids"])  # never in round 1
     assert all(args[j]["part"] not in case["parts"] for j in others)
+
+
+def _p02_after_two_rounds(primary_days):
+    """P02 opening, our 90-d asks, its two counters with PRIMARY at `primary_days` and a 30-d alternative in round 1."""
+    case, threads = load("P02")
+    sid = next(iter(threads))
+    ev = list(threads[sid])
+    def sup(n, price, days, alt=None):
+        sheets = [{"term_sheet_id": f"offer:70510-{n}", "terms": {"unit_price": price, "payment_days": days, "index_clause": None}}]
+        if alt:
+            sheets.append({"term_sheet_id": f"offer:70510-{n}-a", "terms": {"unit_price": alt, "payment_days": 30, "index_clause": None}})
+        return {"from": "sales@70510", "status": "open", "body": "Alternatively, with Zahlungsziel 30 days net: EUR 368.42 per unit.",
+                "term_sheets": sheets}
+    ours = lambda price: {"from": "buyer", "body": "x", "term_sheets": [{"terms": {"unit_price": price, "payment_days": 90, "index_clause": None}}]}
+    ev += [ours(364.69), sup(1, 372.52, primary_days, alt=368.42 if primary_days == 90 else None), ours(365.31), sup(2, 370.85, primary_days)]
+    return case, {sid: ev}, sid
+
+
+@pytest.mark.skipif(not OPENINGS.exists(), reason="needs the probed openings")
+def test_a_model_read_limit_needs_two_refusals_of_our_term():
+    """P02 load test 791a535b: the model read its 30-d ALTERNATIVE as "payment max 30" while its primary stayed at our 90 d;
+    the hard filter made us hop to 30 d (0.531). A limit counts only when its primary refused our term twice."""
+    for primary_days, expect_30 in ((90, False), (30, True)):
+        case, threads, sid = _p02_after_two_rounds(primary_days)
+        agent = NoIdeaAgent()
+        agent.decide(case, {sid: threads[sid][:1]})  # prepare
+        agent.sup[sid]["last_main"] = {"unit_price": 365.31, "payment_days": 90, "index_clause": None}
+        agent.sup[sid]["limits"] = {"payment_days": (None, 30)}  # what the model's notes said
+        agent.threads_ref = threads
+        sheets = agent._sheets_at(case, sid, 360.0, None, n=3)
+        days = {t["payment_days"] for _, t in sheets}
+        assert (days <= {14, 30}) == expect_30, (primary_days, days)

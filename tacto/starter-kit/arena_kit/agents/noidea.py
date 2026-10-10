@@ -850,12 +850,31 @@ class NoIdeaAgent:
             self.sup[sid]["limits"] = saved
         return out
 
+    def limit_confirmed(self, sid, f):
+        """A limit the MODEL read from its e-mail ("refusals") filters our structures only when the supplier's own PRIMARY
+        sheet kept that term away from ours in its last two counters (rule 8: adopt a term it refuses twice). P02 load test
+        791a535b: the model read its ALTERNATIVE ("Alternatively, with Zahlungsziel 30 days net: EUR 368.42") as "payment
+        max 30", while its primary stayed at our 90 d - the limit made us hop to 30 d in round 3: 0.531 instead of ~0.82."""
+        s = self.sup.get(sid) or {}
+        sticky = s.setdefault("limits_ok", set())  # once confirmed it stays (after we adopt its term they agree)
+        if f in sticky:
+            return True
+        events = (getattr(self, "threads_ref", None) or {}).get(sid) or []
+        prim = [standing([m])[1] for m in events if m.get("from") != "buyer" and m.get("term_sheets")]
+        ours = s.get("last_main") or {}
+        counters = prim[1:]  # its answers to us (not its opening quote)
+        ok = len(counters) >= 2 and ours.get(f) is not None and all(
+            c.get(f) is not None and c.get(f) != ours.get(f) for c in counters[-2:])
+        if ok:
+            sticky.add(f)
+        return ok
+
     def _sheets_at(self, case, sid, value, cap_price=None, n=3, band_pct=None):
         """The `n` different term sheets that give the supplier `value` per unit at the lowest cost to us,
         with the premiums it showed us (learn) and the limits it stated (refusals) taken into account."""
         s = self.sup[sid]
         ranked = []
-        lim = s.get("limits", {})
+        lim = {f: v for f, v in (s.get("limits") or {}).items() if self.limit_confirmed(sid, f)}
         self._combo_sid = sid
         for t in self.combos(case, dict(s["open_terms"])):
             if any((lo is not None and (t.get(f) or 0) < lo) or (hi is not None and (t.get(f) or 0) > hi)
@@ -1622,9 +1641,20 @@ or null, "reason": "<one sentence>"}."""
             chosen = [t for _, t in cands][:3]
         args = [pool[i] for i in aidx]
         opening = self.clean_opening(case, str(d.get("opening") or ""))
+        if k >= 1 and "lean_later" in EXPERIMENTS:  # experiment: later e-mails without the model's paragraph
+            opening = self.lean_opening(events)
         if k >= 1 and hedged:  # later rounds stay lean (probe A: one line, cuts 0.25 / 0.06 vs the model's 0.09 / 0.08)
             opening = "Thank you for your revised offer. We move towards you."
         return self.message(case, sid, events, chosen, k, args=args, opening=opening)
+
+    @staticmethod
+    def lean_opening(events):
+        """Experiment `lean_later`: a later e-mail opens with one plain sentence instead of the model's paragraph (short later
+        e-mails drew bigger steps: P11 0.97% vs 0.80% per message with a fact, n=49 / 82; P07 1.13% vs 0.79%; P01, P18 alike;
+        the hedged-supplier rule already does this - P08 probe A lean 0.25 / 0.06 vs model 0.09 / 0.08)."""
+        prices = [standing([m])[1].get("unit_price") for m in events if m.get("from") != "buyer" and m.get("term_sheets")]
+        moved = len(prices) >= 2 and None not in prices[-2:] and prices[-1] < prices[-2] - 1e-9
+        return "Thank you for moving." if moved else "Thank you for your reply."
 
     def clean_opening(self, case, text):
         """The same filters as for the opening paragraph: no figures, no leaks, no off-table levers, English."""
@@ -2300,7 +2330,10 @@ or null, "reason": "<one sentence>"}."""
             return (f"Dear {name} team,\n\nThank you for your final offer. We accept your alternative exactly as you "
                     f"proposed it ({offers}); it is attached as a term sheet for your confirmation.\n\n"
                     "Kind regards,\nPurchasing, Hollerau Pumpenwerke")
-        if self.complete and not given_opening:
+        lean = k >= 1 and "lean_later" in EXPERIMENTS
+        if lean and not given_opening:
+            opening = self.lean_opening(events)
+        if self.complete and not given_opening and not lean:
             levers = "; ".join(f"{m}: {v['lever']}" for m, v in motives.items())
             playbook = _sections(self.playbooks.get(case["type"], ""), PLAYBOOK_SECTIONS)[:2500]
             user = (f"SUPPLIER: {name}\nCASE: {case['title']} ({case['type']}, goal {case['buyer']['category_goal']})\n"
@@ -2331,6 +2364,8 @@ or null, "reason": "<one sentence>"}."""
         # suppliers keep asking "Which volume can you commit to?" (P07 live): answer in code
         unit = "kits" if case["type"] == "bundling" else "units"
         lines = [f"We confirm a binding volume of {vol:,} {unit} per year" + (f" for {months} months" if months else "") + "."]
+        if lean and not re.search(r"(?i)volume|how many (units|pieces)|quantit", latest(events).get("body") or ""):
+            lines = []  # lean later e-mail: the volume line only when it asks about volume
         tt = s.get("trade_term")
         if tt and k == 1 and sheets and sheets[0].get(tt[0]) == tt[1]:  # experiment trade_term: the concession, said once
             lines.append(f"To meet you, we now commit to the longer contract: {tt[1]} months.")

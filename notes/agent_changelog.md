@@ -1211,3 +1211,19 @@ games 8ccbdcc0 / 98e834e4, P02 10b624c1, P07 216f49e9, P08 00e8923e, P10 673ee89
 - Template mode follows pure engine rules ("We value our cooperation and have made a step towards you"; the approval ladder:
   "Any further step needs approval from our management" -> after we RAISE our ask, "Our management has approved a further step").
   It can return under load in the final; the agent has now been played in both modes. Not triggerable, never to be provoked.
+
+### LOAD TEST (00:41): 9 practice cases in parallel in ONE process (the final's runner shape), wave cap 8 min, hidden mode
+- Wall 188 s for all nine (slowest case 188 s); **0 warnings**: no decision over 45 s, no 60-s timeout, no 5xx, no safe move.
+  Scores: P01 0.999, P02 0.531, P03 **0.989** (best was 0.963), P04 0.860, P07 0.740, P08 0.916, P10 0.702, P11 0.794, P18 0.666.
+- P03 0.989: it COUNTERED our first ask (3 earlier hidden games agreed at once at 430.81 = 0.954) with a 36-month alternative at
+  429.40; the agent followed that structure down to 429.09 (its optimum sits at the 8% sustainable-margin line, ~429.5). A draw.
+- **P02 0.531 = a general bug (fixed v2.34e)**: the model's notes read the supplier's ALTERNATIVE ("Alternatively, with
+  Zahlungsziel 30 days net: EUR 368.42") as a refusal "payment max 30"; `_sheets_at` hard-filtered every structure to <= 30 d, so
+  round 3 hopped from 90 d to 30 d (its primary had stayed at our 90 d). Fix `limit_confirmed()`: a model-read limit filters
+  only when the supplier's PRIMARY sheet kept that term away from ours in its last two counters (rule 8), and then stays.
+  Test `test_a_model_read_limit_needs_two_refusals_of_our_term`; 66 tests pass; crash test 19/19.
+- P18 by our round-1 payment term (normal mode, all games): 14/30 d -> first counter 5.20 (4 of 4); 45 d -> 5.30/5.40; 90 d -> 5.50.
+  P07 the opposite (90 d 0.791 mean vs 30 d 0.715). No pre-round-1 signal separates them -> no rule (would trade P18 for P07).
+- Experiment `lean_later` (later e-mails: one plain opening sentence instead of the model's paragraph; volume line only when it
+  asks about volume) coded, OFF: archive says short later e-mails drew bigger steps (P11 0.97% vs 0.80%, P07 1.13 vs 0.79, P01,
+  P18) but most short ones came from teammates' scripts (confounded) -> live A/B (loop 4).

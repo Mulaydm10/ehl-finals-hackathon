@@ -271,3 +271,7 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
 118. **Check the arena's MODE before crediting a change** (Neel): in engine-template mode (its model off, 23:51-23:58 on
      10 Oct) every reply is fixed engine sentences and results differ (P10 31.00 vs 31.50). Two of our "new bests" came from
      that window. A/B only within one mode; `analysis/tools/supplier_mode_scan.py` tells them apart.
+119. **A supplier's ALTERNATIVE is not a refusal** (P02 0.531): never let a model's reading of its e-mail hard-filter our
+     structure; a term counts as refused only when its PRIMARY sheet moved away from ours twice (rule 8), then we adopt it for good.
+120. **An instant agreement to our first ask means the anchor left room** (P03: agreed at once 3 of 3 = 0.954; the one game where
+     it countered went to 0.989 via its own 36-month alternative). Look for the term the supplier pays for in its counters.

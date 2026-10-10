@@ -1,7 +1,8 @@
 {
  "sup:70110": {
-  "games": 11,
+  "games": 12,
   "scores": [
+   0.999,
    0.999,
    1.0,
    0.78,
@@ -181,16 +182,16 @@
    }
   },
   "took": {
-   "index change": 8,
+   "index change": 9,
    "notice period": 5,
    "quality record": 1,
-   "should cost": 1,
-   "volume change": 5,
+   "should cost": 2,
+   "volume change": 6,
    "volume forecast": 1
   }
  },
  "sup:70140": {
-  "games": 55,
+  "games": 56,
   "scores": [
    0.672,
    0.609,
@@ -227,6 +228,7 @@
    0.752,
    0.71,
    0.358,
+   0.794,
    0.777,
    0.777,
    0.71,
@@ -372,20 +374,21 @@
    "energy cost": 1,
    "energy index": 7,
    "index and price history": 1,
-   "index change": 86,
+   "index change": 88,
    "labour cost index": 1,
-   "quality record": 51,
-   "volume change": 48
+   "quality record": 52,
+   "volume change": 49
   }
  },
  "sup:70410": {
-  "games": 25,
+  "games": 27,
   "scores": [
    0.0,
    0.686,
    0.647,
    0.647,
    0.639,
+   0.71,
    0.702,
    0.694,
    0.639,
@@ -397,6 +400,7 @@
    0.694,
    0.663,
    0.0,
+   0.702,
    0.702,
    0.694,
    0.694,
@@ -411,7 +415,7 @@
    "delivery record": 2,
    "price history": 1,
    "quality record": 1,
-   "volume change": 13
+   "volume change": 14
   },
   "structures": {
    "contract_months=24|lead_time_days=35|volume_per_year=23400": {
@@ -567,12 +571,12 @@
   },
   "took": {
    "index change": 1,
-   "price history": 10,
-   "should cost": 11
+   "price history": 11,
+   "should cost": 12
   }
  },
  "sup:70510": {
-  "games": 25,
+  "games": 26,
   "scores": [
    0.809,
    0.0,
@@ -583,6 +587,7 @@
    0.0,
    0.847,
    0.223,
+   0.531,
    0.847,
    0.818,
    0.0,
@@ -609,6 +614,7 @@
     "agreed_to_our_ask": [],
     "finals": [
      366.26,
+     366.55,
      369.45
     ],
     "named_floors": [],
@@ -626,12 +632,20 @@
       366.66
      ],
      [
+      361.33,
+      366.78
+     ],
+     [
       361.4,
       369.45
      ],
      [
       361.81,
       366.26
+     ],
+     [
+      361.81,
+      366.55
      ]
     ]
    },
@@ -957,12 +971,12 @@
    }
   },
   "took": {
-   "index change": 11,
+   "index change": 13,
    "volume change": 8
   }
  },
  "sup:70530": {
-  "games": 19,
+  "games": 20,
   "scores": [
    0.936,
    0.0,
@@ -974,6 +988,7 @@
    0.9,
    0.862,
    0.954,
+   0.989,
    0.963,
    0.862,
    0.903,
@@ -1003,6 +1018,10 @@
     "finals": [],
     "named_floors": [],
     "refused_asks": [
+     [
+      430.81,
+      431.95
+     ],
      [
       430.81,
       432.94
@@ -1045,6 +1064,7 @@
    "contract_months=36|payment_days=90|volume_per_year=4580": {
     "agreed_to_our_ask": [],
     "finals": [
+     429.09,
      431.58,
      432.15,
      433.09
@@ -1082,6 +1102,18 @@
      [
       428.12,
       432.49
+     ],
+     [
+      428.95,
+      429.09
+     ],
+     [
+      428.95,
+      429.11
+     ],
+     [
+      428.95,
+      429.19
      ],
      [
       429.38,
@@ -1139,14 +1171,14 @@
    }
   },
   "took": {
-   "index change": 4,
+   "index change": 5,
    "price history": 2,
    "should cost": 4,
-   "volume change": 6
+   "volume change": 7
   }
  },
  "sup:70610": {
-  "games": 22,
+  "games": 23,
   "scores": [
    0.676,
    0.695,
@@ -1168,6 +1200,7 @@
    0.121,
    0.695,
    0.695,
+   0.74,
    0.121,
    0.728
   ],
@@ -1218,6 +1251,7 @@
      5.37,
      5.4,
      5.41,
+     5.42,
      5.44,
      5.49,
      5.5
@@ -1282,6 +1316,10 @@
      ],
      [
       5.13,
+      5.48
+     ],
+     [
+      5.13,
       5.49
      ],
      [
@@ -1313,6 +1351,10 @@
       5.41
      ],
      [
+      5.23,
+      5.44
+     ],
+     [
       5.24,
       5.44
      ],
@@ -1327,6 +1369,10 @@
      [
       5.3,
       5.41
+     ],
+     [
+      5.3,
+      5.42
      ],
      [
       5.31,
@@ -1345,11 +1391,11 @@
   },
   "took": {
    "index change": 9,
-   "volume change": 6
+   "volume change": 7
   }
  },
  "sup:70620": {
-  "games": 18,
+  "games": 20,
   "scores": [
    0.874,
    0.7,
@@ -1363,6 +1409,7 @@
    0.874,
    0.766,
    0.815,
+   0.86,
    0.766,
    0.0,
    0.86,
@@ -1372,8 +1419,8 @@
   ],
   "shrugged": {
    "index change": 6,
-   "price history": 7,
-   "volume change": 11
+   "price history": 8,
+   "volume change": 12
   },
   "structures": {
    "contract_months=36|payment_days=14": {
@@ -1497,10 +1544,11 @@
   "took": {}
  },
  "sup:70710": {
-  "games": 26,
+  "games": 27,
   "scores": [
    0.781,
    0.83,
+   0.916,
    0.642,
    0.0,
    0.0,
@@ -1611,13 +1659,13 @@
    }
   },
   "took": {
-   "index change": 25,
-   "price history": 7,
-   "volume change": 15
+   "index change": 27,
+   "price history": 8,
+   "volume change": 16
   }
  },
  "sup:70740": {
-  "games": 19,
+  "games": 20,
   "scores": [
    0.53,
    0.727,
@@ -1637,12 +1685,13 @@
    0.688,
    0.441,
    0.539,
+   0.666,
    0.598
   ],
   "shrugged": {
-   "index change": 4,
+   "index change": 5,
    "lci-c": 1,
-   "volume change": 11
+   "volume change": 12
   },
   "structures": {
    "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}|payment_days=14": {
@@ -1755,7 +1804,7 @@
   },
   "took": {
    "index change": 9,
-   "price history": 14,
+   "price history": 15,
    "volume change": 5
   }
  }

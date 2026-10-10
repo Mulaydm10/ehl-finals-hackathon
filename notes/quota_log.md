@@ -262,3 +262,12 @@
 | 2026-10-11 00:26 | Dhruv | D01 | v2.34d SANDBOX unseen supplier / gpt-6-astra | 0.9098 | 6df9e5bd0a72465b |
 | 2026-10-11 00:26 | Dhruv | D02 | v2.34d SANDBOX unseen RFQ / gpt-6-astra | 0.5154 | ec2806ab3dd21e33 |
 | 2026-10-11 00:30 | Neel | P10 | noidea_p10 (cloud plan, after P10_draw.md; normal mode) / gpt-6-astra | **0.71** | 3c4aa1a6471cdc3c |
+| 2026-10-11 00:41 | Dhruv | P01 | v2.34d LOAD 9-parallel / gpt-6-astra | 0.9987 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:41 | Dhruv | P02 | v2.34d LOAD (model-read limit -> hop to 30 d) / gpt-6-astra | 0.5311 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:41 | Dhruv | P03 | v2.34d LOAD (countered: 36-m alternative) / gpt-6-astra | 0.9889 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:41 | Dhruv | P04 | v2.34d LOAD / gpt-6-astra | 0.8604 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:41 | Dhruv | P07 | v2.34d LOAD / gpt-6-astra | 0.7405 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:41 | Dhruv | P08 | v2.34d LOAD / gpt-6-astra | 0.9156 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:41 | Dhruv | P10 | v2.34d LOAD / gpt-6-astra | 0.7019 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:41 | Dhruv | P11 | v2.34d LOAD / gpt-6-astra | 0.7935 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:41 | Dhruv | P18 | v2.34d LOAD / gpt-6-astra | 0.6658 | see notes/analysis_v234 LOAD log |
