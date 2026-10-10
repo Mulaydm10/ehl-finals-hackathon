@@ -29,6 +29,7 @@ PRIOR_TAKE = {"should_cost": 1.0, "scorecard_ppm": 1.0, "rival_quote": 0.75, "vo
               "notice_period": 0.5, "po_prices": 0.44, "index_change": 0.31, "scorecard_otd": 0.3}
 MIN_SEEN = 3  # fewer observations than this: the prior decides (OTD: 1 game, P10, a supplier that took no data at all)
 MIN_TAKE = 0.3  # below this a kind is only cited when nothing better is left
+PROVEN = 1.5  # a kind this supplier already took into account in an earlier game ranks above every prior
 
 
 def reactions():
@@ -43,6 +44,8 @@ def take_rate(kind, case_id, data=None):
     calculation" from THIS case's supplier (P03: price history, 2 of 2) counts as 0."""
     data = data or reactions()
     seen = data.get("by_case", {}).get(case_id, {}).get(kind)
+    if seen and seen.get("taken"):
+        return PROVEN  # this very supplier took this kind before: cite it first
     if seen and not seen.get("taken") and (seen.get("no_change") or seen.get("confirm_case")):
         return 0.0
     k = data.get("by_kind", {}).get(kind)
@@ -50,22 +53,23 @@ def take_rate(kind, case_id, data=None):
 
 
 def volume_claims(case, facts):
-    """'Our demand forecast ... is up +X% (fc:...)' for the case's own forecast refs - only a RISE (good news for
-    it). Dhruv's v2.7 round 1 on P03 (8c2816f2d571b367): "it holds and we took it into account" -> EUR 432.94 @ 90 d,
-    the best first answer in 7 P03 games; v2.6 and earlier never cited it. 12 of 19 such claims were taken."""
-    out = []
-    for ref in case.get("refs", []):
-        if not ref.startswith("fc:") or ref not in facts:
-            continue
-        f = facts[ref]
-        pct = f.get("change_pct")
-        if pct is None or pct <= 0:
-            continue
-        out.append({"supplier": None, "part": f.get("part"), "kind": "volume_change", "ids": [ref], "figure": pct,
-                    "sentence": f"Our demand forecast for this part is up {pct:+.1f}% ({ref}), and we commit "
-                                f"{f.get('volume_per_year') or case['buyer']['need_per_year']:,} units a year.",
-                    "checked_by_arena": True})
-    return out
+    """ONE volume-forecast claim, the LATEST forecast for the part, only if it is a RISE (a second fc ID was marked
+    "duplicate" by the arena, P07). Live P03: September +10.3% (with should-cost) -> committee EUR 432.15; the June
+    snapshot +23.3% instead -> 432.54 (d1bfa5a91489432b) - the latest figure is what counts. Dhruv's v2.7 round 1 on
+    P03 (8c2816f2d571b367): "it holds and we took it into account"; 12 of 19 such claims were taken."""
+    parts = set(case.get("parts", []))
+    fcs = {k: v for k, v in facts.items() if k.startswith("fc:") and v.get("part") in parts}
+    if not fcs:
+        return []
+    ref = max(fcs, key=lambda k: k.split("@")[-1])
+    f = fcs[ref]
+    pct = f.get("change_pct")
+    if pct is None or pct <= 0:
+        return []
+    return [{"supplier": None, "part": f.get("part"), "kind": "volume_change", "ids": [ref], "figure": pct,
+             "sentence": f"Our demand forecast for this part is up {pct:+.1f}% ({ref}), and we commit "
+                         f"{f.get('volume_per_year') or case['buyer']['need_per_year']:,} units a year.",
+             "checked_by_arena": True}]
 
 
 def should_cost_claims(claims, sid, parts, opening_price, min_gap=0.03):
@@ -76,11 +80,15 @@ def should_cost_claims(claims, sid, parts, opening_price, min_gap=0.03):
             and opening_price and opening_price > c["figure"] * (1 + min_gap)]
 
 
-def falling_window_claims(case, parts_drivers, max_claims=1, min_fall=-0.5):
-    """The steepest FALL of each cost driver in any window the arena checks (<= 12 months, ending within the last 12
-    months of the data), as a checkable index claim - only falls, one claim (2+ index claims drew "a lot of material"
-    11 of 11 times). P03: every 6/12-month window rose, but copper fell -1.2% from 2026-01 to 2026-02. Index data was
-    "taken into account" when it fell (P01 energy, P18 AS-14404)."""
+def falling_window_claims(case, drivers, per_series=1, min_fall=-0.2):
+    """Falls of the cost drivers in windows the arena checks, as index claims: <= 12 months apart and ENDING within the
+    last 12 months of the whole data package (live P03 d1bfa5a91489432b: a window ending 2025-09, 12 months before
+    the data's 2026-09, came back "irrelevant" - "an outdated timeframe"). Per series up to `per_series` windows with
+    all-new IDs (each ID counts once per case), ranked by weight x fall: the cut follows it (live P03: electronic
+    components 42% x -2.3% -> -EUR 0.48 in round 1; copper 5% x -2.2% -> -EUR 0.05 in round 2, "negligible effect").
+    `drivers`: {series: weight}. The agent sends at most one index claim per e-mail (padding). One window per series:
+    a second window of the same series is "duplicate" (live P03 2483e3891d076863: "already taken that index change
+    data into account")."""
     import csv
     data = ROOT / "tacto/data/data"
     names = {r["id"]: r["name"] for r in csv.DictReader((data / "index_series.csv").open(encoding="utf-8"))}
@@ -88,30 +96,34 @@ def falling_window_claims(case, parts_drivers, max_claims=1, min_fall=-0.5):
     for r in csv.DictReader((data / "index_values.csv").open(encoding="utf-8")):
         vals.setdefault(r["series_id"], {})[r["month"]] = float(r["value"])
     last = max(m for v in vals.values() for m in v)
-    ly, lm = int(last[:4]), int(last[5:7])
-    earliest_end = f"{ly - 1 + (lm // 12)}-{lm % 12 + 1:02d}"  # 12 months back from the last month of the data
 
     def months_apart(a, b):
         return (int(b[:4]) - int(a[:4])) * 12 + int(b[5:7]) - int(a[5:7])
     out = []
-    for series in parts_drivers:
+    for series, weight in drivers.items():
         v = vals.get(series, {})
-        best = None
-        for b in v:
-            if b < earliest_end:
-                continue
-            for a in v:
-                if 0 < months_apart(a, b) <= 12:
+        used = set()
+        for _ in range(per_series):
+            best = None
+            for b in v:
+                if months_apart(b, last) >= 12 or b in used:
+                    continue
+                for a in v:
+                    if a in used or not 0 < months_apart(a, b) <= 12:
+                        continue
                     pct = (v[b] / v[a] - 1) * 100
                     if pct <= min_fall and (best is None or pct < best[0]):
                         best = (pct, a, b)
-        if best:
+            if not best:
+                break
             pct, a, b = best
-            out.append({"supplier": None, "part": None, "kind": "index_change", "series": series, "figure": round(pct, 1),
+            used |= {a, b}
+            out.append({"supplier": None, "part": None, "kind": "index_change", "series": series,
+                        "figure": round(pct, 2), "weight": weight or 0.0,
                         "ids": [f"idx:{series}@{a}", f"idx:{series}@{b}"], "checked_by_arena": True,
                         "sentence": f"{names.get(series, series)} changed {pct:+.1f}% from {a} to {b} "
                                     f"(idx:{series}@{a}, idx:{series}@{b})."})
-    return sorted(out, key=lambda c: c["figure"])[:max_claims]
+    return sorted(out, key=lambda c: c["figure"] * (c["weight"] or 0.01))
 
 
 def weak_delivery_claims(claims, sid, bar=90.0):
