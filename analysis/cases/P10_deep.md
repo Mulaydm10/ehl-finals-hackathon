@@ -116,3 +116,16 @@ Every team sits on the same structure (lead 56, 23,400, 24-36 m), one 10-cent st
   - turn 3 accepts its final.
 - **Other cases:** P01, P03, P04, P08, P11, P18 (49 threads) all SAME.
 - The probe JSON's figures are the facts.json values: PPI-C2219 118.9 -> 118.6 = -0.25%; LCI-C 117.6 -> 117.3 = -0.26%; written "-0.3%" (the labour version was verified twice live).
+
+## 9. Live results (local, 2026-10-11 00:05-00:19; record by then = Dhruv v2.34b hidden 673ee890 **0.741 = 30.70 @ 56 d / 36 m**)
+| game | agent | round 1 -> its counter | round 2 -> its final | score |
+|---|---|---|---|---:|
+| 673ee890 (Dhruv) | main v2.34b hidden | 29.57 / 36 m + should-cost + path + OTD + committee sentence -> **31.00** | forecast (shrugged) -> "management approved a further step" **30.70** | **0.741** |
+| a9e2c0e4 | noidea_p10b v1 | same, rubber idx instead of OTD -> 31.50 | labour idx -> 31.30 | 0.694 |
+| 67f3678f | noidea_p10b v2 | **identical to 673e** (should-cost + path + OTD + committee) -> **31.50** | labour idx -> 31.30 | 0.694 |
+| **59c899b9** | **noidea_p10 (this plan)** | 29.89 / 24 m + path + should-cost + rubber idx (all verified) -> 31.50 | **36 m move + labour idx, ask 30.40 -> final 31.10 (-0.40)** | **0.710** |
+- **The round-1 counter is a per-session draw:** the same e-mail drew 31.00 once (673e) and 31.50 in 67f3; 31.50 in 10 of 11 games
+  with should-cost + price path.
+- **Stacking works:** the 36-month move + a taken fact in the same round-2 e-mail cut 0.40 (31.50 -> 31.10), the biggest
+  round-2 step on P10 (the move alone 0.10-0.30, labour alone 0.20).
+- **To beat 0.741:** this plan's round 2 on a low draw (31.00 -> ~30.60 = ~0.75) - the draw is the lottery (~1 in 10).

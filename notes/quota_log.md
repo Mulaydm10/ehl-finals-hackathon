@@ -239,3 +239,4 @@
 | 2026-10-10 23:09 | Parth | P11 | p11_hold timeout first=0d5b 42.77/43.57/44.01 hair-0.08 5e37c67 / scripted | 0.8770 | 8f62abf996ef150f |
 | 2026-10-11 00:06 | Neel | P10 | noidea_p10b (NOIDEA_EXPERIMENTS=hidden; r1 rubber idx instead of OTD) / gpt-6-astra | **0.69** | a9e2c0e41cc1be12 |
 | 2026-10-11 00:08 | Neel | P10 | noidea_p10b v2 (NOIDEA_EXPERIMENTS=hidden; record r1 incl. OTD, r2 labour idx) / gpt-6-astra | **0.69** | 67f3678ff842d9a8 |
+| 2026-10-11 00:18 | Neel | P10 | noidea_p10 (cloud plan: r1 24 m + path + should-cost + rubber idx; r2 36 m move + labour idx) / gpt-6-astra | **0.71** | 59c899b93ba24dec |
