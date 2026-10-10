@@ -69,3 +69,15 @@ rank versions, not to predict arena scores. It ignores arguments, tone and the r
 | **Qwen role fix**: "we" is always the buyer; supplier situation labelled as THEIRS; never reveal targets; drop sentences that do (`BAD_OPENING`) | `src/eval/qwen_bench.py` on 9 openings: 5/9 paragraphs wrote the supplier's restructuring/committee as "ours", one leaked "our target cost" | after the fix: 0/9 role errors, 0 leaks; latency mean 6.5 s, max 8.5 s |
 - Offline eval unchanged at 0.936 / 0.944 (the simulator ignores text), as expected.
 - Qwen still occasionally thanks for a "cost breakdown" it never sent; P03 "we acknowledge your price increase" is soft.
+
+### v1.4: accept on final_offer (after a live failure)
+- **P07 v1.3 live (c5d845883158676c): no deal, 0.12.** The kit calculation worked (best price yet, €5.40 vs €5.50
+  in v1.2; it also stated "our internal cost breakdown… cannot be shared", "material accounts for about … of our cost").
+  But at its `final_offer` our "final tweak" (same price, 90 d instead of 30 d) made it **walk away**.
+- **Fix:** on `final_offer` accept if it keeps the must-haves and beats the alternative (and every other bidder).
+  `final_tweak()` kept but unused. The playbook rule (_common.md §4 "one small final ask") is wrong for the
+  arena: the brief says "final_offer: push further and it may walk" — **Neel: please update the playbook.**
+- Simulator now makes a supplier walk when pushed after final_offer; it still can't reproduce this case
+  (its supplier agrees before reaching final_offer), so offline means are unchanged (0.936 / 0.944).
+- Lesson for testing: offline wins on text/signals need live checks; the simulator only covers price paths.
+- Model comparison: the user ruled out the Antigravity proxy; Claude would need a real API key. Not tested.

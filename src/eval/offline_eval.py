@@ -69,6 +69,13 @@ def simulate(Agent, case, opening, c_open, c_best, r, max_rounds=10):
             c = total_cost(case, sheet, std)
             return max(0.0, min(1.0, (c_open - c) / (c_open - c_best))), "deal", sum(n.values())
         n[sid] += 1
+        if events[-1].get("status") == "final_offer":  # pushing after its last word: it walks (P07 v1.3 live)
+            threads[sid].append({"from": sid, "status": "walked_away", "body": ""})
+            others = [s for s in threads if threads[s][-1].get("status") not in ("walked_away",)]
+            if not others:
+                c_alt = agent.c_alt
+                return (0.0 if c_alt == math.inf else max(0.0, (c_open - c_alt) / (c_open - c_best))), "walked", sum(n.values())
+            continue
         sheets = [complete_offer(case, t["terms"]) for t in msg["term_sheets"]]
         costs = [total_cost(case, t, std) for t in sheets]
         ok = [(c, t) for c, t in zip(costs, sheets) if c >= c_best - 1]

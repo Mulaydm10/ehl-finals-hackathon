@@ -305,12 +305,9 @@ class NoIdeaAgent:
         if status == "final_offer" or moves_left(case, events) <= 1 or k >= PLANNED_ROUNDS + 1:
             if not ok:
                 return walk if self.c_alt < math.inf or len(live) > 1 else accept if sheet_id else walk
-            if status == "final_offer" and sid not in self.final_asked and moves_left(case, events) > 1:
-                # playbooks/_common.md 4: one last small ask on a non-price lever, then accept
-                self.final_asked.add(sid)
-                tweak = self.final_tweak(case, sid, terms)
-                if tweak:
-                    return self.message(case, sid, events, [tweak], k, final=True)
+            # final_offer = its last word: ACCEPT. P07 v1.3 live (c5d845883158676c): one "small" extra ask
+            # (90 instead of 30 payment days at its EUR 5.40) made it walk away -> no deal, 0.12 instead of ~0.73.
+            # The brief warns: "final_offer: push further and it may walk". final_tweak() is kept but unused.
             if c_stand <= best_elsewhere:
                 return accept
         cap = terms.get("unit_price") if sheet_id else None

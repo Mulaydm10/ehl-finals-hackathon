@@ -17,3 +17,6 @@
   number (volume is a fixed term, not on the sheets). **Fixed:** every e-mail now states the binding volume + term.
 - We conceded on a fixed schedule (5.25 → 5.43) while it moved 5.56 → 5.52. **Fixed:** reciprocal
   concession, 8 planned rounds (a round took ~25 s live).
+
+## 2026-10-10 14:45 - playbook fix needed
+- playbooks/_common.md 4 "final_offer: one last small ask on a non-price lever, then accept" made the P07 supplier walk away (c5d845883158676c, 90 d instead of 30 d at its EUR 5.40 final). The agent now accepts on final_offer. Please change the rule to: accept final_offer if it beats the alternative; no further asks.

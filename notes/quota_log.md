@@ -16,3 +16,4 @@
 | 2026-10-10 13:11 | Neel | P18 | probe: open + walk away (exact c_open/c_best) | 0.00 | 3620a05514f2a069 |
 | 2026-10-10 13:29 | Dhruv | P07 | noidea v1 (cost-floor fix) / qwen local | **0.68** | 00ae513af1091e9c |
 | 2026-10-10 14:08 | Dhruv | P07 | noidea v1.2 (playbooks, calibrated anchor) / qwen local | **0.69** | 33e48d99ea640a6a |
+| 2026-10-10 14:38 | Dhruv | P07 | noidea v1.3 (kit calc; final extra ask) / qwen local | **0.12 no deal** (walked after final push; final_offer was 5.40) | c5d845883158676c |
