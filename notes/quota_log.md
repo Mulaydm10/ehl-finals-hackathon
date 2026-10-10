@@ -21,3 +21,5 @@
 | 2026-10-10 14:46 | Dhruv | P07 | noidea v1.4 / gpt-6-astra (OpenAI) | **0.70** (same as Qwen) | c819aac1445eb5d0 |
 | 2026-10-10 14:51 | Dhruv | P07 | noidea v1.5 (36 m tie-break) / qwen local | **0.65** (36 m priced higher) | 0f754b1368387b8e |
 | 2026-10-10 14:55 | Dhruv | P07 | noidea v1.6 (forecast evidence, falling indices only) / qwen local | **0.70** | d67da0a2d2360134 |
+| 2026-10-10 15:07 | Dhruv | P10 | noidea v1.7 / gpt-6-astra | 0.46 (asked lead 35, final 35.00 accepted) | 675fc6b9c1c8c291 |
+| 2026-10-10 15:11 | Dhruv | P10 | noidea v1.8 / gpt-6-astra | **0.65** (its alternative 31.90 @ 56 agreed) | 2d91214cf7693eff |

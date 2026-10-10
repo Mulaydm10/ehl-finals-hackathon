@@ -148,10 +148,9 @@ class NoIdeaAgent:
                 k = c["series"]
                 if k not in best or c["figure"] < best[k]["figure"]:
                     best[k] = c
-        for c in sorted(best.values(), key=lambda c: (c["figure"] - ask_pct) * (c.get("weight") or 0)):
-            if c["figure"] > 0:  # a rise alone "confirms their case" (P07 live): set it against the ask
-                c = {**c, "sentence": c["sentence"].rstrip(".") + f", well below the {ask_pct:+.1f}% you ask for."}
-            out.append(c)
+        # only indices that FELL or stayed flat: a rise "confirms their case: that driver rose" even when
+        # framed as "well below the ask" (P07 v1.5 and P10 live)
+        out += [c for c in sorted(best.values(), key=lambda c: c["figure"] * (c.get("weight") or 0)) if c["figure"] <= 0]
         out += [c for c in mine if c["kind"] == "should_cost" and c["part"] in parts
                 and c.get("price_vs_should_cost_pct", -1) > 3]
         # flat price history is the argument when there's no increase to fight - but not for kits:
@@ -259,9 +258,21 @@ class NoIdeaAgent:
             if cap_price and t["unit_price"] > cap_price:  # never above its standing price (P01, score 0)
                 continue
             ranked.append((total_cost(case, t, s["std"], s["est"]), t))
-        # v1.5 preferred the longer contract on cost ties; P07 live (0f754b1368387b8e) priced 36 m HIGHER
-        # (opened 5.60 vs 5.56, final 5.56 vs 5.49): reverted to plain cost order
-        ranked.sort(key=lambda x: x[0])
+        # on cost ties take what is EASIEST for the supplier: the option closest to its own opening terms.
+        # P10 live (675fc6b9c1c8c291): lead 35 instead of our need 42 (same cost for us) was "technically
+        # unfeasible" -> final_offer EUR 35.00 in round 1; P07 live: 36 m (vs its 24 m) was priced higher
+        opening = s["open_terms"]
+        def strain(t):
+            out = 0.0
+            for f in case["negotiable"]:
+                o, v = opening.get(f), t.get(f)
+                if f == "unit_price" or o is None or v is None or not isinstance(v, (int, float)):
+                    continue
+                if f == "lead_time_days":  # faster than we need is pure strain; slower than need costs us anyway
+                    v = max(v, 0)
+                out += abs(v - o) / max(abs(o), 1)
+            return out
+        ranked.sort(key=lambda x: (round(x[0], 0), strain(x[1])))
         out = []
         # the supplier may pick ANY sheet we send: only offer ones we'd be glad to have accepted
         # (offline eval P10: a 12-month sheet at equal supplier value cost us +33% and got picked)
@@ -330,6 +341,13 @@ class NoIdeaAgent:
         if status == "final_offer" or moves_left(case, events) <= 1 or k >= PLANNED_ROUNDS + 1:
             if not ok:
                 return walk if self.c_alt < math.inf or len(live) > 1 else accept if sheet_id else walk
+            # its final message may carry a prose alternative that is cheaper for us (P10 live: "Alternatively,
+            # with Lieferzeit ... days: EUR ..."): propose exactly that once - it is its own offer, not a push
+            if status == "final_offer" and sid not in self.final_asked and moves_left(case, events) > 1:
+                alt_p = self.prose_alternative(case, sid, events)
+                if alt_p and ok and alt_p[0] < c_stand - 1:
+                    self.final_asked.add(sid)
+                    return self.message(case, sid, events, [alt_p[1]], k, final=True)
             # final_offer = its last word: ACCEPT. P07 v1.3 live (c5d845883158676c): one "small" extra ask
             # (90 instead of 30 payment days at its EUR 5.40) made it walk away -> no deal, 0.12 instead of ~0.73.
             # The brief warns: "final_offer: push further and it may walk". final_tweak() is kept but unused.
@@ -392,8 +410,18 @@ class NoIdeaAgent:
                 t["effective_date"] = iso.group(0)
             elif word and word.group(2).lower() in self.MONTHS:
                 t["effective_date"] = f"{word.group(3)}-{self.MONTHS[word.group(2).lower()]:02d}-{int(word.group(1)):02d}"
-            if (days := re.search(r"(\d{1,3})\s*(?:-\s*)?(?:days|Tage)", sent)):
-                t["payment_days"] = int(days.group(1))
+            # "Lieferzeit / lead time / delivery N days" is a lead time; "Zahlungsziel / payment N days" is payment
+            # (P10 live: "Alternatively, with Lieferzeit … days: EUR …")
+            lead = re.search(r"(?i)(?:lieferzeit|lead[ -]?time|deliver\w*)\D{0,20}?(\d{1,3})\s*(?:days|tage)", sent)
+            pay = re.search(r"(?i)(?:zahlungsziel|payment\w*|net)\D{0,20}?(\d{1,3})\s*(?:days|tage)|(\d{1,3})\s*(?:days|tage)\s*(?:net|netto)", sent)
+            if lead and "lead_time_days" in case["negotiable"]:
+                t["lead_time_days"] = int(lead.group(1))
+            if pay and "payment_days" in case["negotiable"]:
+                t["payment_days"] = int(pay.group(1) or pay.group(2))
+            if not lead and not pay and (days := re.search(r"(\d{1,3})\s*(?:-\s*)?(?:days|Tage)", sent)):
+                f = "payment_days" if "payment_days" in case["negotiable"] else "lead_time_days"
+                if f in case["negotiable"]:
+                    t[f] = int(days.group(1))
             t = complete_offer(case, t)
             if must_haves_ok(case, t, s["std"]):
                 c = total_cost(case, t, s["std"], s["est"])
@@ -504,6 +532,6 @@ class NoIdeaAgent:
             lines.append("We have also put our invoice processing in order and will pay reliably on the agreed day.")
         if k == 0 and case["type"] == "quality":
             lines.append("Please send us your 8D report and a binding ppm commitment.")
-        ask = ("As our final step, we can accept your offer with this one change (attached)." if final else
+        ask = ("We accept your alternative as you proposed it; it is attached as a term sheet for your confirmation." if final else
                f"On this basis we propose the attached term sheets ({offers}). Please let us know which option works best for you.")
         return (f"Dear {name} team,\n\n{opening}\n\n" + " ".join(lines) + f"\n\n{ask}\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke")

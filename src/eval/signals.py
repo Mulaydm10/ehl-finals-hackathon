@@ -57,6 +57,8 @@ SIGNALS = {
     "data_supports_supplier": (r"figures confirm our case|that driver rose", "never cite an index that rose (it supports its price)"),
     "asks_volume_evidence": (r"documentation supporting|which figures is that based on|send us the data", "cite demand forecasts (fc:) as volume evidence"),
     "needs_more_volume": (r"significantly higher volume commitment|higher volume would", "volume is its price lever; offer more only if the need allows"),
+    "lead_time_premium": (r"lead time .* (unfeasible|incompatible)|technically unfeasible|significant premium|our lieferzeit is",
+                          "don't ask for a faster lead than we need; price the supplier's lead-time premium"),
     "boilerplate": (r"thank you for your enquiry|find our angebot|mit freundlichen|dear sir or madam|do not hesitate|any questions|look forward|inside sales|export manager|zahlungsziel",
                     "ignore"),
 }

@@ -151,3 +151,26 @@ C_open/C_best). The arena's suppliers are hidden; Tacto's `arena-sim` is only a 
   words (template opening instead). Re-run P10 with Astra: all 3 rounds English.
 - Both offline stages are now clean for P05 / P10 / P11 → ready for stage 3 (live).
 - Known offline weak spot: **P05 (RFQ) 0.76**; round-robin + rival citing, no auction mechanics yet (task D).
+
+## P10 live (capacity, secure_supply, gpt-6-astra)
+| version | score | session | what happened |
+|---|---:|---|---|
+| v1.7 | 0.46 | 675fc6b9c1c8c291 | we asked lead **35** (need is 42, same cost for us) → "technically unfeasible" → final_offer **€35.00 @ 35** in round 1, accepted. Its prose "Alternatively, with Lieferzeit … days: €…" ignored. "Your figures confirm our case: that driver rose" again (labour +1.7%, rubber +3.2%, even framed "well below the +7.7% you ask") |
+| v1.8 | **0.65** | 2d91214cf7693eff | lead **42** → final_offer **€33.80 @ 42** (−€1.20); its prose alternative **€31.90 @ 56** proposed back verbatim → `agreed` → accepted. C €1,541,808 (price 1,492,920 + late delivery 33,600 + payment 9,953 + quality 5,335) |
+
+### v1.8: learnings from P10 applied (offline Qwen + Astra clean, then live 0.46 → 0.65)
+- **Supplier-friendly tie-break:** on equal cost to us, pick the option closest to the supplier's own opening terms
+  (lead = our need, not faster; contract length near its offer). Replaces v1.5's "longer contract" rule.
+- **Never cite an index that rose** (not even "well below your ask"): only indices that fell or stayed flat.
+- **final_offer + a cheaper prose alternative → propose exactly that alternative once** ("We accept your
+  alternative as you proposed it"), else accept the final. Live: it `agreed` to its own alternative.
+- Prose parser: "Lieferzeit / lead time / delivery N days" = lead time, "Zahlungsziel / payment / net N days" = payment.
+- Supplier reasons (v1.8): "A reduction in lead time to … days is incompatible with our current capacity
+  utilization unless a significant premium is applied"; "Our Lieferzeit is … days" (its standard ≈ 54–56);
+  forecast + delivery-record data "holds, but does not change our calculation"; should-cost "took it into account";
+  "Our price reflects our costs; our calculation stays internal" (closed book).
+- **Next idea (not done):** the supplier prices lead time below its standard steeply (€33.80 @ 42 vs €31.90 @ 56
+  = €1.90/unit for 14 days). Our supplier model ignores that (`extra` = 0), so round 1 never offers a longer lead
+  at a lower price. Model a lead-time premium in `supplier_value` (`extra` ≈ −k · (std_lead − lead) · price), so
+  the optimizer sees the real trade. Capacity suppliers go final in round 1, so **round 1 must already be the
+  right structure.**
