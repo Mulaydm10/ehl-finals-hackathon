@@ -45,7 +45,7 @@ R2_STEP = {"free": 0.16, "db0": 0.07, "db5": 0.07}  # db5 asks: 0 (1f27, hold) /
 # path (low: c387 0.210, cae4 0.220, 6912 0.217, a4b9 0.210, a43d 0.199; high: 1363 0.258, db7d 0.281). Round 2 takes 0.16 after
 # a ~16% step of ours, 0.11-0.12 after a 30% step (6912 at 90 d, a4b9 at 14 d: the step, not the payment term), 0.16 on the
 # high draw; a deferral round takes half of what is left, the final the rest. XSELL: an untested floor shift (cross-sell).
-BUDGET = {"low": 0.212, "high": 0.27}
+BUDGET = {"low": 0.209, "high": 0.27}  # 13 games (task 14): low c387 .210 cae4 .220 6912 .217 a4b9 .210 a43d .199 ad04 .200
 R2_BIG_STEP_CUT = 0.115  # low draw, our round-2 step >= 25% of the gap
 FINAL_STEP, DEFER_STEP, DEFER_BELOW, FINAL_AT = 0.05, 0.055, 0.3, 3  # deferral rounds: db7d 0.06/0.06, 6912fd89 0.049/0.049
 HOUSE = 0.752
@@ -76,9 +76,9 @@ def plain_value(t):
     return t["unit_price"] * f(t.get("payment_days") or 30)
 
 
-def sheet(v, days, db):
+def sheet(v, days, db, months=24):
     return {"unit_price": round(v / f(days) + DB_PT * db + 1e-9, 2), "payment_days": days, "index_clause": clause(db),
-            "contract_months": 24}
+            "contract_months": months}
 
 
 def score(t):
@@ -86,8 +86,9 @@ def score(t):
 
 
 class Donautal:
-    def __init__(self, draw="low", max_defer=1, xsell=0.0):
+    def __init__(self, draw="low", max_defer=1, xsell=0.0, term36=0.0):
         self.draw, self.max_defer, self.xsell, self.free, self.v1, self.xs = draw, max_defer, xsell, True, None, False
+        self.term36, self.months = term36, 24  # term36: untested round-1 value shift for a 36-month ask (task 14)
         self.v, self.n, self.defers, self.final, self.ours = None, 0, 0, False, []
         self.its_steps, self.last_prim, self.head_days = [], None, None
 
@@ -102,9 +103,10 @@ class Donautal:
         first = max((t for t in sheets if value(t) >= best - 0.003), key=lambda t: t["payment_days"])
         if self.n == 1:
             days = self.head_days = first["payment_days"]
-            h = HEADLINE[self.draw]
+            self.months = 36 if first.get("contract_months") == 36 else 24
+            h = round(HEADLINE[self.draw] - (self.term36 if self.months == 36 else 0), 2)
             self.v = self.v1 = h * f(days)
-            prim = {"unit_price": h, "payment_days": days, "index_clause": clause(0), "contract_months": 24}
+            prim = {"unit_price": h, "payment_days": days, "index_clause": clause(0), "contract_months": self.months}
             status, step = "open", None
         else:
             db = db_of(first)
@@ -132,7 +134,7 @@ class Donautal:
             self.its_steps.append(step)
             self.v -= step
             days = first["payment_days"]
-            prim = sheet(self.v, days, 0 if db is None else (5 if db >= 2.5 else 0))
+            prim = sheet(self.v, days, 0 if db is None else (5 if db >= 2.5 else 0), self.months)
             if step == 0 and self.last_prim:  # a hold keeps its standing sheet (1f27)
                 prim = self.last_prim
             status = "final_offer" if self.final else "open"
@@ -143,7 +145,7 @@ class Donautal:
             self.ours.append(first)
             return "agreed", t, None, "We agree to your terms."
         alt_db = 5 if db_of(prim) == 0 else 0
-        alt = sheet(self.v, prim["payment_days"] if self.n > 1 else 14, alt_db) if self.n > 1 else \
+        alt = sheet(self.v, prim["payment_days"] if self.n > 1 else 14, alt_db, self.months) if self.n > 1 else \
             {**prim, "unit_price": round(prim["unit_price"] + (0.04 if prim["payment_days"] == 90 else 0.08), 2),
              "payment_days": 14, "index_clause": clause(0 if self.draw == "high" else 5)}
         self.ours.append(first)
@@ -157,7 +159,7 @@ class Donautal:
         else:
             lines.append("We have reviewed your offer and can adjust our Angebot as follows.")
         lines.append(f"Our terms: a price of €{prim['unit_price']:.2f} per unit, Zahlungsziel {prim['payment_days']} days net, "
-                     "a contract term of 24 months, a Preisgleitklausel on AS-14404.")
+                     f"a contract term of {prim.get('contract_months', 24)} months, a Preisgleitklausel on AS-14404.")
         if any(r.startswith("idx:AS-14404") for r in refs):
             lines.append("That is not our reality: our AS-14404 is covered at fixed prices until March 2027. "
                          "It does not change our calculation.")
@@ -181,10 +183,10 @@ def load(path):
     return mod.NoIdeaAgent
 
 
-def run(Agent, draw="low", max_defer=1, verbose=True, xsell=0.0):
+def run(Agent, draw="low", max_defer=1, verbose=True, xsell=0.0, term36=0.0):
     threads = {sid: [dict(m) for m in ms] for sid, ms in PROBE["threads"].items()}
     sid = next(iter(threads))
-    events, sup, agent, log = threads[sid], Donautal(draw, max_defer, xsell), Agent(None), []
+    events, sup, agent, log = threads[sid], Donautal(draw, max_defer, xsell, term36), Agent(None), []
     for n in range(1, 11):
         d = agent.decide(CASE, threads)
         msg = d["message"]
