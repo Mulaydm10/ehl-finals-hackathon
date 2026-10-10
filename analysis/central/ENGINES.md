@@ -1,4 +1,4 @@
-STATUS: tasks 3+4 DONE - 2026-10-10 evening, cloud session, offline only. Task 5 (REGRESSION.md) next.
+STATUS: tasks 3, 4, 5 DONE - 2026-10-10 evening, cloud session, offline only (task 5: analysis/central/REGRESSION.md).
 
 # Supplier engines of the 10 hosted practice cases
 
