@@ -593,3 +593,5 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
   (70210 final €31.50). The v2.15 RFQ fixes work.
 - P02 v2.15 again ended on its 30-day final (€369.45 @ 30 d) - the supplier itself switched its primary to 30 d; analyse why
   it switches in some games (v2.3/v2.11 it stayed on 90 d).
+
+- 2026-10-10 ~18:10 (Dhruv/Claude): merged Neel P03 0.936 (central.py PROVEN take-rate) + fixed rank tie (proven kinds by own take share, then prior; P18 round-1 test green again); merged Parth E2 results. 37 tests pass, offline mean 0.944.
