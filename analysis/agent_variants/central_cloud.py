@@ -148,6 +148,13 @@ def quality_notification_claims(case, facts, sid):
                  and v.get("part") in parts and (v.get("date") or "") > floor)
     if not qns:
         return []
+    # ONE part, at most 8 IDs (newest first), like the 2-8 order lines api.md allows: live P07 (Parth, 79b7b274b6a77470,
+    # 55db9b3de85aa78d) - 19 QN IDs over the kit's parts in one claim -> the arena answered HTTP 500 four times and the
+    # agent died mid-game (abandoned case = no deal)
+    by_part = {}
+    for k in qns:
+        by_part.setdefault(facts[k]["part"], []).append(k)
+    qns = sorted(max(by_part.values(), key=len), key=lambda k: facts[k].get("date") or "", reverse=True)[:8]
     mean = sum(facts[k]["ppm"] for k in qns) / len(qns)
     return [{"supplier": sid, "part": facts[qns[0]]["part"], "kind": "quality_notification", "ids": qns,
              "figure": round(mean), "keep_alive": True, "checked_by_arena": True,
