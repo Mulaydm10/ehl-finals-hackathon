@@ -146,6 +146,8 @@ class NoIdeaAgent:
                              "args": self.rank_args(case, sid, ask_pct),
                              "kit": self.kit_calc(case, sid) if case["type"] == "bundling" else None}
             self.sup[sid]["k"] = self.prior_k(case, sid)
+            body = next((m.get("body") or "" for m in events if m.get("from") != "buyer"), "")
+            self.sup[sid]["story"] = self.price_story(case, sid, body)
             log.info("prep %s: ask %+.1f%%, justified %+.1f%%, full_cost~%.2f, cash_rate %.2f, motives %s",
                      sid, ask_pct, justified, full_cost, rate, list(motives))
 
@@ -177,8 +179,11 @@ class NoIdeaAgent:
                 and c.get("price_vs_should_cost_pct", -1) > 3]
         # flat price history is the argument when there's no increase to fight - but not for kits:
         # P07 live, part-level history "does not change our calculation" for a bundle (kit_calc instead)
-        if ask_pct <= 0 and case["type"] != "bundling":
-            out += [c for c in mine if c["kind"] == "po_prices" and c["part"] in parts]
+        # ... and when the price already jumped (P18: an index clause took it 5.26 -> 5.84 in July, +11%,
+        # more than the 12-month driver change): the history shows the rise is already paid for
+        pos =[c for c in mine if c["kind"] == "po_prices" and c["part"] in parts]
+        if case["type"] != "bundling" and (ask_pct <= 0 or any(self.po_jump(c) >= 3.0 for c in pos)):
+            out += pos
         if case["type"] in ("capacity", "price_increase"):
             out += [c for c in mine if c["kind"] == "scorecard_otd" and (c["figure"] or 100) < 85]
         out += self.forecast_args(case)
@@ -188,6 +193,47 @@ class NoIdeaAgent:
                 seen.add(c["sentence"])
                 ranked.append(c)
         return ranked
+
+    @staticmethod
+    def po_jump(claim):
+        """% from the first to the last price in a po_prices sentence ("... were at 5.26, 5.84 per 1 ...")."""
+        m = re.search(r"were at ([\d.]+(?:, [\d.]+)*) per", claim["sentence"]) if claim else None
+        prices = [float(x) for x in m.group(1).split(", ")] if m else []
+        return (prices[-1] / prices[0] - 1) * 100 if len(prices) > 1 and prices[0] else 0.0
+
+    def price_story(self, case, sid, body):
+        """Round-1 prose built from the supplier's OWN statements and our contract, all figures from code.
+        P18: its quote says PPI-C2431 "is 38 % of our cost", but the current contract's index clause passes
+        PPI-C2431 on at 80 % (ctr:4600070740#3.2) - that clause already took the price 5.26 -> 5.84."""
+        s, d, out = self.sup[sid], self.sup[sid]["dossier"], []
+        shares = re.findall(r"([A-Z][A-Z0-9-]+) (?:rose|fell|changed) [-\d.]+ % in \w+ months "
+                            r"and is (\d+) % of our cost", body)
+        stated = {k: float(v) for k, v in shares}
+        parts = case["parts"]
+        pos = [c for c in self.claims if c["supplier"] == sid and c["kind"] == "po_prices" and c["part"] in parts]
+        jump = max((self.po_jump(c) for c in pos), default=0.0)
+        if s["ask_pct"] > 0:
+            for cl in (d.get("contract") or {}).get("clauses", []):
+                share, series = float(cl.get("material_share") or 0) * 100, cl.get("series")
+                if cl.get("type") == "index" and series in stated and share > stated[series] + 5:
+                    tail = f"; that clause has already raised our price by {jump:.0f}% this year." if jump >= 3 else "."
+                    out.append(f"Our current contract passes {series} on at {share:.0f}% weight ({cl['id']}), "
+                               f"while your quote states it is {stated[series]:.0f}% of your cost{tail}")
+        # the market: a recent, cheaper quote from another supplier, in prose only (past quotes may not be
+        # checked as data of this case) and never in RFQs (there the rival's live offer is cited) or when
+        # the goal protects the supplier's health
+        if case["type"] != "rfq" and case["buyer"]["category_goal"] not in ("stabilise", "secure_supply"):
+            cap = min(s["open_terms"].get("unit_price") or math.inf, s["cur"] or math.inf)
+            recent = [c["figure"] for c in self.claims
+                      if c["supplier"] == sid and c["kind"] == "rival_quote_context" and c["part"] in parts
+                      and c.get("figure") and c["figure"] < cap
+                      and (m := re.search(r"(\d{4}-\d{2}-\d{2})\)", c["sentence"])) and m.group(1) >= "2026-07-01"]
+            if recent:
+                out.append(f"Other suppliers currently quote this part at about EUR {min(recent):.2f}.")
+        if "approval_ladder" in d.get("motives", {}):
+            out.append("We understand a change of this size needs your pricing committee; "
+                       "please put this proposal to them.")
+        return out
 
     def kit_calc(self, case, sid):
         """Bundling: the kit priced at the supplier's OWN current prices, plus today's best price for the
@@ -657,12 +703,29 @@ class NoIdeaAgent:
             return best
         return None
 
+    @staticmethod
+    def plain(field, v):
+        """A term in words for the e-mail body ("EUR 4.77 per unit", "90 days payment"); the term sheet binds."""
+        if field == "unit_price":
+            return f"EUR {v:.2f} per unit"
+        if field == "index_clause":
+            return (f"{v['series']} index clause ({v['material_share']:.0%} share, {v['deadband_pct']:g}% deadband)"
+                    if v else "no index clause")
+        if field == "chargeback_eur_per_complaint":
+            return f"EUR {v:g} per complaint"
+        words = {"payment_days": "{} days payment", "contract_months": "{} months",
+                 "lead_time_days": "{} days lead time", "volume_per_year": "{:,.0f} units a year",
+                 "ppm_commitment": "{} ppm", "tooling_eur": "EUR {:,.0f} tooling", "effective_date": "from {}",
+                 "incoterm": "{}"}
+        return words.get(field, field + " {}").format(v) if v is not None else ""
+
     def write(self, case, sid, events, sheets, k, args, rival, final, given_opening=None):
         s = self.sup[sid]
         d = s["dossier"]
         name = d.get("name", "your company")
         motives = d.get("motives", {})
-        offers = "; ".join(", ".join(f"{f} {v}" for f, v in t.items() if f in case["negotiable"]) for t in sheets)
+        offers = "; ".join(", ".join(x for f, v in t.items() if f in case["negotiable"] and (x := self.plain(f, v)))
+                           for t in sheets)
         opening = given_opening or "Thank you for your message."
         if self.complete and not given_opening:
             levers = "; ".join(f"{m}: {v['lever']}" for m, v in motives.items())
@@ -708,6 +771,8 @@ class NoIdeaAgent:
         if rival:
             lines.append(f"We have an offer at EUR {rival[1]:.2f} per unit ({rival[0]}).")
         lines += args
+        if k == 0:
+            lines += s.get("story", [])
         if k == 0 and "open_book" in motives:
             what = "the kit" if case["type"] == "bundling" else "this part"
             lines.append(f"Could you share your cost breakdown for {what}, so we can understand the drivers together?")

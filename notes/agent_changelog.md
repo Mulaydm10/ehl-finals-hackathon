@@ -235,3 +235,13 @@ Code still does all maths and safety checks; at runtime the agent now reads, lea
   arguments, model (Qwen/Astra) or dynamic reading moved it below €31.90.
 - Untested: a small first ask (≤ 3% below its opening) to avoid the round-1 final; the cross-game data does not
   support the approval-ladder idea, so it's a long shot. **P10 parked at 0.65; next: untested case types (P05, P11, …).**
+
+### v2.3 (Parth, offline only, 0 games): P18 round-1 arguments + plain-word sheets
+| change | evidence | offline check |
+|---|---|---|
+| `po_prices` also cited when the price **jumped ≥ 3%** in the PO history, not only when there's no increase | P18: July index step 5.26 → 5.84 (+11%) was never cited (ask +4.5%) | P18 e-mail now cites it |
+| `price_story()`: if the current contract's index clause passes a series on at more than the cost share **the supplier itself states** in its quote ("… is 38 % of our cost"), say so with the clause ID | P18 `ctr:4600070740#3.2` 80% vs 38%; 5 of 10 practice openings state cost shares | fires on P18 only |
+| market line in prose: cheapest **recent** (≥ 2026-07) rival quote below the standing price; not in RFQs / stabilise / secure_supply | P18: €5.45 (70710, `quote:7300008`); prose only, past quotes may not be checked as data of this case | fires on P18 only |
+| `approval_ladder` motive → round 1: "please put this proposal to your pricing committee" | P18 M3, P02, P03 dossiers | P02, P03, P18 |
+| term sheets in plain words ("EUR 4.77 per unit, 90 days payment, 24 months, no index clause") instead of field names | every e-mail printed "index_clause None" | all cases |
+- Offline unchanged: mean **0.937 / 0.944**, 31 tests pass, no new lint errors. **Needs one live P18 game** (plan: analysis/cases/P18.md §8).
