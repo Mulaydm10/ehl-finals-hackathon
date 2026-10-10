@@ -36,9 +36,10 @@ def probe(c, cid):
            "result": {k: result.get(k) for k in ("c_open", "c_deal", "c_alt", "c_best", "score")}}
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / f"{cid.split(':')[1]}.json").write_text(json.dumps(rec, indent=1, ensure_ascii=False), encoding="utf-8")
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    now = datetime.now().strftime("%Y-%m-%d %H:%M")  # local time (CEST), as in the log header
     with open(LOG, "a", encoding="utf-8") as f:
-        f.write(f"| {now} | Neel | {cid} | {result.get('score')} | {sid} | probe: open + walk away for c_open/c_best |\n")
+        f.write(f"| {now} | Neel | {cid.split(':')[1]} | probe: open + walk away (exact c_open/c_best) "
+                f"| {result.get('score') or 0:.2f} | {sid} |\n")
     print(cid, sid, rec["result"], "remaining", c.practice_remaining)
     return rec
 

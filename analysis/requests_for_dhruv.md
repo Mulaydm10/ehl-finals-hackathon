@@ -20,3 +20,7 @@
    P07's alternative (today's terms) beats the opening (walking away = 0.12).
 5. **Exact C_open / C_best for all 10 hosted cases** are in `analysis/cases/openings/*.json`
    (`result`). The agent's prepare step can load them for practice runs (score of any sheet before sending).
+6. **Playbooks (N3) are in `playbooks/`**: one per arena `type` plus `playbooks/_common.md` (signals,
+   claim rules, motive → lever table, closing rules). Please **prepend `_common.md`** to
+   `playbooks/<type>.md` in the prompt (together ≤ ~160 lines). For a hidden case whose type mixes
+   with an unfamiliar goal, `_common.md` §1 (lever ranking by total_cost) is the part that generalises.
