@@ -243,6 +243,12 @@ class Game:
             ]
             for i, (oid, price_r) in enumerate(rivals):
                 lines.append(f"We have {'another' if i else 'an'} offer at EUR {price_r:.2f} per piece ({oid}).")
+            if self.args.facts:  # two more checked facts (3 claims per message at most, with one rival)
+                lines.append("We noted: Drehteile Fuchsreiter GmbH looks for new customers (news:20260309-03).")
+                lines.append(
+                    "The 1.4404 alloy surcharge changed -8.47% from 2024-11 to 2025-10 "
+                    "(idx:AS-14404@2024-11, idx:AS-14404@2025-10)."
+                )
         else:
             lines = ["thank you for your reply. We move again."]
         lines.append(f"We propose EUR {price:.2f} per piece, 14 days net, 28 days lead time (term sheet attached).")
@@ -314,7 +320,9 @@ class Game:
         rivals = self.rival_offers()[: a.rivals]
         reply = self.send(TARGET, self.target_ask(a.ask2, 0, rivals))
         self.note(
-            sid=TARGET, k="ask1", do=f"ask {a.ask2}@14/28 + cite {rivals} + late-pay + shift + schedule"
+            sid=TARGET,
+            k="ask1",
+            do=f"ask {a.ask2}@14/28 + cite {rivals}{' + news + AS-14404' if a.facts else ''} + late-pay + shift",
         )
         show(f"{TARGET} reply", reply)
         if "result" in reply:
@@ -354,6 +362,9 @@ def main():
     ap.add_argument("--ask3", type=float, default=26.30, help="the one move after its 'clarify internally'")
     ap.add_argument("--ask4", type=float, default=26.80, help="only if it is still open above 27.00 after ask3")
     ap.add_argument("--rivals", type=int, default=1, help="rival bidders' offers cited in the first ask (1-2)")
+    ap.add_argument(
+        "--facts", action="store_true", help="first ask also cites its free-capacity news + the 1.4404 surcharge fall"
+    )
     ap.add_argument("--reserve", type=int, default=40)
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
