@@ -860,3 +860,5 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 - What made it work: no empty round (v2.21c), the probe / floor pair in the same e-mail as the pending facts (v2.21b), the
   hair-under-the-floor price (v2.19b), memory saying its price is hard at 45.00 (v2.20), the person's currency (v2.18).
 - P11 history: 0.67 (v2.7) -> 0.79 (v2.16) -> 0.8019 (v2.21c).
+
+### v2.21d (offline): two-step floor ask for 0.81 - round 1 at the floor: [44.90 (0.810), 45.00 + EUR 300 chargeback (0.809)]; if refused: 44.95 alone (0.802, agreed in eac20911). Replay + simulated refusal OK; tests 50, offline 0.930/0.925.

@@ -40,6 +40,7 @@ CLOSE_GAP = 0.015     # ...only when our last ask is within 1.5% of its standing
 STALL_DROP = 1 / 3    # it stalled: its last move (share of the gap) < 1/3 of the previous one...
 STALL_MIN = 0.02      # ...or < 2% of the gap
 MESO_BAND = 0.03  # round-1 MESOs: other structures within 3% of our best cost
+HAIR_DEEP = 0.0022  # first floor round (P11 45.00 -> 44.90 = 0.810; refused once in 7285, try it with the chargeback sheet)
 HAIR = 0.001  # one ask this far under a floor the supplier NAMED (P11: 45.00 -> 44.95)
 GRID_LADDER = (0.5, 0.25, 0.1, 0.04)
 GRID_LADDER_LOW = (0.8, 0.6, 0.4, 0.2)  # when it keeps its limits internal (P11 high draws: agreed 45.10-45.25)  # probe j asks its price - grid x GRID_LADDER[j] (P11 low draw: 44.75, 44.875, 44.95, 44.98)
@@ -1085,15 +1086,24 @@ class NoIdeaAgent:
         mlad = self.memory_ladder(case, sid, terms) if probing and g else None
         hard = bool(mlad) and len(mlad) == 1  # memory: it refused asks right up to a hair under this standing price
         at_floor = probing and g and holding and (s.get("probes", 0) >= 1 or s.get("hair_tried") or hard)
+        tries = s.get("floor_tries", 0)
+        if at_floor and tries == 1 and status == "open":
+            # 2nd floor round: it refused the deeper hair -> the shallow hair alone (P11 eac20911 agreed 44.95 = 0.8019)
+            t_h = complete_offer(case, {**terms, "unit_price": round(int(terms["unit_price"] * (1 - HAIR) * 100) / 100, 2)})
+            if must_haves_ok(case, t_h, s["std"]):
+                s["floor_tries"], near_final, close_now = 2, False, True
+                sheets = [(total_cost(case, t_h, s["std"], s["est"]), t_h)]
+                target = supplier_value(case, t_h, s["est"]) + self.premium(sid, t_h)
+                log.info("%s: floor round 2 - hair %.2f", sid, t_h["unit_price"])
         if at_floor and "chargeback_eur_per_complaint" in case["negotiable"] and not s.get("cb_tried") \
                 and (terms.get("chargeback_eur_per_complaint") or 0) == 0 and terms.get("ppm_commitment") and opts \
                 and "no_floor_chargeback" not in EXPERIMENTS:
             cb = next((o for o in sorted(opts) if o >= 300), max(opts))
             t_cb = complete_offer(case, {**terms, "chargeback_eur_per_complaint": cb})
-            t_h = complete_offer(case, {**terms, "unit_price": round(int(terms["unit_price"] * (1 - HAIR) * 100) / 100, 2)})
+            t_h = complete_offer(case, {**terms, "unit_price": round(int(terms["unit_price"] * (1 - HAIR_DEEP) * 100) / 100, 2)})
             pair = [x for x in (t_cb, t_h) if must_haves_ok(case, x, s["std"])]
             if pair and total_cost(case, t_cb, s["std"], s["est"]) < c_stand:
-                s["cb_tried"], s["probes"], s["send_all"] = cb, GRID_PROBES, True
+                s["cb_tried"], s["probes"], s["send_all"], s["floor_tries"] = cb, GRID_PROBES, True, 1
                 near_final, close_now = False, True
                 sheets = sorted(((total_cost(case, x, s["std"], s["est"]), x) for x in pair), key=lambda z: z[0])
                 target = supplier_value(case, sheets[0][1], s["est"]) + self.premium(sid, sheets[0][1])
