@@ -393,3 +393,13 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
   15 real finals: +0.031 mean vs taking the first sheet. Tests 32 passed; offline 0.939 / 0.947.
 - Also reviewed an external negotiation-agent playbook → `docs/PLAYBOOK_REVIEW.md` (main gaps: overfitting to the 9,
   growing concession steps, no injection test, no leave-one-out / synthetic suppliers).
+
+## P05 (RFQ) live 0.39 - root cause found (fix pending, next task)
+- Live f8604d43d3fbf92f: we accepted 70240 at **€32.00 / lead 42** while 70250 had **agreed** to our €30.83 / lead 28 and
+  70210 had just sent a **final €30.00 / lead 28** - the most expensive of three bids.
+- Timeline (log): 70210 final_offer 16:38:02 → round-robin turned to 70240 → `accept`. Offline replay of that state
+  (`src/eval/debug_rfq.py`) says "send", so the live path was a different branch.
+- Suspect: `decide()` → `if not sheets: return accept if ok else walk` accepts **without comparing other bidders**
+  (sheets can be empty when model-stated limits filter every combination). Also: on an RFQ the agent should, once a
+  bidder says `agreed`/`final_offer` with the lowest C, accept THAT bidder first, not whoever's turn it is.
+- Next: fix both, then the RFQ auction tactics (cite the leader's offer to the others, step targets down together).
