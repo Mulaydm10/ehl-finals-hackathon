@@ -109,3 +109,90 @@ All of it used: **EUR 431.58 @ 90 d = 0.936**, above the house (0.925). 0.95 nee
 data kind is left that this supplier takes into account. General rule for any supplier: **cite every verified, honest
 fact it takes, one new kind (or index series) per message, from round 1, and keep the rounds going while data is
 left**; it is the only thing a code-priced supplier rewards.
+
+## 7. P02 (Nordmark): 0.507 -> 0.824 in 3 live games (house 0.74, best of all teams 0.721)
+A different engine from P03: Nordmark **mirrors our steps** ("In response to your step, we are prepared to reduce",
+"We expect a significant step towards our position") and cuts for each NEW verified fact; it goes final when a round
+brings no new data ("it lacks new verifiable data").
+
+| game | change | its price @ 90 d by round | score |
+|---|---|---|---:|
+| de6192e39dd86084 | central layer: volume + steel index −4.3% + quality (no effect); copper; labour; then no data | 372.52, 371.45, 370.85, final 370.45 | 0.657 |
+| a1e2a4acb73dd3e9 | data spread one per round, order-price history last, no committee line | 372.52, 371.52, 370.92, final 370.32 | 0.669 |
+| **ee98266bedd37231** | **+ mirror rule: step 30% of the remaining gap** (€3.17 instead of €0.76) | **372.52, 370.85, 369.45, final 368.55** | **0.824** |
+
+Rules now in `central.py` (general, from per-case signals mined by `mine_claims.py`):
+- **Spread the data:** keep one new fact for each of the next 3 rounds; send 1 per later round.
+- **Mirroring supplier** (signal in its replies): step 30% of the remaining gap, staying a near-close below its price.
+  The deal is ITS price, so a bigger step from us costs nothing and buys a bigger one.
+- **"I hold full authority"** (P02 said it in every round): never mention a committee.
+- "Confirm our case" (a rising index) does not block a *falling* index of the same kind; a falling cost-driver index was
+  taken in every case where we cited one (P01, P02 x3, P03 x4, P18).
+Round 4 said "our best effort ... without requiring management escalation", so escalation may be the next lever.
+
+### 7b. P02, three more live games (552fb056e31d24d1, 8d4c4d5d7dff80bb: 0.847 each)
+- **Nordmark follows a fixed concession schedule once our steps are big enough.** With 30% steps, with 40% steps plus
+  a 5% deeper anchor, and with 2 extra data rounds, its path was the same to the cent: 372.52, 370.85, 369.45, 368.55,
+  final 368.25 (5th message). Small steps (EUR 0.76) bought less (cuts 1.00 / 0.60 / 0.60). Step size matters up to a
+  cap; the anchor does not (the split-the-difference model was wrong).
+- **It goes final at a fixed message count** (4th or 5th) whatever data the later rounds carry ("our service levels
+  remain within acceptable parameters" for on-time delivery, "past prices do not reflect our current cost structure" for
+  order history). Later rounds still cut, but on its schedule.
+- So the floor it approaches (~EUR 368.0 @ 90 d) is what to lower, as on P03, with data it takes **early**. Next test:
+  quality notifications on the part (never cited in any game).
+- Cloud session (analysis/central/ENGINES.md, analysis/cases/*_engine.md): engine type per case. 5 of 10 suppliers
+  mirror, 2 hold, 1 floor-stop, 1 one-shot, 1 auction. QNs and the supplier's own recent quote were never cited.
+- **A contradicted claim is expensive** (P02 f778b35c67ecd799, 0.607): our quality-notification sentence carried four
+  numbers ("2 notifications ... 12 months ... 4,632 ppm"); the arena checked the wrong one -> "contradicted ... That
+  costs trust". Its first answer rose from 372.52 to 373.88 and the final from 368.25 to 370.95 (-0.24 score), and it
+  asked for proof in every later round. **Rule: one number per claim sentence, the checked figure, no thousands
+  separator.** (Fixed in central.quality_notification_claims; untested live.)
+
+## 8. P08 (Donautal): 0.647 -> 0.732 in one live game (cae4b621695f8161; house 0.752, best of other teams 0.679)
+Plan from the cloud session (analysis/cases/P08_engine.md): hedged alloy index never cited, cold drawing -2.3% and the
+volume forecast in round 1 (both "took it into account"), its own EUR 5.45 quote in words, 24 m clause-free asks, hold
+the structure it priced. Path 5.41 @ 90 -> 5.15 @ 14 -> final 5.10 @ 14 (db0, its clause). Quality notifications and
+order history: "does not change". **Round 3 had no data -> "Which figures is that based on?" + final.**
+Fixes: every unhedged driver gets its own falling window (labour was skipped once cold drawing had one); facts it
+shrugged off are kept as LAST-round fillers (never in round 1), so no round goes out empty; data timed to its final
+(mined: P08 always at our 3rd message).
+
+### 8b. P08 after 9 games: the first counter is a coin flip; everything after it is fixed (live 136352b4a3a9f752 = 0.642)
+Same agent as cae4b621695f8161, same three sheets, same opening, the same two taken claims in round 1 (only the quality
+notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41. Values below are its price as a
+30-day, db0 equivalent at its 8% cash rate (`engine_dump.py P08 --rate 0.08`). db5 costs +0.12. **House 0.752 = 5.10.**
+
+| game | round 1 data (taken?) | r1 value | round 2: our move -> its step | round 3 data -> final step | final | score |
+|---|---|---:|---|---|---:|---:|
+| 1f27 | alloy (no) | 5.39 | db5 asks below its price -> **hold** | - | walked | 0 |
+| ab47 | alloy (no) | 5.39 | took its db0 clause -> -0.05 | forecast -> -0.04 | 5.30 | 0.52 |
+| a43d | alloy, labour+, drawing+ | 5.39 | **clause-free** 4.84 @ 45 -> **-0.15** | forecast -> -0.05 | 5.19 | 0.65 |
+| cae4 | drawing -2.3%, forecast (yes), QNs (no) | **5.34** | **clause-free** 4.80 @ 14, order history (no) -> **-0.17** | none -> -0.05 | **5.12** | **0.73** |
+| 325d | alloy (no) | 5.51 | took its db0 clause -> -0.09 | forecast -> -0.06 | 5.36 | 0.46 |
+| 586a | alloy (no) | 5.51 | db5 asks -> -0.03 | forecast -> -0.03 | 5.45 | 0.49 |
+| 9bfa | alloy (no) | 5.51 | db5 @ 14 -> +0.06 | forecast -> -0.04 | 5.53 | 0.41 |
+| 1363 | drawing -2.3%, forecast (yes) | **5.46** | **clause-free** 4.80 @ 14, labour -0.3% (yes) -> **-0.16** | QNs (no) -> -0.10 | 5.20 | 0.64 |
+
+1. **Round 1 is bimodal: 5.39 or 5.51 before data, 4 games each,** with identical sheets and claims. It's drawn per
+   session, not caused by our wording.
+2. **New taken data in round 1 cuts 0.05 in both modes** (forecast + a falling unhedged index). A second index series
+   (labour, round 2) was "taken" but added nothing beyond the fixed round-2 step: the cut is per new kind, as in P03.
+3. **Round 2 clause-free = -0.15 to -0.17 (3 of 3)**, data or not. Taking its clause gives -0.05 or -0.09; db5 asks give
+   -0.03, a hold, or +0.06. This is the only big lever, and the agent already pulls it.
+4. **Final at our 3rd message: -0.03 to -0.06** (once -0.10, with quality notifications in round 3).
+5. Expected outcome of the current agent: low mode 5.08-5.13 (**0.73-0.78, beats the house about half the time**); high
+   mode 5.20-5.25 (0.59-0.64). The rest is noise of a few cents. No message we can write changes the draw.
+6. **Offline run after the cloud regression fixes (28a2791): `analysis/offline_runs/P08_noidea_neel_7.json`, sim 0.99.**
+   The floor-stop sim isn't P08's engine: no mandatory 24-month clause, no bimodal first counter, and its floor sits at
+   C_best. Treat 0.99 as "no crash, data placed right", not as a forecast. Its three e-mails carry the same sheets and
+   refs as live 136352b4a3a9f752 (r1 forecast + drawing -2.3% + own quote in words; r2 labour -0.3%; r3 QNs). So the
+   fixes leave P08 untouched, and the live forecast stays 0.73-0.78 on the low draw and 0.59-0.64 on the high one.
+7. **Live c387f78034601d57 = 0.721 (low draw).** 5.41 @ 90 (value 5.34) -> 5.16 @ 14 (5.18, -0.16; labour -0.3% was
+   "incorporated", but the step equals cae4's step without data) -> final 5.11 @ 14 (5.13, -0.05; QNs: "do not impact the
+   cost structure"). That's the cae4 path again, one cent higher. **Corrected forecast: low draw 0.72-0.73, high draw
+   0.59-0.64. The house's 0.752 (value 5.10) needs 2-3 cents beyond the current recipe even on the low draw.** 1363's
+   final -0.10 was noise.
+   Round 1: cloud VARIANCE.md shows its headline is the same nominal price (5.41 or 5.53) whatever payment term it picks.
+   So the "-0.05 for round-1 data" is really the 90-day sheet it chose: keep a 90-day sheet in round 1.
+   Untested lever: a round-2 step of at least 30% of the gap (P02's schedule trigger). All P08 round-2 steps so far were
+   16-25% of the gap.

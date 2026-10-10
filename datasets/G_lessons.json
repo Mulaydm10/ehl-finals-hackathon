@@ -24,7 +24,13 @@
   "Keep the e-mail in English and never promise a lever that is not negotiable in the case.",
   "Price a chargeback at the supplier's REAL defect rate (its scorecard), not at the commitment: a cash-short supplier priced EUR 150 per complaint at +EUR 0.50-1.00 per unit while it was worth EUR 0.12 to us (P11). A tighter ppm commitment without chargeback costs it no cash - ask for that instead.",
   "When the supplier prices one of our structures better than the others, stay on THAT structure: P11 answered our 300 ppm / EUR 0 sheet with 0.71 in round 1; going back to our own main sheet ended at 0.61.",
-  "Keep feeding one NEW verified data kind per round (cost-driver falls in any checkable window, price history, forecast): a code-priced supplier cuts once per new fact it takes and holds when nothing new arrives."
+  "Keep feeding one NEW verified data kind per round (cost-driver falls in any checkable window, price history, forecast): a code-priced supplier cuts once per new fact it takes and holds when nothing new arrives.",
+  "A CONTRADICTED claim costs trust and makes the supplier close early: P11's qn mean-ppm claims came back 'do not match the records. That costs trust' and it went final one round early (fa9a9d0277f372c6). Cite only data whose check you can reproduce exactly.",
+  "Identify the supplier's engine early: a MIRROR answers our step with its own (spread facts, one per round); a HOLDER moves only for new verified facts (pack two per round before its fixed final); a one-shot is final at message 1 (put everything in message 1).",
+  "Suppliers go final at a fixed message count; make sure every verified fact you have lands before it, and never send a round without a new fact.",
+  "Write one number per claim sentence - the figure the arena checks, no thousands separator; a sentence with several numbers got the wrong one checked and was contradicted (P02, -0.24).",
+  "A supplier that says it holds full authority must never be pointed to a committee or management.",
+  "A supplier that quotes only round numbers (every price a multiple of 0.50) may accept a buyer price between them: once it holds, raise the ask in small steps from just above its previous grid point instead of taking its round number (P11 agreed to 45.13 while quoting 45.50)."
  ],
  "price_increase": [
   "P01 (stabilise, family foundry, data-naive owner): index data + short-notice argument + later effective date + faster payment → 0.85 in 3 rounds.",

@@ -17,6 +17,7 @@ deep dives (analysis/cases/). Change log with evidence: notes/agent_changelog.md
     alternative is cheaper)
 """
 
+import datetime
 import itertools
 import json
 import logging
@@ -38,6 +39,10 @@ CLOSE_STEP = 0.0008   # near-close: ask 0.08% below its standing value (live P04
 CLOSE_GAP = 0.015     # ...only when our last ask is within 1.5% of its standing value
 STALL_DROP = 1 / 3    # it stalled: its last move (share of the gap) < 1/3 of the previous one...
 STALL_MIN = 0.02      # ...or < 2% of the gap
+MESO_BAND = 0.03  # round-1 MESOs: other structures within 3% of our best cost
+GRID_PROBES = 4  # grid probe: asks between (its price - grid) and its price, stepping up (P11 floor hidden in the 0.50 grid)
+NEAR_CLOSE_TRY = 0.0075  # one ask this far below an OPEN offer before taking it (P11 7117d351: agreed to ours, -0.8%)
+WALK_GUARD_MOVE = 0.005  # its last move cut our cost > 0.5%: still conceding, not about to walk
 CASH_SHORT_RISK = 2.0  # a cash-short supplier prices uncertain cash outflows (chargebacks) ~2x their expectation
 STALL_NOISE = 0.10    # a big move UP (structure switch) is not a stall
 TIE_BAND = 0.0001     # committee tie-break: sheets within 0.01% of our best cost (0.015%/0.05% made P02 worse)
@@ -66,6 +71,7 @@ def _central():
 PROPOSE_ALT_AFTER_FINAL = False  # sending its alternative back after final_offer: walked 2x, worked 1x -> off
 RFQ_MARKET_DEPTH = 0.10  # RFQ ask vs the market's lowest valid offer (20% made the best bidder walk: P05 d9af85e000ab3d4d)
 PLANNED_ROUNDS = 8  # P07 live: ~25 s per round, so an 8-minute wave fits ~12-15; keep a margin
+GAP_STEP = 0.3  # later asks move this share of the gap to its standing value (patience 3-4; off: no_gap_steps)
 MIN_GAIN_PTS = 1.0  # never pay more than ask - 1 pt unless it is the last word
 # How far below the opening quote to anchor (src/eval/calibrate.py: best deal vs opening, practice cases)
 # Round-1 argument order = what moved suppliers' FIRST counters live (score units, 58 practice games):
@@ -141,6 +147,27 @@ Rules:
   prices, dates or IDs (code adds them), English only, no greeting line, no sign-off."""
 
 
+def _engine():
+    """Neel's live engine classifier (analysis/central/engine_rules.py: mirror / holder / floor_stop / one_shot / auction from
+    the thread alone, 87% right at thread end). None if missing."""
+    global _ENGINE
+    if "_ENGINE" not in globals():
+        try:
+            import importlib.util
+            f = Path(__file__).resolve().parents[4] / "analysis/central/engine_rules.py"
+            spec = importlib.util.spec_from_file_location("engine_rules", f)
+            _ENGINE = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(_ENGINE)
+        except Exception as e:
+            log.warning("engine classifier not loaded (%s)", e)
+            _ENGINE = None
+    return _ENGINE
+
+
+MIRROR_RX = re.compile(r"(?i)in response to your (step|movement|adjustment)|significant step towards our position")
+MIRROR_SHARE = 0.30  # a MIRRORING supplier: step 30% of the remaining gap (Neel P02 0.67 -> 0.82; 40% gave the same path)
+
+
 def _repo():
     return Path(os.environ.get("NOIDEA_REPO") or Path(__file__).resolve().parents[4])
 
@@ -180,8 +207,17 @@ class NoIdeaAgent:
             log.warning("signal catalogue not loaded (%s)", e)
             self.signal_rx = {}
         facts = root / "tacto/data/facts.json"
-        self.fc = ({k: v for k, v in json.loads(facts.read_text(encoding="utf-8")).items() if k.startswith("fc:")}
-                   if facts.exists() else {})
+        _facts = json.loads(facts.read_text(encoding="utf-8")) if facts.exists() else {}
+        self.fc = {k: v for k, v in _facts.items() if k.startswith("fc:")}
+        self.facts = {k: v for k, v in _facts.items() if k.startswith("qn:")}  # quality notifications (complaint_args)
+        self.all_facts = _facts
+        self.po_hist = {}  # (supplier, part) -> [(date, po id, price)] by date (price_path)
+        for k, v in _facts.items():
+            if k.startswith("po:") and v.get("unit_price") and v.get("date"):
+                self.po_hist.setdefault((v.get("supplier"), v.get("part")), []).append(
+                    (v["date"], k, float(v["unit_price"])))
+        for rows in self.po_hist.values():
+            rows.sort()
         # today's price of every part at every supplier (for kit calculations)
         self.part_prices = {}
         for sid, d in self.dossiers.items():
@@ -284,7 +320,16 @@ class NoIdeaAgent:
         # ... and when the price already jumped (P18: an index clause took it 5.26 -> 5.84 in July, +11%,
         # more than the 12-month driver change): the history shows the rise is already paid for
         pos =[c for c in mine if c["kind"] == "po_prices" and c["part"] in parts]
-        if case["type"] != "bundling" and (ask_pct <= 0 or any(self.po_jump(c) >= 3.0 for c in pos)):
+        # a short-fuse supplier (final in round 1-2) never reads a round-2 fact: its flat history goes in round 1
+        # (P10 probes A-E: "price history ... it holds and we took it into account", counter 31.50 vs 31.70 without)
+        short = self.patience_prior(case, sid) <= 2
+        # and as the price PATH, which it takes, not the flat run it shrugs off (price_path). Others only in the
+        # experiment `price_path_all` (upward paths: P02 +1.2%, P03 +3.1%, P04 +2.3%, P08; untested live)
+        if short or "price_path_all" in EXPERIMENTS:
+            desc = {p["part"]: p["description"] for p in self.dossiers.get(sid, {}).get("parts", [])}
+            pos = [(self.price_path(sid, c["part"], desc.get(c["part"], c["part"])) or c)
+                   if self.po_jump(c) == 0 else c for c in pos]
+        if case["type"] != "bundling" and (ask_pct <= 0 or short or any(self.po_jump(c) >= 3.0 for c in pos)):
             out += pos
         elif case["type"] != "bundling" and ask_pct > 0:
             # an increase on a price our orders show flat or falling: the history is checkable data for a later round
@@ -292,6 +337,40 @@ class NoIdeaAgent:
             out += [{**c, "late": True} for c in pos if self.po_jump(c) <= 0]
         if case["type"] in ("capacity", "price_increase"):
             out += [c for c in mine if c["kind"] == "scorecard_otd" and (c["figure"] or 100) < 85]
+        # a supplier under cash stress (news of restructuring / cash-short dossier): the verified news frames what we give
+        # that costs us nothing - no chargebacks, payment on the agreed day, a binding volume - in ITS currency (playbook:
+        # interests over positions). api.md checks only "that it is about this supplier", so it cannot be contradicted.
+        # P11: rounds 3+ had no new fact left -> it held and went final
+        motives = set(self.dossiers.get(sid, {}).get("motives", {}))
+        # OFF by default (experiment `news_frame`): live P11 7117d3517bedd67e "it holds, but it does not change our calculation"
+        # + "we received a lot of material" - no cut, counts as padding
+        if "news_frame" in EXPERIMENTS and {"cash_short", "news_restructuring"} & motives:
+            gives = ["no chargebacks" if "chargeback_eur_per_complaint" in case["negotiable"] else None,
+                     "payment of every invoice on the agreed day", "a binding volume for the full term"]
+            gives = [g for g in gives if g]
+            for c in mine:
+                if c["kind"] == "news" and c["ids"]:
+                    out.append({**c, "late": True,
+                                "sentence": f"We are aware of your current situation ({c['ids'][0]}), which is why our offer "
+                                            f"is built on {', '.join(gives[:-1])} and {gives[-1]}."})
+        # OFF by default: live P11 fa9a9d0277f372c6 the arena marked our qn mean-ppm claims CONTRADICTED ("do not match the
+        # records. That costs trust") and the supplier went final one round early. How it averages qn rows is unknown.
+        last_sc = (self.dossiers.get(sid, {}).get("scorecards_last4") or [{}])[-1]
+        if "qn_claims" in EXPERIMENTS and (case["type"] == "quality" or case["buyer"].get("category_goal") == "quality_first"):
+            out += self.complaint_args(sid, parts)
+        # Neel's version (central.quality_notification_claims): the supplier-caused QNs on this part in the last 12 months,
+        # cited WITHOUT a figure - the arena then takes the data's own value, so it cannot be contradicted (our mean-ppm
+        # sentence and Neel's "at 4,632 ppm" both came back contradicted). Never cited in 8 of 10 cases (ENGINES.md).
+        # A later-round fact for any case with such QNs (holder engines cut once per new fact: P11 plan msg 3).
+        # ... and only for a supplier whose quality IS a problem (last scorecard amber/red) or in a quality case: green
+        # Leitner (P07 probe B 68092e5) answered "we take them seriously ... they do not alter" and cut less all game
+        elif central and "qn_claims" not in EXPERIMENTS and (
+                case["type"] == "quality" or case["buyer"].get("category_goal") == "quality_first"
+                or (last_sc.get("colour") or "green") != "green"):
+            try:
+                out += [{**c, "late": True} for c in central.quality_notification_claims(case, self.all_facts, sid)]
+            except Exception as e:
+                log.warning("qn claims failed (%s)", e)
         out += self.forecast_args(case)
         # measured take-rates per data kind (Neel, 54 games: should-cost 2/2 taken, volume forecast 12/19, rising index
         # 7x "confirms our case", OTD 0/1); kinds THIS supplier already shrugged off get rate 0 and are dropped
@@ -299,7 +378,10 @@ class NoIdeaAgent:
             try:
                 ordered = central.rank(out, case["case_id"])
                 kept = [c for c in ordered if central.take_rate(c["kind"], case["case_id"]) > 0]
-                out = kept or ordered
+                # kinds this supplier shrugged off before are LAST-round fillers, never dropped and never round 1 (Neel
+                # e27b6f0): P11 price history "does not change" alone in round 3, but in round 2 with the electricity
+                # fall the pair cut EUR 1.00 (3 games) vs 0.50 for one fact
+                out = (kept + [{**c, "late": True, "filler": True} for c in ordered if c not in kept]) if kept else ordered
             except Exception as e:
                 log.warning("central.rank failed (%s)", e)
         seen, ranked = set(), []
@@ -313,7 +395,12 @@ class NoIdeaAgent:
         if "all_parts_po" in EXPERIMENTS:
             ranked += [{**c, "other_part": True} for c in mine if c["kind"] == "po_prices" and c["part"] not in parts
                        and self.po_jump(c) >= 3.0 and c["sentence"] not in seen]
-        ranked = [c for c in ranked if not c.get("late")] + [c for c in ranked if c.get("late")]  # later rounds' data last
+        # an index fall too small to matter (weight x fall < 0.25 points: P03 labour -0.26% x 16% -> EUR 0.02, P11 labour
+        # -0.3% -> no cut) comes after every other fact; then later rounds' data
+        tiny = lambda c: c["kind"] == "index_change" and abs((c.get("figure") or 0) * (c.get("weight") or 0)) < 0.25 \
+            and c.get("weight") is not None
+        ranked = [c for c in ranked if not c.get("late") and not tiny(c)] + [c for c in ranked if c.get("late")] + \
+                 [{**c, "late": True} for c in ranked if tiny(c) and not c.get("late")]  # never in round 1
         # the arena counts a volume trend once per case: a 2nd forecast (another part) came back `duplicate` (P07 x4)
         fc = [c for c in ranked if c["kind"] == "forecast"]
         ranked = [c for c in ranked if c["kind"] != "forecast" or c is fc[0]]
@@ -402,6 +489,39 @@ class NoIdeaAgent:
         m = re.search(r"were at ([\d.]+(?:, [\d.]+)*) per", claim["sentence"]) if claim else None
         prices = [float(x) for x in m.group(1).split(", ")] if m else []
         return (prices[-1] / prices[0] - 1) * 100 if len(prices) > 1 and prices[0] else 0.0
+
+    def price_path(self, sid, part, desc):
+        """The order history as a PATH: the last order at the earlier price, the first at today's and the latest.
+        P10: [28.94, 29.89, 29.89] got "it holds and we took it into account" (probes A-E, 5/5); the flat [29.89 x 8]
+        got "it holds, but it does not change our calculation" (c283f47ddedd3b53). Only if today's price was a rise."""
+        rows = self.po_hist.get((sid, part)) or []
+        runs = []  # [price, first row, last row] of each run of equal prices
+        for i, (_, _, p) in enumerate(rows):
+            if runs and runs[-1][0] == p:
+                runs[-1][2] = i
+            else:
+                runs.append([p, i, i])
+        # a one-order blip is noise (P04: EUR 4.39 since Jan 2026, one order at 4.29 on 9 Jun, then 4.39 again)
+        merged = []
+        for k, r in enumerate(runs):
+            if r[2] == r[1] and k < len(runs) - 1:
+                continue
+            if merged and merged[-1][0] == r[0]:
+                merged[-1][2] = r[2]
+            else:
+                merged.append(list(r))
+        if len(rows) < 3 or len(merged) < 2 or merged[-2][0] >= merged[-1][0]:
+            return None  # never changed in the data, or the last change was a cut
+        before, first, last = rows[merged[-2][2]], rows[merged[-1][1]], rows[-1]
+
+        def month(d):
+            return datetime.date.fromisoformat(d[:10]).strftime("%B %Y")
+
+        ids = [before[1], first[1], last[1]]
+        return {"supplier": sid, "part": part, "kind": "po_prices", "ids": ids, "figure": None, "unit": None,
+                "checked_by_arena": True, "path": True,
+                "sentence": f"Our orders for {desc} were at EUR {before[2]:.2f} until {month(before[0])} and have been "
+                            f"at EUR {last[2]:.2f} since {month(first[0])} ({', '.join(ids)})."}
 
     def price_story(self, case, sid, body):
         """Round-1 prose built from the supplier's OWN statements and our contract, all figures from code.
@@ -495,6 +615,44 @@ class NoIdeaAgent:
                             "sentence": f"Our demand forecast for {desc.split(',')[0]} is up {ch:+.1f}% ({ks[-1]})."})
         return sorted(out, key=lambda c: -c["figure"])[:2]
 
+    def complaint_args(self, sid, parts, per_claim=3, max_claims=3):
+        """Its recent quality notifications on this part, as checkable data for LATER rounds (api.md: `qn:` rows are
+        checked as the mean ppm when you speak of quality). P11 v2.16 f80f4b5452fa442a: after round 2 we had no new data
+        left, it held EUR 45.50 twice and asked "Which figures is that based on? Please send us the data." Newest first.
+        No thousands separator: the arena read our "18,558 ppm" as 18.558 -> `contradicted` (fa9a9d0277f372c6); written
+        "18558" it verifies, but after a scorecard ppm claim it is `duplicate` - the quality record counts once per case
+        (P11 probe A 7e21be9: "we already factored the quality issues into our last price drop")."""
+        qn = sorted(((k, v) for k, v in self.facts.items() if k.startswith("qn:") and v.get("supplier") == sid
+                     and v.get("part") in parts and v.get("ppm")), key=lambda kv: kv[1].get("date") or "", reverse=True)
+        out = []
+        for i in range(0, min(len(qn), per_claim * max_claims), per_claim):
+            grp = qn[i:i + per_claim]
+            if not grp:
+                break
+            ppm = sum(v["ppm"] for _, v in grp) / len(grp)
+            ids = [k for k, _ in grp]
+            out.append({"supplier": sid, "part": grp[0][1]["part"], "kind": "quality_notification", "ids": ids,
+                        "figure": round(ppm), "checked_by_arena": True, "late": True,
+                        "sentence": f"Your complaints on this part from {grp[-1][1]['date'][:7]} to {grp[0][1]['date'][:7]} "
+                                    f"ran at a mean of {ppm:.0f} ppm on the affected deliveries ({', '.join(ids)})."})
+        return out
+
+    @staticmethod
+    def weak(c):
+        """A filler, a quality complaint or an index fall too small to matter (weight x fall < 0.25 points)."""
+        return bool(c.get("filler")) or c["kind"] == "quality_notification" or (
+            c["kind"] == "index_change" and c.get("weight") is not None
+            and abs((c.get("figure") or 0) * (c.get("weight") or 0)) < 0.25)
+
+    @staticmethod
+    def weak_ok(events):
+        """Weak facts only for a HOLDER: from round 3, after a reply in which it did not move (P11 cuts only for a new
+        fact). A supplier that is moving answers them with the fact's tiny value instead of mirroring our step: P07
+        probes A / B / C (68092e5, 20a3ae4) 0.812 lean vs 0.792 with QNs or labour -0.3% in round 2."""
+        prices = [standing([m])[1].get("unit_price") for m in events
+                  if m.get("from") != "buyer" and m.get("term_sheets")]
+        return len(prices) >= 3 and None not in prices[-2:] and prices[-1] >= prices[-2] - 1e-9
+
     def next_args(self, sid, n, first_round=False):
         """The next `n` arguments whose IDs were not cited yet (re-citing reads as padding). Round 1 is about this
         part only: other parts' price histories (experiment `all_parts_po`) wait for round 2."""
@@ -503,6 +661,8 @@ class NoIdeaAgent:
             if len(picked) == n:
                 break
             if any(i in self.cited for i in c["ids"]) or (first_round and (c.get("other_part") or c.get("late"))):
+                continue
+            if not first_round and not self.sup[sid].get("weak_ok", True) and self.weak(c):
                 continue
             # one index claim per e-mail: 2+ drew "we received a lot of material" 11 of 11 times (Neel)
             if c["kind"] == "index_change" and any(x["kind"] == "index_change" for x in picked):
@@ -525,15 +685,15 @@ class NoIdeaAgent:
                     continue
             yield t
 
-    def sheets_at(self, case, sid, value, cap_price=None, n=3):
-        out = self._sheets_at(case, sid, value, cap_price, n)
+    def sheets_at(self, case, sid, value, cap_price=None, n=3, band_pct=None):
+        out = self._sheets_at(case, sid, value, cap_price, n, band_pct)
         if not out and self.sup[sid].get("limits"):  # model-read limits filtered everything (P05): ignore them
             saved, self.sup[sid]["limits"] = self.sup[sid]["limits"], {}
-            out = self._sheets_at(case, sid, value, cap_price, n)
+            out = self._sheets_at(case, sid, value, cap_price, n, band_pct)
             self.sup[sid]["limits"] = saved
         return out
 
-    def _sheets_at(self, case, sid, value, cap_price=None, n=3):
+    def _sheets_at(self, case, sid, value, cap_price=None, n=3, band_pct=None):
         """The `n` different term sheets that give the supplier `value` per unit at the lowest cost to us,
         with the premiums it showed us (learn) and the limits it stated (refusals) taken into account."""
         s = self.sup[sid]
@@ -629,7 +789,7 @@ class NoIdeaAgent:
         if ranked and "price_frozen" in s["dossier"].get("motives", {}) and "payment_days" in case["negotiable"]:
             near = [x for x in ranked if x[0] <= ranked[0][0] * 1.01]
             ranked = sorted(near, key=lambda x: (-(x[1].get("payment_days") or 0), x[0])) + ranked[len(near):]
-        band = ranked[0][0] * (1.01 if n <= 3 else 1.015) if ranked else 0
+        band = ranked[0][0] * (1 + band_pct if band_pct else 1.01 if n <= 3 else 1.015) if ranked else 0
         for c, t in ranked:  # 3 genuinely different options: same-cost duplicates waste a slot
             if c > band:
                 break
@@ -652,6 +812,11 @@ class NoIdeaAgent:
         anchor_price = opening * (1 - depth)
         if kind == "price_increase":  # the cost-justified change (EDA 3) when it is lower
             anchor_price = min(anchor_price, s["cur"] * (1 + s["justified"] / 100))
+        if self.patience_prior(case, sid) <= 2 and kind != "rfq" and s["cur"] and opening > s["cur"]:
+            # a short-fuse supplier answers an anchor at its floor with its final at once (P10 x11: EUR 27.38 = C_best's
+            # price at lead 56, "your target price is unrealistic", final 31.70-32.00); the price we pay today, backed
+            # by the order history, keeps it negotiating (P10 probes B-E: open in round 1, final in round 2, 0.70)
+            anchor_price = max(anchor_price, s["cur"])
         limit_price = s["cur"] * (1 + (s["ask_pct"] - MIN_GAIN_PTS) / 100)
         market = self.market_low(case, sid)
         if market:
@@ -684,6 +849,22 @@ class NoIdeaAgent:
         # near-close (Neel; live P04 d3050f951dc2c45b: it moved 55% of the gap, then 5%, then final at that price while
         # we were ~1% lower): when it stalls close to us, ask a hair below its standing value instead of creeping
         sv = [supplier_value(case, complete_offer(case, t), s["est"]) for t in stand]
+        if k == 1 and sv and self.patience_prior(case, sid) <= 1:
+            # a capacity supplier goes final in round 2 (P10 probes B-E): one real step, a third of the gap to its
+            # standing value, drew its largest move (+0.51 -> -0.30; +0.15 -> -0.10; +1.01 -> -0.20)
+            hist.append(min(limit, hist[-1] + max(0.0, (sv[-1] - hist[-1]) / 3)))
+            return hist[-1]
+        # not holders (cash_short: P11), hedged suppliers (P08: its round-2 cut is a per-session draw; Neel's rule) or
+        # frozen prices (P03, untested); P08 89259de630143206 with it: +0.20 step -> -0.06, final round 3, 0.528
+        mirror = 3 <= self.patience_prior(case, sid) <= 4 and not (
+            {"cash_short", "hedged_forward", "price_frozen"} & set(s["dossier"].get("motives", {})))
+        if "no_gap_steps" not in EXPERIMENTS and k >= 1 and sv and kind != "rfq" and mirror:
+            # a MIRROR supplier answers our step with 0.5-0.9x of it and goes final at a fixed round, so the 8-round
+            # schedule (+0.07/round) starves it: P07 probe A 58bf025d01aa1275 +0.12 -> -0.11, +0.15 -> -0.08,
+            # then agreed at our 5.31 = 0.812 (best 0.753 with +0.07 steps). Not for patient suppliers (prior >= 5,
+            # P01/P02 concede on their own: offline 0.99 -> 0.88 with it); P18 (fixed 0.10 steps) neutral live 0.666
+            hist.append(min(limit, hist[-1] + max(0.0, GAP_STEP * (sv[-1] - hist[-1]))))
+            return hist[-1]
         fr = [(sv[j - 1] - sv[j]) / (sv[j - 1] - hist[j - 1]) for j in range(1, min(len(sv), len(hist) + 1))
               if sv[j - 1] - hist[j - 1] > 1e-9]
         stalled = len(fr) >= 2 and fr[-1] > -STALL_NOISE and fr[-2] > 0 and (fr[-1] < STALL_DROP * fr[-2] or fr[-1] < STALL_MIN)
@@ -693,8 +874,45 @@ class NoIdeaAgent:
             return hist[-1]
         theirs = max(0.0, vals[0] - vals[1]) if len(vals) == 2 else (limit - anchor) / PLANNED_ROUNDS
         step = min(scheduled - hist[-1], max(theirs, (limit - anchor) / (2 * rounds)))
+        # a MIRRORING supplier answers our step with its own and goes final at a fixed message count: step 30% of the
+        # remaining gap, staying a near-close below its price (Neel P02 ee98266bedd37231: 0.67 -> 0.82). Gated on the
+        # live signal only - against non-mirroring suppliers big steps give value away (stubborn sim 0.98 -> 0.86,
+        # analysis/central/REGRESSION.md); holders (P03, P11) cut for data, not for our steps
+        if sv and "mirror_step" in EXPERIMENTS and self.mirroring(events):
+            gap = sv[-1] - hist[-1]
+            hist.append(min(limit, hist[-1] + max(0.0, min(max(step, MIRROR_SHARE * gap), gap - sv[-1] * CLOSE_STEP))))
+            return hist[-1]
         hist.append(min(limit, hist[-1] + max(0.0, step)))
         return hist[-1]
+
+    def mirroring(self, events):
+        if MIRROR_RX.search(latest(events).get("body") or ""):
+            return True
+        eng = _engine()
+        if not eng:
+            return False
+        try:
+            if eng.classify(events).get("type") != "mirror":
+                return False
+        except Exception as e:
+            log.warning("engine classify failed (%s)", e)
+            return False
+        # ... and proof it moves for our STEP, not for data: a cut after one of our e-mails that carried no new fact.
+        # A holder never does (P11: 0 of 7 rounds), and P11 reads "mirror" to the classifier in 5 of 8 games.
+        seen, prev = set(), None
+        for m in events:
+            if m.get("from") == "buyer":
+                ids = set(m.get("refs") or []) | set(re.findall(r"\b(?:idx|fc|cost|sc|po|qn|quote|news|doc|ctr):[\w@.\-]+", m.get("body") or ""))
+                new_fact, seen = bool(ids - seen), seen | ids
+                continue
+            sh = (m.get("term_sheets") or [{}])[0].get("terms") or {}
+            price = sh.get("unit_price")
+            if price is not None and prev is not None and m is not events[0] and not new_fact and price < prev[0] * 0.999 \
+                    and all(sh.get(f) == prev[1].get(f) for f in sh if f != "unit_price"):
+                return True
+            if price is not None:
+                prev = (price, sh)
+        return False
 
     # ---- the move ------------------------------------------------------------------------------
     def decide(self, case, threads):
@@ -727,6 +945,7 @@ class NoIdeaAgent:
                 if cs[best] <= min(cs.values()) + 1:
                     sid = best
         events, s = threads[sid], self.sup[sid]
+        s["weak_ok"] = self.weak_ok(events)  # weak facts only for a supplier that held last round (a holder)
         sheet_id, terms, c_stand = self.best_sheet(case, sid, events)  # cheapest of ALL its sheets, not just [0]
         status = latest(events).get("status")
         k = sum(m.get("from") == "buyer" and bool(m.get("term_sheets")) for m in events)
@@ -768,6 +987,28 @@ class NoIdeaAgent:
         cap = terms.get("unit_price") if sheet_id else None
         target = self.value_target(case, sid, events)
         sheets = self.sheets_at(case, sid, target, cap)
+        if k == 0 and "meso" in EXPERIMENTS:
+            # round 1: MESOs (OFF by default: P11 f5157e0d it priced the loosest 1500 ppm sheet, 0.54; 0d5b +1 fact - n=1 each) - up to 3 genuinely different structures of near-equal cost to us (Medvec & Galinsky: multiple
+            # equivalent simultaneous offers show flexibility, reveal its preference and draw a bigger first move). P11:
+            # two sheets (800/150 + 300/0) with ONE fact got EUR 45.50 on 300/0 in round 1 (0d5bc007); one sheet with three
+            # facts got 46.00-46.50 in 7 games. Every sheet is one we'd be glad to have accepted (within MESO_BAND of our best).
+            meso = self.sheets_at(case, sid, target, cap, n=3, band_pct=MESO_BAND)
+            # never vary the PAYMENT term: suppliers price each payment term separately and our hopping cost P02 / P03
+            # (3 sheets 60/45/30 d on P03 = 0.862 vs one 90-d sheet 0.90+); MESOs vary the non-cash terms only
+            lead = (sheets or meso or [(0, {})])[0][1]
+            meso = [x for x in meso if x[1].get("payment_days") == lead.get("payment_days")]
+            if sheets and meso and sheets[0][1] not in [t for _, t in meso]:
+                meso = [sheets[0]] + meso[:2]
+            s["meso"] = None
+            if len(meso) > 1:
+                sheets = meso
+                s["meso"] = [t for _, t in meso]
+        if not sheets and status == "open" and moves_left(case, events) > 1 and s.get("last_main") and k >= 1:
+            # nothing priced below its offer (e.g. a premium we mis-learned): don't take an OPEN offer by default - repeat
+            # our last ask and let the probe / later rules decide (P11 f5157e0d: this guard accepted 46.50 in round 2, 0.54)
+            lm = complete_offer(case, dict(s["last_main"]))
+            if lm.get("unit_price") and must_haves_ok(case, lm, s["std"]):
+                sheets = [(total_cost(case, lm, s["std"], s["est"]), lm)]
         if not sheets:  # nothing left to offer this one: accept only if it is the best deal across ALL bidders
             if ok and c_stand <= best_elsewhere:
                 return accept
@@ -778,11 +1019,51 @@ class NoIdeaAgent:
             return accept if ok else walk
         # accept when the supplier meets our current ask, or when we are within 0.3% late in the game
         near_final = k >= max(1, s.get("patience", PLANNED_ROUNDS) - 1)
+        # keep the rounds going while verified facts are left: a holder cuts once per new fact (P11 352bdb04: we took an
+        # OPEN EUR 45.50 in round 3 with facts unused; with one more fact it cut EUR 0.50 each time)
+        if near_final and status not in ("final_offer", "agreed") and self.next_args(sid, 1):
+            near_final = False
+        # GRID PROBE (v2.17): a supplier that quotes on a coarse price grid (P11: every counter in 12 games a multiple of
+        # EUR 0.50) rounds its real floor UP to the grid, and agrees to a buyer ask at or above that floor (7117d351: it
+        # showed 45.50 and AGREED to our 45.13; f80f/e662 held at 45.13/45.16; 3d85 held at 44.98 -> the floor lies between
+        # grid points and is drawn per session). Once it stops cutting (no new facts left), we step our ask UP from just
+        # above (standing - grid) in GRID_PROBES small steps on ITS sheet; the first ask >= its floor is agreed. Its final
+        # offer is still accepted at once (never push after final). Without a grid: one near-close ask (-0.75%).
+        g = self.price_grid(events)
+        own = [ts["terms"]["unit_price"] for m in events if m.get("from") != "buyer"
+               for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get("unit_price")]
+        holding = len(own) >= 2 and abs(own[-1] - own[-2]) < 1e-9
+        probing = (near_final or holding) and status == "open" and moves_left(case, events) > 1 and ok \
+            and c_stand <= best_elsewhere and not self.next_args(sid, 1) and (holding or not g)
+        close_now = False
+        if probing and g and s.get("probes", 0) < GRID_PROBES:
+            j = s.get("probes", 0)
+            ask = terms["unit_price"] - g + g * (j + 1) / (GRID_PROBES + 1)
+            last = next((ts["terms"]["unit_price"] for m in reversed(events) if m.get("from") == "buyer"
+                         for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get("unit_price")), 0.0)
+            ask = round(min(terms["unit_price"] - 0.01, max(ask, last + 0.01)), 2)
+            if ask < terms["unit_price"]:
+                t_close = complete_offer(case, {**terms, "unit_price": ask})
+                if must_haves_ok(case, t_close, s["std"]):
+                    s["probes"] = j + 1
+                    near_final, close_now = False, True
+                    sheets = [(total_cost(case, t_close, s["std"], s["est"]), t_close)]
+                    target = supplier_value(case, t_close, s["est"]) + self.premium(sid, t_close)
+                    log.info("%s: grid probe %d/%d ask %.2f (its open %.2f, grid %.2f)", sid, j + 1, GRID_PROBES, ask,
+                             terms["unit_price"], g)
+        elif probing and not g and not s.get("close_tried") and k < PLANNED_ROUNDS and c_stand <= sheets[0][0] * 1.003:
+            t_close = complete_offer(case, {**terms, "unit_price": round(terms["unit_price"] * (1 - NEAR_CLOSE_TRY), 2)})
+            if must_haves_ok(case, t_close, s["std"]):
+                s["close_tried"] = close_now = True
+                near_final = False
+                sheets = [(total_cost(case, t_close, s["std"], s["est"]), t_close)]
+                target = supplier_value(case, t_close, s["est"]) + self.premium(sid, t_close)
+                log.info("%s: one near-close ask %.2f below its open %.2f", sid, t_close["unit_price"], terms.get("unit_price"))
         # walk-risk: it repeats the same objection / counter-proposal in its last two e-mails (P02 x2: "returning to our
         # standard 30-day payment term" + a 30-day '-a' sheet in rounds 2 and 3, we kept 90 d, it walked in round 4
         # "our general terms dictate this position"; 372.15 @ 90 d would have scored ~0.50) -> take its best sheet
-        if ok and k >= 2 and c_stand <= best_elsewhere and self.repeats_objection(events) and \
-                c_stand <= sheets[0][0] * 1.015:
+        if ok and k >= 2 and c_stand <= best_elsewhere and self.repeats_objection(events, case) and \
+                c_stand <= sheets[0][0] * 1.015 and not self.still_moving(case, sid, events):
             log.info("%s: it repeats its objection - taking its best sheet before it walks", sid)
             return accept
         if ok and k > 0 and c_stand <= best_elsewhere and not s.get("closing") and (
@@ -790,7 +1071,7 @@ class NoIdeaAgent:
             return accept
         log.info("%s round %d: our best C %.0f vs standing %.0f (alt %.0f)", sid, k, sheets[0][0], c_stand, self.c_alt)
         if self.complete:  # dynamic: the model reads its e-mail and picks among pre-priced candidates
-            cands = self.sheets_at(case, sid, target, cap, n=8)
+            cands = sheets if close_now else self.sheets_at(case, sid, target, cap, n=8)
             # the backbone (structure) is code's: after round 1 the model may only pick sheets with the structure code
             # leads with (P02 v2.13 dc1d4fd8a7cd47cb: the model moved us to 30 d, it made 30 d its final -> 0.20; the
             # good P02 games held 90 d every round)
@@ -830,7 +1111,8 @@ class NoIdeaAgent:
         pre-priced candidate sheets and up to 3 verified arguments, write the opening. Everything it returns is
         validated; any problem -> None (the deterministic path runs instead)."""
         s = self.sup[sid]
-        pool = [c for c in s["args"] if not any(i in self.cited for i in c["ids"])][:8]
+        pool = [c for c in s["args"] if not any(i in self.cited for i in c["ids"])
+                and (k == 0 or s.get("weak_ok", True) or not self.weak(c))][:8]
         motives = s["dossier"].get("motives", {})
         levers = "; ".join(f"{m}: {v['lever']}" for m, v in motives.items())
         lines = [f"[{i}] rank {i + 1}: " + ", ".join(f"{f} {v}" for f, v in t.items() if f in case["negotiable"])
@@ -874,8 +1156,12 @@ class NoIdeaAgent:
                     break
             return out
         own = [i for i, c in enumerate(pool) if not c.get("other_part")]
-        must = fit(own, 3) if k == 0 else fit(range(len(pool)), 1)
-        aidx = fit(must + aidx, 3 if k == 0 else 2)
+        per_round = 3 if k == 0 else 1 if self.mirroring(events) else 2  # mirror: spread; holder: pack (see below)
+        must = fit(own, 3) if k == 0 else fit(range(len(pool)), per_round)
+        # after round 1 ONE new fact per e-mail: a supplier cuts once per new fact and holds without one, so spreading the
+        # facts keeps every round productive until its final (Neel P02 0.51 -> 0.82/0.85 "data spread over rounds")
+        # (P11 holder: 2 facts in round 2 cut EUR 1.00 three times, 1 fact cut 0.50) - mirror: spread, holder: pack
+        aidx = fit(must + aidx, per_round)
         notes = d.get("notes") or {}
         for r in notes.get("refusals") or []:  # remember its stated limits for the next rounds
             f = r.get("field")
@@ -886,6 +1172,8 @@ class NoIdeaAgent:
                 s["limits"][f] = (lo, hi)
         log.info("%s model: sheets %s args %s notes %s", sid, idx, aidx, json.dumps(notes)[:300])
         chosen = [cands[i][1] for i in idx]
+        if k == 0 and s.get("meso"):  # round 1 structure is code's: all MESOs go out
+            chosen = list(s["meso"])
         args = [pool[i] for i in aidx]
         opening = self.clean_opening(case, str(d.get("opening") or ""))
         return self.message(case, sid, events, chosen, k, args=args, opening=opening)
@@ -980,6 +1268,8 @@ class NoIdeaAgent:
                 if len(diff) == 1 and diff[0] in self.LEARN_FIELDS:
                     f = diff[0]
                     slopes.setdefault(f, []).append((b["unit_price"] - a["unit_price"]) / (b[f] - a[f]))
+                    lo, hi = s.setdefault("k_range", {}).get(f, (min(a[f], b[f]), max(a[f], b[f])))
+                    s["k_range"][f] = (min(lo, a[f], b[f]), max(hi, a[f], b[f]))
         # index clause: its sheets carry a clause we didn't ask for -> required; the deadband is priced
         # (P08 a43d77c01405cba4: EUR 5.26 @ db0 vs 5.38 @ db5, same 45 d; P18 5.30 vs 5.40)
         for m in events:
@@ -1009,7 +1299,12 @@ class NoIdeaAgent:
         """Value adjustment for the learned premiums, relative to the supplier's latest standing terms."""
         s = self.sup[sid]
         ref = s["open_terms"]  # fixed baseline: a moving one made the price jump (offline P10: 25.81 -> 28.52)
-        adj = -sum(k * ((t.get(f) or 0) - (ref.get(f) or 0)) for f, k in (s.get("k") or {}).items()
+        # a learned slope holds only over the range it was seen on (P11 f5157e0d: 300 vs 1500 ppm priced 1.20 apart ->
+        # -0.001/ppm, extrapolated to its opening 6,400 ppm = EUR 6.10/unit; every sheet priced above its offer, and the
+        # no-sheets guard accepted 0.54). Clamp both values into the observed range; priors (no range) stay linear.
+        rng = s.get("k_range") or {}
+        clamp = lambda f, v: min(max(v, rng[f][0]), rng[f][1]) if f in rng else v
+        adj = -sum(k * (clamp(f, t.get(f) or 0) - clamp(f, ref.get(f) or 0)) for f, k in (s.get("k") or {}).items()
                    if not f.startswith("_") and t.get(f) is not None
                    and (ref.get(f) is not None or f in ("chargeback_eur_per_complaint", "tooling_eur")))
         kd = (s.get("k") or {}).get("_deadband")
@@ -1072,13 +1367,40 @@ class NoIdeaAgent:
                               r"restrict(s|ing)? our (pricing )?flexibility|financing costs|cannot (go|move) (any )?further|"
                               r"unable to (reduce|lower|accommodate)|must maintain|strictly (fixed|frozen)|maximum flexibility)")
 
-    def repeats_objection(self, events):
-        """Its last two e-mails carry the same kind of objection / standard-terms counter-proposal."""
+    @staticmethod
+    def price_grid(events, min_n=3):
+        """The coarse grid its prices sit on (1.00 / 0.50 / 0.25), if every one of its >= min_n quoted prices is a multiple
+        of it and the grid is a real step (>= 0.4% of the price). P11: 47.00, 46.50, 46.00, 45.50, 45.00 -> 0.50."""
+        prices = [ts["terms"]["unit_price"] for m in events if m.get("from") != "buyer"
+                  for ts in (m.get("term_sheets") or []) if (ts.get("terms") or {}).get("unit_price")]
+        if len(prices) < min_n:
+            return None
+        for g in (1.0, 0.5, 0.25):
+            if all(abs(x / g - round(x / g)) < 1e-6 for x in prices) and g >= 0.004 * max(prices):
+                return g
+        return None
+
+    def still_moving(self, case, sid, events, min_move=WALK_GUARD_MOVE):
+        """Its last counter cut our cost by more than `min_move` (share of C): a supplier still conceding is not about to
+        walk, whatever template objection it repeats (P11 v2.16 6b02b8cc94796703: 46.00 -> 45.00 = 2.2%, the repeated
+        "Faster payment would help us" fired the walk guard and we took 0.79 in round 2; P02's walks came after 0.16% moves)"""
+        cs = [total_cost(case, complete_offer(case, standing([m])[1]), self.sup[sid]["std"], self.sup[sid]["est"])
+              for m in events if m.get("from") != "buyer" and m.get("term_sheets")][-2:]
+        return len(cs) == 2 and cs[0] - cs[1] > min_move * cs[0]
+
+    def repeats_objection(self, events, case=None):
+        """Its last two e-mails carry the same kind of objection / standard-terms counter-proposal. A payment-term phrase
+        counts only when payment is negotiable: "Our standard Zahlungsziel is 60 days net" is a template line in EVERY P11
+        e-mail (payment fixed there) and fired the walk guard on a supplier that never walks; the P02 walks repeated real
+        counter-proposals ("returning to our standard 30-day", "restrict our pricing flexibility")."""
         sup = [m.get("body") or "" for m in events if m.get("from") != "buyer"][-2:]
         if len(sup) < 2:
             return False
         a, b = ({x.group(0).lower() for x in self.OBJECTION_RX.finditer(t)} for t in sup)
-        return bool(a & b)
+        common = a & b
+        if case is not None and "payment_days" not in case.get("negotiable", []):
+            common = {x for x in common if "zahlungsziel" not in x and "financing" not in x and "-day" not in x}
+        return bool(common)
 
     def events_for(self, sid):
         return (getattr(self, "threads_ref", {}) or {}).get(sid, [])

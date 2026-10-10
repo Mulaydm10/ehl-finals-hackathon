@@ -355,3 +355,23 @@ def test_an_alternative_the_arena_refuses_is_kept_without_its_id():
     assert play(Table(), "case:X", Cheapest()) == {"deal": True}
     assert tried == ["offer:1-3-a", "offer:1-3"]
     assert sheets[1] == {"term_sheet_id": None, "terms": {"unit_price": 5.3}}  # terms kept to propose back
+
+
+def test_a_server_error_on_our_email_is_resent_once_without_data_ids():
+    from arena_kit.play import RemoteTable
+
+    sent = []
+
+    class Client:
+        def send_message(self, session_id, supplier_id, message):
+            sent.append(message)
+            if message.get("refs"):
+                raise ArenaError(500, "internal error")
+            return {"status": "open"}
+
+    table = RemoteTable(Client())
+    msg = {"body": "Your complaints ran high (qn:1, qn:2). Kit at EUR 5.95 (per kit).", "refs": ["qn:1", "qn:2"],
+           "term_sheets": [{"terms": {"unit_price": 5.0}}]}
+    assert table.send("sup:1", msg) == {"status": "open"}
+    assert sent[1]["refs"] == [] and sent[1]["body"] == "Your complaints ran high. Kit at EUR 5.95 (per kit)."
+    assert sent[1]["term_sheets"] == msg["term_sheets"]

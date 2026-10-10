@@ -1,0 +1,59 @@
+{
+ "case": "P04",
+ "variant": "noidea_neel",
+ "sim_score": 0.8098066042011054,
+ "end": "deal {'unit_price': 4.91, 'payment_days': 60, 'contract_months': 24}",
+ "rounds": 2,
+ "emails": [
+  {
+   "body": "Dear Florian Gruber,\n\nThank you for your message.\n\n1. Volume and term: we confirm a binding volume of 20,000 units per year for 24 months, 40,000 units in total.\n2. Our proposal: option A: EUR 4.79 per unit, 14 days net, 24-month contract; option B: EUR 4.84 per unit, 60 days net, 24-month contract; option C: EUR 4.81 per unit, 30 days net, 24-month contract. Option A amounts to about EUR 191,600 over the term.\n3. Basis: On 2026-09-20 you quoted us EUR 4.63 per unit for this part; your new quote is 7.1% above it. Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01). We raised quality notifications on this part over the past year (qn:20004711, qn:20004732, qn:20004762, qn:20004857, qn:20004869, qn:20004968). Our recent orders for Deep groove ball bearing 6306-2Z C3 were at 4.29, 4.39 per 1 (po:4500014329-10, po:4500014389-10, po:4500014467-10).\n4. Next step: Please send us your cost breakdown for this part. All other terms as in your quote; on your written confirmation of one option we will issue the order.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [
+    "idx:LCI-C@2025-10",
+    "idx:LCI-C@2026-01",
+    "po:4500014053-10",
+    "po:4500014120-10",
+    "po:4500014171-10",
+    "po:4500014280-10",
+    "po:4500014280-20",
+    "po:4500014329-10",
+    "po:4500014389-10",
+    "po:4500014467-10",
+    "qn:20004711",
+    "qn:20004732",
+    "qn:20004762",
+    "qn:20004857",
+    "qn:20004869",
+    "qn:20004968"
+   ],
+   "sheets": [
+    {
+     "unit_price": 4.79,
+     "payment_days": 14,
+     "contract_months": 24
+    },
+    {
+     "unit_price": 4.84,
+     "payment_days": 60,
+     "contract_months": 24
+    },
+    {
+     "unit_price": 4.81,
+     "payment_days": 30,
+     "contract_months": 24
+    }
+   ]
+  },
+  {
+   "body": "Dear Florian Gruber,\n\nThank you for your message.\n\n1. Volume and term: we confirm a binding volume of 20,000 units per year for 24 months, 40,000 units in total.\n2. Our proposal: EUR 4.85 per unit, 60 days net, 24-month contract. This amounts to about EUR 194,000 over the term.\n3. Next step: All other terms as in your quote; on your written confirmation of these terms we will issue the order.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [],
+   "sheets": [
+    {
+     "unit_price": 4.85,
+     "payment_days": 60,
+     "contract_months": 24
+    }
+   ]
+  }
+ ],
+ "relationship": {}
+}

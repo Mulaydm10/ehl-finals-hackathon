@@ -610,3 +610,137 @@ no committee; its call each round is counter / hold / final; final in round 4-5.
 - Round 1 P11 now: 300 ppm / EUR 0 @ 42.77 + forecast + iron & steel -4.3% + scorecard; later rounds: electricity, labour, price history.
 - Other cases' round 1: P02/P04/P05/P07/P08/P10 identical; P03 gains electronics -2.3%; P18 one steeper AS-14404 window (was 2 index claims).
 - Tests 37 passed (P18 backbone test updated to the one-index rule); offline 0.942 / 0.945.
+
+## v2.16 live P11 (18:03, gpt-6-astra): **0.79 = new best P11** (6b02b8cc94796703; was 0.67)
+- Round 1 300 ppm / EUR 0 @ 42.77 + scorecard + iron & steel -4.3% + forecast -> all three "taken", it answered **300/0 @ EUR 46.00**
+  (+ a 2500/0 @ 45.50 alternative). Round 2 electricity -17.1% + price history -> "they're right" -> **EUR 45.00 @ 300/0** (open).
+- **We accepted in round 2 while it was still conceding EUR 1.00/round**: the v2.13 walk guard fired on its repeated template line
+  "Faster payment would help us more than anything".
+### v2.16b (offline): walk guard only when it STALLS
+- `still_moving()`: its last counter cut our cost > 0.5% -> not about to walk, keep negotiating (P02's walks came after 0.16% moves).
+- Replays: P11 6b02b8cc -> round 3 asks EUR 44.90 instead of accepting 45.00; P02 walk replays unchanged (0.51 / - / 0.54 / 0.51).
+
+## v2.16b live P11 (18:07): 0.71 (f80f4b5452fa442a)
+- Same path as the 0.79 game, but its round-1 answer to the SAME first e-mail was EUR 46.50 (0.79 game: 46.00) -> noise of EUR 0.50.
+  Round 2 (electricity -17.1% + price history, "it holds and we took it into account") -> 45.50. Rounds 3-4: only labour -0.3%,
+  then nothing -> **held 45.50 twice** ("Which figures is that based on? Please send us the data.") -> accepted 45.50 @ 300/0.
+- Back office: counter, counter, hold, hold. The supplier = start - one cut per NEW verified fact (like Neel's P03 engine).
+### v2.16c (offline): more verified facts for later rounds (general)
+- **Quality notifications** (`qn:`, api.md: checked as the mean ppm when you speak of quality) as later-round claims for quality
+  cases: newest supplier-caused complaints of this part, 3 IDs per claim (P11: 18,558 / 11,070 / 11,946 ppm).
+- **Tiny index falls** (weight x fall < 0.25 pts; labour -0.3%) go last and never in round 1 (P03 measured EUR 0.02; P11 no cut).
+- P11 rounds now: r1 forecast + iron & steel + scorecard, r2 electricity, r3 price history, r4-5 complaints, then labour.
+- Note: P02/P07 round 1 now carry a falling index - Neel's new reaction data (cfce529, P02 0.824) marks index data as taken.
+- Tests 37 passed; offline 0.942 / 0.945; P02 walk replays unchanged.
+
+## v2.16c live P11 (18:14): 0.71 (fa9a9d0277f372c6) -> qn claims switched OFF (v2.16d)
+- Round 1 -> EUR 46.00 (as the 0.79 game). Round 2 electricity -17.1% ("taken", but "the energy index drop is tiny for us") + our
+  qn mean-ppm claim -> **"the quality record figures you cite do not match the records. That costs trust"** -> only -0.50 (45.50).
+  Round 3 price history + a 2nd qn claim -> "contradicted" again + "We received a lot of material" -> **final_offer in round 3**.
+- Lesson (general): **a contradicted claim costs trust and shortens its patience** - cite only data whose check we know exactly
+  (api.md: qn rows are checked as a mean ppm we could not reproduce from facts.json lot ppm). Never ship an unverified claim type
+  live without first knowing its check; `qn_claims` stays behind NOIDEA_EXPERIMENTS.
+- P11 so far on v2.16: 0.79 / 0.71 / 0.71 (mean 0.74; v2.7-2.10 mean 0.55). The ceiling it shows: ~EUR 45.00-45.50 @ 300/0.
+
+## v2.16d live P11 (18:23): 0.77 (7117d3517bedd67e) -> news framing OFF (v2.16e)
+- 46.50 -> 45.50 (electricity + price history) -> our news-framing claim: "it holds, but it does not change our calculation" +
+  "We received a lot of material" -> held 45.50 -> **it AGREED to our near-close EUR 45.13** (0.77; in f80f4b54 the same 45.13
+  got another 45.50 hold). The gain is the near-close ask, not the news. News framing -> experiment `news_frame` (off).
+- **P11 on v2.16: 0.79 / 0.71 / 0.71 / 0.77 = mean 0.745** (v2.7-v2.10: 0.67 / 0.36 / 0.61 = 0.55). Its stop ~EUR 45.00-45.50.
+- Rules consolidated in `docs/GENERAL_RULES.md` (35 rules with evidence).
+
+## v2.16f live P11 (18:31): 0.71 (352bdb0495fc67e4) -> v2.16g
+v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one fact per later round + mirror step (gated).
+- 46.50 -> electricity alone 46.00 (-0.50) -> QNs "we already looked at those quality notifications before, so they don't
+  change our calculation" but 45.50 (-0.50) -> **we accepted an OPEN 45.50 in round 3** (near-final band) with facts unused.
+- **P11 cut per round = EUR 0.50 per accepted fact**: 2 facts in round 2 cut 1.00 three times (6b02b8cc, f80f4b54, 7117d351),
+  1 fact cut 0.50 (352bdb04, fa9a9d02 with one contradicted). A HOLDER cuts per fact and goes final at a fixed message count.
+### v2.16g (offline) - general
+| fix | why |
+|---|---|
+| later rounds: **1 fact for a mirroring supplier, 2 for the rest** (code-forced) | mirror cuts per round (Neel P02 spread); holder per fact before a fixed final |
+| kinds it shrugged off = **last-round fillers**, not dropped (Neel e27b6f0) | P11 price history: "does not change" alone in r3, but part of the -1.00 pair in r2 |
+| **no near-final accept of an OPEN offer while unused facts remain** | 352bdb04 accepted 45.50 in round 3 with facts left |
+| **mirror step (30% of gap) behind `mirror_step`** (off): gate = its words or classifier + a cut after a fact-free e-mail of ours | offline it cost P04 0.99 -> 0.82, P08 0.92 -> 0.86; live evidence only P02 (Neel) - test on P07 first |
+- P11 plan now: r1 forecast + steel + scorecard, r2 electricity + QNs, r3 labour + price history. Tests 38 passed; offline 0.945 / 0.945.
+- P11 v2.16 series: 0.79 / 0.71 / 0.71 / 0.77 / 0.71.
+
+## v2.16g live P11 (18:37): 0.71 (c0d6894ce2cf586a) -> v2.16h
+- r1 46.50, r2 electricity + QNs -> 46.00 (QNs = the same "quality record" kind it already took), r3 labour + price history ->
+  45.50, no facts left -> accepted the OPEN 45.50 (0.71).
+- **P11's data budget is ~EUR 1.50-2.00 of cuts in total -> EUR 45.00-45.50.** Above 0.80 (EUR 44.96) needs it to AGREE to our
+  price below its own, which happened once (7117d351 agreed to 45.13).
+### v2.16h (offline): one near-close ask before taking an OPEN offer
+- When we would accept its OPEN (not final) offer near its expected final, first send ITS sheet with the price 0.75% lower
+  (`NEAR_CLOSE_TRY`), once; accept next round. Pushing on an open offer never caused a walk in our games (walks came after
+  final_offer or after a stalling repeated objection - both guarded). Replay c0d6894c: 45.16 instead of accepting 45.50.
+- Bug found on the way: supplier_value() and sheets_at() differ by the learned premiums -> the near-close sheet is built from
+  its own terms, not re-derived. Tests 38; offline 0.945; walk + finals replays unchanged.
+- Rules doc: `docs/GENERAL_RULES.md` now 47 rules incl. section I (teammates: engines, fixed final count, one number per claim,
+  fillers, full authority, hedged series, own quote, one-shot P10 probe, RFQ loop).
+
+## v2.16h live P11 (18:48): 0.71 (e662af62eb9341a4) -> v2.16i
+- r1 46.50 -> 46.00 -> 45.50; the one near-close ask 45.16 -> it held 45.50 -> accepted (0.71). Near-close try kept (no cost).
+- **Round-1 comparison of all 11 P11 games** (`/tmp/r1cmp.py` logic): 0d5b (TWO sheets 800/150 + 300/0, ONE fact) -> 300/0 @ EUR
+  45.50 in round 1; one sheet + three facts -> 46.00 (2x) / 46.50 (5x). The number of sheets mattered more than the data.
+### v2.16i (offline): round-1 MESOs on non-cash terms
+- Round 1 sends up to 3 genuinely different sheets within 3% of our best cost (multiple equivalent simultaneous offers, Medvec &
+  Galinsky), **never varying the payment term** (P02/P03: payment variants were priced and hopping cost 0.04).
+  Only P11 changes (300 / 800 / 1500 ppm, EUR 0); all other hosted cases still send their single sheet. Tests 38; offline 0.945.
+
+## v2.16i live P11 (18:53): **0.54** (f5157e0d3ca6b113) -> v2.16j
+- MESOs 300/800/1500 ppm -> it priced the LOOSEST (1500 @ 46.50), then 300 @ 46.50 -> **we accepted in round 2**.
+- **Bug (general): learned premiums were extrapolated linearly** beyond the range the supplier priced: 300 vs 1500 ppm at 1.20
+  apart = -0.001 EUR/ppm, applied from its opening 6,400 ppm = EUR 6.10/unit -> every sheet priced above its offer -> the
+  no-sheets guard accepted. Fix: `learn()` records each premium's observed range, `premium()` clamps into it.
+  Replay f5157e0d: now 43.07 / 43.31 instead of accepting.
+- MESOs -> experiment `meso` (off): n=1 for (0d5b), n=1 against (f5157e0d).
+
+## v2.16j live P11 (18:56): 0.71 (3d85f13947660729)
+- 46.50 -> 46.00 -> 45.50, then held 45.50 for FOUR rounds (near-close ask included) -> accepted. With a 46.50 round-1 answer (7 of 10 games) its stop is 45.50.
+- **P11 summary, 10 games on v2.16.x: 0.79 / 0.71 / 0.71 / 0.77 / 0.71 / 0.71 / 0.71 / 0.54 (bug, fixed) / 0.71** - median 0.71, best 0.79 (was 0.67 best, 0.55 mean on v2.7-2.10). The ceiling is set by its round-1 answer (46.00 in 2 of 10 -> 0.77-0.79). Stop spending P11 games; the general fixes stay.
+
+- Root cause of the contradicted P11 qn claims (fa9a9d02), found by Parth (db447d4): the arena read "18,558" as 18.558 - the thousands separator, not the averaging. Rule 39 (no thousands separator) covers it; his fix is merged.
+
+### v2.17 (offline): GRID PROBE - find the floor a supplier hides between its price grid points (target P11 >= 0.85)
+- **Finding (12 P11 games, `/tmp/asks.py`):** every counter it ever made is a multiple of EUR 0.50, yet in 7117d351 it AGREED to our
+  45.13 while showing 45.50; f80f/e662 held at 45.13/45.16, 3d85 held at 44.98. -> It rounds its real floor UP to the 0.50 grid
+  and agrees to any buyer ask >= that floor; the floor is drawn per session inside (shown - 0.50, shown].
+- **Rule (general):** `price_grid()` detects a coarse grid (1.00 / 0.50 / 0.25, >= 3 prices, >= 0.4% of price). Once it HOLDS
+  (same price twice) and no new facts are left, step our ask UP on ITS sheet: shown - grid + grid x j/5 (4 probes, P11: 45.10,
+  45.20, 45.30, 45.40). First ask >= floor is agreed. A final offer is still accepted at once. No grid -> one near-close (-0.75%).
+- `src/eval/probe_sim.py` (real state + simulated floor): 6b02 (shown 45.00) floor 44.60 -> deal 44.60 = **0.86**, 44.75 -> 0.83;
+  3d85 (shown 45.50) floor 45.05 -> 0.78, 45.20 -> 0.75, >= 45.35 -> 0.71 (as today). Never worse than accepting.
+- **Conflicts fixed (audit of decide() rule order):**
+  1. walk guard fired on the TEMPLATE line "Our standard Zahlungsziel is 60 days net" (every P11 e-mail, payment fixed) ->
+     payment-term phrases count as an objection only when payment is negotiable (P02 walk replays unchanged).
+  2. the "no sheets -> accept" guard ran BEFORE the probe (0.54 game) -> with an open offer and rounds left we repeat our last
+     ask instead. Checked: no duplicate function / constant names in noidea.py; final_offer still accepted before any probe;
+     walk guard still precedes the probe (walk risk > probe gain).
+- Tests 38; offline 0.931 (P10 = Parth's live-validated anchor); walk + finals replays unchanged.
+
+## v2.17 live P11 (19:10): 0.71 (876705379b434d96)
+- High draw (46.50 first counter) -> 46.00 -> 45.50 -> hold -> **grid probes 45.10 / 45.20 / 45.30 all held** -> final 45.50 -> accepted. Floor this session > 45.30 (7117d351: <= 45.13). Mechanics live-verified; no walk, final came after 3 probes (patience ~4 holds).
+- Expected with the probe (cloud VARIANCE draw ~40/60): low draw (shown 45.00, floor ~44.6-45.0) -> 0.80-0.86, high draw -> 0.71-0.77.
+
+### Parth (branch parth/n1-p06-p09-p12), evening: crash fix + P07 0.81 + mirror rules - PLEASE MERGE
+**1. Crash (HTTP 500) - affects main.** `central.quality_notification_claims` cited every QN of the case's parts in one
+sentence: on P07 (4-part kit) 19 IDs -> the arena answered HTTP 500 on every retry and the agent died mid-game (twice,
+79b7b274b6a77470, 55db9b3de85aa78d; in the final = abandoned case, no deal). Fixed: one part, newest 8 IDs (central.py +
+central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with data IDs is resent once without the IDs.
+**2. P07 0.753 -> 0.812 (agent, 6f360ce484bb3f30; probe 0.812 x2).** Leitner is deterministic (same messages = same replies):
+| probe | rounds 2-4 | final | score |
+|---|---|---|---:|
+| A | lean, steps +0.12 / +0.15 / +0.10 | agreed 5.31 | **0.812** (x2) |
+| B | A + 8 QNs in round 2 | final 5.34 | 0.792 |
+| C | A + labour -0.3% in round 2 | final 5.34 | 0.792 |
+- **Weak facts hurt a supplier that is moving** ("factored it in ... while we appreciate your movement, we ca[nnot]"):
+  fillers / QNs / tiny index falls now only from round 3 after a reply in which it did NOT move (holders like P11).
+- **QN claims only for amber/red scorecards or quality cases** (P07 is green: "they do not alter our price").
+- **Gap steps (default ON, `no_gap_steps` turns off):** for patience prior 3-4, not cash-short, not RFQ, later asks move
+  30% of the gap to its standing value (the 8-round schedule gave +0.07 steps and starved the mirror). Live: P07 0.812,
+  P18 neutral (0.666, fixed 0.10 steps). Offline: P01/P02/P11 unchanged; P07/P08 offline dips are simulator artifacts.
+**3. P18:** 90 d + AS db5 is priced in (+0.25-0.30/kg vs our 0.18 value): probe 0.598; ceiling ~0.68.
+**4. P11:** holds at 45.00 (margin floor, payment fixed); QN after scorecard ppm = duplicate; its own quote = irrelevant.
+- Update: gap steps now exclude hedged (P08) and price-frozen (P03) suppliers too. P08 live with them (89259de630143206):
+  +0.20 step -> -0.06, final in round 3, 0.528; its round-2 cut is a per-session draw (good games -0.25 after +0.07).

@@ -14,6 +14,7 @@ Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden supp
   (`~/Dhruv/local-llm/serve-qwen`, port 8081). **Never use the Antigravity proxy.** Key in `.env.openai` (gitignored) - user must rotate after.
 
 ## Read these files (in this order)
+0. **`docs/GENERAL_RULES.md` - every general rule (35) with its live evidence. Start here.**
 1. `notes/agent_changelog.md` - EVERY version v1 → v2.15, each live result with session id, root causes, lessons. **Read the tail.**
 2. `notes/quota_log.md` - every practice game (who, case, version, score, session). ~86 of 200 used; reset 2026-10-11 12:22.
 3. `datasets/G_lessons.json` - lessons fed to the model each round (`principles` = playbook, `general`, per case type).
@@ -41,11 +42,22 @@ Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden supp
 ## Best live score per hosted case (team, all versions)
 | P01 | P02 | P03 | P04 | P05 | P07 | P08 | P10 | P11 | P18 |
 |---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 0.91 | 0.51 | 0.94 (Neel) | 0.86 | **0.61** | 0.75 | 0.65 | 0.66 | 0.67 | 0.67 |
+| 0.91 | **0.85** (Neel) | 0.94 (Neel) | 0.86 | **0.61** | 0.75 | 0.73 (Neel) | 0.70 (Parth) | **0.79** (v2.16) | 0.68 (Parth) |
 
 ## Last live results (recorded)
 - v2.15: **P05 0.61 (new best, e9eaf87e62371fdf)**; **P02 0.20** (ef17b16a03f0225d) - supplier switched its primary to 30 d and made that its final; analyse vs the 0.48/0.51 games (they stayed on 90 d).
 - Nothing is running now.
+
+## State 19:05 (v2.16j, all teammate branches merged at b0b53d5)
+- **Read `docs/GENERAL_RULES.md` (52 rules incl. teammates' section I) and `analysis/central/ENGINES.md` + `VARIANCE.md`.**
+- P11: 10 games on v2.16.x, median 0.71, best 0.79; round-1 counter is a per-session coin flip (46.00 / 46.50) -> stop spending
+  P11 games. Kept general fixes: chargeback at real ppm, follow best-priced structure, holder packs 2 facts / mirror spreads 1,
+  fillers, no early accept with facts left, one near-close ask, premium clamp (bug), figure-free QNs. Off (experiments):
+  `mirror_step`, `meso`, `news_frame`, `qn_claims`.
+- Next: one full pass of the hosted cases on the merged agent (expected ~0.75 mean, cloud VARIANCE.md), P01/P05/P07 untested.
+
+## v2.16 (P11 focus, 18:00-18:10)
+- P11 0.67 -> **0.79** live: chargebacks priced at the real defect rate, follow its best-priced structure (300 ppm / EUR 0), Neel's falling-window claims, one index per e-mail, late price history. v2.16b: walk guard only when it stalls (it fired on a template line while P11 was conceding EUR 1/round). Details: changelog tail.
 
 ## Merged
 - 2026-10-10 ~18:00: Parth branch parth/n1-p06-p09-p12 merged into main (be018e9): E1 experiments, round-1 argument backbone, UTF-8, parallel RFQ sends + RFQ focus choices; v2.15 walk guard kept. 37 tests pass, offline mean 0.94. Nothing running.

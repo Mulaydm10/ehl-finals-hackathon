@@ -1,0 +1,25 @@
+{
+  "case": "P10",
+  "label": "P10_D 2023-price anchor + small round-2 move",
+  "hypothesis": "B and C fit 'it closes ~30% of the gap between its price and our ask' (R1: 32.20 - 0.3 x (32.20 - 29.89) = 31.51, seen 31.50; R2 steps 0.30 and 0.20 for gaps 1.10 and 0.60), and a below-floor ask (27.38 = C_best's price at lead 56) is 'unrealistic' -> final. Anchor at the 2023 price 28.94 (above its floor): predicted counter ~31.22; then a tiny move (+0.15) + 36 m keeps the gap wide: predicted ~30.58.",
+  "on_agreed": "accept",
+  "on_open": "next",
+  "on_final": "alternative",
+  "rounds": [
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for your offer and for being open about your capacity situation.\n\nWe are ready to give you the firm commitment you asked for: a binding 23,400 pieces per year for 24 months, and we accept a longer lead time of 56 days so you can plan production.\n\nOur orders for the 24 mm mechanical seal were at EUR 28.94 in 2023 and have been at EUR 29.89 since January 2024 (po:4500010364-10, po:4500010407-10, po:4500014436-10).\nOur should-cost estimate for this seal is EUR 24.31 per piece (cost:340010).\n\nWith a firm long-term commitment of this size, we propose EUR 28.94 per piece.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 28.94, "volume_per_year": 23400, "contract_months": 24, "lead_time_days": 56}],
+      "refs": ["po:4500010364-10", "po:4500010407-10", "po:4500014436-10", "cost:340010"]
+    },
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for moving. We extend the commitment to 36 months, 70,200 pieces in total, which gives you planning security well beyond the 12 months you asked for in March, and propose EUR 29.09 per piece.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 29.09, "volume_per_year": 23400, "contract_months": 36, "lead_time_days": 56}],
+      "refs": []
+    },
+    {
+      "body": "Dear Ms Zellner,\n\nThank you. To close, we propose EUR 29.30 per piece on the same 36-month, 56-day terms.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 29.3, "volume_per_year": 23400, "contract_months": 36, "lead_time_days": 56}],
+      "refs": []
+    }
+  ]
+}

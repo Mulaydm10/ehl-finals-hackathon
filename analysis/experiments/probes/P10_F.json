@@ -1,0 +1,25 @@
+{
+  "case": "P10",
+  "label": "P10_F higher credible anchor 30.50",
+  "hypothesis": "Round-1 counter is 31.50 whatever the anchor (28.94, 29.57, 29.89), but the round-2 step grew with the anchor: 28.94 -> 0.10 (D, E), 29.57 -> 0.20 (agent x2), 29.89 -> 0.30 (B). Anchor 30.50 (below its 31.50, so it cannot just agree) with the 36 m move and a small step to 30.75 tests whether the step keeps growing (predicted ~0.45 -> ~31.05).",
+  "on_agreed": "accept",
+  "on_open": "next",
+  "on_final": "alternative",
+  "rounds": [
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for your offer and for being open about your capacity situation.\n\nWe are ready to give you the firm commitment you asked for: a binding 23,400 pieces per year for 24 months, and we accept a longer lead time of 56 days so you can plan production.\n\nOur orders for the 24 mm mechanical seal were at EUR 28.94 until December 2023 and have been at EUR 29.89 since January 2024 (po:4500010364-10, po:4500010407-10, po:4500014436-10).\nOur should-cost estimate for this seal is EUR 24.31 per piece (cost:340010).\n\nWe propose EUR 30.50 per piece.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 30.5, "volume_per_year": 23400, "contract_months": 24, "lead_time_days": 56}],
+      "refs": ["po:4500010364-10", "po:4500010407-10", "po:4500014436-10", "cost:340010"]
+    },
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for moving. We extend the commitment to 36 months, 70,200 pieces in total, which gives you planning security well beyond the 12 months you asked for in March, and propose EUR 30.75 per piece.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 30.75, "volume_per_year": 23400, "contract_months": 36, "lead_time_days": 56}],
+      "refs": []
+    },
+    {
+      "body": "Dear Ms Zellner,\n\nThank you. To close, we propose EUR 30.90 per piece on the same 36-month, 56-day terms.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 30.9, "volume_per_year": 23400, "contract_months": 36, "lead_time_days": 56}],
+      "refs": []
+    }
+  ]
+}

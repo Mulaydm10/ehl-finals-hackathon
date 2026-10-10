@@ -25,7 +25,8 @@ CALIBRATION = ROOT / "analysis" / "central" / "calibration.json"
 # Supplier reactions to verified data, 54 games (analysis/tools/mine_claims.py): "it holds and we took it into
 # account" vs "it holds, but it does not change our calculation" vs "Your figures confirm our case" (a rising
 # index, 7x). Prior take-rates used when the mined file is missing.
-PRIOR_TAKE = {"should_cost": 1.0, "scorecard_ppm": 1.0, "rival_quote": 0.75, "volume_change": 0.63,
+PRIOR_TAKE = {"should_cost": 1.0, "scorecard_ppm": 0.5, "quality_notification": 0.6,  # ppm: taken in P11, ~0 in P03; qn: never cited
+              "rival_quote": 0.75, "volume_change": 0.63,
               "notice_period": 0.5, "po_prices": 0.44, "index_change": 0.31, "scorecard_otd": 0.3}
 MIN_SEEN = 3  # fewer observations than this: the prior decides (OTD: 1 game, P10, a supplier that took no data at all)
 MIN_TAKE = 0.3  # below this a kind is only cited when nothing better is left
@@ -43,13 +44,19 @@ def take_rate(kind, case_id, data=None):
     """Chance this kind of verified claim moves the supplier. A kind that only ever got "does not change our
     calculation" from THIS case's supplier (P03: price history, 2 of 2) counts as 0."""
     data = data or reactions()
+    if kind == "quality_notification":  # the arena words both as "quality record" (P08 cae4b621695f8161: no change)
+        q = data.get("by_case", {}).get(case_id, {}).get("scorecard_ppm") or {}
+        if q.get("no_change") and not q.get("taken"):
+            return 0.0
     seen = data.get("by_case", {}).get(case_id, {}).get(kind)
     if seen and seen.get("taken"):
         # this very supplier took this kind before: cite it first - among proven kinds by its own take share, then
         # the prior (P18: index 4 taken / 1 "confirms our case" must not outrank price history 6 / 6)
         share = seen["taken"] / max(1, sum(v for v in seen.values() if isinstance(v, (int, float))))
         return PROVEN + share + 0.01 * PRIOR_TAKE.get(kind, 0.0)
-    if seen and not seen.get("taken") and (seen.get("no_change") or seen.get("confirm_case")):
+    # "confirm our case" is the reaction to a RISING index, which we no longer cite - it says nothing about a fall
+    # (P02: 7 rising-index games had blocked copper's -2.2% fall)
+    if seen and not seen.get("taken") and seen.get("no_change"):
         return 0.0
     k = data.get("by_kind", {}).get(kind)
     return k["take_rate"] if k and sum(v for x, v in k.items() if x != "take_rate") >= MIN_SEEN else PRIOR_TAKE.get(kind, 0.3)
@@ -69,9 +76,10 @@ def volume_claims(case, facts):
     pct = f.get("change_pct")
     if pct is None or pct <= 0:
         return []
+    # one number per claim sentence (the commitment is stated in section 1 of every e-mail). P08 offline: the old
+    # sentence said "we commit 118,500 units a year" - the forecast's volume, not the case's fixed 94,800
     return [{"supplier": None, "part": f.get("part"), "kind": "volume_change", "ids": [ref], "figure": pct,
-             "sentence": f"Our demand forecast for this part is up {pct:+.1f}% ({ref}), and we commit "
-                         f"{f.get('volume_per_year') or case['buyer']['need_per_year']:,} units a year.",
+             "sentence": f"Our demand forecast for this part is up {pct:+.1f}% ({ref}).",
              "checked_by_arena": True}]
 
 
@@ -129,6 +137,87 @@ def falling_window_claims(case, drivers, per_series=1, min_fall=-0.2):
     return sorted(out, key=lambda c: c["figure"] * (c["weight"] or 0.01))
 
 
+def quality_notification_claims(case, facts, sid):
+    """Supplier-caused quality notifications on THIS part in the last 12 months of the data, as one verified quality fact
+    (the arena checks qn rows as "the mean ppm if you speak of quality"). Never cited in any of our games (cloud
+    session, analysis/central/ENGINES.md); P02: qn:20004698 (2025-10-16, 4,000 ppm), qn:20004826 (2026-02-18, 5,263 ppm)."""
+    parts = set(case.get("parts", []))
+    last = max((v.get("date") or "") for v in facts.values() if isinstance(v, dict) and v.get("date"))
+    floor = f"{int(last[:4]) - 1}{last[4:]}"
+    qns = sorted(k for k, v in facts.items() if k.startswith("qn:") and v.get("supplier") == sid
+                 and v.get("part") in parts and (v.get("date") or "") > floor)
+    if not qns:
+        return []
+    # ONE part, at most 8 IDs (newest first), like the 2-8 order lines api.md allows: live P07 (Parth, 79b7b274b6a77470,
+    # 55db9b3de85aa78d) - 19 QN IDs over the kit's parts in one claim -> the arena answered HTTP 500 four times and the
+    # agent died mid-game (abandoned case = no deal)
+    by_part = {}
+    for k in qns:
+        by_part.setdefault(facts[k]["part"], []).append(k)
+    qns = sorted(max(by_part.values(), key=len), key=lambda k: facts[k].get("date") or "", reverse=True)[:8]
+    mean = sum(facts[k]["ppm"] for k in qns) / len(qns)
+    return [{"supplier": sid, "part": facts[qns[0]]["part"], "kind": "quality_notification", "ids": qns,
+             "figure": round(mean), "keep_alive": True, "checked_by_arena": True,
+             # NO number at all: live P02 f778b35c67ecd799 wrote "2 quality notifications ... in the last 12 months, at
+             # 4,632 ppm" -> "contradicted ... That costs trust" (0.607). Without a figure the arena takes the data's own.
+             "sentence": f"We raised quality notifications on this part over the past year ({', '.join(qns)})."}]
+
+
+def hedged_series(case, motives):
+    """Series it has covered at fixed prices (motive hedged_forward): every claim on them met "That is not our reality:
+    our AS-14404 is covered at fixed prices until March 2027" (P08 5 of 5). Its index-clause series."""
+    if "hedged_forward" not in motives:
+        return set()
+    return {o["series"] for o in case.get("term_options", {}).get("index_clause", []) if o}
+
+
+def final_at(case_id, data=None):
+    """Our message number at which this supplier said final_offer in past games (most common), or None.
+    P08: always our 3rd; P02: 4th-5th."""
+    data = data or reactions()
+    sig = data.get("by_case", {}).get(case_id, {}).get("_signals", {})
+    counts = {int(k.split("_")[-1]): v for k, v in sig.items() if k.startswith("final_at_")}
+    return max(counts, key=lambda n: (counts[n], -n)) if counts else None
+
+
+def own_quote_note(facts, sid, parts, opening_price, today="2026-09-30", days=90):
+    """Its OWN recent quote for this part below its opening, in words only (no ID: a quote outside the case refs would be
+    "irrelevant"). P08: "On 2026-09-10 you quoted EUR 5.45" vs its EUR 6.05 opening (cloud: analysis/cases/P08_engine.md)."""
+    from datetime import date
+    t0 = date.fromisoformat(today)
+    best = None
+    for k, v in facts.items():
+        if k.startswith("quote:") and v.get("supplier") == sid and v.get("part") in parts and v.get("date"):
+            if (t0 - date.fromisoformat(v["date"])).days <= days and opening_price and v["unit_price"] < opening_price:
+                if best is None or v["date"] > best["date"]:
+                    best = v
+    if not best:
+        return None
+    return (f"On {best['date']} you quoted us EUR {best['unit_price']:.2f} per unit for this part; your new quote is "
+            f"{(opening_price / best['unit_price'] - 1) * 100:.1f}% above it.")
+
+
+def delivery_year_claims(facts, sid, bar=95.0):
+    """On-time delivery as the mean of 4 quarterly scorecard rows, for the last 12 months and the 12 months before
+    (P02: 89.3% and 83.9%). Each a verified fact with its own IDs. For a MIRRORING supplier only, as the last items:
+    it cuts in every round that brings new verified data, even data it says "does not change our calculation" (P02
+    552fb056e31d24d1: order history -> -1.10), and goes final in the first round without any (-> -0.30, final)."""
+    rows = sorted((k for k, v in facts.items() if k.startswith(f"sc:{sid[4:]}@") and v.get("otd_pct") is not None),
+                  key=lambda k: k.split("@")[-1])
+    out = []
+    for block in (rows[-4:], rows[-8:-4]):
+        if len(block) < 4:
+            continue
+        mean = sum(facts[k]["otd_pct"] for k in block) / 4
+        if mean >= bar:
+            continue
+        q0, q1 = block[0].split("@")[-1], block[-1].split("@")[-1]
+        out.append({"supplier": sid, "part": None, "kind": "scorecard_otd", "ids": list(block), "figure": round(mean, 1),
+                    "keep_alive": True, "checked_by_arena": True,
+                    "sentence": f"Your on-time delivery averaged {mean:.1f}% from {q0} to {q1} ({', '.join(block)})."})
+    return out
+
+
 def weak_delivery_claims(claims, sid, bar=90.0):
     """Its on-time delivery below `bar`% (P03: 84.6%) - a third, different kind of data for round 1. Mixed kinds never
     drew "We received a lot of material" (P10 / P18: three kinds, no padding); two+ index claims always did."""
@@ -143,7 +232,10 @@ def rank(claims, case_id, data=None):
     def key(c):
         if c["kind"] == "index_change" and (c.get("figure") or 0) > 0:
             return 9.0
-        return -take_rate(c["kind"], case_id, data)
+        rate = take_rate(c["kind"], case_id, data)
+        if c["kind"] == "index_change":  # a FALL of a cost driver was taken in P01, P03 (x3), P18
+            rate = max(rate, 0.9)
+        return -rate
     return sorted(claims, key=key)
 
 
@@ -181,8 +273,39 @@ def money_cheaper_for_it(est, buyer_rate):
 APPROVAL = re.compile(r"(?i)above (\d+(?:[.,]\d+)?)\s?%")
 
 
+FULL_AUTHORITY = re.compile(r"(?i)hold (the )?full authority|committee is not applicable|without further committee")
+
+
 def committee_round1(motives):
     return bool({"approval_ladder", "price_frozen"} & set(motives))
+
+
+MIRROR = re.compile(r"(?i)in response to your (step|movement|adjustment)|significant step towards our position")
+MIRROR_SHARE = 0.40  # a mirroring supplier: step 40% of the remaining gap per round (P02: 30% -> its cuts 1.67/1.40/0.90)
+MIRROR_ANCHOR = 0.05  # ...and open 5% below its quote in value (stabilise default 3.5%): the meeting point follows the anchor
+
+
+# its sales person signals its own limit and that management could go further. P02 ee98266bedd37231 round 4: "This
+# represents our best effort to accommodate your target without requiring management escalation"; then "we cannot adjust
+# our calculation without a verifiable basis" -> final. Ask ONCE, with a real step, before it goes final.
+ESCALATION_HINT = re.compile(r"(?i)without (requiring )?(management|committee) (escalation|approval)|best effort|"
+                             r"cannot adjust (our|the) (calculation|pricing|price)|lacks new verifiable data|"
+                             r"no new verified data|maximum (flexibility|concession)")
+
+
+def mirror_supplier(case_id, data=None):
+    """It answers our step with a step of its own (P02: "In response to your step, we are prepared to reduce our price"
+    in 4 games, 1:1 in 466f3cb54614635f; a1e2a4acb73dd3e9: "We expect a significant step towards our position"). Our
+    ask is far below its price and the deal is ITS price, so a bigger step from us costs nothing and buys a bigger one."""
+    data = data or reactions()
+    return bool(data.get("by_case", {}).get(case_id, {}).get("_signals", {}).get("mirror"))
+
+
+def full_authority(case_id, data=None):
+    """Its sales person said it decides alone (P02 x4, every round of de6192e39dd86084: "I hold full authority to
+    conclude this agreement ... without further committee approval"): then never mention a committee."""
+    data = data or reactions()
+    return bool(data.get("by_case", {}).get(case_id, {}).get("_signals", {}).get("full_authority"))
 
 
 def same_structure(t, ref, fields=("payment_days", "contract_months", "volume_per_year")):

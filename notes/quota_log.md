@@ -98,3 +98,42 @@
 | 2026-10-10 17:43 | Parth | P11 | noidea dac5e97 E2 / gpt-6-astra | 0.67 (first counter 0.505, final round 5, timeouts 0) | 03a3beee7e64f5b3 |
 | 2026-10-10 17:46 | Parth | P18 | noidea 0b9ee8b E3 + all_parts_po / gpt-6-astra | 0.54 (first counter 0.485, final round 3, timeouts 0) | 928a3878c58f7dc3 |
 | 2026-10-10 17:46 | Parth | P18 | noidea 0b9ee8b E3 + all_parts_po / gpt-6-astra | 0.68 (first counter 0.552, final round 3, timeouts 0) | 4e244819e8b9207b |
+| 2026-10-10 18:03 | Dhruv | P11 | noidea v2.16 / gpt-6-astra | **0.79 best P11** (accepted 45.00 @ 300/0 in round 2 - walk guard) | 6b02b8cc94796703 |
+| 2026-10-10 17:54 | Neel | P02 | noidea_neel / gpt-6-astra | **0.66** | de6192e39dd86084 |
+| 2026-10-10 17:58 | Neel | P02 | noidea_neel / gpt-6-astra | **0.67** | a1e2a4acb73dd3e9 |
+| 2026-10-10 18:01 | Neel | P02 | noidea_neel / gpt-6-astra | **0.82** | ee98266bedd37231 |
+| 2026-10-10 18:07 | Dhruv | P11 | noidea v2.16b / gpt-6-astra | 0.71 (round-1 answer 0.50 higher than the 0.79 game; held twice when data ran out) | f80f4b5452fa442a |
+| 2026-10-10 18:14 | Dhruv | P11 | noidea v2.16c / gpt-6-astra | 0.71 (qn claims contradicted -> final round 3) | fa9a9d0277f372c6 |
+| 2026-10-10 18:09 | Neel | P02 | noidea_neel / gpt-6-astra | **0.85** | 552fb056e31d24d1 |
+| 2026-10-10 18:13 | Neel | P02 | noidea_neel / gpt-6-astra | **0.85** | 8d4c4d5d7dff80bb |
+| 2026-10-10 18:17 | Neel | P02 | noidea_neel / gpt-6-astra | **0.61** | f778b35c67ecd799 |
+| 2026-10-10 18:23 | Dhruv | P11 | noidea v2.16d / gpt-6-astra | 0.77 (agreed to our near-close 45.13; news claim no effect) | 7117d3517bedd67e |
+| 2026-10-10 18:25 | Parth | P10 | probe P10_A 2%-ladder (scripted, no model) | 0.674 (unit_price=31.56, volume_per_year=23400, contract_months=24, lead_time_days=56) | e479da115f89e76a |
+| 2026-10-10 18:27 | Parth | P10 | probe P10_B current-price anchor (scripted, no model) | 0.702 (unit_price=31.2, volume_per_year=23400, contract_months=36, lead_time_days=56) | 991ff7c420b037fc |
+| 2026-10-10 18:30 | Parth | P10 | probe P10_C bigger round-2 step + quality data (scripted, no model) | 0.694 (unit_price=31.3, volume_per_year=23400, contract_months=36, lead_time_days=56) | 7a9294b8466a475d |
+| 2026-10-10 18:32 | Parth | P10 | probe P10_D 2023-price anchor + small round-2 move (scripted, no model) | 0.686 (unit_price=31.4, volume_per_year=23400, contract_months=36, lead_time_days=56) | e61c28186f958320 |
+| 2026-10-10 18:35 | Parth | P10 | probe P10_E 3 round-1 claims + optimal step (scripted, no model) | 0.686 (unit_price=31.4, volume_per_year=23400, contract_months=36, lead_time_days=56) | 0b29bc23bb8ed5e4 |
+| 2026-10-10 18:25 | Neel | P08 | noidea_neel / gpt-6-astra | **0.73** | cae4b621695f8161 |
+| 2026-10-10 18:31 | Dhruv | P11 | noidea v2.16f / gpt-6-astra | 0.71 (1 fact/round; accepted open 45.50 in r3) | 352bdb0495fc67e4 |
+| 2026-10-10 18:37 | Dhruv | P11 | noidea v2.16g / gpt-6-astra | 0.71 (data budget used by r3; accepted open 45.50) | c0d6894ce2cf586a |
+| 2026-10-10 18:30 | Neel | P08 | noidea_neel / gpt-6-astra | **0.64** | 136352b4a3a9f752 |
+| 2026-10-10 18:48 | Dhruv | P11 | noidea v2.16h / gpt-6-astra | 0.71 (near-close ask held) | e662af62eb9341a4 |
+| 2026-10-10 18:49 | Neel | P08 | noidea_neel / gpt-6-astra | **0.72** | c387f78034601d57 |
+| 2026-10-10 18:53 | Dhruv | P11 | noidea v2.16i / gpt-6-astra | 0.54 (MESO + premium-extrapolation bug -> accepted r2) | f5157e0d3ca6b113 |
+| 2026-10-10 18:56 | Dhruv | P11 | noidea v2.16j / gpt-6-astra | 0.71 (held 45.50 four rounds) | 3d85f13947660729 |
+| 2026-10-10 18:42 | Parth | P10 | noidea 2a53cb1 short-fuse / gpt-6-astra | 0.679 (open 31.70 -> final 31.50 @ 56, 36 m; flat price history 'does not change' (probes' 28.94->29.89 path was taken)) | c283f47ddedd3b53 |
+| 2026-10-10 18:48 | Parth | P10 | noidea 87653f3 short-fuse + price path / gpt-6-astra | 0.694 (price path taken -> open 31.50, final 31.30 @ 56, 36 m) | 53bab007f0218897 |
+| 2026-10-10 18:51 | Parth | P10 | probe P10_F higher credible anchor 30.50 (scripted, no model) | 0.694 (unit_price=31.3, volume_per_year=23400, contract_months=36, lead_time_days=56) | a2e38ea824aa1d67 |
+| 2026-10-10 18:58 | Parth | P11 | probe P11_A one new fact per round (scripted, no model) | 0.794 (ppm_commitment=300, chargeback_eur_per_complaint=0.0, unit_price=45.0) | 4d6c9a1396e4d0a0 |
+| 2026-10-10 19:10 | Dhruv | P11 | noidea v2.17 / gpt-6-astra | 0.71 (high draw; probes 45.10/45.20/45.30 held, final 45.50) | 876705379b434d96 |
+| 2026-10-10 19:24 | Parth | P18 | probe P18_A 90 d + AS db5 structure (scripted, no model) | 0.598 (unit_price=5.3, index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 5.0, 'base_month': '2026-08'}, payment_days=90, contract_months=24) | c9b288817e76ee78 |
+| 2026-10-10 19:28 | Parth | P07 | probe P07_A one 90 d sheet + bigger mirrored steps (scripted, no model) | 0.812 (unit_price=5.31, payment_days=90, contract_months=24) | 58bf025d01aa1275 |
+| 2026-10-10 19:32 | Parth | P07 | noidea 6d41238 + gap_steps / gpt-6-astra | 0.667 (arena HTTP 500 on our round-2 message (4 retries); closed by accepting its round-1 standing 5.46/30 d - not a test of the switch) | 79b7b274b6a77470 |
+| 2026-10-10 19:34 | Parth | P07 | noidea 6d41238 + gap_steps / gpt-6-astra | 0.667 (arena HTTP 500 again on round 2: central.py QN claim with 19 IDs (kit parts); closed by accepting its round-1 standing) | 55db9b3de85aa78d |
+| 2026-10-10 19:39 | Parth | P07 | noidea cb1dc6c + gap_steps / gpt-6-astra | 0.747 (agent with 30%-gap steps, QN claim capped) | 1dd6ecf10880bece |
+| 2026-10-10 19:42 | Parth | P07 | probe P07_A one 90 d sheet + bigger mirrored steps (scripted, no model) | 0.812 (unit_price=5.31, payment_days=90, contract_months=24) | 44f5c5da31a47e9e |
+| 2026-10-10 19:43 | Parth | P07 | probe P07_B = A + quality notifications in round 2 (scripted, no model) | 0.792 (unit_price=5.34, payment_days=90, contract_months=24) | 287604034dad9f63 |
+| 2026-10-10 19:46 | Parth | P07 | probe P07_C = A + tiny labour claim in round 2 (scripted, no model) | 0.792 (unit_price=5.34, payment_days=90, contract_months=24) | 6404d167cbdc59ac |
+| 2026-10-10 19:50 | Parth | P07 | noidea 03aa32f + gap_steps / gpt-6-astra | 0.812 (lean later rounds (no weak facts while it moves), QN gate, 30%-gap steps) | 6f360ce484bb3f30 |
+| 2026-10-10 19:53 | Parth | P18 | noidea 03aa32f + gap_steps / gpt-6-astra | 0.666 (gap_steps check on a fixed-step supplier) | a665044e93877cd6 |
+| 2026-10-10 19:59 | Parth | P08 | noidea a67d138 (gap steps default) / gpt-6-astra | 0.528 (check of default gap steps on P08) | 89259de630143206 |

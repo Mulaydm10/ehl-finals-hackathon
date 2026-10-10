@@ -1,0 +1,34 @@
+{
+ "case": "P18",
+ "variant": "noidea_neel",
+ "sim_score": 0.9420811296330103,
+ "end": "deal {'unit_price': 4.77, 'index_clause': None, 'payment_days': 45, 'contract_months': 36}",
+ "rounds": 1,
+ "emails": [
+  {
+   "body": "Dear Franz Seidl,\n\nThank you for your message.\n\n1. Volume and term: we confirm a binding volume of 23,700 units per year for 36 months, 71,100 units in total.\n2. Our proposal: EUR 4.77 per unit, no price-adjustment clause, 45 days net, 36-month contract. This amounts to about EUR 339,147 over the term.\n3. Basis: On 2026-09-09 you quoted us EUR 6.06 per unit for this part; your new quote is 0.7% above it. Our recent orders for Round bar 1.4404 dia 30 mm, peeled were at 5.26, 5.84 per 1 (po:4500014292-10, po:4500014355-10, po:4500014427-10). Alloy surcharge 1.4404, Isartal Edelstahlwerk (fictional mill, derived) changed -5.5% from 2026-06 to 2026-09 (idx:AS-14404@2026-06, idx:AS-14404@2026-09). Our demand forecast for this part is up +1.9% (fc:370010@2026-09).\n4. Next step: Please send us your cost breakdown for this part. You told us that price changes above 2% need your pricing committee. Please put this proposal to your pricing committee: a binding 36-month agreement for 71,100 units, about EUR 339,147. On the committee's written confirmation we issue the order the same day, and we pay every invoice on the due date.\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "refs": [
+    "fc:370010@2026-09",
+    "idx:AS-14404@2026-06",
+    "idx:AS-14404@2026-09",
+    "po:4500014022-10",
+    "po:4500014078-10",
+    "po:4500014140-10",
+    "po:4500014239-10",
+    "po:4500014287-10",
+    "po:4500014292-10",
+    "po:4500014355-10",
+    "po:4500014427-10"
+   ],
+   "sheets": [
+    {
+     "unit_price": 4.77,
+     "index_clause": null,
+     "payment_days": 45,
+     "contract_months": 36
+    }
+   ]
+  }
+ ],
+ "relationship": {}
+}
