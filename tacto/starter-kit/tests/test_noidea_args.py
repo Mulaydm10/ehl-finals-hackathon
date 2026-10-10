@@ -50,3 +50,22 @@ def test_a_volume_trend_is_cited_once():
     agent.decide(case, threads)
     kinds = [c["kind"] for c in agent.sup[next(iter(threads))]["args"]]
     assert kinds.count("forecast") <= 1, kinds
+
+
+@pytest.mark.skipif(not OPENINGS.exists(), reason="needs the probed openings")
+def test_other_parts_price_history_comes_last_and_only_as_an_experiment(monkeypatch):
+    import arena_kit.agents.noidea as noidea
+
+    case, threads = load("P18")
+    sid = next(iter(threads))
+    off = NoIdeaAgent(None)
+    off.decide(case, threads)
+    assert all(c["part"] in case["parts"] for c in off.sup[sid]["args"] if c["kind"] == "po_prices")
+    monkeypatch.setattr(noidea, "EXPERIMENTS", {"all_parts_po"})
+    on = NoIdeaAgent(None)
+    msg = on.decide(case, threads)["message"]
+    args = on.sup[sid]["args"]
+    others = [i for i, c in enumerate(args) if c.get("other_part")]
+    assert others, [c["kind"] for c in args]
+    assert not any(i in msg["refs"] for j in others for i in args[j]["ids"])  # never in round 1
+    assert all(args[j]["part"] not in case["parts"] for j in others)

@@ -41,7 +41,7 @@ MIN_GAIN_PTS = 1.0  # never pay more than ask - 1 pt unless it is the last word
 # (P10: "does not change our calculation"), quality record in quality cases (P11 "took it into account"),
 # falling indices small. Rising indices are never cited ("your figures confirm our case").
 ARG_PRIORITY = {"notice_period": 0, "cost_calc": 1, "po_prices": 2, "should_cost": 3, "forecast": 4,
-                "scorecard_ppm": 5, "scorecard_otd": 5, "index_change": 6}
+                "scorecard_ppm": 5, "scorecard_otd": 5, "index_change": 6, "po_prices_other": 5.5}
 ANCHOR_DEPTH = {"rfq": 0.20, "bundling": 0.15, "raw_material": 0.22, "capacity": 0.14, "quality": 0.09}
 ANCHOR_DEPTH_BY_GOAL = {"stabilise": 0.03, "secure_supply": 0.10, "quality_first": 0.09,
                         "leverage": 0.18, "routine": 0.03}
@@ -236,12 +236,18 @@ class NoIdeaAgent:
             if c["sentence"] not in seen:
                 seen.add(c["sentence"])
                 ranked.append(c)
+        # experiment: the price history of the supplier's OTHER parts with us, when it jumped too. api.md: "Order lines of
+        # different parts are separate arguments". P18: all three of 70740's bars rose +11% in July (one index clause);
+        # price history was its strongest argument (+0.2). Ranked last: later rounds, after this part's own case.
+        if "all_parts_po" in EXPERIMENTS:
+            ranked += [{**c, "other_part": True} for c in mine if c["kind"] == "po_prices" and c["part"] not in parts
+                       and self.po_jump(c) >= 3.0 and c["sentence"] not in seen]
         # the arena counts a volume trend once per case: a 2nd forecast (another part) came back `duplicate` (P07 x4)
         fc = [c for c in ranked if c["kind"] == "forecast"]
         ranked = [c for c in ranked if c["kind"] != "forecast" or c is fc[0]]
         # what moved first counters live, strongest first (stable sort keeps the order within a kind)
         prio = dict(ARG_PRIORITY, scorecard_ppm=1.5 if case["type"] == "quality" else ARG_PRIORITY["scorecard_ppm"])
-        return sorted(ranked, key=lambda c: prio.get(c["kind"], 9))
+        return sorted(ranked, key=lambda c: prio["po_prices_other"] if c.get("other_part") else prio.get(c["kind"], 9))
 
     # Expected round of its final_offer, by what we know before round 1 (26 practice games, src/eval/archive_runs.py):
     # capacity P10 round 1 (5/5), renewal P04 round 3, bundling P07 round 4 (6/6), stabilise price increase P01
@@ -414,13 +420,14 @@ class NoIdeaAgent:
                             "sentence": f"Our demand forecast for {desc.split(',')[0]} is up {ch:+.1f}% ({ks[-1]})."})
         return sorted(out, key=lambda c: -c["figure"])[:2]
 
-    def next_args(self, sid, n):
-        """The next `n` arguments whose IDs were not cited yet (re-citing reads as padding)."""
+    def next_args(self, sid, n, first_round=False):
+        """The next `n` arguments whose IDs were not cited yet (re-citing reads as padding). Round 1 is about this
+        part only: other parts' price histories (experiment `all_parts_po`) wait for round 2."""
         picked = []
         for c in self.sup[sid]["args"]:
             if len(picked) == n:
                 break
-            if not any(i in self.cited for i in c["ids"]):
+            if not any(i in self.cited for i in c["ids"]) and not (first_round and c.get("other_part")):
                 picked.append(c)
         return picked
 
@@ -681,11 +688,13 @@ class NoIdeaAgent:
         idx = list(dict.fromkeys(idx))[:3]
         if not idx:
             return None
-        aidx = [i for i in d.get("args", []) if isinstance(i, int) and 0 <= i < len(pool)][:3 if k == 0 else 2]
+        aidx = [i for i in d.get("args", []) if isinstance(i, int) and 0 <= i < len(pool)
+                and not (k == 0 and pool[i].get("other_part"))][:3 if k == 0 else 2]
         # the backbone is code's, not the model's: round 1 carries our top 3 (pool is ranked by ARG_PRIORITY), later
         # rounds at least the next unused one. Live the model dropped the decisive argument (P02 v2.4 159def0f5e514b40:
         # no argument, 0.34; P10 v2.x: should-cost never sent; P18 9d4d288eb4ae6789: 1 of 4 sent)
-        must = list(range(min(3, len(pool)))) if k == 0 else ([0] if pool else [])
+        own = [i for i, c in enumerate(pool) if not c.get("other_part")]
+        must = own[:3] if k == 0 else ([0] if pool else [])
         aidx = list(dict.fromkeys(must + aidx))[:3 if k == 0 else 2]
         notes = d.get("notes") or {}
         for r in notes.get("refusals") or []:  # remember its stated limits for the next rounds
@@ -922,7 +931,7 @@ class NoIdeaAgent:
     def message(self, case, sid, events, sheets, k, final=False, args=None, opening=None):
         if sheets and not final:
             self.sup[sid]["last_main"] = dict(sheets[0])
-        args = self.next_args(sid, 3 if k == 0 else 1) if args is None else args
+        args = self.next_args(sid, 3 if k == 0 else 1, first_round=k == 0) if args is None else args
         if any(a["kind"] == "cost_calc" for a in args):  # it uses 3 claims: the arena checks at most 3 per e-mail
             args = [a for a in args if a["kind"] == "cost_calc"]
         rival = self.rival_offer(case, sid) if case["type"] == "rfq" else None
