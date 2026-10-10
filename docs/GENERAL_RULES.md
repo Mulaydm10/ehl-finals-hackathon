@@ -185,3 +185,17 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
     contradicted claims 0.32. Coin-flip first counters (P08 50/50, P11 40/60) are NOT fixable - judge on 2+ games.
 80. **At a named / remembered hard floor, offer two sheets: the floor with a cheap-for-it term, and a hair under the floor**:
     P11 eac20911 agreed to 44.95 (0.8019, first above 0.80) - the hair sheet, delivered in the same e-mail as its last facts.
+
+## K. P08 win (Parth 0.912, beats the house 0.752) and the latest teammate lessons (reviewed 2026-10-10 ~20:55)
+81. **Its own rising price path leads round 1**: when our orders with it rose >= 3% in 12 months (P08: 5.17 -> 5.45 in 9 months),
+    cite the order history as a PATH first - "the rise is already in our price". P08's first counter fell 5.41 -> 5.25 and, on a
+    budget supplier, the final followed (d0708ed1038995d1 = **0.912**; Neel's best was 0.732). Code: Parth 544b5cd.
+82. **Never name an acceptable price or "the current level" in the opening** - it anchors the supplier's floor upward
+    (P08 81ee4b1e: +0.08 floor, total cut only -0.13, 0.633).
+83. **Its own earlier quote, by ID, is the one P03 fact never cited** (quote:7300003, EUR 412.74, 5 Sep) - untested lever.
+84. **Never ask again after its final - reconfirmed**: P04 last-cent ask 4.93 @ 90 d after its final -> walked, 0.000 (39d795e).
+85. **The floor trade (rule 66) generalises**: Neel ported it to P08 (its own clause structure one cent under the expected final,
+    gated by supplier memory to low draws).
+86. **Words matter where the numbers are equal: name the fear you remove, never accuse.** P11 (28 games, same data and sheet):
+    openings that told the cash-short owner "no penalties / no chargebacks" drew the low first counter 7 of 9 vs 7 of 19;
+    "prove your reliability" / "earn our confidence" / "documented complaints" leaned high. Put the reassurance in code, not luck.

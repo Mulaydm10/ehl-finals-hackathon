@@ -63,7 +63,7 @@
   }
  },
  "sup:70140": {
-  "games": 34,
+  "games": 35,
   "scores": [
    0.672,
    0.609,
@@ -77,6 +77,7 @@
    0.71,
    0.794,
    0.794,
+   0.71,
    0.71,
    0.794,
    0.772,
@@ -104,7 +105,7 @@
    "labour cost index and the old pos you cited, and we took them into account. we checked the price history": 1,
    "news": 1,
    "old order prices you mentioned, and they are correct, but our situation is different now. we checked the price history": 1,
-   "price history": 19
+   "price history": 20
   },
   "structures": {
    "chargeback_eur_per_complaint=0.0|ppm_commitment=300": {
@@ -201,11 +202,12 @@
   },
   "took": {
    "energy cost": 1,
-   "energy index": 6,
+   "energy index": 7,
    "index and price history": 1,
-   "index change": 52,
+   "index change": 53,
+   "labour cost index": 1,
    "quality record": 32,
-   "volume change": 28
+   "volume change": 29
   }
  },
  "sup:70410": {
@@ -720,11 +722,12 @@
   }
  },
  "sup:70620": {
-  "games": 7,
+  "games": 8,
   "scores": [
    0.0,
    0.815,
    0.81,
+   0.0,
    0.874,
    0.766,
    0.0,
@@ -795,13 +798,14 @@
   "took": {}
  },
  "sup:70710": {
-  "games": 21,
+  "games": 22,
   "scores": [
    0.642,
    0.0,
    0.0,
    0.46,
    0.493,
+   0.822,
    0.726,
    0.721,
    0.633,
@@ -828,6 +832,7 @@
     "agreed_to_our_ask": [],
     "finals": [
      4.94,
+     5.02,
      5.1,
      5.11,
      5.12,
@@ -899,9 +904,9 @@
    }
   },
   "took": {
-   "index change": 15,
-   "price history": 1,
-   "volume change": 9
+   "index change": 18,
+   "price history": 3,
+   "volume change": 11
   }
  },
  "sup:70740": {

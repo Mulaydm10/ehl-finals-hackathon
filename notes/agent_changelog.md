@@ -863,3 +863,19 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 
 ### v2.21d (offline): two-step floor ask for 0.81 - round 1 at the floor: [44.90 (0.810), 45.00 + EUR 300 chargeback (0.809)]; if refused: 44.95 alone (0.802, agreed in eac20911). Replay + simulated refusal OK; tests 50, offline 0.930/0.925.
 - v2.21d live P11 (20:46): 0.71 (11e2d8727fc045a1) - HIGH draw 46.50/45.50; probe 45.10, floor trade (45.50 + EUR 300 / 45.39), hair 45.45 all held -> accepted 45.50. Its high-draw floor this session > 45.45. The 44.90 step needs a LOW draw.
+
+### Merge parth (P08 price path, 544b5cd) + cloud (P08 floor trade port, CLOUD_LEARNINGS.md, P03 own-quote plan)
+- Round 1 change only for P08: order-price path (4 po IDs) + cold-drawing index lead; P11 / all others identical. Tests 50,
+  offline 0.930 / 0.925, walk replays unchanged. Rules 81-85 + 2 lessons for the model.
+- Parth: **our agent with the P08 price path scored 0.822 live** (6785420; the 0.912 was scripted probe A). P04 probe experiment (pay-on-time promise + probe sheets beating 0.874).
+
+### v2.22 (offline): WORDING - name the fear we remove, no accusing openings (user: "is there a problem with wording?")
+- `/tmp/wording.py` over 28 P11 games with the identical 300/0 @ 42.77 sheet and data: "not punitive / no penalties" in round 1
+  7/9 low draws vs 7/19 high; the word "chargeback" (as "we won't ask for chargebacks") 3/9 vs 0/19; "earning our confidence"
+  2/9 vs 8/19; "documented complaints" 1/9 vs 6/19; "prove your reliability" 7/9 vs 19/19. The model wrote the reassurance only
+  by chance. Suggestive (n=28), cheap to act on.
+- Code line in round 1 for a cash-driven supplier when our sheets carry no chargeback: "We will not ask you for chargebacks or
+  any penalties: we want a binding quality commitment and your corrective-action plan, not cash out of your business."
+  Prompt rule: never sound like an accusation or a test ("prove your reliability", "earn our confidence", "documented complaints").
+- Astra round 1 OK (non-accusing opening + the line), injection PASS, tests 56.
+- v2.22 live P11 (20:55): 0.71 (605ed96c39467c97) - HIGH draw despite the fixed reassurance line (1 game: the wording hypothesis is neither confirmed nor refuted; 7 of 19 earlier high draws also had reassuring wording). Probes 45.10, floor trade 45.50+EUR 300 / 45.39, hair 45.45 all held.

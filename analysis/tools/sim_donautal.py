@@ -40,16 +40,20 @@ STD = {"payment_days": 30, "incoterm": "DAP", "ppm_commitment": 50, "chargeback_
        "lead_time_days": 10}
 RATE, DB_PT, FREE_RISK = 0.08, 0.024, 0.14
 HEADLINE = {"low": 5.41, "high": 5.53}
+PATH_SHIFT = 0.16  # task 19: a rising order-history PATH in round 1 ("rose from EUR 5.17 to EUR 5.45 within nine months") lowered the
+                   # low-draw headline 5.41 -> 5.25 (d0708ed1 = 0.912); the high draw is untested - the same shift assumed
 R2_STEP = {"free": 0.16, "db0": 0.07, "db5": 0.07}  # db5 asks: 0 (1f27, hold) / -0.15 (586a) / -0.06 (9bfa) -> the mean
 # task 13 (analysis/cases/P08_floor.md): FLOOR-BOUND. With clause-free asks its final = round-1 value - BUDGET, whatever the
 # path (low: c387 0.210, cae4 0.220, 6912 0.217, a4b9 0.210, a43d 0.199; high: 1363 0.258, db7d 0.281). Round 2 takes 0.16 after
 # a ~16% step of ours, 0.11-0.12 after a 30% step (6912 at 90 d, a4b9 at 14 d: the step, not the payment term), 0.16 on the
 # high draw; a deferral round takes half of what is left, the final the rest. XSELL: an untested floor shift (cross-sell).
-BUDGET = {"low": 0.208, "high": 0.27}  # 14 games (task 15): low c387 .210 cae4 .220 6912 .217 a4b9 .210 a43d .199 ad04 .200 94e7 .200
+BUDGET = {"low": 0.208, "high": 0.278}  # task 19: high 1363 .258 db7d .281 b1ca .291
+LOW_60_BUDGET = 0.133  # task 19: 81ee4b1e, the only low draw with round 2 on 60 d: cut -0.033, total -0.133 (n=1; confounded with an
+                       # opening line "no higher than the current level"); high draws on 60 d were normal (db7d .281, b1ca .291)  # 14 games (task 15): low c387 .210 cae4 .220 6912 .217 a4b9 .210 a43d .199 ad04 .200 94e7 .200
 R2_BIG_STEP_CUT = 0.115  # (task 15, superseded by R2_GAP_SHARE)
 R2_GAP_SHARE = 0.255  # task 16: round-2 cut = min(0.16, 0.255 x gap after our ask): 8180 0.60 -> 0.16, 6912 0.43 -> 0.118, a4b9 0.44 -> 0.109
 DEFER_MIN_LEFT = 0.07  # task 16: no deferral when the budget left after round 2 is one final step (8180d389: 0.05 left -> final at msg 3)
-FINAL_STEP, DEFER_STEP, DEFER_BELOW, FINAL_AT = 0.05, 0.055, 0.3, 3  # deferral rounds: db7d 0.06/0.06, 6912fd89 0.049/0.049
+FINAL_STEP, DEFER_STEP, DEFER_BELOW, FINAL_AT = 0.05, 0.055, 0.35, 3  # task 19: deferred at 0.18-0.30x live (81ee 0.30), final at >= 0.9x  # deferral rounds: db7d 0.06/0.06, 6912fd89 0.049/0.049
 HOUSE = 0.752
 
 
@@ -88,9 +92,10 @@ def score(t):
 
 
 class Donautal:
-    def __init__(self, draw="low", max_defer=1, xsell=0.0, term36=0.01):  # 94e77b7b: 36 m headline 5.40 vs 5.41/5.42
+    def __init__(self, draw="low", max_defer=1, xsell=0.0, term36=0.01, soft=0.0):  # 94e77b7b: 36 m headline 5.40 vs 5.41/5.42
         self.draw, self.max_defer, self.xsell, self.free, self.v1, self.xs = draw, max_defer, xsell, True, None, False
         self.term36, self.months = term36, 24  # term36: untested round-1 value shift for a 36-month ask (task 14)
+        self.soft = soft  # task 18: how far under its final it would still agree to ITS OWN structure (untested; P11's floor: 0)
         self.v, self.n, self.defers, self.final, self.ours = None, 0, 0, False, []
         self.its_steps, self.last_prim, self.head_days = [], None, None
 
@@ -106,14 +111,18 @@ class Donautal:
         if self.n == 1:
             days = self.head_days = first["payment_days"]
             self.months = 36 if first.get("contract_months") == 36 else 24
-            h = round(HEADLINE[self.draw] - (self.term36 if self.months == 36 else 0), 2)
+            h = round(HEADLINE[self.draw] - (self.term36 if self.months == 36 else 0)
+                      - (PATH_SHIFT if "rose from EUR" in (getattr(self, "body_in", "") or "") else 0), 2)
             self.v = self.v1 = h * f(days)
             prim = {"unit_price": h, "payment_days": days, "index_clause": clause(0), "contract_months": self.months}
             status, step = "open", None
         else:
             db = db_of(first)
             self.free = self.free and db is None
-            floor = self.v1 - BUDGET[self.draw] - (self.xsell if self.xs else 0)
+            if self.n == 2:
+                self.r2_days = first["payment_days"]
+            budget = LOW_60_BUDGET if (self.draw == "low" and getattr(self, "r2_days", None) == 60) else BUDGET[self.draw]
+            floor = self.v1 - budget - (self.xsell if self.xs else 0)
             if self.n == 2:
                 kind = "free" if db is None else ("db0" if db < 2.5 else "db5")
                 step = R2_STEP[kind]
@@ -121,6 +130,8 @@ class Donautal:
                 share = (plain_value(first) - plain_value(self.ours[-1])) / gap if gap > 0 else 0
                 if kind == "free":  # task 16: 15 games fit cut = min(0.16, 0.255 x the gap left after our ask)
                     step = min(R2_STEP["free"], R2_GAP_SHARE * (self.last_v_before - plain_value(first)))
+                    if self.draw == "low" and first["payment_days"] == 60:
+                        step = 0.033  # task 19: 81ee4b1e
             elif self.n >= FINAL_AT:
                 ours = plain_value(first) - plain_value(self.ours[-1])
                 last = self.its_steps[-1] if self.its_steps else 0
@@ -143,8 +154,9 @@ class Donautal:
                 prim = self.last_prim
             status = "final_offer" if self.final else "open"
         # agreement: a sheet of ours worth at least what it would offer now
-        ok = [t for t in sheets if value(t, free_risk=True) >= self.v - 1e-6]
-        if ok and not self.final:
+        ok = [t for t in sheets if value(t, free_risk=True) >= self.v - (self.soft if db_of(t) is not None else 0) - 1e-6]
+        if ok and (not self.final or any(db_of(t) is not None for t in ok)):
+            self.final = False
             t = max(ok, key=lambda t: value(t, free_risk=True))
             self.ours.append(first)
             return "agreed", t, None, "We agree to your terms."
@@ -187,10 +199,10 @@ def load(path):
     return mod.NoIdeaAgent
 
 
-def run(Agent, draw="low", max_defer=1, verbose=True, xsell=0.0, term36=0.01):
+def run(Agent, draw="low", max_defer=1, verbose=True, xsell=0.0, term36=0.01, soft=0.0):
     threads = {sid: [dict(m) for m in ms] for sid, ms in PROBE["threads"].items()}
     sid = next(iter(threads))
-    events, sup, agent, log = threads[sid], Donautal(draw, max_defer, xsell, term36), Agent(None), []
+    events, sup, agent, log = threads[sid], Donautal(draw, max_defer, xsell, term36, soft), Agent(None), []
     for n in range(1, 11):
         d = agent.decide(CASE, threads)
         msg = d["message"]
@@ -255,6 +267,9 @@ def validate():
                 print(f"{sid[:8]} | {n} | {m['status']} | {st} |")
                 continue
             lv, sv = value(m["terms"]), value(prim) if prim else None
+            if sv is None:
+                print(f"{sid[:8]} | {n} | {m['status']} | sim ended ({st}) |")
+                continue
             errs.append(abs(lv - sv))
             print(f"{sid[:8]} | {n} | {m['status'][:5]} {m['terms']['unit_price']}@{m['terms']['payment_days']} "
                   f"db{db_of(m['terms'])} ({lv:.3f}) | {st[:5]} {prim['unit_price']}@{prim['payment_days']} "

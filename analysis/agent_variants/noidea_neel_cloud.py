@@ -25,6 +25,7 @@ deep dives (analysis/cases/). Change log with evidence: notes/agent_changelog.md
     alternative is cheaper)
 """
 
+import ast
 import itertools
 import json
 import logging
@@ -62,9 +63,14 @@ FINAL_AT_MSG = {"raw_material": 3}  # cloud task 10: our message at which this c
 DEFER_RATIO = 0.18  # ...where our step is only this share of its last step (P08 deferred at 0.19x; final at >= 0.9x, P18 at 0.53x)
 DEEP_ANCHOR_HEDGED = None  # cloud task 15: round-1 anchor depth for hedged raw material; tested 0.26 in loop run 3 (8180d389):
 # headline 5.41 (no gain) and a bigger round-2 cut that left no budget for the deferral -> OFF (task 16)
-PAY_DAYS_HEDGED = 60  # cloud task 16 (P08_loop3.md): payment term from round 2 for hedged raw material. Its final is cent-rounded on
-# OUR payment term; at the low-draw floor (value ~5.116-5.121) 60 d lands on 5.15 = 0.7329, 14 d on 5.10 = 0.7323 (the record).
-# P(score > 0.7323 | low draw, 5.40 headline) 54% at 60 d vs 20% at 14 d (noise model, 8 budgets); mean -0.002
+PAY_DAYS_HEDGED = None  # cloud task 19 (P08_run81ee.md): REVERTED to the shortest term (14 d). Task 16 put round 2 on 60 d for the
+# cent grid (+0.0006); live 81ee4b1e (low draw) then cut only -0.033 in round 2 and its floor sat 0.08 higher (total -0.133 vs
+# 0.199-0.220 in 8 low draws, 6 of them at 14 d). n=1 and confounded with an opening line ("no higher than the current level"),
+# but 14 d is the proven term and the grid gain was a tenth of a cent.
+OWN_QUOTE_ID = True  # cloud task 17: cite a price-frozen supplier's own recent quote by ID (P03 only)
+PRICE_PATH_HEDGED = True  # cloud task 19: round-1 order-history price path for hedged raw material (P08 0.912)
+HAIR_HEDGED = True  # cloud task 18: floor-trade pair at our final message after a deferral (P08 only)
+HAIR_CENTS = 1  # ...one cent under its expected final
 LONG_TERM_HEDGED = True  # cloud task 14: 36 m sheets for hedged raw-material suppliers (experiment, P08 loop run 2)
 CROSS_SELL = True  # cloud task 13: invite a hedged raw-material distributor to quote for a part we buy elsewhere (untested live)
 DEFER_TIMES = 1  # cloud task 11: small steps in a row (1 = live-tested in db7d315a; 2+ untested - sim_donautal --max-defer)
@@ -125,6 +131,8 @@ Rules:
   their committee, their capacity, their restructuring) - never describe it as ours.
 - Never reveal our position: no targets, budgets, urgency, alternatives or weaknesses.
 - Do not mention materials, costs or facts that are not in their e-mail.
+- Never name a price level we could accept ("no higher than the current level", "around EUR X"): the figures below
+  are our only position (P08 81ee4b1e: that line in round 2, and its floor sat 0.08 higher than in any other low draw).
 - Never call a price for different payment days or a different clause an increase; compare only like for like
   (P08 ad0427655e885fc1: "We reject a price increase for shorter payment terms" - it had raised nothing).
 - Never comment on their departments, colleagues or internal processes (credit control, finance, sales,
@@ -286,6 +294,24 @@ class NoIdeaAgent:
                 fillers.append({**c, "filler": True})
         # verified facts it shrugged off before go LAST, so no round goes out empty: a round without data drew "Which
         # figures is that based on?" and a final (P02, P08); P02's "does not change" order history still came with a cut
+        # cloud task 17 (analysis/cases/P03_beat.md): a price-frozen holder cuts once per NEW verified data kind and every
+        # kind it takes is used; its own recent quote by ID is the one kind never cited -> right after round 1's data, so
+        # the remaining kinds still reach its final at our 5th message
+        # cloud task 19 (analysis/cases/P08_run81ee.md): a hedged raw-material supplier's FIRST counter is what its floor
+        # follows (budget model); our order history as a rising PATH in round 1 lowered it 5.41 -> 5.25 (live P08 d0708ed1 =
+        # 0.912, beat the house): first claim of round 1, replacing the flat run it shrugged off 6 of 6
+        if PRICE_PATH_HEDGED and case["type"] in FINAL_AT_MSG and "hedged_forward" in self.dossiers.get(sid, {}).get("motives", {}):
+            desc = {p["part"]: p["description"] for p in self.dossiers.get(sid, {}).get("parts", [])}
+            pp = [x for x in (central.rising_price_path(self.facts, sid, pt, desc.get(pt, "")) for pt in case["parts"]) if x]
+            if pp:
+                ranked = pp + [c for c in ranked if c["kind"] != "po_prices"]
+                fillers = [c for c in fillers if c["kind"] != "po_prices"]
+        if OWN_QUOTE_ID and "price_frozen" in self.dossiers.get(sid, {}).get("motives", {}):
+            oq = central.own_quote_claims(self.facts, sid, parts, opening)
+            r1 = [c for c in ranked if c["kind"] in ("should_cost", "volume_change")]
+            first_idx = next((c for c in ranked if c["kind"] == "index_change"), None)
+            head = r1 + ([first_idx] if first_idx else [])
+            ranked = head + oq + [c for c in ranked if c not in head]
         return ranked + fillers
 
     def kit_calc(self, case, sid):
@@ -832,7 +858,56 @@ class NoIdeaAgent:
         return out
 
     # ---- the words -----------------------------------------------------------------------------
+    def best_final_value(self, case, sid):
+        """Lowest value of any final this supplier gave us (datasets/H_supplier_memory.json, Dhruv v2.20), or None."""
+        try:
+            mem = json.loads((_repo() / "datasets/H_supplier_memory.json").read_text(encoding="utf-8")).get(sid) or {}
+        except (OSError, ValueError):
+            return None
+        out = []
+        for key, rec in (mem.get("structures") or {}).items():
+            t = {}
+            for part in key.split("|"):
+                f, _, v = part.partition("=")
+                if f in ("payment_days", "contract_months"):
+                    t[f] = int(v)
+                elif f == "index_clause":
+                    t[f] = ast.literal_eval(v)  # the key holds a repr of a plain dict (or None)
+            for price in rec.get("finals") or []:
+                out.append(supplier_value(case, complete_offer(case, {**t, "unit_price": price}), self.sup[sid]["est"]))
+        return min(out) if out else None
+
+    def hair_pair(self, case, sid, events, sheets, k):
+        """cloud task 18 (analysis/cases/P08_task18.md): rule 66 floor trade for a budget supplier. After a deferral (its
+        message 3 stayed open), its final at our next message lands one step lower (P08 6 of 6: half the budget left,
+        0.049-0.060). Next to our normal step, send ITS OWN structure (the clause it insists on, its payment term) one cent
+        under that expected final. A hard floor refuses it and goes final as always (P11: 0 of 9 asks under its floor);
+        a soft one agrees, and the deal is under the record. Never above its expected final."""
+        s = self.sup[sid]
+        if not (HAIR_HEDGED and self.hedged_raw(case, sid) and k == FINAL_AT_MSG.get(case["type"], 0)
+                and s.get("defers") and latest(events).get("status") == "open"):
+            return sheets
+        stand = [standing([m]) for m in events if m.get("from") != "buyer" and m.get("term_sheets")]
+        if len(stand) < 2 or not stand[-1][0]:
+            return sheets
+        terms = complete_offer(case, stand[-1][1])
+        v = [supplier_value(case, complete_offer(case, t), s["est"]) for _, t in stand[-2:]]
+        step = v[0] - v[1]
+        if step <= 0:
+            return sheets
+        per_value = supplier_value(case, terms, s["est"]) / terms["unit_price"]
+        final_price = round((v[1] - step) / per_value, 2)
+        hair = {**stand[-1][1], "unit_price": round(final_price - HAIR_CENTS / 100, 2)}
+        # only a hair that beats every final it ever gave (supplier memory, rule 65): on a high draw the clause sheet only
+        # risks its smaller clause budget (sim: 0.666 -> 0.644; ab473a1c / 325d6e71 took the clause and got -0.09 / -0.15)
+        best = self.best_final_value(case, sid)
+        if best is not None and supplier_value(case, complete_offer(case, hair), s["est"]) >= best:
+            return sheets
+        log.info("%s floor trade: its structure at %.2f (expected final %.2f)", sid, hair["unit_price"], final_price)
+        return list(sheets[:1]) + [hair]
+
     def message(self, case, sid, events, sheets, k, final=False):
+        sheets = self.hair_pair(case, sid, events, sheets, k)
         # later rounds: up to 2 NEW data kinds - live P03 2e4bf89ac2967a45: a counter without data got "Which figures
         # is that based on? Please send us the data", and P03 never moved in a later round without data (12 games)
         # spread the data: P02/P03 cut their price for each NEW fact and went final once none was left - so keep one

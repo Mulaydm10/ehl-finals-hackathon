@@ -35,7 +35,9 @@
   "Some suppliers give a fixed total budget after their first counter whatever you do: then the first counter decides - lead with the sheet worth least to them at the same nominal price (longest payment).",
   "Against a supplier that mirrors your steps, move 30% of the gap per round; against patient, cash-short or hedged suppliers keep small steps.",
   "Weak facts (complaints, tiny index falls) only once the supplier stops moving; while it moves they just shrink its step.",
-  "Cite quality complaints only when its quality really is a problem (amber/red scorecard)."
+  "Cite quality complaints only when its quality really is a problem (amber/red scorecard).",
+  "If our order prices with this supplier already ROSE this year, lead round 1 with that price path: the increase is already paid for (P08 0.912).",
+  "Never name a price you would accept, or 'the current level', in the opening - the supplier anchors its floor on it."
  ],
  "price_increase": [
   "P01 (stabilise, family foundry, data-naive owner): index data + short-notice argument + later effective date + faster payment → 0.85 in 3 rounds.",
