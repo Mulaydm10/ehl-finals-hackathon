@@ -147,3 +147,12 @@ Round 4 said "our best effort ... without requiring management escalation", so e
   costs trust". Its first answer rose from 372.52 to 373.88 and the final from 368.25 to 370.95 (-0.24 score), and it
   asked for proof in every later round. **Rule: one number per claim sentence, the checked figure, no thousands
   separator.** (Fixed in central.quality_notification_claims; untested live.)
+
+## 8. P08 (Donautal): 0.647 -> 0.732 in one live game (cae4b621695f8161; house 0.752, best of other teams 0.679)
+Plan from the cloud session (analysis/cases/P08_engine.md): hedged alloy index never cited, cold drawing -2.3% and the
+volume forecast in round 1 (both "took it into account"), its own EUR 5.45 quote in words, 24 m clause-free asks, hold
+the structure it priced. Path 5.41 @ 90 -> 5.15 @ 14 -> final 5.10 @ 14 (db0, its clause). Quality notifications and
+order history: "does not change". **Round 3 had no data -> "Which figures is that based on?" + final.**
+Fixes: every unhedged driver gets its own falling window (labour was skipped once cold drawing had one); facts it
+shrugged off are kept as LAST-round fillers (never in round 1), so no round goes out empty; data timed to its final
+(mined: P08 always at our 3rd message).
