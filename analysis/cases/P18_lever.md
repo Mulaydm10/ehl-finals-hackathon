@@ -127,3 +127,23 @@ when our ask crosses the target, so the deal sits near M = (m x opening + T1) / 
 - The step pattern worked (-0.20, -0.10), but from 5.30 the meeting point is ~0.10 higher; the final came at our 4th message.
 - Not separable: whether the 4.69 opening raised its first counter, or the 5.30 was the per-session draw (it came 3 of 9 times
   with the 4.76 opening at 30 d).
+
+## 11. Live v5 (local, 2026-10-11 01:49, cee66b66edd04b71): **0.598 - a deeper opening raises its first counter**
+Idea: the "too low" line is our cost (counts the clause), its concessions run on price + payment, so its clause from round 1 allows
+a deeper opening (4.57 @ 30 d db0 = score 0.969) -> lower meeting point. Plus "play the man": its letter's clause accepted at
+once, the account value (EUR 428k a year, three bars), our honest late-payment record (88% late, ~3 days) with an on-time promise,
+and a round-3 ask inside the KAM's 2% authority.
+| our msg | ask | its answer |
+|---:|---|---|
+| 1 | 4.57 @ 30 d with its db0 clause + path, AS-14404, PPI-C2431, account value, committee | **5.30 @ 30 d** |
+| 2 | 4.81 @ 14 d + forecast + late-payment admission and on-time promise (+0.29 in its value) | 5.20 @ 14 d (only **-0.10**) |
+| 3 | 4.86 + labour (6.5% under its offer) | 5.10 |
+| 4 | main | final 5.10 @ 14 d -> 0.598 |
+**What this settles (do not repeat):**
+- **Deeper openings draw the HIGH first counter**: 4.69 (v4) and 4.57 (v5) -> 5.30 both times; the 4.76 opening drew 5.20 in 6 of
+  9 games at 30 d. Keep the opening at 4.76.
+- **Its round-2 cut does not grow with our step**: +0.29 in its value drew -0.10 here; +0.16 drew -0.20 in 0c968aae and -0.10 in
+  three others. The mirror model of section 10 is wrong on the size of its steps: they are 0.10-0.20 whatever we do.
+- The late-payment admission, the account value and the accepted clause in round 1 did not move it either.
+- Team best on P18 stays 0.727 (0c968aae): 4.76 @ 30 d -> 4.87 @ 14 d -> 4.91, agreed. In 28 normal-mode games no path got under
+  4.91 @ 14 d (= 5.01 @ 45 d); the record (4.90 @ 45 d = 4.80 @ 14 d in its terms) is one 0.10 grid step below everything we saw.
