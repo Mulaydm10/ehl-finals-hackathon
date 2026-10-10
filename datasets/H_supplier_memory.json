@@ -141,7 +141,7 @@
   }
  },
  "sup:70140": {
-  "games": 38,
+  "games": 39,
   "scores": [
    0.672,
    0.609,
@@ -150,6 +150,7 @@
    0.71,
    0.71,
    0.71,
+   0.794,
    0.794,
    0.794,
    0.71,
@@ -186,7 +187,7 @@
    "labour cost index and the old pos you cited, and we took them into account. we checked the price history": 1,
    "news": 1,
    "old order prices you mentioned, and they are correct, but our situation is different now. we checked the price history": 1,
-   "price history": 22
+   "price history": 23
   },
   "structures": {
    "chargeback_eur_per_complaint=0.0|ppm_commitment=300": {
@@ -289,10 +290,10 @@
    "energy cost": 1,
    "energy index": 7,
    "index and price history": 1,
-   "index change": 61,
+   "index change": 64,
    "labour cost index": 1,
-   "quality record": 35,
-   "volume change": 32
+   "quality record": 36,
+   "volume change": 33
   }
  },
  "sup:70410": {
@@ -1337,7 +1338,7 @@
   }
  },
  "sup:70740": {
-  "games": 13,
+  "games": 14,
   "scores": [
    0.53,
    0.0,
@@ -1347,6 +1348,7 @@
    0.606,
    0.542,
    0.673,
+   0.707,
    0.666,
    0.618,
    0.441,
@@ -1354,7 +1356,8 @@
    0.598
   ],
   "shrugged": {
-   "volume change": 5
+   "index change": 1,
+   "volume change": 6
   },
   "structures": {
    "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}|payment_days=14": {
@@ -1454,7 +1457,7 @@
    }
   },
   "took": {
-   "index change": 8,
+   "index change": 9,
    "price history": 10,
    "volume change": 5
   }

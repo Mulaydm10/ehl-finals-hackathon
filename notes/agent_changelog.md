@@ -994,3 +994,7 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 ### v2.27 (offline): P18 - budget supplier, the first counter decides (same part as P08)
 - P18 total cut after round 1 is fixed ~0.20 (5.20 -> 5.00; 5.30 -> 5.10) whatever our steps (gap steps neutral, 0.666). First counter 5.20 when round 1 had price history + alloy -5.5% + cold drawing -2.3% (4e24, 0.677); 5.40 with price history only (9d4d).
 - Our current round 1 drops the cold-drawing fall (one index claim per e-mail). Experiment `r1_two_index`: round 1 may carry 2 index claims of different series. P18 round 1 then: price history + alloy -8.5% + cold drawing -2.3%. Off by default; other cases unchanged; tests 64.
+
+## v2.27 live P18 (22:04, r1_two_index): **0.707 = new best P18** (a09d953636747cae; was 0.677, record ours)
+- r1 price history + alloy -8.5% + cold drawing -2.3% -> 5.20 (= the best first counter, 4e24); r2 our sheet moved to 14 d -> "your proposal of 14-day payment terms allows us to offer a more competitive base price" -> 5.00 (-0.20 in one round); held 5.00; **agreed to our 4.94 @ 14 d** ("a fair balance of commercial certainty and predictable payment").
+- Lessons: P18 values FAST payment (cut 0.20 for 14 d); after it holds, a creeping ask 1.2% under its standing was agreed (like P11). Two index claims in round 1 drew no "lot of material" here.
