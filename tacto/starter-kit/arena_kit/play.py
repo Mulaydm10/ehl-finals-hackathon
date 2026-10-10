@@ -28,6 +28,10 @@ MOVE_LIMIT_S = 60
 # In the Live Final, close this long before the wave's cap - or the slowest round of the case so far
 # (your decision plus a supplier reply of up to about a minute) plus a margin, if that is longer.
 CLOSE_BEFORE_CAP_S, ROUND_MARGIN_S = 90, 15
+# An agent with `hold_first = True` (noidea experiment `hold_r1`, OFF by default) sends its first e-mail only after one
+# timeout round: the supplier's patience drops and it concedes faster (P05 Parth: first counter 28.00 / 27.50 after a
+# round-1 timeout vs 30.00 after a no-price note and 30.50 without a hold; record 0.965). Single-supplier cases only.
+HOLD_FIRST_S = 65
 RUNNING = re.compile(r"one session per case in the final: (\S+)")
 # "(idx:..., idx:...)" / "(po:...)" lists of data IDs in an e-mail body (the arena checks IDs written in the body too)
 IDS_IN_BODY = re.compile(r"\s*\((?:[a-z]+:[^()\s,]+(?:,\s*)?)+\)")
@@ -247,6 +251,7 @@ def play(table, case_id, agent, deadline=None):
     """Play one case to its end. `deadline` (time.time(), or a function returning it): a Live Final
     wave's cap - shortly before it, `closing_move` closes the case so it does not end without a deal."""
     case, threads = table.open(case_id)
+    t_open = time.monotonic()
     if getattr(table, "done", None):  # resumed a case that had already ended
         return table.done
     for events in threads.values():
@@ -270,6 +275,11 @@ def play(table, case_id, agent, deadline=None):
             if msg.get("action"):
                 log.info("%s %s", sid, msg["action"])
                 return table.close(sid, msg)
+            if getattr(agent, "hold_first", False) and not any(m.get("from") == "buyer" for m in threads[sid]):
+                wait_s = HOLD_FIRST_S - (time.monotonic() - t_open)
+                if wait_s > 0:
+                    log.info("%s: hold - first e-mail after one timeout round (%.0f s)", sid, wait_s)
+                    time.sleep(wait_s)
             reply = table.send(sid, msg)
         except ArenaError as e:
             if msg.get("action"):  # a refused or late accept: resync and decide again, never crash the case

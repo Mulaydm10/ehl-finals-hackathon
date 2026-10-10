@@ -173,6 +173,102 @@
    "hypothesis": "No case regresses; RFQ and argument fixes lift the mean.",
    "evidence": "Baseline medians mean 0.642; bests mean 0.720.",
    "keep_if": "mean score >= 0.68 AND no case below its median - 0.10"
+  },
+  "HOLD": {
+   "title": "Round-1 hold: our first e-mail after one timeout round (A arm)",
+   "change": "switch hold_r1 (play.py waits 65 s before the first e-mail to a single supplier)",
+   "switches": [
+    "hold_r1"
+   ],
+   "games": [
+    [
+     "P02",
+     2
+    ],
+    [
+     "P07",
+     2
+    ],
+    [
+     "P18",
+     2
+    ]
+   ],
+   "parallel": 3,
+   "hypothesis": "A timeout drops the supplier's patience: it concedes faster and ends lower (P05 scripted: first counter 28.00/27.50 vs 30.00-30.50, record 0.965; P11 held path 44.45 vs 44.50).",
+   "evidence": "analysis/experiments/signals/SIGNALS.md",
+   "keep_if": "mean score of HOLD > mean of HOLD0 by >= 0.03 AND no case worse by > 0.05"
+  },
+  "HOLD0": {
+   "title": "Round-1 hold: control arm (same agent build and cases, no hold)",
+   "change": "none",
+   "switches": [],
+   "games": [
+    [
+     "P02",
+     2
+    ],
+    [
+     "P07",
+     2
+    ],
+    [
+     "P18",
+     2
+    ]
+   ],
+   "parallel": 3,
+   "hypothesis": "control",
+   "evidence": "-",
+   "keep_if": "-"
+  },
+  "HOLD_B": {
+   "title": "Round-1 hold, cases P03/P08/P10 (A arm)",
+   "change": "switch hold_r1 (play.py waits 65 s before the first e-mail to a single supplier)",
+   "switches": [
+    "hold_r1"
+   ],
+   "games": [
+    [
+     "P03",
+     2
+    ],
+    [
+     "P08",
+     2
+    ],
+    [
+     "P10",
+     2
+    ]
+   ],
+   "parallel": 3,
+   "hypothesis": "A timeout drops the supplier's patience: it concedes faster and ends lower (P05 scripted: first counter 28.00/27.50 vs 30.00-30.50, record 0.965; P11 held path 44.45 vs 44.50).",
+   "evidence": "analysis/experiments/signals/SIGNALS.md",
+   "keep_if": "mean score of HOLD > mean of HOLD0 by >= 0.03 AND no case worse by > 0.05"
+  },
+  "HOLD0_B": {
+   "title": "Round-1 hold control, cases P03/P08/P10",
+   "change": "none",
+   "switches": [],
+   "games": [
+    [
+     "P03",
+     2
+    ],
+    [
+     "P08",
+     2
+    ],
+    [
+     "P10",
+     2
+    ]
+   ],
+   "parallel": 3,
+   "hypothesis": "control",
+   "evidence": "-",
+   "keep_if": "-"
   }
  }
 }
