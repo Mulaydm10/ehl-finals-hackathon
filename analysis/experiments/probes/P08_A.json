@@ -1,0 +1,85 @@
+{
+  "case": "P08",
+  "label": "P08_A upward price path in round 1 (best low-draw path, lean later rounds)",
+  "hypothesis": "16 games: round 1 is 5.40-5.42 (low draw) or 5.51-5.53 (high draw) whatever we cited (alloy hedged, PPI, QN, fc); the final is a fixed budget below the round-1 value (P08_floor.md). An UPWARD price path lowered the first counter on P10 (31.70 -> 31.50) and P18; never sent to P08 in round 1. Same path as the best game (cae4b621695f8161, 0.732) otherwise; QNs dropped (green supplier); rounds 2-4 lean.",
+  "on_agreed": "accept",
+  "on_open": "next",
+  "on_final": "accept",
+  "rounds": [
+    {
+      "body": "Dear Georg Aigner,\n\nThank you for your offer. We want to continue with you as our main source for this bar: a binding 94,800 kg per year for 24 months, 189,600 kg in total; our monthly call-off schedule is attached.\n\nOn 2026-09-10 you quoted us EUR 5.45 per kg for this bar; your new quote is 11.0% above it.\nOur orders for this bar rose from EUR 5.17 to EUR 5.45 within nine months (po:4500013278-10, po:4500013392-10, po:4500013795-10, po:4500014455-10).\nProducer prices DE: cold drawing of bars changed -2.3% from 2026-06 to 2026-08 (idx:PPI-C2431@2026-06, idx:PPI-C2431@2026-08).\nOur demand forecast for this part is up +1.9% (fc:370010@2026-09).\n\nWe propose three options, all 24 months without a price adjustment clause: EUR 4.73 at 45 days net, EUR 4.70 at 14 days net, or EUR 4.78 at 90 days net.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 4.73,
+          "index_clause": null,
+          "payment_days": 45,
+          "contract_months": 24
+        },
+        {
+          "unit_price": 4.7,
+          "index_clause": null,
+          "payment_days": 14,
+          "contract_months": 24
+        },
+        {
+          "unit_price": 4.78,
+          "index_clause": null,
+          "payment_days": 90,
+          "contract_months": 24
+        }
+      ],
+      "refs": [
+        "po:4500013278-10",
+        "po:4500013392-10",
+        "po:4500013795-10",
+        "po:4500014455-10",
+        "idx:PPI-C2431@2026-06",
+        "idx:PPI-C2431@2026-08",
+        "fc:370010@2026-09"
+      ],
+      "attachments": [
+        {
+          "name": "call_off_schedule.csv",
+          "type": "csv",
+          "text": "month,quantity\n2027-01,7900\n2027-02,7900\n2027-03,7900\n2027-04,7900\n2027-05,7900\n2027-06,7900\n2027-07,7900\n2027-08,7900\n2027-09,7900\n2027-10,7900\n2027-11,7900\n2027-12,7900\n2028-01,7900\n2028-02,7900\n2028-03,7900\n2028-04,7900\n2028-05,7900\n2028-06,7900\n2028-07,7900\n2028-08,7900\n2028-09,7900\n2028-10,7900\n2028-11,7900\n2028-12,7900\n"
+        }
+      ]
+    },
+    {
+      "body": "Dear Georg Aigner,\n\nThank you for your revised offer. We move towards you: EUR 4.80 per kg, 14 days net, 24 months, no price adjustment clause.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 4.8,
+          "index_clause": null,
+          "payment_days": 14,
+          "contract_months": 24
+        }
+      ],
+      "refs": []
+    },
+    {
+      "body": "Dear Georg Aigner,\n\nThank you for your revised offer. We move towards you: EUR 4.95 per kg, 14 days net, 24 months, no price adjustment clause.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 4.95,
+          "index_clause": null,
+          "payment_days": 14,
+          "contract_months": 24
+        }
+      ],
+      "refs": []
+    },
+    {
+      "body": "Dear Georg Aigner,\n\nThank you for your revised offer. We move towards you: EUR 5.02 per kg, 14 days net, 24 months, no price adjustment clause.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 5.02,
+          "index_clause": null,
+          "payment_days": 14,
+          "contract_months": 24
+        }
+      ],
+      "refs": []
+    }
+  ]
+}
