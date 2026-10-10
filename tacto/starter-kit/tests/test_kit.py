@@ -10,7 +10,7 @@ from arena_kit.agents import LLMAgent, NaiveAgent
 from arena_kit.cost import cost_breakdown, must_haves_ok, relationship_cost, score, supplier_value
 from arena_kit.data import DataPackage
 from arena_kit.docs import quote_terms, read_document
-from arena_kit.play import hosted, quota_used_up
+from arena_kit.play import hosted, play, quota_used_up
 from arena_kit.sim import Sim
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -327,3 +327,31 @@ def test_practice_plays_the_hosted_cases():
     out = play_all(Used, ["case:P01", "case:P02", "case:P03"], NaiveAgent, parallel=1)
     assert all(isinstance(e, ArenaError) and e.status == 429 for e in out.values())
     assert "not started" in out["case:P03"].detail
+
+
+def test_an_alternative_the_arena_refuses_is_kept_without_its_id():
+    sheets = [{"term_sheet_id": "offer:1-3", "terms": {"unit_price": 5.4}},
+              {"term_sheet_id": "offer:1-3-a", "terms": {"unit_price": 5.3}}]
+    tried = []
+
+    class Table:
+        def open(self, case_id):
+            supplier = {"from": "sales@1", "status": "final_offer", "term_sheets": sheets}
+            return {"case_id": case_id}, {"sup:1": [supplier]}
+
+        def close(self, supplier_id, message):
+            tried.append(message["action"]["term_sheet_id"])
+            if tried[-1] != "offer:1-3":  # like arena-sim: only the standing sheet
+                raise ArenaError(422, "not a standing offer in this session")
+            return {"deal": True}
+
+    class Cheapest:  # accepts the cheapest sheet that still has an id
+        def decide(self, case, threads):
+            ts = min((t for t in threads["sup:1"][-1]["term_sheets"] if t["term_sheet_id"]),
+                     key=lambda t: t["terms"]["unit_price"])
+            action = {"type": "accept", "term_sheet_id": ts["term_sheet_id"]}
+            return {"supplier_id": "sup:1", "message": {"action": action}}
+
+    assert play(Table(), "case:X", Cheapest()) == {"deal": True}
+    assert tried == ["offer:1-3-a", "offer:1-3"]
+    assert sheets[1] == {"term_sheet_id": None, "terms": {"unit_price": 5.3}}  # terms kept to propose back

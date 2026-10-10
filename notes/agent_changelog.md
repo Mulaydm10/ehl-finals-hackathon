@@ -17,6 +17,7 @@ rank versions, not to predict arena scores. It ignores arguments, tone and the r
 | v1 | P01 | **0.85** | e3e0b7be271e9371 | €135.70, Apr 2027, 14 d in 3 rounds; "we did not know that, a fair point" |
 | probe (Neel) | 9 cases | 0–0.12 | see quota_log | walk-away probes for exact C_open/C_best |
 | v1.1 | P07 | 0.68 | 00ae513af1091e9c | 24 m won (+0.48); price stalled at €5.52; volume question unanswered 3× |
+| v1.7 / gpt-6-astra | P18 | 0.43 | 6833e98fbbe5ebdf | final_offer €5.40, 60 d, 24 m + AS-14404 db0 in round 3; its db5 alternative sheet was 0.485 (see "P18 live 1") |
 
 ## Versions
 
@@ -281,3 +282,46 @@ Code still does all maths and safety checks; at runtime the agent now reads, lea
 - Parth's branch `parth/n1-p06-p09-p12` (not merged yet): P06/P09/P12 deep dives; P18 live 0.43; v2.3 ideas (PO
   price-jump argument, contract-clause share vs its stated share, market line, committee request, plain-word sheets),
   P18 "the AS-14404 index clause is mandatory on 24 months". It edits noidea.py → needs a merge with v2.4.
+### v2.3 (Parth, offline only, 0 games): P18 round-1 arguments + plain-word sheets
+| change | evidence | offline check |
+|---|---|---|
+| `po_prices` also cited when the price **jumped ≥ 3%** in the PO history, not only when there's no increase | P18: July index step 5.26 → 5.84 (+11%) was never cited (ask +4.5%) | P18 e-mail now cites it |
+| `price_story()`: if the current contract's index clause passes a series on at more than the cost share **the supplier itself states** in its quote ("… is 38 % of our cost"), say so with the clause ID | P18 `ctr:4600070740#3.2` 80% vs 38%; 5 of 10 practice openings state cost shares | fires on P18 only |
+| market line in prose: cheapest **recent** (≥ 2026-07) rival quote below the standing price; not in RFQs / stabilise / secure_supply | P18: €5.45 (70710, `quote:7300008`); prose only, past quotes may not be checked as data of this case | fires on P18 only |
+| `approval_ladder` motive → round 1: "please put this proposal to your pricing committee" | P18 M3, P02, P03 dossiers | P02, P03, P18 |
+| term sheets in plain words ("EUR 4.77 per unit, 90 days payment, 24 months, no index clause") instead of field names | every e-mail printed "index_clause None" | all cases |
+- Offline unchanged: mean **0.937 / 0.944**, 31 tests pass, no new lint errors. **Needs one live P18 game** (plan: analysis/cases/P18.md §8).
+
+### P18 live 1 (Parth, v1.7 / gpt-6-astra, session 6833e98fbbe5ebdf): 0.43
+Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still **untested live**.
+| round | supplier sheet (primary / alternative) | C primary / alt | score primary / alt |
+|---|---|---:|---:|
+| 0 open | €6.10, 30 d, 12 m, no clause | 295,173 | 0.000 |
+| 1 open | €5.60, 90 d, AS db0 / €5.60, 45 d, AS db5 | 272,032 / 268,714 | 0.319 / 0.365 |
+| 2 open | €5.50, 60 d, AS db0 / €5.50, 30 d, AS db5 | 268,912 / 264,784 | 0.362 / 0.419 |
+| 3 final_offer | €5.40, 60 d, AS db0 / €5.40, 30 d, AS db5 | **264,023** (accepted) / 259,970 | **0.430** / 0.485 |
+(all 24 m; C from `arena_kit.cost.total_cost`, reproduces the arena's c_deal to the cent)
+- **The cheaper alternative sheet was left on the table: +0.055 (€4,053).** `standing()` (play.py) is always
+  `term_sheets[0]`; `decide()` accepts that ID. The db5 alternative came as its own term sheet with an ID
+  (`offer:70740-3-a`), not as prose, so `prose_alternative()` doesn't help. Suggest: at `agreed` / `final_offer`,
+  accept the cheapest-for-us sheet among `term_sheets` (and price alternatives in `c_stand` every round).
+  Untested: whether the arena accepts an alternative's ID (it lists both sheets again in the order confirmation).
+- **Index clause is a hard requirement on 24 m**: "We cannot accept a fixed price for a 24-month term; the AS-14404
+  index clause is mandatory" (round 2). All our sheets were clause-free, so it re-added db0 to every primary sheet.
+  Supports P18.md §8 "next lever": offer db5 ourselves (≈ €0.04/kg) in exchange for a base-price step.
+- Claim results: our round-1 claims all **verified** (AS-14404 −0.3%, LCI-C +1.7%, forecast +1.9%); nothing
+  contradicted. Rounds 2–3 cited nothing (refs empty), so no checks. Its own claims (AS +5.9%, LCI +2.7%,
+  PPI-C2431 +12.3%) were answered with "That remains." each time.
+- It refused the XLSX cost breakdown 3× ("proprietary"), even though the dossier has an open-book motive; the
+  writer asked every round. It asked "Which figures is that based on? Please send us the data." (round 2,
+  after our message cited nothing) and "Which volume can you commit to?" in the final.
+- Price path €6.10 → 5.60 → 5.50 → 5.40 (final in round 3), still above P18.md's floor (€5.45 no clause = 0.51).
+- e-mails still say "23,700 units" (P18 is kg). v1.7 printed raw field names; v2.3 fixes that.
+
+### v2.4 (Parth, local): accept the cheapest of the supplier's sheets, not only the standing one
+| change | evidence | offline check |
+|---|---|---|
+| `best_sheet()`: accept / price (`c_stand`, `best_standing`) the cheapest sheet in the supplier's message that keeps the must-haves, by its own id | P18 live 1: `offer:70740-3-a` 0.485 vs accepted `offer:70740-3` 0.430 | replay of the live final: accepts `offer:70740-3-a` |
+| play.py: a `422` on accepting an alternative's id (the brief says accept takes the *standing* sheet; arena-sim only knows `offer_id`) clears that id, keeps its terms and decides again | 422 = "nothing happens, no round is used" (api.md) | new test `test_an_alternative_the_arena_refuses_is_kept_without_its_id` |
+| `refused_alternative()`: such a sheet is proposed back once at `final_offer` ("We accept your alternative as you proposed it"), the v1.8 prose-alternative path | P10 live: its own alternative came back `agreed` | replay: proposes €5.40 / 30 d / AS db5 (C 259,970) |
+- Offline unchanged: mean **0.937 / 0.944** (the offline supplier never sends alternatives), 32 tests pass, ruff clean on the changed lines.

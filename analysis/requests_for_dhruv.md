@@ -24,3 +24,20 @@
    claim rules, motive → lever table, closing rules). Please **prepend `_common.md`** to
    `playbooks/<type>.md` in the prompt (together ≤ ~160 lines). For a hidden case whose type mixes
    with an unfamiliar goal, `_common.md` §1 (lever ranking by total_cost) is the part that generalises.
+
+## From Parth (P18 offline check, v1.7 on main 6750e76; P18 live test is Parth's, P10 stays with Dhruv)
+
+7. **P18: the strongest argument is never sent.** `arguments()` adds `po_prices` only when `ask_pct <= 0`.
+   In P18 (ask +4.5%) the price history *is* the case: the July index step took €5.26 → €5.84 (+11%), more
+   than the full 12-month driver change (+7.0%) (analysis/cases/P18.md §4). Suggest: for `raw_material` (or
+   whenever the last PO price jump > the justified change), add the `po_prices` sentence with a prose line
+   "the July step was +11% against a +7% driver change". Offline e-mail today cites AS-14404 −0.3%, LCI +1.7%, fc +1.9% only.
+8. **Every e-mail prints raw field names** (`write()`, `offers`): "…term sheets (unit_price 4.77, index_clause
+   None, payment_days 45, contract_months 24; …)". Suggest plain words: "€4.77/kg, 45 days, 24 months, no index clause".
+9. **Two analysis findings for the agent logic** (analysis/cases/P06.md, P09.md, P12.md):
+   - a chargeback ≥ `cost_per_defect` sets the quality term to 0, so ppm stops mattering in C (P12: €300 ≥ €275).
+     The sheet search already prices this, but the LLM/prose shouldn't spend price on ppm promises then;
+   - near a cash-short supplier's floor in stabilise/secure_supply cases, **shorter payment can beat a lower price**
+     because the relationship charge falls (P06). Only if the cash-rate / full-cost estimates feed the sheet ranking.
+- Offline P18: 0.94 (both modes) but the simulator accepts message 1 (our €4.77 sheet already costs ≥ C_best), so
+  it only checks the anchor, which matches Neel's brief (€4.65–4.75, 24 m, no clause). Needs one live game.

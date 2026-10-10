@@ -166,6 +166,16 @@ def play(table, case_id, agent, deadline=None):
                 return table.close(sid, msg)
             reply = table.send(sid, msg)
         except ArenaError as e:
+            alt = (msg.get("action") or {}).get("term_sheet_id")
+            refused = [ts for ts in latest(threads[sid]).get("term_sheets") or []
+                       if alt and ts.get("term_sheet_id") == alt]
+            if e.status == 422 and refused and alt != standing(threads[sid])[0]:
+                # the arena may take only the standing sheet (a 422 changes nothing): keep the alternative's
+                # terms without its id, so the agent can propose them back, and decide again
+                log.info("%s: %s - %s cannot be accepted by its id", sid, e.detail, alt)
+                for ts in refused:
+                    ts["term_sheet_id"] = None
+                continue
             if e.status != 409:
                 raise
             log.info("%s: %s", sid, e.detail)
