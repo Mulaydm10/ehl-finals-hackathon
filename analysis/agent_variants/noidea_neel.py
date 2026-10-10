@@ -76,6 +76,7 @@ CROSS_SELL = True  # cloud task 13: invite a hedged raw-material distributor to 
 DEFER_TIMES = 1  # cloud task 11: small steps in a row (1 = live-tested in db7d315a; 2+ untested - sim_donautal --max-defer)
 DEFER_FLOOR = 0.002  # ...but at least 0.2% of its price (a zero step reads as a repeat)
 DEFER_MIN_GAP = 0.02  # ...and only while the gap is still >= 2% of its price (< 0.35% left defers by itself: P01/P02 4 of 4)
+DATA_PUSH = 0.003  # open offer, data left: one more data round this far under its standing value (P01)
 PLANNED_ROUNDS = 8  # P07 live: ~25 s per round, so an 8-minute wave fits ~12-15; keep a margin
 MIN_GAIN_PTS = 1.0  # never pay more than ask - 1 pt unless it is the last word
 CLOSE_STEP = 0.0008  # near-close: ask for 0.08% below its standing cash value. Live P04 5f80eb75c793f352: 0.2% below
@@ -625,7 +626,23 @@ class NoIdeaAgent:
             if s.pop("closing", False):
                 log.info("%s: data left - no near-close yet", sid)
             if ok and c_stand <= sheets[0][0] * 1.0005:
-                return accept
+                # P01 f70338659b42114e: our schedule caught up with an OPEN 130.20 and we took it (0.993) with quality
+                # data still uncited, from a supplier that cut on every new fact ("We did not know that - a fair point").
+                # Once per thread: one more data round at DATA_PUSH under its standing value, then accept
+                v_stand = supplier_value(case, complete_offer(case, terms), s["est"])
+                push = [x for x in self.sheets_at(case, sid, v_stand * (1 - DATA_PUSH), cap)
+                        if central.same_structure(x[1], terms)][:1]
+                # not for committee / approval-ladder suppliers: P03's recipe (2483e389) must replay unchanged
+                if s.get("data_push") or not push or push[0][0] >= c_stand or central.committee_round1(motives):
+                    return accept
+                s["data_push"] = True
+                # a should-cost at or above its price now argues for it (P01: 132.64 vs its 130.20): spend it unsaid
+                for c in s.get("args") or []:
+                    if c["kind"] == "should_cost" and (c.get("figure") or 0) >= (terms.get("unit_price") or 0):
+                        self.cited.update(c["ids"])
+                sheets = push
+                log.info("%s round %d: open offer, data left - one more data round at %.2f", sid, k,
+                         push[0][1]["unit_price"])
             out = [t for _, t in sheets]
             if sheet_id and case["type"] != "rfq":  # stay on the structure it priced
                 out = [t for t in out if central.same_structure(t, terms)][:1] or out[:1]
