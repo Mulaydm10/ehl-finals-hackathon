@@ -1,0 +1,1058 @@
+{
+ "cost_pressure_story": {
+  "action": "counter with the real driver indices",
+  "examples": [
+   {
+    "case": "case:P01",
+    "session": "a44d915880203878",
+    "round": 0,
+    "source": "reason",
+    "text": "LCI-C rose … in twelve months and is … of our cost."
+   },
+   {
+    "case": "case:P01",
+    "session": "a44d915880203878",
+    "round": 0,
+    "source": "reason",
+    "text": "PPI-C241 rose … in twelve months and is … of our cost."
+   },
+   {
+    "case": "case:P01",
+    "session": "a44d915880203878",
+    "round": 1,
+    "source": "reason",
+    "text": "Our initial calculation strictly reflects the verified increases in our material and labour costs, which are necessary to uphold our standard of craftsmanship."
+   },
+   {
+    "case": "case:P01",
+    "session": "b04caaf8824a9871",
+    "round": 0,
+    "source": "reason",
+    "text": "LCI-C rose … in twelve months and is … of our cost."
+   },
+   {
+    "case": "case:P01",
+    "session": "b04caaf8824a9871",
+    "round": 0,
+    "source": "reason",
+    "text": "PPI-C241 rose … in twelve months and is … of our cost."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 0,
+    "source": "reason",
+    "text": "LCI-C rose … in twelve months and is … of our cost."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 0,
+    "source": "reason",
+    "text": "PPI-C241 rose … in twelve months and is … of our cost."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 1,
+    "source": "reason",
+    "text": "LCI-C rose … in twelve months and is … of our cost. That remains."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 1,
+    "source": "reason",
+    "text": "PPI-C241 rose … in twelve months and is … of our cost. That remains."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 1,
+    "source": "reason",
+    "text": "We have also factored in the energy index data you provided, allowing us to revise our price to €… per unit."
+   },
+   {
+    "case": "case:P02",
+    "session": "e5fdf61d6275f326",
+    "round": 0,
+    "source": "reason",
+    "text": "CU-NOTATION rose … in twelve months and is … of our cost."
+   },
+   {
+    "case": "case:P02",
+    "session": "e5fdf61d6275f326",
+    "round": 0,
+    "source": "reason",
+    "text": "LCI-C rose … in twelve months and is … of our cost."
+   }
+  ],
+  "n": 37
+ },
+ "term_conceded": {
+  "action": "lock that term in, move on to price",
+  "examples": [
+   {
+    "case": "case:P01",
+    "session": "a44d915880203878",
+    "round": 1,
+    "source": "reason",
+    "text": "We are willing to accept the 60-day payment terms and, to support our continued cooperation, we offer a revised price of €… per unit."
+   },
+   {
+    "case": "case:P01",
+    "session": "b04caaf8824a9871",
+    "round": 1,
+    "source": "reason",
+    "text": "We are pleased to accommodate these terms to support our continued successful cooperation and provide the stability you seek."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 1,
+    "source": "reason",
+    "text": "We accept your proposed 14-day payment terms as part of this updated offer."
+   }
+  ],
+  "n": 3
+ },
+ "acknowledges_our_move": {
+  "action": "reciprocity works: keep small, steady steps",
+  "examples": [
+   {
+    "case": "case:P01",
+    "session": "a44d915880203878",
+    "round": 2,
+    "source": "reason",
+    "text": "We acknowledge your revised offer and appreciate the step towards our position."
+   },
+   {
+    "case": "case:P01",
+    "session": "a44d915880203878",
+    "round": 3,
+    "source": "reason",
+    "text": "We appreciate your revised offer and the movement towards our position."
+   },
+   {
+    "case": "case:P01",
+    "session": "a44d915880203878",
+    "round": 4,
+    "source": "reason",
+    "text": "We appreciate your continued movement and the respectful dialogue between our houses."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 2,
+    "source": "reason",
+    "text": "The data you cited was already factored into our previous concession, but in recognition of your improved offer, we are willing to make another step."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 3,
+    "source": "reason",
+    "text": "We acknowledge your improved offer and are willing to make another step towards you."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 4,
+    "source": "reason",
+    "text": "In response to your improved offer, we can further reduce our price to €… per unit for the 30-day payment term."
+   }
+  ],
+  "n": 6
+ },
+ "absorb_pushback": {
+  "action": "its story is firm: trade terms, not data",
+  "examples": [
+   {
+    "case": "case:P01",
+    "session": "a44d915880203878",
+    "round": 2,
+    "source": "reason",
+    "text": "However, our initial calculation was based on verified cost increases that we cannot simply absorb while maintaining our standard of craftsmanship."
+   }
+  ],
+  "n": 1
+ },
+ "partnership_appeal": {
+  "action": "acknowledge the relationship; no threats",
+  "examples": [
+   {
+    "case": "case:P01",
+    "session": "a44d915880203878",
+    "round": 2,
+    "source": "reason",
+    "text": "In the spirit of our long-standing partnership, we can make a further concession to €… per unit."
+   },
+   {
+    "case": "case:P01",
+    "session": "a44d915880203878",
+    "round": 3,
+    "source": "reason",
+    "text": "We trust this demonstrates our commitment to our long-standing partnership and the quality of our foundry work."
+   },
+   {
+    "case": "case:P07",
+    "session": "00ae513af1091e9c",
+    "round": 3,
+    "source": "reason",
+    "text": "We appreciate your commitment to our partnership and your readiness to finalize the agreement."
+   },
+   {
+    "case": "case:P07",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "It is always a pleasure to work with you, and we are delighted to present our proposal for your component requirements."
+   },
+   {
+    "case": "case:P07",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "As a reliable supply partner, we pride ourselves on delivering excellent service and maintaining a comprehensive product range to keep your production running smoothly."
+   },
+   {
+    "case": "case:P11",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "We are very excited about the opportunity to work together with Hollerau Pumpenwerke GmbH and to prove ourselves as a reliable partner for your business!"
+   },
+   {
+    "case": "case:P05",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "We are very eager to work with Hollerau Pumpenwerke GmbH and to prove ourselves as a reliable, long-term partner for your business!"
+   },
+   {
+    "case": "case:P08",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "We look forward to continuing our partnership with your team and supplying your needs from our extensive inventory."
+   },
+   {
+    "case": "case:P04",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "As your trusted partner, we pride ourselves on exceptional distributor service and look forward to continuing our successful business relationship."
+   }
+  ],
+  "n": 9
+ },
+ "nearing_close": {
+  "action": "it is near its limit: be ready to accept",
+  "examples": [
+   {
+    "case": "case:P01",
+    "session": "a44d915880203878",
+    "round": 3,
+    "source": "reason",
+    "text": "To reach an agreement, we are prepared to make a further concession to €… per unit."
+   },
+   {
+    "case": "case:P01",
+    "session": "a44d915880203878",
+    "round": 4,
+    "source": "reason",
+    "text": "To bridge the remaining gap, we are prepared to lower our price to €… per unit."
+   },
+   {
+    "case": "case:P01",
+    "session": "a44d915880203878",
+    "round": 4,
+    "source": "reason",
+    "text": "We trust this further step brings us to a mutually agreeable conclusion."
+   }
+  ],
+  "n": 3
+ },
+ "data_verified_no_effect": {
+  "action": "drop that kind of argument for this supplier; bring a different lever",
+  "examples": [
+   {
+    "case": "case:P01",
+    "session": "b04caaf8824a9871",
+    "round": 1,
+    "source": "reason",
+    "text": "We checked the rival quote data you cited; it holds, but it does not change our calculation."
+   },
+   {
+    "case": "case:P01",
+    "session": "b04caaf8824a9871",
+    "round": 1,
+    "source": "reason",
+    "text": "We checked the notice period data you cited; it holds, but it does not change our calculation."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 1,
+    "source": "reason",
+    "text": "We checked the price history data you cited; it holds, but it does not change our calculation."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 1,
+    "source": "reason",
+    "text": "Although we have verified the index data and historical pricing for the specific hex bolt, these records do not fully represent the cost structure of the complete bundled kit."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 2,
+    "source": "reason",
+    "text": "We checked the price history data you cited; it holds, but it does not change our calculation."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 2,
+    "source": "reason",
+    "text": "We have reviewed the historical pricing for the hex nuts; however, as with the bolts, this individual component price does not change the overall calculation for the bundled kit."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 3,
+    "source": "reason",
+    "text": "We checked the price history data you cited; it holds, but it does not change our calculation."
+   }
+  ],
+  "n": 7
+ },
+ "data_disarmed": {
+  "action": "data works on this supplier: keep citing NEW facts",
+  "examples": [
+   {
+    "case": "case:P01",
+    "session": "b04caaf8824a9871",
+    "round": 1,
+    "source": "reason",
+    "text": "We did not know that - a fair point."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 1,
+    "source": "reason",
+    "text": "We checked the notice period data you cited; it holds and we took it into account."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 1,
+    "source": "reason",
+    "text": "As to the index change and notice period data you cited, we did not know that - a fair point."
+   }
+  ],
+  "n": 3
+ },
+ "standard_terms": {
+  "action": "state every negotiable field; unstated terms close on its standard terms",
+  "examples": [
+   {
+    "case": "case:P01",
+    "session": "b04caaf8824a9871",
+    "round": 1,
+    "source": "reason",
+    "text": "Our standard Zahlungsziel is … days net."
+   },
+   {
+    "case": "case:P01",
+    "session": "b04caaf8824a9871",
+    "round": 1,
+    "source": "reason",
+    "text": "Our general terms and conditions apply; the quote lists our standard terms."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 1,
+    "source": "reason",
+    "text": "Our standard terms apply to everything the quote does not state; see attached."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 2,
+    "source": "reason",
+    "text": "Our general terms and conditions apply; the quote lists our standard terms."
+   },
+   {
+    "case": "case:P07",
+    "session": "00ae513af1091e9c",
+    "round": 1,
+    "source": "reason",
+    "text": "Our general terms and conditions apply; the quote lists our standard terms."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 1,
+    "source": "reason",
+    "text": "Our standard Zahlungsziel is … days net."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 1,
+    "source": "reason",
+    "text": "Our general terms and conditions apply; the quote lists our standard terms."
+   },
+   {
+    "case": "case:P18",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "We are pleased to present our pricing and standard terms for your requirements."
+   }
+  ],
+  "n": 8
+ },
+ "boilerplate": {
+  "action": "ignore",
+  "examples": [
+   {
+    "case": "case:P01",
+    "session": "b04caaf8824a9871",
+    "round": 1,
+    "source": "reason",
+    "text": "Our standard Zahlungsziel is … days net."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 1,
+    "source": "reason",
+    "text": "Our standard Zahlungsziel is … days net."
+   },
+   {
+    "case": "case:P07",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "Thank you for your enquiry."
+   },
+   {
+    "case": "case:P07",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "Please find our Angebot below."
+   },
+   {
+    "case": "case:P07",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "This quote comes with a Zahlungsziel 30 days net and a contract term of 12 months."
+   },
+   {
+    "case": "case:P07",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "We trust this proposal meets your expectations and look forward to continuing our successful business relationship."
+   },
+   {
+    "case": "case:P07",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "Please do not hesitate to reach out if you have any questions."
+   },
+   {
+    "case": "case:P07",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "Mit freundlichen Grüßen"
+   },
+   {
+    "case": "case:P07",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "Inside Sales, Schraubenhandel Leitner & Sohn GmbH"
+   },
+   {
+    "case": "case:P11",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "Thank you for your enquiry."
+   },
+   {
+    "case": "case:P11",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "Please find our Angebot below."
+   },
+   {
+    "case": "case:P11",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "Let us know if you have any questions at all."
+   }
+  ],
+  "n": 55
+ },
+ "prose_alternative": {
+  "action": "only term sheets bind: put the alternative into our next sheet",
+  "examples": [
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 1,
+    "source": "reason",
+    "text": "Alternatively, with valid from … January …: €… per unit."
+   }
+  ],
+  "n": 1
+ },
+ "closed_book": {
+  "action": "stop asking for a cost breakdown",
+  "examples": [
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 1,
+    "source": "reason",
+    "text": "Our price reflects our costs; our calculation stays internal."
+   }
+  ],
+  "n": 1
+ },
+ "data_already_counted": {
+  "action": "stop re-citing; each ID counts once",
+  "examples": [
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 2,
+    "source": "reason",
+    "text": "We received a lot of material; we looked at what bears on this part."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 2,
+    "source": "reason",
+    "text": "We have already taken that index change data into account."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 2,
+    "source": "reason",
+    "text": "We have already taken that notice period data into account."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 2,
+    "source": "reason",
+    "text": "The data you cited was already factored into our previous concession, but in recognition of your improved offer, we are willing to make another step."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 3,
+    "source": "reason",
+    "text": "We have already taken that index change data into account."
+   },
+   {
+    "case": "case:P01",
+    "session": "e3e0b7be271e9371",
+    "round": 3,
+    "source": "reason",
+    "text": "The notice period data you cited again has already been fully accounted for in our previous concessions."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 1,
+    "source": "reason",
+    "text": "We received a lot of material; we looked at what bears on this part."
+   }
+  ],
+  "n": 7
+ },
+ "asks_volume": {
+  "action": "state the binding volume and term (done in v1.2)",
+  "examples": [
+   {
+    "case": "case:P07",
+    "session": "00ae513af1091e9c",
+    "round": 1,
+    "source": "reason",
+    "text": "To accurately calculate the pricing impact of this consolidation, we kindly request the specific volume figures you expect."
+   },
+   {
+    "case": "case:P07",
+    "session": "00ae513af1091e9c",
+    "round": 1,
+    "source": "reason",
+    "text": "Which volume can you commit to?"
+   },
+   {
+    "case": "case:P07",
+    "session": "00ae513af1091e9c",
+    "round": 2,
+    "source": "reason",
+    "text": "Please provide the exact volume you intend to order so that we may proceed accordingly."
+   },
+   {
+    "case": "case:P07",
+    "session": "00ae513af1091e9c",
+    "round": 2,
+    "source": "reason",
+    "text": "Which volume can you commit to?"
+   },
+   {
+    "case": "case:P07",
+    "session": "00ae513af1091e9c",
+    "round": 3,
+    "source": "reason",
+    "text": "Our pricing requires a commitment to the volume from your initial inquiry; please confirm this expected annual quantity so we can conclude our negotiations."
+   },
+   {
+    "case": "case:P07",
+    "session": "00ae513af1091e9c",
+    "round": 3,
+    "source": "reason",
+    "text": "Which volume can you commit to?"
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 1,
+    "source": "reason",
+    "text": "Which volume can you commit to?"
+   }
+  ],
+  "n": 7
+ },
+ "concession_with_trade": {
+  "action": "it moves when we move: keep reciprocal steps",
+  "examples": [
+   {
+    "case": "case:P07",
+    "session": "00ae513af1091e9c",
+    "round": 1,
+    "source": "reason",
+    "text": "For a 24-month contract with 45-day payment terms, we can offer a revised price of €… per unit."
+   },
+   {
+    "case": "case:P07",
+    "session": "00ae513af1091e9c",
+    "round": 2,
+    "source": "reason",
+    "text": "In response to your proposal for a 30-day payment term over a 24-month contract, we can offer a revised price of €… per unit."
+   },
+   {
+    "case": "case:P07",
+    "session": "00ae513af1091e9c",
+    "round": 3,
+    "source": "reason",
+    "text": "In response to your latest offer, we are pleased to propose a revised price of €… per unit for a 24-month contract with 90-day payment terms."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 1,
+    "source": "reason",
+    "text": "In return for the 14-day payment terms and the 24-month contract, we can revise our offer to €… per unit."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 2,
+    "source": "reason",
+    "text": "Based on your preferred 30-day payment terms and the 24-month contract, we can offer a revised price of €… per unit."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 3,
+    "source": "reason",
+    "text": "To support your supply chain consolidation, we can offer a further revised price of €… per unit for the 30-day payment term and 24-month contract."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 4,
+    "source": "reason",
+    "text": "In response to your improved offer, we can further reduce our price to €… per unit for the 30-day payment term."
+   },
+   {
+    "case": "case:P07",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "For the requested volume, we can offer you a price of €5.74 per unit."
+   },
+   {
+    "case": "case:P05",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "We can offer you a price of €36.00 per unit."
+   },
+   {
+    "case": "case:P05",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "We can offer a price of €38.50 per unit."
+   },
+   {
+    "case": "case:P18",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "For this item, we can offer a price of €6.10 per unit, with a Zahlungsziel 30 days net, a contract term of 12 months, and no Preisgleitklausel."
+   }
+  ],
+  "n": 11
+ },
+ "volume_helps_price": {
+  "action": "offer more volume / longer term if the need allows",
+  "examples": [
+   {
+    "case": "case:P07",
+    "session": "00ae513af1091e9c",
+    "round": 1,
+    "source": "reason",
+    "text": "A binding higher volume would help us and can improve the price."
+   },
+   {
+    "case": "case:P07",
+    "session": "00ae513af1091e9c",
+    "round": 2,
+    "source": "reason",
+    "text": "A binding higher volume would help us and can improve the price."
+   },
+   {
+    "case": "case:P07",
+    "session": "00ae513af1091e9c",
+    "round": 3,
+    "source": "reason",
+    "text": "A binding higher volume would help us and can improve the price."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 1,
+    "source": "reason",
+    "text": "A binding higher volume would help us and can improve the price."
+   }
+  ],
+  "n": 4
+ },
+ "cost_drivers_named": {
+  "action": "cite exactly those series (helps us if they moved little)",
+  "examples": [
+   {
+    "case": "case:P07",
+    "session": "00ae513af1091e9c",
+    "round": 2,
+    "source": "reason",
+    "text": "Our price follows our main cost drivers: PPI-C2594, LCI-C."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 1,
+    "source": "reason",
+    "text": "Our price follows our main cost drivers: PPI-C2594, LCI-C."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 2,
+    "source": "reason",
+    "text": "Our price follows our main cost drivers: PPI-C2594, LCI-C."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 3,
+    "source": "reason",
+    "text": "Our price follows our main cost drivers: PPI-C2594, LCI-C."
+   },
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 4,
+    "source": "reason",
+    "text": "Our price follows our main cost drivers: PPI-C2594, LCI-C."
+   }
+  ],
+  "n": 5
+ },
+ "asks_calculation": {
+  "action": "send a calculation (kit_calc for bundles, driver maths otherwise)",
+  "examples": [
+   {
+    "case": "case:P07",
+    "session": "33e48d99ea640a6a",
+    "round": 4,
+    "source": "reason",
+    "text": "To help us understand your target pricing for the bundled kit, please share the specific data or calculations you are basing it on."
+   }
+  ],
+  "n": 1
+ },
+ "validity": {
+  "action": "note quote validity",
+  "examples": [
+   {
+    "case": "case:P07",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "Please note that this offer remains valid for 30 days."
+   },
+   {
+    "case": "case:P07",
+    "session": "probe",
+    "round": 0,
+    "source": "quote_pdf",
+    "text": "Price valid from 2027-01-01"
+   },
+   {
+    "case": "case:P07",
+    "session": "probe",
+    "round": 0,
+    "source": "quote_pdf",
+    "text": "Validity: 30 days."
+   },
+   {
+    "case": "case:P11",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "Please note that this offer stays valid for 30 days."
+   },
+   {
+    "case": "case:P11",
+    "session": "probe",
+    "round": 0,
+    "source": "quote_pdf",
+    "text": "Price valid from 2027-01-01"
+   },
+   {
+    "case": "case:P11",
+    "session": "probe",
+    "round": 0,
+    "source": "quote_pdf",
+    "text": "Validity: 30 days."
+   },
+   {
+    "case": "case:P10",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "Please note that this offer remains valid for 30 days."
+   },
+   {
+    "case": "case:P10",
+    "session": "probe",
+    "round": 0,
+    "source": "quote_pdf",
+    "text": "Price valid from 2027-01-01"
+   },
+   {
+    "case": "case:P10",
+    "session": "probe",
+    "round": 0,
+    "source": "quote_pdf",
+    "text": "Validity: 30 days."
+   },
+   {
+    "case": "case:P05",
+    "session": "probe",
+    "round": 0,
+    "source": "quote_pdf",
+    "text": "Price valid from 2027-01-01"
+   },
+   {
+    "case": "case:P05",
+    "session": "probe",
+    "round": 0,
+    "source": "quote_pdf",
+    "text": "Validity: on request."
+   },
+   {
+    "case": "case:P05",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "Please note that this offer stays valid for 30 days."
+   }
+  ],
+  "n": 31
+ },
+ "eager_new_business": {
+  "action": "new or hungry supplier: push price, it wants the deal",
+  "examples": [
+   {
+    "case": "case:P11",
+    "session": "probe",
+    "round": 0,
+    "source": "opening",
+    "text": "We are eager to show you what we can do and hope this initial quote meets your expectations."
+   }
+  ],
+  "n": 1
+ },
+ "_unmatched": [
+  {
+   "text": "We note your request for a lower price and extended payment terms of … days.",
+   "n": 1
+  },
+  {
+   "text": "We have carefully considered your request to shift the effective date to … January … and extend the payment terms to … days.",
+   "n": 1
+  },
+  {
+   "text": "We propose a revised price of # per unit for a start date of … January … with … payment days.",
+   "n": 1
+  },
+  {
+   "text": "We can now offer # per unit for a start date of … April … with … days payment terms.",
+   "n": 1
+  },
+  {
+   "text": "We welcome the opportunity to bundle the entire kit and are pleased to extend the contract term to … months.",
+   "n": 1
+  },
+  {
+   "text": "We appreciate your readiness to commit to the required volume, but we still require the specific figures to accurately finalize the pricing structure.",
+   "n": 1
+  },
+  {
+   "text": "We welcome your strategic decision to consolidate the fastener kit with us and your commitment to a #-month volume.",
+   "n": 1
+  },
+  {
+   "text": "We appreciate your commitment to the … units volume and the #-month contract to consolidate your supply chain.",
+   "n": 1
+  },
+  {
+   "text": "We have verified the historical pricing for the washers; however, as with the other individual components, this does not alter the overall cost structure of the bundled kit.",
+   "n": 1
+  },
+  {
+   "text": "We value your commitment to the … units volume and the #-month contract.",
+   "n": 1
+  },
+  {
+   "text": "We appreciate your continued commitment to the … units volume and the #-month contract.",
+   "n": 1
+  },
+  {
+   "text": "For our offer, we can propose a price of €# per unit, alongside a quality commitment of # ppm.",
+   "n": 1
+  },
+  {
+   "text": "We offer a volume of # pcs per year at a price of €# per unit.",
+   "n": 1
+  },
+  {
+   "text": "The requested contract term is # months, and our Lieferzeit is # days.",
+   "n": 1
+  },
+  {
+   "text": "Segment Manager, Dichtungswerk Ravensteiner GmbH",
+   "n": 1
+  },
+  {
+   "text": "It is good to hear from Hollerau Pumpenwerke GmbH.",
+   "n": 1
+  },
+  {
+   "text": "We have looked at your request carefully for our shop.",
+   "n": 1
+  },
+  {
+   "text": "Let us know if this works for you.",
+   "n": 1
+  },
+  {
+   "text": "Andreas Dralveck",
+   "n": 1
+  },
+  {
+   "text": "Owner, Zerspanung Dralveck GmbH",
+   "n": 1
+  },
+  {
+   "text": "We are happy to offer you a price of €# per unit, Lieferzeit # days.",
+   "n": 1
+  },
+  {
+   "text": "Let us know if this works for you!",
+   "n": 1
+  },
+  {
+   "text": "Jana Procházková",
+   "n": 1
+  },
+  {
+   "text": "As a practical shop, we like to keep things simple and direct.",
+   "n": 1
+  },
+  {
+   "text": "You can count on our usual hands-on quality and clear communication for this work.",
+   "n": 1
+  },
+  {
+   "text": "Let us know if this works for you so we can get started.",
+   "n": 1
+  },
+  {
+   "text": "Claudia Fuchsreiter",
+   "n": 1
+  },
+  {
+   "text": "Owner, Drehteile Fuchsreiter GmbH",
+   "n": 1
+  },
+  {
+   "text": "Enquiry: Alloy surcharge and base price for # bar.",
+   "n": 1
+  },
+  {
+   "text": "We are delighted to assist Hollerau Pumpenwerke GmbH and remain eager to serve all your requirements from our extensive product range.",
+   "n": 1
+  },
+  {
+   "text": "Birgit Mayrhofer",
+   "n": 1
+  },
+  {
+   "text": "Key Account Manager, Selvbrunn Drive Systems GmbH",
+   "n": 1
+  },
+  {
+   "text": "Key Account Manager, Antriebstechnik Nordmark AG",
+   "n": 1
+  },
+  {
+   "text": "Enquiry: Alloy surcharge and base price for # bar (Werdenfels).",
+   "n": 1
+  }
+ ]
+}

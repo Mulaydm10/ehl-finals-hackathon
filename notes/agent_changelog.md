@@ -17,7 +17,6 @@ rank versions, not to predict arena scores. It ignores arguments, tone and the r
 | v1 | P01 | **0.85** | e3e0b7be271e9371 | €135.70, Apr 2027, 14 d in 3 rounds; "we did not know that, a fair point" |
 | probe (Neel) | 9 cases | 0–0.12 | see quota_log | walk-away probes for exact C_open/C_best |
 | v1.1 | P07 | 0.68 | 00ae513af1091e9c | 24 m won (+0.48); price stalled at €5.52; volume question unanswered 3× |
-| v1.2 | P07 | 0.69 | 33e48d99ea640a6a | anchor €4.94; supplier 5.56 → 5.56 → 5.52 → **final_offer 5.50** in round 4. All claims verified but "it does not change our calculation": single-part PO history is irrelevant to a kit price. Final reason: "please share the specific data or calculations you are basing [the kit target] on" → next: a kit-level calculation argument |
 
 ## Versions
 
@@ -59,3 +58,14 @@ rank versions, not to predict arena scores. It ignores arguments, tone and the r
 - P01: Neel's score-1.0 package is Apr + 90 d, v1 took 14 d (cash-rate estimate 0.14 may be too high).
 - RFQ round-robin is simple; Neel's auction mechanics (step targets down together) not yet in code.
 - Index clauses still off (correct for P02/P08/P18 where the path is positive; may help when it's ≤ 0).
+
+### v1.3 (offline only, 0 games): kit calculation, supplier signals, Qwen fixes
+| change | evidence | offline check |
+|---|---|---|
+| **Kit-level calculation** for bundles: kit at the supplier's own current prices + today's best price for parts it doesn't sell us yet ("the kit costs EUR 5.95; your EUR 5.74 is a 3.5% bundle discount for 5x our business") | P07 v1.2 live: part-level history "does not change our calculation… do not fully represent the cost structure of the complete bundled kit"; final message asked for "the specific data or calculations" | P07 €5.95 = Neel's hand calculation; P15 €5.56 |
+| No part-level PO citations for kits; "kits" wording; cost breakdown "for the kit" | same | – |
+| **Supplier-signal catalogue** `src/eval/signals.py` → `datasets/E_supplier_signals.json` (228 supplier sentences, 11 sessions/probes, 22 categories) | new signals found: prose_alternative, closed_book, term_conceded, nearing_close, acknowledges_our_move, absorb_pushback, eager_new_business | – |
+| **Prose alternative → term sheet** ("Alternatively, from 1 January 2027: EUR …" is not binding; we put it in a sheet when it's within 1% of our ask or late in the game) | P01 live reason; playbooks/_common.md §4 | parses ISO and "1 January 2027" dates, payment days; no-op without one |
+| **Qwen role fix**: "we" is always the buyer; supplier situation labelled as THEIRS; never reveal targets; drop sentences that do (`BAD_OPENING`) | `src/eval/qwen_bench.py` on 9 openings: 5/9 paragraphs wrote the supplier's restructuring/committee as "ours", one leaked "our target cost" | after the fix: 0/9 role errors, 0 leaks; latency mean 6.5 s, max 8.5 s |
+- Offline eval unchanged at 0.936 / 0.944 (the simulator ignores text), as expected.
+- Qwen still occasionally thanks for a "cost breakdown" it never sent; P03 "we acknowledge your price increase" is soft.
