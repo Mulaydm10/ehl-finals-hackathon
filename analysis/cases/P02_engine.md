@@ -2,6 +2,10 @@ STATUS: DONE (task 1, P02) - 2026-10-10 ~18:00 CEST, cloud session, offline only
 Data: all 14 P02 games (datasets/runs, tools/replays/raw, tools/replays/backoffice), calibrated supplier (full cost EUR 367.60, rate 6.6%).
 Tool: `cd tacto/starter-kit && uv run python ../../analysis/tools/engine_dump.py P02 --rate 0.066 --reasons`
 
+> **UPDATE (evening):** live game ee98266bedd37231 reached 0.824 (EUR 368.55 @ 90 d, value ~364.5) with steps of 30% of
+> the gap. So ~367.8 was NOT a hard stop: it was where our small 0.6 steps ran out by the round-4 final. It mirrors bigger
+> steps too (its step / ours: 0.5 without new data, ~1.0 with). See LEARNINGS section 7 and analysis/central/ENGINES.md.
+
 # P02 engine (Nordmark, sup:70510): how its price is set, and the plan to reach 0.68+
 
 All prices below are the supplier's **cash value per unit** ("value") unless marked: the price at its standard 30 days that
