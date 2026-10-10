@@ -46,6 +46,7 @@ GRID_LADDER = (0.5, 0.25, 0.1, 0.04)
 GRID_LADDER_LOW = (0.8, 0.6, 0.4, 0.2)  # when it keeps its limits internal (P11 high draws: agreed 45.10-45.25)  # probe j asks its price - grid x GRID_LADDER[j] (P11 low draw: 44.75, 44.875, 44.95, 44.98)
 GRID_PROBES = 4  # grid probe: asks between (its price - grid) and its price, stepping up (P11 floor hidden in the 0.50 grid)
 NEAR_CLOSE_TRY = 0.0075  # one ask this far below an OPEN offer before taking it (P11 7117d351: agreed to ours, -0.8%)
+HOLD_MIN_PATIENCE = 7  # experiment hold_r1: only suppliers with this patience prior (price_increase + stabilise)
 WALK_GUARD_MOVE = 0.005  # its last move cut our cost > 0.5%: still conceding, not about to walk
 CASH_SHORT_RISK = 2.0  # a cash-short supplier prices uncertain cash outflows (chargebacks) ~2x their expectation
 STALL_NOISE = 0.10    # a big move UP (structure switch) is not a stall
@@ -195,7 +196,7 @@ class NoIdeaAgent:
         self.focus = None  # RFQs: the bidders play.py lets us answer now (their replies are in)
         # experiment `hold_r1` (OFF): play.py sends our first e-mail after one timeout round - the supplier's patience
         # drops and it concedes faster (P05 record path; analysis/experiments/signals/SIGNALS.md). A/B before any use.
-        self.hold_first = "hold_r1" in EXPERIMENTS
+        self.hold_first = False  # set per case in prepare() (patient single suppliers only)
         root = _repo()
         self.dossiers = json.loads((root / "datasets/A_dossiers.json").read_text(encoding="utf-8"))
         claims = (root / "datasets/C_arguments.jsonl").read_text(encoding="utf-8")
@@ -289,6 +290,10 @@ class NoIdeaAgent:
                              "kit": self.kit_calc(case, sid) if case["type"] == "bundling" else None}
             self.sup[sid]["k"] = self.prior_k(case, sid)
             self.sup[sid]["patience"] = self.patience_prior(case, sid)
+            # hold_r1 only for a PATIENT single supplier: A/B (2+2 games, same build) P02 (prior 7) +0.150,
+            # P07 +0.010, P03 0.000, P08 -0.012, P18 -0.034 (prior 3-4), P10 (prior 1) 0.0 twice (final_offer at once)
+            patient = self.sup[sid]["patience"] >= HOLD_MIN_PATIENCE
+            self.hold_first = "hold_r1" in EXPERIMENTS and len(threads) == 1 and patient
             log.info("%s patience prior: final expected around round %d", sid, self.sup[sid]["patience"])
             body = next((m.get("body") or "" for m in events if m.get("from") != "buyer"), "")
             self.sup[sid]["story"] = self.price_story(case, sid, body)

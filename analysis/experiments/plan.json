@@ -284,6 +284,38 @@
    "hypothesis": "control",
    "evidence": "-",
    "keep_if": "-"
+  },
+  "HOLD_P01": {
+   "title": "Gated round-1 hold (patience prior >= 7) on P01",
+   "change": "switch hold_r1 (play.py waits 65 s before the first e-mail to a single supplier)",
+   "switches": [
+    "hold_r1"
+   ],
+   "games": [
+    [
+     "P01",
+     2
+    ]
+   ],
+   "parallel": 2,
+   "hypothesis": "A timeout drops the supplier's patience: it concedes faster and ends lower (P05 scripted: first counter 28.00/27.50 vs 30.00-30.50, record 0.965; P11 held path 44.45 vs 44.50).",
+   "evidence": "analysis/experiments/signals/SIGNALS.md",
+   "keep_if": "mean score of HOLD > mean of HOLD0 by >= 0.03 AND no case worse by > 0.05"
+  },
+  "HOLD0_P01": {
+   "title": "Gated round-1 hold control on P01",
+   "change": "none",
+   "switches": [],
+   "games": [
+    [
+     "P01",
+     2
+    ]
+   ],
+   "parallel": 2,
+   "hypothesis": "control",
+   "evidence": "-",
+   "keep_if": "-"
   }
  }
 }
