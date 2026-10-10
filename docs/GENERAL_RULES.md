@@ -227,3 +227,10 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
     move either", then - after our deep ask + the lowest rival - "we need to clarify this internally" and its line drops about
     one step per round; it agrees to our standing ask once that is above its line. Make ONE move after the clarification.
     A late reply counts as "our last offer repeated" (three in a row end the thread) - prefer a no-price note to a timeout.
+
+## M. From the top-scoring runs of the whole team (docs/TOP_RUNS_LEARNINGS.md, src/eval/top_runs.py)
+101. **Round 1 = every strong verified fact the case offers** (falling indices, forecast, should-cost, price path, notice
+     breach): top games had more round-1 facts in 7 of 9 bilateral cases and a bigger first cut.
+102. **One sheet in round 1** (top games of 7 cases), the term chosen by the supplier's currency (90 d / 14 d / grid term).
+103. **The best deals close with the supplier agreeing to our ask** after it holds - keep a standing ask just under its line.
+104. **One more round while it still moves or facts are left** - the top games ran a round longer on P02, P03, P04, P11.

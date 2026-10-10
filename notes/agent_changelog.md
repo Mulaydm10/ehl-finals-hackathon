@@ -1066,3 +1066,7 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 - Replay of Parth's 0.965 game in real round order: r0 note -> r1 deep ask 25.16 @ 14 -> r2 it agreed 26.60 -> accept (= 0.965).
 - Tests 64; offline mean 0.942 (P05 0.95 -> 0.87 offline: the sim's bidders accept at once, a hold round cannot pay there);
   walk replays, P11 / P01 / P04 unchanged; offline Qwen + Astra P05 OK; injection PASS.
+
+## Stopped P05 (user: "dont run p5 anymore") - two v2.32 live games were killed right after start (sessions end as
+timeouts, no deal). The hold path code (v2.32) stays in, untested live.
+## Top-runs generalisation (src/eval/top_runs.py -> docs/TOP_RUNS_LEARNINGS.md, rules 101-104, 3 principles for the model)
