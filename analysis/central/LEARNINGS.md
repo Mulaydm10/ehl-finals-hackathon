@@ -156,3 +156,29 @@ order history: "does not change". **Round 3 had no data -> "Which figures is tha
 Fixes: every unhedged driver gets its own falling window (labour was skipped once cold drawing had one); facts it
 shrugged off are kept as LAST-round fillers (never in round 1), so no round goes out empty; data timed to its final
 (mined: P08 always at our 3rd message).
+
+### 8b. P08 after 9 games: the first counter is a coin flip; everything after it is fixed (live 136352b4a3a9f752 = 0.642)
+Same agent as cae4b621695f8161, same three sheets, same opening, the same two taken claims in round 1 (only the quality
+notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41. Values below are its price as a
+30-day, db0 equivalent at its 8% cash rate (`engine_dump.py P08 --rate 0.08`). db5 costs +0.12. **House 0.752 = 5.10.**
+
+| game | round 1 data (taken?) | r1 value | round 2: our move -> its step | round 3 data -> final step | final | score |
+|---|---|---:|---|---|---:|---:|
+| 1f27 | alloy (no) | 5.39 | db5 asks below its price -> **hold** | - | walked | 0 |
+| ab47 | alloy (no) | 5.39 | took its db0 clause -> -0.05 | forecast -> -0.04 | 5.30 | 0.52 |
+| a43d | alloy, labour+, drawing+ | 5.39 | **clause-free** 4.84 @ 45 -> **-0.15** | forecast -> -0.05 | 5.19 | 0.65 |
+| cae4 | drawing -2.3%, forecast (yes), QNs (no) | **5.34** | **clause-free** 4.80 @ 14, order history (no) -> **-0.17** | none -> -0.05 | **5.12** | **0.73** |
+| 325d | alloy (no) | 5.51 | took its db0 clause -> -0.09 | forecast -> -0.06 | 5.36 | 0.46 |
+| 586a | alloy (no) | 5.51 | db5 asks -> -0.03 | forecast -> -0.03 | 5.45 | 0.49 |
+| 9bfa | alloy (no) | 5.51 | db5 @ 14 -> +0.06 | forecast -> -0.04 | 5.53 | 0.41 |
+| 1363 | drawing -2.3%, forecast (yes) | **5.46** | **clause-free** 4.80 @ 14, labour -0.3% (yes) -> **-0.16** | QNs (no) -> -0.10 | 5.20 | 0.64 |
+
+1. **Round 1 is bimodal: 5.39 or 5.51 before data, 4 games each,** with identical sheets and claims. It's drawn per
+   session, not caused by our wording.
+2. **New taken data in round 1 cuts 0.05 in both modes** (forecast + a falling unhedged index). A second index series
+   (labour, round 2) was "taken" but added nothing beyond the fixed round-2 step: the cut is per new kind, as in P03.
+3. **Round 2 clause-free = -0.15 to -0.17 (3 of 3)**, data or not. Taking its clause gives -0.05 or -0.09; db5 asks give
+   -0.03, a hold, or +0.06. This is the only big lever, and the agent already pulls it.
+4. **Final at our 3rd message: -0.03 to -0.06** (once -0.10, with quality notifications in round 3).
+5. Expected outcome of the current agent: low mode 5.08-5.13 (**0.73-0.78, beats the house about half the time**); high
+   mode 5.20-5.25 (0.59-0.64). The rest is noise of a few cents. No message we can write changes the draw.
