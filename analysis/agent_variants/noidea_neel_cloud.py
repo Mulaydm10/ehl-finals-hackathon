@@ -63,9 +63,11 @@ FINAL_AT_MSG = {"raw_material": 3}  # cloud task 10: our message at which this c
 DEFER_RATIO = 0.18  # ...where our step is only this share of its last step (P08 deferred at 0.19x; final at >= 0.9x, P18 at 0.53x)
 DEEP_ANCHOR_HEDGED = None  # cloud task 15: round-1 anchor depth for hedged raw material; tested 0.26 in loop run 3 (8180d389):
 # headline 5.41 (no gain) and a bigger round-2 cut that left no budget for the deferral -> OFF (task 16)
-PAY_DAYS_HEDGED = 60  # cloud task 16 (P08_loop3.md): payment term from round 2 for hedged raw material. Its final is cent-rounded on
-# OUR payment term; at the low-draw floor (value ~5.116-5.121) 60 d lands on 5.15 = 0.7329, 14 d on 5.10 = 0.7323 (the record).
-# P(score > 0.7323 | low draw, 5.40 headline) 54% at 60 d vs 20% at 14 d (noise model, 8 budgets); mean -0.002
+PAY_DAYS_HEDGED = None  # cloud task 19 (P08_run81ee.md): REVERTED to the shortest term (14 d). Task 16 put round 2 on 60 d for the
+# cent grid (+0.0006); live 81ee4b1e (low draw) then cut only -0.033 in round 2 and its floor sat 0.08 higher (total -0.133 vs
+# 0.199-0.220 in 8 low draws, 6 of them at 14 d). n=1 and confounded with an opening line ("no higher than the current level"),
+# but 14 d is the proven term and the grid gain was a tenth of a cent.
+OWN_QUOTE_ID = True  # cloud task 17: cite a price-frozen supplier's own recent quote by ID (P03 only)
 HAIR_HEDGED = True  # cloud task 18: floor-trade pair at our final message after a deferral (P08 only)
 HAIR_CENTS = 1  # ...one cent under its expected final
 LONG_TERM_HEDGED = True  # cloud task 14: 36 m sheets for hedged raw-material suppliers (experiment, P08 loop run 2)
@@ -128,6 +130,8 @@ Rules:
   their committee, their capacity, their restructuring) - never describe it as ours.
 - Never reveal our position: no targets, budgets, urgency, alternatives or weaknesses.
 - Do not mention materials, costs or facts that are not in their e-mail.
+- Never name a price level we could accept ("no higher than the current level", "around EUR X"): the figures below
+  are our only position (P08 81ee4b1e: that line in round 2, and its floor sat 0.08 higher than in any other low draw).
 - Never call a price for different payment days or a different clause an increase; compare only like for like
   (P08 ad0427655e885fc1: "We reject a price increase for shorter payment terms" - it had raised nothing).
 - Never comment on their departments, colleagues or internal processes (credit control, finance, sales,
@@ -289,6 +293,15 @@ class NoIdeaAgent:
                 fillers.append({**c, "filler": True})
         # verified facts it shrugged off before go LAST, so no round goes out empty: a round without data drew "Which
         # figures is that based on?" and a final (P02, P08); P02's "does not change" order history still came with a cut
+        # cloud task 17 (analysis/cases/P03_beat.md): a price-frozen holder cuts once per NEW verified data kind and every
+        # kind it takes is used; its own recent quote by ID is the one kind never cited -> right after round 1's data, so
+        # the remaining kinds still reach its final at our 5th message
+        if OWN_QUOTE_ID and "price_frozen" in self.dossiers.get(sid, {}).get("motives", {}):
+            oq = central.own_quote_claims(self.facts, sid, parts, opening)
+            r1 = [c for c in ranked if c["kind"] in ("should_cost", "volume_change")]
+            first_idx = next((c for c in ranked if c["kind"] == "index_change"), None)
+            head = r1 + ([first_idx] if first_idx else [])
+            ranked = head + oq + [c for c in ranked if c not in head]
         return ranked + fillers
 
     def kit_calc(self, case, sid):
