@@ -1,0 +1,178 @@
+{
+ "_about": "Live experiment plan (Parth). Run with tools/experiments/run_plan.py <ID>. Each experiment changes ONE thing against the baseline of all 74 practice games so far (datasets/runs/, 2026-10-10 ~17:30). Evidence and reasoning: analysis/strategy_0.95.md.",
+ "reserve": 40,
+ "baseline": {
+  "P01": {
+   "best": 0.91,
+   "median": 0.816,
+   "best_first_counter": 0.661,
+   "games": 5
+  },
+  "P02": {
+   "best": 0.507,
+   "median": 0.39,
+   "best_first_counter": 0.36,
+   "games": 11
+  },
+  "P03": {
+   "best": 0.923,
+   "median": 0.9,
+   "best_first_counter": 0.926,
+   "games": 10
+  },
+  "P04": {
+   "best": 0.86,
+   "median": 0.815,
+   "best_first_counter": 0.81,
+   "games": 4
+  },
+  "P05": {
+   "best": 0.588,
+   "median": 0.528,
+   "best_first_counter": 0.355,
+   "games": 4
+  },
+  "P07": {
+   "best": 0.753,
+   "median": 0.695,
+   "best_first_counter": 0.634,
+   "games": 11
+  },
+  "P08": {
+   "best": 0.647,
+   "median": 0.493,
+   "best_first_counter": 0.427,
+   "games": 7
+  },
+  "P10": {
+   "best": 0.663,
+   "median": 0.639,
+   "best_first_counter": 0.663,
+   "games": 10
+  },
+  "P11": {
+   "best": 0.672,
+   "median": 0.609,
+   "best_first_counter": 0.71,
+   "games": 4
+  },
+  "P18": {
+   "best": 0.673,
+   "median": 0.539,
+   "best_first_counter": 0.485,
+   "games": 8
+  }
+ },
+ "experiments": {
+  "E1": {
+   "title": "RFQ: every bidder answered within its 60 s (parallel sends)",
+   "change": "commit d85babc: play() sends to all bidders in parallel; the agent answers the bidders whose reply is in",
+   "switches": [],
+   "games": [
+    [
+     "P05",
+     2
+    ]
+   ],
+   "parallel": 1,
+   "hypothesis": "No timeouts; rival offers cited every round to every bidder ('much lower rival quote -> give the step'); P05 well above 0.39.",
+   "evidence": "Live P05 f8604d43d3fbf92f: 6 timeouts, a bidder at EUR 38.50 went to 31.00 then agreed 30.25 after ONE rival citation; offline test fails on the old loop (3 timeouts, thread lost) and passes on the new one.",
+   "keep_if": "0 timeouts in both games AND mean score >= 0.65 (P05 best so far 0.588)"
+  },
+  "E2": {
+   "title": "Round-1 argument backbone in code",
+   "change": "commit 392174a: round 1 = top 3 arguments by evidence order (price history > should-cost > forecast > quality > falling index), one forecast per case; later rounds always the next unused one",
+   "switches": [],
+   "games": [
+    [
+     "P10",
+     1
+    ],
+    [
+     "P18",
+     1
+    ],
+    [
+     "P11",
+     1
+    ],
+    [
+     "P02",
+     1
+    ]
+   ],
+   "parallel": 4,
+   "hypothesis": "The first counter rises where the model used to drop the decisive argument (P10 should-cost, P18 3 of 4 dropped); finals follow (final ~ first counter + steps).",
+   "evidence": "First counters with vs without the right data: P01 0.66 vs 0.34, P18 0.49 vs 0.27, P02 0.36 vs 0.14, P10 0.66 vs 0.55 (should-cost at lead 42).",
+   "keep_if": "first counter >= baseline best_first_counter - 0.02 in >= 3 of 4 AND no final below its case median - 0.05"
+  },
+  "E3": {
+   "title": "Other parts' price jumps as round-2+ arguments",
+   "change": "commit a124590, switch all_parts_po",
+   "switches": [
+    "all_parts_po"
+   ],
+   "games": [
+    [
+     "P18",
+     2
+    ]
+   ],
+   "parallel": 2,
+   "hypothesis": "api.md: 'Order lines of different parts are separate arguments'. P18's supplier raised all 3 bars +11% in July; the 2 other bars' histories in rounds 2-3 are verified and taken into account -> bigger steps.",
+   "evidence": "Price history was P18's strongest argument (+0.2 on the first counter). Risk: 'irrelevant' or 'duplicate' (no trust cost); 'contradicted' would cost trust (IDs are pre-checked by the builder).",
+   "keep_if": "no 'contradicted' AND the other-part claims come back verified AND mean final >= 0.59 (P18 median 0.539 + 0.05)"
+  },
+  "E4": {
+   "title": "Full pass with the build that won E1-E3 (gate before merging to main)",
+   "change": "everything kept; pass the kept switches with --switches",
+   "switches": [],
+   "games": [
+    [
+     "P01",
+     1
+    ],
+    [
+     "P02",
+     1
+    ],
+    [
+     "P03",
+     1
+    ],
+    [
+     "P04",
+     1
+    ],
+    [
+     "P05",
+     1
+    ],
+    [
+     "P07",
+     1
+    ],
+    [
+     "P08",
+     1
+    ],
+    [
+     "P10",
+     1
+    ],
+    [
+     "P11",
+     1
+    ],
+    [
+     "P18",
+     1
+    ]
+   ],
+   "parallel": 5,
+   "hypothesis": "No case regresses; RFQ and argument fixes lift the mean.",
+   "evidence": "Baseline medians mean 0.642; bests mean 0.720.",
+   "keep_if": "mean score >= 0.68 AND no case below its median - 0.10"
+  }
+ }
+}

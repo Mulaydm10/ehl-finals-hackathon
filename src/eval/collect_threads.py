@@ -30,7 +30,8 @@ for s in c.get("/v1/sessions").json():
                         "status": m.get("status"), "standing": sheets[0]["terms"] if sheets else None,
                         "body": m.get("body", "")})
             n += 1
-(ROOT / "datasets/F_supplier_emails.jsonl").write_text("\n".join(json.dumps(x, ensure_ascii=False) for x in out) + "\n")
+(ROOT / "datasets/F_supplier_emails.jsonl").write_text(
+    "\n".join(json.dumps(x, ensure_ascii=False) for x in out) + "\n", encoding="utf-8")
 print(f"{n} supplier e-mails from {len({x['session'] for x in out})} sessions -> datasets/F_supplier_emails.jsonl")
 alts = [x for x in out if "lternativ" in x["body"]]
 print(f"{len(alts)} contain 'Alternatively'; statuses:", {st: sum(x['status'] == st for x in out) for st in {x['status'] for x in out}})

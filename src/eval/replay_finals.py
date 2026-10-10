@@ -14,12 +14,12 @@ from arena_kit.agents.noidea import NoIdeaAgent  # noqa: E402
 from arena_kit.cost import total_cost  # noqa: E402
 
 logging.basicConfig(level=logging.WARNING)
-cases = {c["case_id"]: c for c in json.loads((ROOT / "datasets/cases_practice.json").read_text())}
-probes = {f.stem: json.loads(f.read_text()).get("result", {}) for f in (ROOT / "analysis/cases/openings").glob("*.json")}
+cases = {c["case_id"]: c for c in json.loads((ROOT / "datasets/cases_practice.json").read_text(encoding="utf-8"))}
+probes = {f.stem: json.loads(f.read_text(encoding="utf-8")).get("result", {}) for f in (ROOT / "analysis/cases/openings").glob("*.json")}
 probes["P01"] = {"c_open": 1153779.74, "c_best": 1096815.78}
 gain = []
 for f in sorted((ROOT / "datasets/runs").glob("*.json")):
-    g = json.loads(f.read_text())
+    g = json.loads(f.read_text(encoding="utf-8"))
     cid = g["session"]["case_id"]
     if cid not in cases or len(g["threads"]) != 1:
         continue

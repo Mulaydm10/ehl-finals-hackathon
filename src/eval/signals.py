@@ -92,7 +92,7 @@ def main():
             for x in sentences((t.get("move") or {}).get("body")):
                 items.append((s["case_id"], s["session_id"], t.get("round"), "email", x))
     for f in (ROOT / "analysis/cases/openings").glob("*.json"):
-        for sid, ms in json.loads(f.read_text())["threads"].items():
+        for sid, ms in json.loads(f.read_text(encoding="utf-8"))["threads"].items():
             for m in ms:
                 for x in sentences(m.get("body")):
                     items.append((f"case:{f.stem}", "probe", 0, "opening", x))
@@ -119,7 +119,8 @@ def main():
         print(f"  [{n}x] {text[:200]}")
     out = {k: {"action": SIGNALS[k][1], "examples": v[:12], "n": len(v)} for k, v in by_cat.items()}
     out["_unmatched"] = [{"text": t, "n": n} for t, n in unmatched.most_common()]
-    (ROOT / "datasets/E_supplier_signals.json").write_text(json.dumps(out, indent=1, ensure_ascii=False))
+    (ROOT / "datasets/E_supplier_signals.json").write_text(json.dumps(out, indent=1, ensure_ascii=False),
+                                                            encoding="utf-8")
 
 
 if __name__ == "__main__":

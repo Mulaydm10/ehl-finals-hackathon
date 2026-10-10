@@ -13,7 +13,7 @@ import logging
 import re
 import threading
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 
 from .client import ArenaError
 from .cost import must_haves_ok, total_cost
@@ -148,6 +148,8 @@ def play(table, case_id, agent, deadline=None):
     for events in threads.values():
         for m in events:
             fetch_documents(table, m)
+    if len(threads) > 1:
+        return _play_threads(table, case, case_id, threads, agent, deadline)
     slowest = 0.0  # the longest round so far: decision + the supplier's reply
     while live_threads(threads):
         t0 = time.monotonic()
@@ -189,6 +191,95 @@ def play(table, case_id, agent, deadline=None):
         slowest = max(slowest, time.monotonic() - t0)
         log.info("%s %s %s", sid, reply.get("status"), standing(threads[sid])[1])
     return table.result()
+
+
+# Before accepting while other bidders' replies are still out, wait for them this long after the
+# accepted supplier's own reply (its 60 s keep running), then decide again with everything in.
+WAIT_FOR_BIDS_S = 30
+
+
+def _play_threads(table, case, case_id, threads, agent, deadline):
+    """Several suppliers (RFQ): every bidder gets its answer within its own 60 s.
+
+    A send blocks until that supplier replies - up to about a minute. Answering bidders one after
+    the other therefore made the next bidder wait past its 60 s (live P05 f8604d43d3fbf92f: six
+    timeouts, a thread lost). Here sends run in parallel; the agent decides for the threads whose
+    reply is in (`agent.focus`, if it has one) while the others are still out."""
+    pool = ThreadPoolExecutor(max_workers=len(threads))
+    pending = {}  # supplier_id -> (message, future, sent at)
+    arrived = {sid: time.monotonic() for sid in threads}  # when its latest reply came in
+    slowest = 0.0
+
+    def send(sid, msg):
+        return fetch_documents(table, table.send(sid, msg))
+
+    try:
+        while True:
+            for sid, (msg, fut, t0) in list(pending.items()):  # the replies that are in
+                if not fut.done():
+                    continue
+                del pending[sid]
+                try:
+                    reply = fut.result()
+                except ArenaError as e:
+                    if e.status != 409:
+                        raise
+                    log.info("%s: %s", sid, e.detail)
+                    reply = table.missed(sid, e)
+                if "result" in reply:  # the reply ended the case
+                    return reply["result"]
+                threads[sid] += [{**msg, "from": "buyer"}, reply]
+                arrived[sid] = time.monotonic()
+                slowest = max(slowest, arrived[sid] - t0)
+                log.info("%s %s %s", sid, reply.get("status"), standing(threads[sid])[1])
+            live = live_threads(threads)
+            ready = [sid for sid in live if sid not in pending]
+            if not ready:
+                if not pending:
+                    return table.result()
+                wait([f for _, f, _ in pending.values()], return_when=FIRST_COMPLETED)
+                continue
+            cap = deadline() if callable(deadline) else deadline
+            if cap and time.time() > cap - max(CLOSE_BEFORE_CAP_S, slowest + ROUND_MARGIN_S):
+                log.info("%s: the wave's cap is near - closing", case_id)
+                decision = closing_move(case, threads)
+            else:
+                if hasattr(agent, "focus"):
+                    agent.focus = set(ready)
+                decision = agent.decide(case, threads)
+            sid, msg = decision["supplier_id"], decision["message"]
+            if sid in pending:  # it chose a bidder whose reply is still out: wait for one
+                wait([f for _, f, _ in pending.values()], return_when=FIRST_COMPLETED)
+                continue
+            if msg.get("action"):
+                left = WAIT_FOR_BIDS_S - (time.monotonic() - arrived.get(sid, 0.0))
+                if pending and left > 0 and not (cap and time.time() > cap - CLOSE_BEFORE_CAP_S):
+                    wait([f for _, f, _ in pending.values()], timeout=left, return_when=FIRST_COMPLETED)
+                    continue  # decide again with the new bids in
+                log.info("%s %s", sid, msg["action"])
+                try:
+                    return table.close(sid, msg)
+                except ArenaError as e:
+                    alt = (msg.get("action") or {}).get("term_sheet_id")
+                    refused = [ts for ts in latest(threads[sid]).get("term_sheets") or []
+                               if alt and ts.get("term_sheet_id") == alt]
+                    if e.status == 422 and refused and alt != standing(threads[sid])[0]:
+                        log.info("%s: %s - %s cannot be accepted by its id", sid, e.detail, alt)
+                        for ts in refused:
+                            ts["term_sheet_id"] = None
+                        continue
+                    if e.status != 409:
+                        raise
+                    log.info("%s: %s", sid, e.detail)
+                    reply = table.missed(sid, e)
+                    if "result" in reply:
+                        return reply["result"]
+                    threads[sid].append(fetch_documents(table, reply))
+                    arrived[sid] = time.monotonic()
+                    continue
+            pending[sid] = (msg, pool.submit(send, sid, msg), time.monotonic())
+    finally:
+        pool.shutdown(wait=False, cancel_futures=True)
 
 
 def hosted(cases):
