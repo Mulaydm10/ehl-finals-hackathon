@@ -81,3 +81,9 @@ rank versions, not to predict arena scores. It ignores arguments, tone and the r
   (its supplier agrees before reaching final_offer), so offline means are unchanged (0.936 / 0.944).
 - Lesson for testing: offline wins on text/signals need live checks; the simulator only covers price paths.
 - Model comparison: the user ruled out the Antigravity proxy; Claude would need a real API key. Not tested.
+
+- **P07 v1.4 live (0d480561d4703cde): 0.70**, accepted its final_offer €5.49 @ 90 d. The fix works.
+- Across 4 P07 games the supplier's final lands at the same cash value (€5.40 @ 30 d ≈ €5.49–5.52 @ 90 d) whatever
+  our anchor, arguments or pace: **the price path is no longer the bottleneck**. Reaching C_best (~€5.00) needs a
+  lever we haven't pulled: e.g. 36 months instead of 24 (same C for us on a 2-year horizon, but security for it),
+  or asking for its boss (approval ladder: a bigger move needs the committee). To explore, not proven.
