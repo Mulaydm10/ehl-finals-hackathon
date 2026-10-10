@@ -58,6 +58,10 @@ central = _central()
 ALT_BAND = 1.003  # alternative sheets within 0.3% of our best C (cloud REGRESSION_FIX.md #3)
 MIRROR_GATE = 0.2  # from our 3rd ask: big mirror steps only while its last step >= 0.2x ours (cloud #4; P02 live 0.26-0.76x)
 R2_HEDGED_SHARE = 0.30  # cloud task 9: round-2 step for hedged suppliers, share of the gap (was ~0.16)
+FINAL_AT_MSG = {"raw_material": 3}  # cloud task 10: our message at which this case type's supplier goes final (P08 9/10, P18 7/10)
+DEFER_RATIO = 0.25  # ...where our step is only this share of its last step (P08 deferred at 0.19x; final at >= 0.9x, P18 at 0.53x)
+DEFER_FLOOR = 0.002  # ...but at least 0.2% of its price (a zero step reads as a repeat)
+DEFER_MIN_GAP = 0.02  # ...and only while the gap is still >= 2% of its price (< 0.35% left defers by itself: P01/P02 4 of 4)
 PLANNED_ROUNDS = 8  # P07 live: ~25 s per round, so an 8-minute wave fits ~12-15; keep a margin
 MIN_GAIN_PTS = 1.0  # never pay more than ask - 1 pt unless it is the last word
 CLOSE_STEP = 0.0008  # near-close: ask for 0.08% below its standing cash value. Live P04 5f80eb75c793f352: 0.2% below
@@ -431,6 +435,18 @@ class NoIdeaAgent:
         if stalled and sv[-1] - hist[-1] <= gap_ok * sv[-1]:
             s["closing"] = True
             hist.append(max(hist[-1], min(sv[-2:]) * (1 - CLOSE_STEP)))
+            return hist[-1]
+        # cloud task 10 (analysis/central/FINAL_TRIGGER.md): a supplier goes final at a fixed message of ours when our step
+        # there roughly matches its last one (P08 final at our 3rd message in 9 of 9 such games, step ratio 0.9-2.5); a step
+        # well below its own deferred it once (P08 db7d315a: 0.19x -> open -0.06, final -0.06 a round later: 0.666, best
+        # high draw). Raw-material suppliers go final at our 3rd message (P08 9/10, P18 7/10), so there
+        # our 3rd ask moves only DEFER_RATIO x its last step - once per thread; the next ask is a normal step again.
+        # Hedged suppliers only: P08 gives a fixed ~1% per round whatever we do; P18 mirrors 0.8-0.9 of our step, so an
+        # extra round buys nothing there (6d61c1fd went final one message later than its identical twin a99d02eb: 0.61 vs 0.62).
+        if (k == FINAL_AT_MSG.get(kind, 0) - 1 and "hedged_forward" in s["dossier"].get("motives", {})
+                and len(sv) >= 2 and sv[-2] - sv[-1] > 0
+                and sv[-1] - hist[-1] > DEFER_MIN_GAP * sv[-1]):
+            hist.append(min(limit, hist[-1] + max(DEFER_FLOOR * sv[-1], DEFER_RATIO * (sv[-2] - sv[-1]))))
             return hist[-1]
         theirs = max(0.0, vals[0] - vals[1]) if len(vals) == 2 else (limit - anchor) / PLANNED_ROUNDS
         step = min(scheduled - hist[-1], max(theirs, (limit - anchor) / (2 * PLANNED_ROUNDS)))
