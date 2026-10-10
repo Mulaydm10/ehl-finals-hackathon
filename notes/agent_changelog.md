@@ -785,3 +785,6 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
 2. The named-floor regex matched its standard sentence "Our offer stands at a price of EUR X" (e647 -> hair at 45.45). Now only answer phrases (can give you / best we can do / lowest we can / floor / meet you at).
 3. After the probes, the next ask could fall BELOW our previous ask (37ea replay 44.95 -> 44.72): now we hold our last ask (no backtracking).
 - Offline back to 0.931 / 0.930, tests 38, walk replays unchanged.
+
+## v2.19d live P11 (19:52): 0.71 (313c4e22dd0f2933) - high draw, slow (46.50 -> 46.00 -> 45.50), limits kept internal -> low ladder 45.10, 45.38 both refused -> final 45.50. Floor > 45.38 this session.
+- **P11 tally since v2.18 (play the man)**: 0.777, 0.7935, 0.7935, 0.752, 0.71 -> mean 0.765 (v2.16-2.17: mean 0.71). High-draw floors seen: <=45.10, <=45.13, <=45.25, >45.30, >45.38 -> spread over the whole gap: no ladder wins every high draw. Low draws: floor 45.00 named (2x) -> hair 44.95 untested live.
