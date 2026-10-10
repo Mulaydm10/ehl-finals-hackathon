@@ -687,3 +687,11 @@ v2.16f = Neel's figure-free QN claim (central.quality_notification_claims) + one
 - Round 1 sends up to 3 genuinely different sheets within 3% of our best cost (multiple equivalent simultaneous offers, Medvec &
   Galinsky), **never varying the payment term** (P02/P03: payment variants were priced and hopping cost 0.04).
   Only P11 changes (300 / 800 / 1500 ppm, EUR 0); all other hosted cases still send their single sheet. Tests 38; offline 0.945.
+
+## v2.16i live P11 (18:53): **0.54** (f5157e0d3ca6b113) -> v2.16j
+- MESOs 300/800/1500 ppm -> it priced the LOOSEST (1500 @ 46.50), then 300 @ 46.50 -> **we accepted in round 2**.
+- **Bug (general): learned premiums were extrapolated linearly** beyond the range the supplier priced: 300 vs 1500 ppm at 1.20
+  apart = -0.001 EUR/ppm, applied from its opening 6,400 ppm = EUR 6.10/unit -> every sheet priced above its offer -> the
+  no-sheets guard accepted. Fix: `learn()` records each premium's observed range, `premium()` clamps into it.
+  Replay f5157e0d: now 43.07 / 43.31 instead of accepting.
+- MESOs -> experiment `meso` (off): n=1 for (0d5b), n=1 against (f5157e0d).

@@ -114,3 +114,8 @@ Sources: Neel `analysis/central/LEARNINGS.md` 1-8, `analysis/central/ENGINES.md`
     60 s (parallel sends).
 47. **Exact supplier calibration** (Neel: full cost + cash rate pinned by two deals) is practice-supplier knowledge - useful to
     understand engines, NOT ported (it would overfit the hidden final).
+48. **A learned premium holds only over the range the supplier priced** - never extrapolate (P11 f5157e0d: a 300-vs-1500 ppm
+    slope extrapolated to 6,400 ppm made every sheet unaffordable -> forced accept 0.54). `premium()` clamps.
+49. **MESOs (several equal-value sheets in round 1) are unproven**: one game better (0d5b), one worse (f5157e0d - it priced the
+    loosest variant). Off (`meso`). Never vary the payment term across sheets (P02/P03).
+50. **One near-close ask (-0.75%) before taking an OPEN offer** costs nothing: it agreed once (7117d351), held twice.

@@ -888,8 +888,8 @@ class NoIdeaAgent:
         cap = terms.get("unit_price") if sheet_id else None
         target = self.value_target(case, sid, events)
         sheets = self.sheets_at(case, sid, target, cap)
-        if k == 0:
-            # round 1: MESOs - up to 3 genuinely different structures of near-equal cost to us (Medvec & Galinsky: multiple
+        if k == 0 and "meso" in EXPERIMENTS:
+            # round 1: MESOs (OFF by default: P11 f5157e0d it priced the loosest 1500 ppm sheet, 0.54; 0d5b +1 fact - n=1 each) - up to 3 genuinely different structures of near-equal cost to us (Medvec & Galinsky: multiple
             # equivalent simultaneous offers show flexibility, reveal its preference and draw a bigger first move). P11:
             # two sheets (800/150 + 300/0) with ONE fact got EUR 45.50 on 300/0 in round 1 (0d5bc007); one sheet with three
             # facts got 46.00-46.50 in 7 games. Every sheet is one we'd be glad to have accepted (within MESO_BAND of our best).
@@ -1144,6 +1144,8 @@ class NoIdeaAgent:
                 if len(diff) == 1 and diff[0] in self.LEARN_FIELDS:
                     f = diff[0]
                     slopes.setdefault(f, []).append((b["unit_price"] - a["unit_price"]) / (b[f] - a[f]))
+                    lo, hi = s.setdefault("k_range", {}).get(f, (min(a[f], b[f]), max(a[f], b[f])))
+                    s["k_range"][f] = (min(lo, a[f], b[f]), max(hi, a[f], b[f]))
         # index clause: its sheets carry a clause we didn't ask for -> required; the deadband is priced
         # (P08 a43d77c01405cba4: EUR 5.26 @ db0 vs 5.38 @ db5, same 45 d; P18 5.30 vs 5.40)
         for m in events:
@@ -1173,7 +1175,12 @@ class NoIdeaAgent:
         """Value adjustment for the learned premiums, relative to the supplier's latest standing terms."""
         s = self.sup[sid]
         ref = s["open_terms"]  # fixed baseline: a moving one made the price jump (offline P10: 25.81 -> 28.52)
-        adj = -sum(k * ((t.get(f) or 0) - (ref.get(f) or 0)) for f, k in (s.get("k") or {}).items()
+        # a learned slope holds only over the range it was seen on (P11 f5157e0d: 300 vs 1500 ppm priced 1.20 apart ->
+        # -0.001/ppm, extrapolated to its opening 6,400 ppm = EUR 6.10/unit; every sheet priced above its offer, and the
+        # no-sheets guard accepted 0.54). Clamp both values into the observed range; priors (no range) stay linear.
+        rng = s.get("k_range") or {}
+        clamp = lambda f, v: min(max(v, rng[f][0]), rng[f][1]) if f in rng else v
+        adj = -sum(k * (clamp(f, t.get(f) or 0) - clamp(f, ref.get(f) or 0)) for f, k in (s.get("k") or {}).items()
                    if not f.startswith("_") and t.get(f) is not None
                    and (ref.get(f) is not None or f in ("chargeback_eur_per_complaint", "tooling_eur")))
         kd = (s.get("k") or {}).get("_deadband")
