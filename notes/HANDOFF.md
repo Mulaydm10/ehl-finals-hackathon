@@ -46,6 +46,9 @@ Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden supp
 - v2.15: **P05 0.61 (new best, e9eaf87e62371fdf)**; **P02 0.20** (ef17b16a03f0225d) - supplier switched its primary to 30 d and made that its final; analyse vs the 0.48/0.51 games (they stayed on 90 d).
 - Nothing is running now.
 
+## Merged
+- 2026-10-10 ~18:00: Parth branch parth/n1-p06-p09-p12 merged into main (be018e9): E1 experiments, round-1 argument backbone, UTF-8, parallel RFQ sends + RFQ focus choices; v2.15 walk guard kept. 37 tests pass, offline mean 0.94. Nothing running.
+
 ## (old) RUNNING note
 - v2.15 live: P02 finished **0.20** (ef17b16a03f0225d, analyse it) and **P05** (`/tmp/v215/P05.log`). Get scores with
   `grep '"score"' /tmp/v215/P0*.log`, then `archive_runs.py`, append to `notes/agent_changelog.md` + `notes/quota_log.md` +
