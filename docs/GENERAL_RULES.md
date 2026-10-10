@@ -143,3 +143,5 @@ Sources: Neel `analysis/central/LEARNINGS.md` 1-8, `analysis/central/ENGINES.md`
 59. **The person's currency moves the floor; data moves the price.** P11's high-draw floor fell to 45.10 (from 45.13-45.50) after we
     owned our late payments; all facts together cut ~EUR 1.00-1.50. Beyond that only real value to the person helps.
 60. **A supplier cost floor is hard**: P11 stopped at ~EUR 45.00 in 14 games whatever we sent (data, person-currency, probes, timing). Find the floor early (ask it), take it, and spend no more rounds/games pushing through it.
+61. **Probe high, not low, when patience is short**: a holder at its floor gives 1-3 probe rounds; asks far below the floor are refused and burn them. Ladder 50/25/10% of a grid step under its price; under a NAMED floor send one hair-below ask.
+62. **Read the arena trace reasons** (detail.result.trace[].reasons): the supplier explains each move ("cannot take on that financial risk", "extra guys on the line") - mine them before guessing.
