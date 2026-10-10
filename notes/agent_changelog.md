@@ -339,3 +339,13 @@ Played on v1.7 (`64fd00b`): v2.3 was pushed while the game ran, so v2.3 is still
   another structure is ≥ 1% cheaper for us. Offline Astra P02: cost calc in round 1, 90 d in every round
   (364.69 → 367.26). Offline eval **0.939 / 0.947** (was 0.937 / 0.944). Lesson: **the model may choose, but the
   strategy's backbone (strongest argument, structure) must be fixed in code.**
+
+### v2.6 (Parth, offline + replay, 0 games): offer the index clause the supplier insists on
+- `required_clause()`: when the supplier answers our clause-free sheets with an index clause on **every** sheet, the
+  sheet search tries clause options on its series (`combos(..., clause)`), so the cheapest deadband for us goes out
+  (P18: AS-14404 db5). Otherwise clauses stay off as before.
+- Evidence: P18 live a99d02eb41cafa66 (0.62): "for a contract of this duration, we cannot offer a fixed price and must
+  include the AS-14404 index clause"; our rounds 2–3 stayed clause-free, it moved €0.10/round and went final in round 3.
+- Replay of both real P18 games: round 2 now sends €4.84–4.89 with AS db5 (was €4.88 no clause); finals unchanged
+  (accepts `-a` db5 0.618 > db0 0.610). Offline mean unchanged **0.939 / 0.947** (= main v2.5), 32 tests pass,
+  no new lint errors. Needs one live P18 game.
