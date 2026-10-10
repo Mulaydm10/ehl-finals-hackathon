@@ -1034,3 +1034,9 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
 ### v2.30 (offline): RFQ ratchet also for OPEN offers
 - The base would accept an OPEN offer while other live bidders sit above it and have not seen it (62a9e69f: took 70210 open 28.00 @ 30 d at once with two bidders live, 0.824) -> show it to them first, once per (bidder, offer); agreed / final unchanged. Opt-out no_rfq_show_open.
 - Offline Qwen P05 0.95, offline Astra 0.95, injection PASS, tests 64. Live: 2 runs in parallel.
+
+## v2.30 live P05 x2 (22:26): 0.824 (fef71f65d9545953) and 0.761 (37c25dfb8f43d84b)
+- The open-offer ratchet fired (70210 open 28.00 shown to 70240/70250) but the others NEVER move (70250 30.25-30.50, 70240 33.00 in every game): P05 is 70210 alone.
+- 70210 counters with its OWN price on 30 d when our ask is below its floor (28.00 @ 30 = 0.824) and AGREES to our ask when it is above (~28.6 @ 14 d = 0.76).
+- **Bug:** "RFQ ask 28.61 (cap 27.45)" - the base round-1 anchor sat above the RFQ cap and the no-backtracking creep kept every later ask above it.
+### v2.31 (offline): RFQ round-1 anchor capped at 10% under the market low (in value). Round-1 asks: 70210 28.70 @ 45 -> 28.06 @ 14; 70250 30.25 -> 27.85. Opt-out no_rfq_cap_r1. Tests 64, offline unchanged, Astra offline P05 OK.

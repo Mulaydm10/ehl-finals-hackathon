@@ -70,14 +70,21 @@ class NoIdeaAgent(_Main):
             return super().value_target(case, sid, events)
         s = self.sup[sid]
         hist = s.get("ours")
-        if not hist:
-            return super().value_target(case, sid, events)  # round 1: the market anchor
         lows = []  # every live bidder's standing offer, valued with THIS bidder's cash rate (our asks are values)
         for other in live_threads(self.threads_ref):
             if other in self.sup:
                 t = standing(self.threads_ref[other])[1] or {}
                 if t.get("unit_price"):
                     lows.append(supplier_value(case, complete_offer(case, t), s["est"]))
+        if not hist:
+            # round 1: the base market anchor, but never above the cap - the base anchor came out at 28.61 (value) while
+            # the cap was 27.45, and the no-backtracking creep kept every later ask above the cap (live fef71f65 /
+            # 62a9e69f: 70210's 28.00 was below our own ask and was taken, 0.824)
+            v = super().value_target(case, sid, events)
+            if lows and "no_rfq_cap_r1" not in EXPERIMENTS_RFQ:
+                v = min(v, min(lows) * (1 - RFQ_BELOW_LOW))
+                s["ours"][-1] = v
+            return v
         cap = min(lows) * (1 - RFQ_BELOW_LOW) if lows else hist[-1] + RFQ_CREEP
         nxt = max(hist[-1], min(hist[-1] + RFQ_CREEP, cap))
         hist.append(nxt)
