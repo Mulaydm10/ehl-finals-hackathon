@@ -22,6 +22,12 @@ KINDS = {"volume change": "volume_change", "price history": "po_prices", "index 
          "rival quote": "rival_quote", "should cost": "should_cost", "quality record": "scorecard_ppm",
          "delivery record": "scorecard_otd", "notice period": "notice_period"}
 CHECKED = re.compile(r"(?i)we checked the (.+?) data you cited; it holds(,| and)(?: but)? (it does not change|we took it)")
+# P02 x4: "As Key Account Manager, I hold full authority ... without further committee approval", "your request to
+# involve our pricing committee is not applicable to this standard procedure"
+FULL_AUTHORITY = re.compile(r"(?i)hold (the )?full authority|committee is not applicable|without further committee")
+# P02 x5: "In response to your step, we are prepared to reduce", "In response to your movement, we can adjust",
+# "We expect a significant step towards our position in your next proposal"
+MIRROR = re.compile(r"(?i)in response to your (step|movement|adjustment)|significant step towards our position")
 ALREADY = re.compile(r"(?i)already (taken|been fully accounted|factored).{0,40}?(volume change|price history|index change|"
                      r"notice period|rival quote|should cost)?")
 
@@ -69,6 +75,10 @@ def main():
                     general["fair_point"] += 1
                 if re.search(r"(?i)lot of material", r):
                     general["padding"] += 1
+                if MIRROR.search(r):
+                    by_case[case]["_signals"]["mirror"] += 1
+                if FULL_AUTHORITY.search(r):
+                    by_case[case]["_signals"]["full_authority"] += 1
                 if re.search(r"(?i)which figures is that based on|please send us the data", r):
                     general["asked_for_data"] += 1
                 if ALREADY.search(r):

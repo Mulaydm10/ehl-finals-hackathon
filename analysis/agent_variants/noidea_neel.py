@@ -215,7 +215,9 @@ class NoIdeaAgent:
                 and c.get("price_vs_should_cost_pct", -1) > 3]
         # flat price history is the argument when there's no increase to fight - but not for kits:
         # P07 live, part-level history "does not change our calculation" for a bundle (kit_calc instead)
-        if ask_pct <= 0 and case["type"] != "bundling":
+        # price increases too, as the LAST item (spread over rounds; live P02 de6192e39dd86084: with no data left in
+        # round 4 it went final - "it lacks new verifiable data")
+        if case["type"] != "bundling":
             out += [c for c in mine if c["kind"] == "po_prices" and c["part"] in parts]
         if case["type"] in ("capacity", "price_increase"):
             out += [c for c in mine if c["kind"] == "scorecard_otd" and (c["figure"] or 100) < 85]
@@ -386,6 +388,13 @@ class NoIdeaAgent:
             return hist[-1]
         theirs = max(0.0, vals[0] - vals[1]) if len(vals) == 2 else (limit - anchor) / PLANNED_ROUNDS
         step = min(scheduled - hist[-1], max(theirs, (limit - anchor) / (2 * PLANNED_ROUNDS)))
+        # central: a mirroring supplier answers our step with its own - step a share of the remaining gap, but stay a
+        # near-close below its standing value (the deal is its price; our ask only has to pull it down)
+        if sv and (central.mirror_supplier(case["case_id"]) or central.MIRROR.search(latest(events).get("body") or "")):
+            gap = sv[-1] - hist[-1]
+            step = max(step, central.MIRROR_SHARE * gap)
+            hist.append(min(limit, hist[-1] + max(0.0, min(step, gap - sv[-1] * CLOSE_STEP))))
+            return hist[-1]
         hist.append(min(limit, hist[-1] + max(0.0, step)))
         return hist[-1]
 
@@ -442,6 +451,9 @@ class NoIdeaAgent:
         if not sheets:
             return accept if ok else walk
         committee = central.committee_round1(motives)
+        if central.FULL_AUTHORITY.search(latest(events).get("body") or "") or central.full_authority(case["case_id"]):
+            s["no_committee"] = True
+            s.pop("committee_sent", None)
         # central: while unused verified data remains, keep the round going - no near-close, no early accept. Live P03
         # d1bfa5a91489432b: copper data in round 2 cut its price again (432.54 -> 432.49); P03 never moved in a later
         # round WITHOUT data (12 games)
@@ -482,7 +494,8 @@ class NoIdeaAgent:
         # sheets its KAM picked 60 d and stopped at its 2% limit in all 6 of ours)
         if committee and k == 0:
             out = out[:1]
-            s["escalate_now"] = s["committee_r1"] = s["committee_sent"] = True
+            if not s.get("no_committee"):
+                s["escalate_now"] = s["committee_r1"] = s["committee_sent"] = True
             log.info("%s round 1 to the committee: %s", sid, [(t["unit_price"], t.get("payment_days")) for t in out])
         alt_prose = self.prose_alternative(case, sid, events)
         # only when it is near our ask or late in the game: it may pick any sheet (P10 lesson),
@@ -653,7 +666,10 @@ class NoIdeaAgent:
     def message(self, case, sid, events, sheets, k, final=False):
         # later rounds: up to 2 NEW data kinds - live P03 2e4bf89ac2967a45: a counter without data got "Which figures
         # is that based on? Please send us the data", and P03 never moved in a later round without data (12 games)
-        args = self.next_args(sid, 3 if k == 0 else 2)
+        # spread the data: P02/P03 cut their price for each NEW fact and went final once none was left - so keep one
+        # fact for each of the next 3 rounds and send 1 per later round
+        left = sum(not any(i in self.cited for i in c["ids"]) for c in self.sup[sid]["args"])
+        args = self.next_args(sid, max(1, min(3, left - 3)) if k == 0 else 1)
         s = self.sup[sid]
         if s.get("escalate_now") and not s.get("committee_r1") and (gap := self.freeze_gap(sid, self.best_sheet(case, sid, events)[1])) > 0:
             # live P03 x4: "our base prices are strictly frozen" while charging +4.6% on today's EUR 412.74.

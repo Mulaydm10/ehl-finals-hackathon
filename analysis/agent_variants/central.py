@@ -25,7 +25,8 @@ CALIBRATION = ROOT / "analysis" / "central" / "calibration.json"
 # Supplier reactions to verified data, 54 games (analysis/tools/mine_claims.py): "it holds and we took it into
 # account" vs "it holds, but it does not change our calculation" vs "Your figures confirm our case" (a rising
 # index, 7x). Prior take-rates used when the mined file is missing.
-PRIOR_TAKE = {"should_cost": 1.0, "scorecard_ppm": 1.0, "rival_quote": 0.75, "volume_change": 0.63,
+PRIOR_TAKE = {"should_cost": 1.0, "scorecard_ppm": 0.5,  # ppm: taken in P11 (quality case), ~0 effect in P03
+              "rival_quote": 0.75, "volume_change": 0.63,
               "notice_period": 0.5, "po_prices": 0.44, "index_change": 0.31, "scorecard_otd": 0.3}
 MIN_SEEN = 3  # fewer observations than this: the prior decides (OTD: 1 game, P10, a supplier that took no data at all)
 MIN_TAKE = 0.3  # below this a kind is only cited when nothing better is left
@@ -49,7 +50,9 @@ def take_rate(kind, case_id, data=None):
         # the prior (P18: index 4 taken / 1 "confirms our case" must not outrank price history 6 / 6)
         share = seen["taken"] / max(1, sum(v for v in seen.values() if isinstance(v, (int, float))))
         return PROVEN + share + 0.01 * PRIOR_TAKE.get(kind, 0.0)
-    if seen and not seen.get("taken") and (seen.get("no_change") or seen.get("confirm_case")):
+    # "confirm our case" is the reaction to a RISING index, which we no longer cite - it says nothing about a fall
+    # (P02: 7 rising-index games had blocked copper's -2.2% fall)
+    if seen and not seen.get("taken") and seen.get("no_change"):
         return 0.0
     k = data.get("by_kind", {}).get(kind)
     return k["take_rate"] if k and sum(v for x, v in k.items() if x != "take_rate") >= MIN_SEEN else PRIOR_TAKE.get(kind, 0.3)
@@ -143,7 +146,10 @@ def rank(claims, case_id, data=None):
     def key(c):
         if c["kind"] == "index_change" and (c.get("figure") or 0) > 0:
             return 9.0
-        return -take_rate(c["kind"], case_id, data)
+        rate = take_rate(c["kind"], case_id, data)
+        if c["kind"] == "index_change":  # a FALL of a cost driver was taken in P01, P03 (x3), P18
+            rate = max(rate, 0.9)
+        return -rate
     return sorted(claims, key=key)
 
 
@@ -181,8 +187,30 @@ def money_cheaper_for_it(est, buyer_rate):
 APPROVAL = re.compile(r"(?i)above (\d+(?:[.,]\d+)?)\s?%")
 
 
+FULL_AUTHORITY = re.compile(r"(?i)hold (the )?full authority|committee is not applicable|without further committee")
+
+
 def committee_round1(motives):
     return bool({"approval_ladder", "price_frozen"} & set(motives))
+
+
+MIRROR = re.compile(r"(?i)in response to your (step|movement|adjustment)|significant step towards our position")
+MIRROR_SHARE = 0.30  # a mirroring supplier: step 30% of the remaining gap per round
+
+
+def mirror_supplier(case_id, data=None):
+    """It answers our step with a step of its own (P02: "In response to your step, we are prepared to reduce our price"
+    in 4 games, 1:1 in 466f3cb54614635f; a1e2a4acb73dd3e9: "We expect a significant step towards our position"). Our
+    ask is far below its price and the deal is ITS price, so a bigger step from us costs nothing and buys a bigger one."""
+    data = data or reactions()
+    return bool(data.get("by_case", {}).get(case_id, {}).get("_signals", {}).get("mirror"))
+
+
+def full_authority(case_id, data=None):
+    """Its sales person said it decides alone (P02 x4, every round of de6192e39dd86084: "I hold full authority to
+    conclude this agreement ... without further committee approval"): then never mention a committee."""
+    data = data or reactions()
+    return bool(data.get("by_case", {}).get(case_id, {}).get("_signals", {}).get("full_authority"))
 
 
 def same_structure(t, ref, fields=("payment_days", "contract_months", "volume_per_year")):
