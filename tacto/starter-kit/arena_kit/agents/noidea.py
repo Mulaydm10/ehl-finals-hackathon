@@ -74,6 +74,7 @@ def _central():
 PROPOSE_ALT_AFTER_FINAL = False  # sending its alternative back after final_offer: walked 2x, worked 1x -> off
 RFQ_MARKET_DEPTH = 0.10  # RFQ ask vs the market's lowest valid offer (20% made the best bidder walk: P05 d9af85e000ab3d4d)
 PLANNED_ROUNDS = 8  # P07 live: ~25 s per round, so an 8-minute wave fits ~12-15; keep a margin
+GAP_STEP = 0.3  # later asks move this share of the gap to its standing value (patience 3-4; off: no_gap_steps)
 MIN_GAIN_PTS = 1.0  # never pay more than ask - 1 pt unless it is the last word
 # How far below the opening quote to anchor (src/eval/calibrate.py: best deal vs opening, practice cases)
 # Round-1 argument order = what moved suppliers' FIRST counters live (score units, 58 practice games):
@@ -330,7 +331,9 @@ class NoIdeaAgent:
         # a short-fuse supplier (final in round 1-2) never reads a round-2 fact: its flat history goes in round 1
         # (P10 probes A-E: "price history ... it holds and we took it into account", counter 31.50 vs 31.70 without)
         short = self.patience_prior(case, sid) <= 2
-        if short:  # and as the price PATH, which it takes, not the flat run it shrugs off (price_path)
+        # and as the price PATH, which it takes, not the flat run it shrugs off (price_path). Others only in the
+        # experiment `price_path_all` (upward paths: P02 +1.2%, P03 +3.1%, P04 +2.3%, P08; untested live)
+        if short or "price_path_all" in EXPERIMENTS:
             desc = {p["part"]: p["description"] for p in self.dossiers.get(sid, {}).get("parts", [])}
             pos = [(self.price_path(sid, c["part"], desc.get(c["part"], c["part"])) or c)
                    if self.po_jump(c) == 0 else c for c in pos]
@@ -360,13 +363,18 @@ class NoIdeaAgent:
                                             f"is built on {', '.join(gives[:-1])} and {gives[-1]}."})
         # OFF by default: live P11 fa9a9d0277f372c6 the arena marked our qn mean-ppm claims CONTRADICTED ("do not match the
         # records. That costs trust") and the supplier went final one round early. How it averages qn rows is unknown.
+        last_sc = (self.dossiers.get(sid, {}).get("scorecards_last4") or [{}])[-1]
         if "qn_claims" in EXPERIMENTS and (case["type"] == "quality" or case["buyer"].get("category_goal") == "quality_first"):
             out += self.complaint_args(sid, parts)
         # Neel's version (central.quality_notification_claims): the supplier-caused QNs on this part in the last 12 months,
         # cited WITHOUT a figure - the arena then takes the data's own value, so it cannot be contradicted (our mean-ppm
         # sentence and Neel's "at 4,632 ppm" both came back contradicted). Never cited in 8 of 10 cases (ENGINES.md).
         # A later-round fact for any case with such QNs (holder engines cut once per new fact: P11 plan msg 3).
-        elif central and "qn_claims" not in EXPERIMENTS:
+        # ... and only for a supplier whose quality IS a problem (last scorecard amber/red) or in a quality case: green
+        # Leitner (P07 probe B 68092e5) answered "we take them seriously ... they do not alter" and cut less all game
+        elif central and "qn_claims" not in EXPERIMENTS and (
+                case["type"] == "quality" or case["buyer"].get("category_goal") == "quality_first"
+                or (last_sc.get("colour") or "green") != "green"):
             try:
                 out += [{**c, "late": True} for c in central.quality_notification_claims(case, self.all_facts, sid)]
             except Exception as e:
@@ -503,14 +511,24 @@ class NoIdeaAgent:
         P10: [28.94, 29.89, 29.89] got "it holds and we took it into account" (probes A-E, 5/5); the flat [29.89 x 8]
         got "it holds, but it does not change our calculation" (c283f47ddedd3b53). Only if today's price was a rise."""
         rows = self.po_hist.get((sid, part)) or []
-        if len(rows) < 3:
-            return None
-        start = len(rows) - 1
-        while start > 0 and rows[start - 1][2] == rows[-1][2]:
-            start -= 1
-        if start == 0 or rows[start - 1][2] >= rows[-1][2]:
+        runs = []  # [price, first row, last row] of each run of equal prices
+        for i, (_, _, p) in enumerate(rows):
+            if runs and runs[-1][0] == p:
+                runs[-1][2] = i
+            else:
+                runs.append([p, i, i])
+        # a one-order blip is noise (P04: EUR 4.39 since Jan 2026, one order at 4.29 on 9 Jun, then 4.39 again)
+        merged = []
+        for k, r in enumerate(runs):
+            if r[2] == r[1] and k < len(runs) - 1:
+                continue
+            if merged and merged[-1][0] == r[0]:
+                merged[-1][2] = r[2]
+            else:
+                merged.append(list(r))
+        if len(rows) < 3 or len(merged) < 2 or merged[-2][0] >= merged[-1][0]:
             return None  # never changed in the data, or the last change was a cut
-        before, first, last = rows[start - 1], rows[start], rows[-1]
+        before, first, last = rows[merged[-2][2]], rows[merged[-1][1]], rows[-1]
 
         def month(d):
             return datetime.date.fromisoformat(d[:10]).strftime("%B %Y")
@@ -635,6 +653,22 @@ class NoIdeaAgent:
                                     f"ran at a mean of {ppm:.0f} ppm on the affected deliveries ({', '.join(ids)})."})
         return out
 
+    @staticmethod
+    def weak(c):
+        """A filler, a quality complaint or an index fall too small to matter (weight x fall < 0.25 points)."""
+        return bool(c.get("filler")) or c["kind"] == "quality_notification" or (
+            c["kind"] == "index_change" and c.get("weight") is not None
+            and abs((c.get("figure") or 0) * (c.get("weight") or 0)) < 0.25)
+
+    @staticmethod
+    def weak_ok(events):
+        """Weak facts only for a HOLDER: from round 3, after a reply in which it did not move (P11 cuts only for a new
+        fact). A supplier that is moving answers them with the fact's tiny value instead of mirroring our step: P07
+        probes A / B / C (68092e5, 20a3ae4) 0.812 lean vs 0.792 with QNs or labour -0.3% in round 2."""
+        prices = [standing([m])[1].get("unit_price") for m in events
+                  if m.get("from") != "buyer" and m.get("term_sheets")]
+        return len(prices) >= 3 and None not in prices[-2:] and prices[-1] >= prices[-2] - 1e-9
+
     def next_args(self, sid, n, first_round=False):
         """The next `n` arguments whose IDs were not cited yet (re-citing reads as padding). Round 1 is about this
         part only: other parts' price histories (experiment `all_parts_po`) wait for round 2."""
@@ -643,6 +677,8 @@ class NoIdeaAgent:
             if len(picked) == n:
                 break
             if any(i in self.cited for i in c["ids"]) or (first_round and (c.get("other_part") or c.get("late"))):
+                continue
+            if not first_round and not self.sup[sid].get("weak_ok", True) and self.weak(c):
                 continue
             # one index claim per e-mail: 2+ drew "we received a lot of material" 11 of 11 times (Neel)
             if c["kind"] == "index_change" and any(x["kind"] == "index_change" for x in picked):
@@ -834,6 +870,17 @@ class NoIdeaAgent:
             # standing value, drew its largest move (+0.51 -> -0.30; +0.15 -> -0.10; +1.01 -> -0.20)
             hist.append(min(limit, hist[-1] + max(0.0, (sv[-1] - hist[-1]) / 3)))
             return hist[-1]
+        # not holders (cash_short: P11), hedged suppliers (P08: its round-2 cut is a per-session draw; Neel's rule) or
+        # frozen prices (P03, untested); P08 89259de630143206 with it: +0.20 step -> -0.06, final round 3, 0.528
+        mirror = 3 <= self.patience_prior(case, sid) <= 4 and not (
+            {"cash_short", "hedged_forward", "price_frozen"} & set(s["dossier"].get("motives", {})))
+        if "no_gap_steps" not in EXPERIMENTS and k >= 1 and sv and kind != "rfq" and mirror:
+            # a MIRROR supplier answers our step with 0.5-0.9x of it and goes final at a fixed round, so the 8-round
+            # schedule (+0.07/round) starves it: P07 probe A 58bf025d01aa1275 +0.12 -> -0.11, +0.15 -> -0.08,
+            # then agreed at our 5.31 = 0.812 (best 0.753 with +0.07 steps). Not for patient suppliers (prior >= 5,
+            # P01/P02 concede on their own: offline 0.99 -> 0.88 with it); P18 (fixed 0.10 steps) neutral live 0.666
+            hist.append(min(limit, hist[-1] + max(0.0, GAP_STEP * (sv[-1] - hist[-1]))))
+            return hist[-1]
         fr = [(sv[j - 1] - sv[j]) / (sv[j - 1] - hist[j - 1]) for j in range(1, min(len(sv), len(hist) + 1))
               if sv[j - 1] - hist[j - 1] > 1e-9]
         stalled = len(fr) >= 2 and fr[-1] > -STALL_NOISE and fr[-2] > 0 and (fr[-1] < STALL_DROP * fr[-2] or fr[-1] < STALL_MIN)
@@ -914,6 +961,7 @@ class NoIdeaAgent:
                 if cs[best] <= min(cs.values()) + 1:
                     sid = best
         events, s = threads[sid], self.sup[sid]
+        s["weak_ok"] = self.weak_ok(events)  # weak facts only for a supplier that held last round (a holder)
         sheet_id, terms, c_stand = self.best_sheet(case, sid, events)  # cheapest of ALL its sheets, not just [0]
         status = latest(events).get("status")
         k = sum(m.get("from") == "buyer" and bool(m.get("term_sheets")) for m in events)
@@ -1007,7 +1055,11 @@ class NoIdeaAgent:
         # probes re-offer ITS sheet at a lower price: only when that sheet has OUR structure (P08 sim 0.92 -> 0.32 when a
         # probe re-offered its own, worse-for-us structure)
         probing = (near_final or holding) and status == "open" and moves_left(case, events) > 1 and ok \
-            and c_stand <= best_elsewhere and not self.next_args(sid, 1) and (holding or not g) and same_structure
+            and c_stand <= best_elsewhere and (not self.next_args(sid, 1) or (holding and g)) and (holding or not g) \
+            and same_structure
+        # (a grid holder that holds gets the probe AND its next fact in the same e-mail: Parth's weak-facts-after-a-hold
+        # rule keeps a fact pending exactly at the hold, and P11 goes final 1-2 rounds after it holds - waiting for "no
+        # facts left" meant no probe / floor trade ever went out in the merged agent, replay 7285b182)
         named = re.search(r"(?i)(?:can give you|can do|best we can do|lowest (?:price )?(?:we|i) can|our (?:absolute )?(?:floor|bottom|minimum)|as low as we can go|meet you at)[^.€]{0,40}(?:€|eur\s?)\s?(\d+[.,]\d{2})",
                           latest(events).get("body") or "") if s.get("asked_floor") else None
         hair = False
@@ -1139,7 +1191,8 @@ class NoIdeaAgent:
         pre-priced candidate sheets and up to 3 verified arguments, write the opening. Everything it returns is
         validated; any problem -> None (the deterministic path runs instead)."""
         s = self.sup[sid]
-        pool = [c for c in s["args"] if not any(i in self.cited for i in c["ids"])][:8]
+        pool = [c for c in s["args"] if not any(i in self.cited for i in c["ids"])
+                and (k == 0 or s.get("weak_ok", True) or not self.weak(c))][:8]
         motives = s["dossier"].get("motives", {})
         levers = "; ".join(f"{m}: {v['lever']}" for m, v in motives.items())
         lines = [f"[{i}] rank {i + 1}: " + ", ".join(f"{f} {v}" for f, v in t.items() if f in case["negotiable"])

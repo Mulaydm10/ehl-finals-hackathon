@@ -28,6 +28,8 @@ MOVE_LIMIT_S = 60
 # (your decision plus a supplier reply of up to about a minute) plus a margin, if that is longer.
 CLOSE_BEFORE_CAP_S, ROUND_MARGIN_S = 90, 15
 RUNNING = re.compile(r"one session per case in the final: (\S+)")
+# "(idx:..., idx:...)" / "(po:...)" lists of data IDs in an e-mail body (the arena checks IDs written in the body too)
+IDS_IN_BODY = re.compile(r"\s*\((?:[a-z]+:[^()\s,]+(?:,\s*)?)+\)")
 # Practice: the case list shows every practice case file; only those marked hosted can be played
 # (a session on another is a 403). Without the marker every listed case counts as hosted.
 HOSTED_FIELD = "hosted"
@@ -62,7 +64,16 @@ class RemoteTable:
         return self.case, {s: self.client.thread(session_id, s)["messages"] for s in state["threads"]}
 
     def send(self, supplier_id, message):
-        return self.client.send_message(self.session_id, supplier_id, message)
+        try:
+            return self.client.send_message(self.session_id, supplier_id, message)
+        except ArenaError as e:
+            # a server error on our e-mail (live P07: a 19-ID quality claim -> HTTP 500 on every retry, the case was
+            # abandoned): send it once more without data IDs - the term sheets still bind, the round is not lost
+            if e.status < 500 or not (message.get("refs") or IDS_IN_BODY.search(message.get("body") or "")):
+                raise
+            log.warning("%s: HTTP %s on our e-mail - resending it without data IDs", supplier_id, e.status)
+            body = IDS_IN_BODY.sub("", message.get("body") or "")
+            return self.client.send_message(self.session_id, supplier_id, {**message, "body": body, "refs": []})
 
     def close(self, supplier_id, message):
         reply = self.client.send_message(self.session_id, supplier_id, message)
