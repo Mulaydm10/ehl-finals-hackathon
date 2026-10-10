@@ -196,6 +196,8 @@ class NoIdeaAgent:
         out = [c for c in mine if c["kind"] == "notice_period" and c.get("short_notice")]
         if case["type"] == "quality":
             out += [c for c in mine if c["kind"] == "scorecard_ppm"] + [c for c in mine if c["kind"] == "scorecard_otd"]
+        else:  # its quality record as one more verified fact for a later round (taken in P11; untested elsewhere)
+            out += [c for c in mine if c["kind"] == "scorecard_ppm"]
         # per driver series: the window (6 or 12 m) with the lower change, if it is below the ask.
         # When the quote is already below today's price (bundles, RFQs, renewals at a cut), the ask is
         # negative and the useful comparison is "no cost push": drivers that moved < 3% (P07 live: the
@@ -224,8 +226,8 @@ class NoIdeaAgent:
         out += central.volume_claims(case, self.facts)
         out += central.weak_delivery_claims(mine, sid)
         if not best:  # no falling 6/12-month window: the steepest fall in any window the arena checks
-            drivers = [dr["series"] for p in self.dossiers.get(sid, {}).get("parts", []) if p["part"] in parts
-                       for dr in p.get("cost_drivers", [])]
+            drivers = {dr["series"]: dr.get("weight") or 0.0 for p in self.dossiers.get(sid, {}).get("parts", [])
+                       if p["part"] in parts for dr in p.get("cost_drivers", [])}
             out += central.falling_window_claims(case, drivers)
         seen, ranked = set(), []
         for c in central.rank(out, case["case_id"]):
@@ -285,6 +287,9 @@ class NoIdeaAgent:
         for c in self.sup[sid]["args"]:
             if len(picked) == n:
                 break
+            # one index claim per e-mail: two or more drew "We received a lot of material" 11 of 11 times
+            if c["kind"] == "index_change" and any(x["kind"] == "index_change" for x in picked):
+                continue
             if not any(i in self.cited for i in c["ids"]):
                 picked.append(c)
         return picked
@@ -437,6 +442,19 @@ class NoIdeaAgent:
         if not sheets:
             return accept if ok else walk
         committee = central.committee_round1(motives)
+        # central: while unused verified data remains, keep the round going - no near-close, no early accept. Live P03
+        # d1bfa5a91489432b: copper data in round 2 cut its price again (432.54 -> 432.49); P03 never moved in a later
+        # round WITHOUT data (12 games)
+        if status == "open" and k >= 1 and moves_left(case, events) > 2 and self.next_args(sid, 1):
+            if s.pop("closing", False):
+                log.info("%s: data left - no near-close yet", sid)
+            if ok and c_stand <= sheets[0][0] * 1.0005:
+                return accept
+            out = [t for _, t in sheets]
+            if committee and sheet_id:  # stay on the structure its committee priced
+                out = [t for t in out if central.same_structure(t, terms)][:1] or out[:1]
+            log.info("%s round %d: new data + step %s", sid, k, [(t["unit_price"], t.get("payment_days")) for t in out])
+            return self.message(case, sid, events, out, k)
         # central 3c: once it priced our lead structure, stay on it (P03 47a88b4d0bb75ce3: management gave 433.08 @ 90 d,
         # we asked 60/45/30 d and its final fell back to 431.61 @ 60 d: 0.90 -> 0.86)
         if committee and k >= 1 and sheet_id and central.same_structure(sheets[0][1], terms):
@@ -449,6 +467,11 @@ class NoIdeaAgent:
         if s.pop("closing", False):
             if ok and sheets[0][0] >= c_stand - 1:  # the closing ask is no better than what stands: take it
                 return accept
+            # one near-close only: the second one was a 1-cent "nominal adjustment" (live P03 2e4bf89ac2967a45: "a nominal
+            # adjustment does not enable us to further reduce our price") - take what stands instead
+            if ok and s.get("near_closed") and c_stand <= best_elsewhere:
+                return accept
+            s["near_closed"] = True
             # it may pick any sheet: only offer ones within a quarter of the remaining gain
             band = sheets[0][0] + 0.25 * max(0.0, c_stand - sheets[0][0])
             sheets = [x for x in sheets if x[0] <= band]
@@ -628,7 +651,9 @@ class NoIdeaAgent:
 
     # ---- the words -----------------------------------------------------------------------------
     def message(self, case, sid, events, sheets, k, final=False):
-        args = self.next_args(sid, 3 if k == 0 else 1)
+        # later rounds: up to 2 NEW data kinds - live P03 2e4bf89ac2967a45: a counter without data got "Which figures
+        # is that based on? Please send us the data", and P03 never moved in a later round without data (12 games)
+        args = self.next_args(sid, 3 if k == 0 else 2)
         s = self.sup[sid]
         if s.get("escalate_now") and not s.get("committee_r1") and (gap := self.freeze_gap(sid, self.best_sheet(case, sid, events)[1])) > 0:
             # live P03 x4: "our base prices are strictly frozen" while charging +4.6% on today's EUR 412.74.
