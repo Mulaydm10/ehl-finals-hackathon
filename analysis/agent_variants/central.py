@@ -25,7 +25,7 @@ CALIBRATION = ROOT / "analysis" / "central" / "calibration.json"
 # Supplier reactions to verified data, 54 games (analysis/tools/mine_claims.py): "it holds and we took it into
 # account" vs "it holds, but it does not change our calculation" vs "Your figures confirm our case" (a rising
 # index, 7x). Prior take-rates used when the mined file is missing.
-PRIOR_TAKE = {"should_cost": 1.0, "scorecard_ppm": 0.5,  # ppm: taken in P11 (quality case), ~0 effect in P03
+PRIOR_TAKE = {"should_cost": 1.0, "scorecard_ppm": 0.5, "quality_notification": 0.6,  # ppm: taken in P11, ~0 in P03; qn: never cited
               "rival_quote": 0.75, "volume_change": 0.63,
               "notice_period": 0.5, "po_prices": 0.44, "index_change": 0.31, "scorecard_otd": 0.3}
 MIN_SEEN = 3  # fewer observations than this: the prior decides (OTD: 1 game, P10, a supplier that took no data at all)
@@ -132,6 +132,45 @@ def falling_window_claims(case, drivers, per_series=1, min_fall=-0.2):
     return sorted(out, key=lambda c: c["figure"] * (c["weight"] or 0.01))
 
 
+def quality_notification_claims(case, facts, sid):
+    """Supplier-caused quality notifications on THIS part in the last 12 months of the data, as one verified quality fact
+    (the arena checks qn rows as "the mean ppm if you speak of quality"). Never cited in any of our games (cloud
+    session, analysis/central/ENGINES.md); P02: qn:20004698 (2025-10-16, 4,000 ppm), qn:20004826 (2026-02-18, 5,263 ppm)."""
+    parts = set(case.get("parts", []))
+    last = max((v.get("date") or "") for v in facts.values() if isinstance(v, dict) and v.get("date"))
+    floor = f"{int(last[:4]) - 1}{last[4:]}"
+    qns = sorted(k for k, v in facts.items() if k.startswith("qn:") and v.get("supplier") == sid
+                 and v.get("part") in parts and (v.get("date") or "") > floor)
+    if not qns:
+        return []
+    mean = sum(facts[k]["ppm"] for k in qns) / len(qns)
+    return [{"supplier": sid, "part": facts[qns[0]]["part"], "kind": "quality_notification", "ids": qns,
+             "figure": round(mean), "keep_alive": True, "checked_by_arena": True,
+             "sentence": f"On quality: we raised {len(qns)} quality notification{'s' if len(qns) > 1 else ''} on this part "
+                         f"in the last 12 months, at {mean:,.0f} ppm on average ({', '.join(qns)})."}]
+
+
+def delivery_year_claims(facts, sid, bar=95.0):
+    """On-time delivery as the mean of 4 quarterly scorecard rows, for the last 12 months and the 12 months before
+    (P02: 89.3% and 83.9%). Each a verified fact with its own IDs. For a MIRRORING supplier only, as the last items:
+    it cuts in every round that brings new verified data, even data it says "does not change our calculation" (P02
+    552fb056e31d24d1: order history -> -1.10), and goes final in the first round without any (-> -0.30, final)."""
+    rows = sorted((k for k, v in facts.items() if k.startswith(f"sc:{sid[4:]}@") and v.get("otd_pct") is not None),
+                  key=lambda k: k.split("@")[-1])
+    out = []
+    for block in (rows[-4:], rows[-8:-4]):
+        if len(block) < 4:
+            continue
+        mean = sum(facts[k]["otd_pct"] for k in block) / 4
+        if mean >= bar:
+            continue
+        q0, q1 = block[0].split("@")[-1], block[-1].split("@")[-1]
+        out.append({"supplier": sid, "part": None, "kind": "scorecard_otd", "ids": list(block), "figure": round(mean, 1),
+                    "keep_alive": True, "checked_by_arena": True,
+                    "sentence": f"Your on-time delivery averaged {mean:.1f}% from {q0} to {q1} ({', '.join(block)})."})
+    return out
+
+
 def weak_delivery_claims(claims, sid, bar=90.0):
     """Its on-time delivery below `bar`% (P03: 84.6%) - a third, different kind of data for round 1. Mixed kinds never
     drew "We received a lot of material" (P10 / P18: three kinds, no padding); two+ index claims always did."""
@@ -195,7 +234,16 @@ def committee_round1(motives):
 
 
 MIRROR = re.compile(r"(?i)in response to your (step|movement|adjustment)|significant step towards our position")
-MIRROR_SHARE = 0.30  # a mirroring supplier: step 30% of the remaining gap per round
+MIRROR_SHARE = 0.40  # a mirroring supplier: step 40% of the remaining gap per round (P02: 30% -> its cuts 1.67/1.40/0.90)
+MIRROR_ANCHOR = 0.05  # ...and open 5% below its quote in value (stabilise default 3.5%): the meeting point follows the anchor
+
+
+# its sales person signals its own limit and that management could go further. P02 ee98266bedd37231 round 4: "This
+# represents our best effort to accommodate your target without requiring management escalation"; then "we cannot adjust
+# our calculation without a verifiable basis" -> final. Ask ONCE, with a real step, before it goes final.
+ESCALATION_HINT = re.compile(r"(?i)without (requiring )?(management|committee) (escalation|approval)|best effort|"
+                             r"cannot adjust (our|the) (calculation|pricing|price)|lacks new verifiable data|"
+                             r"no new verified data|maximum (flexibility|concession)")
 
 
 def mirror_supplier(case_id, data=None):

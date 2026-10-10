@@ -227,13 +227,16 @@ class NoIdeaAgent:
         out += central.should_cost_claims(mine, sid, parts, opening)
         out += central.volume_claims(case, self.facts)
         out += central.weak_delivery_claims(mine, sid)
+        if central.mirror_supplier(case["case_id"]):  # keep its rounds going with verified facts (P02)
+            out = [c for c in out if c["kind"] != "scorecard_otd"] + central.quality_notification_claims(
+                case, self.facts, sid) + central.delivery_year_claims(self.facts, sid)
         if not best:  # no falling 6/12-month window: the steepest fall in any window the arena checks
             drivers = {dr["series"]: dr.get("weight") or 0.0 for p in self.dossiers.get(sid, {}).get("parts", [])
                        if p["part"] in parts for dr in p.get("cost_drivers", [])}
             out += central.falling_window_claims(case, drivers)
         seen, ranked = set(), []
         for c in central.rank(out, case["case_id"]):
-            if c["sentence"] not in seen and central.take_rate(c["kind"], case["case_id"]) > 0:
+            if c["sentence"] not in seen and (central.take_rate(c["kind"], case["case_id"]) > 0 or c.get("keep_alive")):
                 seen.add(c["sentence"])
                 ranked.append(c)
         return ranked
@@ -353,6 +356,10 @@ class NoIdeaAgent:
         depth = ANCHOR_DEPTH.get(kind, ANCHOR_DEPTH_BY_GOAL.get(goal, 0.05))
         if kind in ("price_increase", "renewal") and goal in ANCHOR_DEPTH_BY_GOAL:
             depth = ANCHOR_DEPTH_BY_GOAL[goal]
+        # central: a mirroring supplier meets us in the middle (P02 ee98266bedd37231: its cut was ~half our step), so the
+        # meeting point follows OUR anchor; its first answer did not depend on the anchor (374.84 for 361.96 and 364.69)
+        if central.mirror_supplier(case["case_id"]):
+            depth = max(depth, central.MIRROR_ANCHOR)
         anchor_price = opening * (1 - depth)
         if kind == "price_increase":  # the cost-justified change (EDA 3) when it is lower
             anchor_price = min(anchor_price, s["cur"] * (1 + s["justified"] / 100))
@@ -467,6 +474,22 @@ class NoIdeaAgent:
                 out = [t for t in out if central.same_structure(t, terms)][:1] or out[:1]
             log.info("%s round %d: new data + step %s", sid, k, [(t["unit_price"], t.get("payment_days")) for t in out])
             return self.message(case, sid, events, out, k)
+        # central: management escalation, once, when the data is used up and it signals its own limit (P02
+        # ee98266bedd37231: "our best effort ... without requiring management escalation", then we near-closed without
+        # data and it went final at 368.55). A real step (half the gap), on the structure it priced, to its management.
+        if (status == "open" and k >= 1 and ok and not s.get("mgmt_escalated") and moves_left(case, events) > 1
+                and central.ESCALATION_HINT.search(latest(events).get("body") or "")):
+            s.pop("closing", None)
+            hist = s.get("ours") or []
+            v_now = supplier_value(case, complete_offer(case, terms), s["est"])
+            if len(hist) >= 2 and v_now > hist[-2]:
+                hist[-1] = hist[-2] + central.MIRROR_SHARE * (v_now - hist[-2])
+            esc = self.sheets_at(case, sid, hist[-1] if hist else v_now, cap)
+            out = [t for _, t in esc if central.same_structure(t, terms)][:1] or [t for _, t in esc][:1]
+            if out:
+                s["mgmt_escalated"] = s["mgmt_now"] = True
+                log.info("%s round %d: management escalation %s", sid, k, [(t["unit_price"], t.get("payment_days")) for t in out])
+                return self.message(case, sid, events, out, k)
         # central 3c: once it priced our lead structure, stay on it (P03 47a88b4d0bb75ce3: management gave 433.08 @ 90 d,
         # we asked 60/45/30 d and its final fell back to 431.61 @ 60 d: 0.90 -> 0.86)
         if committee and k >= 1 and sheet_id and central.same_structure(sheets[0][1], terms):
@@ -669,7 +692,8 @@ class NoIdeaAgent:
         # spread the data: P02/P03 cut their price for each NEW fact and went final once none was left - so keep one
         # fact for each of the next 3 rounds and send 1 per later round
         left = sum(not any(i in self.cited for i in c["ids"]) for c in self.sup[sid]["args"])
-        args = self.next_args(sid, max(1, min(3, left - 3)) if k == 0 else 1)
+        reserve = 4 if central.mirror_supplier(case["case_id"]) else 3  # a mirroring supplier cuts in every data round
+        args = self.next_args(sid, max(1, min(3, left - reserve)) if k == 0 else 1)
         s = self.sup[sid]
         if s.get("escalate_now") and not s.get("committee_r1") and (gap := self.freeze_gap(sid, self.best_sheet(case, sid, events)[1])) > 0:
             # live P03 x4: "our base prices are strictly frozen" while charging +4.6% on today's EUR 412.74.
@@ -777,7 +801,10 @@ class NoIdeaAgent:
             playbook = _sections(self.playbooks.get(case["type"], ""), PLAYBOOK_SECTIONS)[:2500]
             user = (f"SUPPLIER: {name}\nCASE: {case['title']} ({case['type']}, goal {case['buyer']['category_goal']})\n"
                     f"ROUND: {k + 1}{' (its final offer - make one last small request, then we close)' if final else ''}\n"
-                    + ("OUR MOVE: our price proposal is above what their key account manager may approve alone - ask "
+                    + ("OUR MOVE: we make a clear step towards them; ask them plainly to take our proposal to their "
+                       "management for a decision, since they said further movement needs management.\n"
+                       if s.get("mgmt_now") else
+                       "OUR MOVE: our price proposal is above what their key account manager may approve alone - ask "
                        "them plainly to put OUR PRICE to their pricing committee for approval. Never suggest they keep "
                        "or maintain their price.\n" if s.get("committee_r1") else
                        "OUR MOVE: their pricing committee has already reviewed our proposal - ask them to take our revised "
@@ -843,6 +870,10 @@ class NoIdeaAgent:
                             f"at {d1} days equals EUR {base:.2f} at your standard {d0} days - {(1 - base / op) * 100:.2f}% "
                             f"below your quote of EUR {op:.2f}, at your {thr * 100:g}% approval threshold. So far the "
                             f"concession is {(1 - (self.best_sheet(case, sid, events)[1]['unit_price'] - slope * (self.best_sheet(case, sid, events)[1].get('payment_days', d0) - d0)) / op) * 100:.2f}%.")
+        if s.pop("mgmt_now", False) and total and p0:
+            nxt.append(f"We have made a clear step towards you. Please take this proposal to your management for a decision: "
+                       f"a binding {months or 12}-month agreement for {total:,} {unit}, about EUR {p0 * total:,.0f}. On "
+                       f"your written confirmation we issue the order the same day and pay every invoice on the due date.")
         if s.pop("committee_r1", False) and total and p0:
             s.pop("escalate_now", None)
             thr = self.approval_threshold(sid)
@@ -856,7 +887,7 @@ class NoIdeaAgent:
                        f"standard approval limit. Your base price stays unchanged in option A. On your confirmation of "
                        f"any option we confirm the order in writing the same day, and we pay every invoice on the due "
                        f"date - no further rounds.")
-        if not any("committee's written confirmation" in x for x in nxt):
+        if not any("committee's written confirmation" in x or "management for a decision" in x for x in nxt):
             nxt.append("All other terms as in your quote; on your written confirmation of "
                        + ("one option" if len(sheets) > 1 else "these terms") + " we will issue the order.")
         if final:
