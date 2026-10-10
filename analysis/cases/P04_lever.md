@@ -82,7 +82,6 @@ How far the floor would have to fall for each one-cent-under ask (over the 562 f
 2. If the team wants the one free lottery ticket: play ONE game with `P04_SHOT = True`.
 3. Then stop: a second refusal of 4.87 @ 30 d confirms the floor is fixed for good.
 4. **Better use of quota: cases where a data kind still cuts.** P03's order price path was the lever (0.963). Next, check every committee / holder supplier for a rising order path we never sent.
-<<<<<<< HEAD
 
 ## 7. Live result (local, 2026-10-10 22:59, 1992e28afb6e7f4b, `P04_SHOT = True`): **0.700 - shot refused, and the fallback lost a cent**
 | our msg | sheet | its answer |
@@ -98,5 +97,3 @@ How far the floor would have to fall for each one-cent-under ask (over the 562 f
   floor-stop supplier (same as LEARNINGS §3: hopping costs).
 - Its 30-d counter 4.88 @ 30 d (0.766) was still open after msg 2; accepting it would have scored 0.766 > 0.700.
 - Stop P04: no lever left. Do not play it again.
-=======
->>>>>>> origin/claude/wizardly-albattani-t7jmh3

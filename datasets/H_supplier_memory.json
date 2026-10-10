@@ -141,7 +141,7 @@
   }
  },
  "sup:70140": {
-  "games": 47,
+  "games": 48,
   "scores": [
    0.672,
    0.609,
@@ -181,6 +181,7 @@
    0.71,
    0.723,
    0.794,
+   0.885,
    0.794,
    0.752,
    0.71,
@@ -308,8 +309,8 @@
    "index and price history": 1,
    "index change": 74,
    "labour cost index": 1,
-   "quality record": 42,
-   "volume change": 39
+   "quality record": 44,
+   "volume change": 41
   }
  },
  "sup:70410": {
