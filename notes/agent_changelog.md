@@ -206,3 +206,19 @@ Code still does all maths and safety checks; at runtime the agent now reads, lea
   Neel's capacity playbook says "price steps ≤ 2%". Our round-1 asks were 14–15% below its opening; a big ask may send
   it straight to the committee's final word. A **small first ask (≤ 2–3% below its opening, at lead 56)** might keep it
   in normal rounds where it concedes stepwise (as the approval-ladder supplier did in P07).
+
+## Behaviour across all games (src/eval/archive_runs.py, 24 games archived in datasets/runs/)
+- **Every game is now archived in full** (both sides' e-mails, term sheets, statuses, trace with reasons):
+  `datasets/runs/<session>.json`. Re-run `archive_runs.py` after each game (idempotent, no quota).
+- **Each supplier follows its own script; our words barely change it.** P07's price path is near-identical across
+  6 games and 5 agent versions (5.74 → 5.56 → 5.56 → 5.52 → 5.49/5.50, final in round 4 every time). Structure
+  moves it (24 m, payment days), arguments mostly "hold, but do not change our calculation".
+- **Patience differs per supplier**: P10 final in round 1 (4/4), P07 round 4 (6/6), P01 never final in 4–5 rounds
+  (concedes €0.5–1.3/round), P04 (Neel) round 3.
+- **Ask size alone does not trigger final_offer**: P07 asks 15%+ below → always open; P10 asks 8–15% → always final.
+  The approval-ladder hypothesis is not supported (no small first ask tried on P10 yet).
+- **What moved suppliers**: structure (P07 24 m; P10 lead 56 vs 35: €31.90 vs €35.00), data only on the data-naive P01
+  owner ("a fair point"), and offering back its own prose alternatives (P10 agreed).
+- Alternatives appear in most multi-round games (P07 1–4 per game, P10 2/4): free better terms.
+- P10 floor seen twice: €31.90 @ 56, €33.80–34.00 @ 42. Beating 0.69 needs ≤ €31.35 @ 56.
+- Note: Neel played P04 (d3050f951dc2c45b, 0.86); quota count now 24 of 200.
