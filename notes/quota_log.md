@@ -160,3 +160,4 @@
 | 2026-10-10 20:23 | Parth | P04 | p04_record 21698a7 --main30 / scripted | 0.766 | 6ed05f043e2164b0 |
 | 2026-10-10 20:32 | Parth | P04 | p04_last_cent f525fc5 (ask 4.93 @ 90 d after its final) / scripted | 0.000 | bd2eabf99b0705bd |
 | 2026-10-10 20:43 | Parth | P08 | probe P08_A upward price path in round 1 (best low-draw path, lean later rounds) (scripted, no model) | 0.912 (unit_price=4.94, index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, payment_days=14, contract_months=24) | d0708ed1038995d1 |
+| 2026-10-10 20:48 | Parth | P08 | noidea 544b5cd (year-rise path, no hedged index) / gpt-6-astra | 0.822 (agent with the P08 probe-A round 1) | 6701d5ddffb86dd4 |
