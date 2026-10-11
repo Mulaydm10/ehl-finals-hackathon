@@ -369,3 +369,4 @@
 | 2026-10-11 04:10 | Neel | P18 | noidea_p18_soft v2 batch / gpt-6-astra - IDENTICAL replies to game 1 within 1 s each (arena replays an identical conversation): wasted | **0.68** | 2908a68c6555c1ba |
 | 2026-10-11 04:10 | Neel | P18 | noidea_p18_soft v2 batch / gpt-6-astra - IDENTICAL replies to game 1 within 1 s each (arena replays an identical conversation): wasted | **0.68** | 99150255574adb07 |
 | 2026-10-11 04:14 | Neel | P18 | noidea_p18_replay (0c968aae msg 1-2 verbatim -> SAME 5.20 / 5.00 @ 14 d state, instantly) / gpt-6-astra - msg 3 4.86 = a step BELOW our 4.87 -> final 5.00 @ 14 d | **0.67** | 152d666e8ca628be |
+| 2026-10-11 04:16 | Neel | P18 | noidea_p18_replay v2 (0c968aae state, msg 3 = 4.99 @ 30 db5 + 4.88 @ 30 db0) / gpt-6-astra - "30-day term requires an adjustment from our 14-day offer": final 5.10 @ 30 d | **0.61** | b354bd0425f2c1fa |

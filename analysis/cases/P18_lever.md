@@ -233,3 +233,11 @@ final 5.20 @ 45 d db3 (0.599).
   4.87: a backward step draws the final (LESSONS.md, P02). My mistake: the 14-d record line (4.86) is below 4.87, so the record
   cannot be reached on 14 d from this state.
 - Next: same msg 1-2, msg 3 forward on 30 d (its standard): 4.99 @ 30 d db5 (0.758) + 4.88 @ 30 d db0 (0.759).
+
+## 17. Live: replay v2 (04:15, b354bd0425f2c1fa): **0.610 - in the 0c968aae state 14 d is worth a step to it; one shot at msg 3**
+- Same reproduced state (5.00 @ 14 d). msg 3 = 4.99 @ 30 d db5 + 4.88 @ 30 d db0 -> **final_offer 5.10 @ 30 d**: "Accommodating your
+  preference for a 30-day payment term requires an adjustment from our previous 14-day offer". In this conversation it had credited
+  the 14 d ("In return for this improved payment term ... reduce our base price"), so leaving 14 d costs 0.10.
+- In this state anything it does not accept at msg 3 draws its final at once (4.86 @ 14 d and the 30-d pair): one shot.
+- Record on 14 d: db0 <= 4.86 (a backward step, refused), db5 <= 4.97 (0.7593; worth 4.87 to it = our msg-2 value).
+  Team best on 14 d: 4.88 db0 = 0.7475, 4.89 = 0.7407, 4.90 = 0.7339 (4.91 = 0.7271 was accepted in 0c968aae).
