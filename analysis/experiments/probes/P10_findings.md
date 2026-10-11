@@ -123,3 +123,11 @@ falling window worth citing (-0.25 % at best). **P10 ceiling with this supplier:
   ~25 different round-2 e-mails. It sits where the committee's band ended in the template game (31.00 @ 36 m); in normal
   mode the model never asks the committee, so 31.10 (0.7097) is the most a normal-mode game can reach. Above it only the
   engine-template mode (mode_watch.py).
+
+## Probe Q (d34ee89a7f54ed54, 04:33): the calibrated floor question = 0.7097
+- General rules 57/58/63 (P11 named its floor when asked). Never asked on P10, never in a round 1 anywhere. Round 1 =
+  59c899b9's at 29.40 + "What is the lowest price at which you can sign these terms today?" -> **31.50**, "Our margin and
+  our limits stay internal." (engine sentence: a supplier that keeps its limits internal). Round 2 (36 m + labour, 3.5%
+  gap = 30.40, the question again) -> final **31.10**. Ravensteiner does not name a floor.
+- probe.py gained `gap_pct` (ask a % under its price) and `if_counter_below` (another round-2 e-mail when its counter came in
+  under a price).

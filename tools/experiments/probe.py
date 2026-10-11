@@ -8,6 +8,8 @@ Design (JSON):
   case        "P10"
   label       short name for the logs
   rounds      [{"body": str, "sheets": [{terms}], "refs": [ids]}]   round k's e-mail (k = 1, 2, ...)
+              optional per round: "step_frac" (move that share of the gap), "gap_pct" (ask that % under its price),
+              "if_counter_below": [price, body] (send that body instead when its standing price is under price)
   on_agreed   "accept" | "next"          next = send the next round instead of accepting (re-ask after agreed)
   on_open     "next" | "accept"          open = it countered without closing
   on_final    "accept" | "alternative" | "next"
@@ -98,15 +100,22 @@ def main(argv=None):
     reply, result, ask = first, None, None
     for k, r in enumerate(design["rounds"], 1):
         sheets = [dict(t) for t in r.get("sheets", [])]
-        if "step_frac" in r and ask is not None:  # move a share of the gap to its standing price
-            theirs = ((reply.get("term_sheets") or [{}])[0].get("terms") or {}).get("unit_price")
+        theirs = ((reply.get("term_sheets") or [{}])[0].get("terms") or {}).get("unit_price")
+        if "gap_pct" in r and theirs:  # ask a fixed % under its standing price (P10: 3.5% drew its biggest step)
+            ask = round(theirs * (1 - r["gap_pct"] / 100), 2)
+            for t in sheets:
+                t["unit_price"] = ask
+        elif "step_frac" in r and ask is not None:  # move a share of the gap to its standing price
             if theirs:
                 ask = round(ask + r["step_frac"] * (theirs - ask), 2)
                 for t in sheets:
                     t["unit_price"] = ask
         elif sheets:
             ask = sheets[0]["unit_price"]
-        body = r["body"].replace("{price}", f"{ask:.2f}" if ask is not None else "")
+        text = r["body"]
+        if "if_counter_below" in r and theirs is not None and theirs < r["if_counter_below"][0]:
+            text = r["if_counter_below"][1]  # [price, body]: another e-mail when its counter came in under that price
+        body = text.replace("{price}", f"{ask:.2f}" if ask is not None else "")
         msg = {"subject": subject, "body": body, "term_sheets": [{"terms": t} for t in sheets],
                "refs": r.get("refs", [])}
         if r.get("attachments"):  # [{"name", "type": "csv"|"md"|"json", "text"}] - the arena reads md/csv/json

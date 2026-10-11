@@ -1,0 +1,49 @@
+{
+  "case": "P10",
+  "label": "P10_Q floor question r1",
+  "hypothesis": "General rules 57/58/63: the calibrated floor question ('What is the lowest price at which you can sign these terms today?') made P11 name its true floor; never asked on P10, never in any round 1. The record's band ended at 31.00 (673ee890 backoffice). If the segment manager names a lower price than her usual 31.50 in round 1, round 2 (36-month move + labour, ask 3.5% under it, a +0.5 move from our 29.40) takes the usual ~0.35 step from there: 31.00 -> ~30.65 (> 0.741). If she ignores it (31.50), round 2 = 59c8's move at 30.40 + the floor question for the final.",
+  "on_agreed": "accept",
+  "on_open": "next",
+  "on_final": "alternative",
+  "rounds": [
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for your offer and for being open about your capacity situation.\n\nWe are ready to give you the firm commitment you asked for: a binding 23,400 pieces per year for 24 months, and we accept a longer lead time of 56 days so you can plan production.\n\nOur orders for Mechanical seal 24 mm, SiC/carbon, EPDM were at EUR 28.94 until December 2023 and have been at EUR 29.89 since January 2024 (po:4500010364-10, po:4500010407-10, po:4500014436-10).\nOur should-cost estimate for Mechanical seal 24 mm, SiC/carbon, EPDM is EUR 24.31 per 1 (cost:340010).\nProducer prices DE: other rubber products changed -0.3% from 2026-01 to 2026-02 (idx:PPI-C2219@2026-01, idx:PPI-C2219@2026-02).\n\nWe therefore propose EUR 29.40 per piece. What is the lowest price at which you can sign these terms today?\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 29.4,
+          "volume_per_year": 23400,
+          "contract_months": 24,
+          "lead_time_days": 56
+        }
+      ],
+      "refs": [
+        "cost:340010",
+        "idx:PPI-C2219@2026-01",
+        "idx:PPI-C2219@2026-02",
+        "po:4500010364-10",
+        "po:4500010407-10",
+        "po:4500014436-10"
+      ]
+    },
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for your answer. We move towards you: we extend the commitment to 36 months, 70,200 pieces in total.\nLabour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01).\n\nWe propose EUR {price} per piece. What is the lowest price at which you can sign these terms today?\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 30.4,
+          "volume_per_year": 23400,
+          "contract_months": 36,
+          "lead_time_days": 56
+        }
+      ],
+      "refs": [
+        "idx:LCI-C@2025-10",
+        "idx:LCI-C@2026-01"
+      ],
+      "gap_pct": 3.5,
+      "if_counter_below": [
+        31.45,
+        "Dear Ms Zellner,\n\nThank you for your answer. We move towards you: we extend the commitment to 36 months, 70,200 pieces in total.\nLabour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01).\n\nWe propose EUR {price} per piece.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke"
+      ]
+    }
+  ]
+}
