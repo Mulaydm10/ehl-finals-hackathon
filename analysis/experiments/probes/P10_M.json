@@ -1,0 +1,44 @@
+{
+  "case": "P10",
+  "label": "P10_M replay 59c899b9 (+engine-mode watch)",
+  "hypothesis": "Exact replay of Neel's 59c899b9 (0.7097, normal mode deterministic: 3c4aa1a6 drew the same 31.50 -> 31.10). Its round 2 (36-month move + labour index + ask raised) is also what the engine's approval step rewards, so in engine-template mode (Pricing Committee: 'Approve a further step?' -> 'Approved') the same e-mails should beat 673ee890's 30.70.",
+  "on_agreed": "accept",
+  "on_open": "next",
+  "on_final": "alternative",
+  "rounds": [
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for your offer and for being open about your capacity situation.\n\nWe are ready to give you the firm commitment you asked for: a binding 23,400 pieces per year for 24 months, and we accept a longer lead time of 56 days so you can plan production.\n\nOur orders for Mechanical seal 24 mm, SiC/carbon, EPDM were at EUR 28.94 until December 2023 and have been at EUR 29.89 since January 2024 (po:4500010364-10, po:4500010407-10, po:4500014436-10).\nOur should-cost estimate for Mechanical seal 24 mm, SiC/carbon, EPDM is EUR 24.31 per 1 (cost:340010).\nProducer prices DE: other rubber products changed -0.3% from 2026-01 to 2026-02 (idx:PPI-C2219@2026-01, idx:PPI-C2219@2026-02).\n\nWe therefore propose to keep EUR 29.89 per piece, the price we have paid since January 2024.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 29.89,
+          "volume_per_year": 23400,
+          "contract_months": 24,
+          "lead_time_days": 56
+        }
+      ],
+      "refs": [
+        "cost:340010",
+        "idx:PPI-C2219@2026-01",
+        "idx:PPI-C2219@2026-02",
+        "po:4500010364-10",
+        "po:4500010407-10",
+        "po:4500014436-10"
+      ]
+    },
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for your answer. We move towards you: we extend the commitment to 36 months, 70,200 pieces in total.\nLabour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01).\n\nWe propose EUR 30.40 per piece.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 30.4,
+          "volume_per_year": 23400,
+          "contract_months": 36,
+          "lead_time_days": 56
+        }
+      ],
+      "refs": [
+        "idx:LCI-C@2025-10",
+        "idx:LCI-C@2026-01"
+      ]
+    }
+  ]
+}
