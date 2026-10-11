@@ -1,0 +1,14 @@
+msg 1: ours ['4.76@30d'] live ['4.76@30d'] {'subject': True, 'body': True, 'term_sheets': True, 'refs': True}
+msg 2: ours ['4.87@14d/db0'] live ['4.87@14d/db0'] {'subject': True, 'body': True, 'term_sheets': True, 'refs': True}
+msg 3: ours ['5.01@14d/db5'] live ['4.91@14d/db0'] {'subject': True, 'body': False, 'term_sheets': False, 'refs': True}
+carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01). What is the lowest price at which you can sign these terms today?
+
+On this basis we propose the attached term sheets (EUR 5.01 per unit, AS-14404 index clause (45% share, 5% deadband), 14 days payment, 24 months). Please let us know which option works best for you.
+
+Kind regards,
+Purchasing, Hollerau Pumpenwerke
+agreed 5.01 db5 -> {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+final 5.00 @ 14 -> {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+final 5.10 db5 -> {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+open 5.10 db5 -> ['5.00@30d/db5', '4.90@30d/db0']
+score 5.01 @ 14 db5: 0.7327

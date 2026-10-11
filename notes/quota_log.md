@@ -386,3 +386,9 @@
 | 2026-10-11 04:39 | Dhruv | P11 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.7935 | see notes/analysis_v234/LOAD_L8v2.log |
 | 2026-10-11 04:39 | Dhruv | P18 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.6207 | see notes/analysis_v234/LOAD_L8v2.log |
 | 2026-10-11 04:52 | Neel | P18 | noidea_p18_state45 v2 (6c2813ce state 5.00 @ 45 d reproduced; 5.03 db5+4.93 -> hold; 5.04 db5+4.94 -> final "absolute limit for these terms") / gpt-6-astra | **0.69** | 81b5c6de3be181e5 |
+| 2026-10-11 05:07 | Neel | P18 | noidea_p18_pay14 record attempt (6c2813ce state; msg 3 4.97 @ 14 d db5 + 4.86 @ 14 d db0) / gpt-6-astra - final 5.00 @ 14 d: "accept your 14-day payment terms, 5.00 is the lowest we can offer" | **0.67** | d71cab8cb90339f8 |
+| 2026-10-11 05:39 | Neel | P18 | noidea_p18_open45 record attempt (new 45-d opening; run by the user via !) / gpt-6-astra - first counter 5.40 -> 5.20 -> 5.10 -> final 5.10 @ 45 d: "all possible adjustments" | **0.62** | 2493f26fb7838c69 |
+| 2026-10-11 05:51 | Neel | P18 | noidea_p18_beat30 (6c2813ce state; 5.02 @ 30 db5 + 4.92 -> hold; 5.03 db5 + 4.93 + OTD -> final 5.00 @ 30 d) / gpt-6-astra | **0.68** | aaf4f9c6fe2f7fe6 |
+| 2026-10-11 06:04 | Neel | P18 | noidea_p18_coda (beat Codacabana: 6c2813ce msg 1 -> 5.20 @ 45 d; new msg 2 -> 5.10 normal; record sheets 5.00 db5 / 4.89 -> final 5.10 @ 45 d at once) / gpt-6-astra | **0.62** | 07836ace9510eafe |
+| 2026-10-11 06:12 | Neel | P18 | noidea_p18_coda2 (6c2813ce msg 1 -> 5.20; its msg 2 at 4.88 -> 5.10 normal; 5.10 db5 + 5.00 inside its 2% -> agreed 5.00 @ 45 d) / gpt-6-astra | **0.69** | cd68b78dfb23022c |
+| 2026-10-11 06:14 | Neel | P18 | noidea_p18_replay P18_MSG3=5.01/14/5 (0c968aae state; 5.01 @ 14 d db5 -> hold 5.10 db5 -> final 5.10 @ 14 d db5) / gpt-6-astra | **0.67** | a9711492eacdd9a7 |

@@ -1,0 +1,32 @@
+== 1. verbatim against 6c2813ce (its real replies)
+  msg 1: ours ['4.77@45d'] live ['4.77@45d'] same {'subject': True, 'body': True, 'term_sheets': True, 'refs': True}
+  msg 2: ours ['4.90@45d/db0'] live ['4.90@45d/db0'] same {'subject': True, 'body': True, 'term_sheets': True, 'refs': True}
+  msg 3: ours ['5.02@30d/db5', '4.92@30d/db0'] live ['4.91@30d/db0'] same {'subject': True, 'body': False, 'term_sheets': False, 'refs': True}
+  msg 3 body = 6c2813ce's with only the proposal changed: True
+== 2. branches after message 3 (scripted replies)
+  agreed 5.02 @ 30 db5: ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+  agreed 4.92 @ 30: ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+  hold 5.00 @ 30: SEND ['5.03@30d/db5', '4.93@30d/db0'] refs ['sc:70740@2026Q3'] | ...'dex clause (45% share, 5% deadband), 30 days payment, 24 months; EUR 4.93 per unit, AS-14404 index clause (45% share, 0% deadband), 30 days payment, 24 months). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke'
+    -> agreed 5.03 @ 30 db5: ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+    -> agreed 4.93 @ 30: ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+    -> final 5.00 @ 30: ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+    msg 4 body: 'Dear Blankstahl Werdenfels GmbH team,\n\nYou have verified the index data without changing your calculation; it sounds like another index debate would not move this forward. We respect the confidentiality of your detailed calculations and want to turn our commitment into a durable commercial agreement. How can we close the remaining price gap on that basis?\n\nWe confirm a binding volume of 23,700 units per year for 24 months. Your on-time delivery in the last quarter was 81.0% (sc:70740@2026Q3).\n\nOn this basis we propose the attached term sheets (EUR 5.03 per unit, AS-14404 index clause (45% share, 5% deadband), 30 days payment, 24 months; EUR 4.93 per unit, AS-14404 index clause (45% share, 0% deadband), 30 days payment, 24 months). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke' refs ['sc:70740@2026Q3']
+  final 5.00 @ 30: ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+  counter 4.90 @ 30: ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+  hold 5.00 @ 45: SEND ['5.03@30d/db5', '4.93@30d/db0'] refs ['sc:70740@2026Q3'] | ...'dex clause (45% share, 5% deadband), 30 days payment, 24 months; EUR 4.93 per unit, AS-14404 index clause (45% share, 0% deadband), 30 days payment, 24 months). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke'
+    -> agreed 5.03 @ 30 db5: ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+    -> agreed 4.93 @ 30: ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+    -> final 5.00 @ 30: ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+== 2b. off track at message 2 (first counter 5.30 @ 45 instead of 5.20)
+  r1 5.30 @ 45: SEND ['4.90@45d/db0'] refs ['fc:370010@2026-09'] | ...'10@2026-09).\n\nOn this basis we propose the attached term sheets (EUR 4.90 per unit, AS-14404 index clause (45% share, 0% deadband), 45 days payment, 24 months). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke'
+== 3. exact scores (arena cost model)
+  msg 3 ask 5.02 @ 30 d db5                0.7377  > 0.727 
+  msg 3 ask 4.92 @ 30 d db0                0.7317  > 0.727 
+  msg 4 ask 5.03 @ 30 d db5                0.7310  > 0.727 
+  msg 4 ask 4.93 @ 30 d db0                0.7249   
+  fallback final 5.00 @ 30 d               0.6774   
+  its floor 5.00 @ 45 d db0 (fallback)     0.6883   
+  record line 45 d db0 4.89                0.7627  > 0.727 > record
+  our best 4.91 @ 14 d db0 (0c968aae)      0.7271   
+  6c2813ce close 4.94 @ 30 d db0           0.7181   
+== Astra calls 0, mean 0.0s, max 0.0s
