@@ -19,6 +19,7 @@
 | 10-11 06:25 | offline H2 | offline (no LLM) | noidea_p18_coda archived replay | 42 recorded games, 0 errors; selected for the live game | analysis/offline_runs/2026-10-11_P18_offline_H2_coda/ |
 | 10-11 06:03 | LIVE | hosted, 1 session | noidea_p18_coda | 07836ace9510eafe: 5.20 @ 45 d (reproduced) -> fresh round 2 = 5.10 (normal, no db5 pair) -> record sheets 4% under -> final 5.10 @ 45 d at once = **0.621** | tools/replays/raw/P18_07836ace9510eafe.json, analysis/offline_runs/2026-10-11_P18_live_07836ace/ |
 | 10-11 06:20 | offline I | offline (0 Astra calls) | new noidea_p18_coda2 (6c2813ce msg 1 verbatim; its msg 2 with only 4.90 -> 4.88; soft: record sheets; normal: inside its 2%) | msgs 1-2 as designed; all soft and normal branches correct; archived replay 42 games 0 errors; selected for the live game | analysis/offline_runs/2026-10-11_P18_offline_I_coda2/ |
+| 10-11 06:11 | LIVE | hosted, 1 session | noidea_p18_coda2 | cd68b78dfb23022c: 5.20 @ 45 d (reproduced) -> 6c2813ce's msg 2 at 4.88 drew 5.10 (normal) -> 5.10 db5 + 5.00 db0 inside its 2% -> agreed 5.00 @ 45 d db0 = **0.688** | tools/replays/raw/P18_cd68b78dfb23022c.json, analysis/offline_runs/2026-10-11_P18_live_cd68b78d/ |
 
 ## Changelog
 - **Run 1 (no code change):** the documented offline simulator is unfit for P18 (see the run README); the decision for the
@@ -41,3 +42,4 @@
 - **Offline H2:** noidea_p18_coda replays 42 recorded games without errors; selected for the live game.
 - **Live 07836ace (0.621):** 6c2813ce's msg 1 fixes round 1 at 5.20 (5 of 5); the new msg 2 drew a normal 5.10. Defect: on the normal branch the record sheets were 4% under its offer (twice its 2% authority) and drew its final at 5.10 at once; that branch must ask within 2% (5.00 @ 45 d -> 0.688).
 - **Offline I:** new `noidea_p18_coda2.py` - msg 2 = 6c2813ce's (the soft reply) with only the ask changed; the normal branch asks inside its 2% (fix for 07836ace).
+- **Live cd68b78d (0.688):** 6c2813ce's soft round 2 does not survive a changed ask (4.88 -> 5.10); the 2% fix banked its 5.00 floor at once (+0.067 over v1 on the same branch); offered db5 and db0 at the same value, it took db0.

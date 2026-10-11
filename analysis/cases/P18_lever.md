@@ -347,3 +347,10 @@ See analysis/offline_runs/2026-10-11_P18_offline_E_astra/README.md.
   **final 5.10 @ 45 d at once** -> 0.621.
 - Lesson: when round 2 is not soft, stay inside its 2% approval authority (5.00 @ 45 d against 5.10) to reach its 5.00 floor
   (0.688); the record sheets are only worth sending against a 5.00 standing offer. Team best stays 0.727; record 0.756.
+
+## 28. Offline I + live (06:11, cd68b78dfb23022c, `noidea_p18_coda2.py`): **0.688 - the soft round 2 is not reproducible with a changed ask; the 2% fix banks the floor**
+- msg 2 = 6c2813ce's msg 2 byte for byte except the ask (4.90 -> 4.88) -> **5.10** (6c2813ce: 5.00 + 5.10 db5). New msg 2s after
+  6c2813ce's msg 1: 0 of 2 soft. The soft reply belongs to that exact conversation; each new msg 2 is a fresh ~1-in-5 draw.
+- Normal branch with the fix: 5.10 db5 + 5.00 db0 (inside its 2% of 5.10) -> **agreed 5.00 @ 45 d db0 at once** (0.6883), vs 0.621
+  for v1's record sheets 4.1% under. Given both sheets at the same value to it, it chose db0 (we would have preferred 5.10 db5, 0.6957).
+- Team best stays 0.727; record 0.756.

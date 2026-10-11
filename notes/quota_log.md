@@ -390,3 +390,4 @@
 | 2026-10-11 05:39 | Neel | P18 | noidea_p18_open45 record attempt (new 45-d opening; run by the user via !) / gpt-6-astra - first counter 5.40 -> 5.20 -> 5.10 -> final 5.10 @ 45 d: "all possible adjustments" | **0.62** | 2493f26fb7838c69 |
 | 2026-10-11 05:51 | Neel | P18 | noidea_p18_beat30 (6c2813ce state; 5.02 @ 30 db5 + 4.92 -> hold; 5.03 db5 + 4.93 + OTD -> final 5.00 @ 30 d) / gpt-6-astra | **0.68** | aaf4f9c6fe2f7fe6 |
 | 2026-10-11 06:04 | Neel | P18 | noidea_p18_coda (beat Codacabana: 6c2813ce msg 1 -> 5.20 @ 45 d; new msg 2 -> 5.10 normal; record sheets 5.00 db5 / 4.89 -> final 5.10 @ 45 d at once) / gpt-6-astra | **0.62** | 07836ace9510eafe |
+| 2026-10-11 06:12 | Neel | P18 | noidea_p18_coda2 (6c2813ce msg 1 -> 5.20; its msg 2 at 4.88 -> 5.10 normal; 5.10 db5 + 5.00 inside its 2% -> agreed 5.00 @ 45 d) / gpt-6-astra | **0.69** | cd68b78dfb23022c |
