@@ -421,3 +421,4 @@
 | 2026-10-11 07:19 | Parth | P18 | noidea_p18_top r2 variant 4 (6c2813ce msg 1, fresh msg 2, record sheets inside its 2% at msg 3; no model) | 0.6295 (5.2 @ 45 d db5.0) | 0a8fdb150167f0c9 |
 | 2026-10-11 07:22 | Parth | P18 | noidea_p18_top r2 variant 5 (6c2813ce msg 1, fresh msg 2, record sheets inside its 2% at msg 3; no model) | 0.6846 (5.1 @ 30 d db5.0) | 9df6a66e2f0edf57 |
 | 2026-10-11 07:24 | Parth | P18 | noidea_p18_top r2 variant 6 (6c2813ce msg 1, fresh msg 2, record sheets inside its 2% at msg 3; no model) | 0.6295 (5.2 @ 45 d db5.0) | 532ff60f75000b7c |
+| 2026-10-11 07:43 | Parth | P18 | noidea_p18_top r2 variant 0 24 m mode alt (6c2813ce msg 1, msg 2 variant, record sheets inside its 2% at msg 3; no model) | 0.6957 (5.1 @ 45 d db5.0) | 767b7a8df606d179 |

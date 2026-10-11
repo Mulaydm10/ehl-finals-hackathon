@@ -68,3 +68,11 @@ Why our two reproducible states cannot reach 0.756:
 | 07:19 | 0a8fdb150167f0c9 | 4, 36 m, both moves named | 5.10 (normal): 'In recognition of the increased binding volume' - one step | 5.00 @ 45 db5 | final at once 5.20 @ 45 d db5 -> **0.6295** |
 | 07:21 | 9df6a66e2f0edf57 | 5, 36 m | **5.00 @ 45 d + 5.10 db5 (SOFT)**; its text said 'reduce our base price to €5.10': the engine set the db0 sheet 0.10 under its db5 alternative (as in 0c968aae) | the 3 beat sheets | final at once 5.10 @ 30 d db5 ('shorter payment terms ... do not significantly alter our pricing') -> **0.6846**; this soft line was ~5.00 |
 | 07:24 | 532ff60f75000b7c | 6, 36 m | 5.10 (normal) | 5.00 @ 45 db5 | final at once 5.20 @ 45 d db5 -> **0.6295** |
+| 07:43 | 767b7a8df606d179 | ALT mode (msgs 1-2 = 1c767030, cached 5.10) | 5.10 (cached) | 4.94 @ 45 db0 + "please also quote your price with a 5% deadband as an alternative" | it countered 5.00 @ 45 d WITHOUT the alternative ("We prefer to proceed with the 0% deadband option"); msg 4 5.10 @ 45 db5 agreed -> **0.6957** |
+
+**Engine artifact (64 round-2 replies):**
+- When a reply carries the 5% deadband alternative, the model's stated price X goes to that alternative and the db0
+  sheet is set to X - 0.10. This happened in all 9 soft replies with readable text (X was 5.10 or 5.20, never 5.00).
+- Asking for the alternative at round 2 triggered it 2 of 2 (15438619, 2493f26f).
+- At its floor the model declines to quote the alternative (767b7a8d), so the db0 sheet never goes under 5.00 this way.
+- **Use:** the round-2 request makes the soft state on demand. Each game is then a draw on the hidden line only.
