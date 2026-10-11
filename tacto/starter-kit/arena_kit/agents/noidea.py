@@ -24,6 +24,8 @@ import logging
 import math
 import os
 import re
+import time
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
 from pathlib import Path
 
 from ..cost import complete_offer, must_haves_ok, supplier_value, total_cost
@@ -78,6 +80,12 @@ PROPOSE_ALT_AFTER_FINAL = False  # sending its alternative back after final_offe
 LAST_TRY_MARGIN = 0.002
 RFQ_MARKET_DEPTH = 0.10  # RFQ ask vs the market's lowest valid offer (20% made the best bidder walk: P05 d9af85e000ab3d4d)
 PLANNED_ROUNDS = 8  # P07 live: ~25 s per round, so an 8-minute wave fits ~12-15; keep a margin
+# (v6) ONE budget for all model calls of one decision. Each call has its own 45 s timeout (agents/llm.py), so a slow or
+# hanging API stretched one decision (decision call + opening paragraph) to ~90 s - past the 60 s a supplier waits, and
+# an unanswered final walks. Normal decisions take ~8-28 s (load runs L6-L9: none over 45 s), so the budget bites only
+# when the API is slow; then the existing fallbacks run (deterministic choice, plain opening). Opt-out `no_llm_budget`.
+LLM_BUDGET_S = 40.0
+LLM_MIN_S = 4.0  # less than this left of the budget: no model call at all
 GAP_STEP = 0.3  # later asks move this share of the gap to its standing value (patience 3-4; off: no_gap_steps)
 MIN_GAIN_PTS = 1.0  # never pay more than ask - 1 pt unless it is the last word
 # How far below the opening quote to anchor (src/eval/calibrate.py: best deal vs opening, practice cases)
@@ -193,8 +201,38 @@ def _sections(text, wanted):
 
 
 class NoIdeaAgent:
+    def _budgeted(self, complete):
+        """(v6) The model call, cut to what is left of this decision's LLM_BUDGET_S. An overrun raises TimeoutError, which
+        every call site already catches (deterministic path / plain opening); the cut call ends in the background."""
+        pool = ThreadPoolExecutor(max_workers=4, thread_name_prefix="llm")
+
+        def call(system, user):
+            t0 = self.decision_t0
+            if t0 is None:  # outside a decision (offline tools): as before
+                return complete(system, user)
+            left = LLM_BUDGET_S - (time.monotonic() - t0)
+            if left < LLM_MIN_S:
+                raise TimeoutError(f"decision budget spent ({LLM_BUDGET_S - left:.0f} s): no model call")
+            try:
+                return pool.submit(complete, system, user).result(timeout=left)
+            except FutureTimeout:
+                raise TimeoutError(f"model slower than the {left:.0f} s left of the decision budget") from None
+        return call
+
     def __init__(self, complete=None):
-        self.complete = complete
+        self.complete = self._budgeted(complete) if complete and "no_llm_budget" not in EXPERIMENTS else complete
+        # (v6) the clock of the model budget starts when play.py asks for a decision: wrap the most derived decide (the RFQ
+        # layer's) on the instance; its internal super().decide() calls go to the class methods and keep the same start
+        self.decision_t0 = None
+        inner = self.decide
+
+        def timed(case, threads):
+            self.decision_t0 = time.monotonic()
+            try:
+                return inner(case, threads)
+            finally:
+                self.decision_t0 = None
+        self.decide = timed
         self.focus = None  # RFQs: the bidders play.py lets us answer now (their replies are in)
         # experiment `hold_r1` (OFF): play.py sends our first e-mail after one timeout round - the supplier's patience
         # drops and it concedes faster (P05 record path; analysis/experiments/signals/SIGNALS.md). A/B before any use.
