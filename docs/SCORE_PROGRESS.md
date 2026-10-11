@@ -42,3 +42,23 @@ The average settled at ~0.83 once the bugs were gone; the worst case rose from 0
 
 Practice board: NoIdea #1 (88.0). The biggest gain is consistency: no case is lost any more, and a single run of the agent
 beats the next-best team's best-of-many results.
+
+## 4. Stress lab - 190 synthetic suppliers per set, built blind from the raw games (`stress/`, night of 10/11)
+Offline, no model, memory off. The simulator is calibrated on the real games (prices within 0.1-1.2% for 11 of 12 suppliers, walk
+rules from the real walks) but is harsher than the arena, so read it for **failure modes and relative changes**, not as a forecast.
+
+| type | cases | v1 | **v2 = final** | v2, suppliers unknown to our data |
+|---|---:|---:|---:|---:|
+| bundling | 20 | 0.757 | 0.757 | 0.721 |
+| capacity | 20 | 0.926 | 0.926 | 0.905 |
+| price_increase | 40 | 0.610 | 0.610 | 0.517 |
+| quality | 20 | 0.631 | 0.644 | 0.558 |
+| raw_material | 30 | 0.557 | 0.557 | 0.418 |
+| renewal | 40 | 0.693 | 0.693 | 0.625 |
+| rfq | 20 | 0.213 | 0.226 | 0.228 |
+| **all** | 190 | 0.628 | **0.631** | 0.560 |
+
+- v2 vs v1: 2 of 190 games better (ST047 RFQ +0.263, ST114 quality +0.258), **0 worse**, on both stress sets.
+- Robustness: 120 structural mutants (unknown suppliers / case types / fields, terms dropped or added, no alternative, extra
+  bidder, 4 rounds): 0 crashes, 0 invalid e-mails, 0 safe moves. Self-consistency: 2 tiny dominated asks in 380 games.
+- Rejected tonight (stress + live): fc100, fc_ref97 / fc_ref99, show2 (see docs/LESSONS.md).

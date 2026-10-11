@@ -1389,3 +1389,9 @@ every case a deal, 9 in parallel in 241 s. Unseen sandbox suppliers: **D01 0.943
 - **Rejected `fc_ref97` / `fc_ref99`** (guess the full cost high when there is no should-cost): unknown set 9 better / 12 worse
   (P10-like secure-supply suppliers have real margin) / worse overall. Reverted - v2 stays = tag final-v2.
 - Regret (an earlier standing offer would have scored > 0.10 more): 4 of 190 with v2 - closing timing is sound.
+
+### Rejected `show2` (04:50 - 04:58)
+- Idea: show the closing bidder's final to a bidder that moved once more ("half the step now, the rest next round", back office
+  44x). Stress: 0 of 380 games changed (simulated bidders move once per cited rival). Live D02 x2: 0.579 both (= v2).
+- Why it cannot pay: under that rule a shown bidder moves at most TO the closing price, never below it - two showings at best tie
+  on price (D02: DEMO-C1 EXW stays dearer than DEMO-J1 DAP at 14.80). Reverted; v2 stays = final-v2.

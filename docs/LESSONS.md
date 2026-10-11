@@ -45,6 +45,7 @@ Distilled from the hidden-supplier loops of 2026-10-10/11 (v2.34 - v2.34h). Deta
 - Inconclusive, kept only where it was measured: the two-sheet choice framing for cash-short quality cases.
 - `fc100` full cost = should-cost x 1.00 (agent estimate is 5-13% low vs real charges): stress 7 of 9 changed cases worse.
 - `fc_ref97` / `fc_ref99` (full cost guessed high without a should-cost figure): unknown-supplier set 9 better / 12 worse, 99% worse overall.
+- `show2` (show a closing final twice): a shown bidder moves at most to the closing price (half step, then the rest) - it can tie, never undercut; 0 effect in 380 sim games and D02 x2.
 
 ## Checked late
 - Lessons the model reads must be general: supplier recipes vs general principles A/B -> the general principles do at least
