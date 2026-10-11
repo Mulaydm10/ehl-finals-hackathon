@@ -71,5 +71,5 @@ rules from the real walks) but is harsher than the arena, so read it for **failu
 | final-v4 (+ RFQ clock) | 0.633 (= v3, the sim has no clock) | 0.560 | D02 x3 0.569 / 0.579 / 0.579 (one 61 s rival reply handled) |
 | final-v5 (+ Sunday release data, paraphrase-aware letter reader) | 0.633 (0.6333 -> 0.6328: 1 better, 3 worse, all P16 sheet cases the bar hedge does not cover) | 0.560 (0 changed) | P02 x3 0.769 / 0.800 / 0.758 (mean 0.776), P11 x2 0.752 / 0.794, P07 0.760; round 1 = v4 on all 19 practice cases |
 | final-v6 (+ 40 s model budget per decision) | 0.633 (= v5, no model in the sim) | 0.560 | L10 9 cases 0.814 (P01 0.999, P02 0.713, P03 0.954, P04 0.766, P07 0.792, P08 0.916, P10 0.702, P11 0.794, P18 0.688; 0 budget cuts); D01 0.943 / 0.883, D02 0.579; hanging API: D01 0.920 (v5: 90 s decisions) |
-| final-v7 (+ RFQ never walked while bidders are live; unreadable attachment = empty) | 0.633 (0 of 190 changed) | 0.560 (0 of 190 changed) | D01 0.909, D02 0.600 x2; L11 below |
+| final-v7 (+ RFQ never walked while bidders are live; unreadable attachment = empty) | 0.633 (0 of 190 changed) | 0.560 (0 of 190 changed) | D01 0.909, D02 0.600 x2; L11 0.763 (P11 held at round 1: 0.501), L12 **0.829** (best of the day) |
 Final rehearsal (kit arena-sim, 2 waves x 3 cases): 6 of 6 deals inside the cap.

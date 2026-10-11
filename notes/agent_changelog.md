@@ -1523,3 +1523,6 @@ Each finding checked against the code, the official API text and our archive (69
   games 0.71-0.88 fired after it had cut to ~45.50). A guard "no probe before our 2nd priced e-mail" tested in the stress
   lab: 0 of 190 changed, unknown-suppliers 1 of 190 worse (ST097 0.966 -> 0.955), 0 better -> NOT taken (no evidence; one
   game, most likely the practice fallback brain). Open risk noted in docs/LESSONS.md.
+- **L12, final-v7 again** (10:05 - 10:08, same code as L11): P01 0.999, P02 0.824, P03 0.954, P04 0.815, P07 0.792, P08 0.916,
+  P10 0.702, P11 0.752, P18 0.707 = **0.829** - the best 9-case mean of the day (L7 v1 0.823, L8 v2 0.820, L10 v6 0.814,
+  L11 v7 0.763). L11's dip was supplier draws (P11 held at round 1, P02 low draw), not code. 0 warnings, 0 safe moves.
