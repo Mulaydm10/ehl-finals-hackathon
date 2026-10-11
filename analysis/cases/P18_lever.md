@@ -309,3 +309,16 @@ fallback 5.00 @ 45 d = 0.688. The record is not reachable there (4.89 = 2.2% und
 - Consequence: with its counters never under 5.00 (db0) / 5.10 (db5), a <2% ask cannot reach any record line on 14 or 30 d. The
   only remaining record line inside 2% is 45 d db5 at 5.00 (1.96% under 5.10 db5; 0.7618), which needs a conversation whose
   45-d floor is <= 4.90 in db0 terms (Codacabana's was; none of our 61 games).
+
+## 24. Offline run E (~05:45): a new 45-day opening for the record (`noidea_p18_open45.py`; user: "try a new opening on 45 days")
+See analysis/offline_runs/2026-10-11_P18_offline_E_astra/README.md.
+- Codacabana's record was set at 00:58 CEST (live feed 2026-10-10T22:58:07Z): normal mode, not the 23:51-23:58 template window.
+- Its acceptance limit is fixed per conversation before our msg 3 (8 msg 3s in the 0c968aae state, 4 in 6c2813ce's met the same
+  limit). Low limits (~4.91-4.94 db0 at 14/30 d) came only with 5.20 first and 5.00 at round 2; 5.30/5.40-start games refused
+  even 5.04-5.05. The 6c2813ce state is a dead end at 45 d (4.94 refused), so the record needs a NEW conversation.
+- 45-d openings that mentioned its small-account review / volume focus drew 5.30 (5 of 5); msg 1 now sticks to the cost basis.
+  "Please also quote your price with a 5% deadband" turned a 5.10 round 2 into 5.00 + 5.10 db5 (83f89503 vs 15438619).
+- Only index change and price history are ever taken, and only in round 1; nothing later changes "our calculation".
+- Plan: msg 1 4.77 @ 45 d (new paragraph + 6c2813ce's data); msg 2 4.84 @ 45 d db0 + forecast + the db5 request; msg 3 the record
+  sheets 5.00 @ 45 d db5 (0.7618) + 4.89 @ 45 d db0 (0.7627), +0.05 in its value; msg 4 hold them if it cut under 5.00, else
+  5.02 db5 / 4.92 (0.7486 / 0.7424). Checks pass; archived replay 0 errors. Odds of a record: low single digits per game.
