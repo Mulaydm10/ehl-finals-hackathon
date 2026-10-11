@@ -1,0 +1,31 @@
+soft=False R=5.0 c3=0.0: 0.7324 5.00@45d/db3  BEATS 0.727
+   US 4.76@30d   :: Dear Sir or Madam, /  / Thank you for your proposal to agree the price basis for the coming period. We want to continue with you and confirm a binding volume of 23700 kg per year for 24 months. /  / Our recent orders for Round bar 1.4404 dia 30 mm, peeled were at 5.26, 5.84 per 1 (po:4500014292-10, po:4500014355-10, po:4500014427-10). Alloy surcharge 1.4404, Isartal Edelstahlwerk (fictional mill, derived) changed -8.
+   SUP open 5.20@30d/db0 | 5.30@30d/db5
+   US 4.87@45d/db3   :: Dear Sir or Madam, /  / Thank you for your offer. We accept your AS-14404 price adjustment clause, with a 3% deadband as in our current framework agreement, where the price adjusts only when the index moves more than 3%. We move on price and on payment. /  / Our demand forecast for Round bar 1.4404 dia 30 mm is up +1.9% (fc:370010@2026-09). /  / We propose EUR 4.87 per kg with the AS-14404 clause at a 3% deadband, 45
+   SUP open 5.10@45d/db3
+   US 4.93@45d/db3   :: Dear Sir or Madam, /  / Thank you for your step. We move again. /  / Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01). /  / We propose EUR 4.93 per kg with the AS-14404 clause at a 3% deadband, 45 days net, 24 months (term sheet attached). What is the lowest price at which you can
+   SUP open 5.00@45d/db3
+   US 4.94@45d/db3   :: Dear Sir or Madam, /  / Thank you. We take one more step to close today. /  / Your on-time delivery in the last quarter was 81.0% (sc:70740@2026Q3). Our quality agreement sets a target of 95%. /  / We propose EUR 4.94 per kg with the AS-14404 clause at a 3% deadband, 45 days net, 24 months (term sheet attached). On your confirmation we will issue the order. /  / Kind regards, / Purchasing, Hollerau Pumpenwerke
+   SUP final_offer 5.00@45d/db3
+   US accept 5.00@45d/db3
+soft=False R=5.0 c3=0.1: 0.6657 5.10@45d/db3
+soft=True R=4.91 c3=0.0: 0.7925 4.91@45d/db3  BEATS 0.727  BEATS RECORD
+   US 4.76@30d   :: Dear Sir or Madam, /  / Thank you for your proposal to agree the price basis for the coming period. We want to continue with you and confirm a binding volume of 23700 kg per year for 24 months. /  / Our recent orders for Round bar 1.4404 dia 30 mm, peeled were at 5.26, 5.84 per 1 (po:4500014292-10, po:4500014355-10, po:4500014427-10). Alloy surcharge 1.4404, Isartal Edelstahlwerk (fictional mill, derived) changed -8.
+   SUP open 5.20@30d/db0 | 5.30@30d/db5
+   US 4.87@45d/db3   :: Dear Sir or Madam, /  / Thank you for your offer. We accept your AS-14404 price adjustment clause, with a 3% deadband as in our current framework agreement, where the price adjusts only when the index moves more than 3%. We move on price and on payment. /  / Our demand forecast for Round bar 1.4404 dia 30 mm is up +1.9% (fc:370010@2026-09). /  / We propose EUR 4.87 per kg with the AS-14404 clause at a 3% deadband, 45
+   SUP open 5.00@45d/db3
+   US 4.91@45d/db3   :: Dear Sir or Madam, /  / Thank you for your step. We move again. /  / Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01). /  / We propose EUR 4.91 per kg with the AS-14404 clause at a 3% deadband, 45 days net, 24 months (term sheet attached). What is the lowest price at which you can
+   SUP agreed 4.91@45d/db3
+   US accept 4.91@45d/db3
+soft=True R=4.91 c3=0.1: 0.6657 5.10@45d/db3
+soft=True R=4.93 c3=0.0: 0.7725 4.94@45d/db3  BEATS 0.727  BEATS RECORD
+   US 4.76@30d   :: Dear Sir or Madam, /  / Thank you for your proposal to agree the price basis for the coming period. We want to continue with you and confirm a binding volume of 23700 kg per year for 24 months. /  / Our recent orders for Round bar 1.4404 dia 30 mm, peeled were at 5.26, 5.84 per 1 (po:4500014292-10, po:4500014355-10, po:4500014427-10). Alloy surcharge 1.4404, Isartal Edelstahlwerk (fictional mill, derived) changed -8.
+   SUP open 5.20@30d/db0 | 5.30@30d/db5
+   US 4.87@45d/db3   :: Dear Sir or Madam, /  / Thank you for your offer. We accept your AS-14404 price adjustment clause, with a 3% deadband as in our current framework agreement, where the price adjusts only when the index moves more than 3%. We move on price and on payment. /  / Our demand forecast for Round bar 1.4404 dia 30 mm is up +1.9% (fc:370010@2026-09). /  / We propose EUR 4.87 per kg with the AS-14404 clause at a 3% deadband, 45
+   SUP open 5.00@45d/db3
+   US 4.91@45d/db3   :: Dear Sir or Madam, /  / Thank you for your step. We move again. /  / Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01). /  / We propose EUR 4.91 per kg with the AS-14404 clause at a 3% deadband, 45 days net, 24 months (term sheet attached). What is the lowest price at which you can
+   SUP open 5.00@45d/db3
+   US 4.94@45d/db3   :: Dear Sir or Madam, /  / Thank you. We take one more step to close today. /  / Your on-time delivery in the last quarter was 81.0% (sc:70740@2026Q3). Our quality agreement sets a target of 95%. /  / We propose EUR 4.94 per kg with the AS-14404 clause at a 3% deadband, 45 days net, 24 months (term sheet attached). On your confirmation we will issue the order. /  / Kind regards, / Purchasing, Hollerau Pumpenwerke
+   SUP agreed 4.94@45d/db3
+   US accept 4.94@45d/db3
+soft=True R=4.93 c3=0.1: 0.6657 5.10@45d/db3
