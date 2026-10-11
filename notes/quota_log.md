@@ -452,3 +452,6 @@
 | 2026-10-11 10:05 | Dhruv | P10 | final-v7 L12 hidden (9 in parallel, from main) / gpt-6-astra | 0.7019 | 1cf2f0eff377bb36 |
 | 2026-10-11 10:05 | Dhruv | P11 | final-v7 L12 hidden (9 in parallel, from main) / gpt-6-astra | 0.7517 | 03f2ec89858de28b |
 | 2026-10-11 10:05 | Dhruv | P18 | final-v7 L12 hidden (9 in parallel, from main) / gpt-6-astra | 0.7067 | b525d3d9475d339f |
+| 2026-10-11 10:10 | Dhruv | D01 sandbox | final pre-flight final-v7 hidden / gpt-6-astra (free) | 0.9089 | 1cf35e6103c0841a |
+| 2026-10-11 10:12 | Dhruv | D02 sandbox | final pre-flight final-v7 hidden / gpt-6-astra (free) | 0.5786 | 131d2b4d62242cba |
+| 2026-10-11 10:15 | Dhruv | P01 | final pre-flight final-v7 hidden / gpt-6-astra | 0.9987 | d1119e3d77717300 |

@@ -1526,3 +1526,6 @@ Each finding checked against the code, the official API text and our archive (69
 - **L12, final-v7 again** (10:05 - 10:08, same code as L11): P01 0.999, P02 0.824, P03 0.954, P04 0.815, P07 0.792, P08 0.916,
   P10 0.702, P11 0.752, P18 0.707 = **0.829** - the best 9-case mean of the day (L7 v1 0.823, L8 v2 0.820, L10 v6 0.814,
   L11 v7 0.763). L11's dip was supplier draws (P11 held at round 1, P02 low draw), not code. 0 warnings, 0 safe moves.
+- **Final pre-flight on final-v7** (10:09 - 10:18, main b38895f = final-v7 + notes): agent code + datasets = final-v7
+  (frozen); model ok 1.1 s; tests 77 + 3 skips; crash 0; D01 0.909, D02 0.579, P01 0.999, 0 failure lines; final runner 60 s:
+  12 polls on 403, no session, stopped; no arena process left. Submit commit bb4049e (tag final-v7) at 11:00.
