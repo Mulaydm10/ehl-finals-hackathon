@@ -7,6 +7,7 @@
 | - | Run 3 | hosted, one session | - | not executed: user said 'dont run on the arena' | - |
 | 10-11 05:30 | offline A | offline (Astra configured, 0 calls) | candidate scoring + archived replay of state45 / replay | C (6c2813ce state, db5 + db0 pairs) ranks first: 0.742 / 0.736 at msg 3; record not reachable from any reproducible state | analysis/offline_runs/2026-10-11_P18_offline_A_astra/ |
 | 10-11 05:40 | offline B | offline (Astra configured, 0 calls) | noidea_p18_state45 v2 on main e67addb | all branch checks pass; byte-equal msgs 1-2; archived replay 42 games 0 errors; selected for the live game | analysis/offline_runs/2026-10-11_P18_offline_B_astra/ |
+| 10-11 05:52 | LIVE | hosted, 1 session | noidea_p18_state45 v2 | 81b5c6de3be181e5: state reproduced; hold at msg 3; final 5.00 @ 45 d at msg 4 ('absolute limit for these terms') = **0.688** | tools/replays/raw/P18_81b5c6de3be181e5.json, analysis/offline_runs/2026-10-11_P18_live_81b5c6de/ |
 
 ## Changelog
 - **Run 1 (no code change):** the documented offline simulator is unfit for P18 (see the run README); the decision for the
@@ -17,3 +18,6 @@
 - **Run 3:** not run (user instruction). Selected agent if a run is approved: noidea_p18_state45.py.
 - **Offline A:** mistakes audit (9 items) and exact candidate scores; decision: build state45 v2 (db5 + db0 at the same value per message).
 - **Offline B:** state45 v2 (db5 + db0 pairs, value-based guard) verified against the new main (final-v2); selected for the live game.
+- **Live 81b5c6de (0.688):** at 45 d its acceptance limit is 5.00; 4.94 was accepted on 30 d in the same state (6c2813ce). It
+  values payment days steeply in acceptance. Lesson: in a reproduced state keep the structure the supplier ACCEPTED at, not the
+  one it countered on; and never send a later e-mail without a new fact.

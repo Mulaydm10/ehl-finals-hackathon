@@ -1,0 +1,40 @@
+04:52:04 session 81b5c6de3be181e5
+04:52:04 sup:70740 patience prior: final expected around round 4
+04:52:04 prep sup:70740: ask +4.5%, justified +7.0%, full_cost~5.49, cash_rate 0.08, motives ['open_book', 'may_drop_small_accounts', 'approval_ladder']
+04:52:04 sup:70740 P18 state45 msg 1: 6c2813ce verbatim (its 6.1)
+04:52:04 sup:70740 open {'unit_price': 5.2, 'payment_days': 45, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+04:52:04 sup:70740 P18 state45 msg 2: 6c2813ce verbatim (its 5.2)
+04:52:05 sup:70740 open {'unit_price': 5.0, 'payment_days': 45, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+04:52:05 sup:70740 P18 state45 msg 3: 6c2813ce's msg 3 with ((5.03, 45, 5), (4.93, 45, 0)) (its 5.00 @ 45 d) - scores [0.742, 0.7357]
+04:52:35 sup:70740 open {'unit_price': 5.0, 'payment_days': 45, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+04:52:35 sup:70740 P18 state45 msg 4: 6c2813ce's msg 4 with ((5.04, 45, 5), (4.94, 45, 0)) (its 5.00 @ 45 d) - scores [0.7354, 0.7289]
+04:52:59 sup:70740 final_offer {'unit_price': 5.0, 'payment_days': 45, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+04:52:59 sup:70740 {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+{
+ "deal": true,
+ "supplier_id": "sup:70740",
+ "terms": {
+  "payment_days": 45,
+  "lead_time_days": 14,
+  "volume_per_year": 23700,
+  "contract_months": 24,
+  "effective_date": "2027-01-01",
+  "index_clause": {
+   "series": "AS-14404",
+   "material_share": 0.45,
+   "deadband_pct": 0.0,
+   "base_month": "2026-08"
+  },
+  "incoterm": "DAP",
+  "tooling_eur": 0.0,
+  "ppm_commitment": 70,
+  "chargeback_eur_per_complaint": 0.0,
+  "unit_price": 5.0
+ },
+ "c_open": 295173.23,
+ "c_deal": 245255.5,
+ "c_best": 222651.27,
+ "score": 0.6883119264840607
+}
+replay: https://arena.tacto.ai/replay/81b5c6de3be181e5 | practice sessions left: 180
+saved: C:\Users\neels\ehl-finals-hackathon\tools\replays\raw\P18_81b5c6de3be181e5.json
