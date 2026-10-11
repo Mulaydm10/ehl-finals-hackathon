@@ -14,6 +14,7 @@ Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden supp
   (`~/Dhruv/local-llm/serve-qwen`, port 8081). **Never use the Antigravity proxy.** Key in `.env.openai` (gitignored) - user must rotate after.
 
 ## Read these files (in this order)
+000. **`docs/SCORE_PROGRESS.md` - how the scores improved (tables): ~0.83 per case in one run, memory off.**
 00. **`docs/LESSONS.md` - how we work, the mistakes we made and fixed, rejected ideas. Read before changing the agent.**
 0. **`docs/GENERAL_RULES.md` - every general rule (35) with its live evidence. Start here.**
 1. `notes/agent_changelog.md` - EVERY version v1 → v2.15, each live result with session id, root causes, lessons. **Read the tail.**

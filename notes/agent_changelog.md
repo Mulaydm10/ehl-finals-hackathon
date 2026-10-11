@@ -1309,3 +1309,5 @@ games 8ccbdcc0 / 98e834e4, P02 10b624c1, P07 216f49e9, P08 00e8923e, P10 673ee89
 - P18 has no general fix tonight: its supplier prices longer payment steeply (first counter 5.20 at 14/30 d, 5.30-5.50 at
   45-90 d) and nothing before round 1 separates it from P07 (the opposite). Record 0.756 (Codacabana) unexplained.
 - Tests 68, crash 19/19.
+
+### Score progress of the night (tables): `docs/SCORE_PROGRESS.md` - run-by-run average and worst case, case by case first run vs now, our single run vs every team.
