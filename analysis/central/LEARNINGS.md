@@ -305,3 +305,5 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
   on 30 d, refused on 45 d in the same conversation). A fact-free later e-mail drew its 'send us the data' line and a final.
 - **Offline C (05:12):** P18 acceptance = within its 2% approval authority (0 of 8 acceptances > 2% nominal under its offer) AND
   above a per-conversation floor in its value terms, where a shorter payment term is worth ~+0.10/kg to it and db5 -0.10.
+- **Live d71cab8c (0.666):** a payment-term 'credit' is conversation-specific, not a rule (it took 14 d for nothing); its 2% rule
+  reads the nominal price of its same-clause sheet. Do not build a plan on a supplier valuation seen in only two conversations.

@@ -292,3 +292,20 @@ fallback 5.00 @ 45 d = 0.688. The record is not reachable there (4.89 = 2.2% und
 - A msg 4 without a new fact drew the "Which figures ... send us the data" line before its final (GENERAL_RULES: a round without
   data is followed by its final). 6c2813ce's identical fact-free msg 4 was accepted only because 4.94 @ 30 d cleared its floor.
 - Our best stays 0.727; record 0.756 (Codacabana). No more P18 sessions planned.
+
+## 23. Live record attempt (05:06, d71cab8cb90339f8, `noidea_p18_pay14.py`): **0.666 - no 14-d credit in this conversation; the 2% rule is nominal**
+- Offline C (acceptance audit, 59 games): 0 of 8 acceptances more than 2% nominal under its standing offer; payment and deadband
+  seemed to count in acceptance (0c968aae: 14 d worth ~0.10; c4bcc22c: 5.00 @ 14 d accepted against 5.10 @ 45 d).
+- Plan: in the reproduced 6c2813ce state (5.00 @ 45 d + 5.10 db5), msg 3 = 4.97 @ 14 d db5 (0.7593) + 4.86 @ 14 d db0 (0.7611)
+  with "We now offer payment in 14 days net instead of 45 days".
+- Live: **final_offer 5.00 @ 14 d at once**: "While we accept your proposed 14-day payment terms, our price of EUR 5.00 per unit is
+  the lowest we can offer for this 24-month agreement." Accepted (0.6658; C 246,888.17: price 237,000, payment 2,422.67, index
+  clause 6,399, index risk 1,066.50).
+- **What it establishes:** (1) the 14-d credit is NOT a rule: it took 14 d and gave nothing here (0c968aae / c4bcc22c credited it
+  only when the ask stayed within 2% of its offer). (2) Both record sheets were > 2% nominal under its sheet of the same clause
+  (4.86 vs 5.00 = 2.8%; 4.97 db5 vs 5.10 db5 = 2.5%) and both were refused: consistent with the 2% rule read on the NOMINAL price
+  of its same-clause sheet. (3) In this state a non-accepted msg 3 that changes the payment term draws its final at once (the
+  hold seen twice came on asks that kept its 45 d).
+- Consequence: with its counters never under 5.00 (db0) / 5.10 (db5), a <2% ask cannot reach any record line on 14 or 30 d. The
+  only remaining record line inside 2% is 45 d db5 at 5.00 (1.96% under 5.10 db5; 0.7618), which needs a conversation whose
+  45-d floor is <= 4.90 in db0 terms (Codacabana's was; none of our 61 games).
