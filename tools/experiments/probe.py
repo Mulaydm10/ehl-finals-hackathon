@@ -12,6 +12,7 @@ Design (JSON):
               "if_counter_below": [price, body] (send that body instead when its standing price is under price)
   on_agreed   "accept" | "next"          next = send the next round instead of accepting (re-ask after agreed)
   on_open     "next" | "accept"          open = it countered without closing
+  stop_on_template  true = no further move once its reply carries the engine-template sentences (accept what stands)
   on_final    "accept" | "alternative" | "next"
               alternative = if one of its alternative sheets is cheaper for us, propose it back once
               ("We accept your alternative as you proposed it"), then accept; next = push on (it may walk)
@@ -35,6 +36,11 @@ from arena_kit.client import ArenaClient  # noqa: E402
 from arena_kit.cost import must_haves_ok, total_cost  # noqa: E402
 
 ALT_BODY = "We accept your alternative as you proposed it; it is attached as a term sheet for your confirmation."
+# The arena's engine-template mode (its model off; 673ee890, 23:51-23:58 on 10 Oct) writes these fixed sentences. With
+# "stop_on_template": true a design makes no further move once one appears: it accepts the standing sheet, so a result never
+# rests on that window (P10 brief: do not exploit the anomaly).
+TEMPLATE_LINES = ("we value our cooperation and have made a step towards you",
+                  "any further step needs approval from our management", "management has approved a further step")
 
 
 def terms_str(t, negotiable):
@@ -128,6 +134,13 @@ def main(argv=None):
         reply = send(msg)
         if "result" in reply:
             result = reply["result"]
+            break
+        if design.get("stop_on_template") and any(s in (reply.get("body") or "").lower() for s in TEMPLATE_LINES):
+            print("  engine-template sentences in its reply (the arena's model is off): no further move, accepting its "
+                  "standing sheet")
+            if reply.get("status") in ("walked_away", "no_bid"):
+                break
+            result = accept(reply).get("result")
             break
         status, last = reply.get("status"), k == len(design["rounds"])
         if status == "agreed":

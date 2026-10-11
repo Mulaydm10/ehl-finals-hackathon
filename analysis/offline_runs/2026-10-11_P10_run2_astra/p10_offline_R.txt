@@ -1,0 +1,29 @@
+$ uv run python ../../tools/experiments/p10_offline.py ../../analysis/experiments/probes/P10_R.json --seed 2 --post-final hold
+  <- open  offer:70410-0: unit_price=32.2, volume_per_year=19890, contract_months=12, lead_time_days=54
+  -> ['unit_price=29.89, volume_per_year=23400, contract_months=24, lead_time_days=56']
+  <- open  offer:70410-1: unit_price=31.5, volume_per_year=23400, contract_months=24, lead_time_days=56
+  -> ['unit_price=30.4, volume_per_year=23400, contract_months=36, lead_time_days=56']
+  <- final_offer  offer:70410-2: unit_price=31.1, volume_per_year=23400, contract_months=36, lead_time_days=56
+  -> ['unit_price=30.69, volume_per_year=23400, contract_months=36, lead_time_days=56']
+  <- final_offer  offer:70410-3: unit_price=31.1, volume_per_year=23400, contract_months=36, lead_time_days=56
+RESULT deal=True score=0.7097389248477162 c_deal=1504118.4 terms=unit_price=31.1, volume_per_year=23400, contract_months=36, lead_time_days=56
+
+$ uv run python ../../tools/experiments/p10_offline.py ../../analysis/experiments/probes/P10_R.json --seed 2 --post-final accept
+  <- open  offer:70410-0: unit_price=32.2, volume_per_year=19890, contract_months=12, lead_time_days=54
+  -> ['unit_price=29.89, volume_per_year=23400, contract_months=24, lead_time_days=56']
+  <- open  offer:70410-1: unit_price=31.5, volume_per_year=23400, contract_months=24, lead_time_days=56
+  -> ['unit_price=30.4, volume_per_year=23400, contract_months=36, lead_time_days=56']
+  <- final_offer  offer:70410-2: unit_price=31.1, volume_per_year=23400, contract_months=36, lead_time_days=56
+  -> ['unit_price=30.69, volume_per_year=23400, contract_months=36, lead_time_days=56']
+  <- agreed  offer:70410-3: unit_price=30.69, volume_per_year=23400, contract_months=36, lead_time_days=56
+RESULT deal=True score=0.7417419580241268 c_deal=1484802.48 terms=unit_price=30.69, volume_per_year=23400, contract_months=36, lead_time_days=56
+
+$ uv run python ../../tools/experiments/p10_offline.py ../../analysis/experiments/probes/P10_R.json --seed 2 --post-final walk
+  <- open  offer:70410-0: unit_price=32.2, volume_per_year=19890, contract_months=12, lead_time_days=54
+  -> ['unit_price=29.89, volume_per_year=23400, contract_months=24, lead_time_days=56']
+  <- open  offer:70410-1: unit_price=31.5, volume_per_year=23400, contract_months=24, lead_time_days=56
+  -> ['unit_price=30.4, volume_per_year=23400, contract_months=36, lead_time_days=56']
+  <- final_offer  offer:70410-2: unit_price=31.1, volume_per_year=23400, contract_months=36, lead_time_days=56
+  -> ['unit_price=30.69, volume_per_year=23400, contract_months=36, lead_time_days=56']
+RESULT deal=False score=0.0 c_deal=None terms=unit_price=None, volume_per_year=None, contract_months=None, lead_time_days=None
+

@@ -1,0 +1,6 @@
+$ uv run python ../../tools/experiments/p10_offline.py ../../analysis/experiments/probes/P10_R.json --mode template --seed 2
+  <- open  offer:70410-0: unit_price=32.2, volume_per_year=19890, contract_months=12, lead_time_days=54
+  -> ['unit_price=29.89, volume_per_year=23400, contract_months=24, lead_time_days=56']
+  <- open  offer:70410-1: unit_price=31.0, volume_per_year=23400, contract_months=24, lead_time_days=56
+  engine-template sentences in its reply (the arena's model is off): no further move, accepting its standing sheet
+RESULT deal=True score=0.7175445426956212 c_deal=1499407.2 terms=unit_price=31.0, volume_per_year=23400, contract_months=24, lead_time_days=56

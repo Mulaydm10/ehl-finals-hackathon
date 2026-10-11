@@ -1,0 +1,20 @@
+$ uv run python ../../analysis/tools/p10_r_check.py
+turn 1: body = live True, sheet = live True, refs = live True, body = P10_R round 1 True
+turn 2: body = live True, sheet = live True, refs = live True, body = P10_R round 2 True
+its final (live): final_offer 31.1
+turn 3: ask 30.69 (0.741742 if agreed) {'unit_price': 30.69, 'volume_per_year': 23400, 'contract_months': 36, 'lead_time_days': 56}; body = P10_R round 3 True; sheet = P10_R True
+  Dear Ms Zellner,
+  
+  Thank you for your offer. We take one more step towards you: EUR 30.69 per piece for the 36 months, 70,200 pieces in total. The difference to your price is less than 2%, within what you can agree yourself without your pricing committee. If you confirm EUR 30.69, we sign today.
+  
+  Kind regards,
+  Purchasing, Hollerau Pumpenwerke
+after turn 3, agreed at 30.69: agent -> accept offer:70410-3  (score 0.741742)
+after turn 3, final 31.10 again (hold): agent -> accept offer:70410-3  (score 0.709739)
+after turn 3, open, counter 31.00: agent -> accept offer:70410-3  (score 0.717545)
+after turn 3, walked away: the thread has ended; the runner stops (0 for this game)
+final 31.40 at message 2 (30.69 would be 2.3% under it): agent -> accept (no push)
+final at message 1 (31.50): agent -> accept
+engine-template reply at message 1 (31.00, the arena's model off): agent -> accept (no move on that window)
+agent errors (crash guard fired): 0 []
+ALL CHECKS PASS

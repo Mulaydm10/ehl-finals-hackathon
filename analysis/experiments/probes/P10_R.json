@@ -45,7 +45,7 @@
     },
     {
       "on_final": "accept",
-      "body": "Dear Ms Zellner,\n\nThank you for your final offer. We take one more step towards you: EUR 30.69 per piece for the 36 months, 70,200 pieces in total. That is a step of less than 2% from your offer, within your own approval range, so it needs no committee. With this we can sign today.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "body": "Dear Ms Zellner,\n\nThank you for your offer. We take one more step towards you: EUR 30.69 per piece for the 36 months, 70,200 pieces in total. The difference to your price is less than 2%, within what you can agree yourself without your pricing committee. If you confirm EUR 30.69, we sign today.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
       "sheets": [
         {
           "unit_price": 30.69,
@@ -56,5 +56,6 @@
       ],
       "refs": []
     }
-  ]
+  ],
+  "stop_on_template": true
 }

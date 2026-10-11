@@ -12,6 +12,7 @@ mode (40+ games, backoffice "My call: counter" only). The mode is arena-side and
 Sandbox sessions do not count against the practice quota (api.md). One probe = open case:D01, one e-mail, walk away,
 classify the reply's reasons with analysis/tools/supplier_mode_scan.reply_mode (engine sentences only = TEMPLATE).
 On TEMPLATE: run the design with tools/experiments/probe.py (ONE practice session), then commit + push the run.
+Since the P10 brief of 2026-10-11 ("do not exploit the anomaly") --max-plays defaults to 0: it only watches.
 """
 
 import argparse
@@ -100,7 +101,8 @@ def main():
     ap.add_argument("--every", type=int, default=300, help="seconds between sandbox probes")
     ap.add_argument("--until", default="11:30", help="local time to stop (HH:MM)")
     ap.add_argument("--design", default=str(ROOT / "analysis" / "experiments" / "probes" / "P10_M.json"))
-    ap.add_argument("--max-plays", type=int, default=2)
+    ap.add_argument("--max-plays", type=int, default=0,
+                    help="0 (default): watch only. The P10 brief of 2026-10-11 rules out playing the template window")
     args = ap.parse_args()
     load_env(str(KIT / ".env"))
     client = ArenaClient()

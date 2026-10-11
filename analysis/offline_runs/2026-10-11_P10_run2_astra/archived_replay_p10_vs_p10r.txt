@@ -1,0 +1,87 @@
+$ uv run python ../../analysis/tools/replay_cmp_cloud.py ../../analysis/agent_variants/noidea_p10.py ../../analysis/agent_variants/noidea_p10r.py ../../tools/replays/raw/P10_*.json
+=== P10_03968142fec00495.json score 0.000  SAME
+=== P10_0bba4ffdf93afbe8.json score 0.647  SAME
+  turn 1: live [(27.38, None)]
+           base [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+           new  [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+  turn 2: live []
+           base accept
+           new  accept
+=== P10_2d91214cf7693eff.json score 0.647  SAME
+  turn 1: live [(27.69, None)]
+           base [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+           new  [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+  turn 2: live [(31.9, None)]
+           base accept
+           new  accept
+  turn 3: live []
+           base accept
+           new  accept
+=== P10_3c4aa1a6471cdc3c.json score 0.710  DIFFERENT
+  turn 1: live [(29.89, None)]
+           base [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+           new  [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+  turn 2: live [(30.4, None)]
+           base [(30.4, None, 36), 'idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+           new  [(30.4, None, 36), 'idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 3: live []
+           base accept
+           new  [(30.69, None, 36)]   <-- changed
+=== P10_59c899b93ba24dec.json score 0.710  DIFFERENT
+  turn 1: live [(29.89, None)]
+           base [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+           new  [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+  turn 2: live [(30.4, None)]
+           base [(30.4, None, 36), 'idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+           new  [(30.4, None, 36), 'idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 3: live []
+           base accept
+           new  [(30.69, None, 36)]   <-- changed
+=== P10_675fc6b9c1c8c291.json score 0.461  SAME
+  turn 1: live [(27.69, None)]
+           base [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+           new  [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+  turn 2: live []
+           base accept
+           new  accept
+=== P10_67f3678ff842d9a8.json score 0.694  DIFFERENT
+  turn 1: live [(29.57, None)]
+           base [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+           new  [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+  turn 2: live [(30.11, None)]
+           base [(30.4, None, 36), 'idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+           new  [(30.4, None, 36), 'idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 3: live []
+           base accept
+           new  [(30.69, None, 36)]   <-- changed
+=== P10_a9e2c0e41cc1be12.json score 0.694  DIFFERENT
+  turn 1: live [(29.57, None)]
+           base [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+           new  [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+  turn 2: live [(30.11, None)]
+           base [(30.4, None, 36), 'idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+           new  [(30.4, None, 36), 'idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 3: live []
+           base accept
+           new  [(30.69, None, 36)]   <-- changed
+=== P10_afd996e3d4b14336.json score 0.539  SAME
+  turn 1: live [(27.69, None)]
+           base [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+           new  [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+  turn 2: live []
+           base accept
+           new  accept
+=== P10_b9e6766299dada92.json score 0.639  SAME
+  turn 1: live [(27.38, None)]
+           base [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+           new  [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+  turn 2: live []
+           base accept
+           new  accept
+=== P10_f0a505fc3669a3b9.json score 0.647  SAME
+  turn 1: live [(27.38, None)]
+           base [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+           new  [(29.89, None, 24), 'cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+  turn 2: live []
+           base accept
+           new  accept

@@ -1,0 +1,15 @@
+model gpt-6-astra via openai; 5 samples per cell; thread = 59c899b9 through its final 31.10
+
+Authority A (2% rule as documented):
+  V0 old P10_R text                      accept 0  hold 5  counter 0 []  walk 0  other 0
+  V1 agent text (<2%, sign today)        accept 0  hold 5  counter 0 []  walk 0  other 0
+  V2 V1 + both steps named               accept 0  hold 5  counter 0 []  walk 0  other 0
+  V3 minimal close                       accept 0  hold 5  counter 0 []  walk 0  other 0
+  C control: 30.40 again (2.3% under)    accept 0  hold 5  counter 0 []  walk 0  other 0
+
+Authority B (band ends at 31.00, template trace):
+  V0 old P10_R text                      accept 0  hold 5  counter 0 []  walk 0  other 0
+  V1 agent text (<2%, sign today)        accept 0  hold 5  counter 0 []  walk 0  other 0
+  V2 V1 + both steps named               accept 0  hold 5  counter 0 []  walk 0  other 0
+  V3 minimal close                       accept 0  hold 5  counter 0 []  walk 0  other 0
+  C control: 30.40 again (2.3% under)    accept 0  hold 4  counter 0 []  walk 1  other 0
