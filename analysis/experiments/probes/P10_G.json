@@ -1,0 +1,39 @@
+{
+ "case": "P10",
+ "label": "P10_G B + round-2 hair 31.12",
+ "hypothesis": "Game B (0.702): round 1 open 31.50, round 2 (our 30.40 @ 36 m) final 31.20 - its counters sit on a 0.10 grid rounded up and it agrees at OUR price once that clears its line (probe A: 31.56 agreed in round 1; 22 such agreements in 5 cases, mine_signals.py), so its round-2 line is in (31.10, 31.20]. Same round 1; round 2 asks 31.12 @ 36 m: agreed = 0.708, else its final.",
+ "on_agreed": "accept",
+ "on_open": "accept",
+ "on_final": "alternative",
+ "rounds": [
+  {
+   "body": "Dear Ms Zellner,\n\nThank you for your offer and for being open about your capacity situation.\n\nWe are ready to give you the firm commitment you asked for: a binding 23,400 pieces per year for 24 months, and we accept a longer lead time of 56 days so you can plan production.\n\nOur orders for the 24 mm mechanical seal were at EUR 28.94 in 2023 and have been at EUR 29.89 since January 2024 (po:4500010364-10, po:4500010407-10, po:4500014436-10).\nOur should-cost estimate for this seal is EUR 24.31 per piece (cost:340010).\n\nWe therefore propose to keep EUR 29.89 per piece, the price we have paid since January 2024.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "sheets": [
+    {
+     "unit_price": 29.89,
+     "volume_per_year": 23400,
+     "contract_months": 24,
+     "lead_time_days": 56
+    }
+   ],
+   "refs": [
+    "po:4500010364-10",
+    "po:4500010407-10",
+    "po:4500014436-10",
+    "cost:340010"
+   ]
+  },
+  {
+   "body": "Dear Ms Zellner,\n\nThank you for your answer. We move towards you: we extend the commitment to 36 months, 70,200 pieces in total, and propose EUR 31.12 per piece.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+   "sheets": [
+    {
+     "unit_price": 31.12,
+     "volume_per_year": 23400,
+     "contract_months": 36,
+     "lead_time_days": 56
+    }
+   ],
+   "refs": []
+  }
+ ]
+}
