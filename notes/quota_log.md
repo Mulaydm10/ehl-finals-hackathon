@@ -431,3 +431,6 @@
 | 2026-10-11 09:37 | Dhruv | P10 | v6 L10 hidden (9 in parallel) / gpt-6-astra | 0.7019 | ad34500fcf7343ab |
 | 2026-10-11 09:37 | Dhruv | P11 | v6 L10 hidden (9 in parallel) / gpt-6-astra | 0.7935 | 392933d50fad9928 |
 | 2026-10-11 09:37 | Dhruv | P18 | v6 L10 hidden (9 in parallel) / gpt-6-astra | 0.6883 | 3d4b6b1482049552 |
+| 2026-10-11 09:55 | Dhruv | D01 sandbox | v7 candidate hidden / gpt-6-astra (free) | 0.9089 | 9e9de888ad009e29 |
+| 2026-10-11 09:55 | Dhruv | D02 sandbox | v7 candidate hidden / gpt-6-astra (free) | 0.5997 | 89ca9d20db98435a |
+| 2026-10-11 09:55 | Dhruv | D02 sandbox | v7 candidate hidden / gpt-6-astra (free) | 0.5997 | bfcd22f4325ea5cc |

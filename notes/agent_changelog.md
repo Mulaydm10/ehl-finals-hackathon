@@ -1493,3 +1493,24 @@ Result: the D02 ceiling is J1's own concession schedule; nothing we control has 
   normal range 0.87-0.94). Normal API: D01 0.943 / 0.883, D02 0.579, 0 budget cuts.
 - **L10, 9 practice cases in parallel on v6**: P01 0.999, P02 0.713, P03 0.954, P04 0.766, P07 0.792, P08 0.916, P10 0.702,
   P11 0.794, P18 0.688 = **0.814** (L7 v1 0.823, L8 v2 0.820, L9 v3 0.795), 0 budget cuts, 0 model failures, 0 warnings.
+
+### Neel's review of final-v5 + final-v7 (09:50 - 10:15, Dhruv + Claude)
+Each finding checked against the code, the official API text and our archive (69 multi-supplier games):
+- **F1 taken (v7)**: noidea.py's final branch returned `walk_away` for an unusable final (breaks a must-have / costs more
+  than the alternative) also with other bidders live; api.md: a walk_away "ends the case without a deal" - the whole case,
+  scored at the alternative, i.e. 0 on practice-type cases (every alternative is dearer than the opening). Never happened
+  live (0 buyer walk-aways in 69 archived multi-supplier games); plausible in an RFQ where a bidder quotes outside the
+  must-have (P05's 70240 quoted 52 d vs our 42 d). Fix: 6 added lines - with other bidders live, safe_move on the others
+  (their valid closing offer, else our last ask); the unusable final expires on its own (its thread only). The original
+  line is unchanged. Regression test tests/test_rfq_keep_case.py: with the opt-out `no_rfq_keep_case` it reproduces the
+  old walk_away, with the fix the move goes to another bidder.
+- **F4 (attachments) taken (v7)**: docs.read_document had no guard - an unreadable PDF/XLSX raised and ended the case. Now
+  "" plus a warning. 0 parse failures in our logs (low odds, zero cost).
+- **Not taken**: F2 (RFQ finals delayed behind a rival's in-flight call - known limit, the review also advises no change;
+  our final-v4 note said J1 was lost "while we showed J1 to C1" - the review's log reading says the final reached the agent
+  72 s late, before any show decision: noted), F3 (safe_move without its own fallback: 0 crashes in 120 mutants + the
+  review's unseen-field test), F4 422 part (single-supplier loop raises on 422; 0 single-supplier 422s in our logs; a fix
+  touches play.py state handling - not this close to the freeze), F5 (hedge covers every index series: known, accepted).
+- The review's "one model call per decision" is inaccurate (decision + opening paragraph); v6 budgets both.
+- **v7 evidence**: 3 new tests pass; suite 79 + 1 skip (77 + 3 hidden); crash test on the v7 code 0 (crash_test.py
+  hard-codes the main path - pointed at the worktree); stress 0 of 380 changed; sandbox D01 0.909, D02 0.600 x2, 0 warnings.

@@ -4,7 +4,8 @@ EHL Munich 2026 hackathon, **Tacto Negotiation Arena** track, team **🃏 NoIdea
 Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden suppliers, no human in the loop; top-10 pitch 13:00.
 
 ## Where things are
-- **Frozen: tag `final-v6` is the final's agent** (09:45 Sunday) = final-v5 + one 40 s budget for all model calls of a decision (a slow model API can no longer hold a reply past 60 s; v5 behaviour: `NOIDEA_EXPERIMENTS=hidden,no_llm_budget`).
+- **Frozen: tag `final-v7` is the final's agent** (10:15 Sunday) = final-v6 + 2 additive fixes from Neel's review (no walk_away of a whole RFQ while other bidders are live; unreadable attachment = empty text); v6 behaviour: `NOIDEA_EXPERIMENTS=hidden,no_rfq_keep_case`.
+- Before: tag `final-v6` (09:45 Sunday) = final-v5 + one 40 s budget for all model calls of a decision (a slow model API can no longer hold a reply past 60 s; v5 behaviour: `NOIDEA_EXPERIMENTS=hidden,no_llm_budget`).
 - Before: tag `final-v5` (08:40 Sunday) = final-v4 agent code (unchanged) + the Sunday release data + a letter reader that also catches paraphrased letters (70250 cash_short, 70720 hedged_forward, 70510 / 70650 price_list_fixed); back to v4 data: `git checkout final-v4r -- datasets` (tools/final/RUNBOOK.md, Version).
 - Before: tag `final-v4` (`a0c9ec5`) (06:55 Sunday) = final-v3 (+ last try before walking, cap margin 1.5 x slowest round) + RFQ clock; lineage and rollback flags in tools/final/RUNBOOK.md (Version). Earlier:  (= v1 + 2 stress-lab fixes); v1 behaviour via `NOIDEA_EXPERIMENTS=hidden,no_prem_std,no_hold_market_check` (tools/final/RUNBOOK.md).
 - v2 work on the Mac: worktree `~/Dhruv/ehl-v2` (branch `v2`); run its code with `PYTHONPATH=~/Dhruv/ehl-v2/tacto/starter-kit` (the shared venv otherwise loads main = v1).

@@ -8,7 +8,7 @@ export LLM_PROVIDER=openai LLM_BASE_URL=https://api.openai.com/v1 LLM_MODEL=gpt-
 export NOIDEA_EXPERIMENTS="${NOIDEA_EXPERIMENTS-hidden}"
 echo "== 0. version: $(git describe --tags --always) on branch $(git branch --show-current)"
 R=$(git rev-parse --show-toplevel); AGENT="tacto/starter-kit/arena_kit analysis/agent_variants/central.py analysis/central/engine_rules.py datasets/G_lessons.json datasets/A_dossiers.json datasets/C_arguments.jsonl"
-for t in final-v6 final-v5 final-v4 final-v3 final-v2 final-v1; do git -C "$R" rev-parse -q --verify "$t" >/dev/null && break; done   # the newest frozen version
+for t in final-v7 final-v6 final-v5 final-v4 final-v3 final-v2 final-v1; do git -C "$R" rev-parse -q --verify "$t" >/dev/null && break; done   # the newest frozen version
 if git -C "$R" diff --quiet "$t" -- $AGENT; then echo "   agent code = $t (frozen)"; else echo "!! agent code differs from $t:"; git -C "$R" diff --stat "$t" -- $AGENT | tail -6; fi
 echo "== 1. key"; .venv/bin/arena me | head -12
 echo "== 2. model"; .venv/bin/python -c "
