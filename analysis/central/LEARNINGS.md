@@ -299,3 +299,5 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
 - **Run 2 (offline, Astra, 05:10):** handing a verbatim-replay conversation to main mid-way makes main re-cite facts the
   replayed messages already used and repeat our last price (an empty repeat). A replay agent must own its plan to the end of
   the rounds it replays. New candidate noidea_p18_state45 (6c2813ce state, 4.93 -> 4.94 @ 45 d); not played (no arena run).
+- **Offline A (05:30):** on a supplier that prices db5 at exactly +0.10, send each ask on db0 AND on db5 at the same value to it:
+  it accepts either at the same floor, and the db5 sheet is worth +0.0057 score to us on P18 (db5 is worth 0.1125/kg to us).

@@ -1,0 +1,24 @@
+our best 0.7271  record 0.75595
+
+A. 0c968aae state (5.00 @ 14 d), one shot at msg 3 (non-acceptance = its final)
+  db0 4.91 (known accepted)          4.91 @ 14 d db0  0.7271  = our best   0c968aae: agreed
+  db5 5.01 (= 4.91 to it)            5.01 @ 14 d db5  0.7327  > our 0.727  accepted if its db5 price is exactly 0.10
+  fallback final                     5.00 @ 14 d db0  0.6658               4.86/4.89/4.90 db0 and 4.97-5.00 db5 all drew this or 5.10 db5
+
+B. 6c2813ce state (5.00 @ 45 d), msg 3 then msg 4 (it HELD at msg 3 there)
+  msg 3 db0 4.93                     4.93 @ 45 d db0  0.7357  > our 0.727  floor at 30 d in (4.91, 4.94]; 45 d not credited in that game
+  msg 4 db0 4.94                     4.94 @ 45 d db0  0.7289  > our 0.727  6c2813ce agreed 4.94 at msg 4 (on 30 d)
+  fallback final                     5.00 @ 45 d db0  0.6883               
+
+C. B with each ask also on db5 at the same value to it (two sheets per message)
+  msg 3 db5 5.03                     5.03 @ 45 d db5  0.7420  > our 0.727  = 4.93 db0 to it
+  msg 3 db0 4.93                     4.93 @ 45 d db0  0.7357  > our 0.727  
+  msg 4 db5 5.04                     5.04 @ 45 d db5  0.7354  > our 0.727  = 4.94 db0 to it
+  msg 4 db0 4.94                     4.94 @ 45 d db0  0.7289  > our 0.727  
+  fallback final                     5.00 @ 45 d db0  0.6883               
+
+D. record lines (what a record needs)
+  14 d db0 <= 4.86                   4.86 @ 14 d db0  0.7611  RECORD       2.8% under 5.00: outside its 2% authority
+  45 d db0 4.90 (Codacabana)         4.90 @ 45 d db0  0.7559  > our 0.727  exactly 2.0%: a tie, not a beat
+  45 d db5 5.00                      5.00 @ 45 d db5  0.7618  RECORD       = 4.90 to it: needs a floor <= 4.90 (never reached in 58 games)
+  60 d db0 4.91                      4.91 @ 60 d db0  0.7599  RECORD       needs 60 d uncharged after round 1 (45 d and 90 d were charged)
