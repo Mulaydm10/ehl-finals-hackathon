@@ -73,6 +73,9 @@ def _central():
 
 
 PROPOSE_ALT_AFTER_FINAL = False  # sending its alternative back after final_offer: walked 2x, worked 1x -> off
+# (v3) before walking away from an offer worse than our alternative, one last sheet that costs us this much under the
+# alternative (last_try; opt-out `no_last_try`)
+LAST_TRY_MARGIN = 0.002
 RFQ_MARKET_DEPTH = 0.10  # RFQ ask vs the market's lowest valid offer (20% made the best bidder walk: P05 d9af85e000ab3d4d)
 PLANNED_ROUNDS = 8  # P07 live: ~25 s per round, so an 8-minute wave fits ~12-15; keep a margin
 GAP_STEP = 0.3  # later asks move this share of the gap to its standing value (patience 3-4; off: no_gap_steps)
@@ -1310,6 +1313,9 @@ or null, "reason": "<one sentence>"}."""
             return accept
         if status == "final_offer" or moves_left(case, events) <= 1 or k >= PLANNED_ROUNDS + 1:
             if not ok:
+                last = self.last_try(case, sid, events, terms, k, live)
+                if last:
+                    return last
                 return walk if self.c_alt < math.inf or len(live) > 1 else accept if sheet_id else walk
             # its final message may carry a prose alternative that is cheaper for us (P10 live: "Alternatively,
             # with Lieferzeit ... days: EUR ..."): propose exactly that once - it is its own offer, not a push
@@ -1452,6 +1458,8 @@ or null, "reason": "<one sentence>"}."""
                 prev = s.get("last_main")
                 if prev:
                     return self.message(case, sid, events, [prev], k)
+            if not ok and (last := self.last_try(case, sid, events, terms, k, live)):
+                return last
             return accept if ok else walk
         # accept when the supplier meets our current ask, or when we are within 0.3% late in the game
         near_final = k >= max(1, s.get("patience", PLANNED_ROUNDS) - 1)
@@ -2179,6 +2187,86 @@ or null, "reason": "<one sentence>"}."""
                     if best is None or c < best[0]:
                         best = (c, t)
         return best
+
+    def last_try(self, case, sid, events, terms, k, live):
+        """(v3, default; opt-out `no_last_try`) A FREE OPTION before walking away. Its final (or last-round) offer costs us
+        more than our alternative, so the case ends at the alternative's score whatever we send now: one last sheet that
+        beats the alternative can only gain - it agrees -> a deal better than walking; it walks or repeats -> the
+        alternative, as before. Single supplier with an alternative only, once per thread. First choice: ITS OWN cheaper
+        sheet (an alternative it offered in its last message, or in prose) - its own offer, the likeliest yes; the arena
+        refuses an '-a' sheet by its id (best_sheet), so it goes back as ours. Else its standing terms at the price that
+        costs us just under the alternative. Stress lab (cases_v2): ST077 (P08 copy: its '-a' sheet 6.20 @ 30 d / 12 m
+        beat our alternative while its final did not; we walked: 0.000 instead of 0.404), ST116 (P12 copy: its '-a' sheet
+        would score 0.715; we walked: 0.326)."""
+        s = self.sup[sid]
+        if "no_last_try" in EXPERIMENTS or len(live) != 1 or self.c_alt == math.inf or s.get("last_try") \
+                or moves_left(case, events) < 1:
+            return None
+        cap = self.c_alt * (1 - LAST_TRY_MARGIN)
+        base = {f: s["std"].get(f) for f in case["negotiable"] if s["std"].get(f) is not None}
+        own = []
+        for ts in (latest(events).get("term_sheets") or [])[1:]:  # its alternatives ([0] is the standing offer)
+            t0 = {f: v for f, v in (ts.get("terms") or {}).items() if v is not None}
+            if t0.get("unit_price") is None:
+                continue
+            t = complete_offer(case, {**base, **t0})
+            exact = all(t.get(f) == t0.get(f) for f in t0 if f in case["negotiable"])
+            if must_haves_ok(case, t, s["std"]):
+                own.append((total_cost(case, t, s["std"], s["est"]), t, exact))
+        for a in (self.refused_alternative(case, sid, events), self.prose_alternative(case, sid, events)):
+            if a:
+                own.append((a[0], a[1], False))
+        own = sorted((x for x in own if x[0] <= cap), key=lambda x: x[0])
+        exact = [x for x in own if x[2]]
+        if exact:  # its own offer, unchanged: say yes to exactly that
+            c, t, _ = exact[0]
+            s["last_try"] = True
+            log.info("%s: last try before walking - its own alternative, C %.0f vs alternative %.0f (its offer %s)", sid, c,
+                     self.c_alt, terms.get("unit_price") if terms else None)
+            return self.message(case, sid, events, [t], k, final=True, args=[])
+        # else up to two sheets it may pick from, both under our alternative: its standing terms at the price that costs us
+        # just under the alternative (a price-only step: within ~1.6% of its final, 3 of 5 real pushes were agreed), and its
+        # alternative on our allowed options
+        out = []
+        t1 = complete_offer(case, {**base, **{f: v for f, v in (terms or {}).items() if v is not None}}) \
+            if terms and terms.get("unit_price") is not None else {}
+        if t1.get("unit_price") and must_haves_ok(case, t1, s["std"]):
+            p1 = t1["unit_price"]
+            p_lo = round(p1 * 0.95, 2)
+            c1 = total_cost(case, t1, s["std"], s["est"])
+            slope = (c1 - total_cost(case, {**t1, "unit_price": p_lo}, s["std"], s["est"])) / max(p1 - p_lo, 0.01)
+            if slope > 0:
+                p = math.floor((p1 - (c1 - cap) / slope) * 100) / 100
+                for _ in range(20):  # the relationship charge bends C: a cent at a time until it is under the cap
+                    if p <= 0.01:
+                        break
+                    t = complete_offer(case, {**t1, "unit_price": p})
+                    c = total_cost(case, t, s["std"], s["est"])
+                    if c <= cap:
+                        if p < p1:
+                            out.append((c, t))
+                        break
+                    p = round(p - 0.01, 2)
+        out += [(c, t) for c, t, _ in own if all(t != o for _, o in out)][:2 - len(out)]
+        if not out:
+            return None
+        s["last_try"] = True
+        log.info("%s: last try before walking - %d sheet(s), C %s vs alternative %.0f (its offer %s)", sid, len(out),
+                 [round(c) for c, _ in out], self.c_alt, terms.get("unit_price") if terms else None)
+        sheets = [t for _, t in out]
+        name = s["dossier"].get("name", "your company")
+        offers = "; ".join(", ".join(x for f, v in t.items() if f in case["negotiable"] and (x := self.plain(f, v)))
+                           for t in sheets)
+        args = self.next_args(sid, 1)
+        refs = sorted({i for a in args for i in a["ids"]})
+        self.cited.update(refs)
+        self.seen(sid).update(refs)
+        body = (f"Dear {name} team,\n\nThank you for your offer. At this level we cannot sign: our alternative for this part "
+                f"costs us less in total." + "".join(f" {a['sentence']}" for a in args) +
+                f"\n\nWe can sign today on the attached term sheet{'s' if len(sheets) > 1 else ''} ({offers}). If that does "
+                f"not work for you, we will go with our alternative.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke")
+        return {"supplier_id": sid, "message": {"subject": f"Re: {case['title']}"[:300], "body": body,
+                                                "term_sheets": [{"terms": t} for t in sheets], "refs": refs[:20]}}
 
     def best_standing(self, case, threads, skip=None):
         out = [math.inf]

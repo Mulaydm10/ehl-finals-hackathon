@@ -28,6 +28,10 @@ MOVE_LIMIT_S = 60
 # In the Live Final, close this long before the wave's cap - or the slowest round of the case so far
 # (your decision plus a supplier reply of up to about a minute) plus a margin, if that is longer.
 CLOSE_BEFORE_CAP_S, ROUND_MARGIN_S = 90, 15
+# (v3) ... and the slowest round counts 1.5 times: under the final's load a reply can take longer than any so far, and a
+# reply after the cap is lost (FAQ, Sunday). Live rounds took 26-42 s (L8: 1.5 x 42 + 15 = 78 s < 90), so nothing changes
+# at practice speed; at 80 s rounds the last counter goes out 135 s before the cap instead of 95 s
+SLOW_FACTOR = 1.5
 # An agent with `hold_first = True` (noidea experiment `hold_r1`, OFF by default) sends its first e-mail only after one
 # timeout round: the supplier's patience drops and it concedes faster (P05 Parth: first counter 28.00 / 27.50 after a
 # round-1 timeout vs 30.00 after a no-price note and 30.50 without a hold; record 0.965). Single-supplier cases only.
@@ -263,7 +267,7 @@ def play(table, case_id, agent, deadline=None):
     while live_threads(threads):
         t0 = time.monotonic()
         cap = deadline() if callable(deadline) else deadline
-        if cap and time.time() > cap - max(CLOSE_BEFORE_CAP_S, slowest + ROUND_MARGIN_S):
+        if cap and time.time() > cap - max(CLOSE_BEFORE_CAP_S, SLOW_FACTOR * slowest + ROUND_MARGIN_S):
             log.info("%s: the wave's cap is near - closing", case_id)
             decision = closing_move(case, threads)
         else:
@@ -390,7 +394,7 @@ def _play_threads(table, case, case_id, threads, agent, deadline):
             if RFQ_SERIAL:  # one call at a time: always the bidder whose reply has waited longest
                 focus = {max(ready, key=lambda x: time.monotonic() - arrived[x])}
             cap = deadline() if callable(deadline) else deadline
-            if cap and time.time() > cap - max(CLOSE_BEFORE_CAP_S, slowest + ROUND_MARGIN_S):
+            if cap and time.time() > cap - max(CLOSE_BEFORE_CAP_S, SLOW_FACTOR * slowest + ROUND_MARGIN_S):
                 log.info("%s: the wave's cap is near - closing", case_id)
                 decision = closing_move(case, threads)
             else:
