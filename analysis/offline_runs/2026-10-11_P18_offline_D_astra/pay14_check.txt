@@ -1,0 +1,29 @@
+== 1. verbatim against 6c2813ce (its real replies)
+  msg 1: ours ['4.77@45d'] live ['4.77@45d'] same {'subject': True, 'body': True, 'term_sheets': True, 'refs': True}
+  msg 2: ours ['4.90@45d/db0'] live ['4.90@45d/db0'] same {'subject': True, 'body': True, 'term_sheets': True, 'refs': True}
+  msg 3: ours ['4.97@14d/db5', '4.86@14d/db0'] live ['4.91@30d/db0'] same {'subject': True, 'body': False, 'term_sheets': False, 'refs': True}
+  msg 3 body = 6c2813ce's with the proposal changed and the 14-d sentence added: True
+== 2. branches after message 3 (scripted replies)
+  agreed 4.97 @ 14 db5: ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+  agreed 4.86 @ 14: ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+  counter 5.00 @ 14: SEND ['5.00@14d/db5', '4.90@14d/db0'] refs ['sc:70740@2026Q3'] | ...'dex clause (45% share, 5% deadband), 14 days payment, 24 months; EUR 4.90 per unit, AS-14404 index clause (45% share, 0% deadband), 14 days payment, 24 months). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke'
+  hold 5.00 @ 45: SEND ['5.00@14d/db5', '4.90@14d/db0'] refs ['sc:70740@2026Q3'] | ...'dex clause (45% share, 5% deadband), 14 days payment, 24 months; EUR 4.90 per unit, AS-14404 index clause (45% share, 0% deadband), 14 days payment, 24 months). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke'
+    -> agreed 5.00 @ 14 db5: ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+    -> agreed 4.90 @ 14: ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+    -> final 5.00 @ 45: ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+  final 5.00 @ 45: ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+  counter 4.85 @ 14 (beats the record): ACTION {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+  counter 4.95 @ 45 (off track): SEND ['5.00@14d/db5', '4.90@14d/db0'] refs ['sc:70740@2026Q3'] | ...'dex clause (45% share, 5% deadband), 14 days payment, 24 months; EUR 4.90 per unit, AS-14404 index clause (45% share, 0% deadband), 14 days payment, 24 months). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke'
+  hold 5.00 @ 30: SEND ['5.00@14d/db5', '4.90@14d/db0'] refs ['sc:70740@2026Q3'] | ...'dex clause (45% share, 5% deadband), 14 days payment, 24 months; EUR 4.90 per unit, AS-14404 index clause (45% share, 0% deadband), 14 days payment, 24 months). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke'
+== 2b. off track at message 2 (first counter 5.30 @ 45 instead of 5.20)
+  r1 5.30 @ 45: SEND ['4.90@45d/db0'] refs ['fc:370010@2026-09'] | ...'10@2026-09).\n\nOn this basis we propose the attached term sheets (EUR 4.90 per unit, AS-14404 index clause (45% share, 0% deadband), 45 days payment, 24 months). Please let us know which option works best for you.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke'
+== 3. exact scores (arena cost model)
+  msg 3 ask 4.97 @ 14 d db5                0.7593  > 0.727 > record
+  msg 3 ask 4.86 @ 14 d db0                0.7611  > 0.727 > record
+  msg 4 ask 5.00 @ 14 d db5                0.7393  > 0.727 
+  msg 4 ask 4.90 @ 14 d db0                0.7339  > 0.727 
+  its floor 5.00 @ 45 d db0 (fallback)     0.6883   
+  record line 45 d db0 4.89                0.7627  > 0.727 > record
+  our best 4.91 @ 14 d db0 (0c968aae)      0.7271   
+  6c2813ce close 4.94 @ 30 d db0           0.7181   
+== Astra calls 0, mean 0.0s, max 0.0s

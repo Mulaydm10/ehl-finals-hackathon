@@ -1,0 +1,127 @@
+charge    P1  cut2 close        alt    cross  harvest  harvest deal
+  0.00  5.20  0.10 step         a     0.7210   0.7666  4.90@60d/db0  BEATS
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.10@90d/db0 / US 4.93@90d/db0 / SUP open 5.00@90d/db0 / US 4.94@90d/db0 | 4.84@60d/db0 / SUP final_offer 5.00@90d/db0 | 4.90@60d/db0 / US 4.90@60d/db0 / SUP agreed 4.90@60d/db0 / US accept 4.90@60d/db0
+  0.00  5.20  0.10 step         b     0.7210   0.7727  5.00@60d/db5  BEATS
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.10@90d/db0 / US 4.93@90d/db0 / SUP open 5.00@90d/db0 / US 4.94@90d/db0 | 4.84@60d/db0 / SUP final_offer 5.00@90d/db0 | 5.00@60d/db5 / US 5.00@60d/db5 / SUP agreed 5.00@60d/db5 / US accept 5.00@60d/db5
+  0.00  5.20  0.10 step         None  0.7210   0.7210  5.00@90d/db0
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.10@90d/db0 / US 4.93@90d/db0 / SUP open 5.00@90d/db0 / US 4.94@90d/db0 | 4.84@60d/db0 / SUP final_offer 5.00@90d/db0 / US accept 5.00@90d/db0
+  0.00  5.20  0.10 agree3       a     0.7210   0.7666  4.90@60d/db0  BEATS
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.10@90d/db0 / US 4.93@90d/db0 / SUP open 5.00@90d/db0 / US 4.94@90d/db0 | 4.84@60d/db0 / SUP final_offer 5.00@90d/db0 | 4.90@60d/db0 / US 4.90@60d/db0 / SUP agreed 4.90@60d/db0 / US accept 4.90@60d/db0
+  0.00  5.20  0.10 agree3       b     0.7210   0.7727  5.00@60d/db5  BEATS
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.10@90d/db0 / US 4.93@90d/db0 / SUP open 5.00@90d/db0 / US 4.94@90d/db0 | 4.84@60d/db0 / SUP final_offer 5.00@90d/db0 | 5.00@60d/db5 / US 5.00@60d/db5 / SUP agreed 5.00@60d/db5 / US accept 5.00@60d/db5
+  0.00  5.20  0.10 agree3       None  0.7210   0.7210  5.00@90d/db0
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.10@90d/db0 / US 4.93@90d/db0 / SUP open 5.00@90d/db0 / US 4.94@90d/db0 | 4.84@60d/db0 / SUP final_offer 5.00@90d/db0 / US accept 5.00@90d/db0
+  0.00  5.20  0.10 hold_agree4  a     0.6540   0.6540  5.10@90d/db0
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.10@90d/db0 / US 4.93@90d/db0 / SUP open 5.10@90d/db0 / US 4.94@90d/db0 / SUP final_offer 5.10@90d/db0 / US accept 5.10@90d/db0
+  0.00  5.20  0.10 hold_agree4  b     0.6540   0.6540  5.10@90d/db0
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.10@90d/db0 / US 4.93@90d/db0 / SUP open 5.10@90d/db0 / US 4.94@90d/db0 / SUP final_offer 5.10@90d/db0 / US accept 5.10@90d/db0
+  0.00  5.20  0.10 hold_agree4  None  0.6540   0.6540  5.10@90d/db0
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.10@90d/db0 / US 4.93@90d/db0 / SUP open 5.10@90d/db0 / US 4.94@90d/db0 / SUP final_offer 5.10@90d/db0 / US accept 5.10@90d/db0
+  0.00  5.20  0.20 step         a     0.7679   0.7679  4.93@90d/db0  BEATS
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.00@90d/db0 / US 4.93@90d/db0 / SUP agreed 4.93@90d/db0 / US accept 4.93@90d/db0
+  0.00  5.20  0.20 step         b     0.7679   0.7679  4.93@90d/db0  BEATS
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.00@90d/db0 / US 4.93@90d/db0 / SUP agreed 4.93@90d/db0 / US accept 4.93@90d/db0
+  0.00  5.20  0.20 step         None  0.7679   0.7679  4.93@90d/db0  BEATS
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.00@90d/db0 / US 4.93@90d/db0 / SUP agreed 4.93@90d/db0 / US accept 4.93@90d/db0
+  0.00  5.20  0.20 agree3       a     0.7679   0.7679  4.93@90d/db0  BEATS
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.00@90d/db0 / US 4.93@90d/db0 / SUP agreed 4.93@90d/db0 / US accept 4.93@90d/db0
+  0.00  5.20  0.20 agree3       b     0.7679   0.7679  4.93@90d/db0  BEATS
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.00@90d/db0 / US 4.93@90d/db0 / SUP agreed 4.93@90d/db0 / US accept 4.93@90d/db0
+  0.00  5.20  0.20 agree3       None  0.7679   0.7679  4.93@90d/db0  BEATS
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.00@90d/db0 / US 4.93@90d/db0 / SUP agreed 4.93@90d/db0 / US accept 4.93@90d/db0
+  0.00  5.20  0.20 hold_agree4  a     0.7612   0.7612  4.94@90d/db0  BEATS
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.00@90d/db0 / US 4.93@90d/db0 / SUP open 5.00@90d/db0 / US 4.94@90d/db0 / SUP agreed 4.94@90d/db0 / US accept 4.94@90d/db0
+  0.00  5.20  0.20 hold_agree4  b     0.7612   0.7612  4.94@90d/db0  BEATS
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.00@90d/db0 / US 4.93@90d/db0 / SUP open 5.00@90d/db0 / US 4.94@90d/db0 / SUP agreed 4.94@90d/db0 / US accept 4.94@90d/db0
+  0.00  5.20  0.20 hold_agree4  None  0.7612   0.7612  4.94@90d/db0  BEATS
+      US 4.76@30d / SUP open 5.20@30d/db0 / US 4.87@90d/db0 / SUP open 5.00@90d/db0 / US 4.93@90d/db0 / SUP open 5.00@90d/db0 / US 4.94@90d/db0 / SUP agreed 4.94@90d/db0 / US accept 4.94@90d/db0
+  0.00  5.30  0.10 step         a     0.6540   0.6992  5.00@60d/db0
+  0.00  5.30  0.10 step         b     0.6540   0.7068  5.10@60d/db5
+  0.00  5.30  0.10 step         None  0.6540   0.6540  5.10@90d/db0
+  0.00  5.30  0.10 agree3       a     0.6540   0.6992  5.00@60d/db0
+  0.00  5.30  0.10 agree3       b     0.6540   0.7068  5.10@60d/db5
+  0.00  5.30  0.10 agree3       None  0.6540   0.6540  5.10@90d/db0
+  0.00  5.30  0.10 hold_agree4  a     0.5870   0.5870  5.20@90d/db0
+  0.00  5.30  0.10 hold_agree4  b     0.5870   0.5870  5.20@90d/db0
+  0.00  5.30  0.10 hold_agree4  None  0.5870   0.5870  5.20@90d/db0
+  0.00  5.30  0.20 step         a     0.7210   0.7666  4.90@60d/db0  BEATS
+  0.00  5.30  0.20 step         b     0.7210   0.7727  5.00@60d/db5  BEATS
+  0.00  5.30  0.20 step         None  0.7210   0.7210  5.00@90d/db0
+  0.00  5.30  0.20 agree3       a     0.7210   0.7666  4.90@60d/db0  BEATS
+  0.00  5.30  0.20 agree3       b     0.7210   0.7727  5.00@60d/db5  BEATS
+  0.00  5.30  0.20 agree3       None  0.7210   0.7210  5.00@90d/db0
+  0.00  5.30  0.20 hold_agree4  a     0.6540   0.6540  5.10@90d/db0
+  0.00  5.30  0.20 hold_agree4  b     0.6540   0.6540  5.10@90d/db0
+  0.00  5.30  0.20 hold_agree4  None  0.6540   0.6540  5.10@90d/db0
+  0.10  5.20  0.10 step         a     0.6774   0.7339  4.90@14d/db0
+  0.10  5.20  0.10 step         b     0.6774   0.7393  5.00@14d/db5
+  0.10  5.20  0.10 step         None  0.6774   0.6774  5.00@30d/db0
+  0.10  5.20  0.10 agree3       a     0.6774   0.7339  4.90@14d/db0
+  0.10  5.20  0.10 agree3       b     0.6774   0.7393  5.00@14d/db5
+  0.10  5.20  0.10 agree3       None  0.6774   0.6774  5.00@30d/db0
+  0.10  5.20  0.10 hold_agree4  a     0.6096   0.6658  5.00@14d/db0
+  0.10  5.20  0.10 hold_agree4  b     0.6096   0.6727  5.10@14d/db5
+  0.10  5.20  0.10 hold_agree4  None  0.6096   0.6096  5.10@30d/db0
+  0.10  5.20  0.20 step         a     0.7210   0.7666  4.90@60d/db0  BEATS
+  0.10  5.20  0.20 step         b     0.7210   0.7727  5.00@60d/db5  BEATS
+  0.10  5.20  0.20 step         None  0.7210   0.7210  5.00@90d/db0
+  0.10  5.20  0.20 agree3       a     0.7210   0.7666  4.90@60d/db0  BEATS
+  0.10  5.20  0.20 agree3       b     0.7210   0.7727  5.00@60d/db5  BEATS
+  0.10  5.20  0.20 agree3       None  0.7210   0.7210  5.00@90d/db0
+  0.10  5.20  0.20 hold_agree4  a     0.6540   0.6540  5.10@90d/db0
+  0.10  5.20  0.20 hold_agree4  b     0.6540   0.6540  5.10@90d/db0
+  0.10  5.20  0.20 hold_agree4  None  0.6540   0.6540  5.10@90d/db0
+  0.10  5.30  0.10 step         a     0.6096   0.6658  5.00@14d/db0
+  0.10  5.30  0.10 step         b     0.6096   0.6727  5.10@14d/db5
+  0.10  5.30  0.10 step         None  0.6096   0.6096  5.10@30d/db0
+  0.10  5.30  0.10 agree3       a     0.6096   0.6658  5.00@14d/db0
+  0.10  5.30  0.10 agree3       b     0.6096   0.6727  5.10@14d/db5
+  0.10  5.30  0.10 agree3       None  0.6096   0.6096  5.10@30d/db0
+  0.10  5.30  0.10 hold_agree4  a     0.5417   0.5977  5.10@14d/db0
+  0.10  5.30  0.10 hold_agree4  b     0.5417   0.6061  5.20@14d/db5
+  0.10  5.30  0.10 hold_agree4  None  0.5417   0.5417  5.20@30d/db0
+  0.10  5.30  0.20 step         a     0.6540   0.6992  5.00@60d/db0
+  0.10  5.30  0.20 step         b     0.6540   0.7068  5.10@60d/db5
+  0.10  5.30  0.20 step         None  0.6540   0.6540  5.10@90d/db0
+  0.10  5.30  0.20 agree3       a     0.6540   0.6992  5.00@60d/db0
+  0.10  5.30  0.20 agree3       b     0.6540   0.7068  5.10@60d/db5
+  0.10  5.30  0.20 agree3       None  0.6540   0.6540  5.10@90d/db0
+  0.10  5.30  0.20 hold_agree4  a     0.5870   0.5870  5.20@90d/db0
+  0.10  5.30  0.20 hold_agree4  b     0.5870   0.5870  5.20@90d/db0
+  0.10  5.30  0.20 hold_agree4  None  0.5870   0.5870  5.20@90d/db0
+  0.20  5.20  0.10 step         a     0.6774   0.7339  4.90@14d/db0
+  0.20  5.20  0.10 step         b     0.6774   0.7393  5.00@14d/db5
+  0.20  5.20  0.10 step         None  0.6774   0.6774  5.00@30d/db0
+  0.20  5.20  0.10 agree3       a     0.6774   0.7339  4.90@14d/db0
+  0.20  5.20  0.10 agree3       b     0.6774   0.7393  5.00@14d/db5
+  0.20  5.20  0.10 agree3       None  0.6774   0.6774  5.00@30d/db0
+  0.20  5.20  0.10 hold_agree4  a     0.6096   0.6658  5.00@14d/db0
+  0.20  5.20  0.10 hold_agree4  b     0.6096   0.6727  5.10@14d/db5
+  0.20  5.20  0.10 hold_agree4  None  0.6096   0.6096  5.10@30d/db0
+  0.20  5.20  0.20 step         a     0.7249   0.7249  4.93@30d/db0
+  0.20  5.20  0.20 step         b     0.7249   0.7249  4.93@30d/db0
+  0.20  5.20  0.20 step         None  0.7249   0.7249  4.93@30d/db0
+  0.20  5.20  0.20 agree3       a     0.7249   0.7249  4.93@30d/db0
+  0.20  5.20  0.20 agree3       b     0.7249   0.7249  4.93@30d/db0
+  0.20  5.20  0.20 agree3       None  0.7249   0.7249  4.93@30d/db0
+  0.20  5.20  0.20 hold_agree4  a     0.7181   0.7181  4.94@30d/db0
+  0.20  5.20  0.20 hold_agree4  b     0.7181   0.7181  4.94@30d/db0
+  0.20  5.20  0.20 hold_agree4  None  0.7181   0.7181  4.94@30d/db0
+  0.20  5.30  0.10 step         a     0.6096   0.6658  5.00@14d/db0
+  0.20  5.30  0.10 step         b     0.6096   0.6727  5.10@14d/db5
+  0.20  5.30  0.10 step         None  0.6096   0.6096  5.10@30d/db0
+  0.20  5.30  0.10 agree3       a     0.6096   0.6658  5.00@14d/db0
+  0.20  5.30  0.10 agree3       b     0.6096   0.6727  5.10@14d/db5
+  0.20  5.30  0.10 agree3       None  0.6096   0.6096  5.10@30d/db0
+  0.20  5.30  0.10 hold_agree4  a     0.5417   0.5977  5.10@14d/db0
+  0.20  5.30  0.10 hold_agree4  b     0.5417   0.6061  5.20@14d/db5
+  0.20  5.30  0.10 hold_agree4  None  0.5417   0.5417  5.20@30d/db0
+  0.20  5.30  0.20 step         a     0.6774   0.7339  4.90@14d/db0
+  0.20  5.30  0.20 step         b     0.6774   0.7393  5.00@14d/db5
+  0.20  5.30  0.20 step         None  0.6774   0.6774  5.00@30d/db0
+  0.20  5.30  0.20 agree3       a     0.6774   0.7339  4.90@14d/db0
+  0.20  5.30  0.20 agree3       b     0.6774   0.7393  5.00@14d/db5
+  0.20  5.30  0.20 agree3       None  0.6774   0.6774  5.00@30d/db0
+  0.20  5.30  0.20 hold_agree4  a     0.6096   0.6658  5.00@14d/db0
+  0.20  5.30  0.20 hold_agree4  b     0.6096   0.6727  5.10@14d/db5
+  0.20  5.30  0.20 hold_agree4  None  0.6096   0.6096  5.10@30d/db0

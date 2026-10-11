@@ -879,6 +879,46 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
   Prompt rule: never sound like an accusation or a test ("prove your reliability", "earn our confidence", "documented complaints").
 - Astra round 1 OK (non-accusing opening + the line), injection PASS, tests 56.
 - v2.22 live P11 (20:55): 0.71 (605ed96c39467c97) - HIGH draw despite the fixed reassurance line (1 game: the wording hypothesis is neither confirmed nor refuted; 7 of 19 earlier high draws also had reassuring wording). Probes 45.10, floor trade 45.50+EUR 300 / 45.39, hair 45.45 all held.
+- v2.22 live P11 (21:03): 0.71 (73c7ca293b8154f0) - high draw; probe 45.10, floor trade 45.50+EUR 300 / 45.39, hair 45.45 held -> 45.50.
+
+### v2.23 (offline): two new experiments, run in parallel (user: "try bad cop good cop and also the 3rd one parallely")
+- `good_bad_cop` (honest): once it stalls - "our Supplier Quality team's escalation (doc:20260921-70140-P11) asks for cost
+  recovery after the red scorecard, and a second source is already qualified ... I would rather keep this business with you:
+  at EUR X I can sign today, with no chargebacks and every invoice paid on the due date." Our real letter + real alternative;
+  no invented authority, no price of the dearer alternative.
+- `planner` (second agent): a model reviews each planned move (thread + supplier memory + top mistakes) and may only accept
+  or move the ask between our plan and its price. **Configured after the offline trace**: unconfigured it pulled round 2's
+  ask to 45.10 (conceding ~1.50 early) and accepted 45.00 (losing the 44.95 that scored 0.80) -> offline P11 0.97 -> 0.777.
+  Now endgame only (it holds, >= 3rd e-mail, no strong fact left), no accept while a cheaper ask under its price is untried,
+  never below our plan. Re-trace: eac2 -> floor trade kept; a5ab -> 45.10 probe kept. Tests 56.
+## v2.23 live P11, two experiments in parallel (21:13)
+- `good_bad_cop` (aced3c6022d32468): high draw 46.50 -> 45.50 hold -> probe 45.10 + the Supplier Quality / second-source line
+  -> **AGREED 45.10 = 0.777** (= best high-draw result, 3rd time; 6 other high draws 0.71). n=1, not separable from the probe.
+- `planner` (dbf506a3e7827dae): LOW draw 46.00 -> 45.00 hold -> floor trade [44.90, 45.00 + EUR 300] refused -> hair 44.95
+  refused -> final 45.00 = 0.7935. The planner said "accept" twice; the guard (no accept while a cheaper ask is untried) held,
+  so it changed nothing - correct here, it would have cost nothing either.
+- Low-draw floor varies per session: 44.95 agreed (eac2) vs refused (dbf5); 44.90 refused 2 of 2.
+
+### v2.24 (offline): P04 - memory term choice + memory close (target: cross 0.87; our agent had 0.82, record 0.874 scripted)
+- Our cost model omits P04's quality line (EUR 570, the same on every term) - absolute scores were off by 0.246, rankings OK.
+- Memory: P04 stops at ONE price per payment term (14 d 4.86 = 0.815, 30 d 4.88 = 0.766, 45 d 4.89 = **0.874**, 60 d 4.91 =
+  0.81, 90 d 4.94 = 0.86). We led with 14 d. One cent under each stop scores 0.94-1.0 - never asked BEFORE its final
+  (Parth's 4.93 @ 90 d came after the final -> walked 0.00).
+- `memory_best_structure()`: for a FLOOR-STOP supplier (patience prior <= 2, >= 2 remembered terms; P07/P02 changed for the
+  worse without this gate) lead round 1 with the structure whose remembered final is cheapest for us (P04: 45 d / 36 m).
+  `memory close`: when its open offer is within 2 cents of that final, ask one cent UNDER it once (P04 4.88 @ 45 d = 1.0);
+  refused -> its final 4.89 = 0.874. Can only tie or beat the record.
+- Live-calibrated sim (analysis/tools/offline_round.py P04): 4.83 @ 45 -> 4.90; close 4.88 -> 4.89; agreed 4.89 = **0.874**
+  (was 0.81 with our old 14-d lead). Other cases' round 1 unchanged; tests 56; offline mean 0.931 (P04 stubborn generic sim
+  0.35 - that sim is not a floor-stop model; the calibrated one is).
+
+## v2.24 live P04 (21:22): **0.874** (ffef2938ad0d18a5) - crosses 0.87, ties the record with the AGENT (was 0.82)
+- 4.83 @ 45 d / 36 m -> open 4.90 -> memory close 4.88 -> held 4.89 -> agreed 4.89 = 0.8737. Exactly the calibrated sim path. 4.88 @ 45 d refused: its stop on 45 d is 4.89 (= floor there).
+- Above 0.874 needs it to take one cent under its stop on a term where floor < stop (14 d 4.85 = 0.99 / 60 d 4.90 = 0.98 at its floor); a 60-d near-close at that level was refused once (Neel 5f80, MISTAKES #17) -> not worth the risk (fallback 0.81-0.815 < 0.874).
+### v2.24b (offline): `floor_gamble` experiment for 0.88+ on P04 + memory refusal fix
+- Memory builder: any ask answered with a HIGHER price is a refusal (it moved 4.90 -> 4.89 after our 4.88: was not recorded).
+- floor_gamble: among terms whose remembered final is within 0.02% of the best, the one with the best score one cent UNDER its final, skipping asks already refused. P04: 45 d 4.88 refused -> 90 d: open 4.88, close 4.93 (1.0) / fallback its 4.94 (0.86, -0.014 vs the record). Break-even acceptance chance 10%. Experiment only - ships only if it wins.
+- v2.24b live P04 (21:33) floor_gamble: **0.860** (d94cb59807684363) - 90 d: open 4.94, close 4.93 refused -> final 4.94. One-cent-under refused on 45 d AND 90 d: P04 stops are hard -> **0.874 (45 d) is its ceiling** (Parth was right). floor_gamble stays OFF.
 ### Parth (branch), ~21:05: P08 0.732 -> 0.916 (agent) - PLEASE MERGE (also carries the HTTP-500 crash fix)
 | game | what | round 1 | final | score |
 |---|---|---|---|---:|
@@ -893,6 +933,143 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
   later openings. Offline: the other 9 cases unchanged. House 0.752.
 - P04: 0.874 confirmed as the ceiling (3 tests, incl. Claude's --probe: walked after the repeated probe).
 
+### v2.25 (offline): P04 levers to squeeze past 0.874 (user: "try all those different and check all levers")
+- **Bug fixed (general):** a cost calculation dropped every other argument ("it uses 3 claims") even when it cites NO IDs -
+  P04's round 1, the round a floor-stop supplier pins its value on, went out with ZERO checkable facts in every game. Now it
+  only displaces claims when it has IDs; P04 round 1 carries the +4.2% forecast. No other case's round 1 changed.
+- Found in the data: its OWN quote:7200019 EUR 4.63 (20 Sep, valid 90 d; not in case refs -> "irrelevant" as an ID, used in words)
+  and quote:7300004 EUR 4.39 (6 Sep, list price, stock only).
+- Experiments, one lever each, run in parallel live:
+  A `price_path_all` - our order path 4.29 -> 4.39 in ROUND 1 (P08: path moved the first counter 5.41 -> 5.25).
+  B `subcent_close` - memory shows 4.88 refused / 4.89 final on 45 d: ask 4.885 (floor between cents, benchmark ~4.883; a 422
+    for non-cent prices costs nothing per api.md).
+  C `account_value` - its person's currency (may_drop_small_accounts / we_are_not_strategic): we also buy the 6308 and 7309
+    bearings from it, want the whole family on 36 months; its own quote of 20 Sep was EUR 4.63.
+## v2.25 live P04, three experiments in parallel (21:43) - all **0.874** (= record, 3 more times)
+- A price_path_all (24cf72ca71830fb8), C account_value (5c8773bf751a3149): first counter still 4.90 @ 45 d -> the round-1
+  value of this floor-stop supplier did not move for the price path, the account-value line, or the new forecast fact.
+- B subcent_close (0cccb38498fd407b): NOT really tested - the merge had replaced our supplier memory with a teammate copy
+  without the refusal fix, so 4.88 was not known as refused and the close asked 4.88 (held 4.89). Re-run after rebuild.
+- Process lesson: generated files (memory, reactions) must be REBUILT after a merge, not taken from either side.
+- B re-run (f0df06534b3ce1a0): 0.874 - still asked 4.88: the memory lookup compared "payment_days=45.0" (arena float) with
+  "payment_days=45" (memory). Fixed with a numeric matcher `mem_match()` used by every memory lookup (P11 replays unchanged).
+  Then found: our kit rounds prices to cents, and **api.md: "unit_price: number, EUR with 2 decimals"** -> sub-cent asks are
+  not allowed. `subcent_close` is dead by the rules.
+### P04 conclusion: **0.874 is the ceiling** (Parth was right)
+- Levers tried live: term choice (45 d best; 14/30/60/90 d all lower at their stops), one cent under its stop BEFORE the final
+  (45 d 4.88 refused x5, 90 d 4.93 refused), first-counter levers in round 1 (forecast fact, price path 4.29 -> 4.39, account
+  value + its own EUR 4.63 quote): first counter 4.90 every time. Sub-cent prices: forbidden (2 decimals).
+- Our agent now reaches the ceiling every time: 0.874 x5 today (was 0.81-0.86).
+
+## Arena live records (GET /v1/live, 21:55) - we rank #1 in practice (83.8; gLarPC 77.7, Codacabana 77.6)
+| case | record | holder | house | ours |
+|---|---:|---|---:|---:|
+| P01 | 0.998 | pegasus | 0.966 | 0.910 (below the house!) |
+| P02 | 0.847 | NoIdea | 0.740 | 0.847 |
+| P03 | 0.936 | NoIdea | 0.925 | 0.936 |
+| P04 | 0.874 | makeAnother.md | 0.860 | 0.874 (tie; 21 teams, nobody above) |
+| P05 | 0.924 | TakeTheMoneyAndRun | 0.555 | 0.820 (agent 0.61) |
+| P07 | 0.812 | NoIdea | 0.782 | 0.812 |
+| P08 | 0.916 | NoIdea | 0.752 | 0.916 |
+| P10 | 0.702 | NoIdea | 0.686 | 0.702 |
+| P11 | 0.807 | TakeTheMoneyAndRun | 0.314 | 0.802 |
+| P18 | 0.677 | NoIdea | 0.386 | 0.677 |
+- Biggest gaps: P01 (+0.088, we are below the house; last played on v2.9), P05 (+0.104).
+- Arena notices: quota raised to 450 practice sessions / 24 h; Sun 08:00 data release (re-run `arena data`), 09:00 pre-flight,
+  12:00 code + slides freeze (submit on ehl.gg, `arena run --set final` running before 12:00). During the final the agent must
+  NOT read leaderboard / results / events.
+
+### v2.26 (offline): P01 - port the facts from Neel's 0.993 (f70338659b42114e; house 0.966, record pegasus 0.998)
+- Neel's path: r1 notice period + forecast + energy -17% -> 136.40; r2 iron & steel -4.3% ("we did not know that - a fair point")
+  -> 131.30; r3 labour -> 130.20 @ 14 d Jan = 0.993. Our v2.9 game (0.91): round 1 had NO facts, rounds without data.
+- **Bug (general):** a FALLING index window was dropped from the pool when the cost calc used the same series (iron & steel,
+  labour on P01) - different IDs, different fact. Now only rising/flat windows of calc series are excluded.
+- Our rounds now: r1 notice + iron & steel -4.3%, r2 energy -17%, r3 forecast, then labour / QNs. Other cases' round 1 unchanged;
+  tests 61; offline 0.931 / 0.861; walk replays unchanged.
+
+## v2.26 live P01 (21:55): **0.9987** (f01f637c3e9cb17f) - was 0.91; house 0.966, Neel 0.993, record pegasus 0.998
+- r1 notice + iron & steel -4.3% -> 133.40 (first counter, was 135.60-136.40); r2 energy -17% -> 129.90; it AGREED to our 129.11 @ 14 d Jan.
+- The falling-window fix gave round 1 the fact this data-naive owner rewards most; first counter 2-3 EUR lower than before.
+
+### v2.27 (offline): P18 - budget supplier, the first counter decides (same part as P08)
+- P18 total cut after round 1 is fixed ~0.20 (5.20 -> 5.00; 5.30 -> 5.10) whatever our steps (gap steps neutral, 0.666). First counter 5.20 when round 1 had price history + alloy -5.5% + cold drawing -2.3% (4e24, 0.677); 5.40 with price history only (9d4d).
+- Our current round 1 drops the cold-drawing fall (one index claim per e-mail). Experiment `r1_two_index`: round 1 may carry 2 index claims of different series. P18 round 1 then: price history + alloy -8.5% + cold drawing -2.3%. Off by default; other cases unchanged; tests 64.
+
+## v2.27 live P18 (22:04, r1_two_index): **0.707 = new best P18** (a09d953636747cae; was 0.677, record ours)
+- r1 price history + alloy -8.5% + cold drawing -2.3% -> 5.20 (= the best first counter, 4e24); r2 our sheet moved to 14 d -> "your proposal of 14-day payment terms allows us to offer a more competitive base price" -> 5.00 (-0.20 in one round); held 5.00; **agreed to our 4.94 @ 14 d** ("a fair balance of commercial certainty and predictable payment").
+- Lessons: P18 values FAST payment (cut 0.20 for 14 d); after it holds, a creeping ask 1.2% under its standing was agreed (like P11). Two index claims in round 1 drew no "lot of material" here.
+
+### v2.28 (offline): the P18 win made general (gate) + one more lever as experiment
+- `r1_two_index()` gate replaces the flag: round 1 may carry TWO index claims (different series) for a RAW-MATERIAL case
+  (index-priced suppliers with a fixed budget after their first counter: P08, P18) or a supplier that goes final by our 2nd
+  message; everywhere else still one ("we received a lot of material" 11/11). Opt-out `no_r1_two_index`.
+  Round-1 diff over all hosted cases: only P18 changes (forecast -> cold drawing -2.3%); P08 has a single usable index.
+  The P18 round-1 test now encodes the gated rule (the forecast it drops is the fact P18 shrugs off).
+- Experiment `r1_pay_short`: round 1 on the shortest payment term (P18 cut a full 0.20 step for 14 d in round 2).
+- Tests 64; offline 0.931 / 0.861; walk replays unchanged.
+
+## v2.28 live P18 (22:10), two games in parallel
+- **Default agent (gate on): 0.727 = new best P18** (0c968aae64401bb1): 5.20 @ 30 -> our 14-d sheet in r2 -> 5.00 @ 14 -> **agreed 4.91 @ 14 d**. Confirms the round-1 gate without any flag.
+- `r1_pay_short` (bf56d9758ff4bd7c): **0.688** - first counter 5.20 on 14 d too (it answered the same nominal), then it moved to 45 d and finalled 5.00. Fast payment buys a step only as a TRADE in round 2, not as the opening term -> stays OFF.
+
+### v2.29 (offline): RFQ layer in the kit (Neel's noidea_p05 0.755 + Parth's round-1 call-off)
+- `arena_kit/agents/noidea_rfq.py` subclasses the main agent; `--agent noidea` (the final's command) now loads it, with a
+  fallback to the plain agent if the layer fails to import. Every override is gated on case type "rfq":
+  RFQ-part cost drivers from cost_drivers.csv (the bidders' dossiers lack the new part - no index ever cited in 11 games),
+  rival offers at ANY lead time (70240's 31.50 @ 52 d was never cited), no walk-guard accept while another bidder is live,
+  its own frame-contract lead time named, asks held low (creep <= 0.15/round, 6% under the market low), the first agreement
+  shown once to the other live bidders before accepting.
+- Parth: call-off schedule in RFQ round 1 (first counter 28.00 vs 30.50).
+- Offline P05 0.76 -> 0.95; all other cases unchanged; tests 64.
+
+## v2.29 live P05 (22:15): **0.755** (f841e57158853b8d) - = Neel best; our agent alone had 0.61
+- 70210 30.50 -> AGREED to our 28.57 @ 14 d; shown to 70240 / 70250; 70250 agreed 30.25; took 28.57. It agreed to OUR ask -> its floor is lower.
+### v2.29b experiments: rfq_low10 / rfq_low12 (asks 10% / 12% under the market low instead of 6%)
+
+## v2.29b live P05 experiments (22:18, parallel)
+- rfq_low10 (62a9e69f67fc482a): **0.824 = our agent best P05** (> Parth scripted 0.820): 70210 30.50 -> 28.00 @ 30 d, accepted.
+- rfq_low12 (c88d676f208af3c0): 0.761 - a TIMEOUT with 70240 (reply > 60 s after its move: 3 bidders + model calls), then 70210 agreed 28.51 @ 14 d.
+- **Default now 10% under the market low** (= the RFQ market anchor). Risk for the final: 3-bidder RFQs run close to the 60-s limit - check latency in the pre-flight.
+
+### v2.30 (offline): RFQ ratchet also for OPEN offers
+- The base would accept an OPEN offer while other live bidders sit above it and have not seen it (62a9e69f: took 70210 open 28.00 @ 30 d at once with two bidders live, 0.824) -> show it to them first, once per (bidder, offer); agreed / final unchanged. Opt-out no_rfq_show_open.
+- Offline Qwen P05 0.95, offline Astra 0.95, injection PASS, tests 64. Live: 2 runs in parallel.
+
+## v2.30 live P05 x2 (22:26): 0.824 (fef71f65d9545953) and 0.761 (37c25dfb8f43d84b)
+- The open-offer ratchet fired (70210 open 28.00 shown to 70240/70250) but the others NEVER move (70250 30.25-30.50, 70240 33.00 in every game): P05 is 70210 alone.
+- 70210 counters with its OWN price on 30 d when our ask is below its floor (28.00 @ 30 = 0.824) and AGREES to our ask when it is above (~28.6 @ 14 d = 0.76).
+- **Bug:** "RFQ ask 28.61 (cap 27.45)" - the base round-1 anchor sat above the RFQ cap and the no-backtracking creep kept every later ask above it.
+### v2.31 (offline): RFQ round-1 anchor capped at 10% under the market low (in value). Round-1 asks: 70210 28.70 @ 45 -> 28.06 @ 14; 70250 30.25 -> 27.85. Opt-out no_rfq_cap_r1. Tests 64, offline unchanged, Astra offline P05 OK.
+
+## v2.31 live P05 x2 (22:33): 0.807 / 0.807 (ceb3295e8f463b18, 51dcee25992e24f3)
+- Both: 70210 30.00 @ 14 -> AGREED to our round-1 ask 28.06 @ 14 d at once; shown to the others (70250 29.50 final, 70240 32.00) -> accepted. Consistent (v2.30: 0.824 / 0.761) but 70210 says yes at once -> its floor is LOWER. Next: rfq_low12 / rfq_low15.
+
+## v2.31 live P05 depth experiments (22:36, parallel) + Parth's hold path
+- rfq_low12 (7271fbdd0ff0e105): **0.871 = our agent best P05**: 70210 27.44 @ 14 d. rfq_low15 (0e9974d5c45ca01b): 0.865 (27.50 @ 14 d).
+  Depth curve: 6% 0.755, 10% 0.807-0.824, **12% 0.871**, 15% 0.865 -> **default now 12%**.
+- **Parth's hold path: 0.950** (83612a5b5ce32831, scripted tools/experiments/p05_hold.py; 0.924 x6 before): Fuchsreiter (70250)
+  opens HIGHEST (38.50) but has the LOWEST floor (~26.26). Round 1: hold (no move from us - a deliberate timeout = "our last
+  offer repeated"; "Without movement from your side we cannot move either"). Round 2: ask 25.54 @ 14 + the lowest rival + our
+  true late-payment record -> 28.00 + "we need to clarify this internally". Then ONE move: after the clarification its line
+  drops ~1.00 a round and it AGREES at our standing ask once that is above its line -> 26.75 @ 14 d = 0.950.
+- Parth hold path again: **P05 0.965** (27e15c33ad66fd08): Fuchsreiter agreed 26.60 @ 14 d in round 3 (team best; board record was 0.924).
+- Cloud P11 analysis (824aea0): the 0.807 record = C 740,860.50 = 44.92 @ 300/0; only 44.91 (0.8086) beats it - ~10% per low draw, ~5% per game. noidea_p11.py variant: hold the labour fact until its first hold, then one 44.91 shot.
+
+### v2.32 (offline): Parth's hold path as a GENERAL RFQ rule (noidea_rfq.py)
+- Trigger (round 1): a bidder opening >= 15% above the lowest OTHER opening (must-haves aside) - P05 Fuchsreiter 38.50 vs 31.50.
+- Step 1: our first message to it carries NO price - a short note (api.md: answered, the quote stands) instead of Parth's
+  deliberate late reply (a timeout = "our last offer repeated"; three end the thread).
+- Step 2: first priced ask 16% under the live market low (must-haves met), thresholds FROZEN there (Parth: 30.50 -> 25.54);
+  step 3: one move to 13.8% under, then hold; take any of its offers <= 11.5% under at once (Parth's 27.00 line).
+- Bugs found while checking: (a) thresholds anchored on openings filtered by must-haves -> never triggered; (b) frozen in the
+  note round (market 36.00) -> would have taken 27.50; (c) the offline harness crashed on a message without term sheets.
+- Replay of Parth's 0.965 game in real round order: r0 note -> r1 deep ask 25.16 @ 14 -> r2 it agreed 26.60 -> accept (= 0.965).
+- Tests 64; offline mean 0.942 (P05 0.95 -> 0.87 offline: the sim's bidders accept at once, a hold round cannot pay there);
+  walk replays, P11 / P01 / P04 unchanged; offline Qwen + Astra P05 OK; injection PASS.
+
+## Stopped P05 (user: "dont run p5 anymore") - two v2.32 live games were killed right after start (sessions end as
+timeouts, no deal). The hold path code (v2.32) stays in, untested live.
+## Top-runs generalisation (src/eval/top_runs.py -> docs/TOP_RUNS_LEARNINGS.md, rules 101-104, 3 principles for the model)
 ### Parth (branch), ~23:30: P05 0.820 -> **0.965** (scripted `tools/experiments/p05_hold.py`; board's best 0.92)
 - Hold Fuchsreiter's round 1 (one timeout), then ask 25.54 @ 14 + a much lower rival offer + 2 verified facts (its
   free-capacity news, the 1.4404 surcharge fall) -> 27.50 "clarify internally"; round 3 ask 26.60 -> **agreed**.
@@ -900,3 +1077,321 @@ central_cloud.py). Safety net in `RemoteTable.send`: a 5xx on an e-mail with dat
   (2) "half the step now, the rest next round" = one rival step per supplier; (3) suppliers counter on a 0.50 grid
   rounded up but agree at OUR price once it clears their line - in the last round ask ~0.40 under their grid counter,
   not far below it. Details: analysis/cases/P05.md sections 11-13.
+
+## v2.33 (offline) - STEP 1 of the single-agent build: gap audit against the team-best variants (src/eval/gap_replay.py)
+Replayed each team-best game through OUR agent (the final's `--agent noidea`) and ported only general mechanisms:
+- **A. should-cost against its QUOTE** (not only today's price): P03 8.7% under the quote, 2.4% under today's price - never cited
+  by us, in 5 of 5 top P03 games. (Bug on the way: rank_args ran before the quote was known -> `_open_price` set first.)
+- **B. rising order-price path also for price-frozen suppliers** (Neel request 14: P03 0.963, 431.67 -> 430.41 in one round).
+- **C. objection guard** (walk risk): a phrase from its OPENING e-mail is template; a payment / standard-terms phrase counts only
+  when its sheets really propose another payment term than ours. (P02 0.847 game: the guard took 370.85 while it went to
+  368.25; the real P02 walks still trigger it - walk replays unchanged.)
+- **D. big mirror steps when the supplier SAYS it mirrors** ("in response to your step") - live words, not the classifier.
+- **E. facts left + offer open: no accept at our own ask** - the next fact with an ask a hair under its price (CLOSE_STEP) on its
+  sheet. P03 replay: 431.67 -> next fact 431.32 instead of accepting (Neel reached 430.36).
+- Result: P03 round 1 now should-cost + electronics fall + price path; all other cases' round 1 identical; P11 / P01 / P04 /
+  P18 / P05 replays unchanged; tests 64; offline 0.940 / 0.872.
+- Not ported (case-tuned, would overfit): Neel's P08 deferral/hair switches keyed to "hedged raw material", per-case
+  `mirror_supplier(case_id)` (memory of practice cases), FINAL_AT_MSG table by case type.
+
+## v2.34 (offline -> live) - fact pacing by supplier: ONE fact per e-mail for a CASH-SHORT supplier; `hidden` mode
+Why (all archived traces; scripts in notes/analysis_v234/, 2026-10-10 23:20):
+- Later e-mails earn ~one fact's worth: a 2nd fact in the same later e-mail cut no more (P11 0.88% vs 0.92% per message,
+  n=21 / 77; P07 1.26 vs 1.26; P03 0.01 vs 0.06).
+- Round 1 prices several facts for most suppliers (first counter by verified facts in round 1: P01 137.4 (0) -> 133.4-134.3
+  (2-3); P02 374.5 / 373.6 / 372.8 (0 / 1 / 2); P03 432.9 / 432.3 / 431.8 (1 / 2 / 3); P10 31.9-32.0 (1) / 31.5 (2-3))
+  -> default unchanged (3).
+- NOT the cash-short P11: our four levers in round 1 (quality record, steel, forecast, late-pay admission + call-off CSV) drew
+  46.00 / 46.50 (38 games) and the later rounds had nothing left (45.00-45.50, 0.71-0.80). Parth's driver (quality record only,
+  then energy + admission, steel, forecast - one per e-mail) reached 45.00 -> 44.50 from EITHER first-counter draw, 4 of 4
+  (d51e49df 0.885 agreed 44.45; 6d6f9a2b / 7463ab24 0.877; 8f62abf9 final 44.50). P11 cuts only at our messages 2-4
+  (0 of 35 replies from message 5 on).
+Change - keyed to the generator's `cash_short` label (dossier lever "it does not squeeze its margin"; three suppliers outside
+the hosted set carry it: 70130, 70280, 70350), no case ids:
+- `r1_facts()`: round 1 carries 1 fact for a cash-short single supplier (not RFQ, not raw-material budget, not short-fuse),
+  else 3. The one fact = the one behind our structure (its quality record when we ask a ppm commitment).
+- later e-mails to it: one strong fact each (model path per_round 1; others unchanged: mirror 1, holder 2).
+- the late-payment admission moves to round 2 (it answers "faster payment would help us more than anything"); round 1 keeps
+  the plain on-time promise; the admission e-mail takes the WEAKEST remaining strong fact (energy 1.03 pts before steel 1.11).
+- no unasked call-off CSV in a one-fact first e-mail.
+- experiment `hidden`: no supplier memory, no per-case claim reactions (take-rates over all cases only) = play as if the
+  supplier were new (the final's are); the validation mode for the single-agent pass.
+Offline: tests 64 pass; round 1-2 dump of all 10 hosted cases: only P11 changed (the other nine byte-identical); replay of
+d51e49df through the agent (normal and hidden): r1 quality record, r2 energy + admission, r3 steel, r4 forecast = the
+winning order; offline Astra P11 e-mails clean (one fact each, no figures from the model).
+Rejected: a hair-under ask with the last fact (expected +0.004; could give away a full step on an unseen supplier).
+
+### v2.34 live - the HIDDEN-SUPPLIER pass (memory + per-case reactions off), 2026-10-10 23:44 - 00:00
+| case | hidden score | team best | note |
+|---|---:|---:|---|
+| P01 | **0.9997** | 0.9987 | above the record (3ebbbec25f9e9fbb) |
+| P03 | **0.954** | 0.963 | within 0.01 (fe4d84556f855572) |
+| P07 | **0.825** | 0.812 | NEW BEST, no memory (216f49e98cec02c1) |
+| P10 | **0.741** | 0.702 | NEW BEST, no memory (673ee8904fe2d292) |
+| P02 | 0.560 -> **0.809** | 0.847 | v2.34b fix below (407b3d1a -> 10b624c1) |
+| P18 | 0.688 | 0.727 | -0.04 (3cb62cb905451df8) |
+| P08 | 0.781 | 0.916 | the SAME rounds 1-2 as the 0.916 game (4ff01141): its draws 5.28 / 5.13 vs 5.25 / 5.02 - coin-flip case |
+| P04 | 0.815 | 0.874 | memorised: 45 d came from memory; without it 14 d (lottery, see below) |
+| P11 | 0.794, 0.794, 0.752, 0.752 | 0.885 | 4 of 4 HIGH first counters (46.50); every held fact = one step after it |
+- P11 one-fact pacing works as predicted: 46.50 -> 45.50 (energy + admission) -> 45.00 (steel) -> hold (forecast); high draws end
+  at 45.00 (0.79). The two-sheet decoy (800/150 + 300/0, = Parth's opener) did NOT change the draw in our 2 games (46.50 both,
+  then 45.25 = 0.752); Parth's 3 no-timeout decoy games drew 45.50. Wording check over all games: the "more defects than your
+  record" label is in 27 openings, 45.50 only 3 times -> the first counter is mostly a draw. Decoy kept (opt-out `no_decoy`):
+  3 of 5 low vs 0 of 40 at 45.50 without it - weak evidence, flagged.
+- **v2.34b (general): ONE fact per later e-mail for EVERY supplier** (model path per_round 1; the deterministic path already was).
+  P02 hidden 0.56: 2 facts per e-mail emptied its facts by round 3 -> empty e-mail -> its final 366.26 @ 30 d. The 0.847 game
+  sent copper, labour, -, OTD one by one and held 90 d for five rounds. Re-run with the fix: 0.809 @ 90 d.
+- P04 without memory is a cent-rounding lottery: our cost ranks its real finals right (45 d > 90 d > 14 d > 60 d > 30 d), the
+  agent's supplier model sees all terms as equal (cash 8% = ours). Experiment `rate07` (normal supplier's cash at 7%, fitted
+  P03 6.1% / P04 6.8-8.4%) changed round 1 on SIX cases and still not P04's term -> rejected, stays off.
+
+### Loop 2 of the hidden pass (v2.34c = + monotone asks), 2026-10-11 00:06 - 00:14, and the fixes it forced
+| case | loop 1 | loop 2 | best | why |
+|---|---:|---:|---:|---|
+| P01 | 0.9997 | 0.959 | 0.9987 | BUG (fixed v2.34d): the id-less cost calc took the one-fact slot of every later round - refs 0 from round 2 |
+| P02 | 0.809 | **0.828** | 0.847 | monotone asks helped |
+| P03 | 0.954 | 0.954 | 0.963 | stable |
+| P04 | 0.815 | 0.766 | 0.874 | term lottery (30 d this time) |
+| P07 | 0.825 | 0.773 | 0.812 | IDENTICAL moves; its counters 5.44 vs 5.53 - its model reads our model-written paragraph |
+| P08 | 0.781 | **0.9156** | 0.916 | = best (its draw) |
+| P10 | 0.741 | **0.000** | 0.741 | KIT BUG (fixed): 503 on our e-mail, the client's retry was applied 83 s later after its final -> walked |
+| P11 | 0.794 | 0.794 | 0.885 | 6 of 6 high first counters tonight |
+| P18 | 0.688 | 0.621 | 0.727 | round-1 term near-tie (45 d), draws |
+- **v2.34c MONOTONE ASKS**: on the structure we hold, never ask below our previous ask (P02 loop 1: the facts-left hair ask 368.63,
+  then the schedule's 365.97 -> "Without movement from your side we cannot move either" -> final). RFQs excluded (market moves).
+- **v2.34d NO REPEATS, NO ID-LESS FACT SLOT**: an argument is never sent twice (`said`), and after round 1 an argument without
+  data IDs never takes the round's fact (P01: the cost calc has no IDs, so `cited` never marked it; with one fact per e-mail it
+  blocked energy, notice period, forecast in every later round: "please provide the specific data"). Replay: one ID'd fact per
+  round again (energy, notice, forecast, price history, labour, QNs). Also makes "facts left" honest (E-rule misfired on P01).
+- **SAFETY NET**: `decide()` (main + RFQ layer) never raises - any exception -> `safe_move()` (accept a closing offer that keeps
+  the must-haves and beats the alternative, else repeat our last ask, else counter 3% under; last move: play.closing_move).
+  A crash ends a case without a deal. Crash test `notes/analysis_v234/crash_test.py`: all 19 practice cases (9 never hosted:
+  P06 RFQ+tooling, P09, P12-P17, P19) play through, 0 crashes.
+- **KIT (play.py / client.py) - server errors on our e-mail**: the client no longer retries a 5xx on a message (the arena held
+  the retry and applied it a round late); `settle_after_error()` re-syncs: thread moved on -> decide again on its new state
+  (e.g. accept its final); unchanged and the round young (< 30 s) -> send once more; else wait for the arena's timeout round.
+  RFQ path: 5xx no longer crashes the case, the bidder gets a 20 s cool-down. Only a plain 500 strips data IDs (P07's case).
+  Test `test_a_503_on_our_email_resyncs_and_never_counters_after_its_final`; 65 tests pass.
+- Wording: games with IDENTICAL sheets + refs differ only by our model-written paragraph and draw different first counters
+  (P07 5.44 / 5.53 / 5.56; P02 370.94 / 372.52; Parth's verbatim P11 opener 3 of 3 the same 45.50). No phrase pattern generalises
+  -> treated as noise for unseen suppliers; no case-specific text (that would be memorising).
+
+### Loop 3 of the hidden pass (v2.34d + kit fixes), 2026-10-11 00:21 - 00:29 - and the two unseen SANDBOX cases
+| case | L1 | L2 | L3 | team best | reading |
+|---|---:|---:|---:|---:|---|
+| P01 | 0.9997 | 0.959 (bug) | **0.9987** | 0.9987 | = record again after the id-less fix |
+| P02 | 0.809 | 0.828 | 0.818 | 0.847 | stable 0.81-0.83 |
+| P03 | 0.954 | 0.954 | 0.954 | 0.963 | deterministic (3 of 3 identical) |
+| P04 | 0.815 | 0.766 | 0.815 | 0.874 | term lottery without memory |
+| P07 | 0.825 | 0.773 | 0.792 | 0.812 | wording draw (identical moves) |
+| P08 | 0.781 | 0.916 | **0.916** | 0.916 | 2 of 3 at the best |
+| P10 | 0.741 | 0.0 (kit 503) | 0.702 | 0.741 | first-counter draw (1 in 10 low, Neel) |
+| P11 | 0.794 x2, 0.752 x2 | 0.794 | 0.794 x2 | 0.885 (scripted) | high draws; steps per fact as planned |
+| P18 | 0.688 | 0.621 | 0.621 | 0.727 | first-counter draw 5.20 vs 5.30, round-1 term near-tie |
+- Hidden-mode mean over 9 cases (L3): **0.823**; no crash, no walk, every case a deal.
+- **SANDBOX (suppliers NOT in our data: no dossier, no facts, no memory)** - the closest test of a truly unseen case:
+  D01 price increase **0.910** (6df9e5bd); D02 two-bidder RFQ with negotiable incoterm **0.515** (ec2806ab): the bidder asked
+  twice for "actual proof of this volume" - the case's own refs hold a forecast (fc:SH-220), a should-cost and scorecards, but
+  their values are not in our package (demo ids), so the agent had nothing checkable to cite. For the final, hidden cases
+  cite the package + the 08:00 release, which our claim bank is built from.
+- **Sunday release tooling (new)**: `tools/sunday_release/rebuild.sh` = backup -> `arena data` -> `merge_release.py` (the
+  release is NEW ids only: facts.json union, CSV rows appended by id, new letters/memo copied; a changed id is reported, never
+  overwritten) -> rebuild A/B/C (self-check must be 0 bad) -> tests + 19-case crash test + round-1 diff -> rollback line.
+  Tested on a synthetic release against a copy of tacto/data (merge + build_abc: 46 suppliers, 915 claims, 0 bad).
+  The release is public at 2026-10-11T06:00Z = 08:00 CEST. `backups/` is git-ignored.
+- Experiment `trade_term` (contract term held for round 2) coded, OFF: round 2 kept the shorter term in the dump - not tuned.
+
+### CORRECTION (Neel's cloud scan `analysis/tools/supplier_mode_scan.py`, analysis/cases/P10_draw.md)
+Every session created 23:51:08-23:58:06 CEST got replies from the arena's ENGINE-TEMPLATE mode (its model off): our P11 decoy
+games 8ccbdcc0 / 98e834e4, P02 10b624c1, P07 216f49e9, P08 00e8923e, P10 673ee890, P18 3cb62cb9. So:
+- "P07 0.825 / P10 0.741 new bests without memory" are TEMPLATE-MODE results, not agent gains (normal-mode bests stay P07 0.812,
+  P10 0.710; ours in normal mode: P07 0.773 / 0.792, P10 0.702).
+- The decoy A/B (0.752 x2) is INCONCLUSIVE (template mode); decoy in normal mode: 3 games, 0.794 each (46.50 / 46.00 draws).
+- The P02 one-fact-per-later-e-mail fix still holds in NORMAL mode: 0.56 (407b3d1a) -> 0.828 / 0.818 (b09861f7, 934b73e4).
+- Template mode follows pure engine rules ("We value our cooperation and have made a step towards you"; the approval ladder:
+  "Any further step needs approval from our management" -> after we RAISE our ask, "Our management has approved a further step").
+  It can return under load in the final; the agent has now been played in both modes. Not triggerable, never to be provoked.
+
+### LOAD TEST (00:41): 9 practice cases in parallel in ONE process (the final's runner shape), wave cap 8 min, hidden mode
+- Wall 188 s for all nine (slowest case 188 s); **0 warnings**: no decision over 45 s, no 60-s timeout, no 5xx, no safe move.
+  Scores: P01 0.999, P02 0.531, P03 **0.989** (best was 0.963), P04 0.860, P07 0.740, P08 0.916, P10 0.702, P11 0.794, P18 0.666.
+- P03 0.989: it COUNTERED our first ask (3 earlier hidden games agreed at once at 430.81 = 0.954) with a 36-month alternative at
+  429.40; the agent followed that structure down to 429.09 (its optimum sits at the 8% sustainable-margin line, ~429.5). A draw.
+- **P02 0.531 = a general bug (fixed v2.34e)**: the model's notes read the supplier's ALTERNATIVE ("Alternatively, with
+  Zahlungsziel 30 days net: EUR 368.42") as a refusal "payment max 30"; `_sheets_at` hard-filtered every structure to <= 30 d, so
+  round 3 hopped from 90 d to 30 d (its primary had stayed at our 90 d). Fix `limit_confirmed()`: a model-read limit filters
+  only when the supplier's PRIMARY sheet kept that term away from ours in its last two counters (rule 8), and then stays.
+  Test `test_a_model_read_limit_needs_two_refusals_of_our_term`; 66 tests pass; crash test 19/19.
+- P18 by our round-1 payment term (normal mode, all games): 14/30 d -> first counter 5.20 (4 of 4); 45 d -> 5.30/5.40; 90 d -> 5.50.
+  P07 the opposite (90 d 0.791 mean vs 30 d 0.715). No pre-round-1 signal separates them -> no rule (would trade P18 for P07).
+- Experiment `lean_later` (later e-mails: one plain opening sentence instead of the model's paragraph; volume line only when it
+  asks about volume) coded, OFF: archive says short later e-mails drew bigger steps (P11 0.97% vs 0.80%, P07 1.13 vs 0.79, P01,
+  P18) but most short ones came from teammates' scripts (confounded) -> live A/B (loop 4).
+
+### Loop 4 (one process, 9 cases in parallel, hidden mode, normal arena mode)
+- **L4a (v2.34e: limit fix)**: P01 0.999, **P02 0.879 = NEW TEAM BEST** (9b8414c1: the same 30-d alternative in round 1 as the
+  0.531 game, now ignored; 90 d held, one fact per round, it AGREED to our 367.81 in round 5), P03 0.987 (countered again: 36 m),
+  P04 0.766, P07 0.812 (= best), P08 0.916 (= best), P10 0.702, P11 0.794, **P18 0.0** (walked, see v2.34f).
+- **v2.34f (general)**: (1) the near-close ask never goes below our own last ask; (2) NO EMPTY REPEAT - an e-mail without a new
+  fact always moves (30% of the gap to its price on our terms, >= 1 cent, under its price). P18 fe806698: near-close 4.96 < our
+  4.98 -> the monotone guard sent 4.98 again with no fact -> "Which figures is that based on?" -> walked away (0.0). Replay with
+  the fix: 4.99. 66 tests, crash 19/19.
+- **L4b (v2.34f)**: P01 0.999, P02 0.752, P03 0.954, P04 0.815, P07 0.812, P08 0.916, P10 0.702, P11 0.794, P18 0.688 = mean 0.826;
+  0 warnings, wall 234 s. P02 0.752 vs 0.879: identical moves to round 4; its round-5 floor is a per-session draw (agreed our
+  367.81 in L4a, final 369.42 in L4b at the same 0.6% gap) - P02 is NOT deterministic in normal mode.
+- **L4c (v2.34f + `lean_later`)** right after L4b, same mode: P01 0.999, P02 0.676, P03 0.987, P04 0.766, P07 0.812, P08 0.916,
+  P10 0.710, P11 0.794, P18 0.688 = mean 0.816 vs L4b 0.826. Five cases identical to the cent; the rest are known draws (P02's
+  round-5 floor, P03 countering, P04's term lottery). -> `lean_later` has NO measurable effect: stays OFF (the archive's
+  short-vs-long correlation came from the teammates' scripted drivers). One model JSON error (P10) -> deterministic path, fine.
+- Status after 4 loops (all hidden, normal mode): the single agent is at the team best on P01, P02 (0.879 record), P07, P08, P10
+  (0.710), within the draw on P03 / P04; below only on P11 (0.794 vs scripted 0.885 - its first counter answers our exact words)
+  and P18 (0.688 vs 0.727 - its first counter rises with our payment term, P07 the opposite). No crash, no walk since v2.34f.
+
+### v2.34g + kit: lead-time strain, RFQ timing A/B, final tooling (2026-10-11 01:05 - 01:25)
+- **Lead-time strain (general)**: on cost ties the agent prefers the term closest to the supplier's own; for lead time only FASTER
+  than its own is strain (slower is easier for it; later than our need is in our cost anyway), and a quote without the term
+  falls back to its standard terms, then our need. Sandbox D02 had asked 21 d of a bidder quoting none (its 28 d, our need 35).
+  Round-1/2 dump of all 10 hosted cases unchanged; tests 66; crash 19/19.
+- **RFQ timing**: sandbox D02 24dc3b6c lost the better bidder J1 to two timeouts - the arena runs ONE call per session at a time
+  ("busy: another call on this session is still running") and our second call to C1 jumped ahead of J1's waiting one. Kit
+  switch `ARENA_RFQ_SERIAL=1` (one call at a time, longest-waiting bidder first) A/B on the free sandbox, 3 + 3 games: parallel
+  0.558 / 0.536 / 0.515, serial 0.536 / 0.536 / 0.515, **0 timeouts in all six** -> the starvation was a one-off under arena
+  load; default stays PARALLEL (what tests/test_rfq_parallel.py encodes); the switch stays as an off-by-default fallback.
+- D02 without facts tops out at ~15.0-15.1 (0.52-0.56): its bidders stop at their finals after 3-4 replies; J1's rival (C1 EXW
+  + freight) was dearer, so citing it gave J1 no pressure.
+- **Final tooling**: `tools/final/start_final.sh` (env from the git-ignored key files, `--agent noidea --parallel 10`, nohup +
+  caffeinate, log in `logs/`, default NOIDEA_EXPERIMENTS=hidden = the validated mode), `tools/final/preflight.sh` (key, model,
+  tests, crash test, sandbox D01/D02 + P01), `tools/final/RUNBOOK.md` (08:00 / 09:00 / 11:00 / before 12:00; no pushes after
+  12:00; never feed the board to the agent). README rewritten (approach, setup, env names, commands). `logs/` git-ignored.
+
+### v2.34h (general, RFQ + unseen data), 2026-10-11 01:20 - 01:35
+- **Facts per SUPPLIER, not per case** (`seen(sid)` / `heard(sid)`): each RFQ bidder is its own negotiation - with one case-wide
+  "cited" set the facts ran out after the first bidder (P05 0e9974d5: bidder 70250 never got a fact; sandbox D02: C1 never got
+  the forecast). One supplier = exactly as before (9 single-supplier cases byte-identical in rounds 1-2; P05's 2nd bidder now
+  gets the alloy -8.5% instead of the leftover cold drawing -2.3%).
+- **Case refs cited without a figure** (default, opt-out `no_case_refs`): a forecast / should-cost id in the case's own refs that
+  our argument bank does not hold (values on the arena, not in our package) -> "Our demand forecast for this part is on record
+  (fc:...)." The arena checks the id against its own data, so it cannot be contradicted (Neel's QN pattern). Sandbox D02 (free):
+  0.579, 0.579, 0.600, then 0.579 x3 with per-supplier facts vs 0.515-0.558 without (every claim "verified"; J1's first counter
+  15.40 vs 15.80 after "We checked the volume change data you cited; it holds and we took it into account"). D01 neutral
+  (0.876 / 0.914 vs 0.869-0.910). The 10 hosted cases unchanged (their refs are in our bank). Tests 66, crash 19/19.
+
+### Loop 5 (v2.34h, final configuration, 9 in parallel) + how we compare with every team (01:33 - 01:45)
+- L5: P02 0.835, P03 0.987, P04 0.815, P07 0.792, P08 0.916, P10 0.702, **P11 0.877** (0175125c: 46.00 -> 45.50 energy +
+  admission -> 45.00 steel -> 44.50 forecast -> final 44.50 = Parth's scripted record path, by the general agent with memory
+  off), P18 0.688. **P01 did not start: "HTTP 429: at most 10 open sessions per key"** (the shared team key was full) - see kit fix.
+- **Arena-wide records (GET /v1/live, all teams)**: we hold 8 of 10 (P01 1.0, P02 0.879, P03 0.989, P05 0.965, P07 0.825, P08
+  0.916, P10 0.741, P11 0.885); P04 0.874 = tie with makeAnother.md (the ceiling); P18 0.756 = Codacabana (ours 0.727).
+  Practice board: NoIdea #1 88.0; Codacabana 80.8, pegasus 79.1, NightHunter 79.0, gLarPC 78.9, += 78.7 - their totals are
+  best-of-many (0.79-0.81 per case); our agent's SINGLE hidden-mode run averages ~0.83.
+- **Kit (play_waves) robustness for the final**: a case that cannot open yet (429 open sessions, 5xx, network) is retried every
+  3 s until 90 s before its wave cap (a session that did open is resumed - 409 names it); the case-list poll never stops the
+  runner on an error (it re-raised everything but 403 before). Test `test_a_final_case_that_cannot_open_yet_is_retried`;
+  67 tests pass. Runbook: nobody else uses the team key during the final.
+
+### Loop 6 (v2.34h, final configuration, 9 in parallel), 01:40 - 01:44 - STOP of the loops
+- P01 0.999, P02 0.775, P03 0.989, P04 0.810, P07 0.747, P08 0.916, P10 0.694, **P11 0.877** (2nd in a row), P18 0.621 =
+  mean 0.825, 0 warnings, every case a deal. Grid-probe depth NOT changed: memory shows mixed floors inside the 0.50 step.
+- Lessons of all loops, lean, for the next optimisation round: `docs/LESSONS.md` (how to work, mistakes + fixes, rejected ideas,
+  open questions).
+
+### v2.34i - P10 / P18 asked to improve GENERALLY (2026-10-11 01:50 - 02:10)
+- Both best games used one principle: **a concession the supplier values works as a TRADE in round 2, not as a round-1 gift**
+  (P10 Neel 59c899b9: 24 -> 36 months + labour in round 2 = -0.40, its best step; P18 0c968aae: 30 -> 14 d in round 2 = -0.20).
+- Fixed the round-2 trade (the stability rule had kept last round's terms: the trade pool is now priced without it) and tested
+  two general forms live, hidden mode, same-window baselines:
+  - `trade_term` (contract held back in round 1, conceded in round 2, said in words) for commitment-seeking suppliers
+    (capacity type or wants_commitment / capacity_tight / needs_multi_year): **P10 0.702 / 0.710** (base 0.694 same window;
+    0.702 / 0.702 / 0.694 before; Neel's two scripted games of the same shape 0.710), P04 0.815 (no harm). -> **DEFAULT ON**
+    (opt-out `no_trade_term`); round-1/2 dump: only P04 and P10 change. Small gain (+0.01): P10's normal-mode ceiling is ~0.71.
+  - `pay_trade` (payment moved one step toward the supplier's standard in round 2 when it costs us < 0.15%): fires only on
+    P18; **P18 0.610 / 0.666** vs base 0.688 -> REJECTED (stays off): once round 1 asked 45 d, the supplier had priced it in.
+- P18 has no general fix tonight: its supplier prices longer payment steeply (first counter 5.20 at 14/30 d, 5.30-5.50 at
+  45-90 d) and nothing before round 1 separates it from P07 (the opposite). Record 0.756 (Codacabana) unexplained.
+- Tests 68, crash 19/19.
+
+### Score progress of the night (tables): `docs/SCORE_PROGRESS.md` - run-by-run average and worst case, case by case first run vs now, our single run vs every team.
+
+### v2.34j - P18 / P07 asked to improve generally; CORRECTION of v2.34i (02:05 - 02:25)
+- **Correction**: v2.34i's "P10 trade 0.702 / 0.710" never traded - the e-mails SENT 24 months in round 2 although the log said
+  "round-2 trade": in the model path the candidates were rebuilt with the stability rule and the 36-month sheet was dropped.
+  Fixed (`trade_now`: a code-decided trade keeps its sheet; replay of 7df25805 now sends 36 m). Re-test with the real trade:
+  **P10 0.7019 x4 - three games with the trade, one without, identical**. -> `trade_term` back to OPT-IN (no effect).
+- **P18 `budget_pay`** (raw-material supplier not hedged: round 1 on its standard payment term, the next shorter one as the
+  round-2 trade): reproduced P18's best game move for move (4.76 @ 30 d -> its 5.20; 4.87 @ 14 d + forecast) but its replies
+  varied (5.10 instead of 5.00) -> **0.666 x3** vs 0.718 base same window (~0.68 over all base games) -> REJECTED (opt-in).
+- **P07**: no agent-side gap - three normal-mode games with IDENTICAL moves ended 0.812 / 0.792 / 0.773 on the supplier's
+  per-session step (-0.11 / -0.08 / -0.06 in round 2); our steps already follow the 30%-of-gap mirror schedule.
+- Default behaviour = v2.34h + the trade_now fix (only matters when a trade experiment is on). Tests 68, crash 19/19.
+
+### Overfitting audit + lessons A/B (02:40 - 03:00)
+- Audit (`docs/OVERFITTING_AUDIT.md`): no case / supplier / part id or fixed price in any code the final runs; per-case data and
+  supplier memory are off in hidden mode; ~25 constants and several rules rest on one or two practice suppliers; our ~0.83 is
+  in-sample. The model's lessons held 7 recipes for ONE practice supplier each, shown for any case of that type -> rewritten as
+  general mechanisms; the originals are keyed by supplier id + case type (shown only to that exact supplier, never in hidden mode).
+- **A/B old recipes vs general principles** (same window, hidden, all normal mode): P02 0.740 vs **0.767**, P07 **0.792** vs
+  0.786, P10 0.694 vs **0.702**, P11 0.794 vs **0.877** -> mean 0.755 vs **0.783**. The general principles do at least as well
+  (P11's gap is partly its first-counter draw). Generalising did NOT dilute the score -> general lessons stay.
+
+### Loop 7 - final configuration (general lessons only, memory off), 03:13 - 03:20
+P01 0.999, P02 0.769, P03 0.987, P04 0.766, P07 0.805, P08 0.916, P10 0.686, P11 0.794, P18 0.688 = **mean 0.823**, 0 warnings,
+every case a deal, 9 in parallel in 241 s. Unseen sandbox suppliers: **D01 0.943** (best so far), D02 RFQ 0.579.
+
+### Final v1 frozen (03:35)
+- Tag **`final-v1` = `db00d37`** (loop 7 configuration: general lessons only, memory off). `main` stays v1; v2 develops on branch `v2`.
+- Independent stress lab being built by a subagent that sees only the raw game traces, the rules and the data - not our code
+  or notes - so the test suppliers are not shaped by our assumptions (`stress/`, kept out of commits until reviewed).
+- Pre-flight step 0 now checks that the agent code matches the newest frozen tag.
+
+### Stress lab, first results (03:56 - 04:40)
+- v1 on 190 synthetic suppliers (`stress/report_v1.md`): mean 0.595, 0 crashes, 0 broken must-haves; capacity 0.93, bundling
+  0.71, renewal 0.69, price increase 0.60, quality 0.59, raw material 0.44, RFQ 0.19. Memory on 0.594 = off 0.595.
+- Agent walk-aways are mostly right: a no-deal scores the alternative (`api.md` 418-425), and walks to an alternative that IS the
+  best scored 1.0. The supplier's alternative sheet cannot be accepted (accept takes the standing offer, `api.md` 95).
+- Biggest simulator failure, RFQ (14 of 20 RFQ walks after a push past a final), is a **simulator artifact**: real P05 bidders
+  pushed after a final 40x -> stayed final 37, reopened 1, walked 2 (one game, 20%-deep ask); single suppliers 11x -> walked 6.
+  Sent back to the stress subagent to recalibrate (cases_v2); the agent's RFQ behaviour stays.
+
+### v2 work (branch `v2`, worktree ~/Dhruv/ehl-v2), 04:00 - 04:25
+- Stress lab recalibrated from real games by the subagent (`stress/cases_v2`): v1 0.628, no-deal 7%, open-thread walks 1.4%
+  (real 1.5%), RFQ push-past-final walks 1/35 (real 2/40).
+- **Dominated-action check** (no supplier model needed): at every decision, compare the action with the offers the agent could
+  SEE. One real bug: the RFQ hold path took a high opener at a take line frozen early (from another bidder's opening) while
+  two other bidders' standing offers were cheaper (ST047: 277k taken, 253k on the table).
+- **v2 fix** (`c3e583d`): no hold-path take while another live bidder's standing offer is cheaper by our own cost; the normal
+  close then takes the cheapest closing bidder. Stress: 1 case changed on each set (+0.263), 0 worse; tests 69 (new
+  invariant `test_rfq_close`), crash 0, round 1 identical to v1 on all hosted cases, live D02 0.579 x2 (= v1; no high opener).
+- **Rejected `fc100`** (full cost = should-cost x 1.00 instead of 0.94, because the agent's estimate is 5-13% under the full
+  cost fitted from real relationship charges on P01-P03): 9 cases changed, 7 worse - the price given up outweighs the charge.
+- Not acted on (simulator assumptions, not real evidence): simulated suppliers agree to our round-1 ask far more often than real
+  ones (real: 0 in 250+ games on 6 cases); unhosted P06 RFQ copies where every counter is above the cheapest opening.
+
+### v2 fix 2 + promotion (04:25 - 04:50)
+- **Learned term slopes were dropped when the opening quote omitted that term** (premium() measured from the opening; arena
+  openings omit lead time / payment, e.g. P05): stress ST114 learned -EUR 0.55 per lead-time day and never used it, walked at
+  0.182. Fix: baseline = the first value the supplier's own primary sheets stated (fixed; no adjustment on the structure it
+  quoted). A standard-terms baseline was tried first and shifted every ask (ST087 0.957 -> 0.935) - replaced. Chargeback /
+  tooling keep their 0 baseline (P11 unchanged). Payment never gets a slope (cash rate), so P01 is unaffected.
+- Result: 2 of 380 simulated games better (ST047 +0.263, ST114 +0.258), 0 worse; tests 69; crash 0; round 1 identical; live D02
+  0.579 x2; **live loop L8 (v2, 9 cases in parallel): P01 0.999, P02 0.758, P03 0.988, P04 0.810, P07 0.799, P08 0.916, P10 0.694,
+  P11 0.794, P18 0.621 = 0.820, 0 warnings** (v1 loop 7: 0.823 - same decisions, arena variance).
+- **Promoted: `main` = tag `final-v2` (`17b7f16`).** v1 behaviour: `NOIDEA_EXPERIMENTS=hidden,no_prem_std,no_hold_market_check`
+  (identical on all 380 games). The P18 argument-order test now skips in hidden mode (it needs per-case claim reactions).
+
+### Robustness of final-v2 for unseen structures and suppliers (04:55 - 05:15)
+- **Structural mutations** (120 cases: unknown supplier ids, a negotiable term dropped / added, no alternative, an extra unknown
+  RFQ bidder, round limit 4, unknown case type, unknown negotiable field): 0 crashes, 0 invalid e-mails, 0 safe moves, 0 refused
+  accepts; deals in 116 of 120.
+- **Suppliers not in our data** (`stress/cases_v2_unknown`: same 190 cases, ids renamed): mean 0.560 vs 0.631 with our data
+  (-0.071; raw material -0.139, price increase -0.093, quality -0.087, renewal -0.068, capacity -0.020, RFQ +0.002). Worst in
+  stabilise cases: without a should-cost figure the full-cost guess is 0.94 x the quote and the relationship charge punishes the
+  squeeze (P02 copy 0.972 -> 0.0: EUR 347 with a EUR 204k charge vs EUR 367 with EUR 36k).
+- **Rejected `fc_ref97` / `fc_ref99`** (guess the full cost high when there is no should-cost): unknown set 9 better / 12 worse
+  (P10-like secure-supply suppliers have real margin) / worse overall. Reverted - v2 stays = tag final-v2.
+- Regret (an earlier standing offer would have scored > 0.10 more): 4 of 190 with v2 - closing timing is sound.
+
+### Rejected `show2` (04:50 - 04:58)
+- Idea: show the closing bidder's final to a bidder that moved once more ("half the step now, the rest next round", back office
+  44x). Stress: 0 of 380 games changed (simulated bidders move once per cited rival). Live D02 x2: 0.579 both (= v2).
+- Why it cannot pay: under that rule a shown bidder moves at most TO the closing price, never below it - two showings at best tie
+  on price (D02: DEMO-C1 EXW stays dearer than DEMO-J1 DAP at 14.80). Reverted; v2 stays = final-v2.

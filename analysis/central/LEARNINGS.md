@@ -94,6 +94,8 @@ Text, anchor depth, our moves (20-92% of the gap) and committee requests change 
 
 | data (cited once per case) | cut per unit | note |
 |---|---:|---|
+| **our order PRICE PATH 400.19 -> 412.74 (2 POs, round 2)** | **1.26** | **722dee8e68a4836c: 431.67 -> 430.41, final 430.36 = 0.963 (new best, beats "+=" 0.944)** |
+| its own quote by ID (quote:7300003) | 0 | "irrelevant" - read as a rival quote |
 | should-cost EUR 403.21 vs its EUR 438.21 quote | 0.79 | only one ID |
 | electronic components −2.27% (2025-01 → 2025-10), 42% of its cost | 0.48 | ≈ 0.5 × weight × fall% |
 | volume forecast +10.3% (latest) | 0.14 | the June +23.3% snapshot did worse; a 2nd fc ID = "duplicate" |
@@ -270,3 +272,41 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
     "order history is flat: no path". Wrong: the path is in the older POs. Two figures in one sentence were verified here
     (5.17 and 5.45 both match POs). Port: round 1 = price path (oldest -> latest PO within 12 months) for P08-type
     suppliers.
+
+## 10. P05 (RFQ) - noidea_p05.py, a subclass of Dhruv's main agent: 0.614 -> 0.705 -> 0.755
+- **v1 (737bacd270dea248, 0.705).** Cost drivers for the RFQ part, from cost_drivers.csv; the bidders' dossiers lack the
+  new part, so no index had ever been cited in 11 games. Plus the cheapest rival at ANY lead time (70240's 31.50 @ 52 d
+  had never been cited). 70210: "you did your homework" -> first counter 30.50 (33.00 in every earlier game) -> agreed
+  at our stepped-up 29.05.
+- **v2 (ec7c2e29fdb046cd, 0.755).** Hold the ask low (creep <= 0.15/round, 6% under the market low) and show the first
+  agreement to the other bidders once before accepting. 70250 agreed 30.25 -> shown to the others -> 70210 agreed
+  28.57 @ 14 -> accepted. The auction ratchet plus verified data per round is the lever. 0.9 needs ~27.20; the record
+  is 0.924 (another team).
+
+## 11. P18 Werdenfels, night of 10-11 Oct (17 live games after the cloud report; analysis/cases/P18_lever.md 12-19)
+- **Identical conversation = identical replies.** A fixed-text agent run 6 times got word-for-word the same game (5 sessions
+  wasted). The "soft draws" of earlier games came from the wording of model-written e-mails. A probe must change one input.
+- **Its acceptance rule:** it agrees only to an ask less than 2% under its current db0 offer, in its value terms (the KAM's
+  2% authority in doc:20260812-70740-M3), and only above the conversation's hidden floor. Its own counters never go under 5.00.
+  In our best game's state (reproduced byte for byte) 4.91 @ 14 d is accepted and 4.86 / 4.89 / 4.90 db0 and 4.97-5.00 db5 all
+  drew its final: 0.727 is that state's maximum.
+- **Term pricing:** db5 = db0 + 0.10; db3 = db5 (never db3); a longer payment term after round 1 costs a step (45 d, 90 d);
+  leaving a 14 d it credited costs a step.
+- **Never step back from our own previous ask** (4.86 after 4.87 drew the final at once) - already a rule from P02, broken by me.
+- Offline sims built from recorded games missed all of this; only live probes (one input each) found it.
+- **Run 1 (offline, Astra, 04:36):** src/eval/offline_eval.py closes P18 at message 1 for every agent (0.94) because its supplier
+  agrees to any sheet costing >= C_best; useless for ranking P18 strategies. Rank P18 candidates on the live record instead.
+- **Run 2 (offline, Astra, 04:43):** handing a verbatim-replay conversation to main mid-way makes main re-cite facts the
+  replayed messages already used and repeat our last price (an empty repeat). A replay agent must own its plan to the end of
+  the rounds it replays. New candidate noidea_p18_state45 (6c2813ce state, 4.93 -> 4.94 @ 45 d); not played (no arena run).
+- **Offline A (04:50):** on a supplier that prices db5 at exactly +0.10, send each ask on db0 AND on db5 at the same value to it:
+  it accepts either at the same floor, and the db5 sheet is worth +0.0057 score to us on P18 (db5 is worth 0.1125/kg to us).
+- **Live 81b5c6de (0.688):** Werdenfels prices payment days steeply in its acceptance (15 more days cost >= 0.06/kg: 4.94 accepted
+  on 30 d, refused on 45 d in the same conversation). A fact-free later e-mail drew its 'send us the data' line and a final.
+- **Offline C (05:12):** P18 acceptance = within its 2% approval authority (0 of 8 acceptances > 2% nominal under its offer) AND
+  above a per-conversation floor in its value terms, where a shorter payment term is worth ~+0.10/kg to it and db5 -0.10.
+- **Live d71cab8c (0.666):** a payment-term 'credit' is conversation-specific, not a rule (it took 14 d for nothing); its 2% rule
+  reads the nominal price of its same-clause sheet. Do not build a plan on a supplier valuation seen in only two conversations.
+- **Live 2493f26f (0.621, new 45-d opening):** on a supplier whose first counter is a per-wording draw, a new opening is a
+  lottery ticket, and the bad draw (5.40 here) costs a full step at the end (final 5.10 vs 5.00). Its acceptance limit is
+  fixed per conversation before our 3rd message; nothing after round 1 moved its calculation in 62 games.

@@ -31,8 +31,13 @@ def agent_factory(name, data):
 
     if name == "naive":
         return NaiveAgent
-    if name == "noidea":  # team NoIdea v1: code sets the numbers, the LLM (if configured) writes
-        from .agents.noidea import NoIdeaAgent
+    if name == "noidea":  # team NoIdea: code sets the numbers, the LLM (if configured) writes
+        # the RFQ layer (Neel's noidea_p05: RFQ part cost drivers, rivals at any lead time, held RFQ asks, show the first
+        # agreement to the others) subclasses the main agent; every override is gated on case type "rfq"
+        try:
+            from .agents.noidea_rfq import NoIdeaAgent
+        except Exception:  # never let the layer break the main agent
+            from .agents.noidea import NoIdeaAgent
 
         complete = llm_from_env() if os.environ.get("LLM_MODEL") else None
         return lambda: NoIdeaAgent(complete)

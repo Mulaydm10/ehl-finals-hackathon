@@ -1,0 +1,161 @@
+{
+ "case_id": "case:ST162",
+ "set": "stress",
+ "type": "price_increase",
+ "title": "Platinenwerk Lausitz: component costs for the HB control board",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with Platinenwerk Lausitz GmbH. Platinenwerk Lausitz: component costs for the HB control board. Need: 19900 pc a year. Category goal: stabilise a strategic supply: a healthy supplier and stable prices count, not only the lowest price. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 59 days). There is no fallback supplier: without a deal the demand is bought at the fallback price. Must-haves: none. Prepare from the data package.",
+ "trigger_doc": "doc:20260919-70550-P17",
+ "parts": [
+  "part:350030"
+ ],
+ "suppliers": [
+  "sup:70550"
+ ],
+ "negotiable": [
+  "unit_price",
+  "payment_days",
+  "volume_per_year"
+ ],
+ "fixed_terms": {
+  "lead_time_days": 56,
+  "contract_months": 12,
+  "effective_date": "2027-01-01",
+  "index_clause": null,
+  "incoterm": "DAP",
+  "tooling_eur": 0
+ },
+ "term_options": {
+  "payment_days": [
+   14,
+   30,
+   45,
+   60,
+   90
+  ],
+  "volume_per_year": [
+   15920,
+   19900,
+   23880
+  ]
+ },
+ "buyer": {
+  "need_per_year": 19900,
+  "horizon_years": 1.0,
+  "current_unit_price": 34.35,
+  "fallback_unit_price": 37.1,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 59,
+  "category_goal": "stabilise",
+  "fallback_risk_pct": 10,
+  "index_risk_pct": 4,
+  "late_cost_per_day": 840,
+  "cost_per_defect": 192,
+  "sustainable_margin_pct": 0.5,
+  "relationship_eur_per_point": 10250,
+  "freight_eur_per_unit": {
+   "EXW": 0.01,
+   "FCA": 0.01,
+   "DAP": 0.0
+  },
+  "index_paths": {},
+  "must_haves": [],
+  "alternative": {
+   "kind": "none",
+   "ref": null,
+   "terms": {}
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260919-70550-P17",
+  "ctr:4600070550",
+  "sc:70550@2026Q3"
+ ],
+ "_hidden": {
+  "template": "case:P17",
+  "variant": 1,
+  "suppliers": {
+   "sup:70550": {
+    "grid": 0.05,
+    "rate": 0.07390276629610382,
+    "r_base": 0.9602295914949422,
+    "levers": {
+     "index_change": 0.007967790465987234,
+     "should_cost": 0.0,
+     "price_history": 0.009102570953868447,
+     "quality": 0.01810841042183596,
+     "volume_change": 0.00793866720135037,
+     "news": 0.009021561948532108,
+     "notice": 0.005607469944689622,
+     "contract": 0.017075650817431256
+    },
+    "lever_repeat": 0.8087188008805057,
+    "fact_pass": 0.5970429917136598,
+    "first_frac": 0.9311233909350936,
+    "recip": 0.9977475674943315,
+    "cap": 0.021455257833927748,
+    "final_round": 8,
+    "p_walk_final": 0.7451683636319528,
+    "patience": 6,
+    "insult": 0.130287977226573,
+    "min_move": 0.08945469100988085,
+    "hazard": 0.014305798543551492,
+    "rival_follow": 0.7085266277424022,
+    "rival_premium": 0.015326995613403147,
+    "lt_cost": 0.007003782681867127,
+    "vol_elast": 0.04868639441196321,
+    "ppm_cost": 0.013280201819050942,
+    "contract_bonus": 0.007625719993878813,
+    "ix_base": 0.020824579275517625,
+    "ix_slope": 0.0021755659086194327,
+    "max_payment_days": null,
+    "trust_penalty": 0.0023580373228558648,
+    "alt_std": true,
+    "strict_drivers": true,
+    "archetype": "conceder",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 700,
+     "chargeback_eur_per_complaint": 0.0,
+     "volume_per_year": 19900,
+     "lead_time_days": 56,
+     "incoterm": "DAP",
+     "contract_months": 12,
+     "tooling_eur": 0
+    },
+    "opening": {
+     "unit_price": 37.1
+    },
+    "drivers": [
+     "LCI-C",
+     "PPI-C2611"
+    ],
+    "ppm_real": 778,
+    "full_cost_frac": 0.9619820794090091,
+    "usual_rate": 0.07390276629610382,
+    "walk_model": 2,
+    "rfq_gap0": 0.0317057381778561,
+    "rfq_gap1": 0.1136625377140165,
+    "p_walk_final_rfq": 0.9820752591610765,
+    "small_gap": 0.014004568625148907,
+    "p_agree_small": 0.8852820265781373,
+    "p_walk_small": 0.026091784065709944,
+    "p_final_nomove2": 0.4493097943994737
+   }
+  },
+  "c_open": 745886.49,
+  "c_alt": null,
+  "c_best": 708675.62,
+  "best_package": {
+   "supplier_id": "sup:70550",
+   "terms": {
+    "unit_price": 35.12,
+    "payment_days": 90,
+    "volume_per_year": 19900
+   },
+   "c": 708675.62
+  },
+  "best_is_alternative": false
+ }
+}

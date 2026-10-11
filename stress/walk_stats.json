@@ -1,0 +1,311 @@
+{
+ "threads": 466,
+ "threads_by_kind": {
+  "single": 346,
+  "rfq": 120
+ },
+ "replies": {
+  "single": 1223,
+  "rfq": 402
+ },
+ "push": {
+  "rfq->final_offer": 37,
+  "rfq->open": 1,
+  "rfq->walked_away": 2,
+  "single->agreed": 4,
+  "single->final_offer": 1,
+  "single->walked_away": 6
+ },
+ "push_vs_final": {
+  "rfq / below final / final_offer": 3,
+  "rfq / below final / open": 1,
+  "rfq / below final / walked_away": 2,
+  "rfq / no sheet / final_offer": 34,
+  "single / below final / agreed": 3,
+  "single / below final / final_offer": 1,
+  "single / below final / walked_away": 6,
+  "single / meets final / agreed": 1
+ },
+ "push_walks": [
+  {
+   "game": "1e65e7addff16aca",
+   "case": "case:P10",
+   "sid": "sup:70410",
+   "kind": "single",
+   "next": "walked_away",
+   "buyer_v": 0.9360773307208287,
+   "final_v": 1.0,
+   "below_pct": 6.39
+  },
+  {
+   "game": "1f27ac1b2856c285",
+   "case": "case:P08",
+   "sid": "sup:70710",
+   "kind": "single",
+   "next": "walked_away",
+   "buyer_v": 0.9187200350304885,
+   "final_v": 0.9426660349527031,
+   "below_pct": 2.54
+  },
+  {
+   "game": "26336719b8c2bbfb",
+   "case": "case:P10",
+   "sid": "sup:70410",
+   "kind": "single",
+   "next": "walked_away",
+   "buyer_v": 0.9360773307208287,
+   "final_v": 1.0,
+   "below_pct": 6.39
+  },
+  {
+   "game": "8134c6d18ce18953",
+   "case": "case:P10",
+   "sid": "sup:70410",
+   "kind": "single",
+   "next": "walked_away",
+   "buyer_v": 0.9528475170562323,
+   "final_v": 0.9960152189195862,
+   "below_pct": 4.33
+  },
+  {
+   "game": "bd2eabf99b0705bd",
+   "case": "case:P04",
+   "sid": "sup:70620",
+   "kind": "single",
+   "next": "walked_away",
+   "buyer_v": 0.9877279681914772,
+   "final_v": 0.9893060550629598,
+   "below_pct": 0.16
+  },
+  {
+   "game": "c5d845883158676c",
+   "case": "case:P07",
+   "sid": "sup:70610",
+   "kind": "single",
+   "next": "walked_away",
+   "buyer_v": 0.9251610913785252,
+   "final_v": 0.9411792554762013,
+   "below_pct": 1.7
+  },
+  {
+   "game": "d9af85e000ab3d4d",
+   "case": "case:P05",
+   "sid": "sup:70250",
+   "kind": "rfq",
+   "next": "walked_away",
+   "buyer_v": 0.6677991341991342,
+   "final_v": 0.7142857142857143,
+   "below_pct": 6.51
+  },
+  {
+   "game": "d9af85e000ab3d4d",
+   "case": "case:P05",
+   "sid": "sup:70240",
+   "kind": "rfq",
+   "next": "walked_away",
+   "buyer_v": 0.8362905039768717,
+   "final_v": 0.9628622993188586,
+   "below_pct": 13.15
+  }
+ ],
+ "push_below_final_pct": [
+  [
+   "rfq",
+   0.06,
+   "open"
+  ],
+  [
+   "rfq",
+   1.79,
+   "final_offer"
+  ],
+  [
+   "rfq",
+   1.89,
+   "final_offer"
+  ],
+  [
+   "rfq",
+   2.77,
+   "final_offer"
+  ],
+  [
+   "rfq",
+   6.51,
+   "walked_away"
+  ],
+  [
+   "rfq",
+   13.15,
+   "walked_away"
+  ],
+  [
+   "single",
+   -1.53,
+   "agreed"
+  ],
+  [
+   "single",
+   0.16,
+   "walked_away"
+  ],
+  [
+   "single",
+   0.18,
+   "final_offer"
+  ],
+  [
+   "single",
+   1.37,
+   "agreed"
+  ],
+  [
+   "single",
+   1.41,
+   "agreed"
+  ],
+  [
+   "single",
+   1.55,
+   "agreed"
+  ],
+  [
+   "single",
+   1.7,
+   "walked_away"
+  ],
+  [
+   "single",
+   2.54,
+   "walked_away"
+  ],
+  [
+   "single",
+   4.33,
+   "walked_away"
+  ],
+  [
+   "single",
+   6.39,
+   "walked_away"
+  ],
+  [
+   "single",
+   6.39,
+   "walked_away"
+  ]
+ ],
+ "nomove_next": {
+  "rfq->agreed": 10,
+  "rfq->final_offer": 7,
+  "rfq->open": 9,
+  "single->agreed": 7,
+  "single->final_offer": 24,
+  "single->open": 34,
+  "single->walked_away": 2
+ },
+ "nomove_streak": {
+  "rfq streak 1 -> agreed": 10,
+  "rfq streak 1 -> final_offer": 3,
+  "rfq streak 1 -> open": 9,
+  "rfq streak 2 -> final_offer": 4,
+  "single streak 1 -> agreed": 7,
+  "single streak 1 -> final_offer": 8,
+  "single streak 1 -> open": 27,
+  "single streak 1 -> walked_away": 2,
+  "single streak 2 -> final_offer": 10,
+  "single streak 2 -> open": 7,
+  "single streak 3 -> final_offer": 6
+ },
+ "insult_next": {
+  "5%": {
+   "rfq->final_offer": 2,
+   "rfq->open": 65,
+   "single->final_offer": 33,
+   "single->open": 153
+  },
+  "10%": {
+   "rfq->final_offer": 2,
+   "rfq->open": 63,
+   "single->final_offer": 10,
+   "single->open": 3
+  },
+  "15%": {
+   "rfq->open": 35,
+   "single->final_offer": 3
+  },
+  "20%": {
+   "rfq->open": 4,
+   "single->final_offer": 1
+  }
+ },
+ "contradicted_next": {
+  "open": 2,
+  "final_offer": 1
+ },
+ "open_walks": [
+  {
+   "game": "150fb1c103141538",
+   "case": "case:P02",
+   "sid": "sup:70510",
+   "round": 4,
+   "buyer_v": 0.9803418598349893,
+   "lowest_v": 0.982987676424152,
+   "nomove": false
+  },
+  {
+   "game": "1ebd6e0eb14313c8",
+   "case": "case:P05",
+   "sid": "sup:70210",
+   "round": 3,
+   "buyer_v": 0.7754355105369197,
+   "lowest_v": 0.7653938996091036,
+   "nomove": false
+  },
+  {
+   "game": "4d18bd1107811ea9",
+   "case": "case:P02",
+   "sid": "sup:70510",
+   "round": 4,
+   "buyer_v": 0.9800211547938786,
+   "lowest_v": 0.982987676424152,
+   "nomove": false
+  },
+  {
+   "game": "62a17f4abde590c7",
+   "case": "case:P04",
+   "sid": "sup:70620",
+   "round": 3,
+   "buyer_v": 0.9884533201725851,
+   "lowest_v": 0.9865086350990059,
+   "nomove": true
+  },
+  {
+   "game": "8e94b127db1e6eaa",
+   "case": "case:P05",
+   "sid": "sup:70210",
+   "round": 3,
+   "buyer_v": 0.7503314832173792,
+   "lowest_v": 0.7653938996091036,
+   "nomove": false
+  },
+  {
+   "game": "8e94b127db1e6eaa",
+   "case": "case:P05",
+   "sid": "sup:70250",
+   "round": 3,
+   "buyer_v": 0.7007445887445887,
+   "lowest_v": 0.6955151515151514,
+   "nomove": false
+  },
+  {
+   "game": "fe806698b5d96eb1",
+   "case": "case:P18",
+   "sid": "sup:70740",
+   "round": 4,
+   "buyer_v": 0.8740055674639053,
+   "lowest_v": 0.866143626628031,
+   "nomove": true
+  }
+ ]
+}

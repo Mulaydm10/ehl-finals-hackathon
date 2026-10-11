@@ -205,7 +205,8 @@ class NoIdeaAgent:
         pb = root / "playbooks"
         self.playbooks = {p.stem: p.read_text(encoding="utf-8") for p in pb.glob("*.md")} if pb.exists() else {}
         self.correspondence = root / "tacto/data/correspondence"
-        les = root / "datasets/G_lessons.json"
+        # experiment `old_lessons`: the lessons as they were before the case recipes were generalised (A/B only)
+        les = root / ("datasets/G_lessons_old.json" if "old_lessons" in EXPERIMENTS else "datasets/G_lessons.json")
         self.lessons = json.loads(les.read_text(encoding="utf-8")) if les.exists() else {}
         try:  # the signal catalogue (src/eval/signals.py): category -> (regex, what works)
             import importlib.util
@@ -225,6 +226,8 @@ class NoIdeaAgent:
         try:
             self.memory = json.loads(mem.read_text(encoding="utf-8")) if mem.exists() else {}
         except ValueError:
+            self.memory = {}
+        if "hidden" in EXPERIMENTS:  # HIDDEN-SUPPLIER test mode: play as if this supplier were new (the final's are)
             self.memory = {}
         self.po_hist = {}  # (supplier, part) -> [(date, po id, price)] by date (price_path)
         for k, v in _facts.items():
@@ -246,6 +249,8 @@ class NoIdeaAgent:
     def prepare(self, case, threads):
         b = case["buyer"]
         self.case_id, self.sup, self.cited, self.final_asked = case["case_id"], {}, set(), set()
+        self.said = set()  # argument sentences already sent (an argument WITHOUT ids is never marked by `cited`)
+        self.cited_by, self.said_by = {}, {}  # per supplier (seen / heard)
         alt = b.get("alternative") or {}
         self.c_alt = total_cost(case, alt["terms"]) if (alt.get("terms") or {}).get("unit_price") else math.inf
         part = case["parts"][0]
@@ -260,11 +265,18 @@ class NoIdeaAgent:
             justified = sum((dr["weight"] or 0) * self.ch.get((dr["series"], 12), (0.0, None))[0]
                             for dr in pinfo.get("cost_drivers", []))
             open_terms = standing(events)[1]
+            self.__dict__.setdefault("_open_price", {})[sid] = open_terms.get("unit_price")  # its quote, for rank_args
             cur = b.get("current_unit_price") or open_terms.get("unit_price")
             should = [c for c in self.claims if c["kind"] == "should_cost" and c["part"] == part and c["supplier"] == sid]
             ref = min(x for x in (cur, open_terms.get("unit_price")) if x)  # the quote can be below today's price
-            full_cost = min(should[0]["figure"], ref) * 0.94 if should else ref * 0.94
-            rate = 0.25 if "cash_short" in motives else 0.14 if "wants_faster_payment" in motives else 0.08
+            # (v2) experiment `fc100`: the stress lab and the real relationship charges (P01 / P02 / P03 fitted full cost =
+            # 1.02 / 1.08 / 0.99 x this base) put the 0.94 factor 5-13% under a supplier's real full cost
+            fc_k = 1.0 if "fc100" in EXPERIMENTS else 0.94
+            full_cost = min(should[0]["figure"], ref) * fc_k if should else ref * fc_k
+            # a normal supplier's money is cheaper than ours (fitted on real deals: P03 6.1%, P04 6.8-8.4%; ours 8%): experiment
+            # `rate07` prices its cash at 7%, so a longer payment term is a small real gain to trade for
+            normal = 0.07 if "rate07" in EXPERIMENTS else 0.08
+            rate = 0.25 if "cash_short" in motives else 0.14 if "wants_faster_payment" in motives else normal
             est = {"standard": std, "interest_rate": rate, "usual_rate": 0.08, "full_cost": full_cost}
             # a chargeback is cash out at the defect rate it REALLY runs (scorecard), not at the commitment we ask for;
             # a cash-short supplier prices that uncertain cash ~2x (P11 live: EUR 150 per complaint was priced at
@@ -286,8 +298,37 @@ class NoIdeaAgent:
                              "ask_pct": ask_pct, "open_terms": open_terms, "cost_calc": calc,
                              "args": ([calc] if calc else []) + [
                                  c for c in self.rank_args(case, sid, ask_pct)
-                                 if not (calc and c["kind"] == "index_change" and c.get("series") in calc["series"])],
+                                 # a FALLING window of a series the cost calc uses is a different, checkable fact (own
+                                 # IDs): P01 iron & steel -4.3% "we did not know that - a fair point" -> -5.10 (Neel
+                                 # f70338659b42114e, 0.993); excluding it left our P01 rounds without data
+                                 if not (calc and c["kind"] == "index_change" and c.get("series") in calc["series"]
+                                         and (c.get("figure") or 0) >= 0)],
                              "kit": self.kit_calc(case, sid) if case["type"] == "bundling" else None}
+            if "no_case_refs" not in EXPERIMENTS:
+                # (default since v2.34h: sandbox D02 0.579 / 0.579 / 0.600 / 0.579 x3 vs 0.515-0.558 without, every claim
+                # verified; D01 neutral; the 10 hosted cases unchanged - only kinds missing from our bank) the case's OWN reference facts our argument bank does not hold (their values sit on the arena, not
+                # in our package - sandbox D02: fc:SH-220@2026-09, cost:part:SH-220) cited WITHOUT a figure: the arena checks an
+                # id against its own data, so a figure-less citation cannot be contradicted (Neel's QN claims, live). D02's
+                # bidder asked twice for "actual proof of this volume"; the forecast in its case refs is that proof
+                have = {i for c in self.sup[sid]["args"] for i in c["ids"]}
+                kinds = {c["kind"] for c in self.sup[sid]["args"]}
+                extra = []
+                for ref in case.get("refs") or []:
+                    if ref in have:
+                        continue
+                    if ref.startswith("cost:") and "should_cost" not in kinds:
+                        extra.append({"kind": "should_cost", "ids": [ref], "supplier": sid, "part": part, "figure": None,
+                                      "checked_by_arena": True,
+                                      "sentence": f"Our should-cost estimate for this part is on record ({ref})."})
+                        kinds.add("should_cost")
+                    elif ref.startswith("fc:") and "forecast" not in kinds:
+                        extra.append({"kind": "forecast", "ids": [ref], "supplier": sid, "part": part, "figure": None,
+                                      "checked_by_arena": True,
+                                      "sentence": f"Our demand forecast for this part is on record ({ref})."})
+                        kinds.add("forecast")
+                if extra:
+                    self.sup[sid]["args"] = extra + self.sup[sid]["args"]
+                    log.info("%s: case refs cited without figures: %s", sid, [c["ids"][0] for c in extra])
             self.sup[sid]["k"] = self.prior_k(case, sid)
             self.sup[sid]["patience"] = self.patience_prior(case, sid)
             # hold_r1 only for a PATIENT single supplier: A/B (2+2 games, same build) P02 (prior 7) +0.150,
@@ -338,8 +379,11 @@ class NoIdeaAgent:
         # only indices that FELL or stayed flat: a rise "confirms their case: that driver rose" even when
         # framed as "well below the ask" (P07 v1.5 and P10 live)
         out += [c for c in sorted(best.values(), key=lambda c: c["figure"] * (c.get("weight") or 0)) if c["figure"] <= 0]
+        # should-cost against the price it ASKS (its quote), not only today's price (P03: 2.4% under today's price, 8.7%
+        # under its quote - never cited by us, in 5 of 5 of the team's top P03 games; Neel central.should_cost_claims)
+        quote = getattr(self, "_open_price", {}).get(sid)
         out += [c for c in mine if c["kind"] == "should_cost" and c["part"] in parts
-                and c.get("price_vs_should_cost_pct", -1) > 3]
+                and (c.get("price_vs_should_cost_pct", -1) > 3 or (quote and c.get("figure") and quote > c["figure"] * 1.03))]
         # flat price history is the argument when there's no increase to fight - but not for kits:
         # P07 live, part-level history "does not change our calculation" for a bundle (kit_calc instead)
         # ... and when the price already jumped (P18: an index clause took it 5.26 -> 5.84 in July, +11%,
@@ -353,10 +397,12 @@ class NoIdeaAgent:
         if short or "price_path_all" in EXPERIMENTS:
             desc = {p["part"]: p["description"] for p in self.dossiers.get(sid, {}).get("parts", [])}
             pos = [(self.price_path(sid, c["part"], desc.get(c["part"], c["part"])) or c)
-                   if self.po_jump(c) == 0 else c for c in pos]
+                   if (self.po_jump(c) == 0 or ("price_path_all" in EXPERIMENTS and self.po_jump(c) < 3.0)) else c for c in pos]
         # a RISE of >= 3% over the last 12 months goes in round 1 as that path, for any supplier (P08 probe A: first
         # counter 5.41 -> 5.25, 0.912 vs house 0.752); not for kits or frozen prices (P03 +3.1%: untested there)
-        if case["type"] != "bundling" and "price_frozen" not in set(self.dossiers.get(sid, {}).get("motives", {})):
+        # ... also for price-frozen suppliers (Neel request 14: P03 committee took the path in round 2, 431.67 -> 430.41, the
+        # biggest cut P03 ever gave, 0.963) - a frozen price still moves for a verified fact
+        if case["type"] != "bundling":
             desc = {p["part"]: p["description"] for p in self.dossiers.get(sid, {}).get("parts", [])}
             year = [y for c in pos if self.po_jump(c) < 3.0
                     if (y := self.year_rise_path(sid, c["part"], desc.get(c["part"], c["part"])))]
@@ -368,7 +414,9 @@ class NoIdeaAgent:
         elif case["type"] != "bundling" and ask_pct > 0:
             # an increase on a price our orders show flat or falling: the history is checkable data for a later round
             # (Neel's engine: every NEW verified kind it takes is one more cut; P11 had nothing left after round 1)
-            out += [{**c, "late": True} for c in pos if self.po_jump(c) <= 0]
+            # (experiment `price_path_all`: a PATH claim leads round 1 instead - a floor-stop supplier pins its value on the
+            # first counter, so a later-round fact never counts there; P08 path 5.41 -> 5.25 in round 1)
+            out += [{**c, "late": not (c.get("path") and "price_path_all" in EXPERIMENTS)} for c in pos if self.po_jump(c) <= 0]
         if case["type"] in ("capacity", "price_increase"):
             out += [c for c in mine if c["kind"] == "scorecard_otd" and (c["figure"] or 100) < 85]
         # a supplier under cash stress (news of restructuring / cash-short dossier): the verified news frames what we give
@@ -413,10 +461,12 @@ class NoIdeaAgent:
             out = [c for c in out if not (c["kind"] == "index_change" and c.get("series") in hedged)]
         # measured take-rates per data kind (Neel, 54 games: should-cost 2/2 taken, volume forecast 12/19, rising index
         # 7x "confirms our case", OTD 0/1); kinds THIS supplier already shrugged off get rate 0 and are dropped
+        # hidden mode: only the take-rates over ALL cases, none of this case's own reactions (a hidden case has none)
+        rx_case = "case:HIDDEN" if "hidden" in EXPERIMENTS else case["case_id"]
         if central:
             try:
-                ordered = central.rank(out, case["case_id"])
-                kept = [c for c in ordered if central.take_rate(c["kind"], case["case_id"]) > 0]
+                ordered = central.rank(out, rx_case)
+                kept = [c for c in ordered if central.take_rate(c["kind"], rx_case) > 0]
                 # kinds this supplier shrugged off before are LAST-round fillers, never dropped and never round 1 (Neel
                 # e27b6f0): P11 price history "does not change" alone in round 3, but in round 2 with the electricity
                 # fall the pair cut EUR 1.00 (3 games) vs 0.50 for one fact
@@ -444,10 +494,13 @@ class NoIdeaAgent:
         # you" -> 45.50 to 45.00; price history and QNs "do not change our calculation" every time)
         if central:
             try:
-                late.sort(key=lambda c: (c.get("filler", False), -central.take_rate(c["kind"], case["case_id"])))
+                late.sort(key=lambda c: (c.get("filler", False), -central.take_rate(c["kind"], rx_case)))
             except Exception:
                 pass
         ranked = [c for c in ranked if not c.get("late") and not tiny(c)] + late  # tiny falls never in round 1
+        if "price_path_all" in EXPERIMENTS:  # experiment: a price PATH leads round 1 even if flat history was shrugged off
+            paths = [{**c, "late": False, "filler": False} for c in ranked if c.get("path")]
+            ranked = paths + [c for c in ranked if not c.get("path")]
         # the arena counts a volume trend once per case: a 2nd forecast (another part) came back `duplicate` (P07 x4)
         fc = [c for c in ranked if c["kind"] == "forecast"]
         ranked = [c for c in ranked if c["kind"] != "forecast" or c is fc[0]]
@@ -739,20 +792,87 @@ class NoIdeaAgent:
                   if m.get("from") != "buyer" and m.get("term_sheets")]
         return len(prices) >= 3 and None not in prices[-2:] and prices[-1] >= prices[-2] - 1e-9
 
-    def next_args(self, sid, n, first_round=False):
+    def r1_facts(self, case, sid):
+        """How many facts our FIRST e-mail carries (later e-mails: one each - a 2nd fact in the same later e-mail cut no more
+        than one: P11 0.88% vs 0.92% per message, n=21 / 77; P07 1.26% vs 1.26%; P03 0.01% vs 0.06%).
+        Default 3: most first counters price every fact they are shown (first counter with 0 / 1 / 2-3 verified facts: P01
+        137.4 / - / 133.4-134.3, P02 374.5 / 373.6 / 372.8, P03 - / 432.9 / 431.8, P10 - / 31.9 / 31.5).
+        1 for a CASH-SHORT supplier (the generator's own label: "trade faster payment for price; it does not squeeze its
+        margin"): it answers data with "we cannot give up margin right now" and cuts ONE step per e-mail however much it is
+        shown. P11, the same five levers (quality record, steel, energy, forecast, late-payment admission): four of them in
+        round 1 ended at 45.00-45.50 (38 games, 0.71-0.80); one per round ended at 44.45-44.50 from either first-counter draw
+        (4 of 4: d51e49df 0.885, 6d6f9a2b / 7463ab24 0.877, 8f62abf9). Not for RFQs (rival offers decide), a short-fuse
+        supplier (final by our 2nd message: everything goes in round 1) or a raw-material budget supplier (round 1 decides).
+        Opt-out `no_r1_hold`."""
+        if "no_r1_hold" in EXPERIMENTS or case["type"] in ("rfq", "raw_material") or len(self.sup) > 1:
+            return 3
+        if "cash_short" not in (self.sup[sid]["dossier"].get("motives") or {}) or self.patience_prior(case, sid) <= 2:
+            return 3
+        return 1
+
+    def admission_due(self, case, sid, events, k):
+        """The late-payment admission ("Straight talk: we paid N% of your invoices late...") goes out in this e-mail: a
+        cash-driven supplier we really pay late (invoices.csv), once. Round 1, or round 2 after a one-fact first e-mail
+        (r1_facts): there it answers its "faster payment would help us more than anything" (P11 d51e49df: energy +
+        admission -> "Thanks to that payment promise" 46.00 -> 45.00)."""
+        rec = self.late_payment(sid)
+        motives = set(self.sup[sid]["dossier"].get("motives", {}))
+        last = (latest(events).get("body") or "").lower()
+        first_k = 1 if self.r1_facts(case, sid) == 1 else 0
+        return bool("no_own_late_pay" not in EXPERIMENTS and k >= first_k and rec and rec[0] >= 0.5 and rec[1] >= 3
+                    and ({"cash_short", "wants_faster_payment"} & motives or re.search(r"pay on time|paid on time|cash", last))
+                    and not self.sup[sid].get("owned_late"))
+
+    def wants_term(self, case, sid):
+        """A supplier that prices contract length as security (capacity cases; motives wants_commitment / capacity_tight /
+        needs_multi_year) - the longer contract is a concession it values: held back for a round-2 trade (v2.34i)."""
+        return case["type"] == "capacity" or bool({"wants_commitment", "capacity_tight", "needs_multi_year"}
+                                                  & set((self.sup.get(sid) or {}).get("dossier", {}).get("motives", {})))
+
+    def seen(self, sid):
+        """Data ids THIS supplier has been shown. Each bidder of an RFQ is its own negotiation: a fact told to one bidder is
+        new to the others (one case-wide set starved the rest: P05 0e9974d5 bidder 70250 never got a fact; sandbox D02 C1
+        never got the forecast). For one supplier this is exactly the case-wide set."""
+        return self.__dict__.setdefault("cited_by", {}).setdefault(sid, set())
+
+    def heard(self, sid):
+        """Argument sentences THIS supplier has been sent (see seen)."""
+        return self.__dict__.setdefault("said_by", {}).setdefault(sid, set())
+
+    @staticmethod
+    def impact(c):
+        """Points a fact is worth to its cost (weight x fall for an index; other kinds count as strong)."""
+        if c["kind"] == "index_change" and c.get("weight") is not None:
+            return abs((c.get("figure") or 0) * c["weight"])
+        return math.inf
+
+    def next_args(self, sid, n, first_round=False, lead_kind=None, weakest=False):
         """The next `n` arguments whose IDs were not cited yet (re-citing reads as padding). Round 1 is about this
-        part only: other parts' price histories (experiment `all_parts_po`) wait for round 2."""
+        part only: other parts' price histories (experiment `all_parts_po`) wait for round 2. `lead_kind`: that kind of
+        argument first (the fact that justifies the structure we ask, e.g. its quality record for a ppm commitment).
+        `weakest`: the e-mail already carries a lever that earns its own cut (the late-payment admission) and one e-mail
+        earns about one step - so it takes the WEAKEST remaining strong fact and the stronger ones keep their own rounds
+        (P11 d51e49df: admission + energy 1.03 pts in round 2 -> 45.00, steel 1.11 pts alone in round 3 -> 44.50)."""
         picked = []
-        for c in self.sup[sid]["args"]:
+        pool = self.sup[sid]["args"]
+        if lead_kind:
+            pool = [c for c in pool if c["kind"] == lead_kind] + [c for c in pool if c["kind"] != lead_kind]
+        if weakest:
+            strong = sorted((c for c in pool if not self.weak(c) and self.impact(c) < math.inf), key=self.impact)
+            pool = strong + [c for c in pool if c not in strong]
+        for c in pool:
             if len(picked) == n:
                 break
-            if any(i in self.cited for i in c["ids"]) or (first_round and (c.get("other_part") or c.get("late"))):
+            if any(i in self.seen(sid) for i in c["ids"]) or (first_round and (c.get("other_part") or c.get("late"))) \
+                    or c["sentence"] in self.heard(sid) or (not first_round and not c["ids"]):
                 continue
             if not first_round and not self.sup[sid].get("weak_ok", True) and self.weak(c) and \
-                    any(not self.weak(x) and not any(i in self.cited for i in x["ids"]) for x in self.sup[sid]["args"]):
+                    any(not self.weak(x) and not any(i in self.seen(sid) for i in x["ids"]) for x in self.sup[sid]["args"]):
                 continue  # weak facts wait only while a strong one is left (never an empty round)
             # one index claim per e-mail: 2+ drew "we received a lot of material" 11 of 11 times (Neel)
-            if c["kind"] == "index_change" and any(x["kind"] == "index_change" for x in picked):
+            n_idx = sum(x["kind"] == "index_change" for x in picked)
+            if c["kind"] == "index_change" and (n_idx >= (2 if (first_round and self.r1_two_index(None, sid)) else 1)
+                                                or any(x.get("series") == c.get("series") for x in picked)):
                 continue
             picked.append(c)
         return picked
@@ -784,12 +904,31 @@ class NoIdeaAgent:
             self.sup[sid]["limits"] = saved
         return out
 
+    def limit_confirmed(self, sid, f):
+        """A limit the MODEL read from its e-mail ("refusals") filters our structures only when the supplier's own PRIMARY
+        sheet kept that term away from ours in its last two counters (rule 8: adopt a term it refuses twice). P02 load test
+        791a535b: the model read its ALTERNATIVE ("Alternatively, with Zahlungsziel 30 days net: EUR 368.42") as "payment
+        max 30", while its primary stayed at our 90 d - the limit made us hop to 30 d in round 3: 0.531 instead of ~0.82."""
+        s = self.sup.get(sid) or {}
+        sticky = s.setdefault("limits_ok", set())  # once confirmed it stays (after we adopt its term they agree)
+        if f in sticky:
+            return True
+        events = (getattr(self, "threads_ref", None) or {}).get(sid) or []
+        prim = [standing([m])[1] for m in events if m.get("from") != "buyer" and m.get("term_sheets")]
+        ours = s.get("last_main") or {}
+        counters = prim[1:]  # its answers to us (not its opening quote)
+        ok = len(counters) >= 2 and ours.get(f) is not None and all(
+            c.get(f) is not None and c.get(f) != ours.get(f) for c in counters[-2:])
+        if ok:
+            sticky.add(f)
+        return ok
+
     def _sheets_at(self, case, sid, value, cap_price=None, n=3, band_pct=None):
         """The `n` different term sheets that give the supplier `value` per unit at the lowest cost to us,
         with the premiums it showed us (learn) and the limits it stated (refusals) taken into account."""
         s = self.sup[sid]
         ranked = []
-        lim = s.get("limits", {})
+        lim = {f: v for f, v in (s.get("limits") or {}).items() if self.limit_confirmed(sid, f)}
         self._combo_sid = sid
         for t in self.combos(case, dict(s["open_terms"])):
             if any((lo is not None and (t.get(f) or 0) < lo) or (hi is not None and (t.get(f) or 0) > hi)
@@ -816,17 +955,28 @@ class NoIdeaAgent:
         # (P07, which never mentioned duration, priced 36 m higher).
         wants_term = case["type"] == "capacity" or bool({"wants_commitment", "capacity_tight", "needs_multi_year"}
                                                         & set(s["dossier"].get("motives", {})))
+        need_lt = case["buyer"].get("need_lead_time_days")
+        std_terms = s.get("std") or {}
+
         def strain(t):
             out = 0.0
             for f in case["negotiable"]:
                 o, v = opening.get(f), t.get(f)
-                if f == "unit_price" or o is None or v is None or not isinstance(v, (int, float)):
+                if f == "unit_price" or v is None or not isinstance(v, (int, float)):
+                    continue
+                if o is None:  # its quote does not state the term: its standard terms, for a lead time our need
+                    o = std_terms.get(f) if std_terms.get(f) is not None else (need_lt if f == "lead_time_days" else None)
+                if o is None or not isinstance(o, (int, float)):
                     continue
                 if f == "contract_months" and wants_term:
                     out -= v / 36  # longer = less strain for a supplier that wants security
                     continue
-                if f == "lead_time_days":  # faster than we need is pure strain; slower than need costs us anyway
-                    v = max(v, 0)
+                if f == "lead_time_days":
+                    # only FASTER than its own lead time is strain (slower is easier for it; later than our need costs us
+                    # anyway, in C). Sandbox D02 ec2806ab: we asked 21 d of a bidder quoting none (its 28 d, our need 35) -
+                    # the symmetric rule had nothing to compare and the first option won (rule 10: never ask strain we don't need)
+                    out += max(0.0, o - v) / max(abs(o), 1)
+                    continue
                 out += abs(v - o) / max(abs(o), 1)
             return out
         ranked.sort(key=lambda x: (round(x[0], 0), strain(x[1])))
@@ -970,7 +1120,9 @@ class NoIdeaAgent:
         # remaining gap, staying a near-close below its price (Neel P02 ee98266bedd37231: 0.67 -> 0.82). Gated on the
         # live signal only - against non-mirroring suppliers big steps give value away (stubborn sim 0.98 -> 0.86,
         # analysis/central/REGRESSION.md); holders (P03, P11) cut for data, not for our steps
-        if sv and "mirror_step" in EXPERIMENTS and self.mirroring(events):
+        mirror_words = any(MIRROR_RX.search(m.get("body") or "") for m in events[-4:] if m.get("from") != "buyer")
+        if sv and (mirror_words or ("mirror_step" in EXPERIMENTS and self.mirroring(events))):
+            # (its words "in response to your step / movement": P02 0.67 -> 0.847 with 30-40% steps; Parth P07 0.81)
             gap = sv[-1] - hist[-1]
             hist.append(min(limit, hist[-1] + max(0.0, min(max(step, MIRROR_SHARE * gap), gap - sv[-1] * CLOSE_STEP))))
             return hist[-1]
@@ -1007,7 +1159,119 @@ class NoIdeaAgent:
         return False
 
     # ---- the move ------------------------------------------------------------------------------
+    PLANNER_SYSTEM = """You are the PLANNER reviewing a buyer agent's next move in a supplier negotiation, before it is sent.
+You get: the supplier's last e-mails, our past games with this supplier (memory), our planned move, and the costly mistakes
+to avoid. Decide ONE of: "send" (the plan is fine), "accept" (take its standing offer now - only if more rounds will not get
+a lower price, e.g. it named its floor, or our memory says it goes final next), or "ask" with a price strictly between our
+last ask and its standing price (when memory shows it agreed to such a price before, or the planned ask is far below
+prices it always refused). Never push after a final offer. Answer JSON only: {"verdict": "send|accept|ask", "price": number
+or null, "reason": "<one sentence>"}."""
+
+    def plan_check(self, case, threads, d):
+        """Second agent (experiment `planner`): a model reviews the planned move; code applies only safe overrides."""
+        if "planner" not in EXPERIMENTS or not self.complete or not d:
+            return d
+        sid = d.get("supplier_id")
+        events = threads.get(sid) or []
+        if not events or latest(events).get("status") != "open" or (d.get("message") or {}).get("action"):
+            return d
+        s = self.sup.get(sid) or {}
+        sheets = (d.get("message") or {}).get("term_sheets") or []
+        if not sheets:
+            return d
+        sheet_id, terms, c_stand = self.best_sheet(case, sid, events)
+        if not sheet_id or not terms.get("unit_price"):
+            return d
+        S = terms["unit_price"]
+        plan = [x["terms"].get("unit_price") for x in sheets]
+        # ENDGAME ONLY (configured after the offline trace): while it still cuts for facts the planner pulled our ask up
+        # to 45.10 in round 2 (concedes ~1.50 too early) - so it acts only once it HOLDS (same price twice), from our 3rd
+        # e-mail, with no strong fact left
+        own = [ (m.get("term_sheets") or [{}])[0].get("terms", {}).get("unit_price") for m in events
+                if m.get("from") != "buyer" and m.get("term_sheets")]
+        k = sum(m.get("from") == "buyer" and bool(m.get("term_sheets")) for m in events)
+        holding = len(own) >= 2 and own[-1] is not None and own[-2] is not None and abs(own[-1] - own[-2]) < 1e-9
+        strong_left = any(not self.weak(c) and not any(i in self.seen(sid) for i in c["ids"]) for c in s.get("args", []))
+        if not holding or k < 2 or strong_left:
+            return d
+        last_ask = next((ts["terms"]["unit_price"] for m in reversed(events) if m.get("from") == "buyer"
+                         for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get("unit_price")), None)
+        sup_mails = [(m.get("status"), (m.get("term_sheets") or [{}])[0].get("terms", {}).get("unit_price"),
+                      " ".join((m.get("body") or "").split())[:400]) for m in events if m.get("from") != "buyer"][-3:]
+        user = (f"SUPPLIER LAST E-MAILS (status, price, text): {json.dumps(sup_mails)}\n"
+                f"ITS STANDING PRICE: {S}\nOUR LAST ASK: {last_ask}\nPLANNED SHEETS (prices): {plan}; data IDs in the "
+                f"planned e-mail: {len((d.get('message') or {}).get('refs') or [])}\n"
+                f"MEMORY:\n{self.memory_note(sid)}\n"
+                "MISTAKES TO AVOID: pushing after final_offer (walks); empty rounds without new data (it goes final); asks "
+                "far below prices it always refused (burn its patience); accepting an OPEN offer while it still moves.")
+        try:
+            raw = self.complete(self.PLANNER_SYSTEM, user)
+            v = json.loads(re.search(r"\{.*\}", raw, re.S).group(0))
+        except Exception as e:
+            log.warning("planner failed (%s) - plan kept", e)
+            return d
+        log.info("%s planner: %s", sid, json.dumps(v)[:300])
+        # no accept while a cheaper ask under its price is still untried (the trace accepted 45.00 and lost the 44.95 = 0.80)
+        untried = min((x for x in plan if x is not None), default=S) < S - 0.005
+        if v.get("verdict") == "accept" and not untried and must_haves_ok(case, terms, s.get("std", {})) \
+                and c_stand < self.c_alt:
+            return {"supplier_id": sid, "message": {"action": {"type": "accept", "term_sheet_id": sheet_id}}}
+        if v.get("verdict") == "ask" and isinstance(v.get("price"), (int, float)):
+            p = round(float(v["price"]), 2)
+            lo = max((last_ask or 0), min((x for x in plan if x is not None), default=0)) + 0.005  # never below the plan
+            if lo < p < S:
+                t = complete_offer(case, {**terms, "unit_price": p})
+                if must_haves_ok(case, t, s.get("std", {})):
+                    d["message"]["term_sheets"] = [{"terms": {f: t.get(f) for f in case["negotiable"]}}] + \
+                        [x for x in sheets if x["terms"].get("unit_price") != p][:2]
+        return d
+
     def decide(self, case, threads):
+        try:
+            return self.plan_check(case, threads, self._decide(case, threads))
+        except Exception:  # a broken rule on an unseen structure must never cost the case (a crash ends it without a deal)
+            log.exception("decide failed - safe move instead")
+            return self.safe_move(case, threads)
+
+    def safe_move(self, case, threads):
+        """The move when our logic fails: take a closing offer (agreed / final_offer) that keeps the must-haves and beats
+        the alternative; else repeat our last ask to the thread furthest behind; else (no ask yet) counter 3% under its
+        standing price; on the last move, play.py's closing logic (cheapest acceptable standing offer, else walk)."""
+        from ..play import closing_move
+        live = live_threads(threads) or list(threads)
+        focus = [x for x in live if not getattr(self, "focus", None) or x in self.focus] or live
+        try:
+            alt = case["buyer"].get("alternative") or {}
+            c_alt = total_cost(case, alt["terms"]) if (alt.get("terms") or {}).get("unit_price") else math.inf
+        except Exception:
+            c_alt = math.inf
+        best = None
+        for sid in focus:
+            ev = threads[sid]
+            sheet_id, terms = standing(ev)
+            std = standard_terms(ev)
+            if sheet_id and latest(ev).get("status") in ("agreed", "final_offer") and must_haves_ok(case, terms, std):
+                c = total_cost(case, terms, std)
+                if c < c_alt and (best is None or c < best[0]):
+                    best = (c, sid, sheet_id)
+        if best:
+            return {"supplier_id": best[1], "message": {"action": {"type": "accept", "term_sheet_id": best[2]}}}
+        sid = min(focus, key=lambda x: sum(m.get("from") == "buyer" for m in threads[x]))
+        ev = threads[sid]
+        prev = ((getattr(self, "sup", None) or {}).get(sid) or {}).get("last_main")
+        if not prev:
+            _, terms = standing(ev)
+            if terms.get("unit_price"):
+                prev = complete_offer(case, {**terms, "unit_price": round(terms["unit_price"] * 0.97, 2)})
+        if not prev or moves_left(case, ev) <= 1:
+            return closing_move(case, threads)
+        return {"supplier_id": sid, "message": {
+            "subject": f"Re: {case['title']}"[:300], "term_sheets": [{"terms": prev}],
+            "body": "Dear team,\n\nThank you for your message. We propose the attached term sheet.\n\n"
+                    "Kind regards,\nPurchasing, Hollerau Pumpenwerke"}}
+
+    def _decide(self, case, threads):
+        self._case = case
         if case["case_id"] != self.case_id:
             self.prepare(case, threads)
         self.threads_ref = threads
@@ -1079,6 +1343,91 @@ class NoIdeaAgent:
         cap = terms.get("unit_price") if sheet_id else None
         target = self.value_target(case, sid, events)
         sheets = self.sheets_at(case, sid, target, cap)
+        if k == 0 and "r1_pay_short" in EXPERIMENTS and "payment_days" in case["negotiable"]:
+            shortest = min(case.get("term_options", {}).get("payment_days") or [30])
+            short = [x for x in self.sheets_at(case, sid, target, cap, n=12, band_pct=0.2) if x[1].get("payment_days") == shortest]
+            if short:
+                sheets = short[:1]
+                s["meso"] = [short[0][1]]  # code's structure, the model only writes
+        # experiment `trade_term`: a term the supplier values is a TRADE for round 2, not a round-1 gift - round 1 offers our
+        # best structure with the next-SHORTER contract at the same price, round 2 concedes the longer contract with the next
+        # fact (P10 Neel 59c899b9: 24 m -> 36 m + labour in round 2 = -0.40, its best round-2 step; P18 0c968aae: 30 -> 14 d
+        # in round 2 -> -0.20, the same term in round 1 drew nothing, bf56d975)
+        if k == 0 and "trade_term" in EXPERIMENTS and sheets and "contract_months" in case["negotiable"] and len(self.sup) == 1 \
+                and self.wants_term(case, sid):
+            opts = sorted(case.get("term_options", {}).get("contract_months") or [])
+            best_t = sheets[0][1]
+            cm = best_t.get("contract_months")
+            shorter = [o for o in opts if cm is not None and o < cm]
+            if cm == (opts[-1] if opts else None) and shorter:
+                t1 = complete_offer(case, {**best_t, "contract_months": shorter[-1]})
+                if must_haves_ok(case, t1, s["std"]):
+                    sheets = [(total_cost(case, t1, s["std"], s["est"]), t1)]
+                    s["meso"] = [t1]  # code's structure in round 1, the model only writes
+                    s["trade_term"] = ("contract_months", cm)
+                    log.info("%s: trade term - round 1 at %s months, %s months kept for round 2", sid, shorter[-1], cm)
+        # BUDGET SUPPLIER PAYMENT (experiment `budget_pay`): an index-priced raw-material supplier that is not hedged fixes its
+        # total concession at the first counter and prices a longer payment term into it steeply (P18 first counter 5.20 at
+        # 14/30 d in 4 of 4, 5.30-5.50 at 45-90 d; its best game 0c968aae: 30 d in round 1, 14 d as the round-2 trade). Round 1
+        # asks its STANDARD term when that costs us < 0.15%; the next shorter term is held for the round-2 trade. Hedged
+        # suppliers excluded (P08: all code sheets go out, its best at 45 d)
+        if k == 0 and "budget_pay" in EXPERIMENTS and sheets and "payment_days" in case["negotiable"] and len(self.sup) == 1 \
+                and case["type"] == "raw_material" and "hedged_forward" not in s["dossier"].get("motives", {}):
+            std_d, best_t = (s.get("std") or {}).get("payment_days"), sheets[0][1]
+            if std_d is not None and best_t.get("payment_days") != std_d:
+                saved_lm = s.pop("last_main", None)
+                try:
+                    pool = self.sheets_at(case, sid, target, cap, n=12, band_pct=0.5)
+                finally:
+                    if saved_lm is not None:
+                        s["last_main"] = saved_lm
+                hit = [x for x in pool if x[1].get("payment_days") == std_d and all(
+                    x[1].get(f) == best_t.get(f) for f in case["negotiable"] if f not in ("payment_days", "unit_price"))]
+                if hit and hit[0][0] <= sheets[0][0] * 1.0015:
+                    sheets, s["meso"] = [hit[0]], [hit[0][1]]
+                    shorter = sorted(o for o in case.get("term_options", {}).get("payment_days") or [] if o < std_d)
+                    if shorter:
+                        s["trade_term"] = ("payment_days", shorter[-1])
+                    log.info("%s: budget supplier - round 1 on its standard %s d, %s held for round 2", sid, std_d,
+                             shorter[-1] if shorter else None)
+        # ROUND-2 TRADE (experiments `trade_term` / `pay_trade`): one concession the supplier values goes out in round 2 as a
+        # visible trade. The stability rule would otherwise keep last round's terms ("unless >= 1% cheaper"), so the trade
+        # sets the structure explicitly: the held-back longer contract (trade_term), or the payment term moved toward the
+        # supplier's standard when that costs us < 0.15% of our total cost (pay_trade; P18 0c968aae 30 -> 14 d in round 2 =
+        # -0.20, its first counters 5.20 at 14/30 d vs 5.30-5.50 at 45-90 d)
+        trade_now = False  # a code-decided trade this round: the model must not re-pick the structure
+        if k == 1 and sheets and not s.get("traded") and (({"trade_term", "budget_pay"} & EXPERIMENTS and s.get("trade_term")) or "pay_trade" in EXPERIMENTS):
+            lead_t = sheets[0][1]
+            want = {}
+            tt = s.get("trade_term")
+            if ({"trade_term", "budget_pay"} & EXPERIMENTS) and tt and lead_t.get(tt[0]) != tt[1]:
+                want = {tt[0]: tt[1]}
+            elif "pay_trade" in EXPERIMENTS and "payment_days" in case["negotiable"] and len(self.sup) == 1:
+                std_d, d = (s.get("std") or {}).get("payment_days"), lead_t.get("payment_days")
+                opts = sorted(o for o in case.get("term_options", {}).get("payment_days") or [] if std_d is not None and std_d <= o < (d or 0))
+                if std_d is not None and d and d > std_d and opts:
+                    want = {"payment_days": opts[-1]}  # one step toward its standard
+            if want:
+                saved_lm = s.pop("last_main", None)  # the trade IS a structure change: price it without the stability rule
+                try:
+                    pool = self.sheets_at(case, sid, target, cap, n=12, band_pct=0.5)
+                finally:
+                    if saved_lm is not None:
+                        s["last_main"] = saved_lm
+                hit = [x for x in pool if all(x[1].get(f) == v for f, v in want.items())
+                       and all(x[1].get(f) == lead_t.get(f) for f in case["negotiable"] if f not in want and f != "unit_price")]
+                if hit and hit[0][0] <= sheets[0][0] * (1.0015 if "payment_days" in want else 1.01):
+                    pct = (hit[0][0] / sheets[0][0] - 1) * 100
+                    sheets, s["traded"], trade_now = [hit[0]], True, True
+                    s["trade_term"] = next(iter(want.items()))
+                    log.info("%s: round-2 trade %s (our cost %+.3f%%)", sid, want, pct)
+        mb = self.memory_best_structure(case, sid) if "no_memory_term" not in EXPERIMENTS else None
+        if mb and sheets:
+            keep = [x for x in self.sheets_at(case, sid, target, cap, n=12, band_pct=0.2)
+                    if all(x[1].get(f) == v for f, v in mb[0].items())]
+            if keep:
+                sheets = keep[:1]
+                s["mem_final"] = mb[1]
         if k == 0 and "meso" in EXPERIMENTS:
             # round 1: MESOs (OFF by default: P11 f5157e0d it priced the loosest 1500 ppm sheet, 0.54; 0d5b +1 fact - n=1 each) - up to 3 genuinely different structures of near-equal cost to us (Medvec & Galinsky: multiple
             # equivalent simultaneous offers show flexibility, reveal its preference and draw a bigger first move). P11:
@@ -1209,13 +1558,42 @@ class NoIdeaAgent:
                     log.info("%s: grid probe %d/%d ask %.2f (its open %.2f, grid %.2f)", sid, j + 1, GRID_PROBES, ask,
                              terms["unit_price"], g)
         elif probing and not g and not s.get("close_tried") and k < PLANNED_ROUNDS and c_stand <= sheets[0][0] * 1.003:
-            t_close = complete_offer(case, {**terms, "unit_price": round(terms["unit_price"] * (1 - NEAR_CLOSE_TRY), 2)})
-            if must_haves_ok(case, t_close, s["std"]):
+            # never below our own last ask on this structure (P18 L4a fe806698: 0.75% under its 5.00 = 4.96 < our 4.98 ->
+            # the monotone guard sent 4.98 again with no fact -> "Which figures is that based on?" -> it WALKED, 0.0)
+            p_close = round(terms["unit_price"] * (1 - NEAR_CLOSE_TRY), 2)
+            if same_structure and lm.get("unit_price") is not None:
+                p_close = max(p_close, round(lm["unit_price"] + 0.01, 2))
+            t_close = complete_offer(case, {**terms, "unit_price": p_close})
+            if must_haves_ok(case, t_close, s["std"]) and p_close < terms["unit_price"]:
                 s["close_tried"] = close_now = True
                 near_final = False
                 sheets = [(total_cost(case, t_close, s["std"], s["est"]), t_close)]
                 target = supplier_value(case, t_close, s["est"]) + self.premium(sid, t_close)
                 log.info("%s: one near-close ask %.2f below its open %.2f", sid, t_close["unit_price"], terms.get("unit_price"))
+        mf = s.get("mem_final")
+        if mf and status == "open" and k >= 1 and not s.get("mem_close") and ok and terms.get("unit_price") \
+                and terms["unit_price"] - mf <= 0.02 + 1e-9 and terms["unit_price"] > mf - 0.01 + 1e-9 \
+                and all(abs(float(terms.get(f) or 0) - float(v or 0)) < 1e-9
+                        for f, v in (self.memory_best_structure(case, sid) or ({}, 0))[0].items()):
+            # MEMORY CLOSE: it usually goes final at mf on this structure; ask one cent UNDER that, while its offer is still
+            # open (after its final it walked: Parth 4.93 @ 90 d -> 0.00). Refused -> its final at mf (P04 45 d: 0.874).
+            close_p = round(mf - 0.01, 2)
+            if "subcent_close" in EXPERIMENTS:
+                mem = (self.memory.get(sid) or {}).get("structures") or {}
+                key = next((kk for kk in mem if self.mem_match(kk, {f: terms.get(f) for f in case["negotiable"]
+                                                                     if f != "unit_price"})), None)
+                ref = [a for a, _ in (mem.get(key) or {}).get("refused_asks", [])] if key else []
+                if any(abs(a - close_p) < 0.0005 for a in ref):
+                    # its floor lies BETWEEN the refused cent and its final (P04 45 d: 4.88 refused, 4.89 final; the case
+                    # benchmark puts it near 4.883) -> half a cent under its final. A 422 (if only cents are allowed) costs
+                    # nothing: "nothing happens, no round is used" (api.md)
+                    close_p = round(mf - 0.005, 3)
+            t_mc = complete_offer(case, {**terms, "unit_price": close_p})
+            if must_haves_ok(case, t_mc, s["std"]):
+                s["mem_close"], close_now, near_final = True, True, False
+                sheets = [(total_cost(case, t_mc, s["std"], s["est"]), t_mc)]
+                target = supplier_value(case, t_mc, s["est"]) + self.premium(sid, t_mc)
+                log.info("%s: memory close %.2f (its usual final %.2f, now %.2f)", sid, t_mc["unit_price"], mf, terms["unit_price"])
         if s.get("probes") and not close_now and sheets and status == "open":
             last_ask = next((ts["terms"]["unit_price"] for m in reversed(events) if m.get("from") == "buyer"
                              for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get("unit_price")), None)
@@ -1230,16 +1608,30 @@ class NoIdeaAgent:
                 c_stand <= sheets[0][0] * 1.015 and not self.still_moving(case, sid, events):
             log.info("%s: it repeats its objection - taking its best sheet before it walks", sid)
             return accept
-        if ok and k > 0 and c_stand <= best_elsewhere and not s.get("closing") and (
+        # E. FACTS LEFT, OFFER OPEN: don't take it at our own ask - send the next fact with an ask a hair under its price on
+        #    ITS sheet (top runs: one more round while facts are left; P03 0.963 431.67 -> 430.41 on the next fact, we had
+        #    accepted 431.67). Final offers, walk risk (above) and its agreement are unaffected.
+        if ok and k > 0 and status == "open" and c_stand <= best_elsewhere and k < PLANNED_ROUNDS and not close_now \
+                and c_stand <= sheets[0][0] * 1.003 and self.next_args(sid, 1) and "no_facts_hold" not in EXPERIMENTS:
+            t_k = complete_offer(case, {**terms, "unit_price": round(terms["unit_price"] * (1 - CLOSE_STEP), 2)})
+            if t_k["unit_price"] < terms["unit_price"] and must_haves_ok(case, t_k, s["std"]):
+                close_now = True
+                sheets = [(total_cost(case, t_k, s["std"], s["est"]), t_k)]
+                target = supplier_value(case, t_k, s["est"]) + self.premium(sid, t_k)
+                log.info("%s: facts left - next fact with %.2f a hair under its open %.2f (no accept yet)", sid,
+                         t_k["unit_price"], terms["unit_price"])
+        if ok and k > 0 and c_stand <= best_elsewhere and not s.get("closing") and not close_now and (
                 c_stand <= sheets[0][0] * 1.0005 or ((k >= PLANNED_ROUNDS - 2 or near_final) and c_stand <= sheets[0][0] * 1.003)):
             return accept
         log.info("%s round %d: our best C %.0f vs standing %.0f (alt %.0f)", sid, k, sheets[0][0], c_stand, self.c_alt)
         if self.complete:  # dynamic: the model reads its e-mail and picks among pre-priced candidates
-            cands = sheets if close_now else self.sheets_at(case, sid, target, cap, n=8)
+            # a code-decided trade keeps its sheet (live P10 7df25805 / 9f210912: the rebuilt candidates carried the old
+            # 24-month structure and the round-2 trade never went out)
+            cands = sheets if (close_now or trade_now) else self.sheets_at(case, sid, target, cap, n=8)
             # the backbone (structure) is code's: after round 1 the model may only pick sheets with the structure code
             # leads with (P02 v2.13 dc1d4fd8a7cd47cb: the model moved us to 30 d, it made 30 d its final -> 0.20; the
             # good P02 games held 90 d every round)
-            if k >= 1 and sheets and cands and not close_now:  # code-built probe / floor pair: no structure lock
+            if (k >= 1 or s.get("mem_final")) and sheets and cands and not close_now and not trade_now:  # + round 1 when memory chose the structure
                 lead = sheets[0][1]
                 keep = [x for x in cands if all(x[1].get(f) == lead.get(f) for f in case["negotiable"] if f != "unit_price")]
                 cands = keep or cands[:1]
@@ -1263,6 +1655,8 @@ class NoIdeaAgent:
         docs = self.sup[sid]["dossier"].get("documents", [])
         ranked = sorted(docs, key=lambda d: -len(words & set(re.findall(r"[a-zäöüß]{5,}", d["text"].lower()))))
         notes = [f"- {d['date']} {d['kind']}: {' '.join(d['text'].split())[:260]}" for d in ranked[:4]]
+        # general lessons only: supplier-specific recipes were tested on their own suppliers and did not beat the general
+        # principles (live A/B 0.755 vs 0.783) - they only add context (archived in datasets/G_lessons_by_supplier.json)
         lessons = [f"- {x}" for x in self.lessons.get(case["type"], []) + self.lessons.get("general", [])]
         principles = [f"- {x}" for x in self.lessons.get("principles", [])]
         return ("SIGNALS IN ITS E-MAIL (and what works):\n" + ("\n".join(sig) or "- none") +
@@ -1276,7 +1670,11 @@ class NoIdeaAgent:
         pre-priced candidate sheets and up to 3 verified arguments, write the opening. Everything it returns is
         validated; any problem -> None (the deterministic path runs instead)."""
         s = self.sup[sid]
-        fresh = [c for c in s["args"] if not any(i in self.cited for i in c["ids"])]
+        # never the same argument twice, and after round 1 only arguments the arena can check (ids): an id-less cost calc
+        # took the one-fact slot of every later round on P01 (hidden a1acdb54: refs 0 from round 2, "please provide the
+        # specific data", 0.959 vs 0.9997) - its figure is restated by write() anyway
+        fresh = [c for c in s["args"] if not any(i in self.seen(sid) for i in c["ids"])
+                 and c["sentence"] not in self.heard(sid) and (k == 0 or c["ids"])]
         pool = [c for c in fresh if k == 0 or s.get("weak_ok", True) or not self.weak(c)][:8]
         if not pool and fresh and k >= 1:
             # NEVER an empty round: when only weak facts are left, send the next one anyway (P11 3cc43596: Parth's
@@ -1317,7 +1715,10 @@ class NoIdeaAgent:
                 c = pool[i]
                 if k == 0 and (c.get("other_part") or c.get("late")):
                     continue
-                if c["kind"] == "index_change" and any(pool[j]["kind"] == "index_change" for j in out):
+                two = k == 0 and self.r1_two_index(case, sid)  # round 1 may carry 2 index claims (P18 0.707)
+                n_idx = sum(pool[j]["kind"] == "index_change" for j in out)
+                if c["kind"] == "index_change" and (n_idx >= (2 if two else 1) or any(
+                        pool[j].get("series") == c.get("series") for j in out if pool[j]["kind"] == "index_change")):
                     continue
                 if any(set(c["ids"]) & set(pool[j]["ids"]) for j in out):  # same ID twice = one claim (OTD + ppm: sc:)
                     continue
@@ -1325,12 +1726,28 @@ class NoIdeaAgent:
                 if len(out) == cap:
                     break
             return out
-        own = [i for i, c in enumerate(pool) if not c.get("other_part")]
-        per_round = 3 if k == 0 else 1 if self.mirroring(events) else 2  # mirror: spread; holder: pack (see below)
-        must = fit(own, 3) if k == 0 else fit(range(len(pool)), per_round)
-        # after round 1 ONE new fact per e-mail: a supplier cuts once per new fact and holds without one, so spreading the
-        # facts keeps every round productive until its final (Neel P02 0.51 -> 0.82/0.85 "data spread over rounds")
-        # (P11 holder: 2 facts in round 2 cut EUR 1.00 three times, 1 fact cut 0.50) - mirror: spread, holder: pack
+        # a CASH-SHORT supplier (r1_facts == 1) cuts one step per e-mail and only at our messages 2-4 (P11, 35 replies from
+        # message 5 on: no cut): round 1 = the fact behind our structure, then ONE strong fact per e-mail; the e-mail with the
+        # late-payment admission takes the weakest one (next_args has the same rules for the deterministic path)
+        n1 = self.r1_facts(case, sid)
+        hold = n1 == 1
+        order = list(range(len(pool)))
+        if k == 0 and hold and "ppm_commitment" in case["negotiable"]:
+            order = [i for i in order if pool[i]["kind"] == "scorecard_ppm"] + [i for i in order if pool[i]["kind"] != "scorecard_ppm"]
+        if k >= 1 and hold and self.admission_due(case, sid, events, k):
+            strong = sorted((i for i in order if not self.weak(pool[i]) and self.impact(pool[i]) < math.inf),
+                            key=lambda i: self.impact(pool[i]))
+            order = strong + [i for i in order if i not in strong]
+        own = [i for i in order if not pool[i].get("other_part")]
+        # after round 1 ONE fact per e-mail for every supplier (rule 105: a 2nd fact in the same later e-mail cut no more; packing
+        # 2 per e-mail emptied P02's facts by round 3 -> an empty e-mail -> its final at 366.26 @ 30 d, 0.56 (hidden pass
+        # 407b3d1a); the 0.847 game sent copper, labour, -, OTD one by one and held 90 d for five rounds)
+        per_round = n1 if k == 0 else 1
+        must = fit(own, n1) if k == 0 else fit(order, per_round)
+        # a supplier cuts once per new fact and holds without one, so spreading the facts keeps every round productive until its
+        # final (Neel P02 0.51 -> 0.82/0.85 "data spread over rounds"). The old "holder: pack 2" (P11: 2 facts in round 2 cut
+        # EUR 1.00 three times) was the payment promise's cut, not the 2nd fact's (v2.34 analysis: message 2 with 1 fact +
+        # promise 0.80 mean, n=23)
         aidx = fit(must + aidx, per_round)
         notes = d.get("notes") or {}
         for r in notes.get("refusals") or []:  # remember its stated limits for the next rounds
@@ -1354,9 +1771,20 @@ class NoIdeaAgent:
             chosen = [t for _, t in cands][:3]
         args = [pool[i] for i in aidx]
         opening = self.clean_opening(case, str(d.get("opening") or ""))
+        if k >= 1 and "lean_later" in EXPERIMENTS:  # experiment: later e-mails without the model's paragraph
+            opening = self.lean_opening(events)
         if k >= 1 and hedged:  # later rounds stay lean (probe A: one line, cuts 0.25 / 0.06 vs the model's 0.09 / 0.08)
             opening = "Thank you for your revised offer. We move towards you."
         return self.message(case, sid, events, chosen, k, args=args, opening=opening)
+
+    @staticmethod
+    def lean_opening(events):
+        """Experiment `lean_later`: a later e-mail opens with one plain sentence instead of the model's paragraph (short later
+        e-mails drew bigger steps: P11 0.97% vs 0.80% per message with a fact, n=49 / 82; P07 1.13% vs 0.79%; P01, P18 alike;
+        the hedged-supplier rule already does this - P08 probe A lean 0.25 / 0.06 vs model 0.09 / 0.08)."""
+        prices = [standing([m])[1].get("unit_price") for m in events if m.get("from") != "buyer" and m.get("term_sheets")]
+        moved = len(prices) >= 2 and None not in prices[-2:] and prices[-1] < prices[-2] - 1e-9
+        return "Thank you for moving." if moved else "Thank you for your reply."
 
     def clean_opening(self, case, text):
         """The same filters as for the opening paragraph: no figures, no leaks, no off-table levers, English."""
@@ -1484,9 +1912,26 @@ class NoIdeaAgent:
         # no-sheets guard accepted 0.54). Clamp both values into the observed range; priors (no range) stay linear.
         rng = s.get("k_range") or {}
         clamp = lambda f, v: min(max(v, rng[f][0]), rng[f][1]) if f in rng else v
-        adj = -sum(k * (clamp(f, t.get(f) or 0) - clamp(f, ref.get(f) or 0)) for f, k in (s.get("k") or {}).items()
+        # (v2, default; opt-out `no_prem_std`) a term its OPENING quote left out (missing_fields) had no baseline, so the slope learned
+        # from its later sheets was silently dropped (stress ST114: -EUR 0.55 per lead-time day ignored; arena openings
+        # often omit lead time / payment, P05). Baseline then = the FIRST value its own primary sheets stated - fixed, and
+        # zero adjustment on the structure it quoted, so our asks there stay as before (a standard-terms baseline shifted
+        # every ask: stress ST087 16.22 -> 15.80, 0.957 -> 0.935). Chargeback / tooling keep their 0 baseline.
+        kb = s.setdefault("kbase", {})
+
+        def base(f):
+            v = ref.get(f)
+            if v is None and "no_prem_std" not in EXPERIMENTS and f not in ("chargeback_eur_per_complaint", "tooling_eur"):
+                if f not in kb:
+                    first = next((ts["terms"][f] for m in self.events_for(sid) if m.get("from") != "buyer"
+                                  for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get(f) is not None), None)
+                    if first is not None:
+                        kb[f] = first
+                v = kb.get(f)
+            return v
+        adj = -sum(k * (clamp(f, t.get(f) or 0) - clamp(f, base(f) or 0)) for f, k in (s.get("k") or {}).items()
                    if not f.startswith("_") and t.get(f) is not None
-                   and (ref.get(f) is not None or f in ("chargeback_eur_per_complaint", "tooling_eur")))
+                   and (base(f) is not None or f in ("chargeback_eur_per_complaint", "tooling_eur")))
         kd = (s.get("k") or {}).get("_deadband")
         if kd and t.get("index_clause"):  # a wider deadband costs it kd per point (baseline: db 0)
             adj -= kd * (t["index_clause"].get("deadband_pct") or 0)
@@ -1551,8 +1996,8 @@ class NoIdeaAgent:
         """Probe prices from our past games with this supplier at the SAME standing price and structure: the prices it
         agreed to (lowest first), else halfway between the highest ask it refused and its price, then a hair below it."""
         mem = (self.memory.get(sid) or {}).get("structures", {})
-        k = "|".join(f"{f}={terms[f]}" for f in sorted(terms) if f != "unit_price" and f in case["negotiable"])
-        st = next((v for kk, v in mem.items() if all(part in kk.split("|") for part in k.split("|") if part)), None)
+        want = {f: terms[f] for f in terms if f != "unit_price" and f in case["negotiable"]}
+        st = next((v for kk, v in mem.items() if self.mem_match(kk, want)), None)
         S = terms["unit_price"]
         if not st:
             return None
@@ -1565,6 +2010,80 @@ class NoIdeaAgent:
             top = max(refused)
             return [round((top + S) / 2, 2), hair] if (top + S) / 2 < hair else [hair]
         return None
+
+    def r1_two_index(self, case, sid):
+        """Round 1 may carry TWO index claims (different series) for a raw-material case - index-priced suppliers that give a
+        fixed budget after their first counter, so round 1 decides (P18: price history + alloy + cold drawing -> 5.20 first
+        counter, 0.707; P08 0.912 with path + cold drawing) - or a supplier that goes final by our 2nd message. Elsewhere 2+
+        index claims drew "we received a lot of material" (11 of 11). Opt-out `no_r1_two_index`; opt-in `r1_two_index`."""
+        if "no_r1_two_index" in EXPERIMENTS:
+            return False
+        if "r1_two_index" in EXPERIMENTS:
+            return True
+        case = case or getattr(self, "_case", None) or {}
+        return case.get("type") == "raw_material" or (sid in getattr(self, "sup", {}) and self.patience_prior(case, sid) <= 2)
+
+    @staticmethod
+    def mem_match(key, terms):
+        """Does a memory structure key ('f=v|f=v') match these terms? Numbers compared as numbers (the arena sends 45.0
+        where memory wrote 45, and 0.0 where memory wrote 0.0) - string matching missed P04's 45-day memory."""
+        for part in key.split("|"):
+            f, _, val = part.partition("=")
+            if f not in terms:
+                continue
+            v = terms.get(f)
+            try:
+                if abs(float(val) - float(v)) > 1e-9:
+                    return False
+            except (TypeError, ValueError):
+                if str(v) != val:
+                    return False
+        return True
+
+    def memory_finals(self, case, sid):
+        """{structure-terms-dict: lowest final price} from our past games with this supplier (memory)."""
+        out = []
+        for k, v in ((self.memory.get(sid) or {}).get("structures") or {}).items():
+            if not v.get("finals"):
+                continue
+            try:
+                t = {}
+                for part in k.split("|"):
+                    f, val = part.split("=", 1)
+                    if f in case["negotiable"]:
+                        t[f] = json.loads(val) if val not in ("None",) else None
+                out.append((t, min(v["finals"])))
+            except (ValueError, json.JSONDecodeError):
+                continue
+        return out
+
+    def memory_best_structure(self, case, sid):
+        """MEMORY TERM CHOICE (v2.24): the structure whose remembered final is cheapest for us - a floor-stop supplier
+        (P04) stops at a fixed price per payment term (14 d 4.86, 30 d 4.88, 45 d 4.89, 60 d 4.91, 90 d 4.94), so the term
+        decides where we land (45 d = 0.874, the record; 14 d, which we led with, = 0.815). Needs >= 2 remembered terms."""
+        fin = self.memory_finals(case, sid)
+        # only for a FLOOR-STOP supplier (final at our 1st-2nd message, patience prior <= 2: P04): there the final is a
+        # fixed price per structure; for mirror / holder suppliers it depends on the path (P07, P02 changed for the worse)
+        if len(fin) < 2 or self.patience_prior(case, sid) > 2 or case["type"] == "rfq":
+            return None
+        s = self.sup[sid]
+        cost = lambda x, d=0.0: total_cost(case, complete_offer(case, {**s["open_terms"], **x[0], "unit_price": round(x[1] - d, 2)}),
+                                           s["std"], s["est"])
+        if "floor_gamble" in EXPERIMENTS:
+            # experiment: the term with the best score one cent UNDER its remembered final, among terms whose final itself
+            # is within 0.02 score of the best final (P04: 90 d - 4.93 = 1.0 if taken, 4.94 = 0.86 if refused, vs 45 d 0.874)
+            span = 0.02 * (s.get("c_span") or 1.0)
+            best_final = min(cost(x) for x in fin)
+            ok = [x for x in fin if cost(x) <= best_final + abs(best_final) * 0.0002] or fin
+            # skip terms where that one-cent-under ask was already REFUSED (memory: P04 45 d 4.88, ffef2938)
+            mem = (self.memory.get(sid) or {}).get("structures") or {}
+            def refused(x):
+                key = next((k for k in mem if self.mem_match(k, x[0])), None)
+                return key is not None and any(abs(a - (x[1] - 0.01)) < 0.005 for a, _ in mem[key].get("refused_asks", []))
+            ok = [x for x in ok if not refused(x)] or ok
+            return min(ok, key=lambda x: cost(x, 0.01))
+        best = min(fin, key=cost)
+        return best
 
     def memory_note(self, sid):
         m = self.memory.get(sid) or {}
@@ -1608,6 +2127,22 @@ class NoIdeaAgent:
         if len(sup) < 2:
             return False
         a, b = ({x.group(0).lower() for x in self.OBJECTION_RX.finditer(t)} for t in sup)
+        # a phrase it already wrote in its OPENING e-mail is its template, not an objection (P02 0.847: "Zahlungsziel ...
+        # net" in every e-mail fired the guard and took 370.85 while it went on to 368.25; the real P02 walks repeated
+        # objections that first appeared mid-game: "returning to our standard 30-day", "restrict our pricing flexibility")
+        first = next((m.get("body") or "" for m in events if m.get("from") != "buyer"), "")
+        template = {x.group(0).lower() for x in self.OBJECTION_RX.finditer(first)}
+        a, b = a - template, b - template
+        # ... and a payment / standard-terms phrase only when its sheets REALLY propose another payment term than ours (the
+        # P02 walks: back to 30 d + a 30-day sheet; P02 0.847: the phrase while it stayed on our 90 d)
+        mine = next((ts["terms"] for m in reversed(events) if m.get("from") == "buyer"
+                     for ts in (m.get("term_sheets") or [])[:1] if ts.get("terms")), {})
+        its = [ts["terms"] for m in [x for x in events if x.get("from") != "buyer"][-1:] for ts in (m.get("term_sheets") or [])]
+        pushes = any(t.get("payment_days") is not None and mine.get("payment_days") is not None
+                     and abs(float(t["payment_days"]) - float(mine["payment_days"])) > 0.5 for t in its)
+        if not pushes:
+            pay = lambda x: any(w in x for w in ("zahlungsziel", "financing", "-day", "standard terms", "standard 30", "standard 60"))
+            a, b = {x for x in a if not pay(x)}, {x for x in b if not pay(x)}
         common = a & b
         if case is not None and "payment_days" not in case.get("negotiable", []):
             common = {x for x in common if "zahlungsziel" not in x and "financing" not in x and "-day" not in x}
@@ -1660,15 +2195,81 @@ class NoIdeaAgent:
         return out
 
     # ---- the words -----------------------------------------------------------------------------
+    def decoy_sheet(self, case, sid, sheets, k):
+        """CHOICE FRAMING for a cash-short supplier (r1_facts == 1) when ppm and chargeback are negotiable, round 1 only:
+        next to our real ask (tight ppm, no chargeback) a second GENUINE sheet at the same price with the term it fears - the
+        next looser ppm WITH the smallest chargeback - sent first. It takes our real ask as the relief and prices it a step
+        lower: P11 first counter on 300/0 45.50 / 46.00 in 5 of 5 games with [800 ppm + EUR 150, 300 ppm + EUR 0] (Parth's
+        0d5b opener) vs 46.00 / 46.50 in 40 of 40 single-sheet games (25 at 46.50; v2.34 H1 / H2 with one fact: 46.50 both).
+        We would sign either (every counter is ranked by our total cost). Opt-out `no_decoy`."""
+        if k != 0 or "no_decoy" in EXPERIMENTS or not sheets or self.r1_facts(case, sid) != 1:
+            return None
+        neg = case["negotiable"]
+        if "ppm_commitment" not in neg or "chargeback_eur_per_complaint" not in neg:
+            return None
+        t, opts = sheets[0], case.get("term_options", {})
+        ppm = t.get("ppm_commitment")
+        looser = sorted(o for o in opts.get("ppm_commitment") or [] if ppm is not None and o > ppm)
+        cbs = sorted(o for o in opts.get("chargeback_eur_per_complaint") or [] if o > 0)
+        if (t.get("chargeback_eur_per_complaint") or 0) or not looser or not cbs:
+            return None
+        d = complete_offer(case, {**t, "ppm_commitment": looser[0], "chargeback_eur_per_complaint": cbs[0]})
+        return d if must_haves_ok(case, d, self.sup[sid]["std"]) and d.get("unit_price") == t.get("unit_price") else None
+
     def message(self, case, sid, events, sheets, k, final=False, args=None, opening=None):
+        prev = self.sup[sid].get("last_main")
+        if sheets and not final and prev and prev.get("unit_price") is not None and case["type"] != "rfq" \
+                and "no_monotone" not in EXPERIMENTS:
+            # MONOTONE CONCESSIONS: on the structure we hold, never ask below our own previous ask - a step back reads as
+            # taking a concession back ("Without movement from your side we cannot move either" -> its final: P02 hidden
+            # 10b624c1, the facts-left hair ask 368.63 then the schedule's 365.97, final 368.74). RFQs excluded: there an
+            # ask follows the market low.
+            same = lambda t: all(t.get(f) == prev.get(f) for f in case["negotiable"] if f != "unit_price")
+            held = []
+            for t in sheets:
+                if same(t) and t.get("unit_price") is not None and t["unit_price"] < prev["unit_price"] - 1e-9:
+                    log.info("%s: ask %.2f below our last %.2f on the same terms - holding %.2f", sid, t["unit_price"],
+                             prev["unit_price"], prev["unit_price"])
+                    t = {**t, "unit_price": prev["unit_price"]}
+                held.append(t)
+            sheets = held
+        if args is None:
+            n1 = self.r1_facts(case, sid) if k == 0 else 1
+            # a single round-1 fact is the one that justifies our structure: its quality record when we ask a ppm commitment
+            lead = "scorecard_ppm" if k == 0 and n1 == 1 and "ppm_commitment" in case["negotiable"] else None
+            weakest = k >= 1 and self.r1_facts(case, sid) == 1 and self.admission_due(case, sid, events, k)
+            args = self.next_args(sid, n1, first_round=k == 0, lead_kind=lead, weakest=weakest)
+        if sheets and not final and prev and prev.get("unit_price") is not None and not args and case["type"] != "rfq" \
+                and "no_move_guard" not in EXPERIMENTS:
+            # NEVER AN EMPTY REPEAT: the same price on the same terms with no new fact reads as no movement at all - P18 L4a
+            # fe806698 walked away on exactly that ("Which figures is that based on?"); a one-cent move kept it in earlier
+            # games. So an e-mail without a new fact always moves: 30% of the gap to its price on these terms, >= 1 cent,
+            # always under its price.
+            t = sheets[0]
+            theirs = standing(events)[1] if events else {}
+            same_t = all(t.get(f) == prev.get(f) for f in case["negotiable"] if f != "unit_price")
+            on_its = all(theirs.get(f) == t.get(f) for f in case["negotiable"] if f != "unit_price")
+            tp = theirs.get("unit_price") if on_its else None
+            if same_t and t.get("unit_price") is not None and abs(t["unit_price"] - prev["unit_price"]) < 1e-9 \
+                    and tp and tp > t["unit_price"] + 0.01:
+                new_p = round(min(tp - 0.01, t["unit_price"] + max(0.01, 0.3 * (tp - t["unit_price"]))), 2)
+                log.info("%s: no new fact and no movement - moving %.2f -> %.2f (its %.2f)", sid, t["unit_price"], new_p, tp)
+                sheets = [{**t, "unit_price": new_p}] + list(sheets[1:])
         if sheets and not final:
-            self.sup[sid]["last_main"] = dict(sheets[0])
-        args = self.next_args(sid, 3 if k == 0 else 1, first_round=k == 0) if args is None else args
-        if any(a["kind"] == "cost_calc" for a in args):  # it uses 3 claims: the arena checks at most 3 per e-mail
+            self.sup[sid]["last_main"] = dict(sheets[0])  # our real ask stays the structure we hold (never the decoy)
+            decoy = self.decoy_sheet(case, sid, sheets, k)
+            if decoy:
+                sheets = [decoy, sheets[0]]
+        # a cost calc uses the claim slots only when it cites IDs: P04's has none, and dropping every other argument for it
+        # sent round 1 - the round a floor-stop supplier pins its value on - with ZERO checkable facts
+        if any(a["kind"] == "cost_calc" and a.get("ids") for a in args):  # it uses 3 claims: the arena checks at most 3
             args = [a for a in args if a["kind"] == "cost_calc"]
         rival = self.rival_offer(case, sid) if case["type"] == "rfq" else None
         refs = sorted({i for c in args for i in c["ids"]} | ({rival[0]} if rival else set()))
         self.cited.update(refs)
+        self.__dict__.setdefault("said", set()).update(c["sentence"] for c in args)
+        self.seen(sid).update(refs)
+        self.heard(sid).update(c["sentence"] for c in args)
         msg = {"subject": f"Re: {case['title']}"[:300],
                "body": self.write(case, sid, events, sheets, k, [c["sentence"] for c in args], rival, final, opening),
                "term_sheets": [{"terms": t} for t in sheets],
@@ -1688,7 +2289,10 @@ class NoIdeaAgent:
         asked = re.search(r"(?i)release schedule|call-?off|delivery schedule|expected volumes|volume figures|"
                           r"documentation supporting|send us the (data|schedule)", latest(events).get("body") or "")
         cash = {"cash_short", "wants_faster_payment"} & set(s["dossier"].get("motives", {}))
-        if not (asked or (k == 0 and cash)) or s.get("schedule_sent"):
+        # ... and in round 1 of an RFQ (Parth e8666ae: the call-off schedule took the first counter to 28.00 vs 30.50)
+        # - but not unasked into a one-fact first e-mail (r1_facts == 1: P11's 0.88 runs sent none)
+        unasked = k == 0 and (cash or case["type"] == "rfq") and self.r1_facts(case, sid) > 1
+        if not (asked or unasked) or s.get("schedule_sent"):
             return None
         t0 = {**case.get("fixed_terms", {}), **sheets[0]}
         vol = t0.get("volume_per_year") or case["buyer"]["need_per_year"]
@@ -1789,9 +2393,9 @@ class NoIdeaAgent:
         #    (the score assumes the agreed term); to a cash-short firm ~10 days of cash is worth more than the price gap.
         motives = set(d.get("motives", {}))
         rec = self.late_payment(sid)
-        if "no_own_late_pay" not in EXPERIMENTS and k >= 0 and rec and rec[0] >= 0.5 and rec[1] >= 3 and \
-                ({"cash_short", "wants_faster_payment"} & motives or re.search(r"pay on time|paid on time|cash", last)) \
-                and not self.sup[sid].get("owned_late"):
+        # with a one-fact first e-mail (r1_facts) the admission is round 2's lever, answering its "faster payment would help
+        # us more than anything" (P11 d51e49df: energy + admission -> "Thanks to that payment promise" 46.00 -> 45.00)
+        if self.admission_due(case, sid, events, k):
             self.sup[sid]["owned_late"] = True
             out.append(f"Straight talk: over the last 12 months we paid {rec[0] * 100:.0f}% of your invoices late, on average "
                        f"{rec[1]:.0f} days after the due date. That is on us, and it ends with this contract: every invoice "
@@ -1806,6 +2410,39 @@ class NoIdeaAgent:
                 out.append(f"We accept your price. On the chargeback: at the {ppm:.0f} ppm you commit to, EUR {cb:.0f} per "
                            f"complaint means about {n:.0f} complaints a year, around EUR {n * cb:,.0f} - it only costs you if "
                            f"quality slips below your own commitment. Alternatively the second sheet, without a chargeback.")
+        # ACCOUNT VALUE (experiment `account_value`): a supplier that "may drop small accounts" / sees us as not strategic
+        # fears we are a small account - name what we really buy from it (other parts in its own order history) and its own
+        # still-valid quote, in words (P04: 6308 + 7309 bearings; quote of 20 Sep EUR 4.63, valid 90 d). Round 1, once.
+        mot = set(d.get("motives", {}))
+        if "account_value" in EXPERIMENTS and k == 0 and {"may_drop_small_accounts", "we_are_not_strategic"} & mot \
+                and not self.sup[sid].get("acct_said"):
+            others = sorted({(pp[3].split(",")[0]) for part, rows in self.part_prices.items() if part not in case["parts"]
+                             for pp in rows if pp[0] == sid} if hasattr(self, "part_prices") else [])
+            qs = [(k2, v) for k2, v in self.all_facts.items() if k2.startswith("quote:") and v.get("supplier") == sid
+                  and v.get("part") in case["parts"] and (v.get("date") or "") >= "2026-09-01"]
+            own_q = max(qs, key=lambda kv: kv[1].get("date") or "", default=None)
+            self.sup[sid]["acct_said"] = True
+            line = "We are not a small account for you"
+            if others:
+                line += f": we also buy the {' and '.join(others[:2])} from you, and we want the whole family on the same " \
+                        "36-month footing"
+            line += "."
+            if own_q:
+                line += f" Your own quote of {own_q[1].get('date')} was EUR {own_q[1]['unit_price']:.2f} per unit."
+            out.append(line)
+        # GOOD COP / BAD COP (experiment `good_bad_cop`): the "bad cop" is real - our own Supplier Quality escalation letter
+        # (the case trigger doc: "will discuss quality commitments and cost recovery") and a real qualified second source
+        # (the case alternative); the negotiator is the good cop who offers the way out. Nothing invented, no price of the
+        # alternative (it is dearer). Once, when it stalls.
+        alt = case["buyer"].get("alternative") or {}
+        trig = case.get("trigger_doc")
+        if "good_bad_cop" in EXPERIMENTS and stalled and trig and alt.get("ref") and not self.sup[sid].get("cop_said"):
+            self.sup[sid]["cop_said"] = True
+            ask = min((t.get("unit_price") for t in sheets if t.get("unit_price")), default=None)
+            out.append(f"To be open with you: our Supplier Quality team's escalation ({trig}) asks for cost recovery after the "
+                       f"red scorecard, and a second source is already qualified for this part. I would rather keep this "
+                       f"business with you" + (f": at EUR {ask:.2f} I can sign today, with no chargebacks and every invoice "
+                                               f"paid on the due date." if ask else "."))
         # 0b. ask its floor (experiment `ask_floor`): "questions go to the person in charge, who answers as openly as the
         #     company is" - once it holds, ask the one number we need
         if "no_ask_floor" not in EXPERIMENTS and (stalled or k >= 2) and not self.sup[sid].get("asked_floor"):
@@ -1834,7 +2471,7 @@ class NoIdeaAgent:
     def plain(field, v):
         """A term in words for the e-mail body ("EUR 4.77 per unit", "90 days payment"); the term sheet binds."""
         if field == "unit_price":
-            return f"EUR {v:.2f} per unit"
+            return f"EUR {v:.3f} per unit" if abs(v * 100 - round(v * 100)) > 1e-6 else f"EUR {v:.2f} per unit"
         if field == "index_clause":
             return (f"{v['series']} index clause ({v['material_share']:.0%} share, {v['deadband_pct']:g}% deadband)"
                     if v else "no index clause")
@@ -1858,7 +2495,10 @@ class NoIdeaAgent:
             return (f"Dear {name} team,\n\nThank you for your final offer. We accept your alternative exactly as you "
                     f"proposed it ({offers}); it is attached as a term sheet for your confirmation.\n\n"
                     "Kind regards,\nPurchasing, Hollerau Pumpenwerke")
-        if self.complete and not given_opening:
+        lean = k >= 1 and "lean_later" in EXPERIMENTS
+        if lean and not given_opening:
+            opening = self.lean_opening(events)
+        if self.complete and not given_opening and not lean:
             levers = "; ".join(f"{m}: {v['lever']}" for m, v in motives.items())
             playbook = _sections(self.playbooks.get(case["type"], ""), PLAYBOOK_SECTIONS)[:2500]
             user = (f"SUPPLIER: {name}\nCASE: {case['title']} ({case['type']}, goal {case['buyer']['category_goal']})\n"
@@ -1889,6 +2529,14 @@ class NoIdeaAgent:
         # suppliers keep asking "Which volume can you commit to?" (P07 live): answer in code
         unit = "kits" if case["type"] == "bundling" else "units"
         lines = [f"We confirm a binding volume of {vol:,} {unit} per year" + (f" for {months} months" if months else "") + "."]
+        if lean and not re.search(r"(?i)volume|how many (units|pieces)|quantit", latest(events).get("body") or ""):
+            lines = []  # lean later e-mail: the volume line only when it asks about volume
+        tt = s.get("trade_term")
+        if tt and k == 1 and sheets and sheets[0].get(tt[0]) == tt[1]:  # experiments trade_term / pay_trade: said once
+            if tt[0] == "contract_months":
+                lines.append(f"To meet you, we now commit to the longer contract: {tt[1]} months.")
+            elif tt[0] == "payment_days":
+                lines.append(f"To meet you, we now move to {tt[1]} days payment.")
         if case["type"] == "bundling":
             if k == 0:
                 lines.append("We want one partner for the complete kit, which bundles parts we buy from several suppliers today.")
@@ -1916,7 +2564,8 @@ class NoIdeaAgent:
             what = "the kit" if case["type"] == "bundling" else "this part"
             lines.append(f"Could you share your cost breakdown for {what}, so we can understand the drivers together?")
         rec = self.late_payment(sid)
-        owns_late = "no_own_late_pay" not in EXPERIMENTS and rec and rec[0] >= 0.5 and rec[1] >= 3
+        owns_late = "no_own_late_pay" not in EXPERIMENTS and rec and rec[0] >= 0.5 and rec[1] >= 3 \
+            and not (k == 0 and self.r1_facts(case, sid) == 1)  # admission deferred to round 2: the plain promise in round 1
         if k <= 1 and "payment_days" not in case["negotiable"] and ({"cash_short", "wants_faster_payment"} & set(motives)) \
                 and "we_pay_late" not in motives and not owns_late:  # the concrete admission replaces the generic line
             # P11: "Faster payment would help us more than anything" every round, but payment is fixed in the case

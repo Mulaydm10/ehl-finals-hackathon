@@ -199,3 +199,94 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
 86. **Words matter where the numbers are equal: name the fear you remove, never accuse.** P11 (28 games, same data and sheet):
     openings that told the cash-short owner "no penalties / no chargebacks" drew the low first counter 7 of 9 vs 7 of 19;
     "prove your reliability" / "earn our confidence" / "documented complaints" leaned high. Put the reassurance in code, not luck.
+87. **Floor-stop suppliers stop at a fixed price per term: choose the TERM from memory** (P04: 45 d = 0.874 vs 14 d = 0.815, the
+    same supplier); then one ask one cent under its usual final BEFORE its final (free: refused -> its final). Agent 0.82 -> 0.874.
+88. **Check the spec before inventing a lever**: prices are EUR with 2 decimals (api.md) - a floor between two cents is out of reach.
+    P04: 0.874 is the ceiling; the agent reaches it every time (5 of 5) once the TERM is chosen from memory.
+89. **Memory lookups must compare numbers as numbers** (the arena sends 45.0 where we stored 45) - a silent mismatch disabled a rule.
+90. **Never drop a checkable fact because a calculation already covers its series**: a falling window has its own IDs and is
+    the strongest fact for a data-naive owner (P01: iron & steel -4.3% in round 1 -> first counter 133.40 vs 136.40, deal 0.9987).
+91. **Budget / short-fuse suppliers: load round 1 with every strong fact** (2 index claims of different series allowed there):
+    P18 first counter 5.20 vs 5.40 with history only; a supplier that values fast payment cuts a whole step for 14 d (0.707).
+92. **A term the supplier values buys a step as a TRADE, not as an opening**: P18 cut 0.20 when we moved to 14 d in round 2
+    (0.727), but answered the same nominal 5.20 when 14 d came in round 1 (0.688). Open on its terms, trade the term later.
+
+## L. RFQ (Neel noidea_p05 0.755, Parth's scripted 0.82, record 0.924)
+93. **Give every bidder data on the RFQ part itself** (cost drivers of the part, not of the bidder's catalogue): "Which figures
+    is that based on?" was answered for the first time - 70210 "you did your homework", first counter 36.00 -> 30.50.
+94. **Cite the cheapest rival offer at any lead time**, not only offers meeting our must-haves ("I give half the step now").
+95. **Hold RFQ asks low and show the first agreement to the others once before accepting** - the auction ratchet
+    (70250 agreed 30.25 -> shown -> 70210 agreed 28.57 @ 14 d). Never a walk-guard accept while another bidder is live.
+96. **Extreme anchors make bidders walk** (Parth run 3: 21.00 -> both walked, 0.381): anchor ~10% under the market low.
+97. **RFQ asks ~10% under the market low** (6% left money: a bidder agreed to our own ask; 10% -> 0.824; 12% and below risk walks
+    and slow rounds). Multi-bidder rounds run close to the 60-s reply limit - one timeout cost 0.06.
+98. **RFQ asks ~12% under the market low** (live P05 curve: 6% 0.755, 10% 0.81, 12% 0.871, 15% 0.865; an extreme anchor walks).
+99. **In an RFQ the highest opener can have the lowest floor** (P05 Fuchsreiter: opens 38.50, agrees 26.75; the low opener's floor
+    ~27.4). Judge bidders by how far they MOVE once they move, not by their opening.
+100. **A round without our move can unlock a holder** (Parth P05 0.950): it answers "without movement from your side we cannot
+    move either", then - after our deep ask + the lowest rival - "we need to clarify this internally" and its line drops about
+    one step per round; it agrees to our standing ask once that is above its line. Make ONE move after the clarification.
+    A late reply counts as "our last offer repeated" (three in a row end the thread) - prefer a no-price note to a timeout.
+
+## M. From the top-scoring runs of the whole team (docs/TOP_RUNS_LEARNINGS.md, src/eval/top_runs.py)
+101. **Round 1 = every strong verified fact the case offers** (falling indices, forecast, should-cost, price path, notice
+     breach): top games had more round-1 facts in 7 of 9 bilateral cases and a bigger first cut.
+102. **One sheet in round 1** (top games of 7 cases), the term chosen by the supplier's currency (90 d / 14 d / grid term).
+103. **The best deals close with the supplier agreeing to our ask** after it holds - keep a standing ask just under its line.
+104. **One more round while it still moves or facts are left** - the top games ran a round longer on P02, P03, P04, P11.
+
+## N. Fact pacing by supplier (v2.34, all archived traces)
+105. **After round 1 one e-mail earns about one fact's worth**: a 2nd fact in the same later e-mail cut no more than one (P11
+     0.88% vs 0.92% per message, n=21 / 77; P07 1.26% vs 1.26%; P03 0.01% vs 0.06%). Later e-mails carry one new fact (mirrors
+     always; other holders still up to 2 - untested either way).
+106. **Round 1 prices several facts - except at a cash-short supplier.** First counter by verified round-1 facts: P01 137.4 (0)
+     -> 133.4-134.3 (2-3), P02 374.5 / 373.6 / 372.8 (0 / 1 / 2), P03 432.9 / 432.3 / 431.8 (1 / 2 / 3), P10 31.9 (1) / 31.5
+     (2-3): load round 1 (rule 101). A CASH-SHORT supplier ("it does not squeeze its margin") cuts ONE step per e-mail however
+     much it is shown: P11, the same five levers - four in round 1 -> 45.00-45.50 (38 games); one per e-mail -> 44.45-44.50
+     (4 of 4, both first-counter draws). Round 1 there = the one fact behind our structure (its quality record for a ppm
+     commitment), then one strong fact per e-mail.
+107. **A lever that earns its own cut travels with the WEAKEST remaining fact** (P11 round 2: late-payment admission + energy
+     1.03 pts -> 45.00; steel 1.11 pts alone in round 3 -> 44.50). Never spend two strong reasons in one capped e-mail.
+108. **Plan the levers for the productive rounds**: P11 cut only at our messages 2-4 (0 of 35 replies from message 5 on). A fact
+     held past its final is lost: one strong fact per productive round, weak ones after.
+109. **Validate as if every supplier were new**: `NOIDEA_EXPERIMENTS=hidden` switches off supplier memory and per-case reactions
+     (the final's suppliers are new). The gap between hidden and normal play is what the agent memorised, not learned.
+110. **One fact per later e-mail holds for EVERY supplier, not only mirrors** (v2.34b): P02 hidden with 2 per e-mail ran out of
+     facts by round 3 -> empty e-mail -> its final on a worse term (0.56); one per e-mail -> 0.809 (best 0.847 did the same).
+111. **A floor-stop supplier without memory is a cent-rounding lottery** (P04: 14 d 0.815 / 30 d 0.766 / 45 d 0.874 / 60 d 0.810 /
+     90 d 0.860, the same floor). No pre-game rule picks 45 d; recalibrating the supplier's cash rate moved six other cases and not
+     P04 (rejected). Accept the lottery; memory helps only if a supplier comes back.
+112. **The first counter of P11 is mostly a draw** (46.00 / 46.50; 45.50 in 3 games): wording labels and the payment promise do
+     not separate the draws over 51 games. What we control is the rest: one held fact = one step, from either draw.
+113. **Never send an argument twice; after round 1 an argument without data IDs never takes the round's fact slot** (P01
+     hidden: an id-less cost calc repeated every round, 0 checkable facts, "please provide the specific data", 0.959 vs 0.9997).
+114. **Concessions are monotone**: on the structure we hold, never ask below our own previous ask - a step back reads as taking a
+     concession back ("Without movement from your side we cannot move either" -> its final, P02).
+115. **A server error is not a reason to resend**: a 503 on our e-mail + a blind retry landed a round late, after the supplier's
+     final, and it walked (P10 0.0). Re-sync with the arena and decide on what the thread says now.
+116. **The agent must never crash a case**: one exception = no deal. Every decision path ends in a safe move; crash-test every
+     known case structure (19 practice cases, 9 never hosted) before the final.
+117. **The supplier reads our exact words** (identical text -> identical counter; identical moves with different paragraphs ->
+     different counters, P07 5.44-5.56). For an unseen supplier this is noise: judge changes on several games, not one.
+118. **Check the arena's MODE before crediting a change** (Neel): in engine-template mode (its model off, 23:51-23:58 on
+     10 Oct) every reply is fixed engine sentences and results differ (P10 31.00 vs 31.50). Two of our "new bests" came from
+     that window. A/B only within one mode; `analysis/tools/supplier_mode_scan.py` tells them apart.
+119. **A supplier's ALTERNATIVE is not a refusal** (P02 0.531): never let a model's reading of its e-mail hard-filter our
+     structure; a term counts as refused only when its PRIMARY sheet moved away from ours twice (rule 8), then we adopt it for good.
+120. **An instant agreement to our first ask means the anchor left room** (P03: agreed at once 3 of 3 = 0.954; the one game where
+     it countered went to 0.989 via its own 36-month alternative). Look for the term the supplier pays for in its counters.
+121. **Never send an e-mail without movement or a new fact** (P18 walked on one; P02 went final after one). If no fact is left,
+     move a real step toward its price; never repeat our last ask word for word.
+122. **In an RFQ every bidder is its own negotiation**: a fact told to one bidder is new to the others - track what EACH
+     supplier has seen (P05: one bidder never got a fact under a case-wide set).
+123. **Cite the case's own evidence even without its value**: a forecast / should-cost id the case lists can be cited without a
+     figure - the arena checks it against its own data (never contradicted; D02 +0.05 in 6 of 6 games). An unanswered "send us
+     proof of the volume" is a lost step.
+124. ~~Hold back the concession a commitment-seeking supplier values and trade it in round 2~~ (WITHDRAWN v2.34j: the first
+     test never traded; with the real trade P10 0.7019 x4, the same as without) (longer contract, said in
+     words with the next fact): P10 0.702 / 0.710 vs 0.694-0.702 without; Neel's same path 0.710 x2. Moving the payment term
+     back in round 2 did NOT work (P18 0.610 / 0.666 vs 0.688) - the round-1 term is already priced in.
+125. **Check what was SENT, not what was logged**: a decision can be overridden later in the pipeline (P10: the log said
+     "round-2 trade", the e-mail carried the old term). Verify every A/B in the arena trace before crediting it.
+126. **Copying a best game's moves does not copy its score** when the supplier's replies vary per session (P18: the best
+     game's exact rounds 1-2 gave 0.666 x3, not 0.727). Judge a rule on its average, never on its best game.

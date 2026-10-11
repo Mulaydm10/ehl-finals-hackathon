@@ -1,0 +1,162 @@
+{
+ "case_id": "case:ST066",
+ "set": "stress",
+ "type": "bundling",
+ "title": "Bundle the fastener kit with one distributor",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with Schraubenhandel Leitner & Sohn GmbH. Bundle the fastener kit with one distributor. Need: 30000 kits a year. Category goal: routine: fewer suppliers and less process cost. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 5 days). Fallback if you walk away: today's terms continue unchanged. Must-haves: none. Prepare from the data package.",
+ "trigger_doc": "doc:20260909-70610-P07",
+ "parts": [
+  "part:360010",
+  "part:360011",
+  "part:360012",
+  "part:360030"
+ ],
+ "suppliers": [
+  "sup:70610"
+ ],
+ "negotiable": [
+  "unit_price",
+  "payment_days",
+  "contract_months"
+ ],
+ "fixed_terms": {
+  "lead_time_days": 5,
+  "volume_per_year": 30000,
+  "effective_date": "2027-01-01",
+  "index_clause": null,
+  "incoterm": "DAP",
+  "tooling_eur": 0
+ },
+ "term_options": {
+  "payment_days": [
+   14,
+   30,
+   45,
+   60,
+   90
+  ],
+  "contract_months": [
+   12,
+   24,
+   36
+  ]
+ },
+ "buyer": {
+  "need_per_year": 30000,
+  "horizon_years": 2,
+  "current_unit_price": 6.29,
+  "fallback_unit_price": 6.91,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 5,
+  "category_goal": "routine",
+  "fallback_risk_pct": 5,
+  "index_risk_pct": 2,
+  "late_cost_per_day": 40,
+  "cost_per_defect": 6,
+  "freight_eur_per_unit": {
+   "EXW": 0.08,
+   "FCA": 0.07,
+   "DAP": 0.0
+  },
+  "index_paths": {},
+  "must_haves": [],
+  "alternative": {
+   "kind": "current_contract",
+   "ref": null,
+   "terms": {
+    "unit_price": 6.29,
+    "payment_days": 30,
+    "lead_time_days": 5,
+    "volume_per_year": 30000,
+    "contract_months": 24,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "incoterm": "DAP",
+    "tooling_eur": 0
+   }
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260909-70610-P07",
+  "ctr:4600070610",
+  "sc:70610@2026Q3"
+ ],
+ "_hidden": {
+  "template": "case:P07",
+  "variant": 5,
+  "suppliers": {
+   "sup:70610": {
+    "grid": 0.01,
+    "rate": 0.06358019371697542,
+    "r_base": 0.913490723671476,
+    "levers": {
+     "index_change": 0.032458518998257274,
+     "price_history": 0.025644469680866346,
+     "quality": 0.03077057322505434,
+     "volume_change": 0.02884487686373549
+    },
+    "lever_repeat": 0.46969799159788,
+    "fact_pass": 0.0878268176736503,
+    "first_frac": 0.474810618492999,
+    "recip": 0.721773641597941,
+    "cap": 0.02604890188463709,
+    "final_round": 3,
+    "p_walk_final": 0.709080466965413,
+    "patience": 5,
+    "insult": 0.104370922271177,
+    "min_move": 0.001090909395190537,
+    "hazard": 0.0,
+    "rival_follow": 0.7317947219985719,
+    "rival_premium": 0.004166655460060828,
+    "lt_cost": 7.401982070707637e-05,
+    "vol_elast": 0.11732360472939697,
+    "ppm_cost": 0.07556157331678776,
+    "contract_bonus": 0.0003093354277672584,
+    "ix_base": 0.010250216480767758,
+    "ix_slope": 0.00635215539319311,
+    "max_payment_days": null,
+    "trust_penalty": 0.0020458675403814564,
+    "alt_std": false,
+    "strict_drivers": false,
+    "archetype": "mirror",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 80,
+     "contract_months": 12,
+     "lead_time_days": 5,
+     "incoterm": "DAP",
+     "volume_per_year": 30000,
+     "tooling_eur": 0,
+     "chargeback_eur_per_complaint": 0.0
+    },
+    "opening": {
+     "unit_price": 5.71,
+     "payment_days": 30,
+     "contract_months": 12
+    },
+    "drivers": [
+     "LCI-C",
+     "PPI-C2594"
+    ],
+    "ppm_real": 52,
+    "full_cost_frac": 0.9653763381959922,
+    "usual_rate": 0.06358019371697542
+   }
+  },
+  "c_open": 390121.4,
+  "c_alt": 379916.0,
+  "c_best": 273592.8,
+  "best_package": {
+   "supplier_id": "sup:70610",
+   "terms": {
+    "unit_price": 4.59,
+    "payment_days": 90,
+    "contract_months": 36
+   },
+   "c": 273592.8
+  },
+  "best_is_alternative": false
+ }
+}

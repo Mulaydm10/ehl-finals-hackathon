@@ -43,7 +43,7 @@ Before: 11 games, all `final_offer` in round 1 at EUR 31.70-32.00 (best 0.663). 
   ask ~1/3 of the gap above our anchor, accept its round-2 final.
 
 ## Round-2 hair test (Parth, 2026-10-11): its round-2 step follows our ask - P10 stays at 0.702
-Probe G (`P10_G.json`): game B's round 1 verbatim -> **open 31.50 again** (deterministic: both claims verified). Round 2
+Probe G (`P10_G_hair.json`; main has a different design under `P10_G.json`): game B's round 1 verbatim -> **open 31.50 again** (deterministic: both claims verified). Round 2
 asked 31.12 @ 36 m (just over the (31.10, 31.20] line B's final implied) -> **final 31.40 = 0.686** (`edefadcb02c5b703`).
 Its line is not fixed: the round-2 step depends on how far under its 31.50 counter we ask (all P10 round 2s):
 31.12 (-1.2 %) -> 0.10; 30.90 (-1.9 %, weak fact) -> 0.20; 30.75 (-2.4 %) -> 0.20; **30.40 (-3.5 %) -> 0.30**;

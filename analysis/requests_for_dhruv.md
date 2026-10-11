@@ -67,3 +67,18 @@ budget; nominal first counter, so lead with the longest payment term; small step
 round; the final is cent-rounded on our payment term; round-2 cut = min(cap, share x gap); levers measured at 0). Please
 add them to docs/GENERAL_RULES.md (I don't write in docs/). Rules 1, 2 and 4 are the general ones. Your v2.20 supplier
 memory could detect a budget supplier from its total cut across games.
+
+## 14. (Neel, 2026-10-10 22:55) Let `year_rise_path` run for price-frozen suppliers too (P03 0.963)
+Live 722dee8e68a4836c (`analysis/agent_variants/noidea_p03.py`): the rising order PRICE PATH ("Our orders for this part
+rose from EUR 400.19 to EUR 412.74 within nine months (po:4500013355-10, po:4500014465-10)") was taken by Selvbrunn's
+committee in round 2: 431.67 -> 430.41, the biggest cut P03 has ever given. The final 430.36 @ 90 d = 0.963 beats "+=" 0.944.
+Your `year_rise_path` skips price-frozen suppliers, so the main agent never sends it to P03. Its own quote by ID
+(quote:7300003) came back "irrelevant" (read as a rival quote): leave it out. Details: analysis/cases/P03_lever.md §6.
+
+## 15. (Neel, 2026-10-11 01:30) P18 regression in v2.34+: the round-1 term choice opens at 45 d and never switches to 14 d
+All 26 P18 games (analysis/cases/P18_lever.md section 9): v2.27/v2.28 opened with ONE sheet @ 30 d and switched to 14 d in round 2
+(4.76 -> 4.87, +0.11) -> 5.20 -> 5.00 -> agreed 4.91 / 4.94 = **0.727 / 0.707**. v2.34+ sends three sheets led by 45 d, its primary
+goes to 45 d and stays there: **0.62-0.69 in 7 games**. Werdenfels prices payment at ~EUR 0.10/kg per 30 days (~24%/yr, 3x our 8%),
+so for a supplier whose two-sheet quotes show payment priced above our rate, open at its standard term and move to 14 d in round 2
+with a full step (>= +0.11 here: smaller steps drew one grid step less, 3 of 3). Never hold our ask in its final-trigger round:
+"it gives nothing without a move" (ed9a881a: hold + new fact -> its final at once).

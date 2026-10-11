@@ -171,11 +171,39 @@
 | 2026-10-10 20:56 | Parth | P04 | p04_record 11543a3 --probe / scripted | 0.000 | 62a17f4abde590c7 |
 | 2026-10-10 20:57 | Parth | P08 | noidea 6567650 (year-rise path, no hedged index, clause-free asks) / gpt-6-astra | 0.830 (agent, P08 rules) | 018b9519cfe7c8f4 |
 | 2026-10-10 20:55 | Dhruv | P11 | noidea v2.22 (wording) / gpt-6-astra | 0.71 (high draw) | 605ed96c39467c97 |
+| 2026-10-10 21:03 | Dhruv | P11 | noidea v2.22 / gpt-6-astra | 0.71 (high draw) | 73c7ca293b8154f0 |
 | 2026-10-10 21:00 | Neel | P05 | noidea / gpt-6-astra | **0.51** | f60b3c3a6a65593f |
+| 2026-10-10 21:12 | Neel | P05 | noidea_p05 / gpt-6-astra | **0.71** | 737bacd270dea248 |
+| 2026-10-10 21:13 | Dhruv | P11 | noidea v2.23 good_bad_cop / gpt-6-astra | 0.78 (high draw; 45.10 agreed) | aced3c6022d32468 |
+| 2026-10-10 21:13 | Dhruv | P11 | noidea v2.23 planner / gpt-6-astra | 0.79 (low draw; 44.90/44.95 refused) | dbf506a3e7827dae |
+| 2026-10-10 21:20 | Neel | P05 | noidea_p05 / gpt-6-astra | **0.75** | ec7c2e29fdb046cd |
+| 2026-10-10 21:22 | Dhruv | P04 | noidea v2.24 / gpt-6-astra | **0.874** (= record; memory term 45 d) | ffef2938ad0d18a5 |
+| 2026-10-10 21:33 | Dhruv | P04 | noidea v2.24b floor_gamble / gpt-6-astra | 0.86 (90 d; 4.93 refused) | d94cb59807684363 |
 | 2026-10-10 21:02 | Parth | P08 | noidea c1d7678 (hedged: 3 sheets r1, lean later) / gpt-6-astra | 0.916 (agent, P08 rules complete) | 4ff01141bab9fea6 |
 | 2026-10-10 21:19 | Parth | P05 | p05_record 1e8ac31 / scripted | 0.820 | 9ce672fffbf931a7 |
+| 2026-10-10 21:43 | Dhruv | P04 | noidea v2.25 experiment / gpt-6-astra | 0.874 | 24cf72ca71830fb8 |
+| 2026-10-10 21:43 | Dhruv | P04 | noidea v2.25 experiment / gpt-6-astra | 0.874 | 0cccb38498fd407b |
+| 2026-10-10 21:43 | Dhruv | P04 | noidea v2.25 experiment / gpt-6-astra | 0.874 | 5c8773bf751a3149 |
+| 2026-10-10 21:45 | Dhruv | P04 | noidea v2.25 subcent_close (re-run) / gpt-6-astra | 0.874 | f0df06534b3ce1a0 |
+| 2026-10-10 21:46 | Neel | P01 | noidea_neel / gpt-6-astra | **0.99** | f70338659b42114e |
+| 2026-10-10 21:53 | Neel | P01 | noidea_neel / gpt-6-astra | **1.00** | ca304e3606547b1f |
+| 2026-10-10 21:55 | Dhruv | P01 | noidea v2.26 / gpt-6-astra | **1.00** (0.9987; agreed 129.11 @ 14 d Jan) | f01f637c3e9cb17f |
 | 2026-10-10 21:46 | Parth | P05 | p05_record e8666ae / scripted | 0.820 | 1ebd6e0eb14313c8 |
+| 2026-10-10 22:04 | Dhruv | P18 | noidea v2.27 r1_two_index / gpt-6-astra | **0.71 BEST P18** (agreed 4.94 @ 14 d) | a09d953636747cae |
+| 2026-10-10 22:03 | Neel | P11 | noidea / gpt-6-astra | **0.79** | 38c77b7d0dcd49cd |
 | 2026-10-10 22:00 | Parth | P05 | p05_record 3c6c292 / scripted | 0.381 | 8e94b127db1e6eaa |
+| 2026-10-10 22:10 | Dhruv | P18 | noidea v2.28 (gate) / gpt-6-astra | **0.73 BEST P18** (agreed 4.91 @ 14 d) | 0c968aae64401bb1 |
+| 2026-10-10 22:10 | Dhruv | P18 | noidea v2.28 r1_pay_short / gpt-6-astra | 0.69 (14 d in round 1: no gain) | bf56d9758ff4bd7c |
+| 2026-10-10 22:12 | Neel | P11 | noidea / gpt-6-astra | **0.79** | 1d97f0e2306bab63 |
+| 2026-10-10 22:15 | Dhruv | P05 | noidea v2.29 (RFQ layer) / gpt-6-astra | 0.75 (70210 agreed 28.57 @ 14 d) | f841e57158853b8d |
+| 2026-10-10 22:18 | Dhruv | P05 | noidea v2.29b rfq_low10 / gpt-6-astra | **0.82 agent best P05** (28.00 @ 30 d) | 62a9e69f67fc482a |
+| 2026-10-10 22:18 | Dhruv | P05 | noidea v2.29b rfq_low12 / gpt-6-astra | 0.76 (timeout with 70240) | c88d676f208af3c0 |
+| 2026-10-10 22:26 | Dhruv | P05 | noidea v2.30 / gpt-6-astra | 0.82 | fef71f65d9545953 |
+| 2026-10-10 22:27 | Dhruv | P05 | noidea v2.30 / gpt-6-astra | 0.76 | 37c25dfb8f43d84b |
+| 2026-10-10 22:28 | Neel | P11 | noidea_p11 / gpt-6-astra | **0.79** | d310d9bf515ba560 |
+| 2026-10-10 22:33 | Dhruv | P05 | noidea v2.31 / gpt-6-astra | 0.81 (agreed 28.06 @ 14 d) | ceb3295e8f463b18 |
+| 2026-10-10 22:33 | Dhruv | P05 | noidea v2.31 / gpt-6-astra | 0.81 (agreed 28.06 @ 14 d) | 51dcee25992e24f3 |
+| 2026-10-10 22:36 | Neel | P11 | noidea_p11 / gpt-6-astra | **0.71** | 23cf3ecd1ca82ac9 |
 | 2026-10-10 22:17 | Parth | P05 | p05_hold timeout 25.54/26.3/26.8 819e635 / scripted | 0.924 | 583554022ba413fd |
 | 2026-10-10 22:23 | Parth | P05 | p05_hold timeout 24.5/26.3/26.8 6d4f9d9 / scripted | 0.924 | b23b50ab87818b39 |
 | 2026-10-10 22:26 | Parth | P05 | p05_hold timeout 25.54/26.3/26.8 3657fc1 / scripted | 0.924 | 628a955aa9fb9183 |
@@ -183,14 +211,99 @@
 | 2026-10-10 22:33 | Parth | P05 | p05_hold timeout 25.54/26.3/26.8 e35baee / scripted | 0.924 | ce9f4a1b6696039b |
 | 2026-10-10 22:36 | Parth | P05 | p05_hold timeout 25.54/26.3/26.8 172e4ec / scripted | 0.924 | b07178ca345fcb62 |
 | 2026-10-10 22:39 | Parth | P05 | p05_hold timeout 25.54/26.75/26.8 2797fee / scripted | 0.950 | 83612a5b5ce32831 |
+| 2026-10-10 22:36 | Dhruv | P05 | noidea v2.31 rfq_low12 / gpt-6-astra | **0.87 agent best P05** (70210 27.44 @ 14 d) | 7271fbdd0ff0e105 |
+| 2026-10-10 22:37 | Dhruv | P05 | noidea v2.31 rfq_low15 / gpt-6-astra | 0.87 (70210 27.50 @ 14 d) | 0e9974d5c45ca01b |
+| 2026-10-10 22:40 | Neel | P11 | noidea_p11 / gpt-6-astra | **0.71** | b450b03546d3375e |
 | 2026-10-10 22:40 | Parth | P05 | p05_hold timeout 25.54/26.6/26.8 fcf377f / scripted | 0.965 | 27e15c33ad66fd08 |
+| 2026-10-10 22:50 | Neel | P03 | noidea_p03 / gpt-6-astra | **0.96** | 722dee8e68a4836c |
 | 2026-10-10 22:42 | Parth | P05 | p05_hold timeout 25.54/26.55/26.8 ff9b808 / scripted | 0.924 | 39a1476d7ccab4ca |
 | 2026-10-10 22:44 | Parth | P05 | p05_hold timeout 25.54/26.55/26.8 4526d07 / scripted | 0.924 | 63b709605318ba51 |
 | 2026-10-10 22:53 | Parth | P11 | p11_hold timeout 42.77/43.57/44.01 hair-0.08 56d39b7 / scripted | 0.7230 | c67d7cd1300143fb |
+| 2026-10-10 22:59 | Neel | P04 | noidea_p04 (P04_SHOT=True) / gpt-6-astra | **0.70** | 1992e28afb6e7f4b |
 | 2026-10-10 22:57 | Parth | P11 | p11_hold none first=0d5b 42.77/43.57/44.01 hair-0.08 937f0d7 / scripted | 0.8770 | 6d6f9a2b7348b149 |
 | 2026-10-10 23:00 | Parth | P11 | p11_hold none first=0d5b 42.77/43.57/44.01 hair-0.08 43adcf3 / scripted | 0.8770 | 7463ab2485f55bcd |
+| 2026-10-10 23:44 | Dhruv | P11 | v2.34 hidden (1 fact r1) / gpt-6-astra | 0.7935 | d30c19f68c77e236 |
+| 2026-10-10 23:44 | Dhruv | P11 | v2.34 hidden (1 fact r1) / gpt-6-astra | 0.7935 | deb7f45c85f14f84 |
+| 2026-10-10 23:46 | Dhruv | P01 | v2.34 hidden / gpt-6-astra | 0.9997 | 3ebbbec25f9e9fbb |
+| 2026-10-10 23:46 | Dhruv | P02 | v2.34 hidden (2 facts/later e-mail) / gpt-6-astra | 0.5599 | 407b3d1a59044346 |
+| 2026-10-10 23:46 | Dhruv | P03 | v2.34 hidden / gpt-6-astra | 0.9536 | fe4d84556f855572 |
+| 2026-10-10 23:46 | Dhruv | P04 | v2.34 hidden / gpt-6-astra | 0.8153 | 6c23da73bc3efcc3 |
+| 2026-10-10 23:51 | Dhruv | P11 | v2.34 hidden + decoy / gpt-6-astra | 0.7517 | 8ccbdcc0590cdee9 |
+| 2026-10-10 23:51 | Dhruv | P11 | v2.34 hidden + decoy / gpt-6-astra | 0.7517 | 98e834e4234e6cc0 |
+| 2026-10-10 23:58 | Dhruv | P02 | v2.34b hidden (1 fact/later e-mail) / gpt-6-astra | 0.8089 | 10b624c15674036d |
+| 2026-10-10 23:58 | Dhruv | P07 | v2.34b hidden / gpt-6-astra | 0.8249 | 216f49e98cec02c1 |
+| 2026-10-10 23:58 | Dhruv | P08 | v2.34b hidden / gpt-6-astra | 0.7815 | 00e8923eed8d12dc |
+| 2026-10-10 23:58 | Dhruv | P10 | v2.34b hidden / gpt-6-astra | 0.7410 | 673ee8904fe2d292 |
+| 2026-10-10 23:58 | Dhruv | P18 | v2.34b hidden / gpt-6-astra | 0.6883 | 3cb62cb905451df8 |
 | 2026-10-10 23:05 | Parth | P11 | p11_hold timeout first=0d5b 42.77/43.57/44.01 hair-0.08 bc363f2 / scripted | 0.8850 | d51e49df4d9826a4 |
 | 2026-10-10 23:09 | Parth | P11 | p11_hold timeout first=0d5b 42.77/43.57/44.01 hair-0.08 5e37c67 / scripted | 0.8770 | 8f62abf996ef150f |
+| 2026-10-11 00:06 | Dhruv | P01 | v2.34c hidden L2 (id-less calc bug) / gpt-6-astra | 0.9590 | a1acdb54026e17cb |
+| 2026-10-11 00:06 | Dhruv | P02 | v2.34c hidden L2 / gpt-6-astra | 0.8278 | b09861f722d92ee7 |
+| 2026-10-11 00:06 | Dhruv | P03 | v2.34c hidden L2 / gpt-6-astra | 0.9536 | f8082c20d710299c |
+| 2026-10-11 00:06 | Dhruv | P04 | v2.34c hidden L2 / gpt-6-astra | 0.7661 | aeb8c56737b24742 |
+| 2026-10-11 00:06 | Dhruv | P11 | v2.34c hidden L2 (decoy) / gpt-6-astra | 0.7935 | c897726495188647 |
+| 2026-10-11 00:11 | Dhruv | P07 | v2.34c hidden L2 / gpt-6-astra | 0.7730 | 88c1d97f8a118a35 |
+| 2026-10-11 00:11 | Dhruv | P08 | v2.34c hidden L2 / gpt-6-astra | 0.9156 | 2bfced14e95b42d6 |
+| 2026-10-11 00:11 | Dhruv | P10 | v2.34c hidden L2 (503 -> stale retry after its final -> walk) / gpt-6-astra | 0.0000 | 8134c6d18ce18953 |
+| 2026-10-11 00:11 | Dhruv | P18 | v2.34c hidden L2 / gpt-6-astra | 0.6207 | 77b16b90ff3c91b7 |
+| 2026-10-11 00:06 | Neel | P10 | noidea_p10b (NOIDEA_EXPERIMENTS=hidden; r1 rubber idx instead of OTD) / gpt-6-astra | **0.69** | a9e2c0e41cc1be12 |
+| 2026-10-11 00:08 | Neel | P10 | noidea_p10b v2 (NOIDEA_EXPERIMENTS=hidden; record r1 incl. OTD, r2 labour idx) / gpt-6-astra | **0.69** | 67f3678ff842d9a8 |
+| 2026-10-11 00:18 | Neel | P10 | noidea_p10 (cloud plan: r1 24 m + path + should-cost + rubber idx; r2 36 m move + labour idx) / gpt-6-astra | **0.71** | 59c899b93ba24dec |
+| 2026-10-11 00:21 | Dhruv | P01 | v2.34d hidden L3 / gpt-6-astra | 0.9987 | 00978bd1c35aab21 |
+| 2026-10-11 00:21 | Dhruv | P02 | v2.34d hidden L3 / gpt-6-astra | 0.8184 | 934b73e42b6b2a53 |
+| 2026-10-11 00:21 | Dhruv | P07 | v2.34d hidden L3 / gpt-6-astra | 0.7924 | 40751c7b8a683f60 |
+| 2026-10-11 00:21 | Dhruv | P10 | v2.34d hidden L3 / gpt-6-astra | 0.7019 | 420cc05075f01a72 |
+| 2026-10-11 00:21 | Dhruv | P11 | v2.34d hidden L3 / gpt-6-astra | 0.7935 | c6f7cff834fdf6a6 |
+| 2026-10-11 00:25 | Dhruv | P03 | v2.34d hidden L3 / gpt-6-astra | 0.9536 | 5c74eff537726872 |
+| 2026-10-11 00:25 | Dhruv | P04 | v2.34d hidden L3 / gpt-6-astra | 0.8153 | 8519a38814914b86 |
+| 2026-10-11 00:25 | Dhruv | P08 | v2.34d hidden L3 / gpt-6-astra | 0.9156 | b8282418717996f6 |
+| 2026-10-11 00:25 | Dhruv | P18 | v2.34d hidden L3 / gpt-6-astra | 0.6207 | 3a6491c842fccaca |
+| 2026-10-11 00:26 | Dhruv | P11 | v2.34d hidden L3b / gpt-6-astra | 0.7935 | 542f9ce85b4a7482 |
+| 2026-10-11 00:26 | Dhruv | D01 | v2.34d SANDBOX unseen supplier / gpt-6-astra | 0.9098 | 6df9e5bd0a72465b |
+| 2026-10-11 00:26 | Dhruv | D02 | v2.34d SANDBOX unseen RFQ / gpt-6-astra | 0.5154 | ec2806ab3dd21e33 |
+| 2026-10-11 00:30 | Neel | P10 | noidea_p10 (cloud plan, after P10_draw.md; normal mode) / gpt-6-astra | **0.71** | 3c4aa1a6471cdc3c |
+| 2026-10-11 00:41 | Dhruv | P01 | v2.34d LOAD 9-parallel / gpt-6-astra | 0.9987 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:41 | Dhruv | P02 | v2.34d LOAD (model-read limit -> hop to 30 d) / gpt-6-astra | 0.5311 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:41 | Dhruv | P03 | v2.34d LOAD (countered: 36-m alternative) / gpt-6-astra | 0.9889 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:41 | Dhruv | P04 | v2.34d LOAD / gpt-6-astra | 0.8604 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:41 | Dhruv | P07 | v2.34d LOAD / gpt-6-astra | 0.7405 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:41 | Dhruv | P08 | v2.34d LOAD / gpt-6-astra | 0.9156 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:41 | Dhruv | P10 | v2.34d LOAD / gpt-6-astra | 0.7019 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:41 | Dhruv | P11 | v2.34d LOAD / gpt-6-astra | 0.7935 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:41 | Dhruv | P18 | v2.34d LOAD / gpt-6-astra | 0.6658 | see notes/analysis_v234 LOAD log |
+| 2026-10-11 00:54 | Neel | P03 | noidea_p03 v2 (cloud P03_deep: asks 0.60 under line, rival quote 7100051 in msg 5) / gpt-6-astra | **0.96** | 45943af6907388d6 |
+| 2026-10-11 00:49 | Dhruv | P01 | v2.34e LOAD L4a / gpt-6-astra | 0.9987 | 096983aa556e5d68 |
+| 2026-10-11 00:49 | Dhruv | P02 | v2.34e LOAD L4a (held 90 d, agreed our ask) NEW BEST / gpt-6-astra | 0.8790 | 9b8414c10d44f574 |
+| 2026-10-11 00:49 | Dhruv | P03 | v2.34e LOAD L4a / gpt-6-astra | 0.9872 | 20d7859253cae541 |
+| 2026-10-11 00:49 | Dhruv | P04 | v2.34e LOAD L4a / gpt-6-astra | 0.7661 | 1e3b5d95e56a30d3 |
+| 2026-10-11 00:49 | Dhruv | P07 | v2.34e LOAD L4a / gpt-6-astra | 0.8119 | a0c0077c9fbd75d1 |
+| 2026-10-11 00:49 | Dhruv | P08 | v2.34e LOAD L4a / gpt-6-astra | 0.9156 | 708a9d7e218b68b3 |
+| 2026-10-11 00:49 | Dhruv | P10 | v2.34e LOAD L4a / gpt-6-astra | 0.7019 | b4c0d2b291783cad |
+| 2026-10-11 00:49 | Dhruv | P11 | v2.34e LOAD L4a / gpt-6-astra | 0.7935 | af941ab2c6381ee4 |
+| 2026-10-11 00:49 | Dhruv | P18 | v2.34e LOAD L4a (empty repeat -> WALKED) / gpt-6-astra | 0.0000 | fe806698b5d96eb1 |
+| 2026-10-11 00:55 | Dhruv | P01 | v2.34f LOAD L4b / gpt-6-astra | 0.9987 | - |
+| 2026-10-11 00:55 | Dhruv | P02 | v2.34f LOAD L4b (its floor draw: final 369.42) / gpt-6-astra | 0.7519 | 02925a6c2448f3c7 |
+| 2026-10-11 00:55 | Dhruv | P03 | v2.34f LOAD L4b / gpt-6-astra | 0.9536 | - |
+| 2026-10-11 00:55 | Dhruv | P04 | v2.34f LOAD L4b / gpt-6-astra | 0.8153 | - |
+| 2026-10-11 00:55 | Dhruv | P07 | v2.34f LOAD L4b / gpt-6-astra | 0.8119 | - |
+| 2026-10-11 00:55 | Dhruv | P08 | v2.34f LOAD L4b / gpt-6-astra | 0.9156 | - |
+| 2026-10-11 00:55 | Dhruv | P10 | v2.34f LOAD L4b / gpt-6-astra | 0.7019 | - |
+| 2026-10-11 00:55 | Dhruv | P11 | v2.34f LOAD L4b / gpt-6-astra | 0.7935 | - |
+| 2026-10-11 00:55 | Dhruv | P18 | v2.34f LOAD L4b (no walk) / gpt-6-astra | 0.6883 | - |
+| 2026-10-11 01:10 | Neel | P18 | noidea_p18 (r2 ask cap 4.85, r3 36-month move + labour at the beat price) / gpt-6-astra | **0.62** | fd5b66b1c9f06fc0 |
+| 2026-10-11 01:20 | Neel | P18 | noidea_p18 v2 (contract-clause October 5.74 argument; r2 4.84 @ 14 d; r3 4.97 db5) / gpt-6-astra | **0.61** | a55d2e8917f705d4 |
+| 2026-10-11 01:24 | Neel | P18 | noidea_p18 v3 (best path 4.76@30 -> 4.86@14 -> hold 4.86 + labour) / gpt-6-astra | **0.60** | ed9a881a0a93d1c5 |
+| 2026-10-11 01:35 | Neel | P18 | noidea_p18 v4 (mirror model: opening 4.69 @ 30 d, then 4.80 / 4.84 / 4.86 @ 14 d) / gpt-6-astra | **0.67** | 6a0a9bfdc4273cba |
+| 2026-10-11 01:50 | Neel | P18 | noidea_p18 v5 (its clause from r1, opening 4.57 @ 30 d, 4.81 @ 14 d + on-time promise, 4.86) / gpt-6-astra | **0.60** | cee66b66edd04b71 |
+| 2026-10-11 01:40 | Dhruv | P01 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.9987 | see notes/analysis_v234/LOAD_L6.log |
+| 2026-10-11 01:40 | Dhruv | P02 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.7751 | see notes/analysis_v234/LOAD_L6.log |
+| 2026-10-11 01:40 | Dhruv | P03 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.9889 | see notes/analysis_v234/LOAD_L6.log |
+| 2026-10-11 01:40 | Dhruv | P04 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.8098 | see notes/analysis_v234/LOAD_L6.log |
+| 2026-10-11 01:40 | Dhruv | P07 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.7470 | see notes/analysis_v234/LOAD_L6.log |
+| 2026-10-11 01:40 | Dhruv | P08 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.9156 | see notes/analysis_v234/LOAD_L6.log |
+| 2026-10-11 01:40 | Dhruv | P10 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.6941 | see notes/analysis_v234/LOAD_L6.log |
+| 2026-10-11 01:40 | Dhruv | P11 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.8771 | see notes/analysis_v234/LOAD_L6.log |
+| 2026-10-11 01:40 | Dhruv | P18 | v2.34h LOAD L6 hidden / gpt-6-astra | 0.6207 | see notes/analysis_v234/LOAD_L6.log |
 | 2026-10-11 00:51 | Parth | P04 | p04_months 2dbff17 (12-month sheets, 90 d primary) / scripted | 0.056 | d9254a0c99c892aa |
 | 2026-10-11 01:05 | Parth | P05 | p05_rounds cf31816 (max rounds: 31) / scripted | 0.965 | 30ec9eb7dd0febc9 |
 | 2026-10-11 01:17 | Parth | P05 | p05_hold note 25.54/26.6/26.8 b42cd96 / scripted | 0.872 | fff61af109edbf39 |
@@ -233,3 +346,66 @@
 | 2026-10-11 04:13 | Parth | P10 | probe P10_O rubber held for round 2 (scripted, no model) | 0.71 (unit_price=31.1, volume_per_year=23400, contract_months=36, lead_time_days=56) | 856dff728d5e8c9c |
 | 2026-10-11 04:13 | Parth | P10 | probe P10_P reciprocity anchor 30.80 (scripted, no model) | 0.702 (unit_price=31.2, volume_per_year=23400, contract_months=36, lead_time_days=56) | fbdf654d4fa59e5a |
 | 2026-10-11 04:21 | Parth | P10 | probe P10_Q floor question r1 (scripted, no model) | 0.71 (unit_price=31.1, volume_per_year=23400, contract_months=36, lead_time_days=56) | d34ee89a7f54ed54 |
+| 2026-10-11 02:04 | Dhruv | P18 | v2.34i hidden A/B pay_trade / gpt-6-astra | 0.6096 | 1d8188917a996b6c |
+| 2026-10-11 02:04 | Dhruv | P18 | v2.34i hidden A/B pay_trade / gpt-6-astra | 0.6658 | 0873041457737dd0 |
+| 2026-10-11 02:04 | Dhruv | P18 | v2.34i hidden A/B base / gpt-6-astra | 0.6883 | 57e43ef7aafc67ea |
+| 2026-10-11 02:04 | Dhruv | P10 | v2.34i hidden A/B trade_term / gpt-6-astra | 0.7019 | 7df258059aa7cbf1 |
+| 2026-10-11 02:04 | Dhruv | P10 | v2.34i hidden A/B trade_term / gpt-6-astra | 0.7097 | 9f210912a85e003b |
+| 2026-10-11 02:04 | Dhruv | P10 | v2.34i hidden A/B base / gpt-6-astra | 0.6941 | 6ca6ae5d9bae6406 |
+| 2026-10-11 02:04 | Dhruv | P04 | v2.34i hidden A/B trade_term / gpt-6-astra | 0.8153 | cd5ab95b8483d1c6 |
+| 2026-10-11 02:17 | Dhruv | P18 | v2.34j hidden A/B budget_pay / gpt-6-astra | 0.6658 | 193f7a3689743cc7 |
+| 2026-10-11 02:17 | Dhruv | P18 | v2.34j hidden A/B budget_pay / gpt-6-astra | 0.6658 | 4eec90233ab1eed1 |
+| 2026-10-11 02:17 | Dhruv | P18 | v2.34j hidden A/B budget_pay / gpt-6-astra | 0.6658 | 19dbe14233166ef1 |
+| 2026-10-11 02:17 | Dhruv | P18 | v2.34j hidden A/B base / gpt-6-astra | 0.7181 | 6c2813cee1fcf116 |
+| 2026-10-11 02:17 | Dhruv | P10 | v2.34j hidden A/B trade_term fixed / gpt-6-astra | 0.7019 | 6fd876c4fb7c0d67 |
+| 2026-10-11 02:17 | Dhruv | P10 | v2.34j hidden A/B trade_term fixed / gpt-6-astra | 0.7019 | 045855e3085b4b27 |
+| 2026-10-11 02:17 | Dhruv | P10 | v2.34j hidden A/B trade_term fixed / gpt-6-astra | 0.7019 | bb285b61870c147d |
+| 2026-10-11 02:17 | Dhruv | P10 | v2.34j hidden A/B no_trade_term / gpt-6-astra | 0.7019 | cb8dc7210eb99af3 |
+| 2026-10-11 02:54 | Dhruv | P02 | v2.34j hidden A/B old_lessons / gpt-6-astra | 0.7405 | bb8f2eddf6eb111c |
+| 2026-10-11 02:54 | Dhruv | P02 | v2.34j hidden A/B general lessons / gpt-6-astra | 0.7666 | d904ecea0b1aae81 |
+| 2026-10-11 02:54 | Dhruv | P07 | v2.34j hidden A/B old_lessons / gpt-6-astra | 0.7924 | a2d70f924d7c0075 |
+| 2026-10-11 02:54 | Dhruv | P07 | v2.34j hidden A/B general lessons / gpt-6-astra | 0.7859 | 2e7ba6fcd624124e |
+| 2026-10-11 02:54 | Dhruv | P10 | v2.34j hidden A/B old_lessons / gpt-6-astra | 0.6941 | 1fc63548805721dd |
+| 2026-10-11 02:54 | Dhruv | P10 | v2.34j hidden A/B general lessons / gpt-6-astra | 0.7019 | f14a4bece64b33b8 |
+| 2026-10-11 02:54 | Dhruv | P11 | v2.34j hidden A/B old_lessons / gpt-6-astra | 0.7935 | d1e499ee783f7e1a |
+| 2026-10-11 02:54 | Dhruv | P11 | v2.34j hidden A/B general lessons / gpt-6-astra | 0.8771 | c8b2844b0f2b7cd5 |
+| 2026-10-11 03:13 | Dhruv | P01 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.9987 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | P02 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.7692 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | P03 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.9872 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | P04 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.7661 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | P07 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.8051 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | P08 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.9156 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | P10 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.6863 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | P11 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.7935 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | P18 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.6883 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | D01 sandbox | final config L7 hidden (general lessons only) / gpt-6-astra | 0.9425 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | D02 sandbox | final config L7 hidden (general lessons only) / gpt-6-astra | 0.5786 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:29 | Neel | P18 | noidea_p18_harvest (cloud cross: 90 d from r2 + two-sheet r4) / gpt-6-astra - 90 d priced +0.10, guard to 30 d, final 5.00 @ 30 d | **0.68** | f2770f53c9ebd512 |
+| 2026-10-11 03:58 | Neel | P18 | noidea_p18_soft (soft-session plan: 3 beat sheets if round 2 = 5.00) / gpt-6-astra - normal session 5.20/5.10/5.00, final 5.00 @ 30 d | **0.68** | 83f89503e22658b2 |
+| 2026-10-11 04:05 | Neel | P18 | noidea_p18_db3 (45 d + db3 from msg 2) / gpt-6-astra - db3 priced like db5 (+0.10), 45 d +0.10: 5.30 -> final 5.20 @ 45 d db3 | **0.60** | d602e35bbccc5318 |
+| 2026-10-11 04:10 | Neel | P18 | noidea_p18_soft v2 batch 1/6 / gpt-6-astra - 5.20, 5.00+db5 alt (soft signature from our msg-2 request), held 5.00, final 5.00 | **0.68** | 15438619586806fb |
+| 2026-10-11 04:10 | Neel | P18 | noidea_p18_soft v2 batch / gpt-6-astra - IDENTICAL replies to game 1 within 1 s each (arena replays an identical conversation): wasted | **0.68** | 6c153bbcada4e16a |
+| 2026-10-11 04:10 | Neel | P18 | noidea_p18_soft v2 batch / gpt-6-astra - IDENTICAL replies to game 1 within 1 s each (arena replays an identical conversation): wasted | **0.68** | 35aaa9ae0367cd0c |
+| 2026-10-11 04:10 | Neel | P18 | noidea_p18_soft v2 batch / gpt-6-astra - IDENTICAL replies to game 1 within 1 s each (arena replays an identical conversation): wasted | **0.68** | 62ee950829402fa6 |
+| 2026-10-11 04:10 | Neel | P18 | noidea_p18_soft v2 batch / gpt-6-astra - IDENTICAL replies to game 1 within 1 s each (arena replays an identical conversation): wasted | **0.68** | 2908a68c6555c1ba |
+| 2026-10-11 04:10 | Neel | P18 | noidea_p18_soft v2 batch / gpt-6-astra - IDENTICAL replies to game 1 within 1 s each (arena replays an identical conversation): wasted | **0.68** | 99150255574adb07 |
+| 2026-10-11 04:14 | Neel | P18 | noidea_p18_replay (0c968aae msg 1-2 verbatim -> SAME 5.20 / 5.00 @ 14 d state, instantly) / gpt-6-astra - msg 3 4.86 = a step BELOW our 4.87 -> final 5.00 @ 14 d | **0.67** | 152d666e8ca628be |
+| 2026-10-11 04:16 | Neel | P18 | noidea_p18_replay v2 (0c968aae state, msg 3 = 4.99 @ 30 db5 + 4.88 @ 30 db0) / gpt-6-astra - "30-day term requires an adjustment from our 14-day offer": final 5.10 @ 30 d | **0.61** | b354bd0425f2c1fa |
+| 2026-10-11 04:18 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=4.97/14/5 (0c968aae state, record probe: worth 4.87 to it) / gpt-6-astra - final 5.10 @ 14 d db5 | **0.67** | d05baf2826e1e6bc |
+| 2026-10-11 04:19 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=4.98/14/5 (0c968aae state, worth 4.88 to it) / gpt-6-astra - final 5.00 @ 14 d db0 | **0.67** | 173a5c90194af19b |
+| 2026-10-11 04:20 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=4.99/14/5 (0c968aae state, worth 4.89 to it) / gpt-6-astra - final 5.00 @ 14 d db0 | **0.67** | ab222b48898c8fb0 |
+| 2026-10-11 04:22 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=4.89/14/0 (0c968aae state) / gpt-6-astra - final 5.00 @ 14 d: floor in (4.89, 4.91] | **0.67** | 66b6abb882860c4a |
+| 2026-10-11 04:23 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=4.90/14/0 (0c968aae state) / gpt-6-astra - final 5.00 @ 14 d: floor in (4.90, 4.91] = its 2% authority | **0.67** | 57f06757e4a2b512 |
+| 2026-10-11 04:25 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=5.00/14/5 (0c968aae state, 1.96% under its 5.10 db5 alt) / gpt-6-astra - final 5.10 db5: the 2% is measured on its db0 offer | **0.67** | 2782c270fa3ff162 |
+| 2026-10-11 04:39 | Dhruv | P01 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.9987 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:39 | Dhruv | P02 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.7580 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:39 | Dhruv | P03 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.9878 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:39 | Dhruv | P04 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.8098 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:39 | Dhruv | P07 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.7989 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:39 | Dhruv | P08 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.9156 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:39 | Dhruv | P10 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.6941 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:39 | Dhruv | P11 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.7935 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:39 | Dhruv | P18 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.6207 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:52 | Neel | P18 | noidea_p18_state45 v2 (6c2813ce state 5.00 @ 45 d reproduced; 5.03 db5+4.93 -> hold; 5.04 db5+4.94 -> final "absolute limit for these terms") / gpt-6-astra | **0.69** | 81b5c6de3be181e5 |
+| 2026-10-11 05:07 | Neel | P18 | noidea_p18_pay14 record attempt (6c2813ce state; msg 3 4.97 @ 14 d db5 + 4.86 @ 14 d db0) / gpt-6-astra - final 5.00 @ 14 d: "accept your 14-day payment terms, 5.00 is the lowest we can offer" | **0.67** | d71cab8cb90339f8 |
+| 2026-10-11 05:39 | Neel | P18 | noidea_p18_open45 record attempt (new 45-d opening; run by the user via !) / gpt-6-astra - first counter 5.40 -> 5.20 -> 5.10 -> final 5.10 @ 45 d: "all possible adjustments" | **0.62** | 2493f26fb7838c69 |

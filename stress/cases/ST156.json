@@ -1,0 +1,190 @@
+{
+ "case_id": "case:ST156",
+ "set": "stress",
+ "type": "raw_material",
+ "title": "Steel sheet: index clause or fixed price?",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with Stahlhandel Rupprecht-Kessel GmbH. Steel sheet: index clause or fixed price?. Need: 5510 x 100 kg a year. Category goal: leverage: competition and data should bring the price down. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 10 days). Fallback if you walk away: the second-source quote quote:7200016. Must-haves: none. Prepare from the data package.",
+ "trigger_doc": "doc:20260916-70720-P16",
+ "parts": [
+  "part:370020"
+ ],
+ "suppliers": [
+  "sup:70720"
+ ],
+ "negotiable": [
+  "unit_price",
+  "index_clause",
+  "payment_days",
+  "contract_months"
+ ],
+ "fixed_terms": {
+  "lead_time_days": 10,
+  "volume_per_year": 5510,
+  "effective_date": "2027-01-01",
+  "incoterm": "DAP",
+  "tooling_eur": 0
+ },
+ "term_options": {
+  "index_clause": [
+   null,
+   {
+    "series": "PPI-C241",
+    "material_share": 0.8,
+    "deadband_pct": 0,
+    "base_month": "2026-08"
+   },
+   {
+    "series": "PPI-C241",
+    "material_share": 0.8,
+    "deadband_pct": 3,
+    "base_month": "2026-08"
+   },
+   {
+    "series": "PPI-C241",
+    "material_share": 0.8,
+    "deadband_pct": 5,
+    "base_month": "2026-08"
+   }
+  ],
+  "payment_days": [
+   14,
+   30,
+   45,
+   60,
+   90
+  ],
+  "contract_months": [
+   12,
+   24,
+   36
+  ]
+ },
+ "buyer": {
+  "need_per_year": 5510,
+  "horizon_years": 2,
+  "current_unit_price": 84.34,
+  "fallback_unit_price": 88.56,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 10,
+  "category_goal": "leverage",
+  "fallback_risk_pct": 3,
+  "index_risk_pct": 1,
+  "late_cost_per_day": 120,
+  "cost_per_defect": 0,
+  "freight_eur_per_unit": {
+   "EXW": 5.75,
+   "FCA": 5.0,
+   "DAP": 0.0
+  },
+  "index_paths": {
+   "PPI-C241": 0.03
+  },
+  "must_haves": [],
+  "alternative": {
+   "kind": "quote",
+   "ref": "quote:7200016",
+   "terms": {
+    "unit_price": 96.37,
+    "payment_days": 30,
+    "lead_time_days": 14,
+    "volume_per_year": 5510,
+    "contract_months": 24,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "incoterm": "DAP",
+    "tooling_eur": 0,
+    "ppm_commitment": 32
+   }
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260916-70720-P16",
+  "ctr:4600070720",
+  "sc:70720@2026Q3",
+  "quote:7200016"
+ ],
+ "_hidden": {
+  "template": "case:P16",
+  "variant": 5,
+  "suppliers": {
+   "sup:70720": {
+    "grid": 0.5,
+    "rate": 0.1085406751490435,
+    "r_base": 0.9997963825516882,
+    "levers": {
+     "index_change": 0.0005450309009923552,
+     "should_cost": 0.0007029904791909657,
+     "price_history": 0.0015178600823869532,
+     "quality": 0.0025365461326317144,
+     "volume_change": 0.002183367046924571,
+     "news": 0.00191447124854058,
+     "notice": 0.002856667953898639,
+     "contract": 0.0026236177018310967
+    },
+    "lever_repeat": 0.7613976729312779,
+    "fact_pass": 0.4099579455201129,
+    "first_frac": 0.13254750249005484,
+    "recip": 1.1492470426779822,
+    "cap": 0.021200627664297006,
+    "final_round": 3,
+    "p_walk_final": 0.41520060494734234,
+    "patience": 5,
+    "insult": 0.14074597471972408,
+    "min_move": 0.10054186247070158,
+    "hazard": 0.05588453683989689,
+    "rival_follow": 0.5322241488115682,
+    "rival_premium": 0.00471572446904247,
+    "lt_cost": 0.003366753786881461,
+    "vol_elast": 0.15006707205390216,
+    "ppm_cost": 0.04159736944835533,
+    "contract_bonus": 0.00021259078790388574,
+    "ix_base": -0.0007947134972024813,
+    "ix_slope": 0.005502186255532859,
+    "max_payment_days": 45,
+    "trust_penalty": 0.0001138612014791307,
+    "alt_std": false,
+    "strict_drivers": true,
+    "archetype": "monopolist",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 50,
+     "chargeback_eur_per_complaint": 0.0,
+     "contract_months": 12,
+     "index_clause": null,
+     "lead_time_days": 10,
+     "incoterm": "DAP",
+     "volume_per_year": 5510,
+     "tooling_eur": 0
+    },
+    "opening": {
+     "unit_price": 84.61,
+     "index_clause": null,
+     "payment_days": 30
+    },
+    "drivers": [
+     "LCI-C",
+     "PPI-C241"
+    ],
+    "ppm_real": 38,
+    "full_cost_frac": 0.9487642644168441,
+    "usual_rate": 0.1085406751490435
+   }
+  },
+  "c_open": 971913.68,
+  "c_alt": 1069557.38,
+  "c_best": 922896.59,
+  "best_package": {
+   "supplier_id": "sup:70720",
+   "terms": {
+    "unit_price": 82.9,
+    "index_clause": null,
+    "payment_days": 14,
+    "contract_months": 36
+   },
+   "c": 922896.59
+  },
+  "best_is_alternative": false
+ }
+}

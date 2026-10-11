@@ -1,0 +1,190 @@
+{"case_id": "case:ST001", "template": "case:P01", "type": "price_increase", "archetypes": {"sup:70110": "mirror"}, "c_open": 1196196.15, "c_best": 1143198.09, "c_alt": 1176178.02}
+{"case_id": "case:ST002", "template": "case:P01", "type": "price_increase", "archetypes": {"sup:70110": "mirror"}, "c_open": 1186350.95, "c_best": 1130518.97, "c_alt": 1176178.02}
+{"case_id": "case:ST003", "template": "case:P01", "type": "price_increase", "archetypes": {"sup:70110": "walker"}, "c_open": 1115957.77, "c_best": 1067130.12, "c_alt": 1176178.02}
+{"case_id": "case:ST004", "template": "case:P01", "type": "price_increase", "archetypes": {"sup:70110": "data_driven"}, "c_open": 1146313.8, "c_best": 1078178.24, "c_alt": 1176178.02}
+{"case_id": "case:ST005", "template": "case:P01", "type": "price_increase", "archetypes": {"sup:70110": "cash_short"}, "c_open": 1157307.61, "c_best": 1106378.15, "c_alt": 1176178.02}
+{"case_id": "case:ST006", "template": "case:P01", "type": "price_increase", "archetypes": {"sup:70110": "mirror"}, "c_open": 1133268.91, "c_best": 1061513.18, "c_alt": 1176178.02}
+{"case_id": "case:ST007", "template": "case:P01", "type": "price_increase", "archetypes": {"sup:70110": "mirror"}, "c_open": 1178967.05, "c_best": 1115506.76, "c_alt": 1176178.02}
+{"case_id": "case:ST008", "template": "case:P01", "type": "price_increase", "archetypes": {"sup:70110": "boulware"}, "c_open": 1110871.08, "c_best": 1042220.89, "c_alt": 1176178.02}
+{"case_id": "case:ST009", "template": "case:P01", "type": "price_increase", "archetypes": {"sup:70110": "mirror"}, "c_open": 1148446.93, "c_best": 1074608.08, "c_alt": 1176178.02}
+{"case_id": "case:ST010", "template": "case:P01", "type": "price_increase", "archetypes": {"sup:70110": "monopolist"}, "c_open": 1197344.75, "c_best": 1171705.5, "c_alt": 1176178.02}
+{"case_id": "case:ST011", "template": "case:P02", "type": "price_increase", "archetypes": {"sup:70510": "data_driven"}, "c_open": 2350894.6, "c_best": 2295865.67, "c_alt": 2604227.78}
+{"case_id": "case:ST012", "template": "case:P02", "type": "price_increase", "archetypes": {"sup:70510": "conceder"}, "c_open": 2329791.97, "c_best": 2294769.37, "c_alt": 2604227.78}
+{"case_id": "case:ST013", "template": "case:P02", "type": "price_increase", "archetypes": {"sup:70510": "monopolist"}, "c_open": 2352985.85, "c_best": 2308304.63, "c_alt": 2604227.78}
+{"case_id": "case:ST014", "template": "case:P02", "type": "price_increase", "archetypes": {"sup:70510": "walker"}, "c_open": 2191775.13, "c_best": 2149910.61, "c_alt": 2604227.78}
+{"case_id": "case:ST015", "template": "case:P02", "type": "price_increase", "archetypes": {"sup:70510": "conceder"}, "c_open": 2355999.71, "c_best": 2302577.92, "c_alt": 2604227.78}
+{"case_id": "case:ST016", "template": "case:P02", "type": "price_increase", "archetypes": {"sup:70510": "mirror"}, "c_open": 2345297.43, "c_best": 2288657.19, "c_alt": 2604227.78}
+{"case_id": "case:ST017", "template": "case:P02", "type": "price_increase", "archetypes": {"sup:70510": "cash_short"}, "c_open": 2265319.15, "c_best": 2222219.52, "c_alt": 2604227.78}
+{"case_id": "case:ST018", "template": "case:P02", "type": "price_increase", "archetypes": {"sup:70510": "walker"}, "c_open": 2359813.16, "c_best": 2310146.59, "c_alt": 2604227.78}
+{"case_id": "case:ST019", "template": "case:P02", "type": "price_increase", "archetypes": {"sup:70510": "walker"}, "c_open": 2341668.5, "c_best": 2280889.59, "c_alt": 2604227.78}
+{"case_id": "case:ST020", "template": "case:P02", "type": "price_increase", "archetypes": {"sup:70510": "boulware"}, "c_open": 2367097.83, "c_best": 2330378.61, "c_alt": 2604227.78}
+{"case_id": "case:ST021", "template": "case:P03", "type": "renewal", "archetypes": {"sup:70530": "mirror"}, "c_open": 4331193.94, "c_best": 4066359.94, "c_alt": 4332545.92}
+{"case_id": "case:ST022", "template": "case:P03", "type": "renewal", "archetypes": {"sup:70530": "walker"}, "c_open": 4292419.36, "c_best": 3978086.8, "c_alt": 4332545.92}
+{"case_id": "case:ST023", "template": "case:P03", "type": "renewal", "archetypes": {"sup:70530": "conceder"}, "c_open": 4289514.72, "c_best": 4006368.51, "c_alt": 4332545.92}
+{"case_id": "case:ST024", "template": "case:P03", "type": "renewal", "archetypes": {"sup:70530": "data_driven"}, "c_open": 4206709.54, "c_best": 3788150.95, "c_alt": 4332545.92}
+{"case_id": "case:ST025", "template": "case:P03", "type": "renewal", "archetypes": {"sup:70530": "conceder"}, "c_open": 4345256.07, "c_best": 4142232.39, "c_alt": 4332545.92}
+{"case_id": "case:ST026", "template": "case:P03", "type": "renewal", "archetypes": {"sup:70530": "conceder"}, "c_open": 4308325.7, "c_best": 4041997.64, "c_alt": 4332545.92}
+{"case_id": "case:ST027", "template": "case:P03", "type": "renewal", "archetypes": {"sup:70530": "conceder"}, "c_open": 4173144.86, "c_best": 3715227.09, "c_alt": 4332545.92}
+{"case_id": "case:ST028", "template": "case:P03", "type": "renewal", "archetypes": {"sup:70530": "mirror"}, "c_open": 4213440.92, "c_best": 3802801.8, "c_alt": 4332545.92}
+{"case_id": "case:ST029", "template": "case:P03", "type": "renewal", "archetypes": {"sup:70530": "mirror"}, "c_open": 4318468.87, "c_best": 3983802.41, "c_alt": 4332545.92}
+{"case_id": "case:ST030", "template": "case:P03", "type": "renewal", "archetypes": {"sup:70530": "cash_short"}, "c_open": 4185224.46, "c_best": 3797814.1, "c_alt": 4332545.92}
+{"case_id": "case:ST031", "template": "case:P04", "type": "renewal", "archetypes": {"sup:70620": "data_driven"}, "c_open": 196833.0, "c_best": 164630.09, "c_alt": 203169.0}
+{"case_id": "case:ST032", "template": "case:P04", "type": "renewal", "archetypes": {"sup:70620": "cash_short"}, "c_open": 195423.67, "c_best": 180389.56, "c_alt": 203169.0}
+{"case_id": "case:ST033", "template": "case:P04", "type": "renewal", "archetypes": {"sup:70620": "walker"}, "c_open": 197235.67, "c_best": 179985.47, "c_alt": 203169.0}
+{"case_id": "case:ST034", "template": "case:P04", "type": "renewal", "archetypes": {"sup:70620": "mirror"}, "c_open": 198443.67, "c_best": 195263.33, "c_alt": 203169.0}
+{"case_id": "case:ST035", "template": "case:P04", "type": "renewal", "archetypes": {"sup:70620": "mirror"}, "c_open": 196833.0, "c_best": 192808.67, "c_alt": 203169.0}
+{"case_id": "case:ST036", "template": "case:P04", "type": "renewal", "archetypes": {"sup:70620": "mirror"}, "c_open": 196631.67, "c_best": 191704.04, "c_alt": 203169.0}
+{"case_id": "case:ST037", "template": "case:P04", "type": "renewal", "archetypes": {"sup:70620": "conceder"}, "c_open": 201262.33, "c_best": 185330.0, "c_alt": 203169.0}
+{"case_id": "case:ST038", "template": "case:P04", "type": "renewal", "archetypes": {"sup:70620": "cash_short"}, "c_open": 198041.0, "c_best": 169883.24, "c_alt": 203169.0}
+{"case_id": "case:ST039", "template": "case:P04", "type": "renewal", "archetypes": {"sup:70620": "data_driven"}, "c_open": 201665.0, "c_best": 178369.11, "c_alt": 203169.0}
+{"case_id": "case:ST040", "template": "case:P04", "type": "renewal", "archetypes": {"sup:70620": "mirror"}, "c_open": 196430.33, "c_best": 192006.0, "c_alt": 203169.0}
+{"case_id": "case:ST041", "template": "case:P05", "type": "rfq", "archetypes": {"sup:70210": "mirror", "sup:70240": "mirror", "sup:70250": "mirror"}, "c_open": 308758.24, "c_best": 199591.28, "c_alt": null}
+{"case_id": "case:ST042", "template": "case:P05", "type": "rfq", "archetypes": {"sup:70210": "mirror", "sup:70240": "mirror", "sup:70250": "boulware"}, "c_open": 293452.88, "c_best": 162501.92, "c_alt": null}
+{"case_id": "case:ST043", "template": "case:P05", "type": "rfq", "archetypes": {"sup:70210": "mirror", "sup:70240": "conceder", "sup:70250": "mirror"}, "c_open": 309350.16, "c_best": 194709.76, "c_alt": null}
+{"case_id": "case:ST044", "template": "case:P05", "type": "rfq", "archetypes": {"sup:70210": "mirror", "sup:70240": "walker", "sup:70250": "boulware"}, "c_open": 311633.28, "c_best": 159998.72, "c_alt": null}
+{"case_id": "case:ST045", "template": "case:P05", "type": "rfq", "archetypes": {"sup:70210": "walker", "sup:70240": "mirror", "sup:70250": "data_driven"}, "c_open": 312563.44, "c_best": 253644.2, "c_alt": null}
+{"case_id": "case:ST046", "template": "case:P05", "type": "rfq", "archetypes": {"sup:70210": "mirror", "sup:70240": "mirror", "sup:70250": "mirror"}, "c_open": 304699.36, "c_best": 211268.55, "c_alt": null}
+{"case_id": "case:ST047", "template": "case:P05", "type": "rfq", "archetypes": {"sup:70210": "mirror", "sup:70240": "cash_short", "sup:70250": "mirror"}, "c_open": 316368.64, "c_best": 189629.59, "c_alt": null}
+{"case_id": "case:ST048", "template": "case:P05", "type": "rfq", "archetypes": {"sup:70210": "mirror", "sup:70240": "boulware", "sup:70250": "walker"}, "c_open": 318736.32, "c_best": 207844.67, "c_alt": null}
+{"case_id": "case:ST049", "template": "case:P05", "type": "rfq", "archetypes": {"sup:70210": "boulware", "sup:70240": "monopolist", "sup:70250": "mirror"}, "c_open": 305967.76, "c_best": 167142.04, "c_alt": null}
+{"case_id": "case:ST050", "template": "case:P05", "type": "rfq", "archetypes": {"sup:70210": "mirror", "sup:70240": "cash_short", "sup:70250": "mirror"}, "c_open": 316960.56, "c_best": 164596.28, "c_alt": null}
+{"case_id": "case:ST051", "template": "case:P06", "type": "rfq", "archetypes": {"sup:70120": "monopolist", "sup:70150": "monopolist"}, "c_open": 2066346.64, "c_best": 1991072.21, "c_alt": null}
+{"case_id": "case:ST052", "template": "case:P06", "type": "rfq", "archetypes": {"sup:70120": "cash_short", "sup:70150": "monopolist"}, "c_open": 1941558.48, "c_best": 1892824.82, "c_alt": null}
+{"case_id": "case:ST053", "template": "case:P06", "type": "rfq", "archetypes": {"sup:70120": "walker", "sup:70150": "mirror"}, "c_open": 2369120.16, "c_best": 2279578.14, "c_alt": null}
+{"case_id": "case:ST054", "template": "case:P06", "type": "rfq", "archetypes": {"sup:70120": "boulware", "sup:70150": "boulware"}, "c_open": 1861563.84, "c_best": 1780804.77, "c_alt": null}
+{"case_id": "case:ST055", "template": "case:P06", "type": "rfq", "archetypes": {"sup:70120": "walker", "sup:70150": "boulware"}, "c_open": 1874036.16, "c_best": 1780776.27, "c_alt": null}
+{"case_id": "case:ST056", "template": "case:P06", "type": "rfq", "archetypes": {"sup:70120": "data_driven", "sup:70150": "mirror"}, "c_open": 2114185.2, "c_best": 2071044.18, "c_alt": null}
+{"case_id": "case:ST057", "template": "case:P06", "type": "rfq", "archetypes": {"sup:70120": "monopolist", "sup:70150": "cash_short"}, "c_open": 1887355.52, "c_best": 1812661.41, "c_alt": null}
+{"case_id": "case:ST058", "template": "case:P06", "type": "rfq", "archetypes": {"sup:70120": "mirror", "sup:70150": "monopolist"}, "c_open": 2023093.92, "c_best": 1881621.98, "c_alt": null}
+{"case_id": "case:ST059", "template": "case:P06", "type": "rfq", "archetypes": {"sup:70120": "mirror", "sup:70150": "monopolist"}, "c_open": 1851263.24, "c_best": 1811940.14, "c_alt": null}
+{"case_id": "case:ST060", "template": "case:P06", "type": "rfq", "archetypes": {"sup:70120": "conceder", "sup:70150": "walker"}, "c_open": 2267199.04, "c_best": 2145184.52, "c_alt": null}
+{"case_id": "case:ST061", "template": "case:P07", "type": "bundling", "archetypes": {"sup:70610": "conceder"}, "c_open": 390725.4, "c_best": 320080.8, "c_alt": 379916.0}
+{"case_id": "case:ST062", "template": "case:P07", "type": "bundling", "archetypes": {"sup:70610": "data_driven"}, "c_open": 384383.4, "c_best": 287784.8, "c_alt": 379916.0}
+{"case_id": "case:ST063", "template": "case:P07", "type": "bundling", "archetypes": {"sup:70610": "mirror"}, "c_open": 392235.4, "c_best": 291578.93, "c_alt": 379916.0}
+{"case_id": "case:ST064", "template": "case:P07", "type": "bundling", "archetypes": {"sup:70610": "monopolist"}, "c_open": 393745.4, "c_best": 345628.8, "c_alt": 379916.0}
+{"case_id": "case:ST065", "template": "case:P07", "type": "bundling", "archetypes": {"sup:70610": "mirror"}, "c_open": 388913.4, "c_best": 284916.8, "c_alt": 379916.0}
+{"case_id": "case:ST066", "template": "case:P07", "type": "bundling", "archetypes": {"sup:70610": "mirror"}, "c_open": 390121.4, "c_best": 273592.8, "c_alt": 379916.0}
+{"case_id": "case:ST067", "template": "case:P07", "type": "bundling", "archetypes": {"sup:70610": "mirror"}, "c_open": 399181.4, "c_best": 314005.87, "c_alt": 379916.0}
+{"case_id": "case:ST068", "template": "case:P07", "type": "bundling", "archetypes": {"sup:70610": "conceder"}, "c_open": 395557.4, "c_best": 318248.8, "c_alt": 379916.0}
+{"case_id": "case:ST069", "template": "case:P07", "type": "bundling", "archetypes": {"sup:70610": "walker"}, "c_open": 390121.4, "c_best": 321868.8, "c_alt": 379916.0}
+{"case_id": "case:ST070", "template": "case:P07", "type": "bundling", "archetypes": {"sup:70610": "mirror"}, "c_open": 387403.4, "c_best": 278244.0, "c_alt": 379916.0}
+{"case_id": "case:ST071", "template": "case:P08", "type": "raw_material", "archetypes": {"sup:70710": "mirror"}, "c_open": 1151156.4, "c_best": 985588.83, "c_alt": 1157019.84}
+{"case_id": "case:ST072", "template": "case:P08", "type": "raw_material", "archetypes": {"sup:70710": "conceder"}, "c_open": 1123481.12, "c_best": 972648.0, "c_alt": 1157019.84}
+{"case_id": "case:ST073", "template": "case:P08", "type": "raw_material", "archetypes": {"sup:70710": "mirror"}, "c_open": 1126344.08, "c_best": 878921.87, "c_alt": 1157019.84}
+{"case_id": "case:ST074", "template": "case:P08", "type": "raw_material", "archetypes": {"sup:70710": "walker"}, "c_open": 1112983.6, "c_best": 999829.06, "c_alt": 1157019.84}
+{"case_id": "case:ST075", "template": "case:P08", "type": "raw_material", "archetypes": {"sup:70710": "cash_short"}, "c_open": 1159745.28, "c_best": 1091831.61, "c_alt": 1157019.84}
+{"case_id": "case:ST076", "template": "case:P08", "type": "raw_material", "archetypes": {"sup:70710": "data_driven"}, "c_open": 1151156.4, "c_best": 990647.36, "c_alt": 1157019.84}
+{"case_id": "case:ST077", "template": "case:P08", "type": "raw_material", "archetypes": {"sup:70710": "cash_short"}, "c_open": 1155928.0, "c_best": 1141757.3, "c_alt": 1157019.84}
+{"case_id": "case:ST078", "template": "case:P08", "type": "raw_material", "archetypes": {"sup:70710": "mirror"}, "c_open": 1131115.68, "c_best": 964290.22, "c_alt": 1157019.84}
+{"case_id": "case:ST079", "template": "case:P08", "type": "raw_material", "archetypes": {"sup:70710": "cash_short"}, "c_open": 1114892.24, "c_best": 927573.76, "c_alt": 1157019.84}
+{"case_id": "case:ST080", "template": "case:P08", "type": "raw_material", "archetypes": {"sup:70710": "data_driven"}, "c_open": 1120618.16, "c_best": 968047.04, "c_alt": 1157019.84}
+{"case_id": "case:ST081", "template": "case:P09", "type": "capacity", "archetypes": {"sup:70220": "mirror"}, "c_open": 350902.2, "c_best": 300263.09, "c_alt": 310669.08}
+{"case_id": "case:ST082", "template": "case:P09", "type": "capacity", "archetypes": {"sup:70220": "monopolist"}, "c_open": 331735.94, "c_best": 284852.29, "c_alt": 310669.08}
+{"case_id": "case:ST083", "template": "case:P09", "type": "capacity", "archetypes": {"sup:70220": "mirror"}, "c_open": 339279.26, "c_best": 279092.34, "c_alt": 310669.08}
+{"case_id": "case:ST084", "template": "case:P09", "type": "capacity", "archetypes": {"sup:70220": "data_driven"}, "c_open": 333824.58, "c_best": 262025.98, "c_alt": 310669.08}
+{"case_id": "case:ST085", "template": "case:P09", "type": "capacity", "archetypes": {"sup:70220": "walker"}, "c_open": 349502.56, "c_best": 272747.75, "c_alt": 310669.08}
+{"case_id": "case:ST086", "template": "case:P09", "type": "capacity", "archetypes": {"sup:70220": "monopolist"}, "c_open": 335816.81, "c_best": 287534.28, "c_alt": 310669.08}
+{"case_id": "case:ST087", "template": "case:P09", "type": "capacity", "archetypes": {"sup:70220": "monopolist"}, "c_open": 337723.08, "c_best": 258061.2, "c_alt": 310669.08}
+{"case_id": "case:ST088", "template": "case:P09", "type": "capacity", "archetypes": {"sup:70220": "monopolist"}, "c_open": 314902.26, "c_best": 258526.41, "c_alt": 310669.08}
+{"case_id": "case:ST089", "template": "case:P09", "type": "capacity", "archetypes": {"sup:70220": "mirror"}, "c_open": 321897.67, "c_best": 258118.27, "c_alt": 310669.08}
+{"case_id": "case:ST090", "template": "case:P09", "type": "capacity", "archetypes": {"sup:70220": "mirror"}, "c_open": 324064.2, "c_best": 256280.18, "c_alt": 310669.08}
+{"case_id": "case:ST091", "template": "case:P10", "type": "capacity", "archetypes": {"sup:70410": "data_driven"}, "c_open": 1930289.69, "c_best": 1441595.1, "c_alt": null}
+{"case_id": "case:ST092", "template": "case:P10", "type": "capacity", "archetypes": {"sup:70410": "mirror"}, "c_open": 1911868.9, "c_best": 1457859.84, "c_alt": null}
+{"case_id": "case:ST093", "template": "case:P10", "type": "capacity", "archetypes": {"sup:70410": "conceder"}, "c_open": 1957520.43, "c_best": 1472739.85, "c_alt": null}
+{"case_id": "case:ST094", "template": "case:P10", "type": "capacity", "archetypes": {"sup:70410": "monopolist"}, "c_open": 1955117.72, "c_best": 1537950.24, "c_alt": null}
+{"case_id": "case:ST095", "template": "case:P10", "type": "capacity", "archetypes": {"sup:70410": "boulware"}, "c_open": 1920278.39, "c_best": 1451751.24, "c_alt": null}
+{"case_id": "case:ST096", "template": "case:P10", "type": "capacity", "archetypes": {"sup:70410": "cash_short"}, "c_open": 1911268.22, "c_best": 1409657.55, "c_alt": null}
+{"case_id": "case:ST097", "template": "case:P10", "type": "capacity", "archetypes": {"sup:70410": "data_driven"}, "c_open": 1954917.49, "c_best": 1465799.17, "c_alt": null}
+{"case_id": "case:ST098", "template": "case:P10", "type": "capacity", "archetypes": {"sup:70410": "conceder"}, "c_open": 1913871.16, "c_best": 1390941.89, "c_alt": null}
+{"case_id": "case:ST099", "template": "case:P10", "type": "capacity", "archetypes": {"sup:70410": "mirror"}, "c_open": 1939900.54, "c_best": 1514394.24, "c_alt": null}
+{"case_id": "case:ST100", "template": "case:P10", "type": "capacity", "archetypes": {"sup:70410": "walker"}, "c_open": 1946908.45, "c_best": 1444441.99, "c_alt": null}
+{"case_id": "case:ST101", "template": "case:P11", "type": "quality", "archetypes": {"sup:70140": "mirror"}, "c_open": 805017.0, "c_best": 704608.5, "c_alt": 894383.19}
+{"case_id": "case:ST102", "template": "case:P11", "type": "quality", "archetypes": {"sup:70140": "mirror"}, "c_open": 846357.0, "c_best": 737521.5, "c_alt": 894383.19}
+{"case_id": "case:ST103", "template": "case:P11", "type": "quality", "archetypes": {"sup:70140": "data_driven"}, "c_open": 814080.0, "c_best": 710173.5, "c_alt": 894383.19}
+{"case_id": "case:ST104", "template": "case:P11", "type": "quality", "archetypes": {"sup:70140": "cash_short"}, "c_open": 824415.0, "c_best": 712081.5, "c_alt": 894383.19}
+{"case_id": "case:ST105", "template": "case:P11", "type": "quality", "archetypes": {"sup:70140": "mirror"}, "c_open": 807084.0, "c_best": 696499.5, "c_alt": 894383.19}
+{"case_id": "case:ST106", "template": "case:P11", "type": "quality", "archetypes": {"sup:70140": "mirror"}, "c_open": 840315.0, "c_best": 719713.5, "c_alt": 894383.19}
+{"case_id": "case:ST107", "template": "case:P11", "type": "quality", "archetypes": {"sup:70140": "walker"}, "c_open": 839043.0, "c_best": 737044.5, "c_alt": 894383.19}
+{"case_id": "case:ST108", "template": "case:P11", "type": "quality", "archetypes": {"sup:70140": "data_driven"}, "c_open": 824733.0, "c_best": 735931.5, "c_alt": 894383.19}
+{"case_id": "case:ST109", "template": "case:P11", "type": "quality", "archetypes": {"sup:70140": "mirror"}, "c_open": 790389.0, "c_best": 687595.5, "c_alt": 894383.19}
+{"case_id": "case:ST110", "template": "case:P11", "type": "quality", "archetypes": {"sup:70140": "walker"}, "c_open": 845403.0, "c_best": 740383.5, "c_alt": 894383.19}
+{"case_id": "case:ST111", "template": "case:P12", "type": "quality", "archetypes": {"sup:70310": "mirror"}, "c_open": 925442.59, "c_best": 880095.98, "c_alt": 906877.18}
+{"case_id": "case:ST112", "template": "case:P12", "type": "quality", "archetypes": {"sup:70310": "conceder"}, "c_open": 930579.74, "c_best": 829578.39, "c_alt": 906877.18}
+{"case_id": "case:ST113", "template": "case:P12", "type": "quality", "archetypes": {"sup:70310": "boulware"}, "c_open": 929402.49, "c_best": 856298.1, "c_alt": 906877.18}
+{"case_id": "case:ST114", "template": "case:P12", "type": "quality", "archetypes": {"sup:70310": "mirror"}, "c_open": 924535.63, "c_best": 827755.18, "c_alt": 906877.18}
+{"case_id": "case:ST115", "template": "case:P12", "type": "quality", "archetypes": {"sup:70310": "monopolist"}, "c_open": 949409.01, "c_best": 906877.18, "c_alt": 906877.18}
+{"case_id": "case:ST116", "template": "case:P12", "type": "quality", "archetypes": {"sup:70310": "mirror"}, "c_open": 933994.08, "c_best": 850922.49, "c_alt": 906877.18}
+{"case_id": "case:ST117", "template": "case:P12", "type": "quality", "archetypes": {"sup:70310": "mirror"}, "c_open": 933371.33, "c_best": 850389.84, "c_alt": 906877.18}
+{"case_id": "case:ST118", "template": "case:P12", "type": "quality", "archetypes": {"sup:70310": "boulware"}, "c_open": 943548.08, "c_best": 892191.46, "c_alt": 906877.18}
+{"case_id": "case:ST119", "template": "case:P12", "type": "quality", "archetypes": {"sup:70310": "mirror"}, "c_open": 951925.83, "c_best": 851825.47, "c_alt": 906877.18}
+{"case_id": "case:ST120", "template": "case:P12", "type": "quality", "archetypes": {"sup:70310": "monopolist"}, "c_open": 934084.18, "c_best": 906877.18, "c_alt": 906877.18}
+{"case_id": "case:ST121", "template": "case:P13", "type": "price_increase", "archetypes": {"sup:70230": "cash_short"}, "c_open": 316756.01, "c_best": 274774.98, "c_alt": 322517.35}
+{"case_id": "case:ST122", "template": "case:P13", "type": "price_increase", "archetypes": {"sup:70230": "walker"}, "c_open": 316756.01, "c_best": 281242.25, "c_alt": 322517.35}
+{"case_id": "case:ST123", "template": "case:P13", "type": "price_increase", "archetypes": {"sup:70230": "boulware"}, "c_open": 314674.84, "c_best": 303061.28, "c_alt": 322517.35}
+{"case_id": "case:ST124", "template": "case:P13", "type": "price_increase", "archetypes": {"sup:70230": "cash_short"}, "c_open": 315715.43, "c_best": 301952.95, "c_alt": 322517.35}
+{"case_id": "case:ST125", "template": "case:P13", "type": "price_increase", "archetypes": {"sup:70230": "mirror"}, "c_open": 314674.84, "c_best": 285026.33, "c_alt": 322517.35}
+{"case_id": "case:ST126", "template": "case:P13", "type": "price_increase", "archetypes": {"sup:70230": "mirror"}, "c_open": 316756.01, "c_best": 311427.45, "c_alt": 322517.35}
+{"case_id": "case:ST127", "template": "case:P13", "type": "price_increase", "archetypes": {"sup:70230": "mirror"}, "c_open": 316756.01, "c_best": 276676.72, "c_alt": 322517.35}
+{"case_id": "case:ST128", "template": "case:P13", "type": "price_increase", "archetypes": {"sup:70230": "mirror"}, "c_open": 314674.84, "c_best": 269284.83, "c_alt": 322517.35}
+{"case_id": "case:ST129", "template": "case:P13", "type": "price_increase", "archetypes": {"sup:70230": "boulware"}, "c_open": 316756.01, "c_best": 290147.99, "c_alt": 322517.35}
+{"case_id": "case:ST130", "template": "case:P13", "type": "price_increase", "archetypes": {"sup:70230": "data_driven"}, "c_open": 314674.84, "c_best": 271912.42, "c_alt": 322517.35}
+{"case_id": "case:ST131", "template": "case:P14", "type": "renewal", "archetypes": {"sup:70560": "mirror"}, "c_open": 2331803.2, "c_best": 2045769.89, "c_alt": null}
+{"case_id": "case:ST132", "template": "case:P14", "type": "renewal", "archetypes": {"sup:70560": "monopolist"}, "c_open": 2309974.02, "c_best": 2008593.36, "c_alt": null}
+{"case_id": "case:ST133", "template": "case:P14", "type": "renewal", "archetypes": {"sup:70560": "conceder"}, "c_open": 2382829.6, "c_best": 2064382.26, "c_alt": null}
+{"case_id": "case:ST134", "template": "case:P14", "type": "renewal", "archetypes": {"sup:70560": "mirror"}, "c_open": 2290453.34, "c_best": 1888982.03, "c_alt": null}
+{"case_id": "case:ST135", "template": "case:P14", "type": "renewal", "archetypes": {"sup:70560": "monopolist"}, "c_open": 2351804.04, "c_best": 2106682.42, "c_alt": null}
+{"case_id": "case:ST136", "template": "case:P14", "type": "renewal", "archetypes": {"sup:70560": "cash_short"}, "c_open": 2328771.71, "c_best": 2058480.16, "c_alt": null}
+{"case_id": "case:ST137", "template": "case:P14", "type": "renewal", "archetypes": {"sup:70560": "cash_short"}, "c_open": 2434155.82, "c_best": 2267394.86, "c_alt": null}
+{"case_id": "case:ST138", "template": "case:P14", "type": "renewal", "archetypes": {"sup:70560": "mirror"}, "c_open": 2361719.3, "c_best": 2065790.53, "c_alt": null}
+{"case_id": "case:ST139", "template": "case:P14", "type": "renewal", "archetypes": {"sup:70560": "data_driven"}, "c_open": 2282965.6, "c_best": 1915286.51, "c_alt": null}
+{"case_id": "case:ST140", "template": "case:P14", "type": "renewal", "archetypes": {"sup:70560": "conceder"}, "c_open": 2353869.72, "c_best": 2012246.68, "c_alt": null}
+{"case_id": "case:ST141", "template": "case:P15", "type": "bundling", "archetypes": {"sup:70430": "data_driven"}, "c_open": 306671.67, "c_best": 234801.67, "c_alt": 284886.67}
+{"case_id": "case:ST142", "template": "case:P15", "type": "bundling", "archetypes": {"sup:70430": "mirror"}, "c_open": 319506.67, "c_best": 284886.67, "c_alt": 284886.67}
+{"case_id": "case:ST143", "template": "case:P15", "type": "bundling", "archetypes": {"sup:70430": "mirror"}, "c_open": 321771.67, "c_best": 284886.67, "c_alt": 284886.67}
+{"case_id": "case:ST144", "template": "case:P15", "type": "bundling", "archetypes": {"sup:70430": "mirror"}, "c_open": 304658.33, "c_best": 255165.0, "c_alt": 284886.67}
+{"case_id": "case:ST145", "template": "case:P15", "type": "bundling", "archetypes": {"sup:70430": "mirror"}, "c_open": 309943.33, "c_best": 240673.33, "c_alt": 284886.67}
+{"case_id": "case:ST146", "template": "case:P15", "type": "bundling", "archetypes": {"sup:70430": "mirror"}, "c_open": 294225.0, "c_best": 234746.56, "c_alt": 284886.67}
+{"case_id": "case:ST147", "template": "case:P15", "type": "bundling", "archetypes": {"sup:70430": "mirror"}, "c_open": 300380.0, "c_best": 249201.67, "c_alt": 284886.67}
+{"case_id": "case:ST148", "template": "case:P15", "type": "bundling", "archetypes": {"sup:70430": "mirror"}, "c_open": 304658.33, "c_best": 238787.44, "c_alt": 284886.67}
+{"case_id": "case:ST149", "template": "case:P15", "type": "bundling", "archetypes": {"sup:70430": "data_driven"}, "c_open": 316475.0, "c_best": 268575.0, "c_alt": 284886.67}
+{"case_id": "case:ST150", "template": "case:P15", "type": "bundling", "archetypes": {"sup:70430": "mirror"}, "c_open": 294843.33, "c_best": 232815.0, "c_alt": 284886.67}
+{"case_id": "case:ST151", "template": "case:P16", "type": "raw_material", "archetypes": {"sup:70720": "mirror"}, "c_open": 957675.47, "c_best": 851767.98, "c_alt": 1069557.38}
+{"case_id": "case:ST152", "template": "case:P16", "type": "raw_material", "archetypes": {"sup:70720": "data_driven"}, "c_open": 997292.37, "c_best": 840775.21, "c_alt": 1069557.38}
+{"case_id": "case:ST153", "template": "case:P16", "type": "raw_material", "archetypes": {"sup:70720": "data_driven"}, "c_open": 954496.93, "c_best": 828105.25, "c_alt": 1069557.38}
+{"case_id": "case:ST154", "template": "case:P16", "type": "raw_material", "archetypes": {"sup:70720": "mirror"}, "c_open": 1021390.54, "c_best": 901884.88, "c_alt": 1069557.38}
+{"case_id": "case:ST155", "template": "case:P16", "type": "raw_material", "archetypes": {"sup:70720": "cash_short"}, "c_open": 997927.85, "c_best": 871018.45, "c_alt": 1069557.38}
+{"case_id": "case:ST156", "template": "case:P16", "type": "raw_material", "archetypes": {"sup:70720": "monopolist"}, "c_open": 971913.68, "c_best": 922896.59, "c_alt": 1069557.38}
+{"case_id": "case:ST157", "template": "case:P16", "type": "raw_material", "archetypes": {"sup:70720": "conceder"}, "c_open": 977235.97, "c_best": 822084.65, "c_alt": 1069557.38}
+{"case_id": "case:ST158", "template": "case:P16", "type": "raw_material", "archetypes": {"sup:70720": "mirror"}, "c_open": 934473.23, "c_best": 715214.36, "c_alt": 1069557.38}
+{"case_id": "case:ST159", "template": "case:P16", "type": "raw_material", "archetypes": {"sup:70720": "mirror"}, "c_open": 946176.83, "c_best": 769971.91, "c_alt": 1069557.38}
+{"case_id": "case:ST160", "template": "case:P16", "type": "raw_material", "archetypes": {"sup:70720": "boulware"}, "c_open": 1001422.3, "c_best": 983235.55, "c_alt": 1069557.38}
+{"case_id": "case:ST161", "template": "case:P17", "type": "price_increase", "archetypes": {"sup:70550": "mirror"}, "c_open": 745886.49, "c_best": 701392.22, "c_alt": null}
+{"case_id": "case:ST162", "template": "case:P17", "type": "price_increase", "archetypes": {"sup:70550": "conceder"}, "c_open": 745886.49, "c_best": 708675.62, "c_alt": null}
+{"case_id": "case:ST163", "template": "case:P17", "type": "price_increase", "archetypes": {"sup:70550": "mirror"}, "c_open": 745886.49, "c_best": 700584.01, "c_alt": null}
+{"case_id": "case:ST164", "template": "case:P17", "type": "price_increase", "archetypes": {"sup:70550": "cash_short"}, "c_open": 745886.49, "c_best": 704027.46, "c_alt": null}
+{"case_id": "case:ST165", "template": "case:P17", "type": "price_increase", "archetypes": {"sup:70550": "data_driven"}, "c_open": 745886.49, "c_best": 697159.7, "c_alt": null}
+{"case_id": "case:ST166", "template": "case:P17", "type": "price_increase", "archetypes": {"sup:70550": "cash_short"}, "c_open": 745886.49, "c_best": 694136.95, "c_alt": null}
+{"case_id": "case:ST167", "template": "case:P17", "type": "price_increase", "archetypes": {"sup:70550": "boulware"}, "c_open": 743425.53, "c_best": 701666.31, "c_alt": null}
+{"case_id": "case:ST168", "template": "case:P17", "type": "price_increase", "archetypes": {"sup:70550": "mirror"}, "c_open": 745886.49, "c_best": 719021.67, "c_alt": null}
+{"case_id": "case:ST169", "template": "case:P17", "type": "price_increase", "archetypes": {"sup:70550": "cash_short"}, "c_open": 740964.56, "c_best": 713254.75, "c_alt": null}
+{"case_id": "case:ST170", "template": "case:P17", "type": "price_increase", "archetypes": {"sup:70550": "mirror"}, "c_open": 745886.49, "c_best": 702474.69, "c_alt": null}
+{"case_id": "case:ST171", "template": "case:P18", "type": "raw_material", "archetypes": {"sup:70740": "walker"}, "c_open": 292071.69, "c_best": 242774.58, "c_alt": 301087.96}
+{"case_id": "case:ST172", "template": "case:P18", "type": "raw_material", "archetypes": {"sup:70740": "mirror"}, "c_open": 298036.19, "c_best": 214225.01, "c_alt": 301087.96}
+{"case_id": "case:ST173", "template": "case:P18", "type": "raw_material", "archetypes": {"sup:70740": "mirror"}, "c_open": 291594.53, "c_best": 212767.7, "c_alt": 301087.96}
+{"case_id": "case:ST174", "template": "case:P18", "type": "raw_material", "archetypes": {"sup:70740": "cash_short"}, "c_open": 299944.83, "c_best": 248863.27, "c_alt": 301087.96}
+{"case_id": "case:ST175", "template": "case:P18", "type": "raw_material", "archetypes": {"sup:70740": "mirror"}, "c_open": 299467.67, "c_best": 238999.33, "c_alt": 301087.96}
+{"case_id": "case:ST176", "template": "case:P18", "type": "raw_material", "archetypes": {"sup:70740": "mirror"}, "c_open": 301853.47, "c_best": 236426.3, "c_alt": 301087.96}
+{"case_id": "case:ST177", "template": "case:P18", "type": "raw_material", "archetypes": {"sup:70740": "walker"}, "c_open": 290163.05, "c_best": 244365.96, "c_alt": 301087.96}
+{"case_id": "case:ST178", "template": "case:P18", "type": "raw_material", "archetypes": {"sup:70740": "conceder"}, "c_open": 299706.25, "c_best": 249768.56, "c_alt": 301087.96}
+{"case_id": "case:ST179", "template": "case:P18", "type": "raw_material", "archetypes": {"sup:70740": "mirror"}, "c_open": 302330.63, "c_best": 200623.42, "c_alt": 301087.96}
+{"case_id": "case:ST180", "template": "case:P18", "type": "raw_material", "archetypes": {"sup:70740": "mirror"}, "c_open": 301376.31, "c_best": 222483.12, "c_alt": 301087.96}
+{"case_id": "case:ST181", "template": "case:P19", "type": "renewal", "archetypes": {"sup:70640": "mirror"}, "c_open": 76534.46, "c_best": 63800.88, "c_alt": 80472.79}
+{"case_id": "case:ST182", "template": "case:P19", "type": "renewal", "archetypes": {"sup:70640": "boulware"}, "c_open": 78998.63, "c_best": 68260.19, "c_alt": 80472.79}
+{"case_id": "case:ST183", "template": "case:P19", "type": "renewal", "archetypes": {"sup:70640": "mirror"}, "c_open": 77398.18, "c_best": 66277.64, "c_alt": 80472.79}
+{"case_id": "case:ST184", "template": "case:P19", "type": "renewal", "archetypes": {"sup:70640": "monopolist"}, "c_open": 78780.13, "c_best": 74847.65, "c_alt": 80472.79}
+{"case_id": "case:ST185", "template": "case:P19", "type": "renewal", "archetypes": {"sup:70640": "walker"}, "c_open": 80158.65, "c_best": 76234.48, "c_alt": 80472.79}
+{"case_id": "case:ST186", "template": "case:P19", "type": "renewal", "archetypes": {"sup:70640": "mirror"}, "c_open": 76620.83, "c_best": 71008.08, "c_alt": 80472.79}
+{"case_id": "case:ST187", "template": "case:P19", "type": "renewal", "archetypes": {"sup:70640": "mirror"}, "c_open": 78866.5, "c_best": 72209.28, "c_alt": 80472.79}
+{"case_id": "case:ST188", "template": "case:P19", "type": "renewal", "archetypes": {"sup:70640": "boulware"}, "c_open": 74608.25, "c_best": 63379.89, "c_alt": 80472.79}
+{"case_id": "case:ST189", "template": "case:P19", "type": "renewal", "archetypes": {"sup:70640": "cash_short"}, "c_open": 77743.67, "c_best": 72420.69, "c_alt": 80472.79}
+{"case_id": "case:ST190", "template": "case:P19", "type": "renewal", "archetypes": {"sup:70640": "conceder"}, "c_open": 78223.86, "c_best": 71380.57, "c_alt": 80472.79}

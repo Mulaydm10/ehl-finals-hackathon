@@ -1,0 +1,195 @@
+{
+ "case_id": "case:ST012",
+ "set": "stress",
+ "type": "price_increase",
+ "title": "Nordmark passes on copper for the 7.5 kW motor",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with Antriebstechnik Nordmark AG. Nordmark passes on copper for the 7.5 kW motor. Need: 6110 pc a year. Category goal: stabilise a strategic supply: a healthy supplier and stable prices count, not only the lowest price. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 36 days). Fallback if you walk away: the second-source quote quote:7200002. Must-haves: none. Prepare from the data package.",
+ "trigger_doc": "doc:20260914-70510-P02",
+ "parts": [
+  "part:350011"
+ ],
+ "suppliers": [
+  "sup:70510"
+ ],
+ "negotiable": [
+  "unit_price",
+  "payment_days",
+  "index_clause"
+ ],
+ "fixed_terms": {
+  "lead_time_days": 35,
+  "volume_per_year": 6110,
+  "contract_months": 12,
+  "effective_date": "2027-01-01",
+  "incoterm": "DAP",
+  "tooling_eur": 0
+ },
+ "term_options": {
+  "payment_days": [
+   14,
+   30,
+   45,
+   60,
+   90
+  ],
+  "index_clause": [
+   null,
+   {
+    "series": "CU-NOTATION",
+    "material_share": 0.2,
+    "deadband_pct": 0,
+    "base_month": "2026-08"
+   },
+   {
+    "series": "CU-NOTATION",
+    "material_share": 0.2,
+    "deadband_pct": 3,
+    "base_month": "2026-08"
+   },
+   {
+    "series": "CU-NOTATION",
+    "material_share": 0.2,
+    "deadband_pct": 5,
+    "base_month": "2026-08"
+   }
+  ]
+ },
+ "buyer": {
+  "need_per_year": 6110,
+  "horizon_years": 1.0,
+  "current_unit_price": 348.32,
+  "fallback_unit_price": 376.19,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 36,
+  "category_goal": "stabilise",
+  "fallback_risk_pct": 10,
+  "index_risk_pct": 4,
+  "late_cost_per_day": 720,
+  "cost_per_defect": 780,
+  "sustainable_margin_pct": 0.5,
+  "relationship_eur_per_point": 31920,
+  "freight_eur_per_unit": {
+   "EXW": 2.99,
+   "FCA": 2.6,
+   "DAP": 0.0
+  },
+  "index_paths": {
+   "CU-NOTATION": 0.05
+  },
+  "must_haves": [],
+  "alternative": {
+   "kind": "quote",
+   "ref": "quote:7200002",
+   "terms": {
+    "unit_price": 421.06,
+    "payment_days": 30,
+    "lead_time_days": 56,
+    "volume_per_year": 6110,
+    "contract_months": 12,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "incoterm": "DAP",
+    "tooling_eur": 0,
+    "ppm_commitment": 0
+   }
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260914-70510-P02",
+  "ctr:4600070510",
+  "sc:70510@2026Q3",
+  "quote:7200002"
+ ],
+ "_hidden": {
+  "template": "case:P02",
+  "variant": 1,
+  "suppliers": {
+   "sup:70510": {
+    "grid": 0.1,
+    "rate": 0.08902612262558632,
+    "r_base": 0.890214455612812,
+    "levers": {
+     "index_change": 0.0,
+     "should_cost": 0.003188896078530472,
+     "price_history": 0.010160064324096087,
+     "quality": 0.0,
+     "volume_change": 0.0,
+     "news": 0.0,
+     "notice": 0.0,
+     "contract": 0.0
+    },
+    "lever_repeat": 0.32648514864780886,
+    "fact_pass": 0.9165167191424084,
+    "first_frac": 0.7441554362448295,
+    "recip": 0.9953327431781377,
+    "cap": 0.036932192273450085,
+    "final_round": 8,
+    "p_walk_final": 0.6793346994237713,
+    "patience": 6,
+    "insult": 0.08765833771095838,
+    "min_move": 0.04950236143275284,
+    "hazard": 0.012028575680279905,
+    "rival_follow": 0.7019124928131915,
+    "rival_premium": 0.010421853932812966,
+    "lt_cost": 0.005842520016774268,
+    "vol_elast": 0.17898180238943565,
+    "ppm_cost": 0.03262701701810138,
+    "contract_bonus": 0.001742600726065846,
+    "ix_base": 0.02781092017554327,
+    "ix_slope": 0.005069365925162024,
+    "max_payment_days": null,
+    "trust_penalty": 0.0008491114475308537,
+    "alt_std": false,
+    "strict_drivers": false,
+    "archetype": "conceder",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 250,
+     "index_clause": null,
+     "lead_time_days": 35,
+     "incoterm": "DAP",
+     "volume_per_year": 6110,
+     "contract_months": 12,
+     "tooling_eur": 0,
+     "chargeback_eur_per_complaint": 0.0
+    },
+    "opening": {
+     "unit_price": 378.55,
+     "payment_days": 30,
+     "index_clause": null
+    },
+    "drivers": [
+     "CU-NOTATION",
+     "LCI-C",
+     "PPI-C241"
+    ],
+    "ppm_real": 227,
+    "full_cost_frac": 0.9977444051746529,
+    "usual_rate": 0.08902612262558632,
+    "walk_model": 2,
+    "rfq_gap0": 0.0371056836853554,
+    "rfq_gap1": 0.12860288271959797,
+    "p_walk_final_rfq": 0.9055173620771394,
+    "small_gap": 0.017730370641897315,
+    "p_agree_small": 0.8077329881649061,
+    "p_walk_small": 0.07037335319965299,
+    "p_final_nomove2": 0.35285726654288696
+   }
+  },
+  "c_open": 2329791.97,
+  "c_alt": 2604227.78,
+  "c_best": 2294769.37,
+  "best_package": {
+   "supplier_id": "sup:70510",
+   "terms": {
+    "unit_price": 365.45,
+    "payment_days": 14,
+    "index_clause": null
+   },
+   "c": 2294769.37
+  },
+  "best_is_alternative": false
+ }
+}

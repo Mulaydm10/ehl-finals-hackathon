@@ -1,0 +1,192 @@
+{
+ "case_id": "case:ST177",
+ "set": "stress",
+ "type": "raw_material",
+ "title": "Alloy surcharge and base price for 1.4404 bar (Werdenfels)",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with Blankstahl Werdenfels GmbH. Alloy surcharge and base price for 1.4404 bar (Werdenfels). Need: 23700 kg a year. Category goal: leverage: competition and data should bring the price down. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 14 days). Fallback if you walk away: the second-source quote quote:7200018. Must-haves: none. Prepare from the data package.",
+ "trigger_doc": "doc:20260922-70740-P18",
+ "parts": [
+  "part:370010"
+ ],
+ "suppliers": [
+  "sup:70740"
+ ],
+ "negotiable": [
+  "unit_price",
+  "index_clause",
+  "payment_days",
+  "contract_months"
+ ],
+ "fixed_terms": {
+  "lead_time_days": 14,
+  "volume_per_year": 23700,
+  "effective_date": "2027-01-01",
+  "incoterm": "DAP",
+  "tooling_eur": 0
+ },
+ "term_options": {
+  "index_clause": [
+   null,
+   {
+    "series": "AS-14404",
+    "material_share": 0.45,
+    "deadband_pct": 0,
+    "base_month": "2026-08"
+   },
+   {
+    "series": "AS-14404",
+    "material_share": 0.45,
+    "deadband_pct": 3,
+    "base_month": "2026-08"
+   },
+   {
+    "series": "AS-14404",
+    "material_share": 0.45,
+    "deadband_pct": 5,
+    "base_month": "2026-08"
+   }
+  ],
+  "payment_days": [
+   14,
+   30,
+   45,
+   60,
+   90
+  ],
+  "contract_months": [
+   12,
+   24,
+   36
+  ]
+ },
+ "buyer": {
+  "need_per_year": 23700,
+  "horizon_years": 2,
+  "current_unit_price": 5.84,
+  "fallback_unit_price": 6.13,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 14,
+  "category_goal": "leverage",
+  "fallback_risk_pct": 3,
+  "index_risk_pct": 1,
+  "late_cost_per_day": 96,
+  "cost_per_defect": 0,
+  "freight_eur_per_unit": {
+   "EXW": 0.06,
+   "FCA": 0.05,
+   "DAP": 0.0
+  },
+  "index_paths": {
+   "AS-14404": 0.06
+  },
+  "must_haves": [],
+  "alternative": {
+   "kind": "quote",
+   "ref": "quote:7200018",
+   "terms": {
+    "unit_price": 6.31,
+    "payment_days": 30,
+    "lead_time_days": 10,
+    "volume_per_year": 23700,
+    "contract_months": 24,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "incoterm": "DAP",
+    "tooling_eur": 0,
+    "ppm_commitment": 75
+   }
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260922-70740-P18",
+  "ctr:4600070740",
+  "sc:70740@2026Q3",
+  "quote:7200018"
+ ],
+ "_hidden": {
+  "template": "case:P18",
+  "variant": 6,
+  "suppliers": {
+   "sup:70740": {
+    "grid": 0.1,
+    "rate": 0.05700297446649291,
+    "r_base": 0.8997052390238718,
+    "levers": {
+     "index_change": 0.0,
+     "should_cost": 0.0,
+     "price_history": 0.0,
+     "quality": 0.005561738153840973,
+     "volume_change": 0.0,
+     "news": 0.0,
+     "notice": 0.0,
+     "contract": 0.006450068204669629
+    },
+    "lever_repeat": 0.8563134566662844,
+    "fact_pass": 0.9512740631997556,
+    "first_frac": 0.677830546055412,
+    "recip": 0.4641605197138268,
+    "cap": 0.004654286925675644,
+    "final_round": 5,
+    "p_walk_final": 1.0,
+    "patience": 2,
+    "insult": 0.046789972247180026,
+    "min_move": 0.19918567690108635,
+    "hazard": 0.12648393898786212,
+    "rival_follow": 0.7242084230512703,
+    "rival_premium": 0.027043180323231556,
+    "lt_cost": 0.003603543426061868,
+    "vol_elast": 0.17694179438091925,
+    "ppm_cost": 0.04453727055737253,
+    "contract_bonus": 0.007759406323850576,
+    "ix_base": -0.004957896889656152,
+    "ix_slope": 0.0026794919912475016,
+    "max_payment_days": null,
+    "trust_penalty": 0.001377808367736303,
+    "alt_std": false,
+    "strict_drivers": true,
+    "archetype": "walker",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 70,
+     "contract_months": 12,
+     "index_clause": null,
+     "lead_time_days": 14,
+     "incoterm": "DAP",
+     "volume_per_year": 23700,
+     "tooling_eur": 0,
+     "chargeback_eur_per_complaint": 0.0
+    },
+    "opening": {
+     "unit_price": 5.89,
+     "payment_days": 30,
+     "index_clause": null,
+     "contract_months": 12
+    },
+    "drivers": [
+     "AS-14404",
+     "LCI-C",
+     "PPI-C2431"
+    ],
+    "ppm_real": 26,
+    "full_cost_frac": 0.911445611283195,
+    "usual_rate": 0.05700297446649291
+   }
+  },
+  "c_open": 290163.05,
+  "c_alt": 301087.96,
+  "c_best": 244365.96,
+  "best_package": {
+   "supplier_id": "sup:70740",
+   "terms": {
+    "unit_price": 5.19,
+    "index_clause": null,
+    "payment_days": 90,
+    "contract_months": 36
+   },
+   "c": 244365.96
+  },
+  "best_is_alternative": false
+ }
+}

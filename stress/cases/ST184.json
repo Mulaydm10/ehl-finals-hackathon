@@ -1,0 +1,166 @@
+{
+ "case_id": "case:ST184",
+ "set": "stress",
+ "type": "renewal",
+ "title": "Renewal of the ball bearing 6306 agreement (Inntal)",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with Kugellager-Vertrieb Inntal GmbH. Renewal of the ball bearing 6306 agreement (Inntal). Need: 8580 pc a year. Category goal: routine: fewer suppliers and less process cost. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 10 days). Fallback if you walk away: the second-source quote quote:7200019. Must-haves: none. Prepare from the data package.",
+ "trigger_doc": "doc:20260925-70640-P19",
+ "parts": [
+  "part:360020"
+ ],
+ "suppliers": [
+  "sup:70640"
+ ],
+ "negotiable": [
+  "unit_price",
+  "payment_days",
+  "contract_months"
+ ],
+ "fixed_terms": {
+  "lead_time_days": 10,
+  "volume_per_year": 8580,
+  "effective_date": "2027-01-01",
+  "index_clause": null,
+  "incoterm": "DAP",
+  "tooling_eur": 0
+ },
+ "term_options": {
+  "payment_days": [
+   14,
+   30,
+   45,
+   60,
+   90
+  ],
+  "contract_months": [
+   12,
+   24,
+   36
+  ]
+ },
+ "buyer": {
+  "need_per_year": 8580,
+  "horizon_years": 2,
+  "current_unit_price": 4.2,
+  "fallback_unit_price": 4.49,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 10,
+  "category_goal": "routine",
+  "fallback_risk_pct": 5,
+  "index_risk_pct": 2,
+  "late_cost_per_day": 75,
+  "cost_per_defect": 95,
+  "freight_eur_per_unit": {
+   "EXW": 0.03,
+   "FCA": 0.03,
+   "DAP": 0.0
+  },
+  "index_paths": {},
+  "must_haves": [],
+  "alternative": {
+   "kind": "quote",
+   "ref": "quote:7200019",
+   "terms": {
+    "unit_price": 4.63,
+    "payment_days": 30,
+    "lead_time_days": 7,
+    "volume_per_year": 8580,
+    "contract_months": 24,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "incoterm": "DAP",
+    "tooling_eur": 0,
+    "ppm_commitment": 302
+   }
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260925-70640-P19",
+  "ctr:4600070640",
+  "sc:70640@2026Q3",
+  "quote:7200019",
+  "fc:360020@2026-09"
+ ],
+ "_hidden": {
+  "template": "case:P19",
+  "variant": 3,
+  "suppliers": {
+   "sup:70640": {
+    "grid": 0.05,
+    "rate": 0.07884071710931229,
+    "r_base": 0.9949719412433404,
+    "levers": {
+     "index_change": 0.0009575394823703316,
+     "should_cost": 0.0025755879418090434,
+     "price_history": 0.0025263180395186536,
+     "quality": 0.0011027879263872185,
+     "volume_change": 0.0028702506504477182,
+     "news": 0.002583282327647695,
+     "notice": 0.001878719889825849,
+     "contract": 0.002948834546971569
+    },
+    "lever_repeat": 0.8592212808408022,
+    "fact_pass": 0.7198470664415987,
+    "first_frac": 0.11861309102386869,
+    "recip": 0.8250019859767577,
+    "cap": 0.022656062071098486,
+    "final_round": 2,
+    "p_walk_final": 0.69179816935156,
+    "patience": 2,
+    "insult": 0.0980823697992498,
+    "min_move": 0.1102423020828019,
+    "hazard": 0.0,
+    "rival_follow": 0.7442750462249748,
+    "rival_premium": 0.024221675806333172,
+    "lt_cost": 0.007492810945170784,
+    "vol_elast": 0.16502198742289959,
+    "ppm_cost": 0.028043997969401088,
+    "contract_bonus": 0.0007468343079354715,
+    "ix_base": 0.0010708471342622781,
+    "ix_slope": 0.001652392047081944,
+    "max_payment_days": null,
+    "trust_penalty": 0.004713976403316246,
+    "alt_std": true,
+    "strict_drivers": true,
+    "archetype": "monopolist",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 400,
+     "chargeback_eur_per_complaint": 0.0,
+     "contract_months": 12,
+     "lead_time_days": 10,
+     "incoterm": "DAP",
+     "volume_per_year": 8580,
+     "tooling_eur": 0
+    },
+    "opening": {
+     "unit_price": 4.4,
+     "payment_days": 30,
+     "contract_months": 12
+    },
+    "drivers": [
+     "LCI-C",
+     "PPI-C2815"
+    ],
+    "ppm_real": 479,
+    "full_cost_frac": 0.9432067801804351,
+    "usual_rate": 0.07884071710931229
+   }
+  },
+  "c_open": 78780.13,
+  "c_alt": 80472.79,
+  "c_best": 74847.65,
+  "best_package": {
+   "supplier_id": "sup:70640",
+   "terms": {
+    "unit_price": 4.28,
+    "payment_days": 14,
+    "contract_months": 36
+   },
+   "c": 74847.65
+  },
+  "best_is_alternative": false
+ }
+}

@@ -57,7 +57,7 @@ class ArenaClient:
         if wait > 0:
             time.sleep(wait)
 
-    def _call(self, method, path, body=None, params=None, raw=False):
+    def _call(self, method, path, body=None, params=None, raw=False, retry_5xx=True):
         headers = {MOVE_ID_HEADER: uuid.uuid4().hex} if method == "POST" else {}
         for attempt in range(self.retries + 1):
             self._pace()
@@ -70,7 +70,8 @@ class ArenaClient:
             else:
                 wait = r.headers.get("Retry-After", "")
                 short = wait.isdigit() and int(wait) <= MAX_RETRY_AFTER_S
-                if r.status_code not in RETRY_STATUS or attempt == self.retries or (r.status_code == 429 and not short):
+                if r.status_code not in RETRY_STATUS or attempt == self.retries or (r.status_code == 429 and not short) \
+                        or (not retry_5xx and r.status_code >= 500):
                     break
             time.sleep(float(wait) if wait and wait.isdigit() else 0.5 * 2**attempt)
         if (left := r.headers.get(REMAINING_HEADER, "")).isdigit():
@@ -101,7 +102,9 @@ class ArenaClient:
     def send_message(self, session_id, supplier_id, message):
         """Your e-mail to one supplier; returns its reply (or the result, if `action` closes)."""
         path = f"/sessions/{session_id}/threads/{supplier_id}/messages"
-        return self._call("POST", path, {"message": message})
+        # a 5xx on an e-mail is NOT retried here: the arena may hold the retry and apply it a round late (live P10
+        # 8134c6d18ce18953: after the supplier's final offer -> it walked). play.settle_after_error re-syncs instead.
+        return self._call("POST", path, {"message": message}, retry_5xx=False)
 
     def thread(self, session_id, supplier_id):
         return self._call("GET", f"/sessions/{session_id}/threads/{supplier_id}")

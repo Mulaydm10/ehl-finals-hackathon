@@ -1,5 +1,7 @@
 # commit + pull + push safely. usage: bash sync.sh "commit message"
 cd ~/Dhruv/ehl-finals-hackathon || exit 1
+markers() { git grep -l "^<<<<<<< \|^>>>>>>> " -- . ; }
+if markers; then echo "MARKERS IN WORKTREE - nothing committed, fix them first"; exit 3; fi   # never commit markers
 git add -A
 git diff --cached --quiet || git commit -qm "$1
 
@@ -12,11 +14,11 @@ for p in $(git diff --name-only --diff-filter=U); do
     datasets/runs/*|tools/replays/*) git checkout --theirs "$p" ;;                          # same session data
     analysis/central/claim_reactions.json) git checkout --theirs "$p"; tacto/starter-kit/.venv/bin/python analysis/tools/mine_claims.py >/dev/null 2>&1 ;;
     datasets/H_supplier_memory.json) git checkout --theirs "$p"; python3 src/eval/supplier_memory.py >/dev/null ;;
-    *) echo "MANUAL CONFLICT: $p"; exit 2 ;;
+    *) echo "MANUAL CONFLICT: $p (merge left open - resolve, then rerun)"; exit 2 ;;
   esac
 done
 git add -A
-if git grep -l "^<<<<<<< \|^>>>>>>> " -- . ; then echo "MARKERS LEFT - not committing"; exit 3; fi
+if markers; then echo "MARKERS LEFT - not committing"; exit 3; fi
 git diff --cached --quiet || git commit -qm "Merge origin/main
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"

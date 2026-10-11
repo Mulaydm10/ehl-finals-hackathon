@@ -1,0 +1,155 @@
+{
+ "case_id": "case:ST165",
+ "set": "stress",
+ "type": "price_increase",
+ "title": "Platinenwerk Lausitz: component costs for the HB control board",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with Platinenwerk Lausitz GmbH. Platinenwerk Lausitz: component costs for the HB control board. Need: 19900 pc a year. Category goal: stabilise a strategic supply: a healthy supplier and stable prices count, not only the lowest price. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 59 days). There is no fallback supplier: without a deal the demand is bought at the fallback price. Must-haves: none. Prepare from the data package.",
+ "trigger_doc": "doc:20260919-70550-P17",
+ "parts": [
+  "part:350030"
+ ],
+ "suppliers": [
+  "sup:70550"
+ ],
+ "negotiable": [
+  "unit_price",
+  "payment_days",
+  "volume_per_year"
+ ],
+ "fixed_terms": {
+  "lead_time_days": 56,
+  "contract_months": 12,
+  "effective_date": "2027-01-01",
+  "index_clause": null,
+  "incoterm": "DAP",
+  "tooling_eur": 0
+ },
+ "term_options": {
+  "payment_days": [
+   14,
+   30,
+   45,
+   60,
+   90
+  ],
+  "volume_per_year": [
+   15920,
+   19900,
+   23880
+  ]
+ },
+ "buyer": {
+  "need_per_year": 19900,
+  "horizon_years": 1.0,
+  "current_unit_price": 34.35,
+  "fallback_unit_price": 37.1,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 59,
+  "category_goal": "stabilise",
+  "fallback_risk_pct": 10,
+  "index_risk_pct": 4,
+  "late_cost_per_day": 840,
+  "cost_per_defect": 192,
+  "sustainable_margin_pct": 0.5,
+  "relationship_eur_per_point": 10250,
+  "freight_eur_per_unit": {
+   "EXW": 0.01,
+   "FCA": 0.01,
+   "DAP": 0.0
+  },
+  "index_paths": {},
+  "must_haves": [],
+  "alternative": {
+   "kind": "none",
+   "ref": null,
+   "terms": {}
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260919-70550-P17",
+  "ctr:4600070550",
+  "sc:70550@2026Q3"
+ ],
+ "_hidden": {
+  "template": "case:P17",
+  "variant": 4,
+  "suppliers": {
+   "sup:70550": {
+    "grid": 0.5,
+    "rate": 0.042882294340143304,
+    "r_base": 0.9948846057753559,
+    "levers": {
+     "index_change": 0.0,
+     "should_cost": 0.03124056830056518,
+     "price_history": 0.0,
+     "quality": 0.0,
+     "volume_change": 0.0,
+     "news": 0.012157486290263786,
+     "notice": 0.012592905992544666,
+     "contract": 0.020592099202708977
+    },
+    "lever_repeat": 0.4341891832316116,
+    "fact_pass": 0.8392232850181393,
+    "first_frac": 0.07217349571670649,
+    "recip": 0.5194042168483202,
+    "cap": 0.01629468350458035,
+    "final_round": 3,
+    "p_walk_final": 0.7959562540079983,
+    "patience": 5,
+    "insult": 0.11216491297963505,
+    "min_move": 0.040795463110715406,
+    "hazard": 0.0,
+    "rival_follow": 0.9486995604660908,
+    "rival_premium": 0.015019498015272997,
+    "lt_cost": 0.005138780360497414,
+    "vol_elast": 0.0029081440134893777,
+    "ppm_cost": 0.049898290028227515,
+    "contract_bonus": 0.0063043520443477625,
+    "ix_base": 0.007559817217039853,
+    "ix_slope": 0.004854832601268131,
+    "max_payment_days": null,
+    "trust_penalty": 0.003405906351180259,
+    "alt_std": false,
+    "strict_drivers": true,
+    "archetype": "data_driven",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 700,
+     "chargeback_eur_per_complaint": 0.0,
+     "volume_per_year": 19900,
+     "lead_time_days": 56,
+     "incoterm": "DAP",
+     "contract_months": 12,
+     "tooling_eur": 0
+    },
+    "opening": {
+     "unit_price": 37.1,
+     "payment_days": 30,
+     "volume_per_year": 19900
+    },
+    "drivers": [
+     "LCI-C",
+     "PPI-C2611"
+    ],
+    "ppm_real": 791,
+    "full_cost_frac": 0.9510040671555491,
+    "usual_rate": 0.042882294340143304
+   }
+  },
+  "c_open": 745886.49,
+  "c_alt": null,
+  "c_best": 697159.7,
+  "best_package": {
+   "supplier_id": "sup:70550",
+   "terms": {
+    "unit_price": 34.57,
+    "payment_days": 90,
+    "volume_per_year": 19900
+   },
+   "c": 697159.7
+  },
+  "best_is_alternative": false
+ }
+}

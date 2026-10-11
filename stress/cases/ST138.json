@@ -1,0 +1,181 @@
+{
+ "case_id": "case:ST138",
+ "set": "stress",
+ "type": "renewal",
+ "title": "Motor cable: base price and copper clause for 2027",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with Kabelwerk Rh\u00f6nsberg GmbH. Motor cable: base price and copper clause for 2027. Need: 3420 x 100 m a year. Category goal: stabilise a strategic supply: a healthy supplier and stable prices count, not only the lowest price. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 14 days). There is no fallback supplier: without a deal the demand is bought at the fallback price. Must-haves: none. Prepare from the data package.",
+ "trigger_doc": "doc:20260910-70560-P14",
+ "parts": [
+  "part:350040"
+ ],
+ "suppliers": [
+  "sup:70560"
+ ],
+ "negotiable": [
+  "unit_price",
+  "payment_days",
+  "contract_months",
+  "index_clause"
+ ],
+ "fixed_terms": {
+  "lead_time_days": 14,
+  "volume_per_year": 3420,
+  "effective_date": "2027-01-01",
+  "incoterm": "DAP",
+  "tooling_eur": 0
+ },
+ "term_options": {
+  "payment_days": [
+   14,
+   30,
+   45,
+   60,
+   90
+  ],
+  "contract_months": [
+   12,
+   24,
+   36
+  ],
+  "index_clause": [
+   null,
+   {
+    "series": "CU-NOTATION",
+    "material_share": 0.55,
+    "deadband_pct": 0,
+    "base_month": "2026-08"
+   },
+   {
+    "series": "CU-NOTATION",
+    "material_share": 0.55,
+    "deadband_pct": 3,
+    "base_month": "2026-08"
+   },
+   {
+    "series": "CU-NOTATION",
+    "material_share": 0.55,
+    "deadband_pct": 5,
+    "base_month": "2026-08"
+   }
+  ]
+ },
+ "buyer": {
+  "need_per_year": 3420,
+  "horizon_years": 2,
+  "current_unit_price": 316.35,
+  "fallback_unit_price": 338.49,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 14,
+  "category_goal": "stabilise",
+  "fallback_risk_pct": 10,
+  "index_risk_pct": 4,
+  "late_cost_per_day": 180,
+  "cost_per_defect": 48,
+  "sustainable_margin_pct": 4,
+  "relationship_eur_per_point": 16230,
+  "freight_eur_per_unit": {
+   "EXW": 0.81,
+   "FCA": 0.7,
+   "DAP": 0.0
+  },
+  "index_paths": {
+   "CU-NOTATION": 0.05
+  },
+  "must_haves": [],
+  "alternative": {
+   "kind": "none",
+   "ref": null,
+   "terms": {}
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260910-70560-P14",
+  "ctr:4600070560",
+  "sc:70560@2026Q3",
+  "fc:350040@2026-09"
+ ],
+ "_hidden": {
+  "template": "case:P14",
+  "variant": 7,
+  "suppliers": {
+   "sup:70560": {
+    "grid": 0.01,
+    "rate": 0.11755793011503979,
+    "r_base": 0.9529619858828042,
+    "levers": {
+     "index_change": 0.0,
+     "should_cost": 0.008324914481684195,
+     "price_history": 0.013928579077615954,
+     "quality": 0.0,
+     "volume_change": 0.0073290215562695675,
+     "news": 0.007084918030075998,
+     "notice": 0.015164098665321599,
+     "contract": 0.0
+    },
+    "lever_repeat": 0.5476532444774,
+    "fact_pass": 0.7291783261329443,
+    "first_frac": 0.2722461271954147,
+    "recip": 0.6621746695311828,
+    "cap": 0.013080932938803155,
+    "final_round": 7,
+    "p_walk_final": 0.459204690013608,
+    "patience": 4,
+    "insult": 0.11645705029597082,
+    "min_move": 0.0969978916022805,
+    "hazard": 0.0,
+    "rival_follow": 0.46619697874943544,
+    "rival_premium": 0.014485954697545978,
+    "lt_cost": 0.004516339271508907,
+    "vol_elast": 0.056613698197068546,
+    "ppm_cost": 0.007496491809197531,
+    "contract_bonus": 0.006472853496485243,
+    "ix_base": 0.028884003402267946,
+    "ix_slope": 0.0033440733584198736,
+    "max_payment_days": null,
+    "trust_penalty": 0.002704313740731843,
+    "alt_std": false,
+    "strict_drivers": true,
+    "archetype": "mirror",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 100,
+     "chargeback_eur_per_complaint": 0.0,
+     "contract_months": 12,
+     "index_clause": null,
+     "lead_time_days": 14,
+     "incoterm": "DAP",
+     "volume_per_year": 3420,
+     "tooling_eur": 0
+    },
+    "opening": {
+     "unit_price": 316.11,
+     "contract_months": 12,
+     "index_clause": null
+    },
+    "drivers": [
+     "CU-NOTATION",
+     "LCI-C"
+    ],
+    "ppm_real": 90,
+    "full_cost_frac": 0.9278960508029908,
+    "usual_rate": 0.11755793011503979
+   }
+  },
+  "c_open": 2361719.3,
+  "c_alt": null,
+  "c_best": 2065790.53,
+  "best_package": {
+   "supplier_id": "sup:70560",
+   "terms": {
+    "unit_price": 294.3,
+    "payment_days": 14,
+    "contract_months": 24,
+    "index_clause": null
+   },
+   "c": 2065790.53
+  },
+  "best_is_alternative": false
+ }
+}

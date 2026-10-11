@@ -1,0 +1,177 @@
+01:39:59 P11 session 9aafb84c61976222
+01:39:59 P04 session 934791e226ff6fa2
+01:39:59 P01 session f393620b1b31e11a
+01:39:59 P10 session 6fc3dc2b6ce2ec6a
+01:39:59 P02 session b47104686a626526
+01:39:59 P08 session 6c7185d46465def1
+01:39:59 P18 session ff337861254521fc
+01:40:00 P03 session beae8ba1c94e2615
+01:40:00 P07 session 80e951cbd1427ca4
+01:40:00 P11 sup:70140 patience prior: final expected around round 4
+01:40:00 P11 prep sup:70140: ask +4.1%, justified +2.3%, full_cost~42.44, cash_rate 0.25, motives ['news_restructuring', 'wants_faster_payment', 'cash_short', 'wants_commitment', 'quality_escalation']
+01:40:00 P11 sup:70140 round 0: our best C 706676 vs standing 817578 (alt 894383)
+01:40:00 P04 sup:70620 cost calc from its own shares: +0.6% (6-month) vs ask +13.0% -> EUR 4.41
+01:40:00 P04 sup:70620 patience prior: final expected around round 2
+01:40:00 P04 prep sup:70620: ask +13.0%, justified +0.7%, full_cost~4.13, cash_rate 0.08, motives ['news_refocus', 'may_drop_small_accounts', 'open_book', 'needs_multi_year', 'we_are_not_strategic']
+01:40:00 P04 sup:70620 round 0: our best C 194129 vs standing 198846 (alt 203169)
+01:40:00 P01 sup:70110 cost calc from its own shares: +2.0% (6-month) vs ask +9.5% -> EUR 129.06
+01:40:00 P01 sup:70110 patience prior: final expected around round 7
+01:40:00 P01 prep sup:70110: ask +9.5%, justified +2.3%, full_cost~118.94, cash_rate 0.14, motives ['partnership_pride', 'data_naive', 'wants_faster_payment']
+01:40:00 P01 sup:70110 round 0: our best C 1064179 vs standing 1153780 (alt 1176178)
+01:40:00 P10 sup:70410 patience prior: final expected around round 1
+01:40:00 P10 prep sup:70410: ask +7.7%, justified +1.3%, full_cost~22.85, cash_rate 0.08, motives ['news_allocation', 'approval_ladder', 'wants_commitment', 'capacity_tight']
+01:40:00 P10 sup:70410 round 0: our best C 1432037 vs standing 1932492 (alt inf)
+01:40:00 P02 sup:70510 patience prior: final expected around round 7
+01:40:00 P02 prep sup:70510: ask +6.5%, justified +11.1%, full_cost~327.42, cash_rate 0.08, motives ['approval_ladder']
+01:40:00 P02 sup:70510 round 0: our best C 2214592 vs standing 2282867 (alt 2604228)
+01:40:00 P08 sup:70710 cost calc from its own shares: +3.6% (6-month) vs ask +11.0% -> EUR 5.65
+01:40:00 P08 sup:70710 patience prior: final expected around round 4
+01:40:00 P08 prep sup:70710: ask +11.0%, justified +7.0%, full_cost~5.12, cash_rate 0.08, motives ['open_book', 'hedged_forward']
+01:40:00 P08 sup:70710 round 0: our best C 899797 vs standing 1135887 (alt 1157020)
+01:40:00 P18 sup:70740 patience prior: final expected around round 4
+01:40:00 P18 prep sup:70740: ask +4.5%, justified +7.0%, full_cost~5.49, cash_rate 0.08, motives ['open_book', 'may_drop_small_accounts', 'approval_ladder']
+01:40:00 P18 sup:70740 round 0: our best C 226852 vs standing 295173 (alt 301088)
+01:40:01 P03 sup:70530 patience prior: final expected around round 3
+01:40:01 P03 prep sup:70530: ask +6.2%, justified +9.7%, full_cost~379.02, cash_rate 0.08, motives ['price_frozen', 'approval_ladder']
+01:40:01 P03 sup:70530 round 0: our best C 3921912 vs standing 4246314 (alt 4332546)
+01:40:01 P07 sup:70610 patience prior: final expected around round 4
+01:40:01 P07 prep sup:70610: ask -8.7%, justified +1.3%, full_cost~5.40, cash_rate 0.08, motives ['needs_volume', 'approval_ladder', 'bundle']
+01:40:01 P07 sup:70610 round 0: our best C 294453 vs standing 391027 (alt 379916)
+01:40:08 P01 sup:70110 model: sheets [0] args [0, 1, 2] notes {"questions": ["Where do we obtain our index figures?"], "refusals": [], "wants": "Reciprocal partnership, cost recovery and faster payment"}
+01:40:08 P02 sup:70510 model: sheets [0] args [0, 2] notes {"questions": [], "refusals": [], "wants": "Recover input-cost increases with predictable pricing"}
+01:40:09 P07 sup:70610 model: sheets [0] args [0, 1] notes {"questions": [], "refusals": [], "wants": "Predictable kit volume and a longer commitment"}
+01:40:11 P03 sup:70530 model: sheets [0] args [0, 1, 2] notes {"questions": [], "refusals": [{"field": "unit_price", "min": null, "max": null, "why": "The annual review notes explicitly state that price reductions are frozen until December 2027; no numerical price floor is specified."}], "wants": "Protect margin and secure stable renewal business"}
+01:40:11 P04 sup:70620 model: sheets [1] args [0, 1, 2] notes {"questions": [], "refusals": [], "wants": "Predictable volume through a multi-year agreement"}
+01:40:11 P10 sup:70410 model: sheets [0] args [0, 1, 2] notes {"questions": ["Requests our confirmation to proceed under its standard commercial procedure."], "refusals": [{"field": "volume_per_year", "min": null, "max": null, "why": "Previously stated that high capacity utilisation prevents confirmation of our full forecast for the coming months."}, {"field":
+01:40:11 P11 sup:70140 model: sheets [0] args [0] notes {"questions": [], "refusals": [], "wants": "Secure business and dependable cash flow"}
+01:40:13 P18 sup:70740 model: sheets [0] args [0, 1, 2] notes {"questions": [], "refusals": [], "wants": "Dependable volume and longer-term commitment with cost recovery"}
+01:40:14 P08 sup:70710 model: sheets [0] args [0, 1, 2] notes {"questions": [], "refusals": [], "wants": "Higher pricing and continued business"}
+01:40:30 P01 sup:70110 open {'unit_price': 134.5, 'payment_days': 14, 'effective_date': '2027-01-01'}
+01:40:30 P01 sup:70110 round 1: our best C 1069185 vs standing 1113483 (alt 1176178)
+01:40:30 P02 sup:70510 open {'unit_price': 372.52, 'payment_days': 90, 'index_clause': None}
+01:40:30 P02 sup:70510 round 1: our best C 2218355 vs standing 2262115 (alt 2604228)
+01:40:31 P10 sup:70410 open {'unit_price': 31.5, 'lead_time_days': 56, 'volume_per_year': 23400, 'contract_months': 36}
+01:40:31 P10 sup:70410 learned premiums (EUR/unit per unit of term): {'lead_time_days': -0.158}
+01:40:31 P10 sup:70410 round 1: our best C 1457478 vs standing 1522963 (alt inf)
+01:40:32 P11 sup:70140 open {'unit_price': 46.0, 'ppm_commitment': 300, 'chargeback_eur_per_complaint': 0.0}
+01:40:32 P11 sup:70140 round 1: our best C 711446 vs standing 758032 (alt 894383)
+01:40:39 P01 sup:70110 model: sheets [0] args [0] notes {"questions": [], "refusals": [], "wants": "Cost recognition, faster payment and a respected long-term partnership"}
+01:40:39 P10 sup:70410 model: sheets [0] args [0] notes {"questions": [], "refusals": [{"field": "unit_price", "min": null, "max": null, "why": "Explicitly rejects our target price as unfeasible at current utilization, without stating a minimum acceptable price."}], "wants": "Firm long-term commitment for capacity planning"}
+01:40:39 P07 sup:70610 open {'unit_price': 5.56, 'payment_days': 90, 'contract_months': 24}
+01:40:39 P07 sup:70610 round 1: our best C 305777 vs standing 331405 (alt 379916)
+01:40:40 P02 sup:70510 model: sheets [0] args [0] notes {"questions": ["Which volume can we commit to?"], "refusals": [], "wants": "Binding volume certainty and recovery of financing costs"}
+01:40:40 P11 sup:70140 model: sheets [0] args [1] notes {"questions": ["Can we pay invoices exactly on the agreed due date?", "Can we pay faster in exchange for a price concession?"], "refusals": [], "wants": "Payment certainty and liquidity without margin erosion"}
+01:40:41 P04 sup:70620 open {'unit_price': 4.91, 'payment_days': 60, 'contract_months': 36}
+01:40:41 P04 sup:70620 round 1: our best C 194570 vs standing 196970 (alt 203169)
+01:40:46 P18 sup:70740 open {'unit_price': 5.3, 'payment_days': 45, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+01:40:46 P18 sup:70740 round 1: our best C 241822 vs standing 259971 (alt 301088)
+01:40:47 P07 sup:70610 model: sheets [0] args [0] notes {"questions": [], "refusals": [{"field": "payment_days", "min": null, "max": 30, "why": "Explicitly rejects a 90-day payment period and insists on standard 30-day terms, although the main quoted offer inconsistently lists 90 days."}], "wants": "Predictable payment and sustained kit business"}
+01:40:48 P08 sup:70710 open {'unit_price': 5.25, 'payment_days': 90, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+01:40:48 P08 sup:70710 round 1: our best C 920723 vs standing 1020119 (alt 1157020)
+01:40:49 P10 sup:70410 final_offer {'unit_price': 31.3, 'lead_time_days': 56, 'volume_per_year': 23400, 'contract_months': 36}
+01:40:49 P10 sup:70410 {'type': 'accept', 'term_sheet_id': 'offer:70410-2'}
+01:40:50 P04 sup:70620 model: sheets [0] args [0] notes {"questions": [], "refusals": [], "wants": "Long-term volume commitment at a cost-covering price; calculation confidentiality"}
+01:40:54 P18 sup:70740 model: sheets [0] args [0] notes {"questions": ["What binding volume can we commit to?", "Can we send the competing offer previously mentioned?"], "refusals": [{"field": "index_clause", "min": null, "max": null, "why": "For a 24-month contract, the supplier explicitly refuses fixed pricing and requires the AS-14404 index clause."}]
+01:40:56 P08 sup:70710 model: sheets [0] args [0] notes {"questions": ["Provide the data supporting our demand forecast."], "refusals": [{"field": "index_clause", "min": null, "max": null, "why": "Requires an AS-14404 index clause for a 24-month agreement because its fixed-price cover ends in March 2027."}], "wants": "Protection after fixed-price cover e
+01:40:58 P11 sup:70140 open {'unit_price': 45.0, 'ppm_commitment': 300, 'chargeback_eur_per_complaint': 0.0}
+01:40:58 P11 sup:70140 round 2: our best C 718442 vs standing 742132 (alt 894383)
+01:41:01 P01 sup:70110 open {'unit_price': 130.8, 'payment_days': 14, 'effective_date': '2027-01-01'}
+01:41:01 P01 sup:70110 round 2: our best C 1076522 vs standing 1088111 (alt 1176178)
+01:41:08 P02 sup:70510 open {'unit_price': 371.25, 'payment_days': 90, 'index_clause': None}
+01:41:08 P02 sup:70510 round 2: our best C 2223818 vs standing 2254407 (alt 2604228)
+01:41:08 P11 sup:70140 model: sheets [0] args [0] notes {"questions": ["Can we pay faster in return for a price reduction?"], "refusals": [], "wants": "Payment certainty and faster cash without sacrificing margin"}
+01:41:09 P04 sup:70620 open {'unit_price': 4.91, 'payment_days': 60, 'contract_months': 36}
+01:41:09 P04 sup:70620: one near-close ask 4.87 below its open 4.91
+01:41:09 P04 sup:70620 round 2: our best C 195370 vs standing 196970 (alt 203169)
+01:41:10 P08 sup:70710 open {'unit_price': 5.02, 'payment_days': 45, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+01:41:10 P08 sup:70710 learned premiums (EUR/unit per unit of term): {'_deadband': 0.024}
+01:41:10 P08 sup:70710: final looks near (validity [30, 30], steps [0.8, 0.23]) -> patience 4 -> 3
+01:41:10 P08 sup:70710 round 2: our best C 949258 vs standing 984946 (alt 1157020)
+01:41:10 P07 sup:70610 open {'unit_price': 5.52, 'payment_days': 90, 'contract_months': 24}
+01:41:10 P07 sup:70610: final looks near (validity [30, 30], steps [0.18, 0.04]) -> patience 4 -> 3
+01:41:10 P07 sup:70610 round 2: our best C 312929 vs standing 329021 (alt 379916)
+01:41:10 P01 sup:70110 model: sheets [0] args [0] notes {"questions": [], "refusals": [], "wants": "Fair cost recovery, prompt payment and reciprocal partnership"}
+01:41:13 P03 sup:70530 open {'unit_price': 431.95, 'payment_days': 90, 'contract_months': 24, 'volume_per_year': 4580}
+01:41:13 P03 sup:70530 learned premiums (EUR/unit per unit of term): {'contract_months': -0.213, 'volume_per_year': -0.009}
+01:41:13 P03 sup:70530 round 1: our best C 3904988 vs standing 3932285 (alt 4332546)
+01:41:13 P18 sup:70740 open {'unit_price': 5.2, 'payment_days': 45, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+01:41:13 P18 sup:70740: final looks near (validity [30, 30], steps [0.8, 0.1]) -> patience 4 -> 3
+01:41:13 P18 sup:70740 round 2: our best C 245746 vs standing 255066 (alt 301088)
+01:41:14 P07 sup:70610 model: sheets [0] args [] notes {"questions": ["Which binding volume can we commit to?"], "refusals": [], "wants": "Binding volume to support better pricing"}
+01:41:15 P02 sup:70510 model: sheets [0] args [0] notes {"questions": [], "refusals": [], "wants": "Cover input and financing costs while keeping its calculation confidential"}
+01:41:20 P03 sup:70530 model: sheets [0] args [0] notes {"questions": [], "refusals": [{"field": "unit_price", "min": null, "max": null, "why": "General price reductions are frozen until December 2027; the supplier nevertheless offers conditional pricing for longer duration or higher binding volume."}], "wants": "A stable renewal within its price freeze,
+01:41:20 P08 sup:70710 model: sheets [0] args [] notes {"questions": [], "refusals": [{"field": "index_clause", "min": null, "max": null, "why": "Explicitly requires an AS-14404 index clause for a 24-month agreement because fixed-price cover ends in March 2027."}], "wants": "Protection against alloy-cost exposure after fixed-price cover expires"}
+01:41:22 P04 sup:70620 model: sheets [0] args [] notes {"questions": [], "refusals": [{"field": "unit_price", "min": 4.91, "max": null, "why": "Explicitly states that further concessions are unavailable and its unit price must be maintained."}], "wants": "Close the long-term renewal at its stated price"}
+01:41:23 P11 sup:70140 open {'unit_price': 44.5, 'ppm_commitment': 300, 'chargeback_eur_per_complaint': 0.0}
+01:41:23 P11 sup:70140 round 3: our best C 726392 vs standing 734182 (alt 894383)
+01:41:26 P18 sup:70740 model: sheets [0] args [0] notes {"questions": ["Which binding volume can Hollerau commit to?"], "refusals": [], "wants": "Binding volume and continuity of business"}
+01:41:26 P01 sup:70110 open {'unit_price': 129.6, 'payment_days': 14, 'effective_date': '2027-01-01'}
+01:41:26 P01 sup:70110: final looks near (validity [30, 30], steps [3.7, 1.2]) -> patience 7 -> 4
+01:41:26 P01 sup:70110 round 3: our best C 1076522 vs standing 1079882 (alt 1176178)
+01:41:33 P07 sup:70610 open {'unit_price': 5.45, 'payment_days': 90, 'contract_months': 24}
+01:41:33 P07 sup:70610 round 3: our best C 316505 vs standing 324849 (alt 379916)
+01:41:36 P11 sup:70140 model: sheets [0] args [0] notes {"questions": ["Can Hollerau pay faster?"], "refusals": [{"field": "unit_price", "min": 44.5, "max": null, "why": "The supplier explicitly states this is its lowest price today for the proposed quality and zero-chargeback package."}], "wants": "Faster payment without sacrificing margin"}
+01:41:36 P03 sup:70530 open {'unit_price': 429.19, 'payment_days': 90, 'contract_months': 36, 'volume_per_year': 4580}
+01:41:36 P03 sup:70530 learned premiums (EUR/unit per unit of term): {'contract_months': -0.213, 'volume_per_year': -0.009}
+01:41:36 P03 sup:70530: facts left - next fact with 428.85 a hair under its open 429.19 (no accept yet)
+01:41:36 P03 sup:70530 round 2: our best C 3904078 vs standing 3907172 (alt 4332546)
+01:41:36 P08 sup:70710 final_offer {'unit_price': 4.97, 'payment_days': 45, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+01:41:36 P08 sup:70710 {'type': 'accept', 'term_sheet_id': 'offer:70710-3'}
+01:41:37 P02 sup:70510 open {'unit_price': 370.45, 'payment_days': 90, 'index_clause': None}
+01:41:37 P02 sup:70510 round 3: our best C 2231526 vs standing 2249551 (alt 2604228)
+01:41:38 P04 sup:70620 final_offer {'unit_price': 4.91, 'payment_days': 60, 'contract_months': 36}
+01:41:38 P04 sup:70620 {'type': 'accept', 'term_sheet_id': 'offer:70620-3'}
+01:41:40 P07 sup:70610 model: sheets [0] args [] notes {"questions": ["Which figures underpin our offer, and can we send the supporting data?", "What binding volume can we commit to?"], "refusals": [], "wants": "Binding kit demand to support better pricing"}
+01:41:41 P18 sup:70740 open {'unit_price': 5.1, 'payment_days': 45, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+01:41:41 P18 sup:70740 round 3: our best C 247218 vs standing 250161 (alt 301088)
+01:41:45 P03 sup:70530 model: sheets [0] args [0] notes {"questions": ["Which annual volume can we commit to on a binding basis?"], "refusals": [{"field": "unit_price", "min": 429.19, "max": null, "why": "Says this is the maximum price flexibility for the current package under the price freeze; explicitly leaves room for improvement with higher binding v
+01:41:45 P03 sup:70530: ask 428.85 below our last 428.95 on the same terms - holding 428.95
+01:41:45 P02 sup:70510 model: sheets [0] args [0] notes {"questions": [], "refusals": [], "wants": "Reach agreement while keeping pricing calculations confidential"}
+01:41:53 P18 sup:70740 model: sheets [0] args [] notes {"questions": [], "refusals": [], "wants": "Long-term commitment while protecting confidential cost details"}
+01:41:54 P07 sup:70610 final_offer {'unit_price': 5.41, 'payment_days': 90, 'contract_months': 24}
+01:41:54 P07 sup:70610 {'type': 'accept', 'term_sheet_id': 'offer:70610-4'}
+01:42:00 P02 sup:70510 open {'unit_price': 369.65, 'payment_days': 90, 'index_clause': None}
+01:42:00 P02 sup:70510 round 4: our best C 2236381 vs standing 2244696 (alt 2604228)
+01:42:03 P03 sup:70530 open {'unit_price': 429.11, 'payment_days': 90, 'contract_months': 36, 'volume_per_year': 4580}
+01:42:03 P03 sup:70530 learned premiums (EUR/unit per unit of term): {'contract_months': -0.213, 'volume_per_year': -0.009}
+01:42:03 P03 sup:70530: facts left - next fact with 428.77 a hair under its open 429.11 (no accept yet)
+01:42:03 P03 sup:70530 round 3: our best C 3903350 vs standing 3906444 (alt 4332546)
+01:42:06 P02 sup:70510 model: sheets [0] args [] notes {"questions": [], "refusals": [], "wants": "Recover input and financing costs while keeping calculations confidential"}
+01:42:07 P18 sup:70740 final_offer {'unit_price': 5.1, 'payment_days': 45, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+01:42:07 P18 sup:70740 {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+01:42:11 P01 sup:70110 agreed {'unit_price': 129.11, 'payment_days': 14, 'effective_date': '2027-01-01'}
+01:42:11 P01 sup:70110 {'type': 'accept', 'term_sheet_id': 'offer:70110-4'}
+01:42:12 P03 sup:70530 model: sheets [0] args [0] notes {"questions": ["Which annual volume can Hollerau commit to on a binding basis?"], "refusals": [{"field": "unit_price", "min": null, "max": null, "why": "States that price reductions are frozen until December 2027, while allowing that a binding higher volume could improve the price."}], "wants": "Bin
+01:42:12 P03 sup:70530: ask 428.77 below our last 428.95 on the same terms - holding 428.95
+01:42:24 P02 sup:70510 final_offer {'unit_price': 369.15, 'payment_days': 90, 'index_clause': None}
+01:42:24 P02 sup:70510 {'type': 'accept', 'term_sheet_id': 'offer:70510-5'}
+01:42:28 P03 sup:70530 final_offer {'unit_price': 429.09, 'payment_days': 90, 'contract_months': 36, 'volume_per_year': 4580}
+01:42:28 P03 sup:70530 {'type': 'accept', 'term_sheet_id': 'offer:70530-4'}
+01:42:39 P11 sup:70140 open {'unit_price': 44.5, 'ppm_commitment': 300, 'chargeback_eur_per_complaint': 0.0}
+01:42:39 P11 sup:70140: grid probe 1/4 ask 44.25 (its open 44.50, grid 0.50)
+01:42:39 P11 sup:70140 round 4: our best C 730208 vs standing 734182 (alt 894383)
+01:42:48 P11 sup:70140 model: sheets [0] args [0] notes {"questions": ["Can we pay invoices earlier to ease cash pressure?"], "refusals": [{"field": "unit_price", "min": null, "max": null, "why": "They explicitly cannot give up margin right now, but state no binding price floor."}], "wants": "Faster payment without sacrificing margin"}
+01:43:09 P11 sup:70140 open {'unit_price': 44.5, 'ppm_commitment': 300, 'chargeback_eur_per_complaint': 0.0}
+01:43:09 P11 sup:70140: floor trade - 44.50 with EUR 300 chargeback, or 44.40 without
+01:43:09 P11 sup:70140 round 5: our best C 732592 vs standing 734182 (alt 894383)
+01:43:22 P11 sup:70140 model: sheets [0] args [0] notes {"questions": ["Requests faster payment as the most helpful concession; asks no direct question in the latest email."], "refusals": [{"field": "unit_price", "min": 44.5, "max": null, "why": "Explicitly refuses further price reductions for the 300 ppm, zero-chargeback package because it cannot sacrif
+01:43:51 P11 sup:70140 open {'unit_price': 44.5, 'ppm_commitment': 300, 'chargeback_eur_per_complaint': 0.0}
+01:43:51 P11 sup:70140: floor round 2 - hair 44.45
+01:43:51 P11 sup:70140 round 6: our best C 733388 vs standing 734182 (alt 894383)
+01:44:00 P11 sup:70140 model: sheets [0] args [0] notes {"questions": ["Which figures is our proposal based on? Please send the supporting data."], "refusals": [{"field": "chargeback_eur_per_complaint", "min": null, "max": 0, "why": "Explicitly insists on zero chargeback and rejects a EUR 300 chargeback at EUR 44.50 per unit."}], "wants": "Predictable fi
+01:44:20 P11 sup:70140 final_offer {'unit_price': 44.5, 'ppm_commitment': 300, 'chargeback_eur_per_complaint': 0.0}
+01:44:20 P11 sup:70140 {'type': 'accept', 'term_sheet_id': 'offer:70140-7'}
+
+==== LOAD TEST: 9 cases in parallel, cap 480s, wall 262s
+case:P01: score 0.9987053217508053 deal True in 133s
+case:P02: score 0.7751001827955863 deal True in 146s
+case:P03: score 0.9889409973442125 deal True in 150s
+case:P04: score 0.8098066042011054 deal True in 100s
+case:P07: score 0.7469839325011869 deal True in 116s
+case:P08: score 0.91555579729687 deal True in 98s
+case:P10: score 0.6941276891519058 deal True in 51s
+case:P11: score 0.8771273853314934 deal True in 262s
+case:P18: score 0.6206757236015132 deal True in 129s
+---- warnings (0):
+practice left: 263
+DONE

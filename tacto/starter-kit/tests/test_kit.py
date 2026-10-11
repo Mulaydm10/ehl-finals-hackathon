@@ -377,6 +377,87 @@ def test_a_server_error_on_our_email_is_resent_once_without_data_ids():
     assert sent[1]["term_sheets"] == msg["term_sheets"]
 
 
+def test_a_503_on_our_email_resyncs_and_never_counters_after_its_final(monkeypatch):
+    """Live P10 8134c6d18ce18953: a 503 on our counter; the arena ran a timeout round meanwhile (its final offer). The
+    stale counter must not go out again - the agent decides on the final and accepts (it walked when we countered)."""
+    import importlib
+
+    P = importlib.import_module("arena_kit.play")  # the package exports a function named play
+    monkeypatch.setattr(P, "SETTLE_POLL_S", 0)
+    monkeypatch.setattr(P, "RESEND_WITHIN_S", -1)  # the round is too old to resend
+    sent, closed = [], []
+    final = {"offer_id": "offer:1-2", "status": "final_offer", "closed": False,
+             "timeouts": [{"offer_id": "offer:1-2", "status": "final_offer", "terms": {"unit_price": 5.0}}]}
+
+    class Client:
+        def session(self, session_id):
+            return {"status": "open"}
+
+        def thread(self, session_id, supplier_id):
+            return final
+
+    class Table:
+        client, session_id = Client(), "s1"
+
+        def open(self, case_id):
+            first = {"from": "sales@1", "status": "open",
+                     "term_sheets": [{"term_sheet_id": "offer:1-1", "terms": {"unit_price": 5.2}}]}
+            return {"case_id": case_id}, {"sup:1": [first]}
+
+        def send(self, supplier_id, message):
+            sent.append(message)
+            raise ArenaError(503, "Service Unavailable")
+
+        def close(self, supplier_id, message):
+            closed.append(message["action"])
+            return {"deal": True}
+
+        def result(self):
+            return {"deal": False}
+
+    class Agent:  # counters an open offer, accepts a final one
+        def decide(self, case, threads):
+            last = threads["sup:1"][-1]
+            if last.get("status") == "final_offer":
+                sheet = last["term_sheets"][0]["term_sheet_id"]
+                return {"supplier_id": "sup:1", "message": {"action": {"type": "accept", "term_sheet_id": sheet}}}
+            return {"supplier_id": "sup:1", "message": {"body": "x", "term_sheets": [{"terms": {"unit_price": 4.9}}]}}
+
+    assert play(Table(), "case:X", Agent()) == {"deal": True}
+    assert len(sent) == 1 and closed == [{"type": "accept", "term_sheet_id": "offer:1-2"}]
+
+
+def test_a_final_case_that_cannot_open_yet_is_retried(monkeypatch):
+    """Load test 01:33: "HTTP 429: at most 10 open sessions per key" - the case was given up (0 in a final). Retry it."""
+    import importlib
+
+    P = importlib.import_module("arena_kit.play")
+    calls = []
+
+    def fake_play(table, case_id, agent, deadline=None):
+        calls.append(case_id)
+        if len(calls) < 3:
+            raise ArenaError(429, "at most 10 open sessions per key")
+        return {"deal": True, "score": 0.9}
+
+    monkeypatch.setattr(P, "play", fake_play)
+    monkeypatch.setattr(P, "START_RETRY_S", 0)
+
+    class Client:
+        n = 0
+
+        def cases(self, set_):
+            Client.n += 1
+            if Client.n == 1:
+                return [{"case_id": "case:F01", "wave": 1, "open": True, "seconds_left": 480}]
+            if Client.n == 2:
+                raise ArenaError(502, "bad gateway")  # a transient error while polling must not stop the runner
+            return [{"case_id": "case:F01", "wave": w, "open": False} for w in range(1, 6)]
+
+    out = P.play_waves(Client(), lambda: None, waves=5, parallel=2, poll=0)
+    assert out == {"case:F01": {"deal": True, "score": 0.9}} and len(calls) == 3
+
+
 def test_an_agent_that_holds_sends_its_first_email_after_one_timeout_round(monkeypatch):
     import importlib
 
