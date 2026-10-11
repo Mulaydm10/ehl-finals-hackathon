@@ -221,3 +221,4 @@
 | 2026-10-11 01:51 | Parth | P08 | noidea eac32bb HOLD0_C / gpt-6-astra | 0.92 (first counter None, final round None, timeouts 0) | 51074f3791fd0405 |
 | 2026-10-11 01:57 | Parth | P01 | noidea c9a7b9d HOLD_P01 + hold_r1 / gpt-6-astra | 0.59 (first counter None, final round None, timeouts 0) | b34b7a631bcfe5af |
 | 2026-10-11 01:57 | Parth | P01 | noidea c9a7b9d HOLD_P01 + hold_r1 / gpt-6-astra | 0.60 (first counter None, final round None, timeouts 0) | 4054f9080b3a7dd8 |
+| 2026-10-11 02:09 | Parth | P05 | p05_rounds 94e8c77 (max rounds: 33) / scripted | 0.965 | a81a92260846a430 |
