@@ -39,7 +39,16 @@ STD = {"ppm_commitment": 70, "chargeback_eur_per_complaint": 0.0}  # its quote's
 TEMPLATE_LINES = ("we value our cooperation and have made a step towards you",
                   "any further step needs approval from our management", "management has approved a further step")
 SIGN = "Kind regards,\nPurchasing, Hollerau Pumpenwerke"
+MONTHS = int(os.environ.get("P18_TOP_MONTHS", "24"))  # 36 from game 4: answers its "Which volume can you commit to?"
 VOL = "We confirm a binding volume of 23,700 units per year for 24 months."
+VOL36 = ("You asked which volume we can commit to: 23,700 kg a year, binding for 36 months, 71,100 kg in total. That is "
+         "50% more binding volume than over 24 months.")
+VOL36_LATER = "We confirm a binding volume of 23,700 kg a year for 36 months, 71,100 kg in total."
+
+
+def vol(first=False):
+    """The volume line: 24 months as 6c2813ce wrote it; 36 months answers its 'Which volume can you commit to?' once."""
+    return (VOL36 if first else VOL36_LATER) if MONTHS == 36 else VOL
 FORECAST = "Our demand forecast for Round bar 1.4404 dia 30 mm is up +1.9% (fc:370010@2026-09)."
 LABOUR = ("Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) "
           "changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01).")
@@ -91,14 +100,14 @@ def clause(db):
     return {"series": "AS-14404", "material_share": 0.45, "deadband_pct": db, "base_month": "2026-08"}
 
 
-def sheet(price, days, db):
-    return {"unit_price": price, "index_clause": clause(db), "payment_days": days, "contract_months": 24}
+def sheet(price, days, db, months=None):
+    return {"unit_price": price, "index_clause": clause(db), "payment_days": days, "contract_months": months or MONTHS}
 
 
 def words(t):
     ic = t["index_clause"]
     return (f"EUR {t['unit_price']:.2f} per kg, AS-14404 index clause (45% share, {ic['deadband_pct']}% deadband), "
-            f"{t['payment_days']} days payment, 24 months")
+            f"{t['payment_days']} days payment, {t['contract_months']} months")
 
 
 def beats(case, t):
@@ -160,7 +169,7 @@ class NoIdeaAgent(_Main):
         if k == 1:
             i = int(os.environ.get("P18_TOP_R2", "0")) % len(R2_OPENINGS)
             t = sheet(*R2_ASK)
-            body = (f"Dear Blankstahl Werdenfels GmbH team,\n\n{R2_OPENINGS[i]}\n\n{VOL} {FORECAST}\n\nOn this basis we propose "
+            body = (f"Dear Blankstahl Werdenfels GmbH team,\n\n{R2_OPENINGS[i]}\n\n{vol(True)} {FORECAST}\n\nOn this basis we propose "
                     f"the attached term sheet ({words(t)}). Please let us know if this works for you.\n\n{SIGN}")
             log.info("%s P18 top msg 2: variant %d, %s", sid, i, words(t))
             return self._send(case, sid, [t], body, ["fc:370010@2026-09"], subject)
@@ -169,7 +178,7 @@ class NoIdeaAgent(_Main):
             opts = ("your 5% deadband alternative, and as options a shorter payment term that brings you cash earlier"
                     if s["top_soft"] else "your 5% deadband alternative")
             body = (f"Dear Blankstahl Werdenfels GmbH team,\n\nThank you for your offer. We take {opts}; each of the attached "
-                    f"term sheets stays within 2% of your offer.\n\n{VOL} {LABOUR}\n\nOn this basis "
+                    f"term sheets stays within 2% of your offer.\n\n{vol()} {LABOUR}\n\nOn this basis "
                     f"we propose the attached term sheets ({'; '.join(words(t) for t in plan)}). We can sign today on any of "
                     f"them.\n\n{SIGN}")
             log.info("%s P18 top msg 3 (%s, its db0 %.2f): %s", sid, "soft" if s["top_soft"] else "normal", db0,
@@ -182,7 +191,7 @@ class NoIdeaAgent(_Main):
             log.info("%s P18 top: its %s scores at least our msg 4 - accept", sid, theirs)
             return accept
         body = (f"Dear Blankstahl Werdenfels GmbH team,\n\nThank you. We move once more towards you and can sign today.\n\n"
-                f"{VOL} {OTD}\n\nOn this basis we propose the attached term sheets "
+                f"{vol()} {OTD}\n\nOn this basis we propose the attached term sheets "
                 f"({'; '.join(words(t) for t in plan)}).\n\n{SIGN}")
         log.info("%s P18 top msg 4: %s", sid, [words(t) for t in plan])
         return self._send(case, sid, plan, body, ["sc:70740@2026Q3"], subject)

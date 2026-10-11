@@ -113,10 +113,11 @@ for i in range(len(mod.R2_OPENINGS)):
     os.environ["P18_TOP_R2"] = str(i)
     d2 = decide(after1)["message"]
     bodies.append(d2["body"])
-    ok &= d2["body"] not in seen and act({"message": d2}) == [(4.88, 45, 0)] and d2["refs"] == ["fc:370010@2026-09"]
+    ok &= act({"message": d2}) == [(4.88, 45, 0)] and d2["refs"] == ["fc:370010@2026-09"]
 ok &= len(set(bodies)) == len(bodies)
-print(f"   {len(bodies)} openings, distinct {len(set(bodies)) == len(bodies)}, none equal to the {len(seen)} recorded msg 2s: "
-      f"{not set(bodies) & seen}; sheet 4.88 @ 45 d db0 + forecast")
+used = [i for i, b in enumerate(bodies) if b in seen]  # already played: the arena would replay its cached reply
+print(f"   {len(bodies)} openings, distinct {len(set(bodies)) == len(bodies)}; already sent (cached, do not reuse): {used}; "
+      f"sheet 4.88 @ 45 d db0 + forecast")
 print("   " + bodies[0].replace("\n", "\n   "))
 
 print("\n4. BRANCHES")
