@@ -230,3 +230,5 @@
 | 2026-10-11 03:48 | Parth | P10 | probe P10_K news claim r1 (scripted, no model) | 0.702 (unit_price=31.2, volume_per_year=23400, contract_months=36, lead_time_days=56) | da37a9beb2b7c7bd |
 | 2026-10-11 03:51 | Parth | P10 | probe P10_L big move, 3.5% gap (scripted, no model) | 0.702 (unit_price=31.2, volume_per_year=23400, contract_months=36, lead_time_days=56) | 802e63e769ef6f4b |
 | 2026-10-11 04:06 | Parth | P10 | probe P10_M replay 59c899b9 (+engine-mode watch) (scripted, no model) | 0.71 (unit_price=31.1, volume_per_year=23400, contract_months=36, lead_time_days=56) | 3a968d38f7b65101 |
+| 2026-10-11 04:13 | Parth | P10 | probe P10_O rubber held for round 2 (scripted, no model) | 0.71 (unit_price=31.1, volume_per_year=23400, contract_months=36, lead_time_days=56) | 856dff728d5e8c9c |
+| 2026-10-11 04:13 | Parth | P10 | probe P10_P reciprocity anchor 30.80 (scripted, no model) | 0.702 (unit_price=31.2, volume_per_year=23400, contract_months=36, lead_time_days=56) | fbdf654d4fa59e5a |

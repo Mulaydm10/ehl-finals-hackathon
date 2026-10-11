@@ -111,3 +111,15 @@ falling window worth citing (-0.25 % at best). **P10 ceiling with this supplier:
 
 ## Replay of 59c899b9 (3a968d38f7b65101, 04:09) = 0.7097 again
 - Byte-identical e-mails -> 31.50 -> 31.10 @ 36 m, the normal-mode maximum (3 of 3 now: 59c8, 3c4a, 3a96).
+
+## Probes O and P (04:20): the two last normal-mode ideas = 0.7097 / 0.702
+| probe | session | change against 59c899b9 | its round 1 / final | score |
+|---|---|---|---:|---:|
+| O | 856dff728d5e8c9c | rubber fall moved from round 1 to round 2 (next to labour) | 31.50 / **31.10** | 0.7097 |
+| P | fbdf654d4fa59e5a | round 2 names the matching step ("your first step was 0.70 ... 30.80 would be a fair answer") | 31.50 / 31.20 | 0.702 |
+- O: round 1 is 31.50 with two facts as with three, and the rubber fall adds nothing in round 2 either: it is marginal
+  everywhere, not capped. P: naming a larger step made it firmer ("does not support the extent of the price reduction").
+- 31.10 is the normal-mode floor: 5 games at 31.10 (59c8, 3c4a, 3a96, 856d, plus agent runs c6b3/9f21), none lower in
+  ~25 different round-2 e-mails. It sits where the committee's band ended in the template game (31.00 @ 36 m); in normal
+  mode the model never asks the committee, so 31.10 (0.7097) is the most a normal-mode game can reach. Above it only the
+  engine-template mode (mode_watch.py).
