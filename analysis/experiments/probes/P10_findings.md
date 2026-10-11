@@ -56,3 +56,12 @@ falling window worth citing (-0.25 % at best). **P10 ceiling with this supplier:
   penalty starts by -4.3 %, so the step peaks right at game B's -3.5 % (30.40 -> 31.20). **Stop P10: 0.702 is its ceiling.**
 - Replay of game B (`cadacbc4cde7954a`, 2026-10-11): identical path - open 31.50 (both claims verified), our 30.40 @ 36 m,
   final 31.20 -> **0.702 again**. P10 is deterministic for the same messages; `P10_B.json` reproduces the best score.
+
+## Probe I (009ca00dfb02656a, 2026-10-11 03:35): the supplier's own 2% rule as the frame = 0.686
+- Round 1: EUR 30.48 (+2.0% on today's 29.89) @ 24 m / lead 56, price path + should-cost, framed with its own rule
+  (doc:20260310-70410-M1: changes above 2% need the pricing committee) as "a change you can confirm yourself" -> **31.50**,
+  the same counter as in all 35 normal-mode games. The frame was not even mentioned.
+- Round 2: EUR 30.60 @ 36 m + labour AND rubber index (both verified, "its overall impact is marginal") + "please put it to
+  your committee, we can wait" -> **final 31.40** (step 0.10). Backoffice: "My call: counter" both rounds, no committee.
+- Lesson: its round-2 step follows OUR price move (+0.12 here -> 0.10; +0.51/0.54 -> 0.30-0.40), capped near 30% of the
+  remaining gap; two index facts in one e-mail add nothing; a committee request is ignored in normal mode.

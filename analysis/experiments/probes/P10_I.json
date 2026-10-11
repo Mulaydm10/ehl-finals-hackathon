@@ -1,0 +1,20 @@
+{
+  "case": "P10",
+  "label": "P10_I 2pct-authority",
+  "hypothesis": "Its own rule (doc:20260310-70410-M1): price changes above 2% need the pricing committee. Probe A's 31.56 (= 32.20 - 2.0%) was agreed at once as 'our maximum flexibility'. Round 1 offers +2.0% on today's 29.89 (EUR 30.48), framed as a change the segment manager can confirm without the committee; agreed = 0.758 (record 0.741). If it counters (31.50 as in 35 normal games), round 2 stacks the 36-month move with BOTH index falls (labour + rubber, held back from round 1) and asks it to put EUR 30.60 to the committee.",
+  "on_agreed": "accept",
+  "on_open": "next",
+  "on_final": "alternative",
+  "rounds": [
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for your offer.\n\nWe are ready to give you the firm commitment you asked for: a binding 23,400 pieces per year for 24 months, and we accept the longer lead time of 56 days so you can plan production.\n\nOur orders for the 24 mm mechanical seal were at EUR 28.94 until December 2023 and have been at EUR 29.89 since January 2024 (po:4500010364-10, po:4500010407-10, po:4500014436-10).\nOur should-cost estimate for this seal is EUR 24.31 per piece (cost:340010).\n\nAt our annual review in March your key account manager explained that price changes above 2% need the approval of your pricing committee (doc:20260310-70410-M1). We therefore propose a change you can confirm yourself, without the committee: +2.0% on today's price, EUR 30.48 per piece.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 30.48, "volume_per_year": 23400, "contract_months": 24, "lead_time_days": 56}],
+      "refs": ["po:4500010364-10", "po:4500010407-10", "po:4500014436-10", "cost:340010", "doc:20260310-70410-M1"]
+    },
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for your answer. We move towards you: we extend the commitment to 36 months, 70,200 pieces in total.\nLabour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01).\nProducer prices DE: other rubber products changed -0.3% from 2026-01 to 2026-02 (idx:PPI-C2219@2026-01, idx:PPI-C2219@2026-02).\n\nWe know a step of this size goes to your pricing committee. Please put EUR 30.60 per piece for the 36 months to the committee; we are glad to wait for its decision.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 30.6, "volume_per_year": 23400, "contract_months": 36, "lead_time_days": 56}],
+      "refs": ["idx:LCI-C@2025-10", "idx:LCI-C@2026-01", "idx:PPI-C2219@2026-01", "idx:PPI-C2219@2026-02"]
+    }
+  ]
+}
