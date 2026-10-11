@@ -62,3 +62,11 @@ rules from the real walks) but is harsher than the arena, so read it for **failu
 - Robustness: 120 structural mutants (unknown suppliers / case types / fields, terms dropped or added, no alternative, extra
   bidder, 4 rounds): 0 crashes, 0 invalid e-mails, 0 safe moves. Self-consistency: 2 tiny dominated asks in 380 games.
 - Rejected tonight (stress + live): fc100, fc_ref97 / fc_ref99, show2 (see docs/LESSONS.md).
+
+## 5. Sunday morning: final-v3 / final-v4 (06:00 - 06:55)
+| version | stress cases_v2 (190) | stress unknown suppliers (190) | live |
+|---|---:|---:|---|
+| final-v2 | 0.631 | 0.560 | L8 9 cases 0.820 |
+| final-v3 (+ last try before walking) | **0.633** (2 better, 0 worse) | 0.560 (0 changed) | L9 9 cases 0.795, same decisions as v2 (last try 0 times; P02 variance) |
+| final-v4 (+ RFQ clock) | 0.633 (= v3, the sim has no clock) | 0.560 | D02 x3 0.569 / 0.579 / 0.579 (one 61 s rival reply handled) |
+Final rehearsal (kit arena-sim, 2 waves x 3 cases): 6 of 6 deals inside the cap.

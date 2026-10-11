@@ -392,3 +392,13 @@
 | 2026-10-11 06:04 | Neel | P18 | noidea_p18_coda (beat Codacabana: 6c2813ce msg 1 -> 5.20 @ 45 d; new msg 2 -> 5.10 normal; record sheets 5.00 db5 / 4.89 -> final 5.10 @ 45 d at once) / gpt-6-astra | **0.62** | 07836ace9510eafe |
 | 2026-10-11 06:12 | Neel | P18 | noidea_p18_coda2 (6c2813ce msg 1 -> 5.20; its msg 2 at 4.88 -> 5.10 normal; 5.10 db5 + 5.00 inside its 2% -> agreed 5.00 @ 45 d) / gpt-6-astra | **0.69** | cd68b78dfb23022c |
 | 2026-10-11 06:14 | Neel | P18 | noidea_p18_replay P18_MSG3=5.01/14/5 (0c968aae state; 5.01 @ 14 d db5 -> hold 5.10 db5 -> final 5.10 @ 14 d db5) / gpt-6-astra | **0.67** | a9711492eacdd9a7 |
+| 2026-10-11 06:32 | Dhruv | P01 | v3 L9 hidden (final-v3 candidate, last_try never fired) / gpt-6-astra | 0.9987 | see /tmp/v216/LOAD_L9v3.log (Mac) |
+| 2026-10-11 06:32 | Dhruv | P02 | v3 L9 hidden (final-v3 candidate, last_try never fired) / gpt-6-astra | 0.5464 | see /tmp/v216/LOAD_L9v3.log (Mac) |
+| 2026-10-11 06:32 | Dhruv | P03 | v3 L9 hidden (final-v3 candidate, last_try never fired) / gpt-6-astra | 0.9536 | see /tmp/v216/LOAD_L9v3.log (Mac) |
+| 2026-10-11 06:32 | Dhruv | P04 | v3 L9 hidden (final-v3 candidate, last_try never fired) / gpt-6-astra | 0.8098 | see /tmp/v216/LOAD_L9v3.log (Mac) |
+| 2026-10-11 06:32 | Dhruv | P07 | v3 L9 hidden (final-v3 candidate, last_try never fired) / gpt-6-astra | 0.7859 | see /tmp/v216/LOAD_L9v3.log (Mac) |
+| 2026-10-11 06:32 | Dhruv | P08 | v3 L9 hidden (final-v3 candidate, last_try never fired) / gpt-6-astra | 0.9156 | see /tmp/v216/LOAD_L9v3.log (Mac) |
+| 2026-10-11 06:32 | Dhruv | P10 | v3 L9 hidden (final-v3 candidate, last_try never fired) / gpt-6-astra | 0.7019 | see /tmp/v216/LOAD_L9v3.log (Mac) |
+| 2026-10-11 06:32 | Dhruv | P11 | v3 L9 hidden (final-v3 candidate, last_try never fired) / gpt-6-astra | 0.7517 | see /tmp/v216/LOAD_L9v3.log (Mac) |
+| 2026-10-11 06:32 | Dhruv | P18 | v3 L9 hidden (final-v3 candidate, last_try never fired) / gpt-6-astra | 0.6883 | see /tmp/v216/LOAD_L9v3.log (Mac) |
+| 2026-10-11 06:50 | Dhruv | D02 sandbox x3 | v4 RFQ clock / gpt-6-astra (free) | 0.5686 / 0.5786 / 0.5786 | /tmp/v216/D02_v31_*.log (Mac) |

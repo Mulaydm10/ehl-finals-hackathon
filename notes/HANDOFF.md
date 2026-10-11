@@ -4,7 +4,7 @@ EHL Munich 2026 hackathon, **Tacto Negotiation Arena** track, team **🃏 NoIdea
 Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden suppliers, no human in the loop; top-10 pitch 13:00.
 
 ## Where things are
-- **Frozen: tag `final-v2` (`17b7f16`) is the final's agent** (= v1 + 2 stress-lab fixes); v1 behaviour via `NOIDEA_EXPERIMENTS=hidden,no_prem_std,no_hold_market_check` (tools/final/RUNBOOK.md).
+- **Frozen: tag `final-v4` (`a0c9ec5`) is the final's agent** (06:55 Sunday) = final-v3 (+ last try before walking, cap margin 1.5 x slowest round) + RFQ clock; lineage and rollback flags in tools/final/RUNBOOK.md (Version). Earlier:  (= v1 + 2 stress-lab fixes); v1 behaviour via `NOIDEA_EXPERIMENTS=hidden,no_prem_std,no_hold_market_check` (tools/final/RUNBOOK.md).
 - v2 work on the Mac: worktree `~/Dhruv/ehl-v2` (branch `v2`); run its code with `PYTHONPATH=~/Dhruv/ehl-v2/tacto/starter-kit` (the shared venv otherwise loads main = v1).
 - **Repo (source of truth):** Mac mini `~/Dhruv/ehl-finals-hackathon` (`ssh macmini`), GitHub `Mulaydm10/ehl-finals-hackathon`
   (private), branch `main`. Laptop scratch copy for editing: `/tmp/claude-1000/-home-mulaydm10/<session>/scratchpad/repo`

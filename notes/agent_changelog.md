@@ -1395,3 +1395,33 @@ every case a deal, 9 in parallel in 241 s. Unseen sandbox suppliers: **D01 0.943
   44x). Stress: 0 of 380 games changed (simulated bidders move once per cited rival). Live D02 x2: 0.579 both (= v2).
 - Why it cannot pay: under that rule a shown bidder moves at most TO the closing price, never below it - two showings at best tie
   on price (D02: DEMO-C1 EXW stays dearer than DEMO-J1 DAP at 14.80). Reverted; v2 stays = final-v2.
+
+### Morning 06:00 - 06:55: gap analysis, final-v3, final-v4 (Dhruv + Claude)
+- **Gap analysis** (all 424 practice + 59 sandbox games archived, `datasets/runs_sandbox/`): per game c_deal vs c_best and the
+  cost breakdown. Losses: P07 / P10 / P18 stop 6-10% above the floor price; P02 / P04 end cents from it. Checked and ruled out
+  with data: faster payment for P11 (payment_days is FIXED in P11 - its "faster payment would help us" is not a lever there);
+  P10's 56-day lead time (consistent with its priced lead-time premium, -0.158 EUR/unit/day prior from P10 itself); citing the
+  case's rival quote (in all 19 case files it is dearer than the supplier's opening - it would only weaken us); pushing after a
+  final (real single-supplier pushes walked 6 of 11). Favourable supplier news (free capacity, new plant, short-time work) is a
+  real lever (10 of 12 citations "took", P05) but only a few suppliers have it - not built.
+- **final-v3** (`bbfb9f3`): (a) `last_try` (opt-out `no_last_try`): when its final costs us more than our alternative we walk
+  anyway, so one last sheet that beats the alternative goes out first - its own cheaper '-a' sheet exactly, else its terms priced
+  just under our alternative + its alternative on our options. Refused or walked = the alternative, as before (a free option).
+  Stress cases_v2: ST077 0.000 -> 0.404 (its -a sheet 6.20 @ 30 d / 12 m beat our alternative), ST116 0.326 -> 0.348; 0 worse;
+  cases_v2_unknown 0 changed. Hosted cases never reach it (their alternatives are dearer than every opening): live L9 (v3, 9 cases
+  in parallel) fired it 0 times - P01 0.999, P02 0.546 (the v2 repeats-objection guard took 371.52 in round 2; arena variance),
+  P03 0.954, P04 0.810, P07 0.786, P08 0.916, P10 0.702, P11 0.752, P18 0.688 = 0.795, 0 warnings. (b) play.py: close before the cap
+  at max(90 s, 1.5 x slowest round + 15 s) - the FAQ warns replies get slower under the final's load and a reply after the cap is
+  lost; live rounds 26-42 s, so nothing changes at practice speed.
+- **Final rehearsal** (the kit's new `arena-sim serve --final-rehearsal`, upstream kit in ~/Dhruv/kit-upstream, port 8010, our
+  runner + agent v3): 403 wait ok, 2 waves x 3 cases, **6 of 6 deals**, each well inside the 4-minute cap, runner exits after wave 2.
+- **final-v4** (`a0c9ec5`) = v3 + **RFQ clock** (Neel's rehearsal D02 e0bd42f0 0.333: the arena serves one call per session at a
+  time; J1's final waited 63 s behind C1's 104 s reply while we showed J1 to C1, and walked). play.py stamps a reply's arrival
+  before the attachment fetch and passes `_at` / `_rt` to the agent; the RFQ layer shows a closing bidder to a rival only when
+  15 s + 1.25 x the rivals' slowest reply fits in the time its final has left, else takes it at once (decision for it only).
+  Opt-outs `no_rfq_clock`, `no_rfq_show`. Show on/off in the stress lab: the show helps 1-2 of 40 RFQ cases (+0.04/+0.05), never
+  hurts -> kept, guarded. Stress v4 = v3 (the sim has no clock). Live D02 x3: 0.569 (rival reply 61 s, 28 s left on the final ->
+  taken at once: the game Neel lost), 0.579 (shown, then taken), 0.579 (taken). Tests 71 + 1 skip, crash 0.
+- **Incident 06:53**: an unquoted heredoc over ssh executed a backtick `bash tools/final/start_final.sh` inside RUNBOOK text: the
+  real final runner started, polled the final list twice (403), opened 0 sessions, killed within a minute
+  (logs/final-20261011-065313.log). Rule: scripts for the Mac are written locally and copied (never unquoted heredocs).

@@ -33,6 +33,9 @@ Distilled from the hidden-supplier loops of 2026-10-10/11 (v2.34 - v2.34h). Deta
 | testing a second version from another folder (git worktree) with the shared venv | the venv's editable install loads `arena_kit` from the MAIN checkout, so the "v2" run silently plays v1 | run v2 with `PYTHONPATH=<v2>/tacto/starter-kit`; check `arena_kit.__file__` first |
 | a simulator failure taken at face value (RFQ bidders walk when pushed after a final) | the stress set said RFQ 0.19; the real P05 bidders stayed in 37 of 40 such pushes | before changing the agent for a simulator failure, measure that mechanism in the real games |
 | a learned value measured from a field the opening left out | the slope is silently dropped (no baseline) | baseline = the first value the supplier itself stated; test with an opening that omits fields |
+| walking away from a final that is worse than our alternative | stress ST077 walked at 0.000 while its own second sheet beat the alternative (0.404) | last try before walking: one sheet under the alternative first (a free option) |
+| showing a bidder's final to a rival before accepting, with slow replies | D02 e0bd42f0: the final waited 63 s behind the rival's reply (one call per session at a time) and walked (0.333) | RFQ clock: show only if the rival's slowest reply fits the final's remaining 60 s |
+| an unquoted heredoc over ssh | backticks in documentation text RAN (started the final runner for a minute, 0 sessions) | write Mac scripts locally and scp them; never interpolate text into a remote shell |
 
 ## Ideas tested and rejected (they helped one case and hurt another = overfitting)
 - moving the payment term toward the supplier's standard in round 2 (`pay_trade`: P18 0.610 / 0.666 vs 0.688).
@@ -46,6 +49,9 @@ Distilled from the hidden-supplier loops of 2026-10-10/11 (v2.34 - v2.34h). Deta
 - `fc100` full cost = should-cost x 1.00 (agent estimate is 5-13% low vs real charges): stress 7 of 9 changed cases worse.
 - `fc_ref97` / `fc_ref99` (full cost guessed high without a should-cost figure): unknown-supplier set 9 better / 12 worse, 99% worse overall.
 - `show2` (show a closing final twice): a shown bidder moves at most to the closing price (half step, then the rest) - it can tie, never undercut; 0 effect in 380 sim games and D02 x2.
+
+- citing the case's rival quote: dearer than the supplier's opening in all 19 case files - it would show a worse alternative.
+- faster payment as a lever where payment_days is a fixed term (P11): the supplier's wish is not negotiable there.
 
 ## Checked late
 - Lessons the model reads must be general: supplier recipes vs general principles A/B -> the general principles do at least
