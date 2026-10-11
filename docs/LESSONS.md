@@ -66,6 +66,9 @@ Distilled from the hidden-supplier loops of 2026-10-10/11 (v2.34 - v2.34h). Deta
   replies still in flight). It found the one real RFQ bug the stress set held.
 
 ## Open questions (measured, not solved)
+- A supplier that HOLDS at round 1 (first counter = its opening) on a price grid gets the grid probe at once (a hair under
+  its price) - L11 P11 agreed 46.75 = 0.501. Never seen in 65 AI-brain P11 games; a k >= 2 guard showed no effect in the
+  stress lab (0 better / 1 worse) - left as is for the final.
 - RFQ D02 stays at ~0.58: the bidders go final early (J1 at its 3rd reply) ~12% above the best package; our asks already
   sit at the floors, round 1 already carries the 3 checkable facts, rival offers are cited. Left: a push under a final (EV ~0 on D02).
 - Suppliers outside our data cost ~0.07 per case in the stress lab (spread over many lost facts and signals, worst through the

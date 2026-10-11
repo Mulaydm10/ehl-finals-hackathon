@@ -434,3 +434,12 @@
 | 2026-10-11 09:55 | Dhruv | D01 sandbox | v7 candidate hidden / gpt-6-astra (free) | 0.9089 | 9e9de888ad009e29 |
 | 2026-10-11 09:55 | Dhruv | D02 sandbox | v7 candidate hidden / gpt-6-astra (free) | 0.5997 | 89ca9d20db98435a |
 | 2026-10-11 09:55 | Dhruv | D02 sandbox | v7 candidate hidden / gpt-6-astra (free) | 0.5997 | bfcd22f4325ea5cc |
+| 2026-10-11 09:59 | Dhruv | P01 | final-v7 L11 hidden (9 in parallel, from main) / gpt-6-astra | 0.9987 | 99c41a6cff951fe0 |
+| 2026-10-11 09:59 | Dhruv | P02 | final-v7 L11 hidden (9 in parallel, from main) / gpt-6-astra | 0.5464 | b546cccbb9505772 |
+| 2026-10-11 09:59 | Dhruv | P03 | final-v7 L11 hidden (9 in parallel, from main) / gpt-6-astra | 0.9536 | 7d79dd9f5afb6884 |
+| 2026-10-11 09:59 | Dhruv | P04 | final-v7 L11 hidden (9 in parallel, from main) / gpt-6-astra | 0.7661 | c462dbf0052be35a |
+| 2026-10-11 09:59 | Dhruv | P07 | final-v7 L11 hidden (9 in parallel, from main) / gpt-6-astra | 0.7924 | 1f1ce1d0f1906332 |
+| 2026-10-11 09:59 | Dhruv | P08 | final-v7 L11 hidden (9 in parallel, from main) / gpt-6-astra | 0.9156 | 06d26d077ebb4ce8 |
+| 2026-10-11 09:59 | Dhruv | P10 | final-v7 L11 hidden (9 in parallel, from main) / gpt-6-astra | 0.7019 | 01bf37d01c259cdb |
+| 2026-10-11 09:59 | Dhruv | P11 | final-v7 L11 hidden (9 in parallel; held 47.00 at round 1 - never in 65 archived games) / gpt-6-astra | 0.5009 | a57045fdf37320ba |
+| 2026-10-11 09:59 | Dhruv | P18 | final-v7 L11 hidden (9 in parallel, from main) / gpt-6-astra | 0.6883 | a389d71f6c56b611 |

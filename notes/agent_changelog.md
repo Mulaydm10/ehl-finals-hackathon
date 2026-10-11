@@ -1514,3 +1514,12 @@ Each finding checked against the code, the official API text and our archive (69
 - The review's "one model call per decision" is inaccurate (decision + opening paragraph); v6 budgets both.
 - **v7 evidence**: 3 new tests pass; suite 79 + 1 skip (77 + 3 hidden); crash test on the v7 code 0 (crash_test.py
   hard-codes the main path - pointed at the worktree); stress 0 of 380 changed; sandbox D01 0.909, D02 0.600 x2, 0 warnings.
+- **L11, final-v7 from main, 9 practice cases in parallel** (09:59 - 10:01): P01 0.999, P02 0.546, P03 0.954, P04 0.766,
+  P07 0.792, P08 0.916, P10 0.702, P11 **0.501**, P18 0.688 = 0.763; 0 warnings, 0 safe moves, 0 budget cuts, the v7 paths
+  silent (no unusable RFQ final, no unreadable attachment). Seven cases repeat L10 to 4 decimals (deterministic suppliers -
+  the organisers' rule-based practice brain when the arena's AI budget runs out; the final is never affected). P02 = its
+  low draw (L9 0.546). P11: its first counter 47.00 = its opening (held at round 1 - in 0 of 65 archived P11 games), so the
+  v2.17 grid probe ("it holds" = two equal prices) asked 46.75 at round 1 and it AGREED (0.501; the probe's 18 earlier
+  games 0.71-0.88 fired after it had cut to ~45.50). A guard "no probe before our 2nd priced e-mail" tested in the stress
+  lab: 0 of 190 changed, unknown-suppliers 1 of 190 worse (ST097 0.966 -> 0.955), 0 better -> NOT taken (no evidence; one
+  game, most likely the practice fallback brain). Open risk noted in docs/LESSONS.md.
