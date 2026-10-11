@@ -175,3 +175,29 @@ into its final, which we propose back if it beats the record (scripted: 4.90 @ 6
   (or 4.99 db5). 4.88 is 2.4% under its 5.00, outside the 2% authority of its approval ladder. In 41 games it never agreed under
   4.91. Honest odds per game are low single digits. The cloud's own rule (P18_deep.md section 0): when 90 d is priced, stop
   spending sessions on P18. Team best stays 0.727 (0c968aae).
+
+## 13. The acceptance floor, and the soft-session plan (local, 2026-10-11 ~04:00, `noidea_p18_soft.py`)
+**From all 43 P18 games** (datasets/runs + tools/replays/raw):
+- **Round 1 is deterministic**: ed9a881a's e-mail (4.76 @ 30 d, no clause, order prices + AS-14404 -8.5% + PPI-C2431 -2.3%) drew
+  5.20 in 8 of 8 games. The 45-d openings with model-written e-mails drew 5.20 / 5.30 / 5.40.
+- **Its own counters never went under EUR 5.00** in 43 games. Every price under 5.00 was it agreeing to our ask (0c968aae 4.91 at
+  once; a09d9536 and 6c2813ce 4.94 after one hold). In normal sessions it went final at 5.00 even on asks 0.4-0.8% under it
+  (4.96-4.98, 16 of 16). So each session has a hidden acceptance floor R: 5.00 in about 4 of 5, about 4.88-4.94 in the rest.
+- **The soft sessions show at round 2**: primary 5.00 with a db5 alternative at 5.10 (its text names 5.10; the db0 sheet is
+  0.10 lower). Normal sessions: one sheet at 5.10. The 45-d games with the same numbers split 1 soft / 4 normal on wording
+  alone, so it is a per-session draw, not something we sent.
+- Codacabana's 4.90 @ 45 d db0 = a soft session with R at or under ~4.89. To beat it, R must be at or under ~4.89 in its value
+  terms, or it must value a structure we prefer more cheaply than the scorer does.
+- **Exact cost model** (P18: horizon 2 y, reference payment 60 d at 8%, AS-14404 path +6%, index risk 1%): db0 costs us 3.15% of
+  spend, db3 1.8%, db5 0.9%, no clause 0; 30 days of payment 0.67%; 12 m buys the second year at the 6.13 fallback (ruled out);
+  24 m = 36 m. Beat lines: 30 d db0 <= 4.88, db3 <= 4.94, db5 <= 4.99; 45 d db0 <= 4.89, db5 <= 5.00; 90 d db0 <= 4.94.
+
+**Plan** (`noidea_p18_soft.py`): msg 1 = the cloud's round 1; msg 2 = 4.87 @ 30 d db0 + forecast. SOFT session (round-2
+primary <= 5.00): msg 3 = three sheets that all beat - 4.88 @ 30 d db0 (0.759), 4.94 @ 30 d db3 (0.762; wins if db3 costs it
+little, as in bf73ee39), 4.94 @ 90 d db0 (0.761; wins if it ignores payment when it agrees) + labour; msg 4 after a hold = 4.99
+@ 30 d db5 (0.758) + the db3 and 90-d sheets + its on-time delivery. NORMAL session: 4.93 -> 4.94 @ 30 d -> its final 5.00
+(0.677); no beat is possible there. Offline: replay of all 43 games without errors (soft branch fires on 0c968aae, a09d9536,
+6c2813ce only); scripted floor model: beats in every soft session with R <= 4.94 if db3 or payment is cheap for it, R <= 4.89 if not.
+
+**Live 1** (03:58, 83f89503e22658b2): normal session - 5.20, 5.10, 5.00, final 5.00 @ 30 d = **0.677**. Exactly the plan's
+normal path; the soft branch never fired. Per game the chance is about P(soft) 0.2 x P(floor low enough) 0.5-1 = 10-20%.
