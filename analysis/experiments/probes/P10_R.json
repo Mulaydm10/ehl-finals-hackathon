@@ -1,0 +1,60 @@
+{
+  "case": "P10",
+  "label": "P10_R 59c8 + one step inside its 2% after the final",
+  "hypothesis": "59c899b9's two e-mails byte for byte (live 31.50 -> final 31.10, 3 of 3), then ONE step up from our 30.40 to 30.69 (record line: 0.7418) = 1.3% under its final, inside the 2% the segment manager may approve alone (doc:20260310-70410-M1; P18: its KAM accepted 1.8% under in the final round, Neel 63e5c54). Same structure, our price moves up (no backward step). Agreed -> record; 'final offer stands' -> accept its final (0.7097); walk -> 0 this game (board keeps 0.741). Push only if its final <= 31.31 (30.69 within 2%); a final in round 1 is accepted.",
+  "on_agreed": "accept",
+  "on_open": "next",
+  "on_final": "accept",
+  "rounds": [
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for your offer and for being open about your capacity situation.\n\nWe are ready to give you the firm commitment you asked for: a binding 23,400 pieces per year for 24 months, and we accept a longer lead time of 56 days so you can plan production.\n\nOur orders for Mechanical seal 24 mm, SiC/carbon, EPDM were at EUR 28.94 until December 2023 and have been at EUR 29.89 since January 2024 (po:4500010364-10, po:4500010407-10, po:4500014436-10).\nOur should-cost estimate for Mechanical seal 24 mm, SiC/carbon, EPDM is EUR 24.31 per 1 (cost:340010).\nProducer prices DE: other rubber products changed -0.3% from 2026-01 to 2026-02 (idx:PPI-C2219@2026-01, idx:PPI-C2219@2026-02).\n\nWe therefore propose to keep EUR 29.89 per piece, the price we have paid since January 2024.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 29.89,
+          "volume_per_year": 23400,
+          "contract_months": 24,
+          "lead_time_days": 56
+        }
+      ],
+      "refs": [
+        "cost:340010",
+        "idx:PPI-C2219@2026-01",
+        "idx:PPI-C2219@2026-02",
+        "po:4500010364-10",
+        "po:4500010407-10",
+        "po:4500014436-10"
+      ],
+      "on_final": "accept"
+    },
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for your answer. We move towards you: we extend the commitment to 36 months, 70,200 pieces in total.\nLabour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01).\n\nWe propose EUR 30.40 per piece.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 30.4,
+          "volume_per_year": 23400,
+          "contract_months": 36,
+          "lead_time_days": 56
+        }
+      ],
+      "refs": [
+        "idx:LCI-C@2025-10",
+        "idx:LCI-C@2026-01"
+      ],
+      "on_final": "next",
+      "next_if_final_at_most": 31.31
+    },
+    {
+      "on_final": "accept",
+      "body": "Dear Ms Zellner,\n\nThank you for your final offer. We take one more step towards you: EUR 30.69 per piece for the 36 months, 70,200 pieces in total. That is a step of less than 2% from your offer, within your own approval range, so it needs no committee. With this we can sign today.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 30.69,
+          "volume_per_year": 23400,
+          "contract_months": 36,
+          "lead_time_days": 56
+        }
+      ],
+      "refs": []
+    }
+  ]
+}

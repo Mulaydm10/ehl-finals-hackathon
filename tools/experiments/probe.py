@@ -97,6 +97,9 @@ def main(argv=None):
     def cost(t):
         return total_cost(case, {**case.get("fixed_terms", {}), "ppm_commitment": 300, **t})
 
+    def theirs_now(reply):
+        return ((reply.get("term_sheets") or [{}])[0].get("terms") or {}).get("unit_price")
+
     reply, result, ask = first, None, None
     for k, r in enumerate(design["rounds"], 1):
         sheets = [dict(t) for t in r.get("sheets", [])]
@@ -133,8 +136,9 @@ def main(argv=None):
             result = accept(reply).get("result")
             break
         if status == "final_offer":
-            mode = design.get("on_final", "alternative")
-            if mode == "next" and not last:
+            mode = r.get("on_final", design.get("on_final", "alternative"))  # a round may override the design's rule
+            cap = r.get("next_if_final_at_most")  # push on only while its final is at most this price
+            if mode == "next" and not last and (cap is None or (theirs_now(reply) or 1e9) <= cap):
                 continue
             sheets = reply.get("term_sheets") or []
             if mode == "alternative" and len(sheets) > 1:

@@ -117,7 +117,9 @@ class P10Sim(Sim):
             mode = self.post_final
             if mode == "draw":
                 mode = "accept" if ask >= floor and self.slack else self.rng.choices(["hold", "walk"], [0.75, 0.25])[0]
-            if mode == "accept" and ask >= floor:
+            if mode == "accept" and ask >= round(fin * 0.98, 2):  # forced: the 2%-authority supplier accepts within 2%
+                return reply("agreed", terms, ["Within my own authority I can confirm this."])
+            if mode == "draw" and ask >= floor and self.slack:
                 return reply("agreed", terms, ["Within my own authority I can confirm this."])
             if mode == "walk" or (fin - ask) / fin > 0.04:
                 th["closed"] = "walked_away"
