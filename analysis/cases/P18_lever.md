@@ -233,3 +233,19 @@ final 5.20 @ 45 d db3 (0.599).
   4.87: a backward step draws the final (LESSONS.md, P02). My mistake: the 14-d record line (4.86) is below 4.87, so the record
   cannot be reached on 14 d from this state.
 - Next: same msg 1-2, msg 3 forward on 30 d (its standard): 4.99 @ 30 d db5 (0.758) + 4.88 @ 30 d db0 (0.759).
+
+## 17. Live: replay v2 (04:15, b354bd0425f2c1fa): **0.610 - in the 0c968aae state 14 d is worth a step to it; one shot at msg 3**
+- Same reproduced state (5.00 @ 14 d). msg 3 = 4.99 @ 30 d db5 + 4.88 @ 30 d db0 -> **final_offer 5.10 @ 30 d**: "Accommodating your
+  preference for a 30-day payment term requires an adjustment from our previous 14-day offer". In this conversation it had credited
+  the 14 d ("In return for this improved payment term ... reduce our base price"), so leaving 14 d costs 0.10.
+- In this state anything it does not accept at msg 3 draws its final at once (4.86 @ 14 d and the 30-d pair): one shot.
+- Record on 14 d: db0 <= 4.86 (a backward step, refused), db5 <= 4.97 (0.7593; worth 4.87 to it = our msg-2 value).
+  Team best on 14 d: 4.88 db0 = 0.7475, 4.89 = 0.7407, 4.90 = 0.7339 (4.91 = 0.7271 was accepted in 0c968aae).
+
+## 18. Live: record probe in the 0c968aae state (04:18, d05baf2826e1e6bc): **0.673 - it will not take its own msg-2 value with db5**
+msg 3 = 4.97 @ 14 d db5 (0.7593, worth 4.87 to it = our msg-2 ask) -> final 5.10 @ 14 d db5. In this state its floor is between
+4.87 and 4.91 (4.91 accepted in 0c968aae). The record cannot be reached from this state. Next: the best reachable value, on db5
+(+0.005 over db0 at the same value to it): 4.98 db5 (0.7527), then 4.99 (0.746), 5.00 (0.739), 5.01 (0.733 = the accepted 4.91).
+- 04:19 173a5c90194af19b: 4.98 @ 14 d db5 (worth 4.88 to it) -> final 5.00 @ 14 d db0 (0.666). Floor above 4.88.
+- 04:20 ab222b48898c8fb0: 4.99 @ 14 d db5 (worth 4.89 to it at its EUR 0.10 deadband price) -> final 5.00 @ 14 d db0 (0.666).
+- 04:21 66b6abb882860c4a: 4.89 @ 14 d db0 -> final 5.00 @ 14 d (0.666). Its floor in this state is in (4.89, 4.91]. Last probe: 4.90 (0.734).

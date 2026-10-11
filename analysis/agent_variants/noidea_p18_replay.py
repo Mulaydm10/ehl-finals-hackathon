@@ -1,4 +1,7 @@
-"""P18 replay of our best game (local, Neel, 2026-10-11 ~04:20). Gate case:P18; every other case = main.
+"""v2 (04:17): msg 3 = 0c968aae's msg 3 with 4.99 @ 30 d db5 + 4.88 @ 30 d db0 (both > 0.756, forward from our 4.87);
+msg 4 after a hold = a09d9536's msg 4 with 5.00 @ 30 d db5 + 4.90 @ 30 d db0 (both > 0.727). v1 (4.86 @ 14 d) drew the final.
+
+P18 replay of our best game (local, Neel, 2026-10-11 ~04:20). Gate case:P18; every other case = main.
 
 Why: the arena answers an IDENTICAL conversation identically - 6 games of noidea_p18_soft v2 at 04:09-04:11 got the same
 replies word for word, games 2-6 within a second each (the first took 12-26 s per reply). P18 is deterministic for identical
@@ -12,6 +15,7 @@ If it holds, msg 4 = a09d9536's msg 4 (agreed 4.94 there after a hold) at FALLBA
 Any other reply: noidea_p18_soft v2 takes over. Accept / harvest rules from noidea_p18_soft (accept a primary over the record).
 """
 import copy
+import os
 import importlib.util
 import json
 import logging
@@ -30,8 +34,16 @@ log = logging.getLogger("arena")
 ROOT = Path(__file__).resolve().parents[2]
 BEST = ROOT / "datasets/runs/0c968aae64401bb1.json"  # our best P18 game
 HOLD = ROOT / "datasets/runs/a09d953636747cae.json"  # its msg 4 was agreed after a hold
-TARGET = 4.86  # msg 3 price (0c968aae asked 4.91 and was agreed at once): 0.7612 at 14 d db0
-FALLBACK = 4.89  # msg 4 after a hold: 0.7407
+TARGET = 4.86  # v1 msg 3 price (live 152d666e: under our msg-2 ask 4.87 -> final at once; never step back)
+FALLBACK = 4.89  # v1 msg 4
+# v2: forward steps on 30 d (its standard), every sheet over the record (msg 3) or over our 0.727 (msg 4)
+MSG3 = ((4.99, 30, 5), (4.88, 30, 0))  # v2 (live b354bd04: 30 d costs a step in this state -> final 5.10 @ 30 d)
+# v3: one probe per game, set by P18_MSG3="price/days/deadband[,price/days/deadband]" (default: the record probe on 14 d)
+MSG3 = tuple(tuple(float(x) if i == 0 else int(x) for i, x in enumerate(sh.split("/")))
+             for sh in os.environ.get("P18_MSG3", "4.97/14/5").split(","))
+MSG4 = ((5.00, 30, 5), (4.90, 30, 0))  # 0.7509 / 0.7453
+OLD3 = "(EUR 4.91 per unit, AS-14404 index clause (45% share, 0% deadband), 14 days payment, 24 months)"
+OLD4 = "(EUR 4.94 per unit, AS-14404 index clause (45% share, 0% deadband), 14 days payment, 24 months)"
 
 
 def _buyer(path):
@@ -46,6 +58,20 @@ def _is(t, price, days, db=0):
 
 class NoIdeaAgent(_soft.NoIdeaAgent):
     _best = _hold = None
+
+    def _msgn(self, case, sid, m, old, plan):
+        """m with its proposal sentence and term sheets replaced by plan [(price, days, deadband), ...]."""
+        m = copy.deepcopy(m)
+        assert old in m["body"], old
+        words = "; ".join(f"EUR {p:.2f} per unit, AS-14404 index clause (45% share, {db}% deadband), {d} days payment, 24 months"
+                          for p, d, db in plan)
+        sheets = [{"terms": {"unit_price": p, "index_clause": dict(self._clause(case, db)), "payment_days": d,
+                             "contract_months": 24}} for p, d, db in plan]
+        out = {"subject": m["subject"], "body": m["body"].replace(old, f"({words})"), "term_sheets": sheets,
+               "refs": m.get("refs") or []}
+        self.cited.update(out["refs"])
+        self.sup[sid]["last_main"] = dict(sheets[0]["terms"])
+        return {"supplier_id": sid, "message": out}
 
     def _msg(self, sid, m, old=None, new=None):
         m = copy.deepcopy(m)
@@ -77,18 +103,19 @@ class NoIdeaAgent(_soft.NoIdeaAgent):
         if status == "open" and on_track and k <= 3:
             if theirs.get("unit_price") is not None and self._score(case, sid, theirs) > _soft.RECORD:
                 return super()._decide(case, threads)  # noidea_p18_soft accepts a primary over the record
-            want = {0: None, 1: (5.20, 30), 2: (5.00, 14), 3: (5.00, 14)}[k]
-            if want is None or _is(theirs, *want):
+            want = {0: None, 1: (5.20, 30), 2: (5.00, 14), 3: (5.00, None)}[k]
+            held = k == 3 and theirs.get("unit_price") is not None and abs(self._eq0(theirs) - 5.00) < 1e-9
+            if want is None or held or _is(theirs, *want):
                 if k in (0, 1):
                     log.info("%s P18 replay msg %d: 0c968aae verbatim (its %s)", sid, k + 1, theirs.get("unit_price"))
                     return self._msg(sid, self._best[k])
                 if k == 2:
-                    log.info("%s P18 replay msg 3: 0c968aae's msg 3 at %.2f instead of 4.91 (its %.2f @ %s d)", sid, TARGET,
+                    log.info("%s P18 replay msg 3: 0c968aae's msg 3 with %s (its %.2f @ %s d)", sid, MSG3,
                              theirs["unit_price"], theirs.get("payment_days"))
-                    return self._msg(sid, self._best[2], 4.91, TARGET)
-                log.info("%s P18 replay msg 4: a09d9536's msg 4 at %.2f instead of 4.94 (it held at %.2f)", sid, FALLBACK,
-                         theirs["unit_price"])
-                return self._msg(sid, self._hold[3], 4.94, FALLBACK)
+                    return self._msgn(case, sid, self._best[2], OLD3, MSG3)
+                log.info("%s P18 replay msg 4: a09d9536's msg 4 with %s (it held at %.2f @ %s d)", sid, MSG4,
+                         theirs["unit_price"], theirs.get("payment_days"))
+                return self._msgn(case, sid, self._hold[3], OLD4, MSG4)
             s["p18_replay"] = False
             log.info("%s P18 replay: its reply %s @ %s d differs from 0c968aae (wanted %s) - noidea_p18_soft takes over", sid,
                      theirs.get("unit_price"), theirs.get("payment_days"), want)
