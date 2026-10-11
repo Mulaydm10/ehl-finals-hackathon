@@ -38,9 +38,10 @@ TARGET = 4.86  # v1 msg 3 price (live 152d666e: under our msg-2 ask 4.87 -> fina
 FALLBACK = 4.89  # v1 msg 4
 # v2: forward steps on 30 d (its standard), every sheet over the record (msg 3) or over our 0.727 (msg 4)
 MSG3 = ((4.99, 30, 5), (4.88, 30, 0))  # v2 (live b354bd04: 30 d costs a step in this state -> final 5.10 @ 30 d)
-# v3: one probe per game, set by P18_MSG3="price/days/deadband[,price/days/deadband]" (default: the record probe on 14 d)
+# v3: one probe per game, set by P18_MSG3="price/days/deadband[,...]". Default 4.91/14/0 = the only msg-3 ask this state
+# accepts (0c968aae, 0.727); live probes 4.86/4.89/4.90 db0 and 4.97-5.00 db5 @ 14 d all drew its final (P18_lever.md 16-19)
 MSG3 = tuple(tuple(float(x) if i == 0 else int(x) for i, x in enumerate(sh.split("/")))
-             for sh in os.environ.get("P18_MSG3", "4.97/14/5").split(","))
+             for sh in os.environ.get("P18_MSG3", "4.91/14/0").split(","))
 MSG4 = ((5.00, 30, 5), (4.90, 30, 0))  # 0.7509 / 0.7453
 OLD3 = "(EUR 4.91 per unit, AS-14404 index clause (45% share, 0% deadband), 14 days payment, 24 months)"
 OLD4 = "(EUR 4.94 per unit, AS-14404 index clause (45% share, 0% deadband), 14 days payment, 24 months)"

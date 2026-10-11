@@ -273,3 +273,8 @@ msg 3 = 4.97 @ 14 d db5 (0.7593, worth 4.87 to it = our msg-2 ask) -> final 5.10
 Simulator 0.94 for every agent at message 1 (it accepts any sheet costing >= C_best): not predictive. Known hosted outcomes of the
 existing candidates (deterministic replies): cross 0.677, soft v2 0.677, replay(4.91) 0.727, replay default 0.673. None can beat
 0.727; Run 2 tests a new input.
+
+## 21. Run 2 - offline with gpt-6-astra (05:10): `noidea_p18_state45.py`; Run 3 not played (user: no arena run)
+See analysis/offline_runs/2026-10-11_P18_run2_astra/README.md. The only recorded state where a <2% ask beats 0.727 on the
+structure it holds: 6c2813ce's 5.00 @ 45 d (a hold there, not a final). 4.93 / 4.94 @ 45 d db0 = 0.7357 / 0.7289 if accepted,
+fallback 5.00 @ 45 d = 0.688. The record is not reachable there (4.89 = 2.2% under 5.00).

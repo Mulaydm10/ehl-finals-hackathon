@@ -296,3 +296,6 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
 - Offline sims built from recorded games missed all of this; only live probes (one input each) found it.
 - **Run 1 (offline, Astra, 04:50):** src/eval/offline_eval.py closes P18 at message 1 for every agent (0.94) because its supplier
   agrees to any sheet costing >= C_best; useless for ranking P18 strategies. Rank P18 candidates on the live record instead.
+- **Run 2 (offline, Astra, 05:10):** handing a verbatim-replay conversation to main mid-way makes main re-cite facts the
+  replayed messages already used and repeat our last price (an empty repeat). A replay agent must own its plan to the end of
+  the rounds it replays. New candidate noidea_p18_state45 (6c2813ce state, 4.93 -> 4.94 @ 45 d); not played (no arena run).
