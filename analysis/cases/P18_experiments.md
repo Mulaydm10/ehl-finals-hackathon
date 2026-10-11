@@ -9,6 +9,7 @@
 | 10-11 04:51 | offline B | offline (Astra configured, 0 calls) | noidea_p18_state45 v2 on main e67addb | all branch checks pass; byte-equal msgs 1-2; archived replay 42 games 0 errors; selected for the live game | analysis/offline_runs/2026-10-11_P18_offline_B_astra/ |
 | 10-11 04:52 | LIVE | hosted, 1 session | noidea_p18_state45 v2 | 81b5c6de3be181e5: state reproduced; hold at msg 3; final 5.00 @ 45 d at msg 4 ('absolute limit for these terms') = **0.688** | tools/replays/raw/P18_81b5c6de3be181e5.json, analysis/offline_runs/2026-10-11_P18_live_81b5c6de/ |
 | 10-11 05:12 | offline C | offline (no LLM) | acceptance-model audit over 59 games | 0 of 8 acceptances > 2% nominal under its offer; payment and deadband count in acceptance; per-conversation floors; record design: 4.97 @ 14 d db5 first | analysis/offline_runs/2026-10-11_P18_offline_C_astra/ |
+| 10-11 05:15 | offline D | offline (Astra configured, 0 calls) | noidea_p18_pay14 (6c2813ce state; msg 3 4.97 @ 14 d db5 + 4.86 @ 14 d db0) | byte-equal msgs 1-2; all branches correct; archived replay 0 errors; selected for the live game | analysis/offline_runs/2026-10-11_P18_offline_D_astra/ |
 
 ## Changelog
 - **Run 1 (no code change):** the documented offline simulator is unfit for P18 (see the run README); the decision for the
