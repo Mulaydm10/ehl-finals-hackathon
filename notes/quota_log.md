@@ -376,3 +376,12 @@
 | 2026-10-11 04:22 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=4.89/14/0 (0c968aae state) / gpt-6-astra - final 5.00 @ 14 d: floor in (4.89, 4.91] | **0.67** | 66b6abb882860c4a |
 | 2026-10-11 04:23 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=4.90/14/0 (0c968aae state) / gpt-6-astra - final 5.00 @ 14 d: floor in (4.90, 4.91] = its 2% authority | **0.67** | 57f06757e4a2b512 |
 | 2026-10-11 04:25 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=5.00/14/5 (0c968aae state, 1.96% under its 5.10 db5 alt) / gpt-6-astra - final 5.10 db5: the 2% is measured on its db0 offer | **0.67** | 2782c270fa3ff162 |
+| 2026-10-11 04:39 | Dhruv | P01 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.9987 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:39 | Dhruv | P02 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.7580 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:39 | Dhruv | P03 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.9878 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:39 | Dhruv | P04 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.8098 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:39 | Dhruv | P07 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.7989 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:39 | Dhruv | P08 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.9156 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:39 | Dhruv | P10 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.6941 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:39 | Dhruv | P11 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.7935 | see notes/analysis_v234/LOAD_L8v2.log |
+| 2026-10-11 04:39 | Dhruv | P18 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.6207 | see notes/analysis_v234/LOAD_L8v2.log |
