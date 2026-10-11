@@ -44,6 +44,7 @@ Distilled from the hidden-supplier loops of 2026-10-10/11 (v2.34 - v2.34h). Deta
   round-1 hold / timeout before the first e-mail (Parth A/B: +0.04 on P02/P07/P18, P10 walked 2 of 2).
 - Inconclusive, kept only where it was measured: the two-sheet choice framing for cash-short quality cases.
 - `fc100` full cost = should-cost x 1.00 (agent estimate is 5-13% low vs real charges): stress 7 of 9 changed cases worse.
+- `fc_ref97` / `fc_ref99` (full cost guessed high without a should-cost figure): unknown-supplier set 9 better / 12 worse, 99% worse overall.
 
 ## Checked late
 - Lessons the model reads must be general: supplier recipes vs general principles A/B -> the general principles do at least
@@ -53,6 +54,8 @@ Distilled from the hidden-supplier loops of 2026-10-10/11 (v2.34 - v2.34h). Deta
   replies still in flight). It found the one real RFQ bug the stress set held.
 
 ## Open questions (measured, not solved)
+- Suppliers outside our data cost ~0.07 per case in the stress lab (spread over many lost facts and signals, worst through the
+  relationship charge in stabilise cases). No single general fix found; the Sunday release's data for new suppliers matters.
 - **Grid suppliers**: where the floor sits inside a 0.50 step differs by session (P11 agreed 45.10/45.25 at 45.50, refused
   44.95 at 45.00, agreed 44.45 at 44.50 once) - the first probe depth is untuned.
 - **P18-type** suppliers price a longer payment term steeply (first counter 5.20 at 14/30 d, 5.30-5.50 at 45-90 d); P07 the
