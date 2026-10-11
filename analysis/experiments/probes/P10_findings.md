@@ -65,3 +65,11 @@ falling window worth citing (-0.25 % at best). **P10 ceiling with this supplier:
   your committee, we can wait" -> **final 31.40** (step 0.10). Backoffice: "My call: counter" both rounds, no committee.
 - Lesson: its round-2 step follows OUR price move (+0.12 here -> 0.10; +0.51/0.54 -> 0.30-0.40), capped near 30% of the
   remaining gap; two index facts in one e-mail add nothing; a committee request is ignored in normal mode.
+
+## Probe K (da37a9beb2b7c7bd, 03:52): the last untested claim type (news) = 0.702
+- Round 1 = 59c899b9's with the rubber index swapped for its own allocation notice (news:20260822-23, verified):
+  "it holds, but it does not change our calculation" -> **31.50** again (37 of 37 normal-mode games).
+- Round 2 = 59c899b9's verbatim (36 m + labour, 30.40) -> final **31.20** (59c899b9 drew 31.10 with the same e-mail: a changed
+  round 1 changes the model's round-2 sample by one grid step).
+- Every claim type the arena checks has now been tried on P10: should-cost and price path move round 1 (-0.20 each),
+  indices are marginal, forecast / OTD / ppm / news are shrugged; there is no rival quote and no notice letter.

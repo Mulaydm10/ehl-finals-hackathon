@@ -1,0 +1,44 @@
+{
+  "case": "P10",
+  "label": "P10_K news claim r1",
+  "hypothesis": "The round-1 counter has been 31.50 in 36 of 36 normal-mode games; only TAKEN facts ever moved it (should-cost -0.20, price path -0.20; indices marginal, forecast/OTD/ppm shrugged). The one claim type never cited on P10 is news (checked: 'that it is about this supplier'): news:20260822-23, its own allocation notice. Round 1 = 59c899b9's (0.710) with the rubber index (marginal) swapped for the news claim; round 2 = 59c899b9's stacked move (36 m + labour, ask a third of the gap) so the result compares 1:1. Taken and the first counter < 31.50 = the first crack in the cap.",
+  "on_agreed": "accept",
+  "on_open": "next",
+  "on_final": "alternative",
+  "rounds": [
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for your offer and for being open about your capacity situation.\n\nWe are ready to give you the firm commitment you asked for: a binding 23,400 pieces per year for 24 months, and we accept a longer lead time of 56 days so you can plan production.\n\nOur orders for Mechanical seal 24 mm, SiC/carbon, EPDM were at EUR 28.94 until December 2023 and have been at EUR 29.89 since January 2024 (po:4500010364-10, po:4500010407-10, po:4500014436-10).\nOur should-cost estimate for Mechanical seal 24 mm, SiC/carbon, EPDM is EUR 24.31 per 1 (cost:340010).\nYou informed your customers in August that deliveries of standard mechanical seals are allocated in line with last year's call-offs (news:20260822-23).\n\nWe therefore propose to keep EUR 29.89 per piece, the price we have paid since January 2024.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 29.89,
+          "volume_per_year": 23400,
+          "contract_months": 24,
+          "lead_time_days": 56
+        }
+      ],
+      "refs": [
+        "cost:340010",
+        "news:20260822-23",
+        "po:4500010364-10",
+        "po:4500010407-10",
+        "po:4500014436-10"
+      ]
+    },
+    {
+      "step_frac": 0.3168,
+      "body": "Dear Ms Zellner,\n\nThank you for your answer. We move towards you: we extend the commitment to 36 months, 70,200 pieces in total.\nLabour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01).\n\nWe propose EUR {price} per piece.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [
+        {
+          "unit_price": 30.4,
+          "volume_per_year": 23400,
+          "contract_months": 36,
+          "lead_time_days": 56
+        }
+      ],
+      "refs": [
+        "idx:LCI-C@2025-10",
+        "idx:LCI-C@2026-01"
+      ]
+    }
+  ]
+}
