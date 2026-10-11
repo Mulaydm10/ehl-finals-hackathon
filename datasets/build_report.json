@@ -1,6 +1,6 @@
 {
  "suppliers": 46,
- "claims": 915,
+ "claims": 920,
  "claims_by_kind": {
   "scorecard_otd": 46,
   "scorecard_ppm": 46,
@@ -9,10 +9,10 @@
   "index_change": 584,
   "po_prices": 75,
   "rival_quote_context": 104,
-  "news": 32
+  "news": 37
  },
  "self_check": {
-  "ok": 811,
+  "ok": 816,
   "bad": 0,
   "problems": []
  }

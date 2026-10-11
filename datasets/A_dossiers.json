@@ -1193,6 +1193,12 @@
      "news:20260911-28"
     ]
    },
+   "news_insolvency": {
+    "lever": "Odlewnia Kalwisz Sp. z o.o. files for insolvency",
+    "evidence": [
+     "news:20261006-S1"
+    ]
+   },
    "wants_faster_payment": {
     "lever": "offer shorter payment days in return for price",
     "evidence": [
@@ -1239,6 +1245,13 @@
     "topic": "restructuring",
     "headline": "Odlewnia Kalwisz Sp. z o.o. restructures",
     "body": "Odlewnia Kalwisz Sp. z o.o. has started a restructuring programme with its banks after two loss-making years; management says customers will not be affected."
+   },
+   {
+    "id": "news:20261006-S1",
+    "date": "2026-10-06",
+    "topic": "insolvency",
+    "headline": "Odlewnia Kalwisz Sp. z o.o. files for insolvency",
+    "body": "Odlewnia Kalwisz Sp. z o.o. has filed for insolvency proceedings; a provisional administrator keeps production running for now. Customers are advised to secure their supply."
    }
   ],
   "documents": [
@@ -4211,7 +4224,8 @@
    "wants_faster_payment": {
     "lever": "offer shorter payment days in return for price",
     "evidence": [
-     "doc:20260904-70250-M4"
+     "doc:20260904-70250-M4",
+     "doc:20261005-70250-S2"
     ]
    }
   },
@@ -4221,7 +4235,8 @@
     "Call with sales at Drehteile Fuchsreiter GmbH: they could take additional parts at short notice; the second shift has been on hold since spring. [doc:20260723-70250-M1]"
    ],
    "cash_pressure": [
-    "In return we would grant a cash discount. [doc:20260904-70250-M4]"
+    "In return we would grant a cash discount. [doc:20260904-70250-M4]",
+    "Our bank is watching our figures every month, and what would help us most now is cash: we kindly ask you to pay our invoices within 10 days from November. [doc:20261005-70250-S2]"
    ]
   },
   "news": [
@@ -4281,6 +4296,14 @@
     "subject": "Payment of invoices",
     "author": "Drehteile Fuchsreiter GmbH",
     "text": "# Payment of invoices\n\nemail - 2026-09-04 - Drehteile Fuchsreiter GmbH\n\nCould you pay our invoices within 10 days? In return we would grant a cash discount."
+   },
+   {
+    "id": "doc:20261005-70250-S2",
+    "date": "2026-10-05",
+    "kind": "letter",
+    "subject": "Payment of invoices from November",
+    "author": "Drehteile Fuchsreiter GmbH",
+    "text": "# Payment of invoices from November\n\nletter - 2026-10-05 - Drehteile Fuchsreiter GmbH\n\nDear Sir or Madam,\n\nwe have had to put our turning department on short-time work from November. Our bank is watching our figures every month, and what would help us most now is cash: we kindly ask you to pay our invoices within 10 days from November.\n\nYours faithfully,\nDrehteile Fuchsreiter GmbH"
    }
   ]
  },
@@ -7012,7 +7035,8 @@
    "news_credit_downgrade": {
     "lever": "Credit agency lowers rating of Oberflächentechnik Weißacher GmbH",
     "evidence": [
-     "news:20260904-26"
+     "news:20260904-26",
+     "news:20261002-S3"
     ]
    },
    "we_pay_late": {
@@ -7048,6 +7072,13 @@
     "topic": "credit_downgrade",
     "headline": "Credit agency lowers rating of Oberflächentechnik Weißacher GmbH",
     "body": "A credit agency has lowered its rating of Oberflächentechnik Weißacher GmbH after delayed payments to its own suppliers."
+   },
+   {
+    "id": "news:20261002-S3",
+    "date": "2026-10-02",
+    "topic": "credit_downgrade",
+    "headline": "Credit insurer withdraws cover for Oberflächentechnik Weißacher GmbH",
+    "body": "A trade credit insurer has withdrawn its limits for Oberflächentechnik Weißacher GmbH; suppliers of the coating shop now ask for prepayment."
    }
   ],
   "documents": [
@@ -8816,7 +8847,8 @@
     "Their key account manager explained that price changes above 2 % need the approval of their pricing committee, which meets every two weeks. [doc:20260227-70510-M2]",
     "Their key account manager explained that price changes above 2 % need the approval of their pricing committee, which meets every two weeks. [doc:20260410-70510-M1]",
     "# Price adjustment from 01 January 2027 [doc:20260914-70510-P02]",
-    "Owing to the strong rise in copper and electronic component prices, we are forced to adjust our prices for Motor IE3 7.5 kW, 4-pole (part:350011) by **6.5 %** with effect from **01 January 2027**: from EUR 348.32 to EUR 370.96 per  pc. [doc:20260914-70510-P02]"
+    "Owing to the strong rise in copper and electronic component prices, we are forced to adjust our prices for Motor IE3 7.5 kW, 4-pole (part:350011) by **6.5 %** with effect from **01 January 2027**: from EUR 348.32 to EUR 370.96 per  pc. [doc:20260914-70510-P02]",
+    "our price list 2027 applies to all customers without exception; our board has ruled out individual price reductions for the coming year. [doc:20261001-70510-S5]"
    ],
    "pride_relationship": [
     "we have supplied Hollerau Pumpenwerke reliably for many years. [doc:20260914-70510-P02]"
@@ -8855,6 +8887,14 @@
     "subject": "Price adjustment from 01 January 2027",
     "author": "Antriebstechnik Nordmark AG",
     "text": "# Price adjustment from 01 January 2027\n\nletter - 2026-09-14 - Antriebstechnik Nordmark AG\n\nDear Sir or Madam,\n\nwe have supplied Hollerau Pumpenwerke reliably for many years. Owing to the strong rise in copper and electronic component prices, we are forced to adjust our prices for Motor IE3 7.5 kW, 4-pole (part:350011) by **6.5 %** with effect from **01 January 2027**: from EUR 348.32 to EUR 370.96 per  pc.\n\nWe regret this step and ask for your understanding.\n\nYours faithfully,\nAntriebstechnik Nordmark AG"
+   },
+   {
+    "id": "doc:20261001-70510-S5",
+    "date": "2026-10-01",
+    "kind": "letter",
+    "subject": "Price list 2027",
+    "author": "Antriebstechnik Nordmark AG",
+    "text": "# Price list 2027\n\nletter - 2026-10-01 - Antriebstechnik Nordmark AG\n\nDear Sir or Madam,\n\nour price list 2027 applies to all customers without exception; our board has ruled out individual price reductions for the coming year. We remain open to discuss payment terms and call-off planning.\n\nYours faithfully,\nAntriebstechnik Nordmark AG"
    }
   ]
  },
@@ -9671,6 +9711,12 @@
      "news:20260302-01"
     ]
    },
+   "news_supply_normalises": {
+    "lever": "Konvertek Antriebselektronik GmbH: semiconductor supply back to normal",
+    "evidence": [
+     "news:20261008-S4"
+    ]
+   },
    "may_drop_small_accounts": {
     "lever": "low leverage: volume/commitment matters more than price push",
     "evidence": [
@@ -9703,6 +9749,13 @@
     "topic": "chip_shortage",
     "headline": "Konvertek Antriebselektronik GmbH warns of longer delivery times",
     "body": "Konvertek Antriebselektronik GmbH reports shortages of power semiconductors and has extended lead times for frequency converters."
+   },
+   {
+    "id": "news:20261008-S4",
+    "date": "2026-10-08",
+    "topic": "supply_normalises",
+    "headline": "Konvertek Antriebselektronik GmbH: semiconductor supply back to normal",
+    "body": "Konvertek Antriebselektronik GmbH reports that power semiconductor deliveries have normalised and that converter lead times will return to about twelve weeks over the winter."
    }
   ],
   "documents": [
@@ -11068,7 +11121,15 @@
     "Their key account manager explained that price changes above 2 % need the approval of their pricing committee, which meets every two weeks. [doc:20260513-70610-M1]"
    ]
   },
-  "news": [],
+  "news": [
+   {
+    "id": "news:20261009-S8",
+    "date": "2026-10-09",
+    "topic": "noise",
+    "headline": "Schraubenhandel Leitner & Sohn GmbH opens a new logistics centre",
+    "body": "Schraubenhandel Leitner & Sohn GmbH has opened an automated logistics centre that will shorten delivery times for standard parts."
+   }
+  ],
   "documents": [
    {
     "id": "doc:20251224-70610-N",
@@ -12322,6 +12383,12 @@
      "news:20260803-21"
     ]
    },
+   "news_acquisition": {
+    "lever": "Strelvo group acquires Verbindungstechnik Mairhofer GmbH",
+    "evidence": [
+     "news:20261006-S9"
+    ]
+   },
    "may_drop_small_accounts": {
     "lever": "low leverage: volume/commitment matters more than price push",
     "evidence": [
@@ -12350,10 +12417,15 @@
   },
   "signals": {
    "price_pressure": [
-    "Their key account manager explained that price changes above 2 % need the approval of their pricing committee, which meets every two weeks. [doc:20260327-70650-M3]"
+    "Their key account manager explained that price changes above 2 % need the approval of their pricing committee, which meets every two weeks. [doc:20260327-70650-M3]",
+    "# Prices and conditions in the Strelvo group [doc:20261008-70650-S10]",
+    "Our prices are set centrally from now on: the group price list 2027 applies to all customers without exception, and we can no longer grant individual price reductions. [doc:20261008-70650-S10]"
    ],
    "capacity_tight": [
     "Call with sales at Verbindungstechnik Mairhofer GmbH: they could take additional parts at short notice; the second shift has been on hold since spring. [doc:20260411-70650-M5]"
+   ],
+   "competitor_or_exit": [
+    "Our prices are set centrally from now on: the group price list 2027 applies to all customers without exception, and we can no longer grant individual price reductions. [doc:20261008-70650-S10]"
    ]
   },
   "news": [
@@ -12363,6 +12435,13 @@
     "topic": "refocus",
     "headline": "Verbindungstechnik Mairhofer GmbH sharpens its focus",
     "body": "Verbindungstechnik Mairhofer GmbH will concentrate on larger key accounts and new product lines; smaller customers are to be served increasingly from standard ranges."
+   },
+   {
+    "id": "news:20261006-S9",
+    "date": "2026-10-06",
+    "topic": "acquisition",
+    "headline": "Strelvo group acquires Verbindungstechnik Mairhofer GmbH",
+    "body": "The Mairhofer family has sold Verbindungstechnik Mairhofer GmbH to Strelvo, a group of fastener distributors. The company keeps its name and its sales team; prices will be set centrally by the group, as for all its member companies."
    }
   ],
   "documents": [
@@ -12421,6 +12500,14 @@
     "subject": "Range changes",
     "author": "Verbindungstechnik Mairhofer GmbH",
     "text": "# Range changes\n\nemail - 2026-08-17 - Verbindungstechnik Mairhofer GmbH\n\nWe are reorganising our range around our key accounts. Standard items will be supplied from stock at list conditions; individual agreements will not be extended."
+   },
+   {
+    "id": "doc:20261008-70650-S10",
+    "date": "2026-10-08",
+    "kind": "letter",
+    "subject": "Prices and conditions in the Strelvo group",
+    "author": "Verbindungstechnik Mairhofer GmbH",
+    "text": "# Prices and conditions in the Strelvo group\n\nletter - 2026-10-08 - Verbindungstechnik Mairhofer GmbH\n\nDear Sir or Madam,\n\nas you may have read, our company now belongs to the Strelvo group. Our prices are set centrally from now on: the group price list 2027 applies to all customers without exception, and we can no longer grant individual price reductions. We remain open to discuss payment terms, call-off planning and contract length.\n\nYours faithfully,\nVerbindungstechnik Mairhofer GmbH"
    }
   ]
  },
@@ -12964,7 +13051,9 @@
     "Call with the owner of Stahlhandel Rupprecht-Kessel GmbH: he offered to walk us through their calculation (hourly rates and material) if that helps to settle prices. [doc:20260415-70720-M2]",
     "Call with the owner of Stahlhandel Rupprecht-Kessel GmbH: he offered to walk us through their calculation (hourly rates and material) if that helps to settle prices. [doc:20260712-70720-M3]",
     "# Price basis and surcharge clause for the coming period [doc:20260916-70720-P16]",
-    "for Sheet S235JR 3 mm, hot rolled, cut to size (part:370020) we propose to agree the price basis for the coming period, including a price adjustment clause based on PPI-C241. [doc:20260916-70720-P16]"
+    "for Sheet S235JR 3 mm, hot rolled, cut to size (part:370020) we propose to agree the price basis for the coming period, including a price adjustment clause based on PPI-C241. [doc:20260916-70720-P16]",
+    "for your planning: we bought our bright and cold-drawn bar requirement forward at fixed prices until June 2027. [doc:20261002-70720-S6]",
+    "Mill price movements will reach our prices only after that. [doc:20261002-70720-S6]"
    ],
    "competitor_or_exit": [
     "Call with the owner of Stahlhandel Rupprecht-Kessel GmbH: he offered to walk us through their calculation (hourly rates and material) if that helps to settle prices. [doc:20260415-70720-M2]",
@@ -13020,6 +13109,14 @@
     "subject": "Supplier day",
     "author": "Hollerau Pumpenwerke, Purchasing",
     "text": "# Supplier day\n\nmeeting note - 2026-09-24 - Hollerau Pumpenwerke, Purchasing\n\nAt our supplier day Stahlhandel Rupprecht-Kessel GmbH said Hollerau is an important reference customer for them."
+   },
+   {
+    "id": "doc:20261002-70720-S6",
+    "date": "2026-10-02",
+    "kind": "letter",
+    "subject": "Bar steel purchasing",
+    "author": "Stahlhandel Rupprecht-Kessel GmbH",
+    "text": "# Bar steel purchasing\n\nletter - 2026-10-02 - Stahlhandel Rupprecht-Kessel GmbH\n\nDear Sir or Madam,\n\nfor your planning: we bought our bright and cold-drawn bar requirement forward at fixed prices until June 2027. Mill price movements will reach our prices only after that.\n\nYours faithfully,\nStahlhandel Rupprecht-Kessel GmbH"
    }
   ]
  },
