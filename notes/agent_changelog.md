@@ -1450,3 +1450,7 @@ every case a deal, 9 in parallel in 241 s. Unseen sandbox suppliers: **D01 0.943
   tests 71 + 1 skip; crash 0; live P02 x3 0.769 / 0.800 / 0.758, P11 x2 0.752 / 0.794 (70140 insolvency news in its dossier),
   P07 0.760, 0 warnings.
 - Pre-flight step 0 now also checks datasets/A_dossiers.json and C_arguments.jsonl against the frozen tag (list starts final-v5).
+- **Pre-flight on final-v5** (08:29 - 08:39, tools/final/preflight.sh): step 0 agent code + datasets = final-v5 (frozen); key ok;
+  model ok 2.2 s; release present; tests 69 + 3 skips (2 skip by design in hidden mode, 1 needs a hosted test arena; 71 + 1
+  without hidden); crash 0; D01 0.920, D02 0.579, P01 0.999, no failed / safe-move / slow-decision lines; final runner 60 s:
+  12 polls on 403, no session opened, stopped. Practice sessions left 295.

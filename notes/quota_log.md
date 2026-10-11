@@ -411,3 +411,6 @@
 | 2026-10-11 08:23 | Dhruv | P07 | final-v5 hidden (release data: noise news for 70610) / gpt-6-astra | 0.7600 | bdacf19b20470cd7 |
 | 2026-10-11 08:23 | Dhruv | P11 | final-v5 hidden (release data: 70140 insolvency news) / gpt-6-astra | 0.7517 | 0ac33c3a5d4bba83 |
 | 2026-10-11 08:23 | Dhruv | P11 | final-v5 hidden (release data: 70140 insolvency news) / gpt-6-astra | 0.7935 | 56a5483c9995bc7a |
+| 2026-10-11 08:29 | Dhruv | D01 sandbox | pre-flight final-v5 hidden / gpt-6-astra (free) | 0.9202 | f610eda291e789e9 |
+| 2026-10-11 08:32 | Dhruv | D02 sandbox | pre-flight final-v5 hidden / gpt-6-astra (free) | 0.5786 | dd058b24e81b340c |
+| 2026-10-11 08:35 | Dhruv | P01 | pre-flight final-v5 hidden / gpt-6-astra | 0.9987 | 7fa2be612c9f248b |
