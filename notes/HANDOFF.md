@@ -5,6 +5,7 @@ Live Final: **Sun 2026-10-11, code freeze 12:00**, 5 waves × 8 min, hidden supp
 
 ## Where things are
 - **Frozen: tag `final-v1` (`db00d37`) is the final's agent.** v2 only via branch `v2` + stress test + live checks (tools/final/RUNBOOK.md).
+- v2 work on the Mac: worktree `~/Dhruv/ehl-v2` (branch `v2`); run its code with `PYTHONPATH=~/Dhruv/ehl-v2/tacto/starter-kit` (the shared venv otherwise loads main = v1).
 - **Repo (source of truth):** Mac mini `~/Dhruv/ehl-finals-hackathon` (`ssh macmini`), GitHub `Mulaydm10/ehl-finals-hackathon`
   (private), branch `main`. Laptop scratch copy for editing: `/tmp/claude-1000/-home-mulaydm10/<session>/scratchpad/repo`
   (NOT a git repo - always `cat` the Mac file into it before patching, then `scp` back).
