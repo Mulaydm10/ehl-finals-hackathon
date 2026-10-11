@@ -1,7 +1,7 @@
-"""v2 (05:35, offline run A): msg 3 / msg 4 carry db5 + db0 at the same value to it (5.03 db5 + 4.93 db0, then 5.04 db5 +
+"""v2 (04:50, offline run A): msg 3 / msg 4 carry db5 + db0 at the same value to it (5.03 db5 + 4.93 db0, then 5.04 db5 +
 4.94 db0); guard in its value terms. v1 (single db0 sheets) was verified in Run 2.
 
-P18 "45-day soft state" (local, Neel, 2026-10-11 ~05:00; Run 2 candidate). Gate case:P18; every other case = main.
+P18 "45-day soft state" (local, Neel, 2026-10-11 ~04:40; Run 2 candidate). Gate case:P18; every other case = main.
 
 Why (analysis/cases/P18_lever.md 15-20, P18_experiments.md):
 - Werdenfels answers an identical conversation identically (15438619 x6; 0c968aae replayed x8). So every existing P18 agent has

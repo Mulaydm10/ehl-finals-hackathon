@@ -1,4 +1,4 @@
-# P18 offline run B (2026-10-11 ~05:40, gpt-6-astra configured; no arena session): verify noidea_p18_state45 v2
+# P18 offline run B (2026-10-11 04:51, gpt-6-astra configured; no arena session): verify noidea_p18_state45 v2
 
 Code: main at e67addb (includes Dhruv's final-v2 promotion; noidea.py changed) + `analysis/agent_variants/noidea_p18_state45.py` v2.
 

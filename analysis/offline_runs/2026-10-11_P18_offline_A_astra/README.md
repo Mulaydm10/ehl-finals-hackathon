@@ -1,4 +1,4 @@
-# P18 offline run A (2026-10-11 ~05:30, gpt-6-astra configured; no arena session): mistakes audit + candidate scoring
+# P18 offline run A (2026-10-11 04:50, gpt-6-astra configured; no arena session): mistakes audit + candidate scoring
 
 **Commands** (strictly local):
     cd tacto/starter-kit

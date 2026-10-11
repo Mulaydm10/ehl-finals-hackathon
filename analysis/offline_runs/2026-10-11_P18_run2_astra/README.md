@@ -1,4 +1,4 @@
-# P18 Run 2 - offline, gpt-6-astra: the 45-day soft-state candidate (2026-10-11 ~05:10; no arena session)
+# P18 Run 2 - offline, gpt-6-astra: the 45-day soft-state candidate (2026-10-11 04:43; no arena session)
 
 **Model:** gpt-6-astra (tacto/starter-kit/.env.openai). Qwen not used (user: "use astra everywhere"; the local server is unreachable).
 **Arena:** no session. The planned Run 3 (one hosted P18 session) was NOT executed: the user said "dont run on the arena".

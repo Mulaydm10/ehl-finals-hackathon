@@ -1,4 +1,4 @@
-# P18 Run 1 - offline baseline with gpt-6-astra (2026-10-11 ~04:50, code aee97f3; no arena session)
+# P18 Run 1 - offline baseline with gpt-6-astra (2026-10-11 04:36, code aee97f3; no arena session)
 
 **Model:** gpt-6-astra (provider openai, from tacto/starter-kit/.env.openai, gitignored). **Qwen:** not used - the documented
 local Qwen server (Dhruv's Mac, MLX, port 8081) is not reachable from this laptop (curl localhost:8081 -> exit 7), and the user
