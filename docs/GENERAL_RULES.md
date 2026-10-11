@@ -299,3 +299,12 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
      supplier values, never price alone; without one, rule 24 stands. (P10 Run 1, `analysis/tools/p10_record_check.py` C.)
      **Confirmed live (P10 d0904bb939fa8f54):** 30.69 after a final of 31.10 (-1.3%, inside the 2% its own manager may give, our price moving up) -> walked: "Since you are unable to accept these terms, we hereby terminate this negotiation."
      An LLM we prompt to play the supplier held 40 of 40 on the same e-mail: such proxies say nothing about the arena's walk risk.
+128. **A supplier's alternative can price its primary sheet under the price it names** (P18 engine, 64 round-2 replies):
+     - when a reply carries a clause alternative (5% deadband), the model's stated price X goes to the alternative and the
+       primary (db0) sheet is set to X - its premium (0.10). This held in 9 of 9 readable cases, and 11 of 12 "-0.20"
+       steps carried one;
+     - asking for the alternative ("please also quote your price with a 5% deadband as an alternative") triggered it
+       2 of 3 at round 2 (15438619, 2493f26f; not 55df6dc9);
+     - at its floor the model declined (767b7a8d).
+     Ask for the clause alternative early, while the supplier is still stepping; read the primary, not the prose price.
+     (`analysis/cases/P18_top.md`.)

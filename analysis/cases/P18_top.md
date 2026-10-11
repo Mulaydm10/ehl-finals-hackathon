@@ -76,3 +76,18 @@ Why our two reproducible states cannot reach 0.756:
 - Asking for the alternative at round 2 triggered it 2 of 2 (15438619, 2493f26f).
 - At its floor the model declines to quote the alternative (767b7a8d), so the db0 sheet never goes under 5.00 this way.
 - **Use:** the round-2 request makes the soft state on demand. Each game is then a draw on the hidden line only.
+| 07:49 | 55df6dc93d5eb8d8 | 7 + round-2 request for the deadband alternative | 5.10, request ignored (no alternative) | 5.00 @ 45 db5 | final at once 5.20 @ 45 d db5 -> **0.6295**. On request: 2 of 3 |
+
+## 6. Conclusion (07:50; 9 games today, 0 above 0.756; team best stays 0.727)
+- **Mechanism:**
+  - its counters stop at 5.00 db0 / 5.10 db5;
+  - it agrees only within 2% of its standing offer and at or above a hidden line per conversation, measured in its money;
+  - beating 0.756 needs a line at or under ~4.85-4.90. Codacabana's conversation had one; ours had 4.91-4.96 (soft) or
+    ~5.00 (normal).
+- **Soft conversations** (where a low line is possible) come from an engine artifact: the model's stated price goes to the
+  deadband alternative and the db0 sheet is set 0.10 lower.
+  - It occurs about 1 in 6 on its own, and 2 of 3 on request at round 2.
+  - The model declines the alternative at its floor, so it never pushes the db0 sheet under 5.00.
+- **Per game** the chance of a line low enough is a few percent. Each game is board-neutral (best score counts), but there
+  is no deterministic path. **Recommendation:** stop spending P18 sessions unless we accept a lottery of roughly 20-30
+  games.
