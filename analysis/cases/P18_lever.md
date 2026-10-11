@@ -250,3 +250,21 @@ msg 3 = 4.97 @ 14 d db5 (0.7593, worth 4.87 to it = our msg-2 ask) -> final 5.10
 - 04:20 ab222b48898c8fb0: 4.99 @ 14 d db5 (worth 4.89 to it at its EUR 0.10 deadband price) -> final 5.00 @ 14 d db0 (0.666).
 - 04:21 66b6abb882860c4a: 4.89 @ 14 d db0 -> final 5.00 @ 14 d (0.666). Its floor in this state is in (4.89, 4.91]. Last probe: 4.90 (0.734).
 - 04:23 57f06757e4a2b512: 4.90 @ 14 d db0 -> final 5.00 (0.666). So in this state it accepts 4.91 (1.8% under its 5.00) and nothing at 2.0% or more: the KAM's 2% authority (doc:20260812-70740-M3). Our 0.727 is the db0 maximum here. Last probe: 5.00 @ 14 d db5 = 1.96% under its 5.10 db5 alternative (0.739).
+- 04:25 2782c270fa3ff162: 5.00 @ 14 d db5 (1.96% under its 5.10 db5 alternative, 2.0% under its 5.00 db0 in its value) -> final
+  5.10 db5 (0.673). The 2% is measured on its db0 offer in its own value terms.
+
+## 19. Conclusion of the night (Neel, 04:26) - stop spending sessions on P18
+- **Its acceptance rule, measured:** it agrees to our ask only when the ask is less than 2% under its current db0 offer (in its
+  value: db5 counts EUR 0.10, a later payment change a step) AND at or above its hidden floor for that conversation. Its own
+  counters never go under 5.00. So the lowest reachable deal is just under 2% below 5.00: 4.91 db0 (14 d: 0.727, 30 d: 0.739),
+  and only in conversations whose floor is that low.
+- **Our best state (0c968aae) is exhausted:** probes at 4.86 / 4.89 / 4.90 db0 and 4.97-5.00 db5 on 14 d, and the 30-d pair, all
+  drew its final; only 4.91 @ 14 d is accepted there (0.727 = our best). 14 d is credited in that conversation, so 30 d costs a
+  step there.
+- **The record needs a conversation whose floor is ~4.89 or lower and whose standing structure lets a <2% ask beat 0.756**
+  (e.g. 45 d at 5.00 with a 4.90 ask, as Codacabana got). None of our 57 games reached such a state; the states come from the
+  e-mail wording, which we cannot steer to it with what we know. 16 sessions spent tonight on P18 after the cloud report
+  (6 of them duplicate fixed-text games: my mistake, logged).
+- **For the final agent (hidden cases):** two general lessons - (1) identical messages get identical replies, so a probe must
+  change one thing; (2) an ask must stay within the supplier's approval authority (here 2%) of its current offer, never a step
+  back from our own previous ask, and the structure we hold must not change once the supplier has priced it.
