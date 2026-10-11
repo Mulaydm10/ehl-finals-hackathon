@@ -336,3 +336,14 @@ See analysis/offline_runs/2026-10-11_P18_offline_E_astra/README.md.
   db5 + 4.93 @ 30 -> final 5.00 @ 30 d (0.677). With 6c2813ce's own 4.94 agreed, its limit there is (4.93, 4.94]: max 0.718.
 - Both reproducible states are mapped: 0c968aae accepts only 4.91 @ 14 d (0.727), 6c2813ce only 4.94 @ 30 d (0.718). The one
   ask not yet tried that beats 0.727 in a known state: 5.01 @ 14 d db5 in the 0c968aae state (0.7327, value 4.91 if db5 = 0.10).
+
+## 27. Offline H1/H2 + live (06:03, 07836ace9510eafe, `noidea_p18_coda.py`): **0.621 - fresh round 2 was normal; an ask 4% under its offer ends it**
+- User: "read the highest score holder's deal and just make a better deal than them". Codacabana: 4.90 @ 45 d db0 (0.756). Better at
+  the same value to Werdenfels: 5.00 @ 45 d db5 (0.7618) or 4.89 @ 45 d db0 (0.7627). P18 negotiates only price, clause, payment
+  days and months, so no other structure beats it at an equal value to it.
+- Agent: 6c2813ce's msg 1 verbatim (5.20 @ 45 d, now 5 of 5) + open45's msg 2 (never sent after that msg 1: a fresh round-2 draw),
+  then the record sheets. Offline H1 branch checks and H2 42-game replay passed.
+- Live: 5.20 -> **5.10** (normal; no db5 pair; "A binding higher volume would help us") -> record sheets (4.1% under 5.10) ->
+  **final 5.10 @ 45 d at once** -> 0.621.
+- Lesson: when round 2 is not soft, stay inside its 2% approval authority (5.00 @ 45 d against 5.10) to reach its 5.00 floor
+  (0.688); the record sheets are only worth sending against a 5.00 standing offer. Team best stays 0.727; record 0.756.

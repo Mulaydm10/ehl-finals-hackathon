@@ -17,6 +17,7 @@
 | 10-11 05:50 | LIVE | hosted, 1 session | noidea_p18_beat30 | aaf4f9c6fe2f7fe6: hold at msg 3, final 5.00 @ 30 d at msg 4 = **0.677**; limit at 30 d (4.93, 4.94] | tools/replays/raw/P18_aaf4f9c6fe2f7fe6.json, analysis/offline_runs/2026-10-11_P18_live_aaf4f9c6/ |
 | 10-11 06:20 | offline H1 | offline (0 Astra calls) | new noidea_p18_coda (6c2813ce msg 1 verbatim -> 5.20 @ 45 d; open45's msg 2 = fresh round-2 draw; record sheets 5.00 @ 45 db5 + 4.89 @ 45 db0) | msg 1 byte-equal; msg 2 new after that msg 1; all branches correct | analysis/offline_runs/2026-10-11_P18_offline_H1_coda/ |
 | 10-11 06:25 | offline H2 | offline (no LLM) | noidea_p18_coda archived replay | 42 recorded games, 0 errors; selected for the live game | analysis/offline_runs/2026-10-11_P18_offline_H2_coda/ |
+| 10-11 06:03 | LIVE | hosted, 1 session | noidea_p18_coda | 07836ace9510eafe: 5.20 @ 45 d (reproduced) -> fresh round 2 = 5.10 (normal, no db5 pair) -> record sheets 4% under -> final 5.10 @ 45 d at once = **0.621** | tools/replays/raw/P18_07836ace9510eafe.json, analysis/offline_runs/2026-10-11_P18_live_07836ace/ |
 
 ## Changelog
 - **Run 1 (no code change):** the documented offline simulator is unfit for P18 (see the run README); the decision for the
@@ -37,3 +38,4 @@
 - **Live aaf4f9c6 (0.677):** the 6c2813ce state accepts only 4.94 @ 30 d; both reproducible states are now mapped to the cent.
 - **Offline H1:** new `noidea_p18_coda.py` - better than Codacabana's 4.90 @ 45 d db0 at the same value to it (5.00 @ 45 d db5, 0.7618); round 1 fixed by 6c2813ce's msg 1, round 2 a fresh draw.
 - **Offline H2:** noidea_p18_coda replays 42 recorded games without errors; selected for the live game.
+- **Live 07836ace (0.621):** 6c2813ce's msg 1 fixes round 1 at 5.20 (5 of 5); the new msg 2 drew a normal 5.10. Defect: on the normal branch the record sheets were 4% under its offer (twice its 2% authority) and drew its final at 5.10 at once; that branch must ask within 2% (5.00 @ 45 d -> 0.688).

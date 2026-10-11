@@ -311,3 +311,4 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
   lottery ticket, and the bad draw (5.40 here) costs a full step at the end (final 5.10 vs 5.00). Its acceptance limit is
   fixed per conversation before our 3rd message; nothing after round 1 moved its calculation in 62 games.
 - **Live aaf4f9c6 (0.677):** a reproducible state has one exact acceptance limit; probing it one cent at a time maps it (6c2813ce: (4.93, 4.94] at 30 d), but each probe costs a session and below the limit ends in its final.
+- **Live 07836ace (0.621):** an ask far outside the supplier's stated approval authority (4% vs its 2%) does not draw its next cut; it draws its final at the standing price. Send the long-shot sheets only when they sit inside that authority of its current offer; otherwise ask at the edge of the authority to bank its floor.
