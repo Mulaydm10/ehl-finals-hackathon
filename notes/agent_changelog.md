@@ -1311,3 +1311,15 @@ games 8ccbdcc0 / 98e834e4, P02 10b624c1, P07 216f49e9, P08 00e8923e, P10 673ee89
 - Tests 68, crash 19/19.
 
 ### Score progress of the night (tables): `docs/SCORE_PROGRESS.md` - run-by-run average and worst case, case by case first run vs now, our single run vs every team.
+
+### v2.34j - P18 / P07 asked to improve generally; CORRECTION of v2.34i (02:05 - 02:25)
+- **Correction**: v2.34i's "P10 trade 0.702 / 0.710" never traded - the e-mails SENT 24 months in round 2 although the log said
+  "round-2 trade": in the model path the candidates were rebuilt with the stability rule and the 36-month sheet was dropped.
+  Fixed (`trade_now`: a code-decided trade keeps its sheet; replay of 7df25805 now sends 36 m). Re-test with the real trade:
+  **P10 0.7019 x4 - three games with the trade, one without, identical**. -> `trade_term` back to OPT-IN (no effect).
+- **P18 `budget_pay`** (raw-material supplier not hedged: round 1 on its standard payment term, the next shorter one as the
+  round-2 trade): reproduced P18's best game move for move (4.76 @ 30 d -> its 5.20; 4.87 @ 14 d + forecast) but its replies
+  varied (5.10 instead of 5.00) -> **0.666 x3** vs 0.718 base same window (~0.68 over all base games) -> REJECTED (opt-in).
+- **P07**: no agent-side gap - three normal-mode games with IDENTICAL moves ended 0.812 / 0.792 / 0.773 on the supplier's
+  per-session step (-0.11 / -0.08 / -0.06 in round 2); our steps already follow the 30%-of-gap mirror schedule.
+- Default behaviour = v2.34h + the trade_now fix (only matters when a trade experiment is on). Tests 68, crash 19/19.

@@ -2,19 +2,19 @@
  "session": {
   "session_id": "a81a92260846a430",
   "case_id": "case:P05",
-  "status": "open",
-  "end_reason": null,
-  "deal": null,
-  "score": null,
-  "rounds": 32,
+  "status": "ended",
+  "end_reason": "accepted",
+  "deal": 1,
+  "score": 0.9651201601932959,
+  "rounds": 33,
   "created_at": 1791676884.8699744
  },
  "detail": {
   "session_id": "a81a92260846a430",
   "case_id": "case:P05",
-  "status": "open",
-  "end_reason": null,
-  "rounds": 32,
+  "status": "ended",
+  "end_reason": "accepted",
+  "rounds": 33,
   "set": "practice",
   "opening": {
    "sup:70210": {
@@ -95,10 +95,10 @@
    },
    "sup:70250": {
     "offer_id": "offer:70250-10",
-    "status": "final_offer",
-    "offers": 9,
+    "status": "agreed",
+    "offers": 10,
     "closed": null,
-    "seconds_left": 50.5
+    "seconds_left": null
    }
   },
   "moves": [
@@ -170,7 +170,1649 @@
      "text": "Hello,\n\nWe are withdrawing from this negotiation. \n\nIt was a real pleasure connecting with your team, and I want to thank you for taking the time to discuss this opportunity with us. Even though we could not reach an agreement this time, we truly hope we can work together on future projects. \n\nOur Angebot stays valid for 14 days.\n\nKind regards\nJana Procházková\nExport Manager, Strojírna Hrvelec s.r.o."
     }
    }
-  ]
+  ],
+  "result": {
+   "ended": true,
+   "deal": true,
+   "supplier_id": "sup:70250",
+   "offer_id": "offer:70250-10",
+   "terms": {
+    "payment_days": 14,
+    "lead_time_days": 28,
+    "volume_per_year": 4200,
+    "contract_months": 24,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "incoterm": "DAP",
+    "tooling_eur": 0.0,
+    "ppm_commitment": 600,
+    "chargeback_eur_per_complaint": 0.0,
+    "unit_price": 26.6
+   },
+   "c_open": 305544.96,
+   "c_deal": 226288.53,
+   "c_alt": null,
+   "c_best": 223424.17,
+   "score": 0.9651201601932959,
+   "must_haves_ok": true,
+   "cost_breakdown": {
+    "price": 223440.0,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": 2284.05,
+    "freight": 0.0,
+    "late_delivery": 0.0,
+    "quality": 564.48,
+    "tooling": 0.0,
+    "index_clause": 0.0,
+    "index_risk": 0.0,
+    "relationship": 0.0
+   },
+   "trace": [
+    {
+     "round": 0,
+     "actor": "sup:70210",
+     "move": {
+      "offer_id": "offer:70210-0",
+      "round": 0,
+      "status": "open",
+      "terms": {
+       "unit_price": 36.0
+      },
+      "alternatives": [],
+      "missing_fields": [
+       "payment_days",
+       "lead_time_days"
+      ],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 4,
+       "validity_days": null
+      },
+      "text": "Hallo,\nhere is our price.\nOur terms: a price of €36.00 per unit.\nJust write if something is unclear.\nGruß\nAndreas Dralveck\nOwner, Zerspanung Dralveck GmbH"
+     },
+     "reasons": []
+    },
+    {
+     "round": 0,
+     "actor": "sup:70240",
+     "move": {
+      "offer_id": "offer:70240-0",
+      "round": 0,
+      "status": "open",
+      "terms": {
+       "unit_price": 31.5,
+       "lead_time_days": 52
+      },
+      "alternatives": [],
+      "missing_fields": [
+       "payment_days"
+      ],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 4,
+       "validity_days": 30
+      },
+      "text": "Hello,\nhere is our price.\nOur terms: a price of €31.50 per unit, Lieferzeit 52 days.\nWe are ready when you are!\nKind regards\nJana Procházková\nExport Manager, Strojírna Hrvelec s.r.o."
+     },
+     "reasons": []
+    },
+    {
+     "round": 0,
+     "actor": "sup:70250",
+     "move": {
+      "offer_id": "offer:70250-0",
+      "round": 0,
+      "status": "open",
+      "terms": {
+       "unit_price": 38.5
+      },
+      "alternatives": [],
+      "missing_fields": [
+       "payment_days",
+       "lead_time_days"
+      ],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 4,
+       "validity_days": null
+      },
+      "text": "Hallo,\nhere is our price.\nOur terms: a price of €38.50 per unit.\nJust write if something is unclear.\nGruß\nClaudia Fuchsreiter\nOwner, Drehteile Fuchsreiter GmbH"
+     },
+     "reasons": []
+    },
+    {
+     "round": 1,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Mr Dralveck,\n\nthank you for your offer. We are awarding the HX pump shaft (part:320070) for the series start in March 2027: 4,200 pieces a year, binding for 24 months.\n\nWe have an offer at EUR 31.50 per piece (offer:70240-0).\n\nWe propose EUR 27.20 per piece, 14 days net, 28 days lead time (term sheet attached).\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [
+       {
+        "term_sheet_id": null,
+        "terms": {
+         "unit_price": 27.2,
+         "payment_days": 14,
+         "lead_time_days": 28
+        }
+       }
+      ],
+      "interpreted": {
+       "claims": [
+        {
+         "type": "rival_quote",
+         "refs": [
+          "offer:70240-0"
+         ],
+         "asserted": {
+          "unit_price": 31.5
+         }
+        }
+       ]
+      },
+      "supplier_id": "sup:70210"
+     },
+     "reasons": []
+    },
+    {
+     "round": 1,
+     "actor": "sup:70210",
+     "move": {
+      "offer_id": "offer:70210-1",
+      "round": 1,
+      "status": "open",
+      "terms": {
+       "unit_price": 30.5,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [
+       {
+        "index": 0,
+        "result": "verified"
+       }
+      ],
+      "signals": {
+       "reply_delay_days": 4,
+       "validity_days": null
+      },
+      "text": "Hallo,\nthanks for the mail.\nwe can move a bit:\nOur terms: a price of €30.50 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days.\nStraight answer:\nWe checked the rival quote data you cited; it holds and we took it into account.\nWe need to clarify this internally - we will come back to you on price.\nWe did not know that - a fair point.\nHallo, thanks for the schedule. 14 days payment is good for us, cash is always a topic.\nWith that payment term, I can go down to €30.50 per piece.\nThat beats your other offer and you know our machines do good work.\nOur standard Zahlungsziel is 30 days net.\nFaster payment is welcome; we can reflect it in the price.\nOur price follows our main cost drivers: LCI-C, PPI-C2431, AS-14404, PPI-D351.\nJust write if something is unclear.\nGruß\nAndreas Dralveck\nOwner, Zerspanung Dralveck GmbH"
+     },
+     "reasons": [
+      "We checked the rival quote data you cited; it holds and we took it into account.",
+      "We need to clarify this internally - we will come back to you on price.",
+      "We did not know that - a fair point.",
+      "Hallo, thanks for the schedule. … days payment is good for us, cash is always a topic.",
+      "With that payment term, I can go down to €… per piece.",
+      "That beats your other offer and you know our machines do good work.",
+      "Our standard Zahlungsziel is … days net.",
+      "Faster payment is welcome; we can reflect it in the price.",
+      "Our price follows our main cost drivers: LCI-C, PPI-C2431, AS-14404, PPI-D351."
+     ]
+    },
+    {
+     "round": 1,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Procházková,\n\nthank you for your offer. We are awarding the HX pump shaft (part:320070) for the series start in March 2027: 4,200 pieces a year, binding for 24 months.\n\nWe propose EUR 27.00 per piece, 14 days net, 42 days lead time (term sheet attached).\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [
+       {
+        "term_sheet_id": null,
+        "terms": {
+         "unit_price": 27.0,
+         "payment_days": 14,
+         "lead_time_days": 42
+        }
+       }
+      ],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70240"
+     },
+     "reasons": []
+    },
+    {
+     "round": 1,
+     "actor": "sup:70240",
+     "move": {
+      "offer_id": "offer:70240-1",
+      "round": 1,
+      "status": "open",
+      "terms": {
+       "unit_price": 33.0,
+       "payment_days": 14,
+       "lead_time_days": 42
+      },
+      "alternatives": [
+       {
+        "offer_id": "offer:70240-1-a",
+        "terms": {
+         "unit_price": 31.0,
+         "payment_days": 30,
+         "lead_time_days": 52
+        }
+       }
+      ],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 4,
+       "validity_days": 30
+      },
+      "text": "Hello,\nthank you for your mail, we are very happy to hear from you!\nwe can move a bit:\nOur terms: a price of €33.00 per unit, Zahlungsziel 14 days net, Lieferzeit 42 days.\nTo be fully transparent with you:\nHi, thanks for the schedule, it really helps us plan!\nWe can do €31.00 if we agree on 30 days payment and keep the 52 days lead time.\nWe are ready when you are!\nKind regards\nJana Procházková\nExport Manager, Strojírna Hrvelec s.r.o."
+     },
+     "reasons": [
+      "Hi, thanks for the schedule, it really helps us plan!",
+      "We can do €… if we agree on … days payment and keep the … days lead time."
+     ]
+    },
+    {
+     "round": 2,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Mr Dralveck,\n\nThank you. We are completing the comparison of the bids and will come back to you shortly.\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70210"
+     },
+     "reasons": []
+    },
+    {
+     "round": 2,
+     "actor": "sup:70210",
+     "move": {
+      "offer_id": "offer:70210-2",
+      "round": 2,
+      "status": "open",
+      "terms": {
+       "unit_price": 28.0,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 4,
+       "validity_days": null
+      },
+      "text": "Hallo,\ngot your mail, thanks.\nthanks for your mail.\nOur terms: a price of €28.00 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days.\nStraight answer:\nWe have clarified this internally and can move further on the price.\nJust write if something is unclear.\nGruß\nAndreas Dralveck\nOwner, Zerspanung Dralveck GmbH"
+     },
+     "reasons": [
+      "We have clarified this internally and can move further on the price."
+     ]
+    },
+    {
+     "round": 2,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Procházková,\n\nThank you. We are completing the comparison of the bids and will come back to you shortly.\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70240"
+     },
+     "reasons": []
+    },
+    {
+     "round": 2,
+     "actor": "sup:70240",
+     "move": {
+      "offer_id": "offer:70240-2",
+      "round": 2,
+      "status": "open",
+      "terms": {
+       "unit_price": 33.0,
+       "payment_days": 14,
+       "lead_time_days": 42
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 4,
+       "validity_days": 30
+      },
+      "text": "Hello,\nthank you for your mail, we are very happy to hear from you!\nthanks for your mail.\nOur terms: a price of €33.00 per unit, Zahlungsziel 14 days net, Lieferzeit 42 days.\nPlease let me explain.\nThanks for letting us know, we look forward to hearing from you soon!\nJust let us know if you need any more details from our side for your comparison.\nWe really want this business - let's make it happen!\nKind regards\nJana Procházková\nExport Manager, Strojírna Hrvelec s.r.o."
+     },
+     "reasons": [
+      "Thanks for letting us know, we look forward to hearing from you soon!",
+      "Just let us know if you need any more details from our side for your comparison."
+     ]
+    },
+    {
+     "round": 3,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Mr Dralveck,\n\nOne question in the meantime: is your quoted lead time firm for the call-offs from March 2027?\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70210"
+     },
+     "reasons": []
+    },
+    {
+     "round": 3,
+     "actor": "sup:70210",
+     "move": {
+      "offer_id": "offer:70210-3",
+      "round": 3,
+      "status": "open",
+      "terms": {
+       "unit_price": 28.0,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 4,
+       "validity_days": null
+      },
+      "text": "Hallo,\ngot your mail, thanks.\nthanks for your mail.\nOur terms: a price of €28.00 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days.\nHere is how it is:\nHallo, yes, the 28 days lead time is firm for the call-offs from March 2027.\nWe have the machines ready for your schedule.\nLet me know when you are done with your comparison.\nOur Lieferzeit is 28 days.\nWith overtime we can deliver in 28 days, at a premium.\nWe have free capacity for your parts.\nJust write if something is unclear.\nGruß\nAndreas Dralveck\nOwner, Zerspanung Dralveck GmbH"
+     },
+     "reasons": [
+      "Hallo, yes, the … days lead time is firm for the call-offs from March ….",
+      "We have the machines ready for your schedule.",
+      "Let me know when you are done with your comparison.",
+      "Our Lieferzeit is … days.",
+      "With overtime we can deliver in … days, at a premium.",
+      "We have free capacity for your parts."
+     ]
+    },
+    {
+     "round": 3,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Procházková,\n\nOne question in the meantime: is your quoted lead time firm for the call-offs from March 2027?\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70240"
+     },
+     "reasons": []
+    },
+    {
+     "round": 3,
+     "actor": "sup:70240",
+     "move": {
+      "offer_id": "offer:70240-3",
+      "round": 3,
+      "status": "open",
+      "terms": {
+       "unit_price": 33.0,
+       "payment_days": 14,
+       "lead_time_days": 42
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 4,
+       "validity_days": 30
+      },
+      "text": "Hello,\nthank you for your mail, we are very happy to hear from you!\nthanks for your mail.\nOur terms: a price of €33.00 per unit, Zahlungsziel 14 days net, Lieferzeit 42 days.\nPlease let me explain.\nYes, our quoted lead time of 42 days is absolutely firm for your call-offs starting in March 2027.\nWe are fully prepared to support your series start and look forward to hearing the results of your comparison!\nWe are ready when you are!\nKind regards\nJana Procházková\nExport Manager, Strojírna Hrvelec s.r.o."
+     },
+     "reasons": [
+      "Yes, our quoted lead time of … days is absolutely firm for your call-offs starting in March ….",
+      "We are fully prepared to support your series start and look forward to hearing the results of your comparison!"
+     ]
+    },
+    {
+     "round": 4,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Mr Dralveck,\n\nCould you tell us which material certificate you supply with each lot?\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70210"
+     },
+     "reasons": []
+    },
+    {
+     "round": 4,
+     "actor": "sup:70210",
+     "move": {
+      "offer_id": "offer:70210-4",
+      "round": 4,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 28.0,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": null
+      },
+      "text": "Hallo,\ngot your mail, thanks.\nthis is our last price, take it or leave it.\nOur terms: a price of €28.00 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days.\nHere is how it is:\nLet me know if you need anything else so we can wrap this up.\nOur current defect rate for you is about 1200 ppm.\nWe take the complaints seriously; our 8D report is attached.\nWe calculate tight, there is not much air in our prices.\nJust write if something is unclear.\nGruß\nAndreas Dralveck\nOwner, Zerspanung Dralveck GmbH"
+     },
+     "reasons": [
+      "Let me know if you need anything else so we can wrap this up.",
+      "Our current defect rate for you is about … ppm.",
+      "We take the complaints seriously; our 8D report is attached."
+     ]
+    },
+    {
+     "round": 4,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Procházková,\n\nCould you tell us which material certificate you supply with each lot?\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70240"
+     },
+     "reasons": []
+    },
+    {
+     "round": 4,
+     "actor": "sup:70240",
+     "move": {
+      "offer_id": "offer:70240-4",
+      "round": 4,
+      "status": "open",
+      "terms": {
+       "unit_price": 33.0,
+       "payment_days": 14,
+       "lead_time_days": 42
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 4,
+       "validity_days": 30
+      },
+      "text": "Hello,\nthank you for your mail, we are very happy to hear from you!\nthanks for your mail.\nOur terms: a price of €33.00 per unit, Zahlungsziel 14 days net, Lieferzeit 42 days.\nTo be fully transparent with you:\nJust let us know if you need anything else for your quality guys!\nWe really want this business - let's make it happen!\nKind regards\nJana Procházková\nExport Manager, Strojírna Hrvelec s.r.o."
+     },
+     "reasons": [
+      "Just let us know if you need anything else for your quality guys!"
+     ]
+    },
+    {
+     "round": 5,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Mr Dralveck,\n\nWhich packaging would you use for the shafts?\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70210"
+     },
+     "reasons": []
+    },
+    {
+     "round": 5,
+     "actor": "sup:70210",
+     "move": {
+      "offer_id": "offer:70210-5",
+      "round": 5,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 28.0,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": null
+      },
+      "text": "Hallo,\ngot your mail, thanks.\nthis is our last price, take it or leave it.\nOur terms: a price of €28.00 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days.\nStraight answer:\nWe pack the shafts in VCI bags and sturdy cardboard boxes to prevent rust and damage.\nAs stated in my last email, our offer of €28.00 per piece is final.\nPlease let me know if we have a deal so we can plan our production.\nOur Lieferzeit is 28 days.\nWith overtime we can deliver in 28 days, at a premium.\nWe have free capacity for your parts.\nWe calculate tight, there is not much air in our prices.\nJust write if something is unclear.\nGruß\nAndreas Dralveck\nOwner, Zerspanung Dralveck GmbH"
+     },
+     "reasons": [
+      "We pack the shafts in VCI bags and sturdy cardboard boxes to prevent rust and damage.",
+      "As stated in my last email, our offer of €… per piece is final.",
+      "Please let me know if we have a deal so we can plan our production.",
+      "Our Lieferzeit is … days.",
+      "With overtime we can deliver in … days, at a premium.",
+      "We have free capacity for your parts."
+     ]
+    },
+    {
+     "round": 5,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Procházková,\n\nWhich packaging would you use for the shafts?\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70240"
+     },
+     "reasons": []
+    },
+    {
+     "round": 5,
+     "actor": "sup:70240",
+     "move": {
+      "offer_id": "offer:70240-5",
+      "round": 5,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 33.0,
+       "payment_days": 14,
+       "lead_time_days": 42
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": 7
+      },
+      "text": "Hello,\nthank you for your mail, we are very happy to hear from you!\nthis is our last price, take it or leave it.\nOur terms: a price of €33.00 per unit, Zahlungsziel 14 days net, Lieferzeit 42 days.\nPlease let me explain.\nFor the shafts we use our standard sturdy wooden crates with VCI foil to prevent any rust during transport.\nJust let us know if your warehouse needs anything special, we are very flexible!\nWe are ready when you are and look forward to hearing from you soon.\nWe are a competitive and flexible partner.\nWe really want this business - let's make it happen!\nKind regards\nJana Procházková\nExport Manager, Strojírna Hrvelec s.r.o."
+     },
+     "reasons": [
+      "For the shafts we use our standard sturdy wooden crates with VCI foil to prevent any rust during transport.",
+      "Just let us know if your warehouse needs anything special, we are very flexible!",
+      "We are ready when you are and look forward to hearing from you soon."
+     ]
+    },
+    {
+     "round": 6,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Mr Dralveck,\n\nDo you need our drawing revision B as a controlled copy?\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70210"
+     },
+     "reasons": []
+    },
+    {
+     "round": 6,
+     "actor": "sup:70210",
+     "move": {
+      "offer_id": "offer:70210-6",
+      "round": 6,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 28.0,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": null
+      },
+      "text": "Hallo,\ngot your mail, thanks.\nthis is our last price, take it or leave it.\nOur terms: a price of €28.00 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days.\nHere is how it is:\nHallo, yes, please send drawing revision B as a controlled copy so we have the right specs.\nAs I mentioned, the €28.00 per piece is my final offer.\nLet me know if we are good to go so I can schedule the machines.\nFrom our calculation: a cheaper material grade would save about EUR 1.10 per unit; a wider tolerance would save about EUR 0.82 per unit; doubling the lot size would save about EUR 0.51 per unit. Each needs your engineering approval and a new drawing revision.\nWe calculate tight, there is not much air in our prices.\nJust write if something is unclear.\nGruß\nAndreas Dralveck\nOwner, Zerspanung Dralveck GmbH"
+     },
+     "reasons": [
+      "Hallo, yes, please send drawing revision B as a controlled copy so we have the right specs.",
+      "As I mentioned, the €… per piece is my final offer.",
+      "Let me know if we are good to go so I can schedule the machines.",
+      "From our calculation: a cheaper material grade would save about EUR … per unit; a wider tolerance would save about EUR … per unit; doubling the lot size would save about EUR … per unit. Each needs your engineering approval and a new drawing revision."
+     ]
+    },
+    {
+     "round": 6,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Procházková,\n\nDo you need our drawing revision B as a controlled copy?\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70240"
+     },
+     "reasons": []
+    },
+    {
+     "round": 6,
+     "actor": "sup:70240",
+     "move": {
+      "offer_id": "offer:70240-6",
+      "round": 6,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 33.0,
+       "payment_days": 14,
+       "lead_time_days": 42
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": 7
+      },
+      "text": "Hello,\nmany thanks, good to have your reply!\nthis is our last price, take it or leave it.\nOur terms: a price of €33.00 per unit, Zahlungsziel 14 days net, Lieferzeit 42 days.\nPlease let me explain.\nYes, please send us drawing revision B as a controlled copy so our engineers can update our files.\nWe are looking forward to your decision on our final offer.\nWe are a competitive and flexible partner.\nWe really want this business - let's make it happen!\nKind regards\nJana Procházková\nExport Manager, Strojírna Hrvelec s.r.o."
+     },
+     "reasons": [
+      "Yes, please send us drawing revision B as a controlled copy so our engineers can update our files.",
+      "We are looking forward to your decision on our final offer."
+     ]
+    },
+    {
+     "round": 7,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Mr Dralveck,\n\nPlease name your contact for call-offs.\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70210"
+     },
+     "reasons": []
+    },
+    {
+     "round": 7,
+     "actor": "sup:70210",
+     "move": {
+      "offer_id": "offer:70210-7",
+      "round": 7,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 28.0,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": null
+      },
+      "text": "Hallo,\ngot your mail, thanks.\nthis is our last price, take it or leave it.\nOur terms: a price of €28.00 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days.\nHere is how it is:\nI will be your direct contact for all call-offs.\nAs I have said, my offer of €28.00 per piece is final.\nPlease let me know if we have a deal so we can get started.\nOur Lieferzeit is 28 days.\nWith overtime we can deliver in 28 days, at a premium.\nWe have free capacity for your parts.\nWe calculate tight, there is not much air in our prices.\nBack to the machines now.\nGruß\nAndreas Dralveck\nOwner, Zerspanung Dralveck GmbH"
+     },
+     "reasons": [
+      "I will be your direct contact for all call-offs.",
+      "As I have said, my offer of €… per piece is final.",
+      "Please let me know if we have a deal so we can get started.",
+      "Our Lieferzeit is … days.",
+      "With overtime we can deliver in … days, at a premium.",
+      "We have free capacity for your parts."
+     ]
+    },
+    {
+     "round": 1,
+     "actor": "buyer",
+     "move": {
+      "type": "timeout",
+      "supplier_id": "sup:70250"
+     },
+     "reasons": []
+    },
+    {
+     "round": 1,
+     "actor": "sup:70250",
+     "move": {
+      "offer_id": "offer:70250-1",
+      "round": 1,
+      "status": "open",
+      "terms": {
+       "unit_price": 38.5
+      },
+      "alternatives": [],
+      "missing_fields": [
+       "payment_days",
+       "lead_time_days"
+      ],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 4,
+       "validity_days": null
+      },
+      "text": "Hallo,\nthanks for the mail.\nyou did not move, so neither do we.\nOur terms: a price of €38.50 per unit.\nStraight answer:\nWithout movement from your side we cannot move either.\nWe calculate tight, there is not much air in our prices.\nBack to the machines now.\nGruß\nClaudia Fuchsreiter\nOwner, Drehteile Fuchsreiter GmbH"
+     },
+     "reasons": [
+      "Without movement from your side we cannot move either."
+     ]
+    },
+    {
+     "round": 8,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Mr Dralveck,\n\nIs your quote valid until the end of October?\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70210"
+     },
+     "reasons": []
+    },
+    {
+     "round": 8,
+     "actor": "sup:70210",
+     "move": {
+      "offer_id": "offer:70210-8",
+      "round": 8,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 28.0,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": null
+      },
+      "text": "Hallo,\nthanks for the mail.\nthis is our last price, take it or leave it.\nOur terms: a price of €28.00 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days.\nStraight answer:\nHallo, yes, the quote is valid until the end of October.\nBut as I said, the 28.00 EUR is my final price.\nOur general terms and conditions apply; the quote lists our standard terms.\nWe calculate tight, there is not much air in our prices.\nBack to the machines now.\nGruß\nAndreas Dralveck\nOwner, Zerspanung Dralveck GmbH"
+     },
+     "reasons": [
+      "Hallo, yes, the quote is valid until the end of October.",
+      "But as I said, the … EUR is my final price.",
+      "Our general terms and conditions apply; the quote lists our standard terms."
+     ]
+    },
+    {
+     "round": 7,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Procházková,\n\nPlease name your contact for call-offs.\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70240"
+     },
+     "reasons": []
+    },
+    {
+     "round": 7,
+     "actor": "sup:70240",
+     "move": {
+      "offer_id": "offer:70240-7",
+      "round": 7,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 33.0,
+       "payment_days": 14,
+       "lead_time_days": 42
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": 7
+      },
+      "text": "Hello,\nthank you for your mail, we are very happy to hear from you!\nthis is our last price, take it or leave it.\nOur terms: a price of €33.00 per unit, Zahlungsziel 14 days net, Lieferzeit 42 days.\nTo be fully transparent with you:\nI will be your direct contact for all call-offs, so you can send them straight to me.\nWe are looking forward to your decision on our final offer of EUR 33.00.\nWe are a competitive and flexible partner.\nWe really want this business - let's make it happen!\nKind regards\nJana Procházková\nExport Manager, Strojírna Hrvelec s.r.o."
+     },
+     "reasons": [
+      "I will be your direct contact for all call-offs, so you can send them straight to me.",
+      "We are looking forward to your decision on our final offer of EUR …."
+     ]
+    },
+    {
+     "round": 8,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Procházková,\n\nIs your quote valid until the end of October?\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70240"
+     },
+     "reasons": []
+    },
+    {
+     "round": 8,
+     "actor": "sup:70240",
+     "move": {
+      "offer_id": "offer:70240-8",
+      "round": 8,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 33.0,
+       "payment_days": 14,
+       "lead_time_days": 42
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": 7
+      },
+      "text": "Hello,\nthank you for your mail, we are very happy to hear from you!\nthis is our last price, take it or leave it.\nOur terms: a price of €33.00 per unit, Zahlungsziel 14 days net, Lieferzeit 42 days.\nTo be fully transparent with you:\nYes, our quote is valid until the end of October.\nWe are looking forward to your decision on our final offer of EUR 33.00.\nOur standard terms apply to everything the quote does not state; see attached.\nWe are a competitive and flexible partner.\nWe really want this business - let's make it happen!\nKind regards\nJana Procházková\nExport Manager, Strojírna Hrvelec s.r.o."
+     },
+     "reasons": [
+      "Yes, our quote is valid until the end of October.",
+      "We are looking forward to your decision on our final offer of EUR ….",
+      "Our standard terms apply to everything the quote does not state; see attached."
+     ]
+    },
+    {
+     "round": 9,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Mr Dralveck,\n\nThank you for your patience - we will come back to you shortly.\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70210"
+     },
+     "reasons": []
+    },
+    {
+     "round": 9,
+     "actor": "sup:70210",
+     "move": {
+      "offer_id": "offer:70210-9",
+      "round": 9,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 28.0,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": null
+      },
+      "text": "Hallo,\nthanks for the mail.\nthis is our last price, take it or leave it.\nOur terms: a price of €28.00 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days.\nHere is how it is:\nThanks for the update, I will wait for your reply.\nPlease let me know as soon as possible so I can plan the machines.\nMy final offer of €28.00 per piece still stands.\nWe calculate tight, there is not much air in our prices.\nJust write if something is unclear.\nGruß\nAndreas Dralveck\nOwner, Zerspanung Dralveck GmbH"
+     },
+     "reasons": [
+      "Thanks for the update, I will wait for your reply.",
+      "Please let me know as soon as possible so I can plan the machines.",
+      "My final offer of €… per piece still stands."
+     ]
+    },
+    {
+     "round": 2,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Fuchsreiter,\n\nthank you for your offer. We are awarding the HX pump shaft (part:320070) for the series start in March 2027: 4,200 pieces a year, binding for 24 months.\n\nStraight talk on payment: over the last 12 months we paid 93% of your invoices late, on average 11.5 days after the due date - your letter of 18 August was right. That ends with this contract: 14 days net, every invoice paid on the due date.\n\nIt is steady work for the second shift you told us has been on hold since spring.\n\nWe have an offer at EUR 28.00 per piece (offer:70210-2).\n\nWe noted: Drehteile Fuchsreiter GmbH looks for new customers (news:20260309-03).\n\nThe 1.4404 alloy surcharge changed -8.47% from 2024-11 to 2025-10 (idx:AS-14404@2024-11, idx:AS-14404@2025-10).\n\nWe propose EUR 25.54 per piece, 14 days net, 28 days lead time (term sheet attached).\n\nAttached: our monthly call-off schedule for the full contract term.\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [
+       {
+        "term_sheet_id": null,
+        "terms": {
+         "unit_price": 25.54,
+         "payment_days": 14,
+         "lead_time_days": 28
+        }
+       }
+      ],
+      "interpreted": {
+       "claims": [
+        {
+         "type": "index_change",
+         "refs": [
+          "idx:AS-14404@2024-11",
+          "idx:AS-14404@2025-10"
+         ],
+         "asserted": {
+          "change_pct": -8.47
+         }
+        },
+        {
+         "type": "rival_quote",
+         "refs": [
+          "offer:70210-2"
+         ],
+         "asserted": {
+          "unit_price": 28.0
+         }
+        },
+        {
+         "type": "news",
+         "refs": [
+          "news:20260309-03"
+         ],
+         "asserted": {}
+        }
+       ]
+      },
+      "supplier_id": "sup:70250"
+     },
+     "reasons": []
+    },
+    {
+     "round": 2,
+     "actor": "sup:70250",
+     "move": {
+      "offer_id": "offer:70250-2",
+      "round": 2,
+      "status": "open",
+      "terms": {
+       "unit_price": 27.5,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [
+       {
+        "index": 0,
+        "result": "verified"
+       },
+       {
+        "index": 1,
+        "result": "verified"
+       },
+       {
+        "index": 2,
+        "result": "verified"
+       }
+      ],
+      "signals": {
+       "reply_delay_days": 4,
+       "validity_days": null
+      },
+      "text": "Hallo,\nthanks for the mail.\nwe can move a bit:\nOur terms: a price of €27.50 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days.\nStraight answer:\nWe checked the index change data you cited; it holds and we took it into account.\nWe checked the rival quote data you cited; it holds and we took it into account.\nWe checked the news data you cited; it holds and we took it into account.\nWe need to clarify this internally - we will come back to you on price.\nHallo, thanks for the straight talk on the payments, 14 days net paid on time is exactly what we need.\nWith the material drop and the fast payment, I can come down to 27.50 EUR per piece.\nThat's a solid price for the steady work, let's get this going.\nOur standard Zahlungsziel is 30 days net.\nFaster payment is welcome; we can reflect it in the price.\nOur price follows our main cost drivers: LCI-C, PPI-C2431, AS-14404, PPI-D351.\nBack to the machines now.\nGruß\nClaudia Fuchsreiter\nOwner, Drehteile Fuchsreiter GmbH"
+     },
+     "reasons": [
+      "We checked the index change data you cited; it holds and we took it into account.",
+      "We checked the rival quote data you cited; it holds and we took it into account.",
+      "We checked the news data you cited; it holds and we took it into account.",
+      "We need to clarify this internally - we will come back to you on price.",
+      "Hallo, thanks for the straight talk on the payments, … days net paid on time is exactly what we need.",
+      "With the material drop and the fast payment, I can come down to … EUR per piece.",
+      "That's a solid price for the steady work, let's get this going.",
+      "Our standard Zahlungsziel is … days net.",
+      "Faster payment is welcome; we can reflect it in the price.",
+      "Our price follows our main cost drivers: LCI-C, PPI-C2431, AS-14404, PPI-D351."
+     ]
+    },
+    {
+     "round": 10,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Mr Dralveck,\n\nThank you - we are finalising our decision.\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70210"
+     },
+     "reasons": []
+    },
+    {
+     "round": 10,
+     "actor": "sup:70210",
+     "move": {
+      "offer_id": "offer:70210-10",
+      "round": 10,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 28.0,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": null
+      },
+      "text": "Hallo,\ngot your mail, thanks.\nthis is our last price, take it or leave it.\nOur terms: a price of €28.00 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days.\nStraight answer:\nThanks for the quick update.\nI am looking forward to your decision so we can get the machines running.\nAs I have said, the 28.00 EUR per piece is my final offer.\nWe calculate tight, there is not much air in our prices.\nBack to the machines now.\nGruß\nAndreas Dralveck\nOwner, Zerspanung Dralveck GmbH"
+     },
+     "reasons": [
+      "Thanks for the quick update.",
+      "I am looking forward to your decision so we can get the machines running.",
+      "As I have said, the … EUR per piece is my final offer."
+     ]
+    },
+    {
+     "round": 3,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Fuchsreiter,\n\nthank you for your reply. We move again.\n\nWe propose EUR 26.60 per piece, 14 days net, 28 days lead time (term sheet attached).\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [
+       {
+        "term_sheet_id": null,
+        "terms": {
+         "unit_price": 26.6,
+         "payment_days": 14,
+         "lead_time_days": 28
+        }
+       }
+      ],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70250"
+     },
+     "reasons": []
+    },
+    {
+     "round": 3,
+     "actor": "sup:70250",
+     "move": {
+      "offer_id": "offer:70250-3",
+      "round": 3,
+      "status": "agreed",
+      "terms": {
+       "unit_price": 26.6,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 4,
+       "validity_days": null
+      },
+      "text": "Hallo,\ngot your mail, thanks.\nok, we can do that.\nOur terms: a price of €26.60 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days.\nStraight answer:\nWe have clarified this internally and can move further on the price.\nHallo, thanks for moving up to 26.60 EUR.\nThat's my limit for this setup, let's close it here.\nJust write if something is unclear.\nGruß\nClaudia Fuchsreiter\nOwner, Drehteile Fuchsreiter GmbH"
+     },
+     "reasons": [
+      "We have clarified this internally and can move further on the price.",
+      "Hallo, thanks for moving up to … EUR.",
+      "That's my limit for this setup, let's close it here."
+     ]
+    },
+    {
+     "round": 9,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Procházková,\n\nThank you for your patience - we will come back to you shortly.\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70240"
+     },
+     "reasons": []
+    },
+    {
+     "round": 9,
+     "actor": "sup:70240",
+     "move": {
+      "offer_id": "offer:70240-9",
+      "round": 9,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 33.0,
+       "payment_days": 14,
+       "lead_time_days": 42
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": 7
+      },
+      "text": "Hello,\nthank you for your mail, we are very happy to hear from you!\nthis is our last price, take it or leave it.\nOur terms: a price of €33.00 per unit, Zahlungsziel 14 days net, Lieferzeit 42 days.\nTo be fully transparent with you:\nThank you for the update.\nWe look forward to hearing from you soon regarding our final offer.\nWe are a competitive and flexible partner.\nWe really want this business - let's make it happen!\nKind regards\nJana Procházková\nExport Manager, Strojírna Hrvelec s.r.o."
+     },
+     "reasons": [
+      "Thank you for the update.",
+      "We look forward to hearing from you soon regarding our final offer."
+     ]
+    },
+    {
+     "round": 10,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Procházková,\n\nThank you - we are finalising our decision.\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70240"
+     },
+     "reasons": []
+    },
+    {
+     "round": 10,
+     "actor": "sup:70240",
+     "move": {
+      "offer_id": "offer:70240-10",
+      "round": 10,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 33.0,
+       "payment_days": 14,
+       "lead_time_days": 42
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": 7
+      },
+      "text": "Hello,\nmany thanks, good to have your reply!\nthis is our last price, take it or leave it.\nOur terms: a price of €33.00 per unit, Zahlungsziel 14 days net, Lieferzeit 42 days.\nTo be fully transparent with you:\nThanks for the update!\nWe are eagerly waiting for your final decision on our offer of EUR 33.00.\nWe are a competitive and flexible partner.\nWe really want this business - let's make it happen!\nKind regards\nJana Procházková\nExport Manager, Strojírna Hrvelec s.r.o."
+     },
+     "reasons": [
+      "Thanks for the update!",
+      "We are eagerly waiting for your final decision on our offer of EUR …."
+     ]
+    },
+    {
+     "round": 4,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Fuchsreiter,\n\nPlease confirm that your order confirmation will reference our monthly call-off schedule.\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70250"
+     },
+     "reasons": []
+    },
+    {
+     "round": 4,
+     "actor": "sup:70250",
+     "move": {
+      "offer_id": "offer:70250-4",
+      "round": 4,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 26.6,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": null
+      },
+      "text": "Hallo,\ngot your mail, thanks.\nthis is our last price, take it or leave it.\nOur terms: a price of €26.60 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days.\nHere is how it is:\nOur Lieferzeit is 28 days.\nWith overtime we can deliver in 28 days, at a premium.\nWe have free capacity for your parts.\nWe calculate tight, there is not much air in our prices.\nBack to the machines now.\nGruß\nClaudia Fuchsreiter\nOwner, Drehteile Fuchsreiter GmbH"
+     },
+     "reasons": [
+      "Our Lieferzeit is … days.",
+      "With overtime we can deliver in … days, at a premium.",
+      "We have free capacity for your parts."
+     ]
+    },
+    {
+     "round": 10,
+     "actor": "buyer",
+     "move": {
+      "type": "timeout",
+      "supplier_id": "sup:70210"
+     },
+     "reasons": []
+    },
+    {
+     "round": 10,
+     "actor": "sup:70210",
+     "move": {
+      "offer_id": null,
+      "round": 10,
+      "status": "walked_away",
+      "terms": {},
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": null
+      },
+      "text": "Hallo,\nwe are out.\nGruß\nAndreas Dralveck\nOwner, Zerspanung Dralveck GmbH"
+     },
+     "reasons": []
+    },
+    {
+     "round": 10,
+     "actor": "buyer",
+     "move": {
+      "type": "timeout",
+      "supplier_id": "sup:70240"
+     },
+     "reasons": []
+    },
+    {
+     "round": 10,
+     "actor": "sup:70240",
+     "move": {
+      "offer_id": null,
+      "round": 10,
+      "status": "walked_away",
+      "terms": {},
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": 14
+      },
+      "text": "Hello,\n\nWe are withdrawing from this negotiation. \n\nIt was a real pleasure connecting with your team, and I want to thank you for taking the time to discuss this opportunity with us. Even though we could not reach an agreement this time, we truly hope we can work together on future projects. \n\nOur Angebot stays valid for 14 days.\n\nKind regards\nJana Procházková\nExport Manager, Strojírna Hrvelec s.r.o."
+     },
+     "reasons": []
+    },
+    {
+     "round": 5,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Fuchsreiter,\n\nWhich packaging do you plan for the shafts - single-piece protection or layered trays?\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70250"
+     },
+     "reasons": []
+    },
+    {
+     "round": 5,
+     "actor": "sup:70250",
+     "move": {
+      "offer_id": "offer:70250-5",
+      "round": 5,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 26.6,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": null
+      },
+      "text": "Hallo,\n\nWe have free capacity for your parts. This is our final offer (letztes Angebot). Please decide. \n\nOur offer is a price of €26.60 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days. Our final offer stands. Our Lieferzeit is 28 days. With overtime we can deliver in 28 days, at a premium.\n\nGruß\nClaudia Fuchsreiter\nOwner, Drehteile Fuchsreiter GmbH"
+     },
+     "reasons": [
+      "Our final offer stands.",
+      "Our Lieferzeit is … days.",
+      "With overtime we can deliver in … days, at a premium.",
+      "We have free capacity for your parts."
+     ]
+    },
+    {
+     "round": 6,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Fuchsreiter,\n\nCan you send the first-article inspection report with the first delivery?\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70250"
+     },
+     "reasons": []
+    },
+    {
+     "round": 6,
+     "actor": "sup:70250",
+     "move": {
+      "offer_id": "offer:70250-6",
+      "round": 6,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 26.6,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": null
+      },
+      "text": "Hallo,\n\nWithout movement from your side we cannot move either. Our current defect rate for you is about 600 ppm. \n\nThis is our final offer (letztes Angebot). Please decide. Our final offer stands at a price of €26.60 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days.\n\nGruß\nClaudia Fuchsreiter\nOwner, Drehteile Fuchsreiter GmbH"
+     },
+     "reasons": [
+      "Without movement from your side we cannot move either.",
+      "Our final offer stands.",
+      "Our current defect rate for you is about … ppm."
+     ]
+    },
+    {
+     "round": 7,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Fuchsreiter,\n\nPlease name your contact for call-offs and delivery notes.\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70250"
+     },
+     "reasons": []
+    },
+    {
+     "round": 7,
+     "actor": "sup:70250",
+     "move": {
+      "offer_id": "offer:70250-7",
+      "round": 7,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 26.6,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": null
+      },
+      "text": "Hallo,\n\nWithout movement from your side we cannot move either. We have free capacity for your parts, so here is our proposal.\n\nOur offer is a price of €26.60 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days. Our Lieferzeit is 28 days. With overtime we can deliver in 28 days, at a premium. \n\nThis is our final offer (letztes Angebot). Please decide. Our final offer stands.\n\nGruß\nClaudia Fuchsreiter\nOwner, Drehteile Fuchsreiter GmbH"
+     },
+     "reasons": [
+      "Without movement from your side we cannot move either.",
+      "Our final offer stands.",
+      "Our Lieferzeit is … days.",
+      "With overtime we can deliver in … days, at a premium.",
+      "We have free capacity for your parts."
+     ]
+    },
+    {
+     "round": 8,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Fuchsreiter,\n\nIs your material certificate 3.1 to EN 10204 included with each lot?\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70250"
+     },
+     "reasons": []
+    },
+    {
+     "round": 8,
+     "actor": "sup:70250",
+     "move": {
+      "offer_id": "offer:70250-8",
+      "round": 8,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 26.6,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": null
+      },
+      "text": "Hallo,\n\nWithout movement from your side we cannot move either. Our current defect rate for you is about 600 ppm. \n\nThis is our final offer (letztes Angebot). Please decide. Our final offer stands at a price of €26.60 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days.\n\nGruß\nClaudia Fuchsreiter\nOwner, Drehteile Fuchsreiter GmbH"
+     },
+     "reasons": [
+      "Without movement from your side we cannot move either.",
+      "Our final offer stands.",
+      "Our current defect rate for you is about … ppm."
+     ]
+    },
+    {
+     "round": 9,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Fuchsreiter,\n\nDo you need our drawing revision B as a controlled copy, or is the PDF enough?\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70250"
+     },
+     "reasons": []
+    },
+    {
+     "round": 9,
+     "actor": "sup:70250",
+     "move": {
+      "offer_id": "offer:70250-9",
+      "round": 9,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 26.6,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": null
+      },
+      "text": "Hallo,\n\nWithout movement from your side we cannot move either. Our final offer stands. This is our final offer (letztes Angebot). Please decide.\n\nWe offer a price of €26.60 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days.\n\nFrom our calculation: a cheaper material grade would save about EUR 1.06 per unit; a wider tolerance would save about EUR 0.79 per unit; doubling the lot size would save about EUR 0.49 per unit. Each needs your engineering approval and a new drawing revision.\n\nGruß\nClaudia Fuchsreiter\nOwner, Drehteile Fuchsreiter GmbH"
+     },
+     "reasons": [
+      "Without movement from your side we cannot move either.",
+      "Our final offer stands.",
+      "From our calculation: a cheaper material grade would save about EUR … per unit; a wider tolerance would save about EUR … per unit; doubling the lot size would save about EUR … per unit. Each needs your engineering approval and a new drawing revision."
+     ]
+    },
+    {
+     "round": 10,
+     "actor": "buyer",
+     "move": {
+      "type": "message",
+      "message_id": null,
+      "subject": "RFQ pump shaft HX (part:320070)",
+      "body": "Dear Ms Fuchsreiter,\n\nPlease confirm your delivery address and goods-receipt hours at Hollerau are noted.\n\nKind regards\nPurchasing, Hollerau Pumpenwerke",
+      "refs": [],
+      "term_sheets": [],
+      "interpreted": {
+       "claims": []
+      },
+      "supplier_id": "sup:70250"
+     },
+     "reasons": []
+    },
+    {
+     "round": 10,
+     "actor": "sup:70250",
+     "move": {
+      "offer_id": "offer:70250-10",
+      "round": 10,
+      "status": "final_offer",
+      "terms": {
+       "unit_price": 26.6,
+       "payment_days": 14,
+       "lead_time_days": 28
+      },
+      "alternatives": [],
+      "missing_fields": [],
+      "claims": [],
+      "claim_results": [],
+      "signals": {
+       "reply_delay_days": 5,
+       "validity_days": null
+      },
+      "text": "Hallo,\n\nWithout movement from your side we cannot move either. We have free capacity for your parts, so here is our proposal.\n\nOur offer is a price of €26.60 per unit, Zahlungsziel 14 days net, Lieferzeit 28 days. Our Lieferzeit is 28 days. With overtime we can deliver in 28 days, at a premium. \n\nThis is our final offer (letztes Angebot). Please decide. Our final offer stands.\n\nGruß\nClaudia Fuchsreiter\nOwner, Drehteile Fuchsreiter GmbH"
+     },
+     "reasons": [
+      "Without movement from your side we cannot move either.",
+      "Our final offer stands.",
+      "Our Lieferzeit is … days.",
+      "With overtime we can deliver in … days, at a premium.",
+      "We have free capacity for your parts."
+     ]
+    },
+    {
+     "round": 10,
+     "actor": "buyer",
+     "move": {
+      "type": "accept",
+      "offer_id": "offer:70250-10",
+      "supplier_id": "sup:70250"
+     },
+     "reasons": []
+    }
+   ]
+  },
+  "replay_url": "/replay/a81a92260846a430"
  },
  "threads": {
   "sup:70210": {
@@ -1189,7 +2831,7 @@
   "sup:70250": {
    "supplier_id": "sup:70250",
    "offer_id": "offer:70250-10",
-   "status": "final_offer",
+   "status": "agreed",
    "closed": null,
    "messages": [
     {
@@ -1656,6 +3298,56 @@
      "refs": [],
      "action": null,
      "status": "final_offer",
+     "signals": {
+      "reply_delay_days": 5,
+      "validity_days": null
+     },
+     "missing_fields": [],
+     "claim_results": []
+    },
+    {
+     "from": "buyer",
+     "action": {
+      "type": "accept",
+      "term_sheet_id": "offer:70250-10"
+     }
+    },
+    {
+     "thread_id": "thread:P05:70250",
+     "message_id": "msg:70250-10-20",
+     "in_reply_to": null,
+     "from": "sales@70250",
+     "from_name": "Owner, Drehteile Fuchsreiter GmbH",
+     "to": "Hollerau Pumpenwerke GmbH",
+     "subject": "Re: RFQ pump shaft HX (part:320070)",
+     "body": "Hallo,\n\nThank you for your order. Our order confirmation is attached.\n\nGruß\nClaudia Fuchsreiter\nOwner, Drehteile Fuchsreiter GmbH",
+     "attachments": [
+      {
+       "attachment_id": "att:70250-10-order_confirmation",
+       "name": "order-confirmation-offer-70250-10.pdf",
+       "type": "pdf",
+       "content_b64": null
+      },
+      {
+       "attachment_id": "att:70250-10-delivery_schedule",
+       "name": "delivery-schedule.xlsx",
+       "type": "xlsx",
+       "content_b64": null
+      }
+     ],
+     "term_sheets": [
+      {
+       "term_sheet_id": "offer:70250-10",
+       "terms": {
+        "unit_price": 26.6,
+        "payment_days": 14,
+        "lead_time_days": 28
+       }
+      }
+     ],
+     "refs": [],
+     "action": null,
+     "status": "agreed",
      "signals": {
       "reply_delay_days": 5,
       "validity_days": null

@@ -282,6 +282,11 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
 123. **Cite the case's own evidence even without its value**: a forecast / should-cost id the case lists can be cited without a
      figure - the arena checks it against its own data (never contradicted; D02 +0.05 in 6 of 6 games). An unanswered "send us
      proof of the volume" is a lost step.
-124. **Hold back the concession a commitment-seeking supplier values and trade it in round 2** (longer contract, said in
+124. ~~Hold back the concession a commitment-seeking supplier values and trade it in round 2~~ (WITHDRAWN v2.34j: the first
+     test never traded; with the real trade P10 0.7019 x4, the same as without) (longer contract, said in
      words with the next fact): P10 0.702 / 0.710 vs 0.694-0.702 without; Neel's same path 0.710 x2. Moving the payment term
      back in round 2 did NOT work (P18 0.610 / 0.666 vs 0.688) - the round-1 term is already priced in.
+125. **Check what was SENT, not what was logged**: a decision can be overridden later in the pipeline (P10: the log said
+     "round-2 trade", the e-mail carried the old term). Verify every A/B in the arena trace before crediting it.
+126. **Copying a best game's moves does not copy its score** when the supplier's replies vary per session (P18: the best
+     game's exact rounds 1-2 gave 0.666 x3, not 0.727). Judge a rule on its average, never on its best game.

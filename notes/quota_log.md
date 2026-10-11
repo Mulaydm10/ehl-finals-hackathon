@@ -332,3 +332,11 @@
 | 2026-10-11 02:04 | Dhruv | P10 | v2.34i hidden A/B trade_term / gpt-6-astra | 0.7097 | 9f210912a85e003b |
 | 2026-10-11 02:04 | Dhruv | P10 | v2.34i hidden A/B base / gpt-6-astra | 0.6941 | 6ca6ae5d9bae6406 |
 | 2026-10-11 02:04 | Dhruv | P04 | v2.34i hidden A/B trade_term / gpt-6-astra | 0.8153 | cd5ab95b8483d1c6 |
+| 2026-10-11 02:17 | Dhruv | P18 | v2.34j hidden A/B budget_pay / gpt-6-astra | 0.6658 | 193f7a3689743cc7 |
+| 2026-10-11 02:17 | Dhruv | P18 | v2.34j hidden A/B budget_pay / gpt-6-astra | 0.6658 | 4eec90233ab1eed1 |
+| 2026-10-11 02:17 | Dhruv | P18 | v2.34j hidden A/B budget_pay / gpt-6-astra | 0.6658 | 19dbe14233166ef1 |
+| 2026-10-11 02:17 | Dhruv | P18 | v2.34j hidden A/B base / gpt-6-astra | 0.7181 | 6c2813cee1fcf116 |
+| 2026-10-11 02:17 | Dhruv | P10 | v2.34j hidden A/B trade_term fixed / gpt-6-astra | 0.7019 | 6fd876c4fb7c0d67 |
+| 2026-10-11 02:17 | Dhruv | P10 | v2.34j hidden A/B trade_term fixed / gpt-6-astra | 0.7019 | 045855e3085b4b27 |
+| 2026-10-11 02:17 | Dhruv | P10 | v2.34j hidden A/B trade_term fixed / gpt-6-astra | 0.7019 | bb285b61870c147d |
+| 2026-10-11 02:17 | Dhruv | P10 | v2.34j hidden A/B no_trade_term / gpt-6-astra | 0.7019 | cb8dc7210eb99af3 |

@@ -1344,7 +1344,7 @@ or null, "reason": "<one sentence>"}."""
         # best structure with the next-SHORTER contract at the same price, round 2 concedes the longer contract with the next
         # fact (P10 Neel 59c899b9: 24 m -> 36 m + labour in round 2 = -0.40, its best round-2 step; P18 0c968aae: 30 -> 14 d
         # in round 2 -> -0.20, the same term in round 1 drew nothing, bf56d975)
-        if k == 0 and "no_trade_term" not in EXPERIMENTS and sheets and "contract_months" in case["negotiable"] and len(self.sup) == 1 \
+        if k == 0 and "trade_term" in EXPERIMENTS and sheets and "contract_months" in case["negotiable"] and len(self.sup) == 1 \
                 and self.wants_term(case, sid):
             opts = sorted(case.get("term_options", {}).get("contract_months") or [])
             best_t = sheets[0][1]
@@ -1357,16 +1357,41 @@ or null, "reason": "<one sentence>"}."""
                     s["meso"] = [t1]  # code's structure in round 1, the model only writes
                     s["trade_term"] = ("contract_months", cm)
                     log.info("%s: trade term - round 1 at %s months, %s months kept for round 2", sid, shorter[-1], cm)
+        # BUDGET SUPPLIER PAYMENT (experiment `budget_pay`): an index-priced raw-material supplier that is not hedged fixes its
+        # total concession at the first counter and prices a longer payment term into it steeply (P18 first counter 5.20 at
+        # 14/30 d in 4 of 4, 5.30-5.50 at 45-90 d; its best game 0c968aae: 30 d in round 1, 14 d as the round-2 trade). Round 1
+        # asks its STANDARD term when that costs us < 0.15%; the next shorter term is held for the round-2 trade. Hedged
+        # suppliers excluded (P08: all code sheets go out, its best at 45 d)
+        if k == 0 and "budget_pay" in EXPERIMENTS and sheets and "payment_days" in case["negotiable"] and len(self.sup) == 1 \
+                and case["type"] == "raw_material" and "hedged_forward" not in s["dossier"].get("motives", {}):
+            std_d, best_t = (s.get("std") or {}).get("payment_days"), sheets[0][1]
+            if std_d is not None and best_t.get("payment_days") != std_d:
+                saved_lm = s.pop("last_main", None)
+                try:
+                    pool = self.sheets_at(case, sid, target, cap, n=12, band_pct=0.5)
+                finally:
+                    if saved_lm is not None:
+                        s["last_main"] = saved_lm
+                hit = [x for x in pool if x[1].get("payment_days") == std_d and all(
+                    x[1].get(f) == best_t.get(f) for f in case["negotiable"] if f not in ("payment_days", "unit_price"))]
+                if hit and hit[0][0] <= sheets[0][0] * 1.0015:
+                    sheets, s["meso"] = [hit[0]], [hit[0][1]]
+                    shorter = sorted(o for o in case.get("term_options", {}).get("payment_days") or [] if o < std_d)
+                    if shorter:
+                        s["trade_term"] = ("payment_days", shorter[-1])
+                    log.info("%s: budget supplier - round 1 on its standard %s d, %s held for round 2", sid, std_d,
+                             shorter[-1] if shorter else None)
         # ROUND-2 TRADE (experiments `trade_term` / `pay_trade`): one concession the supplier values goes out in round 2 as a
         # visible trade. The stability rule would otherwise keep last round's terms ("unless >= 1% cheaper"), so the trade
         # sets the structure explicitly: the held-back longer contract (trade_term), or the payment term moved toward the
         # supplier's standard when that costs us < 0.15% of our total cost (pay_trade; P18 0c968aae 30 -> 14 d in round 2 =
         # -0.20, its first counters 5.20 at 14/30 d vs 5.30-5.50 at 45-90 d)
-        if k == 1 and sheets and not s.get("traded") and (("no_trade_term" not in EXPERIMENTS and s.get("trade_term")) or "pay_trade" in EXPERIMENTS):
+        trade_now = False  # a code-decided trade this round: the model must not re-pick the structure
+        if k == 1 and sheets and not s.get("traded") and (({"trade_term", "budget_pay"} & EXPERIMENTS and s.get("trade_term")) or "pay_trade" in EXPERIMENTS):
             lead_t = sheets[0][1]
             want = {}
             tt = s.get("trade_term")
-            if "no_trade_term" not in EXPERIMENTS and tt and lead_t.get(tt[0]) != tt[1]:
+            if ({"trade_term", "budget_pay"} & EXPERIMENTS) and tt and lead_t.get(tt[0]) != tt[1]:
                 want = {tt[0]: tt[1]}
             elif "pay_trade" in EXPERIMENTS and "payment_days" in case["negotiable"] and len(self.sup) == 1:
                 std_d, d = (s.get("std") or {}).get("payment_days"), lead_t.get("payment_days")
@@ -1384,7 +1409,7 @@ or null, "reason": "<one sentence>"}."""
                        and all(x[1].get(f) == lead_t.get(f) for f in case["negotiable"] if f not in want and f != "unit_price")]
                 if hit and hit[0][0] <= sheets[0][0] * (1.0015 if "payment_days" in want else 1.01):
                     pct = (hit[0][0] / sheets[0][0] - 1) * 100
-                    sheets, s["traded"] = [hit[0]], True
+                    sheets, s["traded"], trade_now = [hit[0]], True, True
                     s["trade_term"] = next(iter(want.items()))
                     log.info("%s: round-2 trade %s (our cost %+.3f%%)", sid, want, pct)
         mb = self.memory_best_structure(case, sid) if "no_memory_term" not in EXPERIMENTS else None
@@ -1591,11 +1616,13 @@ or null, "reason": "<one sentence>"}."""
             return accept
         log.info("%s round %d: our best C %.0f vs standing %.0f (alt %.0f)", sid, k, sheets[0][0], c_stand, self.c_alt)
         if self.complete:  # dynamic: the model reads its e-mail and picks among pre-priced candidates
-            cands = sheets if close_now else self.sheets_at(case, sid, target, cap, n=8)
+            # a code-decided trade keeps its sheet (live P10 7df25805 / 9f210912: the rebuilt candidates carried the old
+            # 24-month structure and the round-2 trade never went out)
+            cands = sheets if (close_now or trade_now) else self.sheets_at(case, sid, target, cap, n=8)
             # the backbone (structure) is code's: after round 1 the model may only pick sheets with the structure code
             # leads with (P02 v2.13 dc1d4fd8a7cd47cb: the model moved us to 30 d, it made 30 d its final -> 0.20; the
             # good P02 games held 90 d every round)
-            if (k >= 1 or s.get("mem_final")) and sheets and cands and not close_now:  # + round 1 when memory chose the structure
+            if (k >= 1 or s.get("mem_final")) and sheets and cands and not close_now and not trade_now:  # + round 1 when memory chose the structure
                 lead = sheets[0][1]
                 keep = [x for x in cands if all(x[1].get(f) == lead.get(f) for f in case["negotiable"] if f != "unit_price")]
                 cands = keep or cands[:1]

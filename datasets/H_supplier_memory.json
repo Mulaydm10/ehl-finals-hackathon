@@ -432,9 +432,10 @@
   }
  },
  "sup:70410": {
-  "games": 38,
+  "games": 42,
   "scores": [
    0.0,
+   0.702,
    0.686,
    0.647,
    0.702,
@@ -453,6 +454,7 @@
    0.694,
    0.694,
    0.694,
+   0.702,
    0.694,
    0.702,
    0.663,
@@ -466,8 +468,10 @@
    0.539,
    0.702,
    0.639,
+   0.702,
    0.679,
    0.71,
+   0.702,
    0.674,
    0.686,
    0.0,
@@ -477,7 +481,7 @@
    "delivery record": 2,
    "price history": 1,
    "quality record": 1,
-   "volume change": 23
+   "volume change": 26
   },
   "structures": {
    "contract_months=24|lead_time_days=35|volume_per_year=23400": {
@@ -651,8 +655,8 @@
   },
   "took": {
    "index change": 1,
-   "price history": 22,
-   "should cost": 22
+   "price history": 25,
+   "should cost": 24
   }
  },
  "sup:70510": {
@@ -2049,7 +2053,7 @@
   }
  },
  "sup:70740": {
-  "games": 37,
+  "games": 41,
   "scores": [
    0.688,
    0.53,
@@ -2057,15 +2061,19 @@
    0.598,
    0.727,
    0.666,
+   0.666,
+   0.666,
    0.61,
    0.0,
    0.621,
    0.688,
    0.677,
+   0.666,
    0.688,
    0.666,
    0.43,
    0.666,
+   0.718,
    0.61,
    0.621,
    0.606,
@@ -2090,9 +2098,9 @@
    0.688
   ],
   "shrugged": {
-   "index change": 18,
+   "index change": 22,
    "lci-c": 1,
-   "volume change": 29
+   "volume change": 33
   },
   "structures": {
    "contract_months=24|index_clause={'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}|payment_days=14": {
@@ -2243,8 +2251,8 @@
    }
   },
   "took": {
-   "index change": 16,
-   "price history": 29,
+   "index change": 19,
+   "price history": 32,
    "volume change": 5
   }
  }

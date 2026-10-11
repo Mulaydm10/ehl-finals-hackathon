@@ -29,16 +29,17 @@ Distilled from the hidden-supplier loops of 2026-10-10/11 (v2.34 - v2.34h). Deta
 | case refs we have no value for were ignored | unseen RFQ bidder asked twice for "proof of volume" | cite the case's own ids without a figure |
 | a wave case that cannot open was dropped | load test: P01 never started (429, 10 sessions per key) | runner retries until 90 s before the cap; nobody else uses the key |
 | claimed bests without checking the arena mode | P07 0.825 / P10 0.741 were template-mode | rule 118 |
+| trusted the log, not the sent e-mail | P10 "trade" A/B never traded (model path rebuilt the sheets) | check the arena trace; `trade_now` |
 
 ## Ideas tested and rejected (they helped one case and hurt another = overfitting)
 - moving the payment term toward the supplier's standard in round 2 (`pay_trade`: P18 0.610 / 0.666 vs 0.688).
+- holding the longer contract back for a round-2 trade (`trade_term`: P10 0.7019 x4 with and without).
+- raw-material supplier on its standard payment term + shorter term as the trade (`budget_pay`: P18 0.666 x3 vs ~0.68) -
+  it copied the best game's moves exactly; the supplier's replies vary, so the score did not follow.
 - open on the supplier's standard payment term (P18 up, P04 / P07 down); normal suppliers' cash rate at 7% (moved six cases,
   not the target); lean later e-mails (no change in a same-mode A/B); contract term held for round 2 (unclear in the dump);
   round-1 hold / timeout before the first e-mail (Parth A/B: +0.04 on P02/P07/P18, P10 walked 2 of 2).
 - Inconclusive, kept only where it was measured: the two-sheet choice framing for cash-short quality cases.
-
-## Kept late (v2.34i)
-- `trade_term`: commitment-seeking suppliers get the longer contract as a round-2 trade (P10 +0.01, P04 neutral).
 
 ## Open questions (measured, not solved)
 - **Grid suppliers**: where the floor sits inside a 0.50 step differs by session (P11 agreed 45.10/45.25 at 45.50, refused
