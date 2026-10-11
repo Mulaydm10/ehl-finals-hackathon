@@ -15,6 +15,7 @@ If it holds, msg 4 = a09d9536's msg 4 (agreed 4.94 there after a hold) at FALLBA
 Any other reply: noidea_p18_soft v2 takes over. Accept / harvest rules from noidea_p18_soft (accept a primary over the record).
 """
 import copy
+import os
 import importlib.util
 import json
 import logging
@@ -36,7 +37,10 @@ HOLD = ROOT / "datasets/runs/a09d953636747cae.json"  # its msg 4 was agreed afte
 TARGET = 4.86  # v1 msg 3 price (live 152d666e: under our msg-2 ask 4.87 -> final at once; never step back)
 FALLBACK = 4.89  # v1 msg 4
 # v2: forward steps on 30 d (its standard), every sheet over the record (msg 3) or over our 0.727 (msg 4)
-MSG3 = ((4.99, 30, 5), (4.88, 30, 0))  # 0.7576 / 0.7588
+MSG3 = ((4.99, 30, 5), (4.88, 30, 0))  # v2 (live b354bd04: 30 d costs a step in this state -> final 5.10 @ 30 d)
+# v3: one probe per game, set by P18_MSG3="price/days/deadband[,price/days/deadband]" (default: the record probe on 14 d)
+MSG3 = tuple(tuple(float(x) if i == 0 else int(x) for i, x in enumerate(sh.split("/")))
+             for sh in os.environ.get("P18_MSG3", "4.97/14/5").split(","))
 MSG4 = ((5.00, 30, 5), (4.90, 30, 0))  # 0.7509 / 0.7453
 OLD3 = "(EUR 4.91 per unit, AS-14404 index clause (45% share, 0% deadband), 14 days payment, 24 months)"
 OLD4 = "(EUR 4.94 per unit, AS-14404 index clause (45% share, 0% deadband), 14 days payment, 24 months)"

@@ -241,3 +241,8 @@ final 5.20 @ 45 d db3 (0.599).
 - In this state anything it does not accept at msg 3 draws its final at once (4.86 @ 14 d and the 30-d pair): one shot.
 - Record on 14 d: db0 <= 4.86 (a backward step, refused), db5 <= 4.97 (0.7593; worth 4.87 to it = our msg-2 value).
   Team best on 14 d: 4.88 db0 = 0.7475, 4.89 = 0.7407, 4.90 = 0.7339 (4.91 = 0.7271 was accepted in 0c968aae).
+
+## 18. Live: record probe in the 0c968aae state (04:18, d05baf2826e1e6bc): **0.673 - it will not take its own msg-2 value with db5**
+msg 3 = 4.97 @ 14 d db5 (0.7593, worth 4.87 to it = our msg-2 ask) -> final 5.10 @ 14 d db5. In this state its floor is between
+4.87 and 4.91 (4.91 accepted in 0c968aae). The record cannot be reached from this state. Next: the best reachable value, on db5
+(+0.005 over db0 at the same value to it): 4.98 db5 (0.7527), then 4.99 (0.746), 5.00 (0.739), 5.01 (0.733 = the accepted 4.91).
