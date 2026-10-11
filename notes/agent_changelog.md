@@ -1365,3 +1365,15 @@ every case a deal, 9 in parallel in 241 s. Unseen sandbox suppliers: **D01 0.943
   cost fitted from real relationship charges on P01-P03): 9 cases changed, 7 worse - the price given up outweighs the charge.
 - Not acted on (simulator assumptions, not real evidence): simulated suppliers agree to our round-1 ask far more often than real
   ones (real: 0 in 250+ games on 6 cases); unhosted P06 RFQ copies where every counter is above the cheapest opening.
+
+### v2 fix 2 + promotion (04:25 - 04:50)
+- **Learned term slopes were dropped when the opening quote omitted that term** (premium() measured from the opening; arena
+  openings omit lead time / payment, e.g. P05): stress ST114 learned -EUR 0.55 per lead-time day and never used it, walked at
+  0.182. Fix: baseline = the first value the supplier's own primary sheets stated (fixed; no adjustment on the structure it
+  quoted). A standard-terms baseline was tried first and shifted every ask (ST087 0.957 -> 0.935) - replaced. Chargeback /
+  tooling keep their 0 baseline (P11 unchanged). Payment never gets a slope (cash rate), so P01 is unaffected.
+- Result: 2 of 380 simulated games better (ST047 +0.263, ST114 +0.258), 0 worse; tests 69; crash 0; round 1 identical; live D02
+  0.579 x2; **live loop L8 (v2, 9 cases in parallel): P01 0.999, P02 0.758, P03 0.988, P04 0.810, P07 0.799, P08 0.916, P10 0.694,
+  P11 0.794, P18 0.621 = 0.820, 0 warnings** (v1 loop 7: 0.823 - same decisions, arena variance).
+- **Promoted: `main` = tag `final-v2` (`17b7f16`).** v1 behaviour: `NOIDEA_EXPERIMENTS=hidden,no_prem_std,no_hold_market_check`
+  (identical on all 380 games). The P18 argument-order test now skips in hidden mode (it needs per-case claim reactions).

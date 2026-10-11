@@ -32,6 +32,7 @@ Distilled from the hidden-supplier loops of 2026-10-10/11 (v2.34 - v2.34h). Deta
 | trusted the log, not the sent e-mail | P10 "trade" A/B never traded (model path rebuilt the sheets) | check the arena trace; `trade_now` |
 | testing a second version from another folder (git worktree) with the shared venv | the venv's editable install loads `arena_kit` from the MAIN checkout, so the "v2" run silently plays v1 | run v2 with `PYTHONPATH=<v2>/tacto/starter-kit`; check `arena_kit.__file__` first |
 | a simulator failure taken at face value (RFQ bidders walk when pushed after a final) | the stress set said RFQ 0.19; the real P05 bidders stayed in 37 of 40 such pushes | before changing the agent for a simulator failure, measure that mechanism in the real games |
+| a learned value measured from a field the opening left out | the slope is silently dropped (no baseline) | baseline = the first value the supplier itself stated; test with an opening that omits fields |
 
 ## Ideas tested and rejected (they helped one case and hurt another = overfitting)
 - moving the payment term toward the supplier's standard in round 2 (`pay_trade`: P18 0.610 / 0.666 vs 0.688).

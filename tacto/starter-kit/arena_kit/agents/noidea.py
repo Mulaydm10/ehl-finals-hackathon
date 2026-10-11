@@ -268,7 +268,10 @@ class NoIdeaAgent:
             cur = b.get("current_unit_price") or open_terms.get("unit_price")
             should = [c for c in self.claims if c["kind"] == "should_cost" and c["part"] == part and c["supplier"] == sid]
             ref = min(x for x in (cur, open_terms.get("unit_price")) if x)  # the quote can be below today's price
-            full_cost = min(should[0]["figure"], ref) * 0.94 if should else ref * 0.94
+            # (v2) experiment `fc100`: the stress lab and the real relationship charges (P01 / P02 / P03 fitted full cost =
+            # 1.02 / 1.08 / 0.99 x this base) put the 0.94 factor 5-13% under a supplier's real full cost
+            fc_k = 1.0 if "fc100" in EXPERIMENTS else 0.94
+            full_cost = min(should[0]["figure"], ref) * fc_k if should else ref * fc_k
             # a normal supplier's money is cheaper than ours (fitted on real deals: P03 6.1%, P04 6.8-8.4%; ours 8%): experiment
             # `rate07` prices its cash at 7%, so a longer payment term is a small real gain to trade for
             normal = 0.07 if "rate07" in EXPERIMENTS else 0.08
@@ -1904,9 +1907,26 @@ or null, "reason": "<one sentence>"}."""
         # no-sheets guard accepted 0.54). Clamp both values into the observed range; priors (no range) stay linear.
         rng = s.get("k_range") or {}
         clamp = lambda f, v: min(max(v, rng[f][0]), rng[f][1]) if f in rng else v
-        adj = -sum(k * (clamp(f, t.get(f) or 0) - clamp(f, ref.get(f) or 0)) for f, k in (s.get("k") or {}).items()
+        # (v2, default; opt-out `no_prem_std`) a term its OPENING quote left out (missing_fields) had no baseline, so the slope learned
+        # from its later sheets was silently dropped (stress ST114: -EUR 0.55 per lead-time day ignored; arena openings
+        # often omit lead time / payment, P05). Baseline then = the FIRST value its own primary sheets stated - fixed, and
+        # zero adjustment on the structure it quoted, so our asks there stay as before (a standard-terms baseline shifted
+        # every ask: stress ST087 16.22 -> 15.80, 0.957 -> 0.935). Chargeback / tooling keep their 0 baseline.
+        kb = s.setdefault("kbase", {})
+
+        def base(f):
+            v = ref.get(f)
+            if v is None and "no_prem_std" not in EXPERIMENTS and f not in ("chargeback_eur_per_complaint", "tooling_eur"):
+                if f not in kb:
+                    first = next((ts["terms"][f] for m in self.events_for(sid) if m.get("from") != "buyer"
+                                  for ts in (m.get("term_sheets") or [])[:1] if (ts.get("terms") or {}).get(f) is not None), None)
+                    if first is not None:
+                        kb[f] = first
+                v = kb.get(f)
+            return v
+        adj = -sum(k * (clamp(f, t.get(f) or 0) - clamp(f, base(f) or 0)) for f, k in (s.get("k") or {}).items()
                    if not f.startswith("_") and t.get(f) is not None
-                   and (ref.get(f) is not None or f in ("chargeback_eur_per_complaint", "tooling_eur")))
+                   and (base(f) is not None or f in ("chargeback_eur_per_complaint", "tooling_eur")))
         kd = (s.get("k") or {}).get("_deadband")
         if kd and t.get("index_clause"):  # a wider deadband costs it kd per point (baseline: db 0)
             adj -= kd * (t["index_clause"].get("deadband_pct") or 0)

@@ -166,6 +166,15 @@ class NoIdeaAgent(_Main):
                 if st in ("open", "agreed", "final_offer") and t.get("unit_price") and low and \
                         t["unit_price"] <= low * (1 - HOLD_TAKE) and must_haves_ok(case, t, self.sup[sid]["std"]):
                     sh = standing(ev)[0]
+                    # (v2) the take line is frozen at our first priced ask, so it can sit above where the market went since:
+                    # taking this bidder while another live bidder's standing offer is cheaper for us is dominated (stress
+                    # ST047: took 277k with 253k-263k on the table) - the normal close then takes the cheapest closing bidder
+                    mine = self.best_sheet(case, sid, ev)[2]
+                    if sh and "no_hold_market_check" not in EXPERIMENTS_RFQ and \
+                            min(self.best_standing(case, threads, skip=sid)) < mine * 0.999:
+                        log.info("%s: hold path - under the take line, but another bidder's standing offer is cheaper: no take",
+                                 sid)
+                        continue
                     if sh:
                         log.info("%s: hold path - its %.2f is under the take line %.2f: accept", sid, t["unit_price"],
                                  low * (1 - HOLD_TAKE))
