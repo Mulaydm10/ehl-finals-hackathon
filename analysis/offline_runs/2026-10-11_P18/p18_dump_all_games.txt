@@ -1,0 +1,418 @@
+=== 3620a05514f2a069 live no deal   end=walked_away
+=== 6833e98fbbe5ebdf live 0.4295 5.40@60d/db0  end=accepted
+   US               4.77@45d/24m (0.942) | 4.82@90d/24m (0.941) | 4.74@14d/24m (0.940)
+   SUP open         5.60@90d/db0/24m (0.319) | 5.60@45d/db5/24m (0.365)
+   US               4.84@14d/24m (0.874) | 4.89@60d/24m (0.874) | 4.86@30d/24m (0.872)
+   SUP open         5.50@60d/db0/24m (0.362) | 5.50@30d/db5/24m (0.419)
+   US               4.97@60d/24m (0.822) | 4.92@14d/24m (0.822) | 4.94@30d/24m (0.820)
+   SUP final_offer  5.40@60d/db0/24m (0.430) | 5.40@30d/db5/24m (0.485)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+   SUP agreed       5.40@60d/db0/24m (0.430) | 5.40@30d/db5/24m (0.485)
+=== a99d02eb41cafa66 live 0.6182 5.20@30d/db5  end=accepted
+   US               4.77@45d/24m (0.942) | 4.76@30d/24m (0.938)
+   SUP open         5.30@30d/db0/24m (0.474) | 5.40@30d/db5/24m (0.485)
+   US               4.86@30d/24m (0.872)
+   SUP open         5.20@30d/db0/24m (0.542)
+   US               4.96@30d/24m (0.807)
+   SUP final_offer  5.10@30d/db0/24m (0.610) | 5.20@30d/db5/24m (0.618)
+   US               5.20@30d/db5/24m (0.618)
+   SUP agreed       5.20@30d/db5/24m (0.618)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.20@30d/db5/24m (0.618)
+=== 06f8f4f5a7689632 live 0.5296 5.20@14d/db0  end=accepted
+   US               4.77@45d/24m (0.942) | 4.76@30d/24m (0.938)
+   SUP open         5.60@30d/db0/24m (0.270)
+   US               4.84@14d/24m (0.874) | 4.86@30d/24m (0.872)
+   SUP open         5.30@30d/db0/24m (0.474) | 5.40@14d/db5/24m (0.473)
+   US               4.99@14d/24m (0.775) | 5.01@30d/24m (0.774)
+   SUP final_offer  5.30@30d/db0/24m (0.474) | 5.20@14d/db0/24m (0.530)
+   US               5.20@14d/db0/24m (0.530)
+   SUP agreed       5.20@14d/db0/24m (0.530)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.20@14d/db0/24m (0.530)
+=== bf73ee394e5b7e2c live 0.4411 5.40@14d/db3  end=accepted
+   US               4.77@45d/24m (0.942) | 4.76@30d/24m (0.938) | 4.74@14d/24m (0.940)
+   SUP open         5.50@30d/db0/24m (0.338) | 5.60@30d/db5/24m (0.353)
+   US               4.84@14d/db5/24m (0.846) | 4.86@30d/db5/24m (0.844) | 4.84@14d/db3/24m (0.817)
+   SUP open         5.40@14d/db3/24m (0.441)
+   US               4.92@14d/db5/24m (0.793)
+   SUP final_offer  5.40@14d/db3/24m (0.441)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+   SUP agreed       5.40@14d/db3/24m (0.441)
+=== c4599331a4ed849b live 0.5395 5.30@14d/db5  end=accepted
+   US               4.77@45d/24m (0.942) | 4.74@14d/24m (0.940)
+   SUP open         5.40@45d/db0/24m (0.418) | 5.40@14d/db5/24m (0.473)
+   US               4.84@14d/db5/24m (0.846) | 4.88@45d/db5/24m (0.841)
+   SUP final_offer  5.40@45d/db5/24m (0.497) | 5.30@14d/db5/24m (0.539)
+   US               5.30@14d/db5/24m (0.539)
+   SUP agreed       5.30@14d/db5/24m (0.539)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+   SUP agreed       5.30@14d/db5/24m (0.539)
+=== 9d4d288eb4ae6789 live 0.6727 5.10@14d/db5  end=accepted
+   US               4.77@45d/24m (0.942) | 4.74@14d/24m (0.940)
+   SUP open         5.40@45d/db0/24m (0.418) | 5.40@14d/db5/24m (0.473)
+   US               4.84@14d/db5/24m (0.846)
+   SUP final_offer  5.10@14d/db5/24m (0.673)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-2'}
+   SUP agreed       5.10@14d/db5/24m (0.673)
+=== 92616dfb9cccf039 live 0.6061 5.20@14d/db5  end=accepted
+   US               4.77@45d/24m (0.942) | 4.74@14d/24m (0.940)
+   SUP open         5.40@45d/db0/24m (0.418) | 5.40@14d/db5/24m (0.473)
+   US               4.92@14d/db5/24m (0.793) | 4.96@45d/db5/24m (0.788)
+   SUP open         5.40@45d/db5/24m (0.497) | 5.30@14d/db5/24m (0.539)
+   US               5.00@14d/db5/24m (0.739)
+   SUP final_offer  5.20@14d/db5/24m (0.606)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+   SUP agreed       5.20@14d/db5/24m (0.606)
+=== 6d61c1fd91f3f13c live 0.6096 5.10@30d/db0  end=None
+   US               4.77@45d/24m (0.942) | 4.76@30d/24m (0.938) | 4.74@14d/24m (0.940)
+   SUP open         5.30@30d/db0/24m (0.474) | 5.40@30d/db5/24m (0.485)
+   US               4.86@30d/db0/24m (0.772) | 4.84@14d/db0/24m (0.775)
+   SUP open         5.20@30d/db0/24m (0.542)
+   US               4.96@30d/db0/24m (0.705)
+   SUP open         5.10@30d/db0/24m (0.610)
+   US               5.06@30d/db0/24m (0.637)
+   SUP final_offer  5.10@30d/db0/24m (0.610)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.10@30d/db0/24m (0.610)
+=== 4e244819e8b9207b live 0.6774 5.00@30d/db0  end=None
+   US               4.77@45d/24m (0.942) | 4.76@30d/24m (0.938)
+   SUP open         5.20@30d/db0/24m (0.542) | 5.30@30d/db5/24m (0.552)
+   US               4.84@14d/db0/24m (0.775) | 4.86@30d/db0/24m (0.772)
+   SUP open         5.10@30d/db0/24m (0.610)
+   US               4.96@30d/db0/24m (0.705)
+   SUP final_offer  5.00@30d/db0/24m (0.677)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+   SUP agreed       5.00@30d/db0/24m (0.677)
+=== 928a3878c58f7dc3 live 0.5417 5.20@30d/db0  end=None
+   US               4.77@45d/24m (0.942) | 4.76@30d/24m (0.938) | 4.74@14d/24m (0.940)
+   SUP open         5.30@30d/db0/24m (0.474) | 5.40@30d/db5/24m (0.485)
+   US               4.86@30d/db0/24m (0.772) | 4.84@14d/db0/24m (0.775)
+   SUP open         5.30@30d/db0/24m (0.474) | 5.20@14d/db0/24m (0.530)
+   US               4.94@30d/db0/24m (0.718)
+   SUP final_offer  5.20@30d/db0/24m (0.542)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+   SUP agreed       5.20@30d/db0/24m (0.542)
+=== c9b288817e76ee78 live 0.5980 5.30@90d/db5  end=accepted
+   US               4.77@90d/db5/24m (0.945)
+   SUP open         5.50@90d/db5/24m (0.467)
+   US               4.90@90d/db5/24m (0.860)
+   SUP open         5.40@90d/db5/24m (0.532)
+   US               5.00@90d/db5/24m (0.795)
+   SUP final_offer  5.30@90d/db5/24m (0.598)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+   SUP agreed       5.30@90d/db5/24m (0.598)
+=== a665044e93877cd6 live 0.6658 5.00@14d/db0  end=accepted
+   US               4.76@30d/24m (0.938)
+   SUP open         5.20@30d/db0/24m (0.542) | 5.30@30d/db5/24m (0.552)
+   US               4.87@14d/db0/24m (0.754)
+   SUP open         5.10@14d/db0/24m (0.598)
+   US               4.94@14d/db0/24m (0.707)
+   SUP open         5.00@14d/db0/24m (0.666)
+   US               4.96@14d/db0/24m (0.693)
+   SUP final_offer  5.00@14d/db0/24m (0.666)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.00@14d/db0/24m (0.666)
+=== a09d953636747cae live 0.7067 4.94@14d/db0  end=accepted
+   US               4.76@30d/24m (0.938)
+   SUP open         5.20@30d/db0/24m (0.542) | 5.30@30d/db5/24m (0.552)
+   US               4.87@14d/db0/24m (0.754)
+   SUP open         5.00@14d/db0/24m (0.666) | 5.10@14d/db5/24m (0.673)
+   US               4.91@14d/db0/24m (0.727)
+   SUP open         5.00@14d/db0/24m (0.666)
+   US               4.94@14d/db0/24m (0.707)
+   SUP agreed       4.94@14d/db0/24m (0.707)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       4.94@14d/db0/24m (0.707)
+=== 0c968aae64401bb1 live 0.7271 4.91@14d/db0  end=accepted
+   US               4.76@30d/24m (0.938)
+   SUP open         5.20@30d/db0/24m (0.542) | 5.30@30d/db5/24m (0.552)
+   US               4.87@14d/db0/24m (0.754)
+   SUP open         5.00@14d/db0/24m (0.666) | 5.10@14d/db5/24m (0.673)
+   US               4.91@14d/db0/24m (0.727)
+   SUP agreed       4.91@14d/db0/24m (0.727)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+   SUP agreed       4.91@14d/db0/24m (0.727)
+=== bf56d9758ff4bd7c live 0.6883 5.00@45d/db0  end=accepted
+   US               4.74@14d/24m (0.940)
+   SUP open         5.20@14d/db0/24m (0.530) | 5.30@14d/db5/24m (0.539)
+   US               4.91@45d/db0/24m (0.749)
+   SUP open         5.10@45d/db0/24m (0.621)
+   US               4.97@45d/db0/24m (0.709)
+   SUP open         5.00@45d/db0/24m (0.688)
+   US               4.98@45d/db0/24m (0.702)
+   SUP final_offer  5.00@45d/db0/24m (0.688)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.00@45d/db0/24m (0.688)
+=== 3cb62cb905451df8 live 0.6883 5.00@45d/db0  end=accepted
+   US               4.77@45d/24m (0.942)
+   SUP open         5.20@45d/db0/24m (0.553)
+   US               4.90@45d/db0/24m (0.756)
+   SUP open         5.10@45d/db0/24m (0.621)
+   US               4.96@45d/db0/24m (0.715)
+   SUP open         5.00@45d/db0/24m (0.688)
+   US               4.97@45d/db0/24m (0.709)
+   SUP final_offer  5.00@45d/db0/24m (0.688)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.00@45d/db0/24m (0.688)
+=== 77b16b90ff3c91b7 live 0.6207 5.10@45d/db0  end=accepted
+   US               4.77@45d/24m (0.942)
+   SUP open         5.40@45d/db0/24m (0.418)
+   US               4.96@45d/db0/24m (0.715)
+   SUP open         5.20@45d/db0/24m (0.553)
+   US               5.03@45d/db0/24m (0.668)
+   SUP open         5.10@45d/db0/24m (0.621)
+   US               5.05@45d/db0/24m (0.654)
+   SUP final_offer  5.10@45d/db0/24m (0.621)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.10@45d/db0/24m (0.621)
+=== 3a6491c842fccaca live 0.6207 5.10@45d/db0  end=accepted
+   US               4.77@45d/24m (0.942)
+   SUP open         5.30@45d/db0/24m (0.485) | 5.40@45d/db5/24m (0.497)
+   US               4.93@45d/db0/24m (0.736)
+   SUP open         5.20@45d/db0/24m (0.553)
+   US               5.01@45d/db0/24m (0.682)
+   SUP open         5.10@45d/db0/24m (0.621)
+   US               5.04@45d/db0/24m (0.661)
+   SUP final_offer  5.10@45d/db0/24m (0.621)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.10@45d/db0/24m (0.621)
+=== c4bcc22c0c901171 live 0.6658 5.00@14d/db0  end=accepted
+   US               4.77@45d/24m (0.942)
+   SUP open         5.30@45d/db0/24m (0.485) | 5.40@45d/db5/24m (0.497)
+   US               4.93@45d/db0/24m (0.736)
+   SUP open         5.20@45d/db0/24m (0.553)
+   US               5.01@45d/db0/24m (0.682)
+   SUP open         5.10@45d/db0/24m (0.621) | 5.20@45d/db5/24m (0.630)
+   US               5.00@14d/db0/24m (0.666)
+   SUP agreed       5.00@14d/db0/24m (0.666)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.00@14d/db0/24m (0.666)
+=== fe806698b5d96eb1 live no deal   end=no_deal
+   US               4.77@45d/24m (0.942)
+   SUP open         5.30@45d/db0/24m (0.485) | 5.40@45d/db5/24m (0.497)
+   US               4.93@45d/db0/24m (0.736)
+   SUP open         5.10@45d/db0/24m (0.621) | 5.20@45d/db5/24m (0.630)
+   US               4.98@45d/db0/24m (0.702)
+   SUP open         5.00@45d/db0/24m (0.688)
+   US               4.98@45d/db0/24m (0.702)
+   SUP walked_away  
+=== 0371de5b8610c827 live 0.6883 5.00@45d/db0  end=accepted
+   US               4.77@45d/24m (0.942)
+   SUP open         5.20@45d/db0/24m (0.553) | 5.30@45d/db5/24m (0.563)
+   US               4.90@45d/db0/24m (0.756)
+   SUP open         5.10@45d/db0/24m (0.621)
+   US               4.96@45d/db0/24m (0.715)
+   SUP open         5.00@45d/db0/24m (0.688)
+   US               4.97@45d/db0/24m (0.709)
+   SUP final_offer  5.00@45d/db0/24m (0.688)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.00@45d/db0/24m (0.688)
+=== ff6a6b20cae0a5ac live 0.6883 5.00@45d/db0  end=accepted
+   US               4.77@45d/24m (0.942)
+   SUP open         5.40@45d/db0/24m (0.418)
+   US               4.96@45d/db0/24m (0.715)
+   SUP open         5.10@45d/db0/24m (0.621) | 5.20@45d/db5/24m (0.630)
+   US               5.00@45d/db0/24m (0.688)
+   SUP agreed       5.00@45d/db0/24m (0.688)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+   SUP agreed       5.00@45d/db0/24m (0.688)
+=== fd5b66b1c9f06fc0 live 0.6207 5.10@45d/db0  end=accepted
+   US               4.77@45d/24m (0.942)
+   SUP open         5.30@45d/db0/24m (0.485) | 5.40@45d/db5/24m (0.497)
+   US               4.85@45d/db0/24m (0.790)
+   SUP open         5.20@45d/db0/24m (0.553)
+   US               4.89@45d/db0/36m (0.763)
+   SUP open         5.20@45d/db0/36m (0.553)
+   US               5.07@45d/db0/36m (0.641)
+   SUP final_offer  5.10@45d/db0/36m (0.621)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.10@45d/db0/36m (0.621)
+=== a55d2e8917f705d4 live 0.6061 5.20@14d/db5  end=accepted
+   US               4.76@30d/24m (0.938)
+   SUP open         5.20@30d/db0/24m (0.542) | 5.30@30d/db5/24m (0.552)
+   US               4.84@14d/db0/24m (0.775)
+   SUP open         5.10@14d/db0/24m (0.598)
+   US               4.97@14d/db5/24m (0.759)
+   SUP open         5.20@14d/db5/24m (0.606)
+   US               4.84@14d/db5/24m (0.846)
+   SUP final_offer  5.20@14d/db5/24m (0.606)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.20@14d/db5/24m (0.606)
+=== ed9a881a0a93d1c5 live 0.5977 5.10@14d/db0  end=accepted
+   US               4.76@30d/24m (0.938)
+   SUP open         5.20@30d/db0/24m (0.542) | 5.30@30d/db5/24m (0.552)
+   US               4.86@14d/db0/24m (0.761)
+   SUP open         5.10@14d/db0/24m (0.598)
+   US               4.86@14d/db0/24m (0.761)
+   SUP final_offer  5.10@14d/db0/24m (0.598)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+   SUP agreed       5.10@14d/db0/24m (0.598)
+=== b45bea5357c4619d live 0.6658 5.00@14d/db0  end=None
+   US               4.76@30d/24m (0.938)
+   SUP open         5.10@30d/db0/24m (0.610) | 5.20@30d/db5/24m (0.618)
+   US               4.84@14d/db0/24m (0.775)
+   SUP final_offer  5.00@14d/db0/24m (0.666)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+   SUP agreed       5.00@14d/db0/24m (0.666)
+=== 099a64a306ff72b8 live 0.5977 5.10@14d/db0  end=None
+   US               4.76@30d/24m (0.938)
+   SUP open         5.20@30d/db0/24m (0.542) | 5.30@30d/db5/24m (0.552)
+   US               4.87@14d/db0/24m (0.754)
+   SUP final_offer  5.10@14d/db0/24m (0.598)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+   SUP agreed       5.10@14d/db0/24m (0.598)
+=== dad91454f5ee9fb9 live 0.6883 5.00@45d/db0  end=accepted
+   US               4.77@45d/24m (0.942)
+   SUP open         5.30@45d/db0/24m (0.485) | 5.40@45d/db5/24m (0.497)
+   US               4.93@45d/db0/24m (0.736)
+   SUP open         5.10@45d/db0/24m (0.621) | 5.20@45d/db5/24m (0.630)
+   US               4.98@45d/db0/24m (0.702)
+   SUP open         5.00@45d/db0/24m (0.688)
+   US               4.99@45d/db0/24m (0.695)
+   SUP final_offer  5.00@45d/db0/24m (0.688)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.00@45d/db0/24m (0.688)
+=== 1958398e9514078b live 0.6658 5.00@14d/db0  end=None
+   US               4.76@30d/24m (0.938)
+   SUP open         5.30@30d/db0/24m (0.474) | 5.40@30d/db5/24m (0.485)
+   US               4.90@14d/db0/24m (0.734)
+   SUP open         5.10@14d/db0/24m (0.598) | 5.20@14d/db5/24m (0.606)
+   US               4.96@14d/db0/24m (0.693)
+   SUP open         5.00@14d/db0/24m (0.666)
+   US               4.97@14d/db0/24m (0.686)
+   SUP final_offer  5.00@14d/db0/24m (0.666)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.00@14d/db0/24m (0.666)
+=== 5ce0441666462a18 live 0.6658 5.00@14d/db0  end=None
+   US               4.76@30d/24m (0.938)
+   SUP open         5.20@30d/db0/24m (0.542) | 5.30@30d/db5/24m (0.552)
+   US               4.87@14d/db0/24m (0.754)
+   SUP open         5.10@14d/db0/24m (0.598)
+   US               4.94@14d/db0/24m (0.707)
+   SUP open         5.00@14d/db0/24m (0.666)
+   US               4.96@14d/db0/24m (0.693)
+   SUP final_offer  5.00@14d/db0/24m (0.666)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.00@14d/db0/24m (0.666)
+=== 6a0a9bfdc4273cba live 0.6658 5.00@14d/db0  end=accepted
+   US               4.69@30d/24m (0.984)
+   SUP open         5.30@30d/db0/24m (0.474)
+   US               4.80@14d/db0/24m (0.802)
+   SUP open         5.10@14d/db0/24m (0.598) | 5.20@14d/db5/24m (0.606)
+   US               4.84@14d/db0/24m (0.775)
+   SUP open         5.00@14d/db0/24m (0.666)
+   US               4.86@14d/db0/24m (0.761)
+   SUP final_offer  5.00@14d/db0/24m (0.666)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.00@14d/db0/24m (0.666)
+=== ff337861254521fc live 0.6207 5.10@45d/db0  end=accepted
+   US               4.77@45d/24m (0.942)
+   SUP open         5.30@45d/db0/24m (0.485)
+   US               4.93@45d/db0/24m (0.736)
+   SUP open         5.20@45d/db0/24m (0.553)
+   US               5.01@45d/db0/24m (0.682)
+   SUP open         5.10@45d/db0/24m (0.621)
+   US               5.04@45d/db0/24m (0.661)
+   SUP final_offer  5.10@45d/db0/24m (0.621)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.10@45d/db0/24m (0.621)
+=== cee66b66edd04b71 live 0.5977 5.10@14d/db0  end=accepted
+   US               4.57@30d/db0/24m (0.969)
+   SUP open         5.30@30d/db0/24m (0.474)
+   US               4.81@14d/db0/24m (0.795)
+   SUP open         5.20@14d/db0/24m (0.530)
+   US               4.86@14d/db0/24m (0.761)
+   SUP open         5.10@14d/db0/24m (0.598)
+   US               4.86@14d/db0/24m (0.761)
+   SUP final_offer  5.10@14d/db0/24m (0.598)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.10@14d/db0/24m (0.598)
+=== 1d8188917a996b6c live 0.6096 5.10@30d/db0  end=accepted
+   US               4.77@45d/24m (0.942)
+   SUP open         5.30@45d/db0/24m (0.485) | 5.40@45d/db5/24m (0.497)
+   US               4.92@30d/db0/24m (0.732)
+   SUP open         5.20@30d/db0/24m (0.542)
+   US               5.00@30d/db0/24m (0.677)
+   SUP open         5.10@30d/db0/24m (0.610)
+   US               5.03@30d/db0/24m (0.657)
+   SUP final_offer  5.10@30d/db0/24m (0.610)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.10@30d/db0/24m (0.610)
+=== 0873041457737dd0 live 0.6658 5.00@14d/db0  end=accepted
+   US               4.77@45d/24m (0.942)
+   SUP open         5.30@45d/db0/24m (0.485) | 5.40@45d/db5/24m (0.497)
+   US               4.92@30d/db0/24m (0.732)
+   SUP open         5.10@30d/db0/24m (0.610) | 5.20@30d/db5/24m (0.618)
+   US               4.95@14d/db0/24m (0.700)
+   SUP open         5.00@14d/db0/24m (0.666)
+   US               4.97@14d/db0/24m (0.686)
+   SUP final_offer  5.00@14d/db0/24m (0.666)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.00@14d/db0/24m (0.666)
+=== 57e43ef7aafc67ea live 0.6883 5.00@45d/db0  end=accepted
+   US               4.77@45d/24m (0.942)
+   SUP open         5.20@45d/db0/24m (0.553) | 5.30@45d/db5/24m (0.563)
+   US               4.90@45d/db0/24m (0.756)
+   SUP open         5.10@45d/db0/24m (0.621)
+   US               4.96@45d/db0/24m (0.715)
+   SUP open         5.00@45d/db0/24m (0.688)
+   US               4.97@45d/db0/24m (0.709)
+   SUP final_offer  5.00@45d/db0/24m (0.688)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.00@45d/db0/24m (0.688)
+=== 193f7a3689743cc7 live 0.6658 5.00@14d/db0  end=accepted
+   US               4.76@30d/24m (0.938)
+   SUP open         5.20@30d/db0/24m (0.542) | 5.30@30d/db5/24m (0.552)
+   US               4.87@14d/db0/24m (0.754)
+   SUP open         5.10@14d/db0/24m (0.598)
+   US               4.94@14d/db0/24m (0.707)
+   SUP open         5.00@14d/db0/24m (0.666)
+   US               4.96@14d/db0/24m (0.693)
+   SUP final_offer  5.00@14d/db0/24m (0.666)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.00@14d/db0/24m (0.666)
+=== 4eec90233ab1eed1 live 0.6658 5.00@14d/db0  end=accepted
+   US               4.76@30d/24m (0.938)
+   SUP open         5.20@30d/db0/24m (0.542) | 5.30@30d/db5/24m (0.552)
+   US               4.87@14d/db0/24m (0.754)
+   SUP open         5.10@14d/db0/24m (0.598)
+   US               4.94@14d/db0/24m (0.707)
+   SUP open         5.00@14d/db0/24m (0.666)
+   US               4.96@14d/db0/24m (0.693)
+   SUP final_offer  5.00@14d/db0/24m (0.666)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.00@14d/db0/24m (0.666)
+=== 19dbe14233166ef1 live 0.6658 5.00@14d/db0  end=accepted
+   US               4.76@30d/24m (0.938)
+   SUP open         5.20@30d/db0/24m (0.542) | 5.30@30d/db5/24m (0.552)
+   US               4.87@14d/db0/24m (0.754)
+   SUP open         5.10@14d/db0/24m (0.598)
+   US               4.94@14d/db0/24m (0.707)
+   SUP open         5.00@14d/db0/24m (0.666)
+   US               4.96@14d/db0/24m (0.693)
+   SUP final_offer  5.00@14d/db0/24m (0.666)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.00@14d/db0/24m (0.666)
+=== 6c2813cee1fcf116 live 0.7181 4.94@30d/db0  end=accepted
+   US               4.77@45d/24m (0.942)
+   SUP open         5.20@45d/db0/24m (0.553) | 5.30@45d/db5/24m (0.563)
+   US               4.90@45d/db0/24m (0.756)
+   SUP open         5.00@45d/db0/24m (0.688) | 5.10@45d/db5/24m (0.696)
+   US               4.91@30d/db0/24m (0.738)
+   SUP open         5.00@30d/db0/24m (0.677)
+   US               4.94@30d/db0/24m (0.718)
+   SUP agreed       4.94@30d/db0/24m (0.718)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       4.94@30d/db0/24m (0.718)
+=== 2ad8b19054644c59 live 0.6883 5.00@45d/db0  end=accepted
+   US               4.77@45d/24m (0.942)
+   SUP open         5.20@45d/db0/24m (0.553) | 5.30@45d/db5/24m (0.563)
+   US               4.90@45d/db0/24m (0.756)
+   SUP open         5.10@45d/db0/24m (0.621)
+   US               4.96@45d/db0/24m (0.715)
+   SUP open         5.00@45d/db0/24m (0.688)
+   US               4.97@45d/db0/24m (0.709)
+   SUP final_offer  5.00@45d/db0/24m (0.688)
+   US  action {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+   SUP agreed       5.00@45d/db0/24m (0.688)

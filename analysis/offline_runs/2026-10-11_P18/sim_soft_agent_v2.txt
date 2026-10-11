@@ -1,0 +1,93 @@
+soft      R     c3  rate  score  deal
+True   4.86 0.0000  0.00  0.7576 4.99@30d/db5  BEAT
+True   4.86 0.0000  0.08  0.7576 4.99@30d/db5  BEAT
+True   4.86 0.0500  0.00  0.7576 4.99@30d/db5  BEAT
+True   4.86 0.0500  0.08  0.7576 4.99@30d/db5  BEAT
+True   4.86 0.0675  0.00  0.7576 4.99@30d/db5  BEAT
+True   4.86 0.0675  0.08  0.7576 4.99@30d/db5  BEAT
+True   4.86 0.1000  0.00  0.7576 4.99@30d/db5  BEAT
+True   4.86 0.1000  0.08  0.7576 4.99@30d/db5  BEAT
+True   4.88 0.0000  0.00  0.7576 4.99@30d/db5  BEAT
+True   4.88 0.0000  0.08  0.7576 4.99@30d/db5  BEAT
+True   4.88 0.0500  0.00  0.7576 4.99@30d/db5  BEAT
+True   4.88 0.0500  0.08  0.7576 4.99@30d/db5  BEAT
+True   4.88 0.0675  0.00  0.7576 4.99@30d/db5  BEAT
+True   4.88 0.0675  0.08  0.7576 4.99@30d/db5  BEAT
+True   4.88 0.1000  0.00  0.7576 4.99@30d/db5  BEAT
+True   4.88 0.1000  0.08  0.7576 4.99@30d/db5  BEAT
+True   4.89 0.0000  0.00  0.7576 4.99@30d/db5  BEAT
+True   4.89 0.0000  0.08  0.7576 4.99@30d/db5  BEAT
+True   4.89 0.0500  0.00  0.7576 4.99@30d/db5  BEAT
+True   4.89 0.0500  0.08  0.7576 4.99@30d/db5  BEAT
+True   4.89 0.0675  0.00  0.7576 4.99@30d/db5  BEAT
+True   4.89 0.0675  0.08  0.7576 4.99@30d/db5  BEAT
+True   4.89 0.1000  0.00  0.7576 4.99@30d/db5  BEAT
+True   4.89 0.1000  0.08  0.7576 4.99@30d/db5  BEAT
+True   4.90 0.0000  0.00  0.7310 5.03@30d/db5
+True   4.90 0.0000  0.08  0.7310 5.03@30d/db5
+True   4.90 0.0500  0.00  0.7310 5.03@30d/db5
+True   4.90 0.0500  0.08  0.7310 5.03@30d/db5
+True   4.90 0.0675  0.00  0.7310 5.03@30d/db5
+True   4.90 0.0675  0.08  0.7310 5.03@30d/db5
+True   4.90 0.1000  0.00  0.7310 5.03@30d/db5
+True   4.90 0.1000  0.08  0.7310 5.03@30d/db5
+True   4.92 0.0000  0.00  0.7310 5.03@30d/db5
+True   4.92 0.0000  0.08  0.7310 5.03@30d/db5
+True   4.92 0.0500  0.00  0.7310 5.03@30d/db5
+True   4.92 0.0500  0.08  0.7310 5.03@30d/db5
+True   4.92 0.0675  0.00  0.7310 5.03@30d/db5
+True   4.92 0.0675  0.08  0.7310 5.03@30d/db5
+True   4.92 0.1000  0.00  0.7310 5.03@30d/db5
+True   4.92 0.1000  0.08  0.7310 5.03@30d/db5
+True   4.94 0.0000  0.00  0.6774 5.00@30d/db0
+True   4.94 0.0000  0.08  0.6774 5.00@30d/db0
+True   4.94 0.0500  0.00  0.6774 5.00@30d/db0
+True   4.94 0.0500  0.08  0.6774 5.00@30d/db0
+True   4.94 0.0675  0.00  0.6774 5.00@30d/db0
+True   4.94 0.0675  0.08  0.6774 5.00@30d/db0
+True   4.94 0.1000  0.00  0.6774 5.00@30d/db0
+True   4.94 0.1000  0.08  0.6774 5.00@30d/db0
+True   4.96 0.0000  0.00  0.6774 5.00@30d/db0
+True   4.96 0.0000  0.08  0.6774 5.00@30d/db0
+True   4.96 0.0500  0.00  0.6774 5.00@30d/db0
+True   4.96 0.0500  0.08  0.6774 5.00@30d/db0
+True   4.96 0.0675  0.00  0.6774 5.00@30d/db0
+True   4.96 0.0675  0.08  0.6774 5.00@30d/db0
+True   4.96 0.1000  0.00  0.6774 5.00@30d/db0
+True   4.96 0.1000  0.08  0.6774 5.00@30d/db0
+False  5.00 0.0000  0.00  0.6774 5.00@30d/db0
+False  5.00 0.0000  0.08  0.6774 5.00@30d/db0
+False  5.00 0.0500  0.00  0.6774 5.00@30d/db0
+False  5.00 0.0500  0.08  0.6774 5.00@30d/db0
+False  5.00 0.0675  0.00  0.6774 5.00@30d/db0
+False  5.00 0.0675  0.08  0.6774 5.00@30d/db0
+False  5.00 0.1000  0.00  0.6774 5.00@30d/db0
+False  5.00 0.1000  0.08  0.6774 5.00@30d/db0
+===== SOFT R=4.93 c3=0 rate=0.08 (0.7310330553669535, '5.03@30d/db5')
+US 4.76@30d
+   Dear Sir or Madam, /  / Thank you for your proposal to agree the price basis for the coming period. We want to continue with you and confirm a binding volume of 23700 kg per year for 24 months. /  / Our recent orders for Round bar 1.4404 dia 30 mm, peeled were at 5.26, 5.84 per 1 (po:4500014292-10, po:4500014355-10, po:4500014427-10). Alloy surcharge 1.4404, Isartal Edelstahlwerk (fictional mill, derived) changed -8.5% from 2024-11 to 2025-10 (idx:AS-14404@2024-11, idx:AS-14404@2025-10). Producer prices DE: cold drawing of bars changed -2.3% from 2026-06 to 2026-08 (idx:PPI-C2431@2026-06, idx:PPI-C2431@2026-08). /  / We are prepared to make a longer-term commitment; please share your cost-br
+SUP open 5.20@30d/db0 | 5.30@30d/db5
+US 4.87@30d/db0
+   Dear Sir or Madam, /  / Thank you for your offer. We accept your AS-14404 price adjustment clause with no deadband, as your letter of 22 September proposed, and we move on price. Please also quote your price with a 5% deadband as an alternative. /  / Our demand forecast for Round bar 1.4404 dia 30 mm is up +1.9% (fc:370010@2026-09). /  / We propose EUR 4.87 per kg with your AS-14404 clause, 30 days net, 24 months (term sheet attached). /  / Kind regards, / Purchasing, Hollerau Pumpenwerke
+SUP open 5.00@30d/db0 | 5.10@30d/db5
+US 4.99@30d/db5 | 4.88@30d/db0
+   Dear Sir or Madam, /  / Thank you for your step to EUR 5.00. We want to close today and leave the clause to you. /  / Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01). /  / We propose EUR 4.99 per kg with the AS-14404 clause at a 5% deadband, 30 days net, 24 months, as in your own alternative, or EUR 4.88 per kg with your AS-14404 clause, 30 days net, 24 months. Both term sheets are attached; on your confirmation of either we will issue the order today. /  / Kind regards, / Purchasing, Hollerau Pumpenwerke
+SUP open 5.00@30d/db0
+US 5.03@30d/db5 | 4.92@30d/db0
+   Dear Sir or Madam, /  / Thank you. We take one more step so that we can close today. /  / Your on-time delivery in the last quarter was 81.0% (sc:70740@2026Q3). Our quality agreement sets a target of 95%. /  / We propose EUR 5.03 per kg with the AS-14404 clause at a 5% deadband, 30 days net, 24 months, as in your own alternative, or EUR 4.92 per kg with your AS-14404 clause, 30 days net, 24 months. Both term sheets are attached; on your confirmation of either we will issue the order today. /  / Kind regards, / Purchasing, Hollerau Pumpenwerke
+SUP agreed 5.03@30d/db5
+US accept 5.03@30d/db5
+===== NORMAL (0.6774186742884498, '5.00@30d/db0')
+US 4.76@30d
+   Dear Sir or Madam, /  / Thank you for your proposal to agree the price basis for the coming period. We want to continue with you and confirm a binding volume of 23700 kg per year for 24 months. /  / Our recent orders for Round bar 1.4404 dia 30 mm, peeled were at 5.26, 5.84 per 1 (po:4500014292-10, po:4500014355-10, po:4500014427-10). Alloy surcharge 1.4404, Isartal Edelstahlwerk (fictional mill, derived) changed -8.5% from 2024-11 to 2025-10 (idx:AS-14404@2024-11, idx:AS-14404@2025-10). Producer prices DE: cold drawing of bars changed -2.3% from 2026-06 to 2026-08 (idx:PPI-C2431@2026-06, idx:PPI-C2431@2026-08). /  / We are prepared to make a longer-term commitment; please share your cost-br
+SUP open 5.20@30d/db0 | 5.30@30d/db5
+US 4.87@30d/db0
+   Dear Sir or Madam, /  / Thank you for your offer. We accept your AS-14404 price adjustment clause with no deadband, as your letter of 22 September proposed, and we move on price. Please also quote your price with a 5% deadband as an alternative. /  / Our demand forecast for Round bar 1.4404 dia 30 mm is up +1.9% (fc:370010@2026-09). /  / We propose EUR 4.87 per kg with your AS-14404 clause, 30 days net, 24 months (term sheet attached). /  / Kind regards, / Purchasing, Hollerau Pumpenwerke
+SUP open 5.10@30d/db0
+US 5.03@30d/db5
+   Dear Sir or Madam, /  / Thank you for your step. We move again. /  / Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01). /  / We propose EUR 5.03 per kg with the AS-14404 clause at a 5% deadband, 30 days net, 24 months (term sheet attached). /  / Kind regards, / Purchasing, Hollerau Pumpenwerke
+SUP open 5.00@30d/db0
+US 5.04@30d/db5
+   Dear Sir or Madam, /  / Thank you. We take one more step to close today. /  / Your on-time delivery in the last quarter was 81.0% (sc:70740@2026Q3). Our quality agreement sets a target of 95%. /  / We propose EUR 5.04 per kg with the AS-14404 clause at a 5% deadband, 30 days net, 24 months (term sheet attached). On your confirmation we will issue the order. /  / Kind regards, / Purchasing, Hollerau Pumpenwerke
+SUP final_offer 5.00@30d/db0
+US accept 5.00@30d/db0

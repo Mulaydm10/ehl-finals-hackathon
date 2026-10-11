@@ -369,3 +369,10 @@
 | 2026-10-11 04:10 | Neel | P18 | noidea_p18_soft v2 batch / gpt-6-astra - IDENTICAL replies to game 1 within 1 s each (arena replays an identical conversation): wasted | **0.68** | 2908a68c6555c1ba |
 | 2026-10-11 04:10 | Neel | P18 | noidea_p18_soft v2 batch / gpt-6-astra - IDENTICAL replies to game 1 within 1 s each (arena replays an identical conversation): wasted | **0.68** | 99150255574adb07 |
 | 2026-10-11 04:14 | Neel | P18 | noidea_p18_replay (0c968aae msg 1-2 verbatim -> SAME 5.20 / 5.00 @ 14 d state, instantly) / gpt-6-astra - msg 3 4.86 = a step BELOW our 4.87 -> final 5.00 @ 14 d | **0.67** | 152d666e8ca628be |
+| 2026-10-11 04:16 | Neel | P18 | noidea_p18_replay v2 (0c968aae state, msg 3 = 4.99 @ 30 db5 + 4.88 @ 30 db0) / gpt-6-astra - "30-day term requires an adjustment from our 14-day offer": final 5.10 @ 30 d | **0.61** | b354bd0425f2c1fa |
+| 2026-10-11 04:18 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=4.97/14/5 (0c968aae state, record probe: worth 4.87 to it) / gpt-6-astra - final 5.10 @ 14 d db5 | **0.67** | d05baf2826e1e6bc |
+| 2026-10-11 04:19 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=4.98/14/5 (0c968aae state, worth 4.88 to it) / gpt-6-astra - final 5.00 @ 14 d db0 | **0.67** | 173a5c90194af19b |
+| 2026-10-11 04:20 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=4.99/14/5 (0c968aae state, worth 4.89 to it) / gpt-6-astra - final 5.00 @ 14 d db0 | **0.67** | ab222b48898c8fb0 |
+| 2026-10-11 04:22 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=4.89/14/0 (0c968aae state) / gpt-6-astra - final 5.00 @ 14 d: floor in (4.89, 4.91] | **0.67** | 66b6abb882860c4a |
+| 2026-10-11 04:23 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=4.90/14/0 (0c968aae state) / gpt-6-astra - final 5.00 @ 14 d: floor in (4.90, 4.91] = its 2% authority | **0.67** | 57f06757e4a2b512 |
+| 2026-10-11 04:25 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=5.00/14/5 (0c968aae state, 1.96% under its 5.10 db5 alt) / gpt-6-astra - final 5.10 db5: the 2% is measured on its db0 offer | **0.67** | 2782c270fa3ff162 |

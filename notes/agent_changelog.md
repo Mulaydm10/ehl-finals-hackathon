@@ -1351,3 +1351,17 @@ every case a deal, 9 in parallel in 241 s. Unseen sandbox suppliers: **D01 0.943
 - Biggest simulator failure, RFQ (14 of 20 RFQ walks after a push past a final), is a **simulator artifact**: real P05 bidders
   pushed after a final 40x -> stayed final 37, reopened 1, walked 2 (one game, 20%-deep ask); single suppliers 11x -> walked 6.
   Sent back to the stress subagent to recalibrate (cases_v2); the agent's RFQ behaviour stays.
+
+### v2 work (branch `v2`, worktree ~/Dhruv/ehl-v2), 04:00 - 04:25
+- Stress lab recalibrated from real games by the subagent (`stress/cases_v2`): v1 0.628, no-deal 7%, open-thread walks 1.4%
+  (real 1.5%), RFQ push-past-final walks 1/35 (real 2/40).
+- **Dominated-action check** (no supplier model needed): at every decision, compare the action with the offers the agent could
+  SEE. One real bug: the RFQ hold path took a high opener at a take line frozen early (from another bidder's opening) while
+  two other bidders' standing offers were cheaper (ST047: 277k taken, 253k on the table).
+- **v2 fix** (`c3e583d`): no hold-path take while another live bidder's standing offer is cheaper by our own cost; the normal
+  close then takes the cheapest closing bidder. Stress: 1 case changed on each set (+0.263), 0 worse; tests 69 (new
+  invariant `test_rfq_close`), crash 0, round 1 identical to v1 on all hosted cases, live D02 0.579 x2 (= v1; no high opener).
+- **Rejected `fc100`** (full cost = should-cost x 1.00 instead of 0.94, because the agent's estimate is 5-13% under the full
+  cost fitted from real relationship charges on P01-P03): 9 cases changed, 7 worse - the price given up outweighs the charge.
+- Not acted on (simulator assumptions, not real evidence): simulated suppliers agree to our round-1 ask far more often than real
+  ones (real: 0 in 250+ games on 6 cases); unhosted P06 RFQ copies where every counter is above the cheapest opening.

@@ -1,0 +1,27 @@
+
+--- case:P18 msg 1 -> sup:70740 | sheets [{'unit_price': 4.76, 'index_clause': None, 'payment_days': 30, 'contract_months': 24}]
+    Dear Blankstahl Werdenfels GmbH team,
+    
+    You have broken out individual cost shares rather than simply citing inflation; it seems the underlying economics are central to your pricing position. Please share your cost-breakdown XLSX so we can examine the material and processing elements against the relevant index evidence and our purchasing history. How can a longer commitment give you the business continuity needed to support a lower base price?
+    
+    We confirm a binding volume of 23,700 units per year for 24 months. Our recent orders for Round bar 1.4404 dia 30 mm, peeled were at 5.26, 5.84 per 1 (po:4500014292-10, po:4500014355-10, po:4500014427-10). Alloy surcharge 1.4404, Isartal Edelstahlwerk (fictional mill, derived) changed -8.5% from 2024-11 to 2025-10 (idx:AS-14404@2024-11, idx:AS-14404@2025-10). Producer prices DE: cold drawing of bars changed -2.3% from 2026-06 to 2026-08 (idx:PPI-C2431@2026-06, idx:PPI-C2431@2026-08). Our current contract passes PPI-C2431 on at 80% weight (ctr:4600070740#3.2), while your quote states it is 38% of your cost; that clause has already raised our price by 11% this year. Other suppliers currently quote this part at about EUR 5.45. We understand a change of this size needs your pricing committee; please put this proposal to them. Could you share your cost breakdown for this part, so we can understand the drivers together?
+    
+    On this basis we propose the attached term sheets (EUR 4.76 per unit, no index clause, 30 days payment, 24 months). Please let us know which option works best for you.
+    
+    Kind regards,
+    Purchasing, Hollerau Pumpenwerke
+
+--- case:P18 msg 1 -> sup:70740 | sheets [{'unit_price': 4.76, 'index_clause': None, 'payment_days': 30, 'contract_months': 24}]
+    Dear Blankstahl Werdenfels GmbH team,
+    
+    You explain your cost shares in detail while offering a fixed price; it sounds like predictable cost recovery matters to you. A longer contractual commitment should support that predictability and create value for both sides. What would your cost-breakdown XLSX show about the gap between our purchase history and your quoted price, taking the latest producer-price movement into account?
+    
+    We confirm a binding volume of 23,700 units per year for 24 months. Our recent orders for Round bar 1.4404 dia 30 mm, peeled were at 5.26, 5.84 per 1 (po:4500014292-10, po:4500014355-10, po:4500014427-10). Alloy surcharge 1.4404, Isartal Edelstahlwerk (fictional mill, derived) changed -8.5% from 2024-11 to 2025-10 (idx:AS-14404@2024-11, idx:AS-14404@2025-10). Producer prices DE: cold drawing of bars changed -2.3% from 2026-06 to 2026-08 (idx:PPI-C2431@2026-06, idx:PPI-C2431@2026-08). Our current contract passes PPI-C2431 on at 80% weight (ctr:4600070740#3.2), while your quote states it is 38% of your cost; that clause has already raised our price by 11% this year. Other suppliers currently quote this part at about EUR 5.45. We understand a change of this size needs your pricing committee; please put this proposal to them. Could you share your cost breakdown for this part, so we can understand the drivers together?
+    
+    On this basis we propose the attached term sheets (EUR 4.76 per unit, no index clause, 30 days payment, 24 months). Please let us know which option works best for you.
+    
+    Kind regards,
+    Purchasing, Hollerau Pumpenwerke
+P18  responsive 0.94 (deal, 1 msgs)   stubborn 0.94 (deal, 1 msgs)
+MEAN responsive 0.938   stubborn 0.938   (n=1)
+LLM calls 2, mean 15.5s, max 18.2s

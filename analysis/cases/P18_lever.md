@@ -233,3 +233,48 @@ final 5.20 @ 45 d db3 (0.599).
   4.87: a backward step draws the final (LESSONS.md, P02). My mistake: the 14-d record line (4.86) is below 4.87, so the record
   cannot be reached on 14 d from this state.
 - Next: same msg 1-2, msg 3 forward on 30 d (its standard): 4.99 @ 30 d db5 (0.758) + 4.88 @ 30 d db0 (0.759).
+
+## 17. Live: replay v2 (04:15, b354bd0425f2c1fa): **0.610 - in the 0c968aae state 14 d is worth a step to it; one shot at msg 3**
+- Same reproduced state (5.00 @ 14 d). msg 3 = 4.99 @ 30 d db5 + 4.88 @ 30 d db0 -> **final_offer 5.10 @ 30 d**: "Accommodating your
+  preference for a 30-day payment term requires an adjustment from our previous 14-day offer". In this conversation it had credited
+  the 14 d ("In return for this improved payment term ... reduce our base price"), so leaving 14 d costs 0.10.
+- In this state anything it does not accept at msg 3 draws its final at once (4.86 @ 14 d and the 30-d pair): one shot.
+- Record on 14 d: db0 <= 4.86 (a backward step, refused), db5 <= 4.97 (0.7593; worth 4.87 to it = our msg-2 value).
+  Team best on 14 d: 4.88 db0 = 0.7475, 4.89 = 0.7407, 4.90 = 0.7339 (4.91 = 0.7271 was accepted in 0c968aae).
+
+## 18. Live: record probe in the 0c968aae state (04:18, d05baf2826e1e6bc): **0.673 - it will not take its own msg-2 value with db5**
+msg 3 = 4.97 @ 14 d db5 (0.7593, worth 4.87 to it = our msg-2 ask) -> final 5.10 @ 14 d db5. In this state its floor is between
+4.87 and 4.91 (4.91 accepted in 0c968aae). The record cannot be reached from this state. Next: the best reachable value, on db5
+(+0.005 over db0 at the same value to it): 4.98 db5 (0.7527), then 4.99 (0.746), 5.00 (0.739), 5.01 (0.733 = the accepted 4.91).
+- 04:19 173a5c90194af19b: 4.98 @ 14 d db5 (worth 4.88 to it) -> final 5.00 @ 14 d db0 (0.666). Floor above 4.88.
+- 04:20 ab222b48898c8fb0: 4.99 @ 14 d db5 (worth 4.89 to it at its EUR 0.10 deadband price) -> final 5.00 @ 14 d db0 (0.666).
+- 04:21 66b6abb882860c4a: 4.89 @ 14 d db0 -> final 5.00 @ 14 d (0.666). Its floor in this state is in (4.89, 4.91]. Last probe: 4.90 (0.734).
+- 04:23 57f06757e4a2b512: 4.90 @ 14 d db0 -> final 5.00 (0.666). So in this state it accepts 4.91 (1.8% under its 5.00) and nothing at 2.0% or more: the KAM's 2% authority (doc:20260812-70740-M3). Our 0.727 is the db0 maximum here. Last probe: 5.00 @ 14 d db5 = 1.96% under its 5.10 db5 alternative (0.739).
+- 04:25 2782c270fa3ff162: 5.00 @ 14 d db5 (1.96% under its 5.10 db5 alternative, 2.0% under its 5.00 db0 in its value) -> final
+  5.10 db5 (0.673). The 2% is measured on its db0 offer in its own value terms.
+
+## 19. Conclusion of the night (Neel, 04:26) - stop spending sessions on P18
+- **Its acceptance rule, measured:** it agrees to our ask only when the ask is less than 2% under its current db0 offer (in its
+  value: db5 counts EUR 0.10, a later payment change a step) AND at or above its hidden floor for that conversation. Its own
+  counters never go under 5.00. So the lowest reachable deal is just under 2% below 5.00: 4.91 db0 (14 d: 0.727, 30 d: 0.739),
+  and only in conversations whose floor is that low.
+- **Our best state (0c968aae) is exhausted:** probes at 4.86 / 4.89 / 4.90 db0 and 4.97-5.00 db5 on 14 d, and the 30-d pair, all
+  drew its final; only 4.91 @ 14 d is accepted there (0.727 = our best). 14 d is credited in that conversation, so 30 d costs a
+  step there.
+- **The record needs a conversation whose floor is ~4.89 or lower and whose standing structure lets a <2% ask beat 0.756**
+  (e.g. 45 d at 5.00 with a 4.90 ask, as Codacabana got). None of our 57 games reached such a state; the states come from the
+  e-mail wording, which we cannot steer to it with what we know. 16 sessions spent tonight on P18 after the cloud report
+  (6 of them duplicate fixed-text games: my mistake, logged).
+- **For the final agent (hidden cases):** two general lessons - (1) identical messages get identical replies, so a probe must
+  change one thing; (2) an ask must stay within the supplier's approval authority (here 2%) of its current offer, never a step
+  back from our own previous ask, and the structure we hold must not change once the supplier has priced it.
+
+## 20. Run 1 - offline baseline with gpt-6-astra (04:50): see analysis/offline_runs/2026-10-11_P18_run1_astra/README.md
+Simulator 0.94 for every agent at message 1 (it accepts any sheet costing >= C_best): not predictive. Known hosted outcomes of the
+existing candidates (deterministic replies): cross 0.677, soft v2 0.677, replay(4.91) 0.727, replay default 0.673. None can beat
+0.727; Run 2 tests a new input.
+
+## 21. Run 2 - offline with gpt-6-astra (05:10): `noidea_p18_state45.py`; Run 3 not played (user: no arena run)
+See analysis/offline_runs/2026-10-11_P18_run2_astra/README.md. The only recorded state where a <2% ask beats 0.727 on the
+structure it holds: 6c2813ce's 5.00 @ 45 d (a hold there, not a final). 4.93 / 4.94 @ 45 d db0 = 0.7357 / 0.7289 if accepted,
+fallback 5.00 @ 45 d = 0.688. The record is not reachable there (4.89 = 2.2% under 5.00).

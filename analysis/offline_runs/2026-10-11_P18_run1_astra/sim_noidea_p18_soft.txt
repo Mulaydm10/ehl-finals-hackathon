@@ -1,0 +1,31 @@
+
+--- case:P18 msg 1 -> sup:70740 | sheets [{'unit_price': 4.76, 'index_clause': None, 'payment_days': 30, 'contract_months': 24}]
+    Dear Sir or Madam,
+    
+    Thank you for your proposal to agree the price basis for the coming period. We want to continue with you and confirm a binding volume of 23700 kg per year for 24 months.
+    
+    Our recent orders for Round bar 1.4404 dia 30 mm, peeled were at 5.26, 5.84 per 1 (po:4500014292-10, po:4500014355-10, po:4500014427-10). Alloy surcharge 1.4404, Isartal Edelstahlwerk (fictional mill, derived) changed -8.5% from 2024-11 to 2025-10 (idx:AS-14404@2024-11, idx:AS-14404@2025-10). Producer prices DE: cold drawing of bars changed -2.3% from 2026-06 to 2026-08 (idx:PPI-C2431@2026-06, idx:PPI-C2431@2026-08).
+    
+    We are prepared to make a longer-term commitment; please share your cost-breakdown XLSX so we can work through the underlying elements together. We understand a change of this size needs your pricing committee; please put this proposal to them.
+    
+    On this basis we propose EUR 4.76 per kg, 30 days net, 24 months (term sheet attached).
+    
+    Kind regards,
+    Purchasing, Hollerau Pumpenwerke
+
+--- case:P18 msg 1 -> sup:70740 | sheets [{'unit_price': 4.76, 'index_clause': None, 'payment_days': 30, 'contract_months': 24}]
+    Dear Sir or Madam,
+    
+    Thank you for your proposal to agree the price basis for the coming period. We want to continue with you and confirm a binding volume of 23700 kg per year for 24 months.
+    
+    Our recent orders for Round bar 1.4404 dia 30 mm, peeled were at 5.26, 5.84 per 1 (po:4500014292-10, po:4500014355-10, po:4500014427-10). Alloy surcharge 1.4404, Isartal Edelstahlwerk (fictional mill, derived) changed -8.5% from 2024-11 to 2025-10 (idx:AS-14404@2024-11, idx:AS-14404@2025-10). Producer prices DE: cold drawing of bars changed -2.3% from 2026-06 to 2026-08 (idx:PPI-C2431@2026-06, idx:PPI-C2431@2026-08).
+    
+    We are prepared to make a longer-term commitment; please share your cost-breakdown XLSX so we can work through the underlying elements together. We understand a change of this size needs your pricing committee; please put this proposal to them.
+    
+    On this basis we propose EUR 4.76 per kg, 30 days net, 24 months (term sheet attached).
+    
+    Kind regards,
+    Purchasing, Hollerau Pumpenwerke
+P18  responsive 0.94 (deal, 1 msgs)   stubborn 0.94 (deal, 1 msgs)
+MEAN responsive 0.938   stubborn 0.938   (n=1)
+LLM calls 0, mean 0.0s, max 0.0s

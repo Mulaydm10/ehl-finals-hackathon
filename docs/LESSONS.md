@@ -42,10 +42,14 @@ Distilled from the hidden-supplier loops of 2026-10-10/11 (v2.34 - v2.34h). Deta
   not the target); lean later e-mails (no change in a same-mode A/B); contract term held for round 2 (unclear in the dump);
   round-1 hold / timeout before the first e-mail (Parth A/B: +0.04 on P02/P07/P18, P10 walked 2 of 2).
 - Inconclusive, kept only where it was measured: the two-sheet choice framing for cash-short quality cases.
+- `fc100` full cost = should-cost x 1.00 (agent estimate is 5-13% low vs real charges): stress 7 of 9 changed cases worse.
 
 ## Checked late
 - Lessons the model reads must be general: supplier recipes vs general principles A/B -> the general principles do at least
   as well (mean 0.783 vs 0.755); supplier-specific notes are keyed by supplier id + case type only.
+
+- A dominated-action check needs no supplier model: compare each action with the offers the agent could see (never with
+  replies still in flight). It found the one real RFQ bug the stress set held.
 
 ## Open questions (measured, not solved)
 - **Grid suppliers**: where the floor sits inside a 0.50 step differs by session (P11 agreed 45.10/45.25 at 45.50, refused

@@ -282,3 +282,20 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
   agreement to the other bidders once before accepting. 70250 agreed 30.25 -> shown to the others -> 70210 agreed
   28.57 @ 14 -> accepted. The auction ratchet plus verified data per round is the lever. 0.9 needs ~27.20; the record
   is 0.924 (another team).
+
+## 11. P18 Werdenfels, night of 10-11 Oct (17 live games after the cloud report; analysis/cases/P18_lever.md 12-19)
+- **Identical conversation = identical replies.** A fixed-text agent run 6 times got word-for-word the same game (5 sessions
+  wasted). The "soft draws" of earlier games came from the wording of model-written e-mails. A probe must change one input.
+- **Its acceptance rule:** it agrees only to an ask less than 2% under its current db0 offer, in its value terms (the KAM's
+  2% authority in doc:20260812-70740-M3), and only above the conversation's hidden floor. Its own counters never go under 5.00.
+  In our best game's state (reproduced byte for byte) 4.91 @ 14 d is accepted and 4.86 / 4.89 / 4.90 db0 and 4.97-5.00 db5 all
+  drew its final: 0.727 is that state's maximum.
+- **Term pricing:** db5 = db0 + 0.10; db3 = db5 (never db3); a longer payment term after round 1 costs a step (45 d, 90 d);
+  leaving a 14 d it credited costs a step.
+- **Never step back from our own previous ask** (4.86 after 4.87 drew the final at once) - already a rule from P02, broken by me.
+- Offline sims built from recorded games missed all of this; only live probes (one input each) found it.
+- **Run 1 (offline, Astra, 04:50):** src/eval/offline_eval.py closes P18 at message 1 for every agent (0.94) because its supplier
+  agrees to any sheet costing >= C_best; useless for ranking P18 strategies. Rank P18 candidates on the live record instead.
+- **Run 2 (offline, Astra, 05:10):** handing a verbatim-replay conversation to main mid-way makes main re-cite facts the
+  replayed messages already used and repeat our last price (an empty repeat). A replay agent must own its plan to the end of
+  the rounds it replays. New candidate noidea_p18_state45 (6c2813ce state, 4.93 -> 4.94 @ 45 d); not played (no arena run).
