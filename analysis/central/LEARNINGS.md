@@ -294,3 +294,5 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
   leaving a 14 d it credited costs a step.
 - **Never step back from our own previous ask** (4.86 after 4.87 drew the final at once) - already a rule from P02, broken by me.
 - Offline sims built from recorded games missed all of this; only live probes (one input each) found it.
+- **Run 1 (offline, Astra, 04:50):** src/eval/offline_eval.py closes P18 at message 1 for every agent (0.94) because its supplier
+  agrees to any sheet costing >= C_best; useless for ranking P18 strategies. Rank P18 candidates on the live record instead.

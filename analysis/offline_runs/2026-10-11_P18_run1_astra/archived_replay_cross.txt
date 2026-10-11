@@ -1,0 +1,230 @@
+=== 3620a05514f2a069  live no deal
+=== 6833e98fbbe5ebdf  live 0.4295
+  turn 1: live 4.77@45d | 4.82@90d | 4.74@14d cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.84@14d | 4.89@60d | 4.86@30d cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.97@60d | 4.92@14d | 4.94@30d cross 4.93@60d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live accept                       cross 5.40@30d/db5  refs []
+=== a99d02eb41cafa66  live 0.6182
+  turn 1: live 4.77@45d | 4.76@30d          cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.86@30d                     cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.96@30d                     cross 4.93@30d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 5.20@30d/db5                 cross accept
+  turn 5: live accept                       cross accept
+=== 06f8f4f5a7689632  live 0.5296
+  turn 1: live 4.77@45d | 4.76@30d          cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.84@14d | 4.86@30d          cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.99@14d | 5.01@30d          cross 4.93@30d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 5.20@14d/db0                 cross 5.20@14d/db0  refs []
+  turn 5: live accept                       cross accept
+=== bf73ee394e5b7e2c  live 0.4411
+  turn 1: live 4.77@45d | 4.76@30d | 4.74@14d cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.84@14d/db5 | 4.86@30d/db5 | 4.84@14d/db3 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.92@14d/db5                 cross 4.93@14d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live accept                       cross accept
+=== c4599331a4ed849b  live 0.5395
+  turn 1: live 4.77@45d | 4.74@14d          cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.84@14d/db5 | 4.88@45d/db5  cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 5.30@14d/db5                 cross 5.30@14d/db5  refs []
+  turn 4: live accept                       cross accept
+=== 9d4d288eb4ae6789  live 0.6727
+  turn 1: live 4.77@45d | 4.74@14d          cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.84@14d/db5                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live accept                       cross accept
+=== 92616dfb9cccf039  live 0.6061
+  turn 1: live 4.77@45d | 4.74@14d          cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.92@14d/db5 | 4.96@45d/db5  cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 5.00@14d/db5                 cross 4.93@45d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live accept                       cross accept
+=== 6d61c1fd91f3f13c  live 0.6096
+  turn 1: live 4.77@45d | 4.76@30d | 4.74@14d cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.86@30d/db0 | 4.84@14d/db0  cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.96@30d/db0                 cross 4.93@30d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 5.06@30d/db0                 cross 4.94@30d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== 4e244819e8b9207b  live 0.6774
+  turn 1: live 4.77@45d | 4.76@30d          cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.84@14d/db0 | 4.86@30d/db0  cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.96@30d/db0                 cross 4.93@30d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live accept                       cross accept
+=== 928a3878c58f7dc3  live 0.5417
+  turn 1: live 4.77@45d | 4.76@30d | 4.74@14d cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.86@30d/db0 | 4.84@14d/db0  cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.94@30d/db0                 cross 4.93@30d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live accept                       cross accept
+=== c9b288817e76ee78  live 0.5980
+  turn 1: live 4.77@90d/db5                 cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.90@90d/db5                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 5.00@90d/db5                 cross 4.93@90d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live accept                       cross accept
+=== a665044e93877cd6  live 0.6658
+  turn 1: live 4.76@30d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.87@14d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.94@14d/db0                 cross 4.93@14d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.96@14d/db0                 cross 4.94@14d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== a09d953636747cae  live 0.7067
+  turn 1: live 4.76@30d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.87@14d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.91@14d/db0                 cross 4.93@14d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.94@14d/db0                 cross 4.94@14d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== 0c968aae64401bb1  live 0.7271
+  turn 1: live 4.76@30d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.87@14d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.91@14d/db0                 cross 4.93@14d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live accept                       cross accept
+=== bf56d9758ff4bd7c  live 0.6883
+  turn 1: live 4.74@14d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.91@45d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.97@45d/db0                 cross 4.93@45d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.98@45d/db0                 cross 4.94@45d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== 3cb62cb905451df8  live 0.6883
+  turn 1: live 4.77@45d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.90@45d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.96@45d/db0                 cross 4.93@45d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.97@45d/db0                 cross 4.94@45d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== 77b16b90ff3c91b7  live 0.6207
+  turn 1: live 4.77@45d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.96@45d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 5.03@45d/db0                 cross 4.93@45d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 5.05@45d/db0                 cross 4.94@45d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== 3a6491c842fccaca  live 0.6207
+  turn 1: live 4.77@45d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.93@45d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 5.01@45d/db0                 cross 4.93@45d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 5.04@45d/db0                 cross 4.94@45d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== c4bcc22c0c901171  live 0.6658
+  turn 1: live 4.77@45d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.93@45d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 5.01@45d/db0                 cross 4.93@45d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 5.00@14d/db0                 cross 4.94@45d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== fe806698b5d96eb1  live no deal
+  turn 1: live 4.77@45d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.93@45d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.98@45d/db0                 cross 4.93@45d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.98@45d/db0                 cross 4.94@45d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+=== 0371de5b8610c827  live 0.6883
+  turn 1: live 4.77@45d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.90@45d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.96@45d/db0                 cross 4.93@45d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.97@45d/db0                 cross 4.94@45d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== ff6a6b20cae0a5ac  live 0.6883
+  turn 1: live 4.77@45d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.96@45d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 5.00@45d/db0                 cross 4.93@45d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live accept                       cross accept
+=== fd5b66b1c9f06fc0  live 0.6207
+  turn 1: live 4.77@45d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.85@45d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.89@45d/db0                 cross 4.93@45d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 5.07@45d/db0                 cross 4.94@45d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== a55d2e8917f705d4  live 0.6061
+  turn 1: live 4.76@30d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.84@14d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.97@14d/db5                 cross 4.93@14d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.84@14d/db5                 cross 4.94@14d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== ed9a881a0a93d1c5  live 0.5977
+  turn 1: live 4.76@30d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.86@14d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.86@14d/db0                 cross 4.93@14d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live accept                       cross accept
+=== b45bea5357c4619d  live 0.6658
+  turn 1: live 4.76@30d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.84@14d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live accept                       cross accept
+=== 099a64a306ff72b8  live 0.5977
+  turn 1: live 4.76@30d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.87@14d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live accept                       cross accept
+=== dad91454f5ee9fb9  live 0.6883
+  turn 1: live 4.77@45d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.93@45d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.98@45d/db0                 cross 4.93@45d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.99@45d/db0                 cross 4.94@45d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== 1958398e9514078b  live 0.6658
+  turn 1: live 4.76@30d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.90@14d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.96@14d/db0                 cross 4.93@14d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.97@14d/db0                 cross 4.94@14d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== 5ce0441666462a18  live 0.6658
+  turn 1: live 4.76@30d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.87@14d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.94@14d/db0                 cross 4.93@14d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.96@14d/db0                 cross 4.94@14d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== 6a0a9bfdc4273cba  live 0.6658
+  turn 1: live 4.69@30d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.80@14d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.84@14d/db0                 cross 4.93@14d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.86@14d/db0                 cross 4.94@14d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== ff337861254521fc  live 0.6207
+  turn 1: live 4.77@45d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.93@45d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 5.01@45d/db0                 cross 4.93@45d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 5.04@45d/db0                 cross 4.94@45d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== cee66b66edd04b71  live 0.5977
+  turn 1: live 4.57@30d/db0                 cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.81@14d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.86@14d/db0                 cross 4.93@14d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.86@14d/db0                 cross 4.94@14d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== 1d8188917a996b6c  live 0.6096
+  turn 1: live 4.77@45d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.92@30d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 5.00@30d/db0                 cross 4.93@30d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 5.03@30d/db0                 cross 4.94@30d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== 0873041457737dd0  live 0.6658
+  turn 1: live 4.77@45d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.92@30d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.95@14d/db0                 cross 4.93@30d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.97@14d/db0                 cross 4.94@30d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== 57e43ef7aafc67ea  live 0.6883
+  turn 1: live 4.77@45d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.90@45d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.96@45d/db0                 cross 4.93@45d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.97@45d/db0                 cross 4.94@45d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== 193f7a3689743cc7  live 0.6658
+  turn 1: live 4.76@30d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.87@14d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.94@14d/db0                 cross 4.93@14d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.96@14d/db0                 cross 4.94@14d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== 4eec90233ab1eed1  live 0.6658
+  turn 1: live 4.76@30d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.87@14d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.94@14d/db0                 cross 4.93@14d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.96@14d/db0                 cross 4.94@14d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== 19dbe14233166ef1  live 0.6658
+  turn 1: live 4.76@30d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.87@14d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.94@14d/db0                 cross 4.93@14d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.96@14d/db0                 cross 4.94@14d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== 6c2813cee1fcf116  live 0.7181
+  turn 1: live 4.77@45d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.90@45d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.91@30d/db0                 cross 4.93@45d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.94@30d/db0                 cross 4.94@45d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept
+=== 2ad8b19054644c59  live 0.6883
+  turn 1: live 4.77@45d                     cross 4.76@30d  refs ['idx:AS-14404@2024-11', 'idx:AS-14404@2025-10', 'idx:PPI-C2431@2026-06']
+  turn 2: live 4.90@45d/db0                 cross 4.87@90d/db0  refs ['fc:370010@2026-09']
+  turn 3: live 4.96@45d/db0                 cross 4.93@45d/db0  refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+  turn 4: live 4.97@45d/db0                 cross 4.94@45d/db0  refs ['idx:AS-14404@2026-06', 'idx:AS-14404@2026-09']
+  turn 5: live accept                       cross accept

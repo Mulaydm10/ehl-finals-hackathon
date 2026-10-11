@@ -268,3 +268,8 @@ msg 3 = 4.97 @ 14 d db5 (0.7593, worth 4.87 to it = our msg-2 ask) -> final 5.10
 - **For the final agent (hidden cases):** two general lessons - (1) identical messages get identical replies, so a probe must
   change one thing; (2) an ask must stay within the supplier's approval authority (here 2%) of its current offer, never a step
   back from our own previous ask, and the structure we hold must not change once the supplier has priced it.
+
+## 20. Run 1 - offline baseline with gpt-6-astra (04:50): see analysis/offline_runs/2026-10-11_P18_run1_astra/README.md
+Simulator 0.94 for every agent at message 1 (it accepts any sheet costing >= C_best): not predictive. Known hosted outcomes of the
+existing candidates (deterministic replies): cross 0.677, soft v2 0.677, replay(4.91) 0.727, replay default 0.673. None can beat
+0.727; Run 2 tests a new input.
