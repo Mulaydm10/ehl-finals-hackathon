@@ -67,3 +67,4 @@ Why our two reproducible states cannot reach 0.756:
 | 07:15 | b531b16b56b96d47 | 3, 36 m answering its volume question | 5.10 (normal): 'In recognition of the longer term, we can reduce our base price' - one step | 5.00 @ 45 db5 | final at once 5.20 @ 45 d db5 -> **0.6295** |
 | 07:19 | 0a8fdb150167f0c9 | 4, 36 m, both moves named | 5.10 (normal): 'In recognition of the increased binding volume' - one step | 5.00 @ 45 db5 | final at once 5.20 @ 45 d db5 -> **0.6295** |
 | 07:21 | 9df6a66e2f0edf57 | 5, 36 m | **5.00 @ 45 d + 5.10 db5 (SOFT)**; its text said 'reduce our base price to €5.10': the engine set the db0 sheet 0.10 under its db5 alternative (as in 0c968aae) | the 3 beat sheets | final at once 5.10 @ 30 d db5 ('shorter payment terms ... do not significantly alter our pricing') -> **0.6846**; this soft line was ~5.00 |
+| 07:24 | 532ff60f75000b7c | 6, 36 m | 5.10 (normal) | 5.00 @ 45 db5 | final at once 5.20 @ 45 d db5 -> **0.6295** |
