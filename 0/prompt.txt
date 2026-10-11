@@ -1,0 +1,1 @@
+Append one line to notes/entire.md (create it if missing) saying the Entire session record is enabled for the EHL Munich 2026 submission, then run git add notes/entire.md and git commit -m 'notes: Entire session record'.
