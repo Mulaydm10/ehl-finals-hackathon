@@ -64,3 +64,4 @@ Why our two reproducible states cannot reach 0.756:
 | 07:06 | 1c767030bd2efdd2 | 0 | 5.10 (normal) | 5.00 @ 45 db5 (1.96% under its 5.10) | final at once 5.20 @ 45 d db5 -> **0.6295**. The normal-branch shot ends the game at its db5 price |
 | 07:08 | 013521be77ea88e5 | 1 | 5.10 (normal) | 5.00 @ 45 db5 | final at once 5.20 @ 45 d db5 -> **0.6295** |
 | 07:09 | 7bbf4eaaeb68821c | 2 | 5.10 (normal) | 5.00 @ 45 db5 | final at once 5.20 @ 45 d db5 -> **0.6295**. Reasons in all 3: it credits ONE move (our clause acceptance) and says 'any further reduction would require a higher volume commitment' / 'Which volume can you commit to?' -> next games answer it with 36 months (71,100 kg binding, same cost to us) |
+| 07:15 | b531b16b56b96d47 | 3, 36 m answering its volume question | 5.10 (normal): 'In recognition of the longer term, we can reduce our base price' - one step | 5.00 @ 45 db5 | final at once 5.20 @ 45 d db5 -> **0.6295** |
