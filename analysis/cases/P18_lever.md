@@ -246,3 +246,4 @@ final 5.20 @ 45 d db3 (0.599).
 msg 3 = 4.97 @ 14 d db5 (0.7593, worth 4.87 to it = our msg-2 ask) -> final 5.10 @ 14 d db5. In this state its floor is between
 4.87 and 4.91 (4.91 accepted in 0c968aae). The record cannot be reached from this state. Next: the best reachable value, on db5
 (+0.005 over db0 at the same value to it): 4.98 db5 (0.7527), then 4.99 (0.746), 5.00 (0.739), 5.01 (0.733 = the accepted 4.91).
+- 04:19 173a5c90194af19b: 4.98 @ 14 d db5 (worth 4.88 to it) -> final 5.00 @ 14 d db0 (0.666). Floor above 4.88.
