@@ -5,6 +5,7 @@
 | 10-11 04:50 | Run 1 | offline, gpt-6-astra | main, noidea_p18_cross, _soft v2, _replay (4.91) at aee97f3 | simulator 0.94 for all at msg 1 (not predictive: it accepts any sheet costing >= C_best); archived replay 0 errors; known hosted outcomes 0.677 / 0.677 / 0.727 | analysis/offline_runs/2026-10-11_P18_run1_astra/ |
 | 10-11 05:10 | Run 2 | offline, gpt-6-astra | new noidea_p18_state45 (6c2813ce msg 1-2 verbatim, 4.93 -> 4.94 @ 45 d db0) | verbatim and branch checks pass after a fix; archived replay 42 games 0 errors; simulator 0.94 (not predictive) | analysis/offline_runs/2026-10-11_P18_run2_astra/ |
 | - | Run 3 | hosted, one session | - | not executed: user said 'dont run on the arena' | - |
+| 10-11 05:30 | offline A | offline (Astra configured, 0 calls) | candidate scoring + archived replay of state45 / replay | C (6c2813ce state, db5 + db0 pairs) ranks first: 0.742 / 0.736 at msg 3; record not reachable from any reproducible state | analysis/offline_runs/2026-10-11_P18_offline_A_astra/ |
 
 ## Changelog
 - **Run 1 (no code change):** the documented offline simulator is unfit for P18 (see the run README); the decision for the
@@ -13,3 +14,4 @@
   Defect found and fixed: the off-track handover to main re-cited facts and repeated our price; the plan now runs to msg 4.
   `noidea_p18_replay.py` default P18_MSG3 4.97/14/5 (refused live) -> 4.91/14/0 (accepted, 0.727).
 - **Run 3:** not run (user instruction). Selected agent if a run is approved: noidea_p18_state45.py.
+- **Offline A:** mistakes audit (9 items) and exact candidate scores; decision: build state45 v2 (db5 + db0 at the same value per message).
