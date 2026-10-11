@@ -16,6 +16,7 @@
 | 10-11 06:00 | offline F | offline (0 Astra calls) | new noidea_p18_beat30 (6c2813ce state; 5.02 @ 30 db5 + 4.92 @ 30, then 5.03 db5 + 4.93) | byte-equal msgs 1-2; branches correct | analysis/offline_runs/2026-10-11_P18_offline_F_astra/ |
 | 10-11 05:50 | LIVE | hosted, 1 session | noidea_p18_beat30 | aaf4f9c6fe2f7fe6: hold at msg 3, final 5.00 @ 30 d at msg 4 = **0.677**; limit at 30 d (4.93, 4.94] | tools/replays/raw/P18_aaf4f9c6fe2f7fe6.json, analysis/offline_runs/2026-10-11_P18_live_aaf4f9c6/ |
 | 10-11 06:20 | offline H1 | offline (0 Astra calls) | new noidea_p18_coda (6c2813ce msg 1 verbatim -> 5.20 @ 45 d; open45's msg 2 = fresh round-2 draw; record sheets 5.00 @ 45 db5 + 4.89 @ 45 db0) | msg 1 byte-equal; msg 2 new after that msg 1; all branches correct | analysis/offline_runs/2026-10-11_P18_offline_H1_coda/ |
+| 10-11 06:25 | offline H2 | offline (no LLM) | noidea_p18_coda archived replay | 42 recorded games, 0 errors; selected for the live game | analysis/offline_runs/2026-10-11_P18_offline_H2_coda/ |
 
 ## Changelog
 - **Run 1 (no code change):** the documented offline simulator is unfit for P18 (see the run README); the decision for the
@@ -35,3 +36,4 @@
 - **Live 2493f26f (0.621):** the new 45-d wording drew 5.40 first; a 5.40 start ends at 5.10. The record path needs a 5.20 start, 5.00 at round 2 and a limit <= 4.90 at 45 d - each new wording is a fresh, low-odds draw.
 - **Live aaf4f9c6 (0.677):** the 6c2813ce state accepts only 4.94 @ 30 d; both reproducible states are now mapped to the cent.
 - **Offline H1:** new `noidea_p18_coda.py` - better than Codacabana's 4.90 @ 45 d db0 at the same value to it (5.00 @ 45 d db5, 0.7618); round 1 fixed by 6c2813ce's msg 1, round 2 a fresh draw.
+- **Offline H2:** noidea_p18_coda replays 42 recorded games without errors; selected for the live game.
