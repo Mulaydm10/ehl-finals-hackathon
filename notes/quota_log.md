@@ -362,3 +362,9 @@
 | 2026-10-11 03:29 | Neel | P18 | noidea_p18_harvest (cloud cross: 90 d from r2 + two-sheet r4) / gpt-6-astra - 90 d priced +0.10, guard to 30 d, final 5.00 @ 30 d | **0.68** | f2770f53c9ebd512 |
 | 2026-10-11 03:58 | Neel | P18 | noidea_p18_soft (soft-session plan: 3 beat sheets if round 2 = 5.00) / gpt-6-astra - normal session 5.20/5.10/5.00, final 5.00 @ 30 d | **0.68** | 83f89503e22658b2 |
 | 2026-10-11 04:05 | Neel | P18 | noidea_p18_db3 (45 d + db3 from msg 2) / gpt-6-astra - db3 priced like db5 (+0.10), 45 d +0.10: 5.30 -> final 5.20 @ 45 d db3 | **0.60** | d602e35bbccc5318 |
+| 2026-10-11 04:10 | Neel | P18 | noidea_p18_soft v2 batch 1/6 / gpt-6-astra - 5.20, 5.00+db5 alt (soft signature from our msg-2 request), held 5.00, final 5.00 | **0.68** | 15438619586806fb |
+| 2026-10-11 04:10 | Neel | P18 | noidea_p18_soft v2 batch / gpt-6-astra - IDENTICAL replies to game 1 within 1 s each (arena replays an identical conversation): wasted | **0.68** | 6c153bbcada4e16a |
+| 2026-10-11 04:10 | Neel | P18 | noidea_p18_soft v2 batch / gpt-6-astra - IDENTICAL replies to game 1 within 1 s each (arena replays an identical conversation): wasted | **0.68** | 35aaa9ae0367cd0c |
+| 2026-10-11 04:10 | Neel | P18 | noidea_p18_soft v2 batch / gpt-6-astra - IDENTICAL replies to game 1 within 1 s each (arena replays an identical conversation): wasted | **0.68** | 62ee950829402fa6 |
+| 2026-10-11 04:10 | Neel | P18 | noidea_p18_soft v2 batch / gpt-6-astra - IDENTICAL replies to game 1 within 1 s each (arena replays an identical conversation): wasted | **0.68** | 2908a68c6555c1ba |
+| 2026-10-11 04:10 | Neel | P18 | noidea_p18_soft v2 batch / gpt-6-astra - IDENTICAL replies to game 1 within 1 s each (arena replays an identical conversation): wasted | **0.68** | 99150255574adb07 |

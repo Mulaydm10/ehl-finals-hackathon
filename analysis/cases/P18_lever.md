@@ -214,3 +214,14 @@ final 5.20 @ 45 d db3 (0.599).
   pass 0.727.
 **v2 of `noidea_p18_soft.py`** (db3 / 90 d dropped): soft msg 3 = 4.99 @ 30 d db5 + 4.88 @ 30 d db0 (both > 0.756); soft msg 4
 = 5.03 @ 30 d db5 + 4.92 @ 30 d db0 (0.731 / 0.732 > 0.727); normal path on db5 (final 5.10 db5 = 0.685).
+
+## 15. Batch of 6 (04:09-04:11, soft agent v2): **0.677 x6 - the arena answers an identical conversation identically**
+- Game 1 (15438619586806fb): msg 2 asked for its 5% deadband price -> 5.00 @ 30 d + 5.10 db5 (the "soft" signature), but it then
+  held 5.00 against 4.99 db5 / 4.88 db0 and against 5.03 db5 / 4.92 db0, and went final at 5.00 ("We have reached our limit").
+  So the 5.00 + db5 pair at round 2 is NOT a lower floor; it can be produced by asking for the alternative.
+- Games 2-6: the same fixed e-mails got word-for-word the same replies within ~1 s each (game 1 took 12-26 s per reply).
+  **Mistake (mine): a batch of a fixed-text agent repeats one game.** VARIANCE.md already said P18 is deterministic for identical
+  inputs. 5 sessions wasted. Rule: never repeat a fixed-text agent on a deterministic supplier; vary one input per game.
+- Consequence: the soft sessions of 0c968aae / a09d9536 / 6c2813ce were caused by what their model-written e-mails said.
+  Next: `noidea_p18_replay.py` - 0c968aae's msg 1 and 2 byte for byte (the state where it agreed 4.91 at once), then its msg 3
+  with only the price changed to 4.86 @ 14 d (0.761); after a hold a09d9536's msg 4 at 4.89 (0.741).
