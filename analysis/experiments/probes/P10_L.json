@@ -1,0 +1,20 @@
+{
+  "case": "P10",
+  "label": "P10_L big move, 3.5% gap",
+  "hypothesis": "Fit over 37 normal-mode games: its round-2 step is capped near 35% of the gap left after our ask (best at a 3.5% gap: 30.40 vs 31.50 -> 31.10 with the labour index), but every game moved only +0.12..+0.54 at that gap; the big moves (+1.01, +1.23) came with tiny gaps (0.60, 0.38). Untested: a BIG move (+1.46) into the same 3.5% gap. Round 1 anchors at the 2023 price 28.94 (credible: e61c/0b29 stayed open at 31.50) with price path + should-cost + rubber; round 2 = 30.40 @ 36 m + labour, naming the size of our move. Reciprocity beyond the gap cap -> 31.00 or below; gap cap only -> 31.10.",
+  "on_agreed": "accept",
+  "on_open": "next",
+  "on_final": "alternative",
+  "rounds": [
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for your offer and for being open about your capacity situation.\n\nWe are ready to give you the firm commitment you asked for: a binding 23,400 pieces per year for 24 months, and we accept a longer lead time of 56 days so you can plan production.\n\nOur orders for Mechanical seal 24 mm, SiC/carbon, EPDM were at EUR 28.94 until December 2023 and have been at EUR 29.89 since January 2024 (po:4500010364-10, po:4500010407-10, po:4500014436-10).\nOur should-cost estimate for Mechanical seal 24 mm, SiC/carbon, EPDM is EUR 24.31 per 1 (cost:340010).\nProducer prices DE: other rubber products changed -0.3% from 2026-01 to 2026-02 (idx:PPI-C2219@2026-01, idx:PPI-C2219@2026-02).\n\nWe therefore propose EUR 28.94 per piece, the price of our 2023 orders.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 28.94, "volume_per_year": 23400, "contract_months": 24, "lead_time_days": 56}],
+      "refs": ["cost:340010", "idx:PPI-C2219@2026-01", "idx:PPI-C2219@2026-02", "po:4500010364-10", "po:4500010407-10", "po:4500014436-10"]
+    },
+    {
+      "body": "Dear Ms Zellner,\n\nThank you for your answer. We make a large step towards you: EUR 1.46 more per piece, and we extend the commitment to 36 months, 70,200 pieces in total.\nLabour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01).\n\nWe propose EUR 30.40 per piece.\n\nKind regards,\nPurchasing, Hollerau Pumpenwerke",
+      "sheets": [{"unit_price": 30.4, "volume_per_year": 23400, "contract_months": 36, "lead_time_days": 56}],
+      "refs": ["idx:LCI-C@2025-10", "idx:LCI-C@2026-01"]
+    }
+  ]
+}

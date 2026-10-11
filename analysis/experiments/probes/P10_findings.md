@@ -73,3 +73,22 @@ falling window worth citing (-0.25 % at best). **P10 ceiling with this supplier:
   round 1 changes the model's round-2 sample by one grid step).
 - Every claim type the arena checks has now been tried on P10: should-cost and price path move round 1 (-0.20 each),
   indices are marginal, forecast / OTD / ppm / news are shrugged; there is no rival quote and no notice letter.
+
+## Probe L (802e63e769ef6f4b, 03:58): a big move into the best gap = 0.702
+- Round 1: 28.94 (the 2023 price) @ 24 m + path + should-cost + rubber -> 31.50 (38 of 38).
+- Round 2: +1.46 to 30.40 @ 36 m + labour, "we make a large step towards you: EUR 1.46" -> final **31.20** (step 0.30).
+- The size of our move buys nothing once it is about 0.5: the step is capped by the gap left after our ask.
+
+## The P10 ceiling in normal mode (all 38 normal-mode games with an open round 1, plus the template game)
+| rule | evidence |
+|---|---|
+| Round 1 is fixed by taken facts and structure: 31.50 with should-cost + price path (31.70 with should-cost only) | 38 of 38; asks 28.94-30.50, 24 or 36 m, 2-3 facts, any prose, the 2% frame, the news claim: all 31.50 |
+| It goes final at our 2nd message, whatever we send | 38 of 38 (a timeout, a no-sheet e-mail, a tiny or a big move: all final at 2) |
+| Round-2 step = at most ~35% of the gap left after our ask; a gap above ~4.3% or a move under ~0.3 draws the token 0.10 | best: gap 1.10 (3.5%) + labour index = 31.10 (2 of 3); gap 1.39 (4.4%) + labour = 31.10 / 31.20 / 31.30 / 31.40 (2 / 11 / 6 / 1); +1.46 move into gap 1.10 = 31.20 |
+| After its final: pushing below it walks (3 of 3); its alternative or its own terms are agreed | 8134c6d1, 1e65e7ad, 26336719; 2d91214c |
+- Normal-mode best = **31.10 @ 56 d / 36 m = 0.7097** (59c899b9 / 3c4aa1a6 replay it exactly: identical e-mails get identical replies).
+- The record **0.741 (673ee890) = 30.70** came from the arena's engine-template replies (31.00 first counter + "Our management
+  has approved a further step"). Beating it needs <= 30.69 at lead 56 (or <= 31.41 at lead 42, which it prices about 2.30 higher):
+  0.81 below 31.50 in one e-mail, where the cap allows ~0.40. Not reachable with any claim, structure or wording in the data.
+- Only path above 0.741: a template-mode first reply (3 single replies in ~380 sessions outside the 23:51-23:58 window, all in
+  round 1). Visible at once (approval line, 4-day delay); then send 59c899b9's round 2 (36 m + labour, ask raised). Not triggerable.
