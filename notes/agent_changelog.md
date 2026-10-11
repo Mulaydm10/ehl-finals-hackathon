@@ -1471,3 +1471,8 @@ it cannot judge an RFQ change; P05 is off-limits; D02 (free) + the 29 archived D
   0 of 4; single pushes within 1.6%: 3 of 5 agreed, 1 walked. D02: +0.05 if agreed, -0.27 if J1 walks (C1 is EXW, +7.2k
   freight) -> expected value about zero with real downside.
 Result: the D02 ceiling is J1's own concession schedule; nothing we control has evidence. final-v5 stays.
+
+- **Official 09:00 pre-flight** (09:00 - 09:09, same Mac / key / network as the final, HEAD a182f92 = final-v5 + notes): agent
+  code + datasets = final-v5 (frozen); key ok (practice 455 used / 295 left); model ok 2.2 s; release present; tests 69 + 3
+  skips; crash 0; D01 0.914, D02 0.579, P01 0.999, 0 failure lines; final runner 60 s: 12 polls on 403, no session, stopped;
+  no arena process left.
