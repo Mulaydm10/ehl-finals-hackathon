@@ -6,7 +6,7 @@ Our agent buys parts for Hollerau Pumpenwerke by e-mail from suppliers it has ne
 language model reads the supplier's e-mail, chooses among offers code has already priced, and writes.** The final runs
 `--agent noidea` (`tacto/starter-kit/arena_kit/agents/noidea_rfq.py`, an RFQ layer on top of `noidea.py`).
 
-Commit the agent runs in the final: `<fill in at 12:00: git rev-parse HEAD>`
+Commit the agent runs in the final: tag `final-v7` = `bb4049e8a422d97d19ed18ec621ab79451bbe600` (agent code and data; later commits on `main` change notes only - `tools/final/preflight.sh` step 0 checks this).
 
 ## Approach
 
