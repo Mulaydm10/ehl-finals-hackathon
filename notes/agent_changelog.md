@@ -1529,3 +1529,8 @@ Each finding checked against the code, the official API text and our archive (69
 - **Final pre-flight on final-v7** (10:09 - 10:18, main b38895f = final-v7 + notes): agent code + datasets = final-v7
   (frozen); model ok 1.1 s; tests 77 + 3 skips; crash 0; D01 0.909, D02 0.579, P01 0.999, 0 failure lines; final runner 60 s:
   12 polls on 403, no session, stopped; no arena process left. Submit commit bb4049e (tag final-v7) at 11:00.
+- **Submission prep** (10:25 - 10:50): pitch deck (15 slides with speaker notes, claude.ai artifact 4ZgGo12N8QFFa5qmebEHDN,
+  downloadable as PPTX/PDF); README's final-commit line filled (tag final-v7 = bb4049e8a422d97d19ed18ec621ab79451bbe600);
+  checklist from tacto/brief/submission.md verified: keys out of the repo (only .env.example templates tracked), README
+  setup/env/command present, data after 08:00, pre-flight ok, runner logs to a file under caffeinate. OPEN: the repo is
+  PRIVATE - the jury and tum.ai must be able to open it (Dhruv decides: public or invite).
