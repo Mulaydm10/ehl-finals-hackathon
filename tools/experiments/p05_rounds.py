@@ -120,8 +120,11 @@ class RoundsGame(H.Game):
         while reply and "result" not in reply and reply.get("status") not in ("walked_away", "no_bid"):
             if self.rounds_used(H.TARGET) >= LIMIT or n >= len(NOTES_TARGET):
                 break
-            t_reply = time.monotonic()  # pace: keep its thread going until the backups have used their rounds
-            while not all(self.backups_done.values()) and time.monotonic() - t_reply < a.pace:
+            # pace EVERY note (not only while the backups play): its thread must outlive both backups by > 60 s so each
+            # backup thread also takes the timeout after its last round (31 rounds in 30ec9eb7: its last notes went out
+            # back to back and we accepted before the backups' closing timeouts)
+            t_reply = time.monotonic()
+            while time.monotonic() - t_reply < a.pace and (a.pace_all or not all(self.backups_done.values())):
                 time.sleep(1)
             reply = self.safe_send(H.TARGET, self.note_msg(H.TARGET, NOTES_TARGET[n]))
             n += 1
@@ -144,6 +147,7 @@ def main():
     ap.add_argument("--ask2", type=float, default=25.54)
     ap.add_argument("--ask3", type=float, default=26.60)
     ap.add_argument("--pace", type=float, default=45, help="seconds we wait after its reply before the next note")
+    ap.add_argument("--pace-all", action="store_true", help="pace every note, also after the backups are done")
     ap.add_argument("--reserve", type=int, default=40)
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
