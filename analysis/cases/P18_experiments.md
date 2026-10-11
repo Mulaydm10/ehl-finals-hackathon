@@ -13,6 +13,8 @@
 | 10-11 05:06 | LIVE | hosted, 1 session | noidea_p18_pay14 | d71cab8cb90339f8: final 5.00 @ 14 d at msg 3 ('accept your 14-day payment terms, 5.00 is the lowest we can offer') = **0.666** | tools/replays/raw/P18_d71cab8cb90339f8.json, analysis/offline_runs/2026-10-11_P18_live_d71cab8c/ |
 | 10-11 05:45 | offline E | offline (Astra configured, 0 calls) | new noidea_p18_open45 (new 45-d opening; msg 3 5.00 @ 45 d db5 + 4.89 @ 45 d db0) | msg 1 new and on the cost basis; all branches correct; archived replay 0 errors; selected for the live game | analysis/offline_runs/2026-10-11_P18_offline_E_astra/ |
 | 10-11 05:37 | LIVE | hosted, 1 session (run by the user) | noidea_p18_open45 | 2493f26fb7838c69: first counter 5.40 (high draw) -> 5.20 -> 5.10 -> final 5.10 @ 45 d = **0.621** | tools/replays/raw/P18_2493f26fb7838c69.json, analysis/offline_runs/2026-10-11_P18_live_2493f26f/ |
+| 10-11 06:00 | offline F | offline (0 Astra calls) | new noidea_p18_beat30 (6c2813ce state; 5.02 @ 30 db5 + 4.92 @ 30, then 5.03 db5 + 4.93) | byte-equal msgs 1-2; branches correct | analysis/offline_runs/2026-10-11_P18_offline_F_astra/ |
+| 10-11 05:50 | LIVE | hosted, 1 session | noidea_p18_beat30 | aaf4f9c6fe2f7fe6: hold at msg 3, final 5.00 @ 30 d at msg 4 = **0.677**; limit at 30 d (4.93, 4.94] | tools/replays/raw/P18_aaf4f9c6fe2f7fe6.json, analysis/offline_runs/2026-10-11_P18_live_aaf4f9c6/ |
 
 ## Changelog
 - **Run 1 (no code change):** the documented offline simulator is unfit for P18 (see the run README); the decision for the
@@ -30,3 +32,4 @@
   refused; final at msg 3. The record is out of reach of a <2% ask on 14/30 d; only 45 d db5 at 5.00 remains (needs a floor <= 4.90).
 - **Offline E:** new `noidea_p18_open45.py` - a new 45-day conversation (the 6c2813ce state cannot reach the record at 45 d); record sheets at msg 3 after a +0.05 step; new fact every round.
 - **Live 2493f26f (0.621):** the new 45-d wording drew 5.40 first; a 5.40 start ends at 5.10. The record path needs a 5.20 start, 5.00 at round 2 and a limit <= 4.90 at 45 d - each new wording is a fresh, low-odds draw.
+- **Live aaf4f9c6 (0.677):** the 6c2813ce state accepts only 4.94 @ 30 d; both reproducible states are now mapped to the cent.

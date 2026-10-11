@@ -310,3 +310,4 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
 - **Live 2493f26f (0.621, new 45-d opening):** on a supplier whose first counter is a per-wording draw, a new opening is a
   lottery ticket, and the bad draw (5.40 here) costs a full step at the end (final 5.10 vs 5.00). Its acceptance limit is
   fixed per conversation before our 3rd message; nothing after round 1 moved its calculation in 62 games.
+- **Live aaf4f9c6 (0.677):** a reproducible state has one exact acceptance limit; probing it one cent at a time maps it (6c2813ce: (4.93, 4.94] at 30 d), but each probe costs a session and below the limit ends in its final.

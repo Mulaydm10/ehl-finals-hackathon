@@ -330,3 +330,9 @@ See analysis/offline_runs/2026-10-11_P18_offline_E_astra/README.md.
 - A 5.40 start ends at 5.10 (77b16b90, 3a6491c8, ff337861 and now this). The record needs a 5.20 start and 5.00 at round 2, then a
   limit <= 4.90 at 45 d; new wording is a fresh draw each time (5.20 in 5 of 16 distinct 45-d openings, 5.00 at round 2 in 1 of 5
   of those). Our best stays 0.727; record 0.756 (Codacabana).
+
+## 26. Live (05:50, aaf4f9c6fe2f7fe6, `noidea_p18_beat30.py`): **0.677 - the 6c2813ce limit at 30 d is (4.93, 4.94]**
+- 6c2813ce msgs 1-2 verbatim -> the same state (4 of 4). msg 3 5.02 @ 30 db5 + 4.92 @ 30 -> hold 5.00 @ 30. msg 4 (+ OTD) 5.03 @ 30
+  db5 + 4.93 @ 30 -> final 5.00 @ 30 d (0.677). With 6c2813ce's own 4.94 agreed, its limit there is (4.93, 4.94]: max 0.718.
+- Both reproducible states are mapped: 0c968aae accepts only 4.91 @ 14 d (0.727), 6c2813ce only 4.94 @ 30 d (0.718). The one
+  ask not yet tried that beats 0.727 in a known state: 5.01 @ 14 d db5 in the 0c968aae state (0.7327, value 4.91 if db5 = 0.10).
