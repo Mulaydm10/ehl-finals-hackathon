@@ -268,7 +268,10 @@ class NoIdeaAgent:
             cur = b.get("current_unit_price") or open_terms.get("unit_price")
             should = [c for c in self.claims if c["kind"] == "should_cost" and c["part"] == part and c["supplier"] == sid]
             ref = min(x for x in (cur, open_terms.get("unit_price")) if x)  # the quote can be below today's price
-            full_cost = min(should[0]["figure"], ref) * 0.94 if should else ref * 0.94
+            # (v2) experiment `fc100`: the stress lab and the real relationship charges (P01 / P02 / P03 fitted full cost =
+            # 1.02 / 1.08 / 0.99 x this base) put the 0.94 factor 5-13% under a supplier's real full cost
+            fc_k = 1.0 if "fc100" in EXPERIMENTS else 0.94
+            full_cost = min(should[0]["figure"], ref) * fc_k if should else ref * fc_k
             # a normal supplier's money is cheaper than ours (fitted on real deals: P03 6.1%, P04 6.8-8.4%; ours 8%): experiment
             # `rate07` prices its cash at 7%, so a longer payment term is a small real gain to trade for
             normal = 0.07 if "rate07" in EXPERIMENTS else 0.08
