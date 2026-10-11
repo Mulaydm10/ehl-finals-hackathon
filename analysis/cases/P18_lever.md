@@ -354,3 +354,12 @@ See analysis/offline_runs/2026-10-11_P18_offline_E_astra/README.md.
 - Normal branch with the fix: 5.10 db5 + 5.00 db0 (inside its 2% of 5.10) -> **agreed 5.00 @ 45 d db0 at once** (0.6883), vs 0.621
   for v1's record sheets 4.1% under. Given both sheets at the same value to it, it chose db0 (we would have preferred 5.10 db5, 0.6957).
 - Team best stays 0.727; record 0.756.
+
+## 29. Live (06:13, a9711492eacdd9a7, `noidea_p18_replay.py` P18_MSG3=5.01/14/5): **0.673 - db5 is not db0 + 0.10 in this state's acceptance**
+- 0c968aae msgs 1-2 verbatim -> 5.00 @ 14 d (reproduced again). msg 3 = 5.01 @ 14 d db5 (1.76% under its 5.10 db5; 4.91 to it at
+  +0.10) -> **hold 5.10 @ 14 d db5** ("For the requested terms including a 5% deadband ... we must hold firm"). msg 4 (hold branch:
+  a09d9536's text, 5.00 @ 30 d db5 + 4.90 @ 30 d) -> final 5.10 @ 14 d db5 -> 0.6727.
+- With 2782c270 (5.00 db5) and d05baf28 (4.97 db5): every db5 ask in this state drew 5.10 db5. Its acceptance limit on db5 here is
+  above 5.01, though 4.91 db0 was agreed: db5 is not credited at exactly 0.10 in acceptance in this conversation.
+- Both reproducible states are exhausted: 0c968aae -> only 4.91 @ 14 d db0 (0.727); 6c2813ce -> only 4.94 @ 30 d (0.718); new msg 2s
+  after 6c2813ce's msg 1 drew 5.10 (0 of 2 soft). Team best 0.727; record 0.756 (Codacabana).

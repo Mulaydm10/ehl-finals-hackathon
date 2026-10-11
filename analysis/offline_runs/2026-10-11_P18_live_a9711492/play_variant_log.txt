@@ -1,0 +1,15 @@
+06:13:50 session a9711492eacdd9a7
+06:13:51 sup:70740 patience prior: final expected around round 4
+06:13:51 prep sup:70740: ask +4.5%, justified +7.0%, full_cost~5.49, cash_rate 0.08, motives ['open_book', 'may_drop_small_accounts', 'approval_ladder']
+06:13:51 sup:70740 P18 replay msg 1: 0c968aae verbatim (its 6.1)
+06:13:51 sup:70740 open {'unit_price': 5.2, 'payment_days': 30, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+06:13:51 sup:70740 P18 replay msg 2: 0c968aae verbatim (its 5.2)
+06:13:51 sup:70740 open {'unit_price': 5.0, 'payment_days': 14, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+06:13:51 sup:70740 P18 replay msg 3: 0c968aae's msg 3 with ((5.01, 14, 5),) (its 5.00 @ 14 d)
+06:14:25 sup:70740 open {'unit_price': 5.1, 'payment_days': 14, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 5.0, 'base_month': '2026-08'}, 'contract_months': 24}
+06:14:25 sup:70740 P18 replay msg 4: a09d9536's msg 4 with ((5.0, 30, 5), (4.9, 30, 0)) (it held at 5.10 @ 14 d)
+06:14:48 sup:70740 final_offer {'unit_price': 5.1, 'payment_days': 14, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 5.0, 'base_month': '2026-08'}, 'contract_months': 24}
+06:14:48 sup:70740 {'type': 'accept', 'term_sheet_id': 'offer:70740-4'}
+deal: 5.10 @ 14 d, AS-14404 db5, 24 m; c_open 295173.23, c_deal 246386.78, c_best 222651.27, score 0.6727127893399459
+replay: https://arena.tacto.ai/replay/a9711492eacdd9a7 | practice sessions left: 324
+saved: tools/replays/raw/P18_a9711492eacdd9a7.json
