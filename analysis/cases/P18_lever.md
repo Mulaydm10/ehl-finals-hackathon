@@ -249,3 +249,4 @@ msg 3 = 4.97 @ 14 d db5 (0.7593, worth 4.87 to it = our msg-2 ask) -> final 5.10
 - 04:19 173a5c90194af19b: 4.98 @ 14 d db5 (worth 4.88 to it) -> final 5.00 @ 14 d db0 (0.666). Floor above 4.88.
 - 04:20 ab222b48898c8fb0: 4.99 @ 14 d db5 (worth 4.89 to it at its EUR 0.10 deadband price) -> final 5.00 @ 14 d db0 (0.666).
 - 04:21 66b6abb882860c4a: 4.89 @ 14 d db0 -> final 5.00 @ 14 d (0.666). Its floor in this state is in (4.89, 4.91]. Last probe: 4.90 (0.734).
+- 04:23 57f06757e4a2b512: 4.90 @ 14 d db0 -> final 5.00 (0.666). So in this state it accepts 4.91 (1.8% under its 5.00) and nothing at 2.0% or more: the KAM's 2% authority (doc:20260812-70740-M3). Our 0.727 is the db0 maximum here. Last probe: 5.00 @ 14 d db5 = 1.96% under its 5.10 db5 alternative (0.739).

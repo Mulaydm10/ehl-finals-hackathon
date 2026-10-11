@@ -374,3 +374,4 @@
 | 2026-10-11 04:19 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=4.98/14/5 (0c968aae state, worth 4.88 to it) / gpt-6-astra - final 5.00 @ 14 d db0 | **0.67** | 173a5c90194af19b |
 | 2026-10-11 04:20 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=4.99/14/5 (0c968aae state, worth 4.89 to it) / gpt-6-astra - final 5.00 @ 14 d db0 | **0.67** | ab222b48898c8fb0 |
 | 2026-10-11 04:22 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=4.89/14/0 (0c968aae state) / gpt-6-astra - final 5.00 @ 14 d: floor in (4.89, 4.91] | **0.67** | 66b6abb882860c4a |
+| 2026-10-11 04:23 | Neel | P18 | noidea_p18_replay v3 P18_MSG3=4.90/14/0 (0c968aae state) / gpt-6-astra - final 5.00 @ 14 d: floor in (4.90, 4.91] = its 2% authority | **0.67** | 57f06757e4a2b512 |
