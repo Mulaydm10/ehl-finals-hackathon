@@ -1294,3 +1294,18 @@ games 8ccbdcc0 / 98e834e4, P02 10b624c1, P07 216f49e9, P08 00e8923e, P10 673ee89
   mean 0.825, 0 warnings, every case a deal. Grid-probe depth NOT changed: memory shows mixed floors inside the 0.50 step.
 - Lessons of all loops, lean, for the next optimisation round: `docs/LESSONS.md` (how to work, mistakes + fixes, rejected ideas,
   open questions).
+
+### v2.34i - P10 / P18 asked to improve GENERALLY (2026-10-11 01:50 - 02:10)
+- Both best games used one principle: **a concession the supplier values works as a TRADE in round 2, not as a round-1 gift**
+  (P10 Neel 59c899b9: 24 -> 36 months + labour in round 2 = -0.40, its best step; P18 0c968aae: 30 -> 14 d in round 2 = -0.20).
+- Fixed the round-2 trade (the stability rule had kept last round's terms: the trade pool is now priced without it) and tested
+  two general forms live, hidden mode, same-window baselines:
+  - `trade_term` (contract held back in round 1, conceded in round 2, said in words) for commitment-seeking suppliers
+    (capacity type or wants_commitment / capacity_tight / needs_multi_year): **P10 0.702 / 0.710** (base 0.694 same window;
+    0.702 / 0.702 / 0.694 before; Neel's two scripted games of the same shape 0.710), P04 0.815 (no harm). -> **DEFAULT ON**
+    (opt-out `no_trade_term`); round-1/2 dump: only P04 and P10 change. Small gain (+0.01): P10's normal-mode ceiling is ~0.71.
+  - `pay_trade` (payment moved one step toward the supplier's standard in round 2 when it costs us < 0.15%): fires only on
+    P18; **P18 0.610 / 0.666** vs base 0.688 -> REJECTED (stays off): once round 1 asked 45 d, the supplier had priced it in.
+- P18 has no general fix tonight: its supplier prices longer payment steeply (first counter 5.20 at 14/30 d, 5.30-5.50 at
+  45-90 d) and nothing before round 1 separates it from P07 (the opposite). Record 0.756 (Codacabana) unexplained.
+- Tests 68, crash 19/19.

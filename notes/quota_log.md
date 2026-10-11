@@ -324,3 +324,10 @@
 | 2026-10-11 01:40 | Parth | P08 | noidea ddb3580 HOLD_B + hold_r1 / gpt-6-astra | 0.90 (first counter None, final round None, timeouts 0) | edbe30a43154d5c9 |
 | 2026-10-11 01:39 | Parth | P10 | noidea ddb3580 HOLD_B + hold_r1 / gpt-6-astra | 0.00 (first counter None, final round None, timeouts 0) | 1e65e7addff16aca |
 | 2026-10-11 01:39 | Parth | P10 | noidea ddb3580 HOLD_B + hold_r1 / gpt-6-astra | 0.00 (first counter None, final round None, timeouts 0) | 26336719b8c2bbfb |
+| 2026-10-11 02:04 | Dhruv | P18 | v2.34i hidden A/B pay_trade / gpt-6-astra | 0.6096 | 1d8188917a996b6c |
+| 2026-10-11 02:04 | Dhruv | P18 | v2.34i hidden A/B pay_trade / gpt-6-astra | 0.6658 | 0873041457737dd0 |
+| 2026-10-11 02:04 | Dhruv | P18 | v2.34i hidden A/B base / gpt-6-astra | 0.6883 | 57e43ef7aafc67ea |
+| 2026-10-11 02:04 | Dhruv | P10 | v2.34i hidden A/B trade_term / gpt-6-astra | 0.7019 | 7df258059aa7cbf1 |
+| 2026-10-11 02:04 | Dhruv | P10 | v2.34i hidden A/B trade_term / gpt-6-astra | 0.7097 | 9f210912a85e003b |
+| 2026-10-11 02:04 | Dhruv | P10 | v2.34i hidden A/B base / gpt-6-astra | 0.6941 | 6ca6ae5d9bae6406 |
+| 2026-10-11 02:04 | Dhruv | P04 | v2.34i hidden A/B trade_term / gpt-6-astra | 0.8153 | cd5ab95b8483d1c6 |

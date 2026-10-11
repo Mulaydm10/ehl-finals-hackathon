@@ -814,6 +814,12 @@ class NoIdeaAgent:
                     and ({"cash_short", "wants_faster_payment"} & motives or re.search(r"pay on time|paid on time|cash", last))
                     and not self.sup[sid].get("owned_late"))
 
+    def wants_term(self, case, sid):
+        """A supplier that prices contract length as security (capacity cases; motives wants_commitment / capacity_tight /
+        needs_multi_year) - the longer contract is a concession it values: held back for a round-2 trade (v2.34i)."""
+        return case["type"] == "capacity" or bool({"wants_commitment", "capacity_tight", "needs_multi_year"}
+                                                  & set((self.sup.get(sid) or {}).get("dossier", {}).get("motives", {})))
+
     def seen(self, sid):
         """Data ids THIS supplier has been shown. Each bidder of an RFQ is its own negotiation: a fact told to one bidder is
         new to the others (one case-wide set starved the rest: P05 0e9974d5 bidder 70250 never got a fact; sandbox D02 C1
@@ -1338,7 +1344,8 @@ or null, "reason": "<one sentence>"}."""
         # best structure with the next-SHORTER contract at the same price, round 2 concedes the longer contract with the next
         # fact (P10 Neel 59c899b9: 24 m -> 36 m + labour in round 2 = -0.40, its best round-2 step; P18 0c968aae: 30 -> 14 d
         # in round 2 -> -0.20, the same term in round 1 drew nothing, bf56d975)
-        if k == 0 and "trade_term" in EXPERIMENTS and sheets and "contract_months" in case["negotiable"] and len(self.sup) == 1:
+        if k == 0 and "no_trade_term" not in EXPERIMENTS and sheets and "contract_months" in case["negotiable"] and len(self.sup) == 1 \
+                and self.wants_term(case, sid):
             opts = sorted(case.get("term_options", {}).get("contract_months") or [])
             best_t = sheets[0][1]
             cm = best_t.get("contract_months")
@@ -1350,6 +1357,36 @@ or null, "reason": "<one sentence>"}."""
                     s["meso"] = [t1]  # code's structure in round 1, the model only writes
                     s["trade_term"] = ("contract_months", cm)
                     log.info("%s: trade term - round 1 at %s months, %s months kept for round 2", sid, shorter[-1], cm)
+        # ROUND-2 TRADE (experiments `trade_term` / `pay_trade`): one concession the supplier values goes out in round 2 as a
+        # visible trade. The stability rule would otherwise keep last round's terms ("unless >= 1% cheaper"), so the trade
+        # sets the structure explicitly: the held-back longer contract (trade_term), or the payment term moved toward the
+        # supplier's standard when that costs us < 0.15% of our total cost (pay_trade; P18 0c968aae 30 -> 14 d in round 2 =
+        # -0.20, its first counters 5.20 at 14/30 d vs 5.30-5.50 at 45-90 d)
+        if k == 1 and sheets and not s.get("traded") and (("no_trade_term" not in EXPERIMENTS and s.get("trade_term")) or "pay_trade" in EXPERIMENTS):
+            lead_t = sheets[0][1]
+            want = {}
+            tt = s.get("trade_term")
+            if "no_trade_term" not in EXPERIMENTS and tt and lead_t.get(tt[0]) != tt[1]:
+                want = {tt[0]: tt[1]}
+            elif "pay_trade" in EXPERIMENTS and "payment_days" in case["negotiable"] and len(self.sup) == 1:
+                std_d, d = (s.get("std") or {}).get("payment_days"), lead_t.get("payment_days")
+                opts = sorted(o for o in case.get("term_options", {}).get("payment_days") or [] if std_d is not None and std_d <= o < (d or 0))
+                if std_d is not None and d and d > std_d and opts:
+                    want = {"payment_days": opts[-1]}  # one step toward its standard
+            if want:
+                saved_lm = s.pop("last_main", None)  # the trade IS a structure change: price it without the stability rule
+                try:
+                    pool = self.sheets_at(case, sid, target, cap, n=12, band_pct=0.5)
+                finally:
+                    if saved_lm is not None:
+                        s["last_main"] = saved_lm
+                hit = [x for x in pool if all(x[1].get(f) == v for f, v in want.items())
+                       and all(x[1].get(f) == lead_t.get(f) for f in case["negotiable"] if f not in want and f != "unit_price")]
+                if hit and hit[0][0] <= sheets[0][0] * (1.0015 if "payment_days" in want else 1.01):
+                    pct = (hit[0][0] / sheets[0][0] - 1) * 100
+                    sheets, s["traded"] = [hit[0]], True
+                    s["trade_term"] = next(iter(want.items()))
+                    log.info("%s: round-2 trade %s (our cost %+.3f%%)", sid, want, pct)
         mb = self.memory_best_structure(case, sid) if "no_memory_term" not in EXPERIMENTS else None
         if mb and sheets:
             keep = [x for x in self.sheets_at(case, sid, target, cap, n=12, band_pct=0.2)
@@ -2440,8 +2477,11 @@ or null, "reason": "<one sentence>"}."""
         if lean and not re.search(r"(?i)volume|how many (units|pieces)|quantit", latest(events).get("body") or ""):
             lines = []  # lean later e-mail: the volume line only when it asks about volume
         tt = s.get("trade_term")
-        if tt and k == 1 and sheets and sheets[0].get(tt[0]) == tt[1]:  # experiment trade_term: the concession, said once
-            lines.append(f"To meet you, we now commit to the longer contract: {tt[1]} months.")
+        if tt and k == 1 and sheets and sheets[0].get(tt[0]) == tt[1]:  # experiments trade_term / pay_trade: said once
+            if tt[0] == "contract_months":
+                lines.append(f"To meet you, we now commit to the longer contract: {tt[1]} months.")
+            elif tt[0] == "payment_days":
+                lines.append(f"To meet you, we now move to {tt[1]} days payment.")
         if case["type"] == "bundling":
             if k == 0:
                 lines.append("We want one partner for the complete kit, which bundles parts we buy from several suppliers today.")
