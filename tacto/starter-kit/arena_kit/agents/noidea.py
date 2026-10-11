@@ -1354,6 +1354,12 @@ or null, "reason": "<one sentence>"}."""
                 last = self.last_try(case, sid, events, terms, k, live)
                 if last:
                     return last
+                if len(live) > 1 and "no_rfq_keep_case" not in EXPERIMENTS:
+                    # (v7) a walk_away ends the WHOLE case (api.md: "ends the case without a deal"), not this bidder's
+                    # thread: with other bidders still in, leave its unusable final unanswered (only its thread ends) and
+                    # move with the others (review F1: stress ST041 walked the case with 70210's valid 36.38 standing)
+                    log.info("%s: its final is unusable - %d other bidder(s) live, not walking the case", sid, len(live) - 1)
+                    return self.safe_move(case, {x: ev for x, ev in threads.items() if x != sid})
                 return walk if self.c_alt < math.inf or len(live) > 1 else accept if sheet_id else walk
             # its final message may carry a prose alternative that is cheaper for us (P10 live: "Alternatively,
             # with Lieferzeit ... days: EUR ..."): propose exactly that once - it is its own offer, not a push

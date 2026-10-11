@@ -26,7 +26,17 @@ CLAUSE = re.compile(r"(\S+), (\d+)% material, deadband ([\d.]+) %, base (\S+)")
 
 
 def read_document(name, data):
-    """The text of an attachment: PDF pages, XLSX rows (formulas as written), or plain text."""
+    """The text of an attachment: PDF pages, XLSX rows (formulas as written), or plain text. (v7) A file the parser cannot
+    read gives "" instead of an exception: an exception here ended the whole case (review F4)."""
+    try:
+        return _read_document(name, data)
+    except Exception as e:
+        import logging
+        logging.getLogger("arena").warning("attachment %s unreadable (%s) - read as empty", name, e)
+        return ""
+
+
+def _read_document(name, data):
     if name.endswith(".pdf"):
         from pypdf import PdfReader
 
