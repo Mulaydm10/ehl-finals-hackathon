@@ -225,3 +225,11 @@ final 5.20 @ 45 d db3 (0.599).
 - Consequence: the soft sessions of 0c968aae / a09d9536 / 6c2813ce were caused by what their model-written e-mails said.
   Next: `noidea_p18_replay.py` - 0c968aae's msg 1 and 2 byte for byte (the state where it agreed 4.91 at once), then its msg 3
   with only the price changed to 4.86 @ 14 d (0.761); after a hold a09d9536's msg 4 at 4.89 (0.741).
+
+## 16. Live: replay of 0c968aae (04:13, 152d666e8ca628be, `noidea_p18_replay.py`): **0.666 - the state reproduces; a backward step ends it**
+- 0c968aae's msg 1 and 2 byte for byte -> **the same replies, within a second** (5.20 @ 30 d, then 5.00 @ 14 d + 5.10 db5): the
+  arena still holds that conversation. Our best game's state can be reached on demand.
+- msg 3 = its msg 3 with 4.86 instead of 4.91 -> **final_offer 5.00 @ 14 d** at once (0.666). 4.86 is under our own msg-2 ask
+  4.87: a backward step draws the final (LESSONS.md, P02). My mistake: the 14-d record line (4.86) is below 4.87, so the record
+  cannot be reached on 14 d from this state.
+- Next: same msg 1-2, msg 3 forward on 30 d (its standard): 4.99 @ 30 d db5 (0.758) + 4.88 @ 30 d db0 (0.759).
