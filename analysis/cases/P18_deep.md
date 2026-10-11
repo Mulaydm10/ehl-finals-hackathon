@@ -1,6 +1,13 @@
 STATUS: DONE (analysis, all 40 P18 games) + agent READY TO RUN, NOT RUN - 2026-10-11 ~03:30 CEST, cloud session, offline only
 (0 arena sessions, no LLM). Agent: `analysis/agent_variants/noidea_p18_cross.py`. Check tool: `analysis/tools/p18_cross_check.py`.
 Corrects `P18_lever.md` section 3 ("stay on 14 d"): after round 1, payment does not move its price.
+UPDATE 2026-10-11, after the final (cloud, offline):
+- **Live result:** `noidea_p18_cross.py` was run once by the local side (f2770f53c9ebd512, 0.677). The plan's key assumption
+  failed: 90 d is priced. 4.87 @ 90 d drew 5.20 @ 90 d ("our standard is 30 days net"), so the guard went back to 30 d, and the
+  game closed at 5.00 @ 30 d.
+- **The "draws" are our wording:** the suppliers give the same reply to the same text. In all 57 groups of recorded games
+  (every case) where our messages were byte-identical, the reply had the same price and status. So the "round-2 draw" below
+  (0.10 or 0.20) came from our own wording, and the odds in section 6 count wordings, not runs.
 
 # P18 deep: how Werdenfels prices, why Codacabana is one step lower, and the plan to cross 0.756
 
