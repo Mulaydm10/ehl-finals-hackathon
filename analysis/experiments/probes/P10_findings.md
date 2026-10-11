@@ -112,7 +112,7 @@ falling window worth citing (-0.25 % at best). **P10 ceiling with this supplier:
 ## Replay of 59c899b9 (3a968d38f7b65101, 04:09) = 0.7097 again
 - Byte-identical e-mails -> 31.50 -> 31.10 @ 36 m, the normal-mode maximum (3 of 3 now: 59c8, 3c4a, 3a96).
 
-## Probes O and P (04:20): the two last normal-mode ideas = 0.7097 / 0.702
+## Probes O and P (04:10-04:14): the two last normal-mode ideas = 0.7097 / 0.702
 | probe | session | change against 59c899b9 | its round 1 / final | score |
 |---|---|---|---:|---:|
 | O | 856dff728d5e8c9c | rubber fall moved from round 1 to round 2 (next to labour) | 31.50 / **31.10** | 0.7097 |
