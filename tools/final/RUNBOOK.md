@@ -27,3 +27,5 @@ Everything runs on the **Mac mini** (`ssh macmini`, repo `~/Dhruv/ehl-finals-hac
 Mean 0.82-0.83 over 9 practice cases, 9 in parallel in one process in under 4 minutes (wave cap 8), 0 crashes / walks since
 v2.34f; P02 0.879 = team record; sandbox (suppliers not in our data) D01 0.87-0.91, D02 RFQ 0.52-0.56.
 After the final: revoke the OpenAI key that was pasted in chat on Saturday.
+
+**Version.** The final runs `main` = tag **`final-v1`** (`db00d37`, the agent validated tonight: loop 7 mean 0.823, 0 warnings). v2 work happens on branch `v2` only; it replaces v1 only if it wins the stress test AND the live checks - then it is tagged `final-v2` and merged to `main`. Pre-flight step 0 says which frozen version the checked-out agent code matches; "!! agent code differs" means stop and check out the tag.
