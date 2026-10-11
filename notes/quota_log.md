@@ -225,3 +225,4 @@
 | 2026-10-11 03:08 | Parth | P10 | probe P10_G B + round-2 hair 31.12 (scripted, no model) | 0.679 (unit_price=31.5, volume_per_year=23400, contract_months=24, lead_time_days=56) | 3ced7cf689618e98 |
 | 2026-10-11 03:08 | Parth | P10 | probe P10_G B + round-2 hair 31.12 (scripted, no model) | 0.686 (unit_price=31.4, volume_per_year=23400, contract_months=36, lead_time_days=56) | edefadcb02c5b703 |
 | 2026-10-11 03:10 | Parth | P10 | probe P10_H B + round-2 ask 30.15 (scripted, no model) | 0.686 (unit_price=31.4, volume_per_year=23400, contract_months=36, lead_time_days=56) | f6da173c35b92d3e |
+| 2026-10-11 03:12 | Parth | P10 | probe P10_B current-price anchor (scripted, no model) | 0.702 (unit_price=31.2, volume_per_year=23400, contract_months=36, lead_time_days=56) | cadacbc4cde7954a |

@@ -54,3 +54,5 @@ change"; a second order-history claim came back "does not change" / "irrelevant"
 falling window worth citing (-0.25 % at best). **P10 ceiling with this supplier: ~0.70; best 0.702 (31.20 @ 36 m).**
 - Probe H (`f6da173c35b92d3e`): round 2 at 30.15 (-4.3 %, no facts) -> step 0.10, final 31.40 = 0.686. The "too far under"
   penalty starts by -4.3 %, so the step peaks right at game B's -3.5 % (30.40 -> 31.20). **Stop P10: 0.702 is its ceiling.**
+- Replay of game B (`cadacbc4cde7954a`, 2026-10-11): identical path - open 31.50 (both claims verified), our 30.40 @ 36 m,
+  final 31.20 -> **0.702 again**. P10 is deterministic for the same messages; `P10_B.json` reproduces the best score.
