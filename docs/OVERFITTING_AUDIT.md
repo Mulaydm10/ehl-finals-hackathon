@@ -35,3 +35,14 @@ so far: sandbox D01 (supplier not in our data) 0.87-0.91; sandbox D02 RFQ 0.52-0
 ## 5. How we know a supplier is "the same"
 The arena gives every supplier a fixed id in every case (`sup:70140` is always the P11 foundry). Supplier-specific knowledge is
 keyed by that id (and, for lessons, also the case type), so it applies only to an exact match; everything else gets general rules.
+
+## 6. Do the general principles hold without the supplier recipes? (live A/B, same window)
+| case | old recipes | general principles |
+|---|---:|---:|
+| P02 | 0.740 | **0.767** |
+| P07 | **0.792** | 0.786 |
+| P10 | 0.694 | **0.702** |
+| P11 | 0.794 | **0.877** |
+| mean | 0.755 | **0.783** |
+
+The general principles do at least as well - generalising did not dilute the score.

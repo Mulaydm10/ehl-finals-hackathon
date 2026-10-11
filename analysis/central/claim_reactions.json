@@ -1,5 +1,5 @@
 {
- "games": 365,
+ "games": 373,
  "by_kind": {
   "copper notation": {
    "taken": 3,
@@ -22,7 +22,7 @@
    "take_rate": 1.0
   },
   "index_change": {
-   "taken": 279,
+   "taken": 282,
    "no_change": 38,
    "confirm_case": 7,
    "take_rate": 0.86
@@ -46,9 +46,9 @@
    "take_rate": 0.89
   },
   "po_prices": {
-   "no_change": 75,
-   "taken": 98,
-   "take_rate": 0.57
+   "no_change": 79,
+   "taken": 100,
+   "take_rate": 0.56
   },
   "rival_quote": {
    "taken": 89,
@@ -60,12 +60,12 @@
    "take_rate": 0.0
   },
   "scorecard_ppm": {
-   "taken": 60,
+   "taken": 62,
    "no_change": 3,
    "take_rate": 0.95
   },
   "should_cost": {
-   "taken": 56,
+   "taken": 58,
    "take_rate": 1.0
   },
   "volume forecast": {
@@ -73,8 +73,8 @@
    "take_rate": 1.0
   },
   "volume_change": {
-   "taken": 150,
-   "no_change": 81,
+   "taken": 152,
+   "no_change": 83,
    "take_rate": 0.65
   }
  },
@@ -111,18 +111,18 @@
    }
   },
   "case:P02": {
-   "_signals": {
-    "mirror": 8,
-    "final_at_4": 17,
-    "final_at_5": 8,
-    "full_authority": 6
-   },
    "index_change": {
-    "taken": 24,
+    "taken": 27,
     "confirm_case": 1
    },
    "po_prices": {
-    "no_change": 8
+    "no_change": 10
+   },
+   "_signals": {
+    "final_at_5": 10,
+    "mirror": 9,
+    "final_at_4": 17,
+    "full_authority": 6
    },
    "volume_change": {
     "taken": 8
@@ -205,7 +205,7 @@
   },
   "case:P07": {
    "_signals": {
-    "final_at_4": 24,
+    "final_at_4": 26,
     "final_at_3": 2,
     "mirror": 12
    },
@@ -244,17 +244,17 @@
   },
   "case:P10": {
    "po_prices": {
-    "taken": 30,
+    "taken": 32,
     "no_change": 1
    },
    "volume_change": {
-    "no_change": 28
+    "no_change": 30
    },
    "should_cost": {
-    "taken": 33
+    "taken": 35
    },
    "_signals": {
-    "final_at_2": 27,
+    "final_at_2": 29,
     "final_at_1": 12
    },
    "index_change": {
@@ -270,23 +270,23 @@
   },
   "case:P11": {
    "scorecard_ppm": {
-    "taken": 59
+    "taken": 61
    },
    "index_change": {
     "taken": 93
    },
    "volume_change": {
-    "taken": 56
+    "taken": 58
    },
    "_signals": {
-    "final_at_7": 7,
+    "final_at_7": 9,
     "final_at_4": 8,
     "final_at_6": 6,
     "final_at_5": 12,
     "final_at_3": 2
    },
    "po_prices": {
-    "no_change": 36
+    "no_change": 38
    },
    "energy cost": {
     "taken": 1
@@ -329,9 +329,9 @@
   }
  },
  "signals": {
-  "already_counted": 58,
-  "asked_for_data": 186,
-  "padding": 53,
+  "already_counted": 59,
+  "asked_for_data": 190,
+  "padding": 55,
   "fair_point": 98,
   "rising_index_backfired": 7
  }
