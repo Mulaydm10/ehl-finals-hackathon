@@ -415,3 +415,4 @@
 | 2026-10-11 06:12 | Neel | P18 | noidea_p18_coda2 (6c2813ce msg 1 -> 5.20; its msg 2 at 4.88 -> 5.10 normal; 5.10 db5 + 5.00 inside its 2% -> agreed 5.00 @ 45 d) / gpt-6-astra | **0.69** | cd68b78dfb23022c |
 | 2026-10-11 06:14 | Neel | P18 | noidea_p18_replay P18_MSG3=5.01/14/5 (0c968aae state; 5.01 @ 14 d db5 -> hold 5.10 db5 -> final 5.10 @ 14 d db5) / gpt-6-astra | **0.67** | a9711492eacdd9a7 |
 | 2026-10-11 07:07 | Parth | P18 | noidea_p18_top r2 variant 0 (6c2813ce msg 1, fresh msg 2, record sheets inside its 2% at msg 3; no model) | 0.6295 (5.2 @ 45 d db5.0) | 1c767030bd2efdd2 |
+| 2026-10-11 07:08 | Parth | P18 | noidea_p18_top r2 variant 1 (6c2813ce msg 1, fresh msg 2, record sheets inside its 2% at msg 3; no model) | 0.6295 (5.2 @ 45 d db5.0) | 013521be77ea88e5 |

@@ -62,3 +62,4 @@ Why our two reproducible states cannot reach 0.756:
 | time | session | msg 2 variant | its round 2 | msg 3 | result |
 |---|---|---|---|---|---|
 | 07:06 | 1c767030bd2efdd2 | 0 | 5.10 (normal) | 5.00 @ 45 db5 (1.96% under its 5.10) | final at once 5.20 @ 45 d db5 -> **0.6295**. The normal-branch shot ends the game at its db5 price |
+| 07:08 | 013521be77ea88e5 | 1 | 5.10 (normal) | 5.00 @ 45 db5 | final at once 5.20 @ 45 d db5 -> **0.6295** |
