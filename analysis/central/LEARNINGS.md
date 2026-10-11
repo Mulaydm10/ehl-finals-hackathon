@@ -303,3 +303,5 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
   it accepts either at the same floor, and the db5 sheet is worth +0.0057 score to us on P18 (db5 is worth 0.1125/kg to us).
 - **Live 81b5c6de (0.688):** Werdenfels prices payment days steeply in its acceptance (15 more days cost >= 0.06/kg: 4.94 accepted
   on 30 d, refused on 45 d in the same conversation). A fact-free later e-mail drew its 'send us the data' line and a final.
+- **Offline C (05:12):** P18 acceptance = within its 2% approval authority (0 of 8 acceptances > 2% nominal under its offer) AND
+  above a per-conversation floor in its value terms, where a shorter payment term is worth ~+0.10/kg to it and db5 -0.10.
