@@ -150,3 +150,28 @@ and a round-3 ask inside the KAM's 2% authority.
 - The late-payment admission, the account value and the accepted clause in round 1 did not move it either.
 - Team best on P18 stays 0.727 (0c968aae): 4.76 @ 30 d -> 4.87 @ 14 d -> 4.91, agreed. In 28 normal-mode games no path got under
   4.91 @ 14 d (= 5.01 @ 45 d); the record (4.90 @ 45 d = 4.80 @ 14 d in its terms) is one 0.10 grid step below everything we saw.
+
+## 12. Live: cloud cross + harvest (local, 2026-10-11 03:28, f2770f53c9ebd512, `noidea_p18_harvest.py`): **0.677 - 90 days is priced**
+My v6 (build on 45 d, switch to 14 d) was not run: P18_deep.md 3.1 shows a 45-d round 1 draws 5.30 in 8 of 13 games.
+Played instead: the cloud's `noidea_p18_cross.py` unchanged (4.76 @ 30 d, then 90 d from round 2, guard back to 30 d) plus one
+addition: after a round-3 cut, our 4th message carries a second sheet (the next shorter term, 0.10 less) to draw an alternative
+into its final, which we propose back if it beats the record (scripted: 4.90 @ 60 d = 0.767, 5.00 @ 60 d db5 = 0.773).
+| our msg | ask | its answer |
+|---:|---|---|
+| 1 | 4.76 @ 30 d, ed9a881a's e-mail | 5.20 @ 30 d (\| 5.30 db5): the usual first counter (10 of 11 now) |
+| 2 | 4.87 @ 90 d db0 + forecast | **5.20 @ 90 d**, alternative **5.10 @ 30 d** "provided we maintain the 30 days net ... Our standard Zahlungsziel is 30 days net"; forecast "does not change our calculation" |
+| 3 | guard -> 4.93 @ 30 d + labour | 5.00 @ 30 d (-0.20): "We appreciate your return to our standard 30 days net payment terms"; labour "negligible" |
+| 4 | 4.94 @ 30 d + 4.84 @ 14 d + AS-14404 2026-06 -> 09 | final 5.00 @ 30 d, one sheet: "we cannot offer a further price reduction for this change" (14 d); the AS-14404 claim scored **"duplicate"** |
+| 5 | accept | 5.00 @ 30 d db0 = **0.677** |
+**What this settles:**
+- **A longer payment term after round 1 costs a full step**: 90 d was priced +0.10 in the same reply (5.20 @ 90 d vs 5.10 @ 30 d).
+  0.10 = 0.068 score, more than the 0.044 that 60 more days are worth to us, so 90 d is a loss. P18_deep.md section 4 ("after
+  round 1 a longer term is free") is ruled out for 90 d. The guard worked: back to 30 d drew -0.20 (the step plus the charge removed).
+- **Its standard is 30 days net**: longer is charged, and this time the shorter 14 d earned nothing ("cannot offer a further price
+  reduction"). Earlier finals did carry a 14-d alternative 0.10 lower (06f8f4f5, c4599331, 928a3878); the model-written alternatives
+  vary. 0 of 1 here.
+- **One index series = one fact**: AS-14404 cited again with a different window (2026-06 -> 09) scored "duplicate".
+- What is left to beat 0.756: a soft draw (its round-2 counter 5.00, about 1 game in 5), then a close at or under 4.88 @ 30 d db0
+  (or 4.99 db5). 4.88 is 2.4% under its 5.00, outside the 2% authority of its approval ladder. In 41 games it never agreed under
+  4.91. Honest odds per game are low single digits. The cloud's own rule (P18_deep.md section 0): when 90 d is priced, stop
+  spending sessions on P18. Team best stays 0.727 (0c968aae).
