@@ -1,0 +1,184 @@
+{
+ "case_id": "case:ST024",
+ "set": "stress",
+ "type": "renewal",
+ "title": "Frame agreement renewal for the 7.5 kW frequency converter",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with Selvbrunn Drive Systems GmbH. Frame agreement renewal for the 7.5 kW frequency converter. Need: 4580 pc a year. Category goal: stabilise a strategic supply: a healthy supplier and stable prices count, not only the lowest price. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 54 days). Fallback if you walk away: the second-source quote quote:7200003. Must-haves: none. Prepare from the data package.",
+ "trigger_doc": "doc:20260917-70530-P03",
+ "parts": [
+  "part:350020"
+ ],
+ "suppliers": [
+  "sup:70530"
+ ],
+ "negotiable": [
+  "unit_price",
+  "payment_days",
+  "contract_months",
+  "volume_per_year"
+ ],
+ "fixed_terms": {
+  "lead_time_days": 49,
+  "effective_date": "2027-01-01",
+  "index_clause": null,
+  "incoterm": "DAP",
+  "tooling_eur": 0
+ },
+ "term_options": {
+  "payment_days": [
+   14,
+   30,
+   45,
+   60,
+   90
+  ],
+  "contract_months": [
+   12,
+   24,
+   36
+  ],
+  "volume_per_year": [
+   3664,
+   4580,
+   5496
+  ]
+ },
+ "buyer": {
+  "need_per_year": 4580,
+  "horizon_years": 2,
+  "current_unit_price": 412.74,
+  "fallback_unit_price": 441.63,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 54,
+  "category_goal": "stabilise",
+  "fallback_risk_pct": 10,
+  "index_risk_pct": 4,
+  "late_cost_per_day": 600,
+  "cost_per_defect": 624,
+  "sustainable_margin_pct": 8,
+  "relationship_eur_per_point": 28360,
+  "freight_eur_per_unit": {
+   "EXW": 0.35,
+   "FCA": 0.3,
+   "DAP": 0.0
+  },
+  "index_paths": {},
+  "must_haves": [],
+  "alternative": {
+   "kind": "quote",
+   "ref": "quote:7200003",
+   "terms": {
+    "unit_price": 466.99,
+    "payment_days": 30,
+    "lead_time_days": 98,
+    "volume_per_year": 4580,
+    "contract_months": 24,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "incoterm": "DAP",
+    "tooling_eur": 0,
+    "ppm_commitment": 0
+   }
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260917-70530-P03",
+  "ctr:4600070530",
+  "sc:70530@2026Q3",
+  "quote:7200003",
+  "fc:350020@2026-09"
+ ],
+ "_hidden": {
+  "template": "case:P03",
+  "variant": 3,
+  "suppliers": {
+   "sup:70530": {
+    "grid": 0.01,
+    "rate": 0.10360416792646747,
+    "r_base": 0.9966267131126151,
+    "levers": {
+     "index_change": 0.0,
+     "should_cost": 0.036279923479019004,
+     "price_history": 0.0,
+     "quality": 0.03912118002665456,
+     "volume_change": 0.02252913894354728,
+     "news": 0.0,
+     "notice": 0.04948075767797822,
+     "contract": 0.0
+    },
+    "lever_repeat": 0.5417375934957462,
+    "fact_pass": 0.9739450946177245,
+    "first_frac": 0.3095304279254829,
+    "recip": 1.1838055172252138,
+    "cap": 0.017181846230599287,
+    "final_round": 2,
+    "p_walk_final": 0.6515293827954526,
+    "patience": 4,
+    "insult": 0.11969555487927504,
+    "min_move": 0.1155837246009721,
+    "hazard": 0.004072936858952329,
+    "rival_follow": 0.9920603806923414,
+    "rival_premium": 0.01849537816586504,
+    "lt_cost": 0.004449785036159351,
+    "vol_elast": 0.004354561327913098,
+    "ppm_cost": 0.032909113142498746,
+    "contract_bonus": 0.00205761909923996,
+    "ix_base": 0.04493325129856554,
+    "ix_slope": 0.0034111326275105915,
+    "max_payment_days": 60,
+    "trust_penalty": 0.005453346333809496,
+    "alt_std": false,
+    "strict_drivers": true,
+    "archetype": "data_driven",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 350,
+     "contract_months": 12,
+     "volume_per_year": 4580,
+     "lead_time_days": 49,
+     "incoterm": "DAP",
+     "tooling_eur": 0,
+     "chargeback_eur_per_complaint": 0.0
+    },
+    "opening": {
+     "unit_price": 429.62,
+     "payment_days": 30,
+     "contract_months": 12,
+     "volume_per_year": 4580
+    },
+    "drivers": [
+     "CU-NOTATION",
+     "LCI-C",
+     "PPI-C2611"
+    ],
+    "ppm_real": 395,
+    "full_cost_frac": 0.8969283506618362,
+    "usual_rate": 0.10360416792646747,
+    "walk_model": 2,
+    "rfq_gap0": 0.020089884187609004,
+    "rfq_gap1": 0.09980748252721894,
+    "p_walk_final_rfq": 0.7326206055425072,
+    "small_gap": 0.01941753739098039,
+    "p_agree_small": 0.673114380677954,
+    "p_walk_small": 0.12011608484254649,
+    "p_final_nomove2": 0.45759881555560145
+   }
+  },
+  "c_open": 4206709.54,
+  "c_alt": 4332545.92,
+  "c_best": 3788150.95,
+  "best_package": {
+   "supplier_id": "sup:70530",
+   "terms": {
+    "unit_price": 402.05,
+    "payment_days": 14,
+    "contract_months": 24,
+    "volume_per_year": 4580
+   },
+   "c": 3788150.95
+  },
+  "best_is_alternative": false
+ }
+}

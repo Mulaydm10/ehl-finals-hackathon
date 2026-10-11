@@ -3,7 +3,8 @@
 NEW hidden behaviour, drawn from distributions somewhat wider than the ones measured in the archived
 real games (stress/ENGINE_MODEL.md), and a perturbed opening price.
 
-    python stress/gen_cases.py [--per 10] [--seed 20261011] [--out stress/cases]
+    python stress/gen_cases.py [--per 10] [--seed 20261011] [--out stress/cases_v2] [--walk-model 2]
+    (stress/cases = --walk-model 1 --out stress/cases)
 
 Each case file is the practice case file as the arena would send it, plus the key `_hidden` (the
 harness strips it before the agent sees the case): template, per-supplier archetype and parameters,
@@ -268,7 +269,44 @@ def yardsticks(case, hidden, facts):
             "best_is_alternative": c_alt is not None and c_alt <= best[0]}
 
 
-def make_hidden(rng, case, facts, fitted, variant):
+# Walk model 2 (cases_v2), measured in stress/walk_stats.json from the archived games:
+#   open-thread walks (no timeouts): 7 of 466 threads, all at reply 3-4 -> per-reply hazard from the 3rd reply on:
+#   single 4/541 replies at risk, RFQ 3/71
+#   push past a final offer: single 11 (1 met the final -> agreed; within 1.6 %: agreed 3, walked 1, repeated 1;
+#   1.7-6.4 % below: walked 4/4); RFQ 40 (34 without a sheet and 3 of 4 pushes 0.06-2.8 % below -> final repeated,
+#   1 reopened; 6.5 % and 13.2 % below, both in game d9af85e000ab3d4d -> walked 2/2): a walk chance that ramps from
+#   0 at ~2.8 % below the final to its maximum at ~13 %
+#   no-move streak 2 -> final_offer 10/17, streak 3 -> 6/6; insulting offers 0 walks in 253; contradicted 0 in 3
+HAZARD_REAL = {"single": 4 / 541, "rfq": 3 / 71}
+
+
+def walk_v2(wr, arche, rfq):
+    """Recalibrated walk parameters, drawn from their own random stream (the v1 draws stay unchanged)."""
+    h = HAZARD_REAL["rfq" if rfq else "single"]
+    mirror = arche == "mirror"
+    hp = {
+        "walk_model": 2,
+        "hazard": h * (wr.uniform(0.6, 1.4) if mirror else wr.uniform(0.5, 2.0)),
+        "rfq_gap0": wr.uniform(0.025, 0.035) if mirror else wr.uniform(0.02, 0.04),
+        "rfq_gap1": wr.uniform(0.11, 0.15) if mirror else wr.uniform(0.08, 0.16),
+        "p_walk_final_rfq": wr.uniform(0.8, 1.0) if mirror else wr.uniform(0.6, 1.0),
+        "small_gap": wr.uniform(0.012, 0.02),
+        "p_agree_small": wr.uniform(0.45, 0.75) if mirror else wr.uniform(0.2, 0.8),
+        "p_walk_small": wr.uniform(0.1, 0.3) if mirror else wr.uniform(0.0, 0.4),
+        "p_walk_final": wr.uniform(0.85, 1.0) if mirror else wr.uniform(0.6, 1.0),
+        "p_final_nomove2": wr.uniform(0.45, 0.75) if mirror else wr.uniform(0.3, 0.9),
+    }
+    if arche == "walker":  # the impatient stranger: at most ~2x the real hazard
+        hp.update(hazard=h * wr.uniform(1.6, 2.0), p_walk_small=wr.uniform(0.3, 0.4), p_walk_final=1.0, p_walk_final_rfq=1.0,
+                  rfq_gap0=0.02, rfq_gap1=0.08)
+    elif arche == "boulware":
+        hp.update(p_walk_final=1.0, p_walk_final_rfq=1.0, p_agree_small=wr.uniform(0.1, 0.3))
+    elif arche == "conceder":
+        hp.update(p_agree_small=wr.uniform(0.7, 0.9), p_walk_final=wr.uniform(0.6, 0.8), p_walk_small=wr.uniform(0.0, 0.1))
+    return hp
+
+
+def make_hidden(rng, case, facts, fitted, variant, walk_model=1, seed=0):
     rfq = len(case["suppliers"]) > 1
     drivers = drivers_for(set(case["parts"]))
     hidden = {"template": case["case_id"], "variant": variant, "suppliers": {}}
@@ -300,6 +338,8 @@ def make_hidden(rng, case, facts, fitted, variant):
             "usual_rate": hp.get("usual_rate", hp["rate"]),
         })
         hp["r_base"] = min(hp["r_base"], 1.0)
+        if walk_model == 2:
+            hp.update(walk_v2(random.Random(f"{seed}:{case['case_id']}:{variant}:{sid}:walk"), arche, rfq))
         hidden["suppliers"][sid] = hp
     hidden.update(yardsticks(case, hidden, facts))
     return hidden
@@ -309,7 +349,9 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--per", type=int, default=10, help="variants per practice template")
     ap.add_argument("--seed", type=int, default=20261011)
-    ap.add_argument("--out", default=str(HERE / "cases"))
+    ap.add_argument("--out", default=str(HERE / "cases_v2"))
+    ap.add_argument("--walk-model", type=int, default=2, choices=[1, 2],
+                    help="1 = the walk rules of stress/cases (v1); 2 = recalibrated (cases_v2)")
     a = ap.parse_args(argv)
     cases = json.load(open(PRACTICE))
     facts = json.load(open(FACTS))
@@ -323,7 +365,7 @@ def main(argv=None):
     for case in cases:
         for v in range(a.per):
             rng = random.Random(f"{a.seed}:{case['case_id']}:{v}")
-            hidden = make_hidden(rng, case, facts, fitted, v)
+            hidden = make_hidden(rng, case, facts, fitted, v, a.walk_model, a.seed)
             n += 1
             cid = f"case:ST{n:03d}"
             c = json.loads(json.dumps(case))
