@@ -336,7 +336,14 @@ def _play_threads(table, case, case_id, threads, agent, deadline):
     slowest = 0.0
 
     def send(sid, msg):
-        return fetch_documents(table, table.send(sid, msg))
+        reply = table.send(sid, msg)
+        # (v3.1) its 60 s run from HERE: the arena serves one call per session at a time, so the attachment fetch below can
+        # wait behind another bidder's reply (Neel D02 e0bd42f0: J1's final waited 63 s behind C1's POST, walked). The
+        # arrival time also goes to the agent ('_at', '_rt' = this reply's time since our send) for its RFQ clock.
+        got = time.monotonic()
+        if isinstance(reply, dict) and "result" not in reply:
+            reply["_at"] = got
+        return fetch_documents(table, reply), got
 
     try:
         while True:
@@ -345,7 +352,7 @@ def _play_threads(table, case, case_id, threads, agent, deadline):
                     continue
                 del pending[sid]
                 try:
-                    reply = fut.result()
+                    reply, got = fut.result()
                 except ArenaError as e:
                     if e.status not in (409, 422) and e.status < 500:
                         raise
@@ -361,9 +368,10 @@ def _play_threads(table, case, case_id, threads, agent, deadline):
                     continue
                 if "result" in reply:  # the reply ended the case
                     return reply["result"]
+                reply["_rt"] = got - t0
                 threads[sid] += [{**msg, "from": "buyer"}, reply]
-                arrived[sid] = time.monotonic()
-                slowest = max(slowest, arrived[sid] - t0)
+                arrived[sid] = got
+                slowest = max(slowest, got - t0)
                 log.info("%s %s %s", sid, reply.get("status"), standing(threads[sid])[1])
             now = time.monotonic()
             for sid in [s for s in live_threads(threads) if s not in pending and now - arrived[s] > MOVE_LIMIT_S]:

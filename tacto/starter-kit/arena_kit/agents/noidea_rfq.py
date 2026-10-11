@@ -21,6 +21,7 @@ Four changes, each from the 11 archived P05 games (analysis/tools/p05_bidders.py
 """
 import csv
 import logging
+import time
 from pathlib import Path
 
 from arena_kit.agents.noidea import NoIdeaAgent as _Main
@@ -55,6 +56,8 @@ RFQ_BELOW_LOW = 0.12  # ... at least 12% under the market low (live P05: 6% 0.75
 import os as _os
 _EXP = {x.strip() for x in _os.environ.get("NOIDEA_EXPERIMENTS", "").split(",") if x.strip()}
 EXPERIMENTS_RFQ = _EXP
+# (v3.1) RFQ clock for showing a final to a rival (see _decide_rfq): its window, our decision time, a margin on reply times
+FINAL_WINDOW_S, SHOW_DECIDE_S, SHOW_RT_FACTOR = 60.0, 15.0, 1.25
 if "rfq_low10" in _EXP:
     RFQ_BELOW_LOW = 0.10
 if "rfq_low15" in _EXP:
@@ -200,7 +203,7 @@ class NoIdeaAgent(_Main):
             self.threads_ref = threads
             live = [x for x in live_threads(threads) if x in self.sup]
             closing = [x for x in live if latest(threads[x]).get("status") in ("agreed", "final_offer")]
-            if closing and len(live) > 1:
+            if closing and len(live) > 1 and "no_rfq_show" not in EXPERIMENTS_RFQ:
                 price = {x: (standing(threads[x])[1] or {}).get("unit_price") for x in live}
                 cb = min(closing, key=lambda x: price[x] or 1e9)
                 # once per (other bidder, closing bidder) - never per sheet id: an unanswered bidder re-sends its offer
@@ -208,6 +211,25 @@ class NoIdeaAgent(_Main):
                 shown = self.__dict__.setdefault("_shown", set())
                 pending = [x for x in live if x not in closing and price.get(x) and price[cb]
                            and price[x] > price[cb] and (x, cb) not in shown]
+                # (v3.1) RFQ CLOCK: a final unanswered for 60 s is lost (it walks), and the arena serves one call per session at
+                # a time - showing it to a rival first means waiting for that rival's reply (Neel D02 e0bd42f0: C1 took 104 s,
+                # J1's 14.80 final walked, 0.333 instead of ~0.58). Show only when the rivals' slowest reply so far fits in the
+                # time its final has left; else take it now. No timing (offline sim, an old runner): as before.
+                at = latest(threads[cb]).get("_at")
+                if pending and at is not None and "no_rfq_clock" not in EXPERIMENTS_RFQ:
+                    rts = [m["_rt"] for x in pending for m in threads[x] if m.get("_rt") is not None]
+                    left = FINAL_WINDOW_S - (time.monotonic() - at)
+                    need = SHOW_DECIDE_S + SHOW_RT_FACTOR * max(rts) if rts else None
+                    if need is None or need > left:
+                        log.info("RFQ: %s closed at %.2f - no time to show it (%.0f s left, a rival reply takes ~%s s): "
+                                 "taking it now", cb, price[cb], left, round(max(rts)) if rts else "?")
+                        shown.update((x, cb) for x in pending)
+                        saved = self.focus
+                        self.focus = {cb}  # decide for IT now - never a new call to a rival while its final waits
+                        try:
+                            return super().decide(case, threads)
+                        finally:
+                            self.focus = saved
                 if pending:
                     log.info("RFQ: %s closed at %.2f - showing it to %s before accepting", cb, price[cb], pending)
                     saved = self.focus
