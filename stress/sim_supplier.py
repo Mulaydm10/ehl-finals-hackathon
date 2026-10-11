@@ -130,6 +130,9 @@ class SimSupplier:
         self.vb_prev = None
         self.pending_rival = 0.0
         self.final_value = None
+        self.rfq = len(case["suppliers"]) > 1
+        self.walk_model = hp.get("walk_model", 1)  # 1 = the rules of stress/cases (v1), 2 = recalibrated (cases_v2)
+        self.nomove_streak = 0
         self.history = []  # what it did, for calibration and debugging
         self.v_open = self.value(self.full(hp["opening"]))
         self.r_base = hp["r_base"] * self.v_open
@@ -429,7 +432,8 @@ class SimSupplier:
                 else:
                     lines.append(f"We checked the {word} data you cited; it holds, but it does not change our calculation.")
             elif res == "contradicted":
-                self.patience -= 1
+                if self.walk_model == 1:
+                    self.patience -= 1
                 self.r_eff = min(self.v_open, self.r_eff + hp["trust_penalty"] * self.v_open)
                 lines.append(f"The {word} figures you cite do not match our records.")
             elif res == "irrelevant":
@@ -458,22 +462,47 @@ class SimSupplier:
         if self.status == "final_offer":
             if vb is not None and vb >= self.final_value - 1e-9:
                 return self._agree(best, lines, results)
-            if vb is not None and rng.random() < hp["p_walk_final"]:
-                return self.walk("We already gave you our final offer; we cannot go further.", results)
+            if self.walk_model == 1:
+                if vb is not None and rng.random() < hp["p_walk_final"]:
+                    return self.walk("We already gave you our final offer; we cannot go further.", results)
+            elif vb is not None:  # walk_stats.json: pushes past a final offer
+                gap = 1 - vb / self.final_value
+                u = rng.random()
+                if self.rfq:
+                    # RFQ: 34/34 no-sheet pushes and 4/4 pushes 0.06-2.8 % below -> no walk; the 2 pushes 6.5 % and 13.2 %
+                    # below (one game) -> walked. Walk chance ramps from 0 at `rfq_gap0` to `p_walk_final_rfq` at `rfq_gap1`
+                    ramp = min(1.0, max(0.0, (gap - hp["rfq_gap0"]) / (hp["rfq_gap1"] - hp["rfq_gap0"])))
+                    if u < hp["p_walk_final_rfq"] * ramp:
+                        return self.walk("Your figure is far below our final offer; we close this enquiry.", results)
+                elif gap <= hp["small_gap"]:  # single, within ~1.6 %: agreed 3, walked 1, repeated 1
+                    if u < hp["p_agree_small"]:
+                        return self._agree(best, lines, results)
+                    if u < hp["p_agree_small"] + hp["p_walk_small"]:
+                        return self.walk("We already gave you our final offer; we cannot go further.", results)
+                elif u < hp["p_walk_final"]:  # single, further below: 4/4 walked
+                    return self.walk("We already gave you our final offer; we cannot go further.", results)
             self.replies += 1
             lines.append("Our final offer stands.")
             self.history.append({"round": self.round, "kind": "final_hold", "target": self.target / self.v_open})
             return self._mail("final_offer", [dict(self.standing)], lines + [self._terms_line(self.standing)], results, attach_quote=True)
-        insult = vb is not None and vb < self.r_min * (1 - hp["insult"])
         no_move = self.replies >= 1 and (step_b is not None and step_b <= 1e-9) and not new_kinds and not rival_vals
-        slow = (self.replies >= 3 and step_b is not None and vb is not None and not new_kinds and not rival_vals
-                and step_b < hp.get("min_move", 0.0) * max(0.0, self.target - vb))
-        if insult or no_move or slow:
-            self.patience -= 1
-        if self.patience <= 0:
-            return self.walk("We are too far apart and see no movement.", results)
-        if self.replies >= 2 and hp["hazard"] > 0 and rng.random() < hp["hazard"]:
-            return self.walk("We need to plan our capacity and close this enquiry now.", results)
+        if self.walk_model == 1:
+            insult = vb is not None and vb < self.r_min * (1 - hp["insult"])
+            slow = (self.replies >= 3 and step_b is not None and vb is not None and not new_kinds and not rival_vals
+                    and step_b < hp.get("min_move", 0.0) * max(0.0, self.target - vb))
+            if insult or no_move or slow:
+                self.patience -= 1
+            if self.patience <= 0:
+                return self.walk("We are too far apart and see no movement.", results)
+            if self.replies >= 2 and hp["hazard"] > 0 and rng.random() < hp["hazard"]:
+                return self.walk("We need to plan our capacity and close this enquiry now.", results)
+        else:
+            # walk_stats.json: insulting offers (0 walks in 253), no-move (2 in 93, never on a 2nd/3rd no-move) and
+            # contradicted data (0 in 3) did not make real suppliers walk; 7 walks from open threads in 466 threads, all at
+            # reply 3-4 -> a per-reply hazard from the 3rd reply on (single 4/541, RFQ 3/71 replies at risk)
+            self.nomove_streak = self.nomove_streak + 1 if no_move else 0
+            if self.replies >= 2 and rng.random() < hp["hazard"]:
+                return self.walk("We need to plan our capacity and close this enquiry now.", results)
         # --- concession in value space
         room = max(0.0, self.target - self.r_eff)
         if self.replies == 0:
@@ -501,6 +530,9 @@ class SimSupplier:
             if any(std_terms.get(k) != main.get(k) for k in self.neg if k != "unit_price"):
                 out.append({**std_terms, "unit_price": self.price_for(std_terms, self.target)})
         final = self.replies >= hp["final_round"] or (self.target - self.r_eff) < 0.002 * self.v_open
+        if self.walk_model == 2 and not final and self.nomove_streak >= 2:
+            # no-move streak 2 -> final_offer 10/17, streak 3 -> 6/6 (single supplier)
+            final = self.nomove_streak >= 3 or self._rng("nomove").random() < hp["p_final_nomove2"]
         status = "final_offer" if final else "open"
         if final:
             self.final_value = self.target

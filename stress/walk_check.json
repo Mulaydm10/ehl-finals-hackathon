@@ -1,0 +1,79 @@
+{
+ "real": {
+  "single threads": 346,
+  "rfq threads": 120,
+  "open-thread walks": 7,
+  "push": {
+   "rfq->final_offer": 37,
+   "rfq->open": 1,
+   "rfq->walked_away": 2,
+   "single->agreed": 4,
+   "single->final_offer": 1,
+   "single->walked_away": 6
+  },
+  "push_vs_final": {
+   "rfq / below final / final_offer": 3,
+   "rfq / below final / open": 1,
+   "rfq / below final / walked_away": 2,
+   "rfq / no sheet / final_offer": 34,
+   "single / below final / agreed": 3,
+   "single / below final / final_offer": 1,
+   "single / below final / walked_away": 6,
+   "single / meets final / agreed": 1
+  },
+  "nomove_next": {
+   "rfq->agreed": 10,
+   "rfq->final_offer": 7,
+   "rfq->open": 9,
+   "single->agreed": 7,
+   "single->final_offer": 24,
+   "single->open": 34,
+   "single->walked_away": 2
+  },
+  "insult_5pct_next": {
+   "rfq->final_offer": 2,
+   "rfq->open": 65,
+   "single->final_offer": 33,
+   "single->open": 153
+  }
+ },
+ "replay_walk_model_1": {
+  "single threads": 346,
+  "rfq threads": 120,
+  "single push -> agreed": 6,
+  "rfq push -> walked_away": 2,
+  "single push -> walked_away": 18,
+  "rfq push -> final_offer": 33,
+  "single open-thread walks": 1,
+  "single push -> final_offer": 8
+ },
+ "replay_walk_model_2": {
+  "single threads": 346,
+  "rfq threads": 120,
+  "single push -> agreed": 10,
+  "rfq push -> walked_away": 1,
+  "single push -> final_offer": 2,
+  "single push -> walked_away": 16,
+  "single open-thread walks": 6,
+  "rfq push -> final_offer": 34
+ },
+ "run_v1": {
+  "single threads": 170,
+  "single pushes past final": 0,
+  "rfq threads": 50,
+  "rfq pushes past final": 16,
+  "rfq walks after a push past final": 14,
+  "rfq open-thread walks (patience: insult / no move / slow / contradicted)": 6,
+  "single open-thread walks (patience: insult / no move / slow / contradicted)": 10,
+  "single open-thread walks (hazard)": 2
+ },
+ "run_v1_c2": {
+  "single threads": 170,
+  "single pushes past final": 0,
+  "rfq threads": 50,
+  "rfq pushes past final": 19,
+  "rfq walks after a push past final": 11,
+  "rfq open-thread walks (hazard)": 2,
+  "single open-thread walks (hazard)": 1
+ }
+}

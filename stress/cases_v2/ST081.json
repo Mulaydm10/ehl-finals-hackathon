@@ -1,0 +1,191 @@
+{
+ "case_id": "case:ST081",
+ "set": "stress",
+ "type": "capacity",
+ "title": "Obermaier & Huber is full - secure flanges for the HX ramp-up",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with CNC-Technik Obermaier & Huber GmbH. Obermaier & Huber is full - secure flanges for the HX ramp-up. Need: 15600 pc a year. Category goal: secure supply of a bottleneck part: coverage of the full need and a supplier that stays healthy come first. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 28 days). Fallback if you walk away: the second-source quote quote:7200009. Must-haves: lead_time_days <= 42. Prepare from the data package.",
+ "trigger_doc": "doc:20260915-70220-P09",
+ "parts": [
+  "part:320030"
+ ],
+ "suppliers": [
+  "sup:70220"
+ ],
+ "negotiable": [
+  "unit_price",
+  "lead_time_days",
+  "volume_per_year",
+  "payment_days"
+ ],
+ "fixed_terms": {
+  "contract_months": 12,
+  "effective_date": "2027-01-01",
+  "index_clause": null,
+  "incoterm": "EXW",
+  "tooling_eur": 0
+ },
+ "term_options": {
+  "lead_time_days": [
+   21,
+   28,
+   35,
+   42,
+   49
+  ],
+  "volume_per_year": [
+   10920,
+   13260,
+   15600
+  ],
+  "payment_days": [
+   14,
+   30,
+   45,
+   60,
+   90
+  ]
+ },
+ "buyer": {
+  "need_per_year": 15600,
+  "horizon_years": 1.0,
+  "current_unit_price": 16.02,
+  "fallback_unit_price": 20.03,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 28,
+  "category_goal": "secure_supply",
+  "fallback_risk_pct": 25,
+  "index_risk_pct": 3,
+  "late_cost_per_day": 1800,
+  "cost_per_defect": 90,
+  "sustainable_margin_pct": 4,
+  "relationship_eur_per_point": 5000,
+  "freight_eur_per_unit": {
+   "EXW": 0.18,
+   "FCA": 0.16,
+   "DAP": 0.0
+  },
+  "index_paths": {},
+  "must_haves": [
+   {
+    "field": "lead_time_days",
+    "op": "<=",
+    "value": 42
+   }
+  ],
+  "alternative": {
+   "kind": "quote",
+   "ref": "quote:7200009",
+   "terms": {
+    "unit_price": 16.33,
+    "payment_days": 45,
+    "lead_time_days": 56,
+    "volume_per_year": 15600,
+    "contract_months": 12,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "incoterm": "FCA",
+    "tooling_eur": 800,
+    "ppm_commitment": 980
+   }
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260915-70220-P09",
+  "ctr:4600070220",
+  "sc:70220@2026Q3",
+  "quote:7200009",
+  "fc:320030@2026-09"
+ ],
+ "_hidden": {
+  "template": "case:P09",
+  "variant": 0,
+  "suppliers": {
+   "sup:70220": {
+    "grid": 0.1,
+    "rate": 0.0845349016447289,
+    "r_base": 0.9235238208323836,
+    "levers": {
+     "index_change": 0.0,
+     "should_cost": 0.002640938954464786,
+     "price_history": 0.0,
+     "quality": 0.013896680880615884,
+     "volume_change": 0.01816220014194269,
+     "news": 0.005400961453461971,
+     "notice": 0.0021192551965036875,
+     "contract": 0.0
+    },
+    "lever_repeat": 0.5672711786963412,
+    "fact_pass": 0.33549704244623074,
+    "first_frac": 0.7267250039663629,
+    "recip": 0.5455592035799992,
+    "cap": 0.019433021030767064,
+    "final_round": 5,
+    "p_walk_final": 0.9261291078961902,
+    "patience": 6,
+    "insult": 0.07138571085337625,
+    "min_move": 0.10389640943372859,
+    "hazard": 0.008030330575143473,
+    "rival_follow": 0.5505230528868841,
+    "rival_premium": 0.00988712310908461,
+    "lt_cost": 0.00663129754318286,
+    "vol_elast": 0.0674062780337183,
+    "ppm_cost": 0.010488795044285994,
+    "contract_bonus": 0.004849136125077047,
+    "ix_base": 0.03809801551958335,
+    "ix_slope": 0.003316571885363786,
+    "max_payment_days": 45,
+    "trust_penalty": 0.005759169091143862,
+    "alt_std": false,
+    "strict_drivers": true,
+    "archetype": "mirror",
+    "standard": {
+     "payment_days": 60,
+     "ppm_commitment": 750,
+     "chargeback_eur_per_complaint": 0.0,
+     "lead_time_days": 52,
+     "volume_per_year": 10920,
+     "incoterm": "EXW",
+     "contract_months": 12,
+     "tooling_eur": 0
+    },
+    "opening": {
+     "unit_price": 17.2,
+     "lead_time_days": 52,
+     "payment_days": 60
+    },
+    "drivers": [
+     "LCI-C",
+     "PPI-C2431",
+     "PPI-D351"
+    ],
+    "ppm_real": 811,
+    "full_cost_frac": 0.9489460140303271,
+    "usual_rate": 0.0845349016447289,
+    "walk_model": 2,
+    "rfq_gap0": 0.030167795846306886,
+    "rfq_gap1": 0.11068290496125005,
+    "p_walk_final_rfq": 0.8051532670185775,
+    "small_gap": 0.01748272720227183,
+    "p_agree_small": 0.5790173728636909,
+    "p_walk_small": 0.1681244574243495,
+    "p_final_nomove2": 0.5133678515983349
+   }
+  },
+  "c_open": 350902.2,
+  "c_alt": 310669.08,
+  "c_best": 300263.09,
+  "best_package": {
+   "supplier_id": "sup:70220",
+   "terms": {
+    "unit_price": 18.6,
+    "lead_time_days": 28,
+    "volume_per_year": 15600,
+    "payment_days": 14
+   },
+   "c": 300263.09
+  },
+  "best_is_alternative": false
+ }
+}

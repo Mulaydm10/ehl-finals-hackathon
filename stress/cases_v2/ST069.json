@@ -1,0 +1,174 @@
+{
+ "case_id": "case:ST069",
+ "set": "stress",
+ "type": "bundling",
+ "title": "Bundle the fastener kit with one distributor",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with Schraubenhandel Leitner & Sohn GmbH. Bundle the fastener kit with one distributor. Need: 30000 kits a year. Category goal: routine: fewer suppliers and less process cost. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 5 days). Fallback if you walk away: today's terms continue unchanged. Must-haves: none. Prepare from the data package.",
+ "trigger_doc": "doc:20260909-70610-P07",
+ "parts": [
+  "part:360010",
+  "part:360011",
+  "part:360012",
+  "part:360030"
+ ],
+ "suppliers": [
+  "sup:70610"
+ ],
+ "negotiable": [
+  "unit_price",
+  "payment_days",
+  "contract_months"
+ ],
+ "fixed_terms": {
+  "lead_time_days": 5,
+  "volume_per_year": 30000,
+  "effective_date": "2027-01-01",
+  "index_clause": null,
+  "incoterm": "DAP",
+  "tooling_eur": 0
+ },
+ "term_options": {
+  "payment_days": [
+   14,
+   30,
+   45,
+   60,
+   90
+  ],
+  "contract_months": [
+   12,
+   24,
+   36
+  ]
+ },
+ "buyer": {
+  "need_per_year": 30000,
+  "horizon_years": 2,
+  "current_unit_price": 6.29,
+  "fallback_unit_price": 6.91,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 5,
+  "category_goal": "routine",
+  "fallback_risk_pct": 5,
+  "index_risk_pct": 2,
+  "late_cost_per_day": 40,
+  "cost_per_defect": 6,
+  "freight_eur_per_unit": {
+   "EXW": 0.08,
+   "FCA": 0.07,
+   "DAP": 0.0
+  },
+  "index_paths": {},
+  "must_haves": [],
+  "alternative": {
+   "kind": "current_contract",
+   "ref": null,
+   "terms": {
+    "unit_price": 6.29,
+    "payment_days": 30,
+    "lead_time_days": 5,
+    "volume_per_year": 30000,
+    "contract_months": 24,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "incoterm": "DAP",
+    "tooling_eur": 0
+   }
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260909-70610-P07",
+  "ctr:4600070610",
+  "sc:70610@2026Q3"
+ ],
+ "_hidden": {
+  "template": "case:P07",
+  "variant": 8,
+  "suppliers": {
+   "sup:70610": {
+    "grid": 0.01,
+    "rate": 0.049104160645195044,
+    "r_base": 0.9939582018212932,
+    "levers": {
+     "index_change": 0.010516823162683604,
+     "should_cost": 0.01569419386261666,
+     "price_history": 0.0,
+     "quality": 0.0,
+     "volume_change": 0.016240295885607863,
+     "news": 0.0,
+     "notice": 0.0,
+     "contract": 0.0
+    },
+    "lever_repeat": 0.8873080794829136,
+    "fact_pass": 0.3099031280651867,
+    "first_frac": 0.636497537049944,
+    "recip": 0.4853775108877409,
+    "cap": 0.025195168403459083,
+    "final_round": 2,
+    "p_walk_final": 1.0,
+    "patience": 1,
+    "insult": 0.02230920892223101,
+    "min_move": 0.1791586618929933,
+    "hazard": 0.013789835386956752,
+    "rival_follow": 0.41906266366961054,
+    "rival_premium": 0.019412714418728882,
+    "lt_cost": 0.005623532108745421,
+    "vol_elast": 0.19360208016838396,
+    "ppm_cost": 0.036241435516561935,
+    "contract_bonus": 0.007256866335972674,
+    "ix_base": 0.04868957042914061,
+    "ix_slope": 0.0012831268195783994,
+    "max_payment_days": null,
+    "trust_penalty": 0.007151666465346655,
+    "alt_std": false,
+    "strict_drivers": false,
+    "archetype": "walker",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 80,
+     "contract_months": 12,
+     "lead_time_days": 5,
+     "incoterm": "DAP",
+     "volume_per_year": 30000,
+     "tooling_eur": 0,
+     "chargeback_eur_per_complaint": 0.0
+    },
+    "opening": {
+     "unit_price": 5.71,
+     "payment_days": 30,
+     "contract_months": 12
+    },
+    "drivers": [
+     "LCI-C",
+     "PPI-C2594"
+    ],
+    "ppm_real": 68,
+    "full_cost_frac": 0.9165611850728643,
+    "usual_rate": 0.049104160645195044,
+    "walk_model": 2,
+    "rfq_gap0": 0.02,
+    "rfq_gap1": 0.08,
+    "p_walk_final_rfq": 1.0,
+    "small_gap": 0.012512215658788368,
+    "p_agree_small": 0.5052770109551673,
+    "p_walk_small": 0.37118921295583673,
+    "p_final_nomove2": 0.8107259628226267
+   }
+  },
+  "c_open": 390121.4,
+  "c_alt": 379916.0,
+  "c_best": 321868.8,
+  "best_package": {
+   "supplier_id": "sup:70610",
+   "terms": {
+    "unit_price": 5.4,
+    "payment_days": 90,
+    "contract_months": 36
+   },
+   "c": 321868.8
+  },
+  "best_is_alternative": false
+ }
+}

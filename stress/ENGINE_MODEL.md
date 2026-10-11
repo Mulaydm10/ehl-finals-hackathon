@@ -208,3 +208,37 @@ levers 0.2-2 % per type with p = 0.4, first_frac 0.05-0.9, recip 0.2-1.2, cap 0.
 2-7, p_walk_final 0.4-1.0, patience 2-6, lead-time premium 0.2-0.8 %/day, ...). Supplier full cost
 from F10 (hosted, +-1.5 points) or 0-6 points above the sustainable margin. `_hidden` holds all of it
 plus c_open, c_best, c_alt and the best package.
+
+## 6. Walk rules recalibrated (walk model 2, `cases_v2/`)
+
+`walk_stats.py` measures the walk-relevant events in the real replies (`walk_stats.json`); `walk_check.py`
+replays every real buyer e-mail through the simulator with the `mirror` walk parameters of walk model 1
+(stress/cases) and walk model 2 (stress/cases_v2) and counts the same events (`walk_check.json`).
+`stress/cases/` is unchanged (`gen_cases.py --walk-model 1 --out stress/cases` regenerates it byte for byte, and
+the v1 report reproduces with the current simulator); `cases_v2/` uses the same seed and the same draws except the
+walk parameters, which come from their own random stream.
+
+| rule | real games | sim replay, model 1 | sim replay, model 2 | stress run v1 (cases) | stress run v1_c2 (cases_v2) |
+|---|---|---|---|---|---|
+| RFQ: push past a final offer -> walk | 2 / 40 pushes (34 had no sheet; 4 sheets 0.06-2.8 % below -> no walk; 6.5 % and 13.2 % below -> walked, both game d9af85e000ab3d4d) | 2 / 35 | 1 / 35 | 14 / 16 pushes | 11 / 19 pushes |
+| single: push past a final -> walk / agreed / repeated | 6 / 4 / 1 of 11 (meets final -> agreed 1/1; within 1.6 %: 1 / 3 / 1; 1.7-6.4 % below: 4 / 0 / 0) | 18 / 6 / 8 of 32 | 16 / 10 / 2 of 28 | no pushes | no pushes |
+| open-thread walk (no timeouts) per thread | 7 / 466 = 1.5 % (single 4/346, RFQ 3/120; all at reply 3-4) | 1 / 466 = 0.2 % | 6 / 466 = 1.3 % | 18 / 220 = 8.2 % (16 patience, 2 hazard) | 3 / 220 = 1.4 % (hazard) |
+| no-move e-mail -> walk | 2 / 93 (both a first no-move; streak 2 -> final 10/17, streak 3 -> final 6/6) | patience -1 each | no patience effect; streak 2 -> final with p 0.45-0.75, streak 3 -> final | | |
+| "insulting" offer (best value > 5 % below the lowest value ever conceded) -> walk | 0 / 253 (0 / 78 at 10 %, 0 / 38 at 15 %) | patience -1 below r_min x (1 - 8-15 %) | removed | | |
+| contradicted data -> walk | 0 / 3 | patience -1 | removed (price hardening `trust_penalty` kept) | | |
+| 3 timeouts in a row | ends the thread (arena rule) | same | same | | |
+
+Walk model 2 parameters (`gen_cases.walk_v2`):
+- per-reply hazard from the 3rd reply on: single 4/541 = 0.74 %, RFQ 3/71 = 4.2 % (the replies at risk in the
+  archive); mirror x U(0.6, 1.4), strangers x U(0.5, 2.0), walker x U(1.6, 2.0), so at most about 2x the real rate;
+- RFQ push: walk chance ramps from 0 at `rfq_gap0` (~2.8 %, the deepest real push that did not walk) to
+  `p_walk_final_rfq` at `rfq_gap1` (~13 %, the deepest real push, which walked); no sheet -> the final is repeated;
+- single push: within `small_gap` (~1.6 %) agreed with p 0.45-0.75 / walk 0.1-0.3 / else repeated; further below
+  -> walk with p 0.85-1.0 (mirror);
+- open-thread patience no longer reacts to insults, slow or no moves, or contradicted data.
+
+Remaining caveat: the agent's RFQ pushes past a final are deep - median 14 % below the bidder's final value
+(3.5-27 %) - deeper than every real push except the two that walked, so most of them still walk (11 / 19). The
+real evidence for deep pushes is 2 events in one game. Sensitivity: with a flat 5 % walk chance per RFQ push
+(depth ignored) the RFQ mean score is the same (0.213), because the walked bidders were not the ones the
+agent's deals depended on - the RFQ shortfall is the price of the deals, not the walks.

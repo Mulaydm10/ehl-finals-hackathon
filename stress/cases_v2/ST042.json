@@ -1,0 +1,301 @@
+{
+ "case_id": "case:ST042",
+ "set": "stress",
+ "type": "rfq",
+ "title": "RFQ: pump shaft for the new HX series",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with Zerspanung Dralveck GmbH, Stroj\u00edrna Hrvelec s.r.o., Drehteile Fuchsreiter GmbH. RFQ: pump shaft for the new HX series. Need: 4200 pc a year. Category goal: leverage: competition and data should bring the price down. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 35 days). There is no fallback supplier: without a deal the demand is bought at the fallback price. Must-haves: lead_time_days <= 42. Prepare from the data package.",
+ "trigger_doc": "doc:20260923-70210-P05",
+ "parts": [
+  "part:320070"
+ ],
+ "suppliers": [
+  "sup:70210",
+  "sup:70240",
+  "sup:70250"
+ ],
+ "negotiable": [
+  "unit_price",
+  "payment_days",
+  "lead_time_days"
+ ],
+ "fixed_terms": {
+  "volume_per_year": 4200,
+  "contract_months": 24,
+  "effective_date": "2027-01-01",
+  "index_clause": null,
+  "incoterm": "DAP",
+  "tooling_eur": 0
+ },
+ "term_options": {
+  "payment_days": [
+   14,
+   30,
+   45,
+   60,
+   90
+  ],
+  "lead_time_days": [
+   28,
+   35,
+   42,
+   56
+  ]
+ },
+ "buyer": {
+  "need_per_year": 4200,
+  "horizon_years": 2.0,
+  "current_unit_price": 36.39,
+  "fallback_unit_price": 36.39,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 35,
+  "category_goal": "leverage",
+  "fallback_risk_pct": 3,
+  "index_risk_pct": 1,
+  "late_cost_per_day": 200,
+  "cost_per_defect": 112,
+  "freight_eur_per_unit": {
+   "EXW": 0.31,
+   "FCA": 0.27,
+   "DAP": 0.0
+  },
+  "index_paths": {},
+  "must_haves": [
+   {
+    "field": "lead_time_days",
+    "op": "<=",
+    "value": 42
+   }
+  ],
+  "alternative": {
+   "kind": "none",
+   "ref": null,
+   "terms": {}
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260923-70210-P05",
+  "sc:70210@2026Q3",
+  "sc:70240@2026Q3",
+  "sc:70250@2026Q3"
+ ],
+ "_hidden": {
+  "template": "case:P05",
+  "variant": 1,
+  "suppliers": {
+   "sup:70210": {
+    "grid": 0.5,
+    "rate": 0.06576885697105893,
+    "r_base": 0.5607283772519241,
+    "levers": {
+     "index_change": 0.0018852895000763354,
+     "price_history": 0.0017436811820403426,
+     "rival_quote": 0.004037964512388747
+    },
+    "lever_repeat": 0.5007534967553268,
+    "fact_pass": 0.5889167109487153,
+    "first_frac": 0.2707513912046145,
+    "recip": 2.4715015255334523,
+    "cap": 0.038618331648822155,
+    "final_round": 4,
+    "p_walk_final": 0.9180944186443952,
+    "patience": 5,
+    "insult": 0.09717207015160685,
+    "min_move": 0.01999238812433847,
+    "hazard": 0.028872862274674334,
+    "rival_follow": 0.6223547322193644,
+    "rival_premium": 0.02293228688811485,
+    "lt_cost": 0.006603577337574053,
+    "vol_elast": 0.0001256978696129552,
+    "ppm_cost": 0.044705454563676444,
+    "contract_bonus": 0.0004378139195910544,
+    "ix_base": 0.04449273323604144,
+    "ix_slope": 0.005568374717558705,
+    "max_payment_days": null,
+    "trust_penalty": 0.009126408046785684,
+    "alt_std": false,
+    "strict_drivers": true,
+    "archetype": "mirror",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 1200,
+     "lead_time_days": 28,
+     "incoterm": "DAP",
+     "volume_per_year": 4200,
+     "contract_months": 24,
+     "tooling_eur": 0,
+     "chargeback_eur_per_complaint": 0.0
+    },
+    "opening": {
+     "unit_price": 34.57
+    },
+    "drivers": [
+     "AS-14404",
+     "LCI-C",
+     "PPI-C2431",
+     "PPI-D351"
+    ],
+    "ppm_real": 2011,
+    "full_cost_frac": 0.9198787093970124,
+    "usual_rate": 0.06576885697105893,
+    "walk_model": 2,
+    "rfq_gap0": 0.03183842341472047,
+    "rfq_gap1": 0.14156716235449754,
+    "p_walk_final_rfq": 0.8822584436878811,
+    "small_gap": 0.014671428826195333,
+    "p_agree_small": 0.6474481003998206,
+    "p_walk_small": 0.1062276495072792,
+    "p_final_nomove2": 0.46650811252488444
+   },
+   "sup:70240": {
+    "grid": 0.5,
+    "rate": 0.0998012298646183,
+    "r_base": 0.988497547074394,
+    "levers": {
+     "index_change": 0.03777372567112883,
+     "price_history": 0.06028844017389702,
+     "rival_quote": 0.04289723775875491
+    },
+    "lever_repeat": 0.18642440058652843,
+    "fact_pass": 0.06108288288674626,
+    "first_frac": 0.22112827397028958,
+    "recip": 1.1466077601329077,
+    "cap": 0.02533729664822684,
+    "final_round": 5,
+    "p_walk_final": 0.9307466062217895,
+    "patience": 4,
+    "insult": 0.10429271577191619,
+    "min_move": 0.017284421240223436,
+    "hazard": 0.0580855205825798,
+    "rival_follow": 0.6579240625347981,
+    "rival_premium": 0.02802653469870591,
+    "lt_cost": 0.005932274275825907,
+    "vol_elast": 0.5520654160816696,
+    "ppm_cost": 0.00040358176452544645,
+    "contract_bonus": 0.0014930113072552913,
+    "ix_base": 0.013710011197671089,
+    "ix_slope": 0.0022185497158622213,
+    "max_payment_days": 45,
+    "trust_penalty": 0.007175306843551287,
+    "alt_std": false,
+    "strict_drivers": false,
+    "archetype": "mirror",
+    "standard": {
+     "payment_days": 45,
+     "ppm_commitment": 1400,
+     "lead_time_days": 52,
+     "incoterm": "DAP",
+     "volume_per_year": 4200,
+     "contract_months": 24,
+     "tooling_eur": 0,
+     "chargeback_eur_per_complaint": 0.0
+    },
+    "opening": {
+     "unit_price": 32.98,
+     "lead_time_days": 52
+    },
+    "drivers": [
+     "AS-14404",
+     "LCI-C",
+     "PPI-C2431",
+     "PPI-D351"
+    ],
+    "ppm_real": 756,
+    "full_cost_frac": 0.9558732759732311,
+    "usual_rate": 0.0998012298646183,
+    "walk_model": 2,
+    "rfq_gap0": 0.029590766517251593,
+    "rfq_gap1": 0.12062942190498743,
+    "p_walk_final_rfq": 0.8696724878263932,
+    "small_gap": 0.0196782085082448,
+    "p_agree_small": 0.6205026800232495,
+    "p_walk_small": 0.19941270829978328,
+    "p_final_nomove2": 0.635934653445164
+   },
+   "sup:70250": {
+    "grid": 0.5,
+    "rate": 0.09830285759207497,
+    "r_base": 0.905458536123167,
+    "levers": {
+     "index_change": 0.0,
+     "should_cost": 0.0,
+     "price_history": 0.008175613354371829,
+     "quality": 0.006017762719881418,
+     "volume_change": 0.0,
+     "news": 0.0012096381580159392,
+     "notice": 0.0035286121838107444,
+     "contract": 0.0,
+     "rival_quote": 0.0233455659686856
+    },
+    "lever_repeat": 0.8174226986799322,
+    "fact_pass": 0.7398501659533154,
+    "first_frac": 0.12100930785799102,
+    "recip": 0.1992237643272394,
+    "cap": 0.0019052778642301787,
+    "final_round": 3,
+    "p_walk_final": 1.0,
+    "patience": 4,
+    "insult": 0.14608877246241883,
+    "min_move": 0.08362374136634804,
+    "hazard": 0.08277477094651346,
+    "rival_follow": 0.341103248593683,
+    "rival_premium": 0.008155793978927262,
+    "lt_cost": 0.004499822137915438,
+    "vol_elast": 0.07740577597627554,
+    "ppm_cost": 0.029421538270271004,
+    "contract_bonus": 0.004550593561330258,
+    "ix_base": 0.001534903582596588,
+    "ix_slope": 0.001493386353250584,
+    "max_payment_days": null,
+    "trust_penalty": 0.007950341779696328,
+    "alt_std": true,
+    "strict_drivers": true,
+    "archetype": "boulware",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 600,
+     "lead_time_days": 28,
+     "incoterm": "DAP",
+     "volume_per_year": 4200,
+     "contract_months": 24,
+     "tooling_eur": 0,
+     "chargeback_eur_per_complaint": 0.0
+    },
+    "opening": {
+     "unit_price": 39.09
+    },
+    "drivers": [
+     "AS-14404",
+     "LCI-C",
+     "PPI-C2431",
+     "PPI-D351"
+    ],
+    "ppm_real": 293,
+    "full_cost_frac": 0.9429684235672309,
+    "usual_rate": 0.09830285759207497,
+    "walk_model": 2,
+    "rfq_gap0": 0.038095442001107746,
+    "rfq_gap1": 0.0854136176635289,
+    "p_walk_final_rfq": 1.0,
+    "small_gap": 0.013506306288306454,
+    "p_agree_small": 0.1708053517020199,
+    "p_walk_small": 0.3897977576963077,
+    "p_final_nomove2": 0.46596488461401464
+   }
+  },
+  "c_open": 293452.88,
+  "c_alt": null,
+  "c_best": 162501.92,
+  "best_package": {
+   "supplier_id": "sup:70210",
+   "terms": {
+    "unit_price": 19.34,
+    "payment_days": 90,
+    "lead_time_days": 28
+   },
+   "c": 162501.92
+  },
+  "best_is_alternative": false
+ }
+}
