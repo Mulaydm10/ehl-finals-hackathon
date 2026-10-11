@@ -417,3 +417,17 @@
 | 2026-10-11 09:01 | Dhruv | D01 sandbox | official 09:00 pre-flight final-v5 hidden / gpt-6-astra (free) | 0.9139 | 62883d264c6b8cf5 |
 | 2026-10-11 09:03 | Dhruv | D02 sandbox | official 09:00 pre-flight final-v5 hidden / gpt-6-astra (free) | 0.5786 | f12daa14057d4de9 |
 | 2026-10-11 09:06 | Dhruv | P01 | official 09:00 pre-flight final-v5 hidden / gpt-6-astra | 0.9987 | e049701648f5d460 |
+| 2026-10-11 09:30 | Dhruv | D01 sandbox | v6 candidate, model API hanging (local 50 s + 503) / gpt-6-astra (free) | 0.9199 | 438e7066a82eb493 |
+| 2026-10-11 09:30 | Dhruv | D01 sandbox | final-v5, model API hanging (90 s per decision; stopped after 3.5 min) (free) | stopped | 20ce531707ace844 |
+| 2026-10-11 09:30 | Dhruv | D01 sandbox | v6 candidate hidden / gpt-6-astra (free) | 0.9425 | 4d6882bd2323301c |
+| 2026-10-11 09:30 | Dhruv | D01 sandbox | v6 candidate hidden / gpt-6-astra (free) | 0.8826 | 966131230e925000 |
+| 2026-10-11 09:30 | Dhruv | D02 sandbox | v6 candidate hidden / gpt-6-astra (free) | 0.5786 | see /tmp/v216/D02_v6n3.log (Mac) |
+| 2026-10-11 09:37 | Dhruv | P01 | v6 L10 hidden (9 in parallel) / gpt-6-astra | 0.9987 | 6ece09cd83495815 |
+| 2026-10-11 09:37 | Dhruv | P02 | v6 L10 hidden (9 in parallel) / gpt-6-astra | 0.7134 | c4a43e9f3fdb1a02 |
+| 2026-10-11 09:37 | Dhruv | P03 | v6 L10 hidden (9 in parallel) / gpt-6-astra | 0.9536 | 2ea7d0911c920b24 |
+| 2026-10-11 09:37 | Dhruv | P04 | v6 L10 hidden (9 in parallel) / gpt-6-astra | 0.7661 | 33fde7d718590920 |
+| 2026-10-11 09:37 | Dhruv | P07 | v6 L10 hidden (9 in parallel) / gpt-6-astra | 0.7924 | deefc48715d1d462 |
+| 2026-10-11 09:37 | Dhruv | P08 | v6 L10 hidden (9 in parallel) / gpt-6-astra | 0.9156 | 8483f2f689f567ca |
+| 2026-10-11 09:37 | Dhruv | P10 | v6 L10 hidden (9 in parallel) / gpt-6-astra | 0.7019 | ad34500fcf7343ab |
+| 2026-10-11 09:37 | Dhruv | P11 | v6 L10 hidden (9 in parallel) / gpt-6-astra | 0.7935 | 392933d50fad9928 |
+| 2026-10-11 09:37 | Dhruv | P18 | v6 L10 hidden (9 in parallel) / gpt-6-astra | 0.6883 | 3d4b6b1482049552 |

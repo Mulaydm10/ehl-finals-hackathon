@@ -1476,3 +1476,20 @@ Result: the D02 ceiling is J1's own concession schedule; nothing we control has 
   code + datasets = final-v5 (frozen); key ok (practice 455 used / 295 left); model ok 2.2 s; release present; tests 69 + 3
   skips; crash 0; D01 0.914, D02 0.579, P01 0.999, 0 failure lines; final runner 60 s: 12 polls on 403, no session, stopped;
   no arena process left.
+
+### final-v6 (09:15 - 09:45): one model budget per decision (Dhruv + Claude)
+- **Risk found** (code read): agents/llm.py gives each model call a 45 s timeout and nothing capped a decision - the decision
+  call + the opening paragraph on a slow or hanging API = ~90 s, past the 60 s a supplier waits (an unanswered final walks).
+  Normal load had no such case (L6-L9: 0 decisions over 45 s), so only an API slowdown during the final would hit it.
+- **final-v6** (noidea.py +39 lines): `_budgeted` wraps the model call; all calls of one decision share LLM_BUDGET_S = 40 s
+  (each call gets what is left; under LLM_MIN_S = 4 s no call), the clock starts when play.py asks for a decision (decide
+  wrapped on the instance, so the RFQ layer's internal super().decide() calls keep the same start). An overrun raises
+  TimeoutError, which every call site already catches (deterministic choice / plain opening). Accepting a final never
+  calls the model. Opt-out `no_llm_budget` (= v5).
+- **Tests**: 5 new unit tests (tests/test_llm_budget.py: within budget, cut at the budget, spent budget makes no call,
+  outside a decision, opt-out); suite 76 + 1 skip (74 + 3 hidden); crash 0; stress cases_v2 0.6328 (= v5, the sim has no model).
+- **Sandbox, model API hanging** (local server: 50 s, then 503): v5 took 90.1 s and 90.0 s for its first two decisions (1
+  e-mail in 3.5 min, stopped); v6 sent 7 e-mails in time (12 budget cuts / skips) and closed a deal at **0.920** (D01's
+  normal range 0.87-0.94). Normal API: D01 0.943 / 0.883, D02 0.579, 0 budget cuts.
+- **L10, 9 practice cases in parallel on v6**: P01 0.999, P02 0.713, P03 0.954, P04 0.766, P07 0.792, P08 0.916, P10 0.702,
+  P11 0.794, P18 0.688 = **0.814** (L7 v1 0.823, L8 v2 0.820, L9 v3 0.795), 0 budget cuts, 0 model failures, 0 warnings.
