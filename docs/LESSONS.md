@@ -41,6 +41,10 @@ Distilled from the hidden-supplier loops of 2026-10-10/11 (v2.34 - v2.34h). Deta
   round-1 hold / timeout before the first e-mail (Parth A/B: +0.04 on P02/P07/P18, P10 walked 2 of 2).
 - Inconclusive, kept only where it was measured: the two-sheet choice framing for cash-short quality cases.
 
+## Checked late
+- Lessons the model reads must be general: supplier recipes vs general principles A/B -> the general principles do at least
+  as well (mean 0.783 vs 0.755); supplier-specific notes are keyed by supplier id + case type only.
+
 ## Open questions (measured, not solved)
 - **Grid suppliers**: where the floor sits inside a 0.50 step differs by session (P11 agreed 45.10/45.25 at 45.50, refused
   44.95 at 45.00, agreed 44.45 at 44.50 once) - the first probe depth is untuned.

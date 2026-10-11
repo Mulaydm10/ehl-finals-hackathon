@@ -340,3 +340,11 @@
 | 2026-10-11 02:17 | Dhruv | P10 | v2.34j hidden A/B trade_term fixed / gpt-6-astra | 0.7019 | 045855e3085b4b27 |
 | 2026-10-11 02:17 | Dhruv | P10 | v2.34j hidden A/B trade_term fixed / gpt-6-astra | 0.7019 | bb285b61870c147d |
 | 2026-10-11 02:17 | Dhruv | P10 | v2.34j hidden A/B no_trade_term / gpt-6-astra | 0.7019 | cb8dc7210eb99af3 |
+| 2026-10-11 02:54 | Dhruv | P02 | v2.34j hidden A/B old_lessons / gpt-6-astra | 0.7405 | bb8f2eddf6eb111c |
+| 2026-10-11 02:54 | Dhruv | P02 | v2.34j hidden A/B general lessons / gpt-6-astra | 0.7666 | d904ecea0b1aae81 |
+| 2026-10-11 02:54 | Dhruv | P07 | v2.34j hidden A/B old_lessons / gpt-6-astra | 0.7924 | a2d70f924d7c0075 |
+| 2026-10-11 02:54 | Dhruv | P07 | v2.34j hidden A/B general lessons / gpt-6-astra | 0.7859 | 2e7ba6fcd624124e |
+| 2026-10-11 02:54 | Dhruv | P10 | v2.34j hidden A/B old_lessons / gpt-6-astra | 0.6941 | 1fc63548805721dd |
+| 2026-10-11 02:54 | Dhruv | P10 | v2.34j hidden A/B general lessons / gpt-6-astra | 0.7019 | f14a4bece64b33b8 |
+| 2026-10-11 02:54 | Dhruv | P11 | v2.34j hidden A/B old_lessons / gpt-6-astra | 0.7935 | d1e499ee783f7e1a |
+| 2026-10-11 02:54 | Dhruv | P11 | v2.34j hidden A/B general lessons / gpt-6-astra | 0.8771 | c8b2844b0f2b7cd5 |

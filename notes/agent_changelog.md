@@ -1323,3 +1323,12 @@ games 8ccbdcc0 / 98e834e4, P02 10b624c1, P07 216f49e9, P08 00e8923e, P10 673ee89
 - **P07**: no agent-side gap - three normal-mode games with IDENTICAL moves ended 0.812 / 0.792 / 0.773 on the supplier's
   per-session step (-0.11 / -0.08 / -0.06 in round 2); our steps already follow the 30%-of-gap mirror schedule.
 - Default behaviour = v2.34h + the trade_now fix (only matters when a trade experiment is on). Tests 68, crash 19/19.
+
+### Overfitting audit + lessons A/B (02:40 - 03:00)
+- Audit (`docs/OVERFITTING_AUDIT.md`): no case / supplier / part id or fixed price in any code the final runs; per-case data and
+  supplier memory are off in hidden mode; ~25 constants and several rules rest on one or two practice suppliers; our ~0.83 is
+  in-sample. The model's lessons held 7 recipes for ONE practice supplier each, shown for any case of that type -> rewritten as
+  general mechanisms; the originals are keyed by supplier id + case type (shown only to that exact supplier, never in hidden mode).
+- **A/B old recipes vs general principles** (same window, hidden, all normal mode): P02 0.740 vs **0.767**, P07 **0.792** vs
+  0.786, P10 0.694 vs **0.702**, P11 0.794 vs **0.877** -> mean 0.755 vs **0.783**. The general principles do at least as well
+  (P11's gap is partly its first-counter draw). Generalising did NOT dilute the score -> general lessons stay.
