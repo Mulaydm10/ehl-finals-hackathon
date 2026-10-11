@@ -402,3 +402,12 @@
 | 2026-10-11 06:32 | Dhruv | P11 | v3 L9 hidden (final-v3 candidate, last_try never fired) / gpt-6-astra | 0.7517 | see /tmp/v216/LOAD_L9v3.log (Mac) |
 | 2026-10-11 06:32 | Dhruv | P18 | v3 L9 hidden (final-v3 candidate, last_try never fired) / gpt-6-astra | 0.6883 | see /tmp/v216/LOAD_L9v3.log (Mac) |
 | 2026-10-11 06:50 | Dhruv | D02 sandbox x3 | v4 RFQ clock / gpt-6-astra (free) | 0.5686 / 0.5786 / 0.5786 | /tmp/v216/D02_v31_*.log (Mac) |
+| 2026-10-11 08:13 | Dhruv | P02 | letter reader WITH price_frozen (rejected) hidden / gpt-6-astra | 0.8881 | 8a5fd6179f876009 |
+| 2026-10-11 08:13 | Dhruv | P02 | letter reader WITH price_frozen (rejected) hidden / gpt-6-astra | 0.8239 | bd235534a6ebf15d |
+| 2026-10-11 08:13 | Dhruv | P02 | letter reader WITH price_frozen (rejected) hidden / gpt-6-astra | 0.5657 | 0103e54a56650f5f |
+| 2026-10-11 08:23 | Dhruv | P02 | final-v5 hidden / gpt-6-astra | 0.7692 | 679c3f849e3130cb |
+| 2026-10-11 08:23 | Dhruv | P02 | final-v5 hidden / gpt-6-astra | 0.8000 | a7b71258eed1e23d |
+| 2026-10-11 08:23 | Dhruv | P02 | final-v5 hidden / gpt-6-astra | 0.7580 | 5251be2a66156142 |
+| 2026-10-11 08:23 | Dhruv | P07 | final-v5 hidden (release data: noise news for 70610) / gpt-6-astra | 0.7600 | bdacf19b20470cd7 |
+| 2026-10-11 08:23 | Dhruv | P11 | final-v5 hidden (release data: 70140 insolvency news) / gpt-6-astra | 0.7517 | 0ac33c3a5d4bba83 |
+| 2026-10-11 08:23 | Dhruv | P11 | final-v5 hidden (release data: 70140 insolvency news) / gpt-6-astra | 0.7935 | 56a5483c9995bc7a |

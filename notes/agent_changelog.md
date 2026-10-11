@@ -1425,3 +1425,28 @@ every case a deal, 9 in parallel in 241 s. Unseen sandbox suppliers: **D01 0.943
 - **Incident 06:53**: an unquoted heredoc over ssh executed a backtick `bash tools/final/start_final.sh` inside RUNBOOK text: the
   real final runner started, polled the final list twice (403), opened 0 sessions, killed within a minute
   (logs/final-20261011-065313.log). Rule: scripts for the Mac are written locally and copied (never unquoted heredocs).
+
+### Morning 08:04 - 08:40: Sunday release + final-v5 (Dhruv + Claude)
+- **Release** (`arena data`, 08:04 via tools/sunday_release/rebuild.sh): 11 new facts - 4 supplier letters (70510 price list
+  2027 for all customers, board ruled out individual price reductions; 70720 bright / cold-drawn bar bought forward at fixed
+  prices until June 2027; 70250 short-time work, "Our bank is watching our figures", pay within 10 days; 70650 now Strelvo group,
+  central price list, no individual reductions), a purchasing memo, 6 news (70140 insolvency, 70350 credit cover withdrawn,
+  70540 semiconductor supply normal again, 70650 acquired by Strelvo, 70610 logistics centre = noise, pump makers' stable order
+  intake). Merged into tacto/data, datasets A/B/C rebuilt (claims 915 -> 920, self-check 816 ok / 0 bad), tests 71 + 1 skip,
+  crash 0, practice round 1 unchanged -> `d1af751`, tag `final-v4r` (= v4 + release data).
+- **Kit update 06:06** (upstream 273a9bc): a "wave closed" log line in the kit's play.py, help text, rehearsal-sim changes -
+  nothing for our agent, not merged.
+- **Gap found**: the motive reader matched exact template phrases; the release paraphrases them, so 3 of its 4 letters were
+  missed (price list "2027" in the middle, "Our bank" for "the bank", "bought our bar requirement forward at fixed prices").
+- **final-v5** = v4 agent code (unchanged) + release data + `MOTIVE_RX` in src/datasets/build_abc.py (regex variants of the
+  templates, lever text of the motive's first template): 70250 + cash_short, 70720 + hedged_forward, 70510 / 70650 +
+  price_list_fixed (lever text for the model only). Diff over all 46 dossiers: these 4 motives, nothing else.
+- **Rejected inside it: price_frozen from the paraphrase.** Its code rule (lead with the longest payment within 1% of our best
+  cost) put a 90 d + CU index-clause sheet into P02's round 1: stress P02 template 0.604 -> 0.512 on the 30 affected cases (12
+  worse, 1 better; the sim suppliers take the index-clause sheet, +18k index risk). Live P02 x3 with it 0.888 (team best,
+  8a5fd6179f876009) / 0.824 / 0.566 = 0.759; without it (v5) 0.769 / 0.800 / 0.758 = 0.776.
+- **v5 evidence**: round 1 identical to v4 on all 19 practice cases; stress cases_v2 0.6333 -> 0.6328 (1 better, 3 worse, all P16
+  sheet cases - the bar-steel hedge does not cover sheet, and the sim has no hedged suppliers), cases_v2_unknown 0 changed;
+  tests 71 + 1 skip; crash 0; live P02 x3 0.769 / 0.800 / 0.758, P11 x2 0.752 / 0.794 (70140 insolvency news in its dossier),
+  P07 0.760, 0 warnings.
+- Pre-flight step 0 now also checks datasets/A_dossiers.json and C_arguments.jsonl against the frozen tag (list starts final-v5).

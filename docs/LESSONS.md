@@ -35,9 +35,11 @@ Distilled from the hidden-supplier loops of 2026-10-10/11 (v2.34 - v2.34h). Deta
 | a learned value measured from a field the opening left out | the slope is silently dropped (no baseline) | baseline = the first value the supplier itself stated; test with an opening that omits fields |
 | walking away from a final that is worse than our alternative | stress ST077 walked at 0.000 while its own second sheet beat the alternative (0.404) | last try before walking: one sheet under the alternative first (a free option) |
 | showing a bidder's final to a rival before accepting, with slow replies | D02 e0bd42f0: the final waited 63 s behind the rival's reply (one call per session at a time) and walked (0.333) | RFQ clock: show only if the rival's slowest reply fits the final's remaining 60 s |
+| the motive reader matched exact template phrases | the Sunday release paraphrased them: 3 of its 4 letters were missed ("price list 2027", "Our bank is watching", "bought our bar ... forward") | regex variants (`MOTIVE_RX` in src/datasets/build_abc.py), diffed on all 46 dossiers before shipping |
 | an unquoted heredoc over ssh | backticks in documentation text RAN (started the final runner for a minute, 0 sessions) | write Mac scripts locally and scp them; never interpolate text into a remote shell |
 
 ## Ideas tested and rejected (they helped one case and hurt another = overfitting)
+- price_frozen read from a paraphrased letter ("no individual price reductions"): its code rule (lead with the longest payment) put a 90 d + index-clause sheet into P02's round 1 - stress P02 template 0.604 -> 0.512 (12 of 30 worse), live P02 x3 0.888 / 0.824 / 0.566 = 0.759 vs 0.776 without it. One 0.888 (team best) is P02's normal spread, not evidence. The paraphrase sets only price_list_fixed (a hint for the model); price_frozen stays on the template it was validated on (P03).
 - moving the payment term toward the supplier's standard in round 2 (`pay_trade`: P18 0.610 / 0.666 vs 0.688).
 - holding the longer contract back for a round-2 trade (`trade_term`: P10 0.7019 x4 with and without).
 - raw-material supplier on its standard payment term + shorter term as the trade (`budget_pay`: P18 0.666 x3 vs ~0.68) -

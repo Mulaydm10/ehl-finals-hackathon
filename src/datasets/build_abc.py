@@ -62,6 +62,18 @@ MOTIVES = {
     "scorecard": ("quality_escalation", "quality case: ppm commitment and chargebacks, cite sc/qn data"),
     "We want one supplier for the kit": ("bundle", "bundling: total kit volume buys price"),
 }
+# The same motives in other words. The Sunday release paraphrases the templates ("our price list 2027 applies to all
+# customers", "our board has ruled out individual price reductions", "Our bank is watching our figures", "we bought our bar
+# requirement forward at fixed prices until June 2027"): the exact phrases above missed 3 of its 4 letters. Regex -> motive,
+# with the lever of that motive's first template. NOT price_frozen from "ruled out individual price reductions": its code
+# rule (lead with the longest payment) put a 90 d + index-clause sheet into P02's round 1 - stress P02 template 0.604 ->
+# 0.512 (12 of 30 worse), live P02 x3 no better (0.759 vs ~0.75) - so the paraphrase sets only the softer price_list_fixed.
+MOTIVE_RX = {
+    r"price list (?:\d{4} )?applies to all customers": "price_list_fixed",
+    r"\b(?:the|our) bank is watching": "cash_short",
+    r"\bbought (?:their|our) [\w ,-]{0,60}?forward|forward at fixed prices|covered at fixed prices until": "hedged_forward",
+}
+LEVER = {m: lever for m, lever in reversed(list(MOTIVES.values()))}
 
 
 def read(data, name):
@@ -282,6 +294,11 @@ def build(data, out):
             for phrase, (motive, lever) in MOTIVES.items():
                 if phrase.lower() in text.lower():
                     motives.setdefault(motive, {"lever": lever, "evidence": []})["evidence"].append(d["id"])
+            for rx, motive in MOTIVE_RX.items():
+                ev = motives.setdefault(motive, {"lever": LEVER[motive], "evidence": []})["evidence"] \
+                    if re.search(rx, text, re.I) else None
+                if ev is not None and d["id"] not in ev:
+                    ev.append(d["id"])
             for sentence in re.split(r"(?<=[.!?])\s+|\n+", text):
                 for tag, rx in SIGNALS.items():
                     if re.search(rx, sentence, re.I) and len(sentence) > 20:

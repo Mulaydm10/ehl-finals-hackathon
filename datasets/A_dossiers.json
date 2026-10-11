@@ -4227,6 +4227,12 @@
      "doc:20260904-70250-M4",
      "doc:20261005-70250-S2"
     ]
+   },
+   "cash_short": {
+    "lever": "trade faster payment for price; it does not squeeze its margin",
+    "evidence": [
+     "doc:20261005-70250-S2"
+    ]
    }
   },
   "signals": {
@@ -8840,6 +8846,12 @@
      "doc:20260227-70510-M2",
      "doc:20260410-70510-M1"
     ]
+   },
+   "price_list_fixed": {
+    "lever": "price will not move: negotiate logistics and payment",
+    "evidence": [
+     "doc:20261001-70510-S5"
+    ]
    }
   },
   "signals": {
@@ -12413,6 +12425,12 @@
     "evidence": [
      "doc:20260602-70650-M4"
     ]
+   },
+   "price_list_fixed": {
+    "lever": "price will not move: negotiate logistics and payment",
+    "evidence": [
+     "doc:20261008-70650-S10"
+    ]
    }
   },
   "signals": {
@@ -13039,6 +13057,12 @@
     "evidence": [
      "doc:20260415-70720-M2",
      "doc:20260712-70720-M3"
+    ]
+   },
+   "hedged_forward": {
+    "lever": "market index moves don't reach its cost yet: index arguments meet 'not our reality'",
+    "evidence": [
+     "doc:20261002-70720-S6"
     ]
    }
   },
