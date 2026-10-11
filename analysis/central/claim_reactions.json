@@ -1,5 +1,5 @@
 {
- "games": 373,
+ "games": 386,
  "by_kind": {
   "copper notation": {
    "taken": 3,
@@ -22,13 +22,13 @@
    "take_rate": 1.0
   },
   "index_change": {
-   "taken": 282,
-   "no_change": 38,
+   "taken": 289,
+   "no_change": 39,
    "confirm_case": 7,
    "take_rate": 0.86
   },
   "labour cost index": {
-   "taken": 2,
+   "taken": 3,
    "take_rate": 1.0
   },
   "lci-c": {
@@ -46,9 +46,9 @@
    "take_rate": 0.89
   },
   "po_prices": {
-   "no_change": 79,
-   "taken": 100,
-   "take_rate": 0.56
+   "no_change": 81,
+   "taken": 108,
+   "take_rate": 0.57
   },
   "rival_quote": {
    "taken": 89,
@@ -60,28 +60,28 @@
    "take_rate": 0.0
   },
   "scorecard_ppm": {
-   "taken": 62,
+   "taken": 63,
    "no_change": 3,
    "take_rate": 0.95
   },
   "should_cost": {
-   "taken": 58,
+   "taken": 65,
    "take_rate": 1.0
   },
   "volume forecast": {
-   "taken": 1,
+   "taken": 2,
    "take_rate": 1.0
   },
   "volume_change": {
-   "taken": 152,
-   "no_change": 83,
-   "take_rate": 0.65
+   "taken": 156,
+   "no_change": 86,
+   "take_rate": 0.64
   }
  },
  "by_case": {
   "case:P01": {
    "index_change": {
-    "taken": 12
+    "taken": 13
    },
    "volume_change": {
     "taken": 10
@@ -91,7 +91,7 @@
     "no_change": 1
    },
    "should_cost": {
-    "taken": 6
+    "taken": 7
    },
    "rival_quote": {
     "no_change": 1
@@ -107,19 +107,19 @@
     "taken": 1
    },
    "volume forecast": {
-    "taken": 1
+    "taken": 2
    }
   },
   "case:P02": {
    "index_change": {
-    "taken": 27,
+    "taken": 29,
     "confirm_case": 1
    },
    "po_prices": {
     "no_change": 10
    },
    "_signals": {
-    "final_at_5": 10,
+    "final_at_5": 11,
     "mirror": 9,
     "final_at_4": 17,
     "full_authority": 6
@@ -133,25 +133,25 @@
   },
   "case:P03": {
    "volume_change": {
-    "taken": 18
+    "taken": 19
    },
    "scorecard_otd": {
     "no_change": 1
    },
    "should_cost": {
-    "taken": 17
+    "taken": 18
    },
    "_signals": {
     "final_at_3": 1,
-    "final_at_4": 5,
+    "final_at_4": 6,
     "final_at_5": 6
    },
    "index_change": {
-    "taken": 25
+    "taken": 28
    },
    "po_prices": {
     "no_change": 6,
-    "taken": 11
+    "taken": 12
    },
    "demand forecast": {
     "taken": 1
@@ -165,15 +165,15 @@
   },
   "case:P04": {
    "po_prices": {
-    "no_change": 15
+    "no_change": 16
    },
    "volume_change": {
-    "no_change": 20
+    "no_change": 21
    },
    "_signals": {
     "mirror": 1,
     "final_at_3": 11,
-    "final_at_2": 7
+    "final_at_2": 8
    },
    "index_change": {
     "no_change": 7,
@@ -205,12 +205,12 @@
   },
   "case:P07": {
    "_signals": {
-    "final_at_4": 26,
+    "final_at_4": 27,
     "final_at_3": 2,
     "mirror": 12
    },
    "volume_change": {
-    "taken": 21
+    "taken": 22
    },
    "index_change": {
     "taken": 12,
@@ -222,21 +222,21 @@
   },
   "case:P08": {
    "index_change": {
-    "taken": 44,
+    "taken": 45,
     "no_change": 7,
     "confirm_case": 1
    },
    "volume_change": {
-    "taken": 31
+    "taken": 32
    },
    "_signals": {
     "final_at_4": 7,
-    "final_at_3": 30,
+    "final_at_3": 31,
     "mirror": 1
    },
    "po_prices": {
     "no_change": 6,
-    "taken": 19
+    "taken": 20
    },
    "scorecard_ppm": {
     "no_change": 1
@@ -244,17 +244,17 @@
   },
   "case:P10": {
    "po_prices": {
-    "taken": 32,
+    "taken": 37,
     "no_change": 1
    },
    "volume_change": {
-    "no_change": 30
+    "no_change": 31
    },
    "should_cost": {
-    "taken": 35
+    "taken": 40
    },
    "_signals": {
-    "final_at_2": 29,
+    "final_at_2": 33,
     "final_at_1": 12
    },
    "index_change": {
@@ -264,29 +264,32 @@
    "scorecard_otd": {
     "no_change": 2
    },
+   "labour cost index": {
+    "taken": 1
+   },
    "scorecard_ppm": {
     "no_change": 1
    }
   },
   "case:P11": {
    "scorecard_ppm": {
-    "taken": 61
+    "taken": 62
    },
    "index_change": {
     "taken": 93
    },
    "volume_change": {
-    "taken": 58
+    "taken": 59
    },
    "_signals": {
-    "final_at_7": 9,
+    "final_at_7": 10,
     "final_at_4": 8,
     "final_at_6": 6,
     "final_at_5": 12,
     "final_at_3": 2
    },
    "po_prices": {
-    "no_change": 38
+    "no_change": 39
    },
    "energy cost": {
     "taken": 1
@@ -307,19 +310,19 @@
   "case:P18": {
    "index_change": {
     "taken": 22,
-    "no_change": 22,
+    "no_change": 23,
     "confirm_case": 1
    },
    "po_prices": {
-    "taken": 38
+    "taken": 39
    },
    "volume_change": {
-    "no_change": 33,
+    "no_change": 34,
     "taken": 6
    },
    "_signals": {
     "mirror": 10,
-    "final_at_4": 21,
+    "final_at_4": 22,
     "final_at_3": 11,
     "final_at_2": 2
    },
@@ -329,10 +332,10 @@
   }
  },
  "signals": {
-  "already_counted": 59,
-  "asked_for_data": 190,
-  "padding": 55,
-  "fair_point": 98,
+  "already_counted": 61,
+  "asked_for_data": 197,
+  "padding": 56,
+  "fair_point": 102,
   "rising_index_backfired": 7
  }
 }

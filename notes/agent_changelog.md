@@ -1332,3 +1332,7 @@ games 8ccbdcc0 / 98e834e4, P02 10b624c1, P07 216f49e9, P08 00e8923e, P10 673ee89
 - **A/B old recipes vs general principles** (same window, hidden, all normal mode): P02 0.740 vs **0.767**, P07 **0.792** vs
   0.786, P10 0.694 vs **0.702**, P11 0.794 vs **0.877** -> mean 0.755 vs **0.783**. The general principles do at least as well
   (P11's gap is partly its first-counter draw). Generalising did NOT dilute the score -> general lessons stay.
+
+### Loop 7 - final configuration (general lessons only, memory off), 03:13 - 03:20
+P01 0.999, P02 0.769, P03 0.987, P04 0.766, P07 0.805, P08 0.916, P10 0.686, P11 0.794, P18 0.688 = **mean 0.823**, 0 warnings,
+every case a deal, 9 in parallel in 241 s. Unseen sandbox suppliers: **D01 0.943** (best so far), D02 RFQ 0.579.
