@@ -361,3 +361,4 @@
 | 2026-10-11 03:13 | Dhruv | D02 sandbox | final config L7 hidden (general lessons only) / gpt-6-astra | 0.5786 | see notes/analysis_v234/LOAD_L7.log |
 | 2026-10-11 03:29 | Neel | P18 | noidea_p18_harvest (cloud cross: 90 d from r2 + two-sheet r4) / gpt-6-astra - 90 d priced +0.10, guard to 30 d, final 5.00 @ 30 d | **0.68** | f2770f53c9ebd512 |
 | 2026-10-11 03:58 | Neel | P18 | noidea_p18_soft (soft-session plan: 3 beat sheets if round 2 = 5.00) / gpt-6-astra - normal session 5.20/5.10/5.00, final 5.00 @ 30 d | **0.68** | 83f89503e22658b2 |
+| 2026-10-11 04:05 | Neel | P18 | noidea_p18_db3 (45 d + db3 from msg 2) / gpt-6-astra - db3 priced like db5 (+0.10), 45 d +0.10: 5.30 -> final 5.20 @ 45 d db3 | **0.60** | d602e35bbccc5318 |

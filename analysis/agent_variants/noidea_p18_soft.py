@@ -1,4 +1,10 @@
-"""P18 "soft-session" variant (local, Neel, 2026-10-11 ~04:30). Gate case:P18; every other case = main. Built on the cloud's
+"""v2 (04:15): db3 and 90 d dropped - live d602e35b priced db3 like db5 (+0.10) and a move to 45 d +0.10, f2770f53 a move to
+90 d +0.10. Soft msg 3 = 4.99 @ 30 d db5 + 4.88 @ 30 d db0 (both beat 0.756: its value 4.89 / 4.88); soft msg 4 = 5.03 @ 30 d
+db5 + 4.92 @ 30 d db0 (0.731 / 0.732, both over our 0.727: value 4.93 / 4.92); normal path on db5 (5.03 -> 5.04 -> its final
+5.10 db5 = 0.685: its 5.00 db0 floor + 0.10, worth 0.1125 to us); msg 2 asks for its 5% deadband price as an alternative.
+v1 (live 83f89503 = 0.677, normal session) is described below.
+
+P18 "soft-session" variant (local, Neel, 2026-10-11 ~04:30). Gate case:P18; every other case = main. Built on the cloud's
 noidea_p18_cross.py (its round 1, facts and helpers); rounds 2-4 replaced. Analysis: analysis/cases/P18_lever.md section 13.
 
 What 43 P18 games say (all in datasets/runs + tools/replays/raw):
@@ -44,9 +50,9 @@ RECORD = 0.75595  # Codacabana: 4.90 @ 45 d, AS-14404 db0
 C_OPEN, C_BEST = 295173.23, 222651.27
 SOFT_LINE = 5.00  # its round-2 primary at or under this (db0 terms) = a soft session
 R2 = (4.87, 30, 0)  # msg 2: price, payment days, deadband
-SOFT_R3 = ((4.88, 30, 0), (4.94, 30, 3), (4.94, 90, 0))  # all beat: 0.7588 / 0.7617 / 0.7612
-SOFT_R4 = ((4.99, 30, 5), (4.94, 30, 3), (4.94, 90, 0))  # all beat: 0.7576 / 0.7617 / 0.7612
-NORMAL = {2: (4.93, 30, 0), 3: (4.94, 30, 0)}  # the proven path to its final 5.00 @ 30 d
+SOFT_R3 = ((4.99, 30, 5), (4.88, 30, 0))  # both beat 0.756: 0.7576 / 0.7588 (its value 4.89 / 4.88)
+SOFT_R4 = ((5.03, 30, 5), (4.92, 30, 0))  # both over our 0.727: 0.7310 / 0.7317 (its value 4.93 / 4.92)
+NORMAL = {2: (5.03, 30, 5), 3: (5.04, 30, 5)}  # = 4.93 / 4.94 db0; its final 5.10 db5 = 0.685 (5.00 db0 = 0.677)
 SIGN = _cross.SIGN
 
 
@@ -132,7 +138,8 @@ class NoIdeaAgent(_cross.NoIdeaAgent):
             p, d, db = R2
             fact = self._next_fact(sid, ("forecast", "lci", "otd"))
             body = ("Dear Sir or Madam,\n\nThank you for your offer. We accept your AS-14404 price adjustment clause with no "
-                    "deadband, as your letter of 22 September proposed, and we move on price.\n\n"
+                    "deadband, as your letter of 22 September proposed, and we move on price. Please also quote your price "
+                    "with a 5% deadband as an alternative.\n\n"
                     + (fact["sentence"] + "\n\n" if fact else "")
                     + f"We propose {_words(p, d, db)} (term sheet attached).\n\n{SIGN}")
             log.info("%s P18 soft msg 2: %.2f @ %s d db%s (its %.2f) + %s", sid, p, d, db, theirs.get("unit_price") or 0,
@@ -145,13 +152,13 @@ class NoIdeaAgent(_cross.NoIdeaAgent):
         if s["p18_soft"]:
             plan = SOFT_R3 if k == 2 else SOFT_R4
             fact = self._next_fact(sid, ("lci", "otd", "forecast") if k == 2 else ("otd", "lci", "forecast"))
-            a, b, c = plan
+            a, b = plan
             lead = (f"Thank you for your step to EUR {theirs.get('unit_price') or 5.0:.2f}. We want to close today and leave "
-                    "the structure to you." if k == 2 else
+                    "the clause to you." if k == 2 else
                     "Thank you. We take one more step so that we can close today.")
             body = (f"Dear Sir or Madam,\n\n{lead}\n\n" + (fact["sentence"] + "\n\n" if fact else "")
-                    + f"We propose {_words(*a)}. Alternatively {_words(*b)}, or {_words(*c)}. The three term sheets are "
-                      f"attached; on your confirmation of any one of them we will issue the order today.\n\n{SIGN}")
+                    + f"We propose {_words(*a)}, as in your own alternative, or {_words(*b)}. Both term sheets are "
+                      f"attached; on your confirmation of either we will issue the order today.\n\n{SIGN}")
             sheets = [self._sheet(case, *x) for x in plan]
             log.info("%s P18 soft msg %d (SOFT): %s + %s", sid, k + 1,
                      " | ".join(f"{p:.2f}@{d}d/db{db} ({self._score(case, sid, t):.4f})" for (p, d, db), t in zip(plan, sheets)),
