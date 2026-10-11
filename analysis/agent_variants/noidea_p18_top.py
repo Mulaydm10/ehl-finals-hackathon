@@ -42,7 +42,8 @@ SIGN = "Kind regards,\nPurchasing, Hollerau Pumpenwerke"
 MONTHS = int(os.environ.get("P18_TOP_MONTHS", "24"))  # 36 from game 4: answers its "Which volume can you commit to?"
 VOL = "We confirm a binding volume of 23,700 units per year for 24 months."
 VOL36 = ("You asked which volume we can commit to: 23,700 kg a year, binding for 36 months, 71,100 kg in total. That is "
-         "50% more binding volume than over 24 months.")
+         "50% more binding volume than over 24 months. So we make two moves at once: your AS-14404 clause as your letter "
+         "proposed, and 36 months instead of 24. We ask you for a step on the base price for each of them.")
 VOL36_LATER = "We confirm a binding volume of 23,700 kg a year for 36 months, 71,100 kg in total."
 
 
