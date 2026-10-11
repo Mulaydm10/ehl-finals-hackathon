@@ -1377,3 +1377,15 @@ every case a deal, 9 in parallel in 241 s. Unseen sandbox suppliers: **D01 0.943
   P11 0.794, P18 0.621 = 0.820, 0 warnings** (v1 loop 7: 0.823 - same decisions, arena variance).
 - **Promoted: `main` = tag `final-v2` (`17b7f16`).** v1 behaviour: `NOIDEA_EXPERIMENTS=hidden,no_prem_std,no_hold_market_check`
   (identical on all 380 games). The P18 argument-order test now skips in hidden mode (it needs per-case claim reactions).
+
+### Robustness of final-v2 for unseen structures and suppliers (04:55 - 05:15)
+- **Structural mutations** (120 cases: unknown supplier ids, a negotiable term dropped / added, no alternative, an extra unknown
+  RFQ bidder, round limit 4, unknown case type, unknown negotiable field): 0 crashes, 0 invalid e-mails, 0 safe moves, 0 refused
+  accepts; deals in 116 of 120.
+- **Suppliers not in our data** (`stress/cases_v2_unknown`: same 190 cases, ids renamed): mean 0.560 vs 0.631 with our data
+  (-0.071; raw material -0.139, price increase -0.093, quality -0.087, renewal -0.068, capacity -0.020, RFQ +0.002). Worst in
+  stabilise cases: without a should-cost figure the full-cost guess is 0.94 x the quote and the relationship charge punishes the
+  squeeze (P02 copy 0.972 -> 0.0: EUR 347 with a EUR 204k charge vs EUR 367 with EUR 36k).
+- **Rejected `fc_ref97` / `fc_ref99`** (guess the full cost high when there is no should-cost): unknown set 9 better / 12 worse
+  (P10-like secure-supply suppliers have real margin) / worse overall. Reverted - v2 stays = tag final-v2.
+- Regret (an earlier standing offer would have scored > 0.10 more): 4 of 190 with v2 - closing timing is sound.
