@@ -1342,3 +1342,12 @@ every case a deal, 9 in parallel in 241 s. Unseen sandbox suppliers: **D01 0.943
 - Independent stress lab being built by a subagent that sees only the raw game traces, the rules and the data - not our code
   or notes - so the test suppliers are not shaped by our assumptions (`stress/`, kept out of commits until reviewed).
 - Pre-flight step 0 now checks that the agent code matches the newest frozen tag.
+
+### Stress lab, first results (03:56 - 04:40)
+- v1 on 190 synthetic suppliers (`stress/report_v1.md`): mean 0.595, 0 crashes, 0 broken must-haves; capacity 0.93, bundling
+  0.71, renewal 0.69, price increase 0.60, quality 0.59, raw material 0.44, RFQ 0.19. Memory on 0.594 = off 0.595.
+- Agent walk-aways are mostly right: a no-deal scores the alternative (`api.md` 418-425), and walks to an alternative that IS the
+  best scored 1.0. The supplier's alternative sheet cannot be accepted (accept takes the standing offer, `api.md` 95).
+- Biggest simulator failure, RFQ (14 of 20 RFQ walks after a push past a final), is a **simulator artifact**: real P05 bidders
+  pushed after a final 40x -> stayed final 37, reopened 1, walked 2 (one game, 20%-deep ask); single suppliers 11x -> walked 6.
+  Sent back to the stress subagent to recalibrate (cases_v2); the agent's RFQ behaviour stays.
