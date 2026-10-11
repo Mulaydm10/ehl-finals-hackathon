@@ -84,39 +84,5 @@
   "Commit to one term sheet in round 1; choose the payment term by what the supplier values (long when our money is worth more, short when it needs cash).",
   "The best results come when the supplier agrees to your price: once it stops moving, keep a firm ask just under its line rather than taking its final.",
   "A supplier short of cash moves about one step per e-mail, whatever you show it: first remove its cash fear (on-time payment, no chargebacks), then give one new verified reason per e-mail, the strongest facts each in their own e-mail."
- ],
- "by_supplier": {
-  "sup:70110": {
-   "price_increase": [
-    "P01 (stabilise, family foundry, data-naive owner): index data + short-notice argument + later effective date + faster payment → 0.85 in 3 rounds."
-   ]
-  },
-  "sup:70510": {
-   "price_increase": [
-    "P02 (stabilise, group, pricing committee): it accepted 90-day payment but priced the financing (~6.7%/yr); final in round 4 at €372.15; wanted verified data behind our target.",
-    "P02 live: 0.48 with no price argument (v2.3), 0.34 and 0.27 when we argued with a 6-month cost calc; it prices 90-day financing at ~6.7%/yr."
-   ]
-  },
-  "sup:70610": {
-   "bundling": [
-    "P07: 24-month contract was the big win (+0.48); the kit-level calculation at its own prices got its best price (€5.40 @ 30 d); its final always lands at ~€5.49 @ 90 d in round 4; 36 months was priced higher."
-   ]
-  },
-  "sup:70410": {
-   "capacity": [
-    "P10 (secure_supply, allocation, approval ladder): goes final in ROUND 1 every time (5/5), so the first offer is everything; lead time below its own costs ~0.49% of price per day; its floor €31.90 @ 56 d (24 or 36 m alike)."
-   ]
-  },
-  "sup:70620": {
-   "renewal": [
-    "P04 (routine, Neel's games): final in round 3; 90-day payment and a small price step scored 0.86."
-   ]
-  },
-  "sup:70140": {
-   "quality": [
-    "P11 (cash-short foundry, 2,376 ppm real): ask 300 ppm with EUR 0 chargeback; it priced 300/0 at EUR 45.50 in round 1 (0.71); chargebacks get priced at ~2x their expected cost."
-   ]
-  }
- },
- "_about_by_supplier": "Lessons about ONE practice supplier, per case type: shown to the model only when that exact supplier id comes back in the same case type (never in hidden mode); everyone else gets the general lessons."
+ ]
 }

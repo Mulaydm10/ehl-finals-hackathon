@@ -1647,10 +1647,9 @@ or null, "reason": "<one sentence>"}."""
         docs = self.sup[sid]["dossier"].get("documents", [])
         ranked = sorted(docs, key=lambda d: -len(words & set(re.findall(r"[a-zäöüß]{5,}", d["text"].lower()))))
         notes = [f"- {d['date']} {d['kind']}: {' '.join(d['text'].split())[:260]}" for d in ranked[:4]]
-        # a returning supplier gets the lessons about ITSELF first (G_lessons "by_supplier"); any other supplier only the general
-        # lessons of its case type - a recipe for one practice supplier must not steer a new one (never in hidden mode)
-        own = [] if "hidden" in EXPERIMENTS else ((self.lessons.get("by_supplier") or {}).get(sid) or {}).get(case["type"], [])
-        lessons = [f"- {x}" for x in own + self.lessons.get(case["type"], []) + self.lessons.get("general", [])]
+        # general lessons only: supplier-specific recipes were tested on their own suppliers and did not beat the general
+        # principles (live A/B 0.755 vs 0.783) - they only add context (archived in datasets/G_lessons_by_supplier.json)
+        lessons = [f"- {x}" for x in self.lessons.get(case["type"], []) + self.lessons.get("general", [])]
         principles = [f"- {x}" for x in self.lessons.get("principles", [])]
         return ("SIGNALS IN ITS E-MAIL (and what works):\n" + ("\n".join(sig) or "- none") +
                 "\nOUR NOTES ON THIS SUPPLIER (verbatim, most relevant first):\n" + ("\n".join(notes) or "- none") +
