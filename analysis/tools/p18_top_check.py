@@ -159,7 +159,7 @@ for name, got, want in cases:
 print("\n4b. ALT MODE (P18_TOP_MODE=alt; msgs 1-2 = live 1c767030bd2efdd2, whose 5.10 @ 45 d reply is cached)")
 g1 = thread_of(ROOT / "datasets/runs/1c767030bd2efdd2.json")
 gb = [m for m in g1 if m.get("from") == "buyer" and m.get("term_sheets")]
-if mod.MONTHS == 24:
+if mod.MONTHS == 24 and not os.environ.get("P18_TOP_R2REQ"):
     os.environ["P18_TOP_R2"] = "0"
     for kk in (0, 1):
         dk = decide(g1[:g1.index(gb[kk])])["message"]
@@ -194,7 +194,7 @@ if mod.MONTHS == 24:
     print(f"   alternative proposed back, then agreed 5.00 db5 @ 45 (0.7618)          -> {got}")
     os.environ.pop("P18_TOP_MODE")
 else:
-    print("   (run with P18_TOP_MONTHS=24)")
+    print("   (alt mode is checked with P18_TOP_MONTHS=24 and without P18_TOP_R2REQ)")
 
 print("\n5. ARCHIVED REPLAY (every P18 game, every turn)")
 files = sorted(set(glob.glob(str(ROOT / "tools/replays/raw/P18_*.json"))) |

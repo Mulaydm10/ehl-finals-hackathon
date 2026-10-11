@@ -171,7 +171,11 @@ class NoIdeaAgent(_Main):
         if k == 1:
             i = int(os.environ.get("P18_TOP_R2", "0")) % len(R2_OPENINGS)
             t = sheet(*R2_ASK)
-            body = (f"Dear Blankstahl Werdenfels GmbH team,\n\n{R2_OPENINGS[i]}\n\n{vol(True)} {FORECAST}\n\nOn this basis we propose "
+            # P18_TOP_R2REQ: ask for its deadband alternative here, where the engine artifact puts its db0 sheet 0.10 under
+            # the price it names (2 of 2 on request: 15438619, 2493f26f) - the soft state on demand
+            req = (" Please also quote your price with a 5% deadband as an alternative."
+                   if os.environ.get("P18_TOP_R2REQ") else "")
+            body = (f"Dear Blankstahl Werdenfels GmbH team,\n\n{R2_OPENINGS[i]}{req}\n\n{vol(True)} {FORECAST}\n\nOn this basis we propose "
                     f"the attached term sheet ({words(t)}). Please let us know if this works for you.\n\n{SIGN}")
             log.info("%s P18 top msg 2: variant %d, %s", sid, i, words(t))
             return self._send(case, sid, [t], body, ["fc:370010@2026-09"], subject)
