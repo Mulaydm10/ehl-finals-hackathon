@@ -1,33 +1,33 @@
 {
- "label": "v2a_cases",
+ "label": "v2b_cases_v2",
  "experiments": "hidden",
  "cases": 190,
  "overall": {
   "n": 190,
-  "mean": 0.5967,
-  "median": 0.6697,
+  "mean": 0.631,
+  "median": 0.6813,
   "min": 0.0,
-  "no_deal_rate": 0.132,
-  "supplier_walk_rate": 0.132,
-  "all_walked_rate": 0.079,
-  "buyer_walk_rate": 0.053,
+  "no_deal_rate": 0.068,
+  "supplier_walk_rate": 0.058,
+  "all_walked_rate": 0.011,
+  "buyer_walk_rate": 0.058,
   "crashes": 0,
   "broken_must_have": 0,
-  "mean_rounds": 2.85
+  "mean_rounds": 2.91
  },
  "by_type": {
   "bundling": {
    "n": 20,
-   "mean": 0.7071,
-   "median": 0.7163,
-   "min": 0.1495,
-   "no_deal_rate": 0.25,
-   "supplier_walk_rate": 0.1,
-   "all_walked_rate": 0.1,
+   "mean": 0.7575,
+   "median": 0.7274,
+   "min": 0.5301,
+   "no_deal_rate": 0.15,
+   "supplier_walk_rate": 0.0,
+   "all_walked_rate": 0.0,
    "buyer_walk_rate": 0.15,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 3.85
+   "mean_rounds": 3.9
   },
   "capacity": {
    "n": 20,
@@ -44,12 +44,12 @@
   },
   "price_increase": {
    "n": 40,
-   "mean": 0.5978,
+   "mean": 0.6101,
    "median": 0.6227,
-   "min": 0.0,
-   "no_deal_rate": 0.05,
-   "supplier_walk_rate": 0.025,
-   "all_walked_rate": 0.025,
+   "min": 0.0398,
+   "no_deal_rate": 0.025,
+   "supplier_walk_rate": 0.0,
+   "all_walked_rate": 0.0,
    "buyer_walk_rate": 0.025,
    "crashes": 0,
    "broken_must_have": 0,
@@ -57,29 +57,29 @@
   },
   "quality": {
    "n": 20,
-   "mean": 0.5892,
-   "median": 0.5747,
-   "min": 0.0,
-   "no_deal_rate": 0.4,
-   "supplier_walk_rate": 0.1,
-   "all_walked_rate": 0.1,
+   "mean": 0.6441,
+   "median": 0.6115,
+   "min": 0.3081,
+   "no_deal_rate": 0.3,
+   "supplier_walk_rate": 0.0,
+   "all_walked_rate": 0.0,
    "buyer_walk_rate": 0.3,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 3.8
+   "mean_rounds": 3.95
   },
   "raw_material": {
    "n": 30,
-   "mean": 0.4416,
-   "median": 0.5265,
+   "mean": 0.557,
+   "median": 0.6082,
    "min": 0.0,
-   "no_deal_rate": 0.233,
-   "supplier_walk_rate": 0.233,
-   "all_walked_rate": 0.233,
-   "buyer_walk_rate": 0.0,
+   "no_deal_rate": 0.067,
+   "supplier_walk_rate": 0.033,
+   "all_walked_rate": 0.033,
+   "buyer_walk_rate": 0.033,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 3.33
+   "mean_rounds": 3.73
   },
   "renewal": {
    "n": 40,
@@ -92,20 +92,20 @@
    "buyer_walk_rate": 0.0,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 1.8
+   "mean_rounds": 1.75
   },
   "rfq": {
    "n": 20,
-   "mean": 0.2032,
-   "median": 0.0835,
+   "mean": 0.2261,
+   "median": 0.1993,
    "min": 0.0,
-   "no_deal_rate": 0.15,
-   "supplier_walk_rate": 0.65,
-   "all_walked_rate": 0.15,
+   "no_deal_rate": 0.05,
+   "supplier_walk_rate": 0.5,
+   "all_walked_rate": 0.05,
    "buyer_walk_rate": 0.0,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 3.7
+   "mean_rounds": 3.55
   }
  },
  "by_template": {
@@ -159,16 +159,16 @@
    "buyer_walk_rate": 0.0,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 1.9
+   "mean_rounds": 1.7
   },
   "case:P05": {
    "n": 10,
-   "mean": 0.3897,
-   "median": 0.4615,
-   "min": 0.0,
-   "no_deal_rate": 0.1,
-   "supplier_walk_rate": 0.6,
-   "all_walked_rate": 0.1,
+   "mean": 0.4356,
+   "median": 0.466,
+   "min": 0.2316,
+   "no_deal_rate": 0.0,
+   "supplier_walk_rate": 0.5,
+   "all_walked_rate": 0.0,
    "buyer_walk_rate": 0.0,
    "crashes": 0,
    "broken_must_have": 0,
@@ -179,39 +179,39 @@
    "mean": 0.0167,
    "median": 0.0,
    "min": 0.0,
-   "no_deal_rate": 0.2,
-   "supplier_walk_rate": 0.7,
-   "all_walked_rate": 0.2,
-   "buyer_walk_rate": 0.0,
-   "crashes": 0,
-   "broken_must_have": 0,
-   "mean_rounds": 3.1
-  },
-  "case:P07": {
-   "n": 10,
-   "mean": 0.6942,
-   "median": 0.7252,
-   "min": 0.1495,
    "no_deal_rate": 0.1,
-   "supplier_walk_rate": 0.1,
+   "supplier_walk_rate": 0.5,
    "all_walked_rate": 0.1,
    "buyer_walk_rate": 0.0,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 3.7
+   "mean_rounds": 2.8
   },
-  "case:P08": {
+  "case:P07": {
    "n": 10,
-   "mean": 0.3859,
-   "median": 0.4373,
-   "min": 0.0,
-   "no_deal_rate": 0.3,
-   "supplier_walk_rate": 0.3,
-   "all_walked_rate": 0.3,
+   "mean": 0.7723,
+   "median": 0.7792,
+   "min": 0.6742,
+   "no_deal_rate": 0.0,
+   "supplier_walk_rate": 0.0,
+   "all_walked_rate": 0.0,
    "buyer_walk_rate": 0.0,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 3
+   "mean_rounds": 3.8
+  },
+  "case:P08": {
+   "n": 10,
+   "mean": 0.4534,
+   "median": 0.5265,
+   "min": 0.0,
+   "no_deal_rate": 0.2,
+   "supplier_walk_rate": 0.1,
+   "all_walked_rate": 0.1,
+   "buyer_walk_rate": 0.1,
+   "crashes": 0,
+   "broken_must_have": 0,
+   "mean_rounds": 3.6
   },
   "case:P09": {
    "n": 10,
@@ -241,25 +241,25 @@
   },
   "case:P11": {
    "n": 10,
-   "mean": 0.6336,
-   "median": 0.6537,
-   "min": 0.0,
-   "no_deal_rate": 0.1,
-   "supplier_walk_rate": 0.1,
-   "all_walked_rate": 0.1,
+   "mean": 0.7177,
+   "median": 0.739,
+   "min": 0.5471,
+   "no_deal_rate": 0.0,
+   "supplier_walk_rate": 0.0,
+   "all_walked_rate": 0.0,
    "buyer_walk_rate": 0.0,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 4.9
+   "mean_rounds": 5.2
   },
   "case:P12": {
    "n": 10,
-   "mean": 0.5447,
+   "mean": 0.5704,
    "median": 0.4642,
-   "min": 0.1825,
-   "no_deal_rate": 0.7,
-   "supplier_walk_rate": 0.1,
-   "all_walked_rate": 0.1,
+   "min": 0.3081,
+   "no_deal_rate": 0.6,
+   "supplier_walk_rate": 0.0,
+   "all_walked_rate": 0.0,
    "buyer_walk_rate": 0.6,
    "crashes": 0,
    "broken_must_have": 0,
@@ -267,12 +267,12 @@
   },
   "case:P13": {
    "n": 10,
-   "mean": 0.5246,
+   "mean": 0.574,
    "median": 0.6089,
-   "min": 0.0,
-   "no_deal_rate": 0.1,
-   "supplier_walk_rate": 0.1,
-   "all_walked_rate": 0.1,
+   "min": 0.1894,
+   "no_deal_rate": 0.0,
+   "supplier_walk_rate": 0.0,
+   "all_walked_rate": 0.0,
    "buyer_walk_rate": 0.0,
    "crashes": 0,
    "broken_must_have": 0,
@@ -293,12 +293,12 @@
   },
   "case:P15": {
    "n": 10,
-   "mean": 0.72,
+   "mean": 0.7427,
    "median": 0.7045,
-   "min": 0.3031,
-   "no_deal_rate": 0.4,
-   "supplier_walk_rate": 0.1,
-   "all_walked_rate": 0.1,
+   "min": 0.5301,
+   "no_deal_rate": 0.3,
+   "supplier_walk_rate": 0.0,
+   "all_walked_rate": 0.0,
    "buyer_walk_rate": 0.3,
    "crashes": 0,
    "broken_must_have": 0,
@@ -306,16 +306,16 @@
   },
   "case:P16": {
    "n": 10,
-   "mean": 0.5527,
-   "median": 0.6951,
-   "min": 0.0,
-   "no_deal_rate": 0.2,
-   "supplier_walk_rate": 0.2,
-   "all_walked_rate": 0.2,
+   "mean": 0.6912,
+   "median": 0.7358,
+   "min": 0.2854,
+   "no_deal_rate": 0.0,
+   "supplier_walk_rate": 0.0,
+   "all_walked_rate": 0.0,
    "buyer_walk_rate": 0.0,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 2.8
+   "mean_rounds": 2.9
   },
   "case:P17": {
    "n": 10,
@@ -332,16 +332,16 @@
   },
   "case:P18": {
    "n": 10,
-   "mean": 0.3864,
-   "median": 0.3735,
-   "min": 0.0,
-   "no_deal_rate": 0.2,
-   "supplier_walk_rate": 0.2,
-   "all_walked_rate": 0.2,
+   "mean": 0.5265,
+   "median": 0.5753,
+   "min": 0.2945,
+   "no_deal_rate": 0.0,
+   "supplier_walk_rate": 0.0,
+   "all_walked_rate": 0.0,
    "buyer_walk_rate": 0.0,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 4.2
+   "mean_rounds": 4.7
   },
   "case:P19": {
    "n": 10,
@@ -360,110 +360,97 @@
  "by_archetype": {
   "boulware": {
    "n": 17,
-   "mean": 0.313,
-   "median": 0.2652,
+   "mean": 0.3462,
+   "median": 0.3057,
    "min": 0.0,
-   "no_deal_rate": 0.235,
-   "supplier_walk_rate": 0.353,
-   "all_walked_rate": 0.118,
+   "no_deal_rate": 0.118,
+   "supplier_walk_rate": 0.176,
+   "all_walked_rate": 0.0,
    "buyer_walk_rate": 0.118,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 2.76
+   "mean_rounds": 2.94
   },
   "cash_short": {
    "n": 24,
-   "mean": 0.4532,
-   "median": 0.5277,
+   "mean": 0.5321,
+   "median": 0.5601,
    "min": 0.0,
-   "no_deal_rate": 0.167,
-   "supplier_walk_rate": 0.208,
-   "all_walked_rate": 0.167,
-   "buyer_walk_rate": 0.0,
+   "no_deal_rate": 0.042,
+   "supplier_walk_rate": 0.083,
+   "all_walked_rate": 0.0,
+   "buyer_walk_rate": 0.042,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 3.04
+   "mean_rounds": 3.17
   },
   "conceder": {
    "n": 21,
-   "mean": 0.7021,
+   "mean": 0.7244,
    "median": 0.828,
    "min": 0.0,
-   "no_deal_rate": 0.048,
-   "supplier_walk_rate": 0.048,
-   "all_walked_rate": 0.048,
+   "no_deal_rate": 0.0,
+   "supplier_walk_rate": 0.0,
+   "all_walked_rate": 0.0,
    "buyer_walk_rate": 0.0,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 2.38
+   "mean_rounds": 2.24
   },
   "data_driven": {
    "n": 22,
-   "mean": 0.5604,
-   "median": 0.6512,
+   "mean": 0.5401,
+   "median": 0.621,
    "min": 0.0,
-   "no_deal_rate": 0.136,
+   "no_deal_rate": 0.091,
    "supplier_walk_rate": 0.136,
-   "all_walked_rate": 0.091,
+   "all_walked_rate": 0.045,
    "buyer_walk_rate": 0.045,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 2.27
+   "mean_rounds": 2.23
   },
   "mirror": {
    "n": 84,
-   "mean": 0.6257,
+   "mean": 0.6343,
    "median": 0.6476,
    "min": 0.0,
-   "no_deal_rate": 0.083,
-   "supplier_walk_rate": 0.107,
-   "all_walked_rate": 0.024,
-   "buyer_walk_rate": 0.06,
+   "no_deal_rate": 0.06,
+   "supplier_walk_rate": 0.083,
+   "all_walked_rate": 0.012,
+   "buyer_walk_rate": 0.048,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 3.39
+   "mean_rounds": 3.35
   },
   "monopolist": {
    "n": 20,
    "mean": 0.598,
    "median": 0.8255,
    "min": 0.0,
-   "no_deal_rate": 0.15,
-   "supplier_walk_rate": 0.25,
+   "no_deal_rate": 0.2,
+   "supplier_walk_rate": 0.2,
    "all_walked_rate": 0.05,
-   "buyer_walk_rate": 0.1,
+   "buyer_walk_rate": 0.15,
    "crashes": 0,
    "broken_must_have": 0,
    "mean_rounds": 2.45
   },
   "walker": {
    "n": 22,
-   "mean": 0.46,
-   "median": 0.5188,
+   "mean": 0.6361,
+   "median": 0.7745,
    "min": 0.0,
-   "no_deal_rate": 0.227,
-   "supplier_walk_rate": 0.409,
-   "all_walked_rate": 0.227,
+   "no_deal_rate": 0.0,
+   "supplier_walk_rate": 0.091,
+   "all_walked_rate": 0.0,
    "buyer_walk_rate": 0.0,
    "crashes": 0,
    "broken_must_have": 0,
-   "mean_rounds": 2.68
+   "mean_rounds": 3.23
   }
  },
  "worst": [
-  {
-   "case_id": "case:ST043",
-   "template": "case:P05",
-   "type": "rfq",
-   "score": 0.0,
-   "archetypes": {
-    "sup:70210": "mirror",
-    "sup:70240": "conceder",
-    "sup:70250": "mirror"
-   },
-   "end": "supplier_walked",
-   "why": "no deal - every supplier walked: sup:70210 walked at r6; sup:70240 walked at r6 (after final_offer); sup:70250 walked at r5 (after final_offer)"
-  },
   {
    "case_id": "case:ST051",
    "template": "case:P06",
@@ -498,7 +485,7 @@
     "sup:70150": "mirror"
    },
    "end": "accepted",
-   "why": "deal with sup:70150 (mirror) at r7, status final_offer; price 260.36 vs best package 266.99; deal value +10.7% over the supplier's absolute floor; C_deal >= C_open; relationship charge 152581; sup:70120 walked at r4"
+   "why": "deal with sup:70120 (walker) at r3, status final_offer; price 250.8 vs best package 266.99; deal value +2.7% over the supplier's absolute floor; C_deal >= C_open; relationship charge 232980"
   },
   {
    "case_id": "case:ST054",
@@ -509,8 +496,8 @@
     "sup:70120": "boulware",
     "sup:70150": "boulware"
    },
-   "end": "supplier_walked",
-   "why": "no deal - every supplier walked: sup:70120 walked at r3 (after final_offer); sup:70150 walked at r3"
+   "end": "accepted",
+   "why": "deal with sup:70150 (boulware) at r3, status final_offer; price 238.5 vs best package 203.74; deal value +11.5% over the supplier's absolute floor; C_deal >= C_open; sup:70120 walked at r3 (after final_offer)"
   },
   {
    "case_id": "case:ST055",
@@ -522,7 +509,7 @@
     "sup:70150": "boulware"
    },
    "end": "accepted",
-   "why": "deal with sup:70150 (boulware) at r2, status final_offer; price 224.5 vs best package 209.03; deal value +14.1% over the supplier's absolute floor; C_deal >= C_open; sup:70120 walked at r2"
+   "why": "deal with sup:70150 (boulware) at r2, status final_offer; price 224.5 vs best package 209.03; deal value +14.1% over the supplier's absolute floor; C_deal >= C_open"
   },
   {
    "case_id": "case:ST056",
@@ -533,8 +520,8 @@
     "sup:70120": "data_driven",
     "sup:70150": "mirror"
    },
-   "end": "supplier_walked",
-   "why": "no deal - every supplier walked: sup:70120 walked at r2 (after final_offer); sup:70150 walked at r3"
+   "end": "accepted",
+   "why": "deal with sup:70150 (mirror) at r3, status final_offer; price 267.9 vs best package 240.14; deal value +0.0% over the supplier's absolute floor; C_deal >= C_open; sup:70120 walked at r2 (after final_offer)"
   },
   {
    "case_id": "case:ST057",
@@ -557,8 +544,8 @@
     "sup:70120": "mirror",
     "sup:70150": "monopolist"
    },
-   "end": "accepted",
-   "why": "deal with sup:70150 (monopolist) at r3, status final_offer; price 241.45 vs best package 211.77; deal value +1.7% over the supplier's absolute floor; C_deal >= C_open; sup:70120 walked at r3 (after final_offer)"
+   "end": "supplier_walked",
+   "why": "no deal - every supplier walked: sup:70120 walked at r3 (after final_offer); sup:70150 walked at r3"
   },
   {
    "case_id": "case:ST060",
@@ -571,9 +558,20 @@
    },
    "end": "accepted",
    "why": "deal with sup:70120 (conceder) at r1, status final_offer; price 264.84 vs best package 245.92; deal value +1.5% over the supplier's absolute floor; C_deal >= C_open; relationship charge 74193"
+  },
+  {
+   "case_id": "case:ST077",
+   "template": "case:P08",
+   "type": "raw_material",
+   "score": 0.0,
+   "archetypes": {
+    "sup:70710": "cash_short"
+   },
+   "end": "buyer_walked",
+   "why": "agent walked away (alternative c_alt=1157020)"
   }
  ],
- "seconds": 1.8,
+ "seconds": 1.9,
  "results": [
   {
    "case_id": "case:ST001",
@@ -658,7 +656,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.014285802841186523,
+    "decide_s": 0.013651609420776367,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -782,10 +780,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 8,
-    "decide_s": 0.0176849365234375,
+    "decide_s": 0.016518592834472656,
     "held_first": 0
    },
-   "seconds": 0.04,
+   "seconds": 0.03,
    "best_price": 136.98
   },
   {
@@ -855,7 +853,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.013035774230957031,
+    "decide_s": 0.012290716171264648,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -931,7 +929,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.01375722885131836,
+    "decide_s": 0.012429237365722656,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -1047,7 +1045,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 7,
-    "decide_s": 0.014913797378540039,
+    "decide_s": 0.014653682708740234,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -1120,10 +1118,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.011048078536987305,
+    "decide_s": 0.011363029479980469,
     "held_first": 0
    },
-   "seconds": 0.02,
+   "seconds": 0.03,
    "best_price": 123.41
   },
   {
@@ -1196,7 +1194,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010993719100952148,
+    "decide_s": 0.010743856430053711,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -1288,7 +1286,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.012084245681762695,
+    "decide_s": 0.012260675430297852,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -1364,7 +1362,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010978460311889648,
+    "decide_s": 0.011185169219970703,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -1420,7 +1418,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.011558055877685547,
+    "decide_s": 0.011821746826171875,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -1493,7 +1491,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010036945343017578,
+    "decide_s": 0.01025700569152832,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -1566,7 +1564,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009904861450195312,
+    "decide_s": 0.009943962097167969,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -1658,7 +1656,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.01147317886352539,
+    "decide_s": 0.011699199676513672,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -1734,7 +1732,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009896993637084961,
+    "decide_s": 0.010130167007446289,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -1807,7 +1805,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009959936141967773,
+    "decide_s": 0.010067224502563477,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -1896,10 +1894,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.011249065399169922,
+    "decide_s": 0.011266708374023438,
     "held_first": 0
    },
-   "seconds": 0.02,
+   "seconds": 0.03,
    "best_price": 376.61
   },
   {
@@ -2020,7 +2018,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 8,
-    "decide_s": 0.014780044555664062,
+    "decide_s": 0.014952421188354492,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -2093,7 +2091,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009904146194458008,
+    "decide_s": 0.009952545166015625,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -2182,7 +2180,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.011217355728149414,
+    "decide_s": 0.01152801513671875,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -2266,7 +2264,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.010607242584228516,
+    "decide_s": 0.010713815689086914,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -2347,7 +2345,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.011573553085327148,
+    "decide_s": 0.011964559555053711,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -2420,7 +2418,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010347843170166016,
+    "decide_s": 0.010502099990844727,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -2493,7 +2491,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010445356369018555,
+    "decide_s": 0.01055908203125,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -2566,7 +2564,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.01039433479309082,
+    "decide_s": 0.010257244110107422,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -2639,7 +2637,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010406255722045898,
+    "decide_s": 0.010522842407226562,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -2712,7 +2710,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010352849960327148,
+    "decide_s": 0.010782718658447266,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -2785,7 +2783,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010349035263061523,
+    "decide_s": 0.010818719863891602,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -2866,10 +2864,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.011484622955322266,
+    "decide_s": 0.011883258819580078,
     "held_first": 0
    },
-   "seconds": 0.02,
+   "seconds": 0.03,
    "best_price": 416.89
   },
   {
@@ -2939,7 +2937,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010635614395141602,
+    "decide_s": 0.010687112808227539,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -3012,7 +3010,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010493993759155273,
+    "decide_s": 0.010628223419189453,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -3085,7 +3083,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009540796279907227,
+    "decide_s": 0.009932518005371094,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -3138,7 +3136,7 @@
    "deal_value_vs_floor": 0.0565,
    "threads": {
     "sup:70620": {
-     "rounds": 6,
+     "rounds": 4,
      "status": "final_offer",
      "closed": null,
      "archetype": "cash_short",
@@ -3169,26 +3167,10 @@
       },
       {
        "round": 4,
-       "kind": "open",
+       "kind": "final_offer",
        "target": 0.9979069344486606,
        "conc": 0.0,
        "step_b": 0.0,
-       "levers": 0.0
-      },
-      {
-       "round": 5,
-       "kind": "open",
-       "target": 0.9979069344486606,
-       "conc": 0.003071364074402519,
-       "step_b": 0.0042097567621537735,
-       "levers": 0.0
-      },
-      {
-       "round": 6,
-       "kind": "final_offer",
-       "target": 0.9979069344486606,
-       "conc": 0.003071364074402519,
-       "step_b": 0.0042097567621537735,
        "levers": 0.0
       }
      ]
@@ -3200,8 +3182,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 7,
-    "decide_s": 0.012434005737304688,
+    "decisions": 5,
+    "decide_s": 0.011499643325805664,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -3274,10 +3256,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009356975555419922,
+    "decide_s": 0.010011434555053711,
     "held_first": 0
    },
-   "seconds": 0.02,
+   "seconds": 0.03,
    "best_price": 4.44
   },
   {
@@ -3366,10 +3348,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.010526180267333984,
+    "decide_s": 0.010843276977539062,
     "held_first": 0
    },
-   "seconds": 0.02,
+   "seconds": 0.03,
    "best_price": 4.9
   },
   {
@@ -3450,7 +3432,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.009826898574829102,
+    "decide_s": 0.010490655899047852,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -3526,7 +3508,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009382247924804688,
+    "decide_s": 0.009451150894165039,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -3599,7 +3581,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.00944209098815918,
+    "decide_s": 0.009886741638183594,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -3672,7 +3654,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009485006332397461,
+    "decide_s": 0.009809494018554688,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -3753,7 +3735,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.009910821914672852,
+    "decide_s": 0.01021885871887207,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -3829,7 +3811,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009381532669067383,
+    "decide_s": 0.009728670120239258,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -3885,7 +3867,7 @@
    "threads": {
     "sup:70210": {
      "rounds": 4,
-     "status": "open",
+     "status": "final_offer",
      "closed": null,
      "archetype": "mirror",
      "history": [
@@ -3915,7 +3897,7 @@
       },
       {
        "round": 4,
-       "kind": "open",
+       "kind": "final_offer",
        "target": 0.827158545278104,
        "conc": 0.0,
        "step_b": 0.0,
@@ -4003,7 +3985,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 14,
-    "decide_s": 0.037705421447753906,
+    "decide_s": 0.03930807113647461,
     "held_first": 0
    },
    "seconds": 0.05,
@@ -4058,7 +4040,7 @@
    "deal_value_vs_floor": 0.5909,
    "threads": {
     "sup:70210": {
-     "rounds": 4,
+     "rounds": 3,
      "status": "final_offer",
      "closed": null,
      "archetype": "mirror",
@@ -4081,14 +4063,6 @@
       },
       {
        "round": 3,
-       "kind": "open",
-       "target": 0.8798501227730964,
-       "conc": 0.0,
-       "step_b": 0.0,
-       "levers": 0.0
-      },
-      {
-       "round": 4,
        "kind": "final_offer",
        "target": 0.8798501227730964,
        "conc": 0.0,
@@ -4098,7 +4072,7 @@
      ]
     },
     "sup:70240": {
-     "rounds": 4,
+     "rounds": 3,
      "status": "open",
      "closed": null,
      "archetype": "mirror",
@@ -4126,21 +4100,13 @@
        "conc": 0.060895678992304046,
        "step_b": 0.0006064281382656026,
        "levers": 0.009309882056133886
-      },
-      {
-       "round": 4,
-       "kind": "open",
-       "target": 0.8958015750100855,
-       "conc": 0.038567005952898234,
-       "step_b": 0.004548211036992073,
-       "levers": 0.0014908530519605414
       }
      ]
     },
     "sup:70250": {
-     "rounds": 4,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "rounds": 3,
+     "status": "final_offer",
+     "closed": null,
      "archetype": "boulware",
      "history": [
       {
@@ -4166,11 +4132,6 @@
        "conc": 0.052737223105718246,
        "step_b": 0.01695788054462442,
        "levers": 0.01893162641607983
-      },
-      {
-       "round": 4,
-       "kind": "walk",
-       "why": "We already gave you our final offer; we cannot go further."
       }
      ]
     }
@@ -4181,8 +4142,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 14,
-    "decide_s": 0.038069963455200195,
+    "decisions": 12,
+    "decide_s": 0.037310123443603516,
     "held_first": 0
    },
    "seconds": 0.05,
@@ -4199,19 +4160,47 @@
     "sup:70240": "conceder",
     "sup:70250": "mirror"
    },
-   "end": "supplier_walked",
-   "deal": false,
+   "end": "accepted",
+   "deal": true,
    "c_open": 309350.16,
    "c_best": 194709.76,
    "c_alt": null,
-   "c_deal": null,
-   "must_haves_ok": null,
-   "score": 0.0,
+   "supplier_id": "sup:70210",
+   "terms": {
+    "volume_per_year": 4200,
+    "contract_months": 24,
+    "payment_days": 90,
+    "lead_time_days": 28,
+    "incoterm": "DAP",
+    "ppm_commitment": 1200,
+    "tooling_eur": 0,
+    "chargeback_eur_per_complaint": 0.0,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "unit_price": 30.5
+   },
+   "c_deal": 255620.96,
+   "must_haves_ok": true,
+   "score": 0.4686759641452751,
+   "breakdown": {
+    "price": 256200.0,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": -1708.0,
+    "freight": 0.0,
+    "late_delivery": 0,
+    "quality": 1128.96,
+    "tooling": 0.0,
+    "index_clause": 0.0,
+    "index_risk": 0.0,
+    "relationship": 0.0
+   },
+   "deal_value_vs_floor": 0.3151,
    "threads": {
     "sup:70210": {
-     "rounds": 6,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "rounds": 3,
+     "status": "final_offer",
+     "closed": null,
      "archetype": "mirror",
      "history": [
       {
@@ -4232,39 +4221,18 @@
       },
       {
        "round": 3,
-       "kind": "open",
+       "kind": "final_offer",
        "target": 0.8259111699393463,
        "conc": 0.0,
        "step_b": 0.0,
        "levers": 0.0
-      },
-      {
-       "round": 4,
-       "kind": "open",
-       "target": 0.8259111699393463,
-       "conc": 0.0,
-       "step_b": 0.0,
-       "levers": 0.0
-      },
-      {
-       "round": 5,
-       "kind": "open",
-       "target": 0.8259111699393463,
-       "conc": 0.0009327078042028168,
-       "step_b": 0.0,
-       "levers": 0.002047771748820576
-      },
-      {
-       "round": 6,
-       "kind": "walk",
-       "why": "We are too far apart and see no movement."
       }
      ]
     },
     "sup:70240": {
-     "rounds": 6,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "rounds": 3,
+     "status": "open",
+     "closed": null,
      "archetype": "conceder",
      "history": [
       {
@@ -4290,31 +4258,13 @@
        "conc": 0.053276605746062626,
        "step_b": 0.004651839361723925,
        "levers": 0.034930207824791545
-      },
-      {
-       "round": 4,
-       "kind": "final_offer",
-       "target": 0.8634714713655379,
-       "conc": 0.030764834405079627,
-       "step_b": 0.004651839361724034,
-       "levers": 0.0
-      },
-      {
-       "round": 5,
-       "kind": "final_hold",
-       "target": 0.8634714713655379
-      },
-      {
-       "round": 6,
-       "kind": "walk",
-       "why": "We already gave you our final offer; we cannot go further."
       }
      ]
     },
     "sup:70250": {
-     "rounds": 5,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "rounds": 3,
+     "status": "open",
+     "closed": null,
      "archetype": "mirror",
      "history": [
       {
@@ -4340,19 +4290,6 @@
        "conc": 0.04799000525802679,
        "step_b": 0.017746091381854977,
        "levers": 0.01644432619392961
-      },
-      {
-       "round": 4,
-       "kind": "final_offer",
-       "target": 0.7792848824205916,
-       "conc": 0.03932698972124487,
-       "step_b": 0.0,
-       "levers": 0.014859819716184238
-      },
-      {
-       "round": 5,
-       "kind": "walk",
-       "why": "We already gave you our final offer; we cannot go further."
       }
      ]
     }
@@ -4363,11 +4300,11 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 19,
-    "decide_s": 0.0407567024230957,
+    "decisions": 12,
+    "decide_s": 0.037096261978149414,
     "held_first": 0
    },
-   "seconds": 0.06,
+   "seconds": 0.05,
    "best_price": 23.2
   },
   {
@@ -4495,7 +4432,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 9,
-    "decide_s": 0.03428173065185547,
+    "decide_s": 0.034571170806884766,
     "held_first": 0
    },
    "seconds": 0.05,
@@ -4574,7 +4511,7 @@
       {
        "round": 3,
        "kind": "walk",
-       "why": "We already gave you our final offer; we cannot go further."
+       "why": "Your figure is far below our final offer; we close this enquiry."
       }
      ]
     },
@@ -4643,7 +4580,7 @@
       {
        "round": 3,
        "kind": "walk",
-       "why": "We already gave you our final offer; we cannot go further."
+       "why": "Your figure is far below our final offer; we close this enquiry."
       }
      ]
     }
@@ -4655,7 +4592,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 12,
-    "decide_s": 0.03564453125,
+    "decide_s": 0.03725099563598633,
     "held_first": 0
    },
    "seconds": 0.05,
@@ -4677,42 +4614,42 @@
    "c_open": 304699.36,
    "c_best": 211268.55,
    "c_alt": null,
-   "supplier_id": "sup:70250",
+   "supplier_id": "sup:70210",
    "terms": {
     "volume_per_year": 4200,
     "contract_months": 24,
-    "payment_days": 14,
+    "payment_days": 60,
     "lead_time_days": 28,
     "incoterm": "DAP",
-    "ppm_commitment": 600,
+    "ppm_commitment": 1200,
     "tooling_eur": 0,
     "chargeback_eur_per_complaint": 0.0,
     "effective_date": "2027-01-01",
     "index_clause": null,
-    "unit_price": 29.7
+    "unit_price": 30.5
    },
-   "c_deal": 252594.72,
+   "c_deal": 257328.96,
    "must_haves_ok": true,
-   "score": 0.5576815613607544,
+   "score": 0.5070104818742339,
    "breakdown": {
-    "price": 249480.0,
+    "price": 256200.0,
     "uncovered_need": 0.0,
     "fallback_risk": 0.0,
-    "payment_terms": 2550.24,
+    "payment_terms": 0.0,
     "freight": 0.0,
     "late_delivery": 0,
-    "quality": 564.48,
+    "quality": 1128.96,
     "tooling": 0.0,
     "index_clause": 0.0,
     "index_risk": 0.0,
     "relationship": 0.0
    },
-   "deal_value_vs_floor": 0.1966,
+   "deal_value_vs_floor": 0.1168,
    "threads": {
     "sup:70210": {
-     "rounds": 5,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "rounds": 8,
+     "status": "final_offer",
+     "closed": null,
      "archetype": "mirror",
      "history": [
       {
@@ -4749,8 +4686,23 @@
       },
       {
        "round": 5,
-       "kind": "walk",
-       "why": "We already gave you our final offer; we cannot go further."
+       "kind": "final_hold",
+       "target": 0.8368310076010442
+      },
+      {
+       "round": 6,
+       "kind": "final_hold",
+       "target": 0.8368310076010442
+      },
+      {
+       "round": 7,
+       "kind": "final_hold",
+       "target": 0.8368310076010442
+      },
+      {
+       "round": 8,
+       "kind": "final_hold",
+       "target": 0.8368310076010442
       }
      ]
     },
@@ -4795,14 +4747,14 @@
       {
        "round": 5,
        "kind": "walk",
-       "why": "We already gave you our final offer; we cannot go further."
+       "why": "Your figure is far below our final offer; we close this enquiry."
       }
      ]
     },
     "sup:70250": {
      "rounds": 7,
-     "status": "final_offer",
-     "closed": null,
+     "status": "walked_away",
+     "closed": "walked_away",
      "archetype": "mirror",
      "history": [
       {
@@ -4855,11 +4807,8 @@
       },
       {
        "round": 7,
-       "kind": "final_offer",
-       "target": 0.7709218889029532,
-       "conc": 0.0,
-       "step_b": 0.0,
-       "levers": 0.0
+       "kind": "walk",
+       "why": "We need to plan our capacity and close this enquiry now."
       }
      ]
     }
@@ -4870,8 +4819,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 20,
-    "decide_s": 0.0411679744720459,
+    "decisions": 23,
+    "decide_s": 0.04326462745666504,
     "held_first": 0
    },
    "seconds": 0.06,
@@ -5032,8 +4981,8 @@
     },
     "sup:70250": {
      "rounds": 6,
-     "status": "final_offer",
-     "closed": null,
+     "status": "walked_away",
+     "closed": "walked_away",
      "archetype": "mirror",
      "history": [
       {
@@ -5070,7 +5019,7 @@
       },
       {
        "round": 5,
-       "kind": "open",
+       "kind": "final_offer",
        "target": 0.7843913646592539,
        "conc": 0.0,
        "step_b": 0.0,
@@ -5078,11 +5027,8 @@
       },
       {
        "round": 6,
-       "kind": "final_offer",
-       "target": 0.7631915980468414,
-       "conc": 0.023730425746233456,
-       "step_b": 0.0,
-       "levers": 0.017436656079618914
+       "kind": "walk",
+       "why": "Your figure is far below our final offer; we close this enquiry."
       }
      ]
     }
@@ -5093,8 +5039,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 21,
-    "decide_s": 0.041863441467285156,
+    "decisions": 20,
+    "decide_s": 0.042185306549072266,
     "held_first": 0
    },
    "seconds": 0.06,
@@ -5116,40 +5062,40 @@
    "c_open": 318736.32,
    "c_best": 207844.67,
    "c_alt": null,
-   "supplier_id": "sup:70240",
+   "supplier_id": "sup:70250",
    "terms": {
     "volume_per_year": 4200,
     "contract_months": 24,
-    "payment_days": 60,
-    "lead_time_days": 42,
+    "payment_days": 14,
+    "lead_time_days": 28,
     "incoterm": "DAP",
-    "ppm_commitment": 1400,
+    "ppm_commitment": 600,
     "tooling_eur": 0,
     "chargeback_eur_per_complaint": 0.0,
     "effective_date": "2027-01-01",
     "index_clause": null,
-    "unit_price": 34.12
+    "unit_price": 33.5
    },
-   "c_deal": 289325.12,
+   "c_deal": 284841.01,
    "must_haves_ok": true,
-   "score": 0.2652246584842052,
+   "score": 0.3056615173459859,
    "breakdown": {
-    "price": 286608.0,
+    "price": 281400.0,
     "uncovered_need": 0.0,
     "fallback_risk": 0.0,
-    "payment_terms": 0.0,
+    "payment_terms": 2876.53,
     "freight": 0.0,
-    "late_delivery": 1400,
-    "quality": 1317.12,
+    "late_delivery": 0,
+    "quality": 564.48,
     "tooling": 0.0,
     "index_clause": 0.0,
     "index_risk": 0.0,
     "relationship": 0.0
    },
-   "deal_value_vs_floor": 0.0293,
+   "deal_value_vs_floor": 0.0361,
    "threads": {
     "sup:70210": {
-     "rounds": 4,
+     "rounds": 7,
      "status": "final_offer",
      "closed": null,
      "archetype": "mirror",
@@ -5185,13 +5131,28 @@
        "conc": 0.009209459927288078,
        "step_b": 0.0,
        "levers": 0.003167722733707293
+      },
+      {
+       "round": 5,
+       "kind": "final_hold",
+       "target": 0.9093114902414073
+      },
+      {
+       "round": 6,
+       "kind": "final_hold",
+       "target": 0.9093114902414073
+      },
+      {
+       "round": 7,
+       "kind": "final_hold",
+       "target": 0.9093114902414073
       }
      ]
     },
     "sup:70240": {
-     "rounds": 3,
-     "status": "final_offer",
-     "closed": null,
+     "rounds": 4,
+     "status": "walked_away",
+     "closed": "walked_away",
      "archetype": "boulware",
      "history": [
       {
@@ -5217,13 +5178,18 @@
        "conc": 0.0014808890334556408,
        "step_b": 0.004581459219584198,
        "levers": 0.0
+      },
+      {
+       "round": 4,
+       "kind": "walk",
+       "why": "Your figure is far below our final offer; we close this enquiry."
       }
      ]
     },
     "sup:70250": {
-     "rounds": 2,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "rounds": 6,
+     "status": "final_offer",
+     "closed": null,
      "archetype": "walker",
      "history": [
       {
@@ -5236,8 +5202,43 @@
       },
       {
        "round": 2,
-       "kind": "walk",
-       "why": "We are too far apart and see no movement."
+       "kind": "open",
+       "target": 0.9091602448171511,
+       "conc": 0.04603713914964628,
+       "step_b": null,
+       "levers": 0.05130697606003683
+      },
+      {
+       "round": 3,
+       "kind": "open",
+       "target": 0.8753914357239427,
+       "conc": 0.0348643580596004,
+       "step_b": 0.019222245176134068,
+       "levers": 0.014413934905360352
+      },
+      {
+       "round": 4,
+       "kind": "open",
+       "target": 0.8701962343249875,
+       "conc": 0.00601457465502196,
+       "step_b": 0.0,
+       "levers": 0.0
+      },
+      {
+       "round": 5,
+       "kind": "open",
+       "target": 0.8701962343249875,
+       "conc": 0.0,
+       "step_b": 0.0,
+       "levers": 0.0
+      },
+      {
+       "round": 6,
+       "kind": "final_offer",
+       "target": 0.8701962343249875,
+       "conc": 0.0,
+       "step_b": 0.0,
+       "levers": 0.0
       }
      ]
     }
@@ -5248,11 +5249,11 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 10,
-    "decide_s": 0.0347592830657959,
+    "decisions": 20,
+    "decide_s": 0.04193925857543945,
     "held_first": 0
    },
-   "seconds": 0.05,
+   "seconds": 0.06,
    "best_price": 24.36
   },
   {
@@ -5336,7 +5337,7 @@
       {
        "round": 4,
        "kind": "walk",
-       "why": "We already gave you our final offer; we cannot go further."
+       "why": "Your figure is far below our final offer; we close this enquiry."
       }
      ]
     },
@@ -5370,7 +5371,7 @@
       {
        "round": 4,
        "kind": "walk",
-       "why": "We already gave you our final offer; we cannot go further."
+       "why": "Your figure is far below our final offer; we close this enquiry."
       }
      ]
     },
@@ -5422,7 +5423,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 14,
-    "decide_s": 0.03695344924926758,
+    "decide_s": 0.03825974464416504,
     "held_first": 0
    },
    "seconds": 0.05,
@@ -5532,7 +5533,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 5,
-    "decide_s": 0.03239297866821289,
+    "decide_s": 0.032602787017822266,
     "held_first": 0
    },
    "seconds": 0.05,
@@ -5626,7 +5627,7 @@
       {
        "round": 2,
        "kind": "walk",
-       "why": "We already gave you our final offer; we cannot go further."
+       "why": "Your figure is far below our final offer; we close this enquiry."
       }
      ]
     }
@@ -5638,7 +5639,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 5,
-    "decide_s": 0.025687694549560547,
+    "decide_s": 0.026604413986206055,
     "held_first": 0
    },
    "seconds": 0.04,
@@ -5755,7 +5756,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 7,
-    "decide_s": 0.028853654861450195,
+    "decide_s": 0.02965378761291504,
     "held_first": 0
    },
    "seconds": 0.04,
@@ -5776,42 +5777,42 @@
    "c_open": 2369120.16,
    "c_best": 2279578.14,
    "c_alt": null,
-   "supplier_id": "sup:70150",
+   "supplier_id": "sup:70120",
    "terms": {
     "volume_per_year": 4200,
     "contract_months": 24,
     "payment_days": 14,
-    "lead_time_days": 70,
+    "lead_time_days": 84,
     "incoterm": "DAP",
-    "ppm_commitment": 2650,
+    "ppm_commitment": 750,
     "chargeback_eur_per_complaint": 0.0,
-    "tooling_eur": 0,
+    "tooling_eur": 7500,
     "effective_date": "2027-01-01",
     "index_clause": null,
-    "unit_price": 260.36
+    "unit_price": 250.8
    },
-   "c_deal": 2373489.77,
+   "c_deal": 2383536.13,
    "must_haves_ok": true,
    "score": 0.0,
    "breakdown": {
-    "price": 2187024.0,
+    "price": 2106720.0,
     "uncovered_need": 0.0,
     "fallback_risk": 0.0,
-    "payment_terms": 22356.25,
+    "payment_terms": 21535.36,
     "freight": 0.0,
-    "late_delivery": 6720,
-    "quality": 4808.16,
-    "tooling": 0.0,
+    "late_delivery": 13440,
+    "quality": 1360.8,
+    "tooling": 7500,
     "index_clause": 0.0,
     "index_risk": 0.0,
-    "relationship": 152581.37
+    "relationship": 232979.97
    },
-   "deal_value_vs_floor": 0.1073,
+   "deal_value_vs_floor": 0.0271,
    "threads": {
     "sup:70120": {
-     "rounds": 4,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "rounds": 3,
+     "status": "final_offer",
+     "closed": null,
      "archetype": "walker",
      "history": [
       {
@@ -5832,22 +5833,17 @@
       },
       {
        "round": 3,
-       "kind": "open",
+       "kind": "final_offer",
        "target": 0.8943778897440516,
        "conc": 0.0,
        "step_b": 0.0,
        "levers": 0.0
-      },
-      {
-       "round": 4,
-       "kind": "walk",
-       "why": "We are too far apart and see no movement."
       }
      ]
     },
     "sup:70150": {
-     "rounds": 7,
-     "status": "final_offer",
+     "rounds": 3,
+     "status": "open",
      "closed": null,
      "archetype": "mirror",
      "history": [
@@ -5874,38 +5870,6 @@
        "conc": 0.020589419588847073,
        "step_b": -0.07015278589534915,
        "levers": 0.014072445279320736
-      },
-      {
-       "round": 4,
-       "kind": "open",
-       "target": 0.911776288068956,
-       "conc": 0.005088953924849579,
-       "step_b": -0.016914450588618013,
-       "levers": 0.005345534160888079
-      },
-      {
-       "round": 5,
-       "kind": "open",
-       "target": 0.911776288068956,
-       "conc": 0.0,
-       "step_b": -0.015176173687883548,
-       "levers": 0.0
-      },
-      {
-       "round": 6,
-       "kind": "open",
-       "target": 0.911776288068956,
-       "conc": 0.0,
-       "step_b": -0.014162178829121769,
-       "levers": 0.0
-      },
-      {
-       "round": 7,
-       "kind": "final_offer",
-       "target": 0.911776288068956,
-       "conc": 0.0,
-       "step_b": -0.013474110889247734,
-       "levers": 0.0
       }
      ]
     }
@@ -5916,11 +5880,11 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 12,
-    "decide_s": 0.03545808792114258,
+    "decisions": 8,
+    "decide_s": 0.030154705047607422,
     "held_first": 0
    },
-   "seconds": 0.05,
+   "seconds": 0.04,
    "best_price": 266.99
   },
   {
@@ -5933,14 +5897,42 @@
     "sup:70120": "boulware",
     "sup:70150": "boulware"
    },
-   "end": "supplier_walked",
-   "deal": false,
+   "end": "accepted",
+   "deal": true,
    "c_open": 1861563.84,
    "c_best": 1780804.77,
    "c_alt": null,
-   "c_deal": null,
-   "must_haves_ok": null,
+   "supplier_id": "sup:70150",
+   "terms": {
+    "volume_per_year": 4200,
+    "contract_months": 24,
+    "payment_days": 14,
+    "lead_time_days": 56,
+    "incoterm": "DAP",
+    "ppm_commitment": 2650,
+    "chargeback_eur_per_complaint": 0.0,
+    "tooling_eur": 0,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "unit_price": 238.5
+   },
+   "c_deal": 2028687.36,
+   "must_haves_ok": true,
    "score": 0.0,
+   "breakdown": {
+    "price": 2003400.0,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": 20479.2,
+    "freight": 0.0,
+    "late_delivery": 0,
+    "quality": 4808.16,
+    "tooling": 0.0,
+    "index_clause": 0.0,
+    "index_risk": 0.0,
+    "relationship": 0.0
+   },
+   "deal_value_vs_floor": 0.1145,
    "threads": {
     "sup:70120": {
      "rounds": 3,
@@ -5967,14 +5959,14 @@
       {
        "round": 3,
        "kind": "walk",
-       "why": "We already gave you our final offer; we cannot go further."
+       "why": "Your figure is far below our final offer; we close this enquiry."
       }
      ]
     },
     "sup:70150": {
      "rounds": 3,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "status": "final_offer",
+     "closed": null,
      "archetype": "boulware",
      "history": [
       {
@@ -5995,8 +5987,11 @@
       },
       {
        "round": 3,
-       "kind": "walk",
-       "why": "We are too far apart and see no movement."
+       "kind": "final_offer",
+       "target": 1.0010262873341336,
+       "conc": 0.00034524551086878634,
+       "step_b": 0.001343716129133665,
+       "levers": 0.0
       }
      ]
     }
@@ -6007,8 +6002,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 6,
-    "decide_s": 0.028941869735717773,
+    "decisions": 7,
+    "decide_s": 0.029787540435791016,
     "held_first": 0
    },
    "seconds": 0.04,
@@ -6062,9 +6057,9 @@
    "deal_value_vs_floor": 0.1408,
    "threads": {
     "sup:70120": {
-     "rounds": 2,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "rounds": 3,
+     "status": "open",
+     "closed": null,
      "archetype": "walker",
      "history": [
       {
@@ -6077,8 +6072,19 @@
       },
       {
        "round": 2,
-       "kind": "walk",
-       "why": "We are too far apart and see no movement."
+       "kind": "open",
+       "target": 0.9432017232302987,
+       "conc": 0.0,
+       "step_b": null,
+       "levers": 0.0
+      },
+      {
+       "round": 3,
+       "kind": "open",
+       "target": 0.9022600650931442,
+       "conc": 0.041303670940082686,
+       "step_b": 0.018158383562682512,
+       "levers": 0.039037340588003004
       }
      ]
     },
@@ -6113,8 +6119,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 5,
-    "decide_s": 0.025622844696044922,
+    "decisions": 7,
+    "decide_s": 0.028689146041870117,
     "held_first": 0
    },
    "seconds": 0.04,
@@ -6130,14 +6136,42 @@
     "sup:70120": "data_driven",
     "sup:70150": "mirror"
    },
-   "end": "supplier_walked",
-   "deal": false,
+   "end": "accepted",
+   "deal": true,
    "c_open": 2114185.2,
    "c_best": 2071044.18,
    "c_alt": null,
-   "c_deal": null,
-   "must_haves_ok": null,
+   "supplier_id": "sup:70150",
+   "terms": {
+    "volume_per_year": 4200,
+    "contract_months": 24,
+    "payment_days": 14,
+    "lead_time_days": 70,
+    "incoterm": "DAP",
+    "ppm_commitment": 2650,
+    "chargeback_eur_per_complaint": 0.0,
+    "tooling_eur": 0,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "unit_price": 267.9
+   },
+   "c_deal": 2284891.84,
+   "must_haves_ok": true,
    "score": 0.0,
+   "breakdown": {
+    "price": 2250360.0,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": 23003.68,
+    "freight": 0.0,
+    "late_delivery": 6720,
+    "quality": 4808.16,
+    "tooling": 0.0,
+    "index_clause": 0.0,
+    "index_risk": 0.0,
+    "relationship": 0.0
+   },
+   "deal_value_vs_floor": 0.0003,
    "threads": {
     "sup:70120": {
      "rounds": 2,
@@ -6156,14 +6190,14 @@
       {
        "round": 2,
        "kind": "walk",
-       "why": "We already gave you our final offer; we cannot go further."
+       "why": "Your figure is far below our final offer; we close this enquiry."
       }
      ]
     },
     "sup:70150": {
      "rounds": 3,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "status": "final_offer",
+     "closed": null,
      "archetype": "mirror",
      "history": [
       {
@@ -6184,8 +6218,11 @@
       },
       {
        "round": 3,
-       "kind": "walk",
-       "why": "We are too far apart and see no movement."
+       "kind": "final_offer",
+       "target": 0.9812199481096467,
+       "conc": 0.00792720698235061,
+       "step_b": 0.0006126953420246511,
+       "levers": 0.0
       }
      ]
     }
@@ -6196,8 +6233,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 5,
-    "decide_s": 0.027033329010009766,
+    "decisions": 6,
+    "decide_s": 0.028361797332763672,
     "held_first": 0
    },
    "seconds": 0.04,
@@ -6267,7 +6304,7 @@
       {
        "round": 2,
        "kind": "walk",
-       "why": "We already gave you our final offer; we cannot go further."
+       "why": "Your figure is far below our final offer; we close this enquiry."
       }
      ]
     },
@@ -6327,10 +6364,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 8,
-    "decide_s": 0.030457735061645508,
+    "decide_s": 0.03191351890563965,
     "held_first": 0
    },
-   "seconds": 0.04,
+   "seconds": 0.05,
    "best_price": 207.57
   },
   {
@@ -6436,7 +6473,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 6,
-    "decide_s": 0.027347326278686523,
+    "decide_s": 0.02791762351989746,
     "held_first": 0
    },
    "seconds": 0.04,
@@ -6452,42 +6489,14 @@
     "sup:70120": "mirror",
     "sup:70150": "monopolist"
    },
-   "end": "accepted",
-   "deal": true,
+   "end": "supplier_walked",
+   "deal": false,
    "c_open": 1851263.24,
    "c_best": 1811940.14,
    "c_alt": null,
-   "supplier_id": "sup:70150",
-   "terms": {
-    "volume_per_year": 4200,
-    "contract_months": 24,
-    "payment_days": 14,
-    "lead_time_days": 56,
-    "incoterm": "DAP",
-    "ppm_commitment": 2650,
-    "chargeback_eur_per_complaint": 0.0,
-    "tooling_eur": 0,
-    "effective_date": "2027-01-01",
-    "index_clause": null,
-    "unit_price": 241.45
-   },
-   "c_deal": 2053720.67,
-   "must_haves_ok": true,
+   "c_deal": null,
+   "must_haves_ok": null,
    "score": 0.0,
-   "breakdown": {
-    "price": 2028180.0,
-    "uncovered_need": 0.0,
-    "fallback_risk": 0.0,
-    "payment_terms": 20732.51,
-    "freight": 0.0,
-    "late_delivery": 0,
-    "quality": 4808.16,
-    "tooling": 0.0,
-    "index_clause": 0.0,
-    "index_risk": 0.0,
-    "relationship": 0.0
-   },
-   "deal_value_vs_floor": 0.0168,
    "threads": {
     "sup:70120": {
      "rounds": 3,
@@ -6514,14 +6523,14 @@
       {
        "round": 3,
        "kind": "walk",
-       "why": "We already gave you our final offer; we cannot go further."
+       "why": "Your figure is far below our final offer; we close this enquiry."
       }
      ]
     },
     "sup:70150": {
      "rounds": 3,
-     "status": "final_offer",
-     "closed": null,
+     "status": "walked_away",
+     "closed": "walked_away",
      "archetype": "monopolist",
      "history": [
       {
@@ -6542,11 +6551,8 @@
       },
       {
        "round": 3,
-       "kind": "final_offer",
-       "target": 0.997755556685018,
-       "conc": 0.00045455814844911404,
-       "step_b": 0.0013551130635053275,
-       "levers": 0.0
+       "kind": "walk",
+       "why": "We need to plan our capacity and close this enquiry now."
       }
      ]
     }
@@ -6557,8 +6563,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 7,
-    "decide_s": 0.029001712799072266,
+    "decisions": 6,
+    "decide_s": 0.02976393699645996,
     "held_first": 0
    },
    "seconds": 0.04,
@@ -6651,7 +6657,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.024100780487060547,
+    "decide_s": 0.02416086196899414,
     "held_first": 0
    },
    "seconds": 0.04,
@@ -6775,7 +6781,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 8,
-    "decide_s": 0.014011144638061523,
+    "decide_s": 0.013031959533691406,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -6859,7 +6865,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.010946035385131836,
+    "decide_s": 0.01036834716796875,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -6959,7 +6965,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 5,
-    "decide_s": 0.01140594482421875,
+    "decide_s": 0.011583566665649414,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -7043,7 +7049,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.01015615463256836,
+    "decide_s": 0.010468244552612305,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -7159,7 +7165,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 7,
-    "decide_s": 0.01251363754272461,
+    "decide_s": 0.012497663497924805,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -7251,7 +7257,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.010571718215942383,
+    "decide_s": 0.01059412956237793,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -7367,7 +7373,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 7,
-    "decide_s": 0.012254714965820312,
+    "decide_s": 0.012606382369995117,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -7451,7 +7457,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.010214090347290039,
+    "decide_s": 0.010291337966918945,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -7466,25 +7472,64 @@
    "archetypes": {
     "sup:70610": "walker"
    },
-   "end": "supplier_walked",
-   "deal": false,
+   "end": "accepted",
+   "deal": true,
    "c_open": 390121.4,
    "c_best": 321868.8,
    "c_alt": 379916.0,
-   "c_deal": null,
-   "must_haves_ok": null,
-   "score": 0.14952397417827332,
+   "supplier_id": "sup:70610",
+   "terms": {
+    "volume_per_year": 30000,
+    "contract_months": 24,
+    "payment_days": 90,
+    "lead_time_days": 5,
+    "incoterm": "DAP",
+    "ppm_commitment": 80,
+    "tooling_eur": 0,
+    "chargeback_eur_per_complaint": 0.0,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "unit_price": 5.48
+   },
+   "c_deal": 326636.8,
+   "must_haves_ok": true,
+   "score": 0.9301418554018456,
+   "breakdown": {
+    "price": 328800.0,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": -2192.0,
+    "freight": 0.0,
+    "late_delivery": 0,
+    "quality": 28.8,
+    "tooling": 0.0,
+    "index_clause": 0.0,
+    "index_risk": 0.0,
+    "relationship": 0.0
+   },
+   "deal_value_vs_floor": 0.008,
    "threads": {
     "sup:70610": {
-     "rounds": 1,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "rounds": 2,
+     "status": "final_offer",
+     "closed": null,
      "archetype": "walker",
      "history": [
       {
        "round": 1,
-       "kind": "walk",
-       "why": "We are too far apart and see no movement."
+       "kind": "open",
+       "target": 0.9712811485431871,
+       "conc": 0.029168544923967497,
+       "step_b": null,
+       "levers": 0.026757119048291467
+      },
+      {
+       "round": 2,
+       "kind": "final_offer",
+       "target": 0.9591222837225556,
+       "conc": 0.018910647193612014,
+       "step_b": 0.033002633084571374,
+       "levers": 0.00933166216274221
       }
      ]
     }
@@ -7495,8 +7540,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 1,
-    "decide_s": 0.009711742401123047,
+    "decisions": 3,
+    "decide_s": 0.010197877883911133,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -7596,7 +7641,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 5,
-    "decide_s": 0.011410951614379883,
+    "decide_s": 0.011757850646972656,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -7680,7 +7725,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.011656999588012695,
+    "decide_s": 0.011604070663452148,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -7780,7 +7825,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 5,
-    "decide_s": 0.014107227325439453,
+    "decide_s": 0.014649391174316406,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -7856,10 +7901,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010421276092529297,
+    "decide_s": 0.010818004608154297,
     "held_first": 0
    },
-   "seconds": 0.02,
+   "seconds": 0.03,
    "best_price": 4.45
   },
   {
@@ -7871,19 +7916,47 @@
    "archetypes": {
     "sup:70710": "walker"
    },
-   "end": "supplier_walked",
-   "deal": false,
+   "end": "accepted",
+   "deal": true,
    "c_open": 1112983.6,
    "c_best": 999829.06,
    "c_alt": 1157019.84,
-   "c_deal": null,
-   "must_haves_ok": null,
-   "score": 0.0,
+   "supplier_id": "sup:70710",
+   "terms": {
+    "volume_per_year": 94800,
+    "contract_months": 24,
+    "payment_days": 30,
+    "lead_time_days": 10,
+    "incoterm": "DAP",
+    "ppm_commitment": 50,
+    "index_clause": null,
+    "tooling_eur": 0,
+    "chargeback_eur_per_complaint": 0.0,
+    "effective_date": "2027-01-01",
+    "unit_price": 5.35
+   },
+   "c_deal": 1021122.4,
+   "must_haves_ok": true,
+   "score": 0.8118207188151711,
+   "breakdown": {
+    "price": 1014360.0,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": 6762.4,
+    "freight": 0.0,
+    "late_delivery": 0,
+    "quality": 0.0,
+    "tooling": 0.0,
+    "index_clause": 0.0,
+    "index_risk": 0.0,
+    "relationship": 0.0
+   },
+   "deal_value_vs_floor": 0.0131,
    "threads": {
     "sup:70710": {
-     "rounds": 2,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "rounds": 5,
+     "status": "final_offer",
+     "closed": null,
      "archetype": "walker",
      "history": [
       {
@@ -7896,8 +7969,35 @@
       },
       {
        "round": 2,
-       "kind": "walk",
-       "why": "We are too far apart and see no movement."
+       "kind": "open",
+       "target": 0.9541139175748199,
+       "conc": 0.009914735527347453,
+       "step_b": 0.008605851979345925,
+       "levers": 0.0011229058114437232
+      },
+      {
+       "round": 3,
+       "kind": "open",
+       "target": 0.945508065595474,
+       "conc": 0.01413682218634972,
+       "step_b": 0.013769363166953541,
+       "levers": 0.0
+      },
+      {
+       "round": 4,
+       "kind": "open",
+       "target": 0.936902213616128,
+       "conc": 0.012369719413056045,
+       "step_b": 0.012048192771084387,
+       "levers": 0.0
+      },
+      {
+       "round": 5,
+       "kind": "final_offer",
+       "target": 0.9282963616367819,
+       "conc": 0.014136822186349565,
+       "step_b": 0.013769363166953388,
+       "levers": 0.0
       }
      ]
     }
@@ -7908,8 +8008,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 2,
-    "decide_s": 0.011857271194458008,
+    "decisions": 6,
+    "decide_s": 0.016293048858642578,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -7924,19 +8024,47 @@
    "archetypes": {
     "sup:70710": "cash_short"
    },
-   "end": "supplier_walked",
-   "deal": false,
+   "end": "accepted",
+   "deal": true,
    "c_open": 1159745.28,
    "c_best": 1091831.61,
    "c_alt": 1157019.84,
-   "c_deal": null,
-   "must_haves_ok": null,
-   "score": 0.04013094859989082,
+   "supplier_id": "sup:70710",
+   "terms": {
+    "volume_per_year": 94800,
+    "contract_months": 24,
+    "payment_days": 14,
+    "lead_time_days": 10,
+    "incoterm": "DAP",
+    "ppm_commitment": 50,
+    "index_clause": null,
+    "tooling_eur": 0,
+    "chargeback_eur_per_complaint": 0.0,
+    "effective_date": "2027-01-01",
+    "unit_price": 5.85
+   },
+   "c_deal": 1120498.08,
+   "must_haves_ok": true,
+   "score": 0.577898381872162,
+   "breakdown": {
+    "price": 1109160.0,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": 11338.08,
+    "freight": 0.0,
+    "late_delivery": 0,
+    "quality": 0.0,
+    "tooling": 0.0,
+    "index_clause": 0.0,
+    "index_risk": 0.0,
+    "relationship": 0.0
+   },
+   "deal_value_vs_floor": 0.0254,
    "threads": {
     "sup:70710": {
-     "rounds": 4,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "rounds": 5,
+     "status": "final_offer",
+     "closed": null,
      "archetype": "cash_short",
      "history": [
       {
@@ -7965,8 +8093,19 @@
       },
       {
        "round": 4,
-       "kind": "walk",
-       "why": "We are too far apart and see no movement."
+       "kind": "open",
+       "target": 0.9424746055690139,
+       "conc": 0.01415595320546772,
+       "step_b": 0.031219498710432635,
+       "levers": 0.0
+      },
+      {
+       "round": 5,
+       "kind": "final_offer",
+       "target": 0.9376691715862029,
+       "conc": 0.012347341926712331,
+       "step_b": 0.027230792569261676,
+       "levers": 0.0
       }
      ]
     }
@@ -7977,8 +8116,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 4,
-    "decide_s": 0.014454126358032227,
+    "decisions": 6,
+    "decide_s": 0.016192197799682617,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -8054,7 +8193,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010307788848876953,
+    "decide_s": 0.011147022247314453,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -8069,7 +8208,7 @@
    "archetypes": {
     "sup:70710": "cash_short"
    },
-   "end": "supplier_walked",
+   "end": "buyer_walked",
    "deal": false,
    "c_open": 1155928.0,
    "c_best": 1141757.3,
@@ -8079,9 +8218,9 @@
    "score": 0.0,
    "threads": {
     "sup:70710": {
-     "rounds": 3,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "rounds": 6,
+     "status": "final_offer",
+     "closed": null,
      "archetype": "cash_short",
      "history": [
       {
@@ -8102,8 +8241,35 @@
       },
       {
        "round": 3,
-       "kind": "walk",
-       "why": "We are too far apart and see no movement."
+       "kind": "open",
+       "target": 0.9864419943536447,
+       "conc": 0.0052782839822216,
+       "step_b": 0.02287949802007332,
+       "levers": 0.0
+      },
+      {
+       "round": 4,
+       "kind": "open",
+       "target": 0.987992404592377,
+       "conc": 0.004736546339119673,
+       "step_b": 0.004084075224867807,
+       "levers": 0.0
+      },
+      {
+       "round": 5,
+       "kind": "open",
+       "target": 0.9864419943536447,
+       "conc": 0.0052782839822216,
+       "step_b": 0.02166876325197692,
+       "levers": 0.0
+      },
+      {
+       "round": 6,
+       "kind": "final_offer",
+       "target": 0.987992404592377,
+       "conc": 0.0052782839822216,
+       "step_b": 0.005294809992964065,
+       "levers": 0.0
       }
      ]
     }
@@ -8114,8 +8280,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 3,
-    "decide_s": 0.013034820556640625,
+    "decisions": 7,
+    "decide_s": 0.017173290252685547,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -8215,7 +8381,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 5,
-    "decide_s": 0.014338493347167969,
+    "decide_s": 0.014465570449829102,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -8307,7 +8473,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.012859344482421875,
+    "decide_s": 0.013204097747802734,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -8322,47 +8488,19 @@
    "archetypes": {
     "sup:70710": "data_driven"
    },
-   "end": "accepted",
-   "deal": true,
+   "end": "supplier_walked",
+   "deal": false,
    "c_open": 1120618.16,
    "c_best": 968047.04,
    "c_alt": 1157019.84,
-   "supplier_id": "sup:70710",
-   "terms": {
-    "volume_per_year": 94800,
-    "contract_months": 24,
-    "payment_days": 45,
-    "lead_time_days": 10,
-    "incoterm": "DAP",
-    "ppm_commitment": 50,
-    "index_clause": null,
-    "tooling_eur": 0,
-    "chargeback_eur_per_complaint": 0.0,
-    "effective_date": "2027-01-01",
-    "unit_price": 5.35
-   },
-   "c_deal": 1017741.2,
-   "must_haves_ok": true,
-   "score": 0.6742885547408975,
-   "breakdown": {
-    "price": 1014360.0,
-    "uncovered_need": 0.0,
-    "fallback_risk": 0.0,
-    "payment_terms": 3381.2,
-    "freight": 0.0,
-    "late_delivery": 0,
-    "quality": 0.0,
-    "tooling": 0.0,
-    "index_clause": 0.0,
-    "index_risk": 0.0,
-    "relationship": 0.0
-   },
-   "deal_value_vs_floor": 0.0429,
+   "c_deal": null,
+   "must_haves_ok": null,
+   "score": 0.0,
    "threads": {
     "sup:70710": {
-     "rounds": 6,
-     "status": "final_offer",
-     "closed": null,
+     "rounds": 5,
+     "status": "walked_away",
+     "closed": "walked_away",
      "archetype": "data_driven",
      "history": [
       {
@@ -8399,19 +8537,8 @@
       },
       {
        "round": 5,
-       "kind": "open",
-       "target": 0.9124525465098265,
-       "conc": 0.004428049326401368,
-       "step_b": 0.013542757800284553,
-       "levers": 0.0
-      },
-      {
-       "round": 6,
-       "kind": "final_offer",
-       "target": 0.9124525465098265,
-       "conc": 0.004428049326401368,
-       "step_b": 0.013542757800284704,
-       "levers": 0.0
+       "kind": "walk",
+       "why": "We need to plan our capacity and close this enquiry now."
       }
      ]
     }
@@ -8422,8 +8549,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 7,
-    "decide_s": 0.017183780670166016,
+    "decisions": 5,
+    "decide_s": 0.015974998474121094,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -8504,7 +8631,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.013019084930419922,
+    "decide_s": 0.01348114013671875,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -8596,7 +8723,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.01537179946899414,
+    "decide_s": 0.01616644859313965,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -8669,7 +8796,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.01143789291381836,
+    "decide_s": 0.012352943420410156,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -8745,7 +8872,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.012059926986694336,
+    "decide_s": 0.012414932250976562,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -8826,7 +8953,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.01302790641784668,
+    "decide_s": 0.012996912002563477,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -8918,7 +9045,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.01514577865600586,
+    "decide_s": 0.015261650085449219,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -9002,7 +9129,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.013625621795654297,
+    "decide_s": 0.013704776763916016,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -9075,7 +9202,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.011775016784667969,
+    "decide_s": 0.011930227279663086,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -9148,7 +9275,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.011831045150756836,
+    "decide_s": 0.011844873428344727,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -9221,10 +9348,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.011664390563964844,
+    "decide_s": 0.01182413101196289,
     "held_first": 0
    },
-   "seconds": 0.03,
+   "seconds": 0.02,
    "best_price": 15.82
   },
   {
@@ -9302,7 +9429,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.010552644729614258,
+    "decide_s": 0.010538101196289062,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -9378,7 +9505,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009920835494995117,
+    "decide_s": 0.00997018814086914,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -9467,7 +9594,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.011372804641723633,
+    "decide_s": 0.011329174041748047,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -9551,7 +9678,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.010616064071655273,
+    "decide_s": 0.010552167892456055,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -9643,7 +9770,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.011051654815673828,
+    "decide_s": 0.011365652084350586,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -9716,7 +9843,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009755134582519531,
+    "decide_s": 0.010155200958251953,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -9800,7 +9927,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.010456085205078125,
+    "decide_s": 0.010957956314086914,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -9873,7 +10000,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009838104248046875,
+    "decide_s": 0.010111331939697266,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -9957,7 +10084,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.010433673858642578,
+    "decide_s": 0.010529279708862305,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -10073,7 +10200,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 7,
-    "decide_s": 0.013238668441772461,
+    "decide_s": 0.013564586639404297,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -10189,7 +10316,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 7,
-    "decide_s": 0.013651132583618164,
+    "decide_s": 0.013782978057861328,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -10313,7 +10440,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 8,
-    "decide_s": 0.01420450210571289,
+    "decide_s": 0.01451730728149414,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -10426,7 +10553,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 7,
-    "decide_s": 0.01366567611694336,
+    "decide_s": 0.014600753784179688,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -10515,7 +10642,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.01174783706665039,
+    "decide_s": 0.012038946151733398,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -10604,7 +10731,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.011856317520141602,
+    "decide_s": 0.012479782104492188,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -10728,7 +10855,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 8,
-    "decide_s": 0.014384746551513672,
+    "decide_s": 0.014574050903320312,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -10743,19 +10870,47 @@
    "archetypes": {
     "sup:70140": "walker"
    },
-   "end": "supplier_walked",
-   "deal": false,
+   "end": "accepted",
+   "deal": true,
    "c_open": 839043.0,
    "c_best": 737044.5,
    "c_alt": 894383.19,
-   "c_deal": null,
-   "must_haves_ok": null,
-   "score": 0.0,
+   "supplier_id": "sup:70140",
+   "terms": {
+    "volume_per_year": 15900,
+    "contract_months": 12,
+    "payment_days": 60,
+    "lead_time_days": 56,
+    "incoterm": "FCA",
+    "ppm_commitment": 300,
+    "chargeback_eur_per_complaint": 0,
+    "tooling_eur": 0,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "unit_price": 45.7
+   },
+   "c_deal": 753262.5,
+   "must_haves_ok": true,
+   "score": 0.8409976617303195,
+   "breakdown": {
+    "price": 726630.0,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": 0.0,
+    "freight": 24486.0,
+    "late_delivery": 0,
+    "quality": 2146.5,
+    "tooling": 0.0,
+    "index_clause": 0.0,
+    "index_risk": 0.0,
+    "relationship": 0.0
+   },
+   "deal_value_vs_floor": 0.0232,
    "threads": {
     "sup:70140": {
-     "rounds": 3,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "rounds": 6,
+     "status": "agreed",
+     "closed": null,
      "archetype": "walker",
      "history": [
       {
@@ -10776,8 +10931,32 @@
       },
       {
        "round": 3,
-       "kind": "walk",
-       "why": "We need to plan our capacity and close this enquiry now."
+       "kind": "open",
+       "target": 0.9572968762549553,
+       "conc": 0.002932092761131289,
+       "step_b": 0.004963805584281176,
+       "levers": 0.0
+      },
+      {
+       "round": 4,
+       "kind": "open",
+       "target": 0.9544013229974578,
+       "conc": 0.0030542632928451576,
+       "step_b": 0.005170630816959669,
+       "levers": 0.0
+      },
+      {
+       "round": 5,
+       "kind": "open",
+       "target": 0.9407508576406843,
+       "conc": 0.013795156699199656,
+       "step_b": 0.004963805584281323,
+       "levers": 0.016389462244400545
+      },
+      {
+       "round": 6,
+       "kind": "agreed",
+       "target": 0.9376484791505086
       }
      ]
     }
@@ -10788,8 +10967,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 3,
-    "decide_s": 0.011789083480834961,
+    "decisions": 7,
+    "decide_s": 0.013641357421875,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -10881,7 +11060,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.011765241622924805,
+    "decide_s": 0.012089967727661133,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -10997,7 +11176,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 7,
-    "decide_s": 0.013590335845947266,
+    "decide_s": 0.013692140579223633,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -11105,7 +11284,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 6,
-    "decide_s": 0.012853860855102539,
+    "decide_s": 0.013283014297485352,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -11205,7 +11384,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 5,
-    "decide_s": 0.015143632888793945,
+    "decide_s": 0.015491008758544922,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -11294,7 +11473,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.014081001281738281,
+    "decide_s": 0.014331817626953125,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -11358,7 +11537,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.013914108276367188,
+    "decide_s": 0.014062881469726562,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -11373,14 +11552,42 @@
    "archetypes": {
     "sup:70310": "mirror"
    },
-   "end": "buyer_walked",
-   "deal": false,
+   "end": "accepted",
+   "deal": true,
    "c_open": 924535.63,
    "c_best": 827755.18,
    "c_alt": 906877.18,
-   "c_deal": null,
-   "must_haves_ok": null,
-   "score": 0.18245885403508624,
+   "supplier_id": "sup:70310",
+   "terms": {
+    "volume_per_year": 8980,
+    "contract_months": 12,
+    "payment_days": 45,
+    "lead_time_days": 35,
+    "incoterm": "DAP",
+    "ppm_commitment": 2500,
+    "chargeback_eur_per_complaint": 0,
+    "tooling_eur": 0,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "unit_price": 96.6
+   },
+   "c_deal": 881933.31,
+   "must_haves_ok": true,
+   "score": 0.4401955146933081,
+   "breakdown": {
+    "price": 867468.0,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": 2891.56,
+    "freight": 0.0,
+    "late_delivery": 5400,
+    "quality": 6173.75,
+    "tooling": 0.0,
+    "index_clause": 0.0,
+    "index_risk": 0.0,
+    "relationship": 0.0
+   },
+   "deal_value_vs_floor": 0.0487,
    "threads": {
     "sup:70310": {
      "rounds": 3,
@@ -11399,17 +11606,17 @@
       {
        "round": 2,
        "kind": "open",
-       "target": 0.9439695321707757,
+       "target": 0.9443701816780882,
        "conc": 0.003796961861542958,
-       "step_b": 0.03391050121324239,
+       "step_b": 0.032921434619701075,
        "levers": 0.0
       },
       {
        "round": 3,
        "kind": "final_offer",
-       "target": 0.9362651060022028,
-       "conc": 0.007922356129028434,
-       "step_b": 0.02723700722431962,
+       "target": 0.9402660200390334,
+       "conc": 0.004593685012545182,
+       "step_b": 0.0007598447139332275,
        "levers": 0.006219913246296403
       }
      ]
@@ -11422,7 +11629,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.014224052429199219,
+    "decide_s": 0.01482701301574707,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -11437,7 +11644,7 @@
    "archetypes": {
     "sup:70310": "monopolist"
    },
-   "end": "supplier_walked",
+   "end": "buyer_walked",
    "deal": false,
    "c_open": 949409.01,
    "c_best": 906877.18,
@@ -11448,8 +11655,8 @@
    "threads": {
     "sup:70310": {
      "rounds": 2,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "status": "final_offer",
+     "closed": null,
      "archetype": "monopolist",
      "history": [
       {
@@ -11462,8 +11669,11 @@
       },
       {
        "round": 2,
-       "kind": "walk",
-       "why": "We are too far apart and see no movement."
+       "kind": "final_offer",
+       "target": 0.9867087424022706,
+       "conc": 0.01843212331826184,
+       "step_b": 0.017241734509256833,
+       "levers": 0.0005357555195198982
       }
      ]
     }
@@ -11474,8 +11684,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 2,
-    "decide_s": 0.013120412826538086,
+    "decisions": 3,
+    "decide_s": 0.013065099716186523,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -11523,7 +11733,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.011340141296386719,
+    "decide_s": 0.011479854583740234,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -11607,7 +11817,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.013049840927124023,
+    "decide_s": 0.0132598876953125,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -11648,18 +11858,18 @@
       {
        "round": 2,
        "kind": "open",
-       "target": 0.9947686251048733,
+       "target": 0.9941958430898501,
        "conc": 0.002502914769383491,
-       "step_b": 0.03204109860308239,
+       "step_b": 0.01690520979194249,
        "levers": 0.0009063006314486093
       },
       {
        "round": 3,
        "kind": "final_offer",
-       "target": 0.9940867498027619,
-       "conc": 0.0018498099538699977,
-       "step_b": 0.04825016353283991,
-       "levers": 0.00023721708947413295
+       "target": 0.9960547981374431,
+       "conc": 0.0016182579671024596,
+       "step_b": 0.020888081261185385,
+       "levers": 0.0
       }
      ]
     }
@@ -11671,7 +11881,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.014303922653198242,
+    "decide_s": 0.014776945114135742,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -11740,7 +11950,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 5,
-    "decide_s": 0.015993118286132812,
+    "decide_s": 0.01618337631225586,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -11796,7 +12006,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.012707948684692383,
+    "decide_s": 0.013128280639648438,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -11888,7 +12098,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.010983943939208984,
+    "decide_s": 0.011216163635253906,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -12012,7 +12222,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 8,
-    "decide_s": 0.013218402862548828,
+    "decide_s": 0.013536214828491211,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -12104,7 +12314,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.010810375213623047,
+    "decide_s": 0.011039972305297852,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -12119,19 +12329,47 @@
    "archetypes": {
     "sup:70230": "cash_short"
    },
-   "end": "supplier_walked",
-   "deal": false,
+   "end": "accepted",
+   "deal": true,
    "c_open": 315715.43,
    "c_best": 301952.95,
    "c_alt": 322517.35,
-   "c_deal": null,
-   "must_haves_ok": null,
-   "score": 0.0,
+   "supplier_id": "sup:70230",
+   "terms": {
+    "volume_per_year": 17900,
+    "contract_months": 12,
+    "payment_days": 14,
+    "lead_time_days": 28,
+    "incoterm": "EXW",
+    "ppm_commitment": 550,
+    "chargeback_eur_per_complaint": 0.0,
+    "effective_date": "2027-04-01",
+    "tooling_eur": 0,
+    "index_clause": null,
+    "unit_price": 17.4
+   },
+   "c_deal": 308913.66,
+   "must_haves_ok": true,
+   "score": 0.4942256046875293,
+   "breakdown": {
+    "price": 303314.27,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": 3100.55,
+    "freight": 1790.0,
+    "late_delivery": 0,
+    "quality": 708.84,
+    "tooling": 0.0,
+    "index_clause": 0.0,
+    "index_risk": 0.0,
+    "relationship": 0.0
+   },
+   "deal_value_vs_floor": 0.0233,
    "threads": {
     "sup:70230": {
      "rounds": 2,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "status": "final_offer",
+     "closed": null,
      "archetype": "cash_short",
      "history": [
       {
@@ -12144,8 +12382,11 @@
       },
       {
        "round": 2,
-       "kind": "walk",
-       "why": "We are too far apart and see no movement."
+       "kind": "final_offer",
+       "target": 0.9877457529214049,
+       "conc": 0.02840624580354447,
+       "step_b": 0.05023930200229843,
+       "levers": 0.0
       }
      ]
     }
@@ -12156,8 +12397,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 2,
-    "decide_s": 0.010170221328735352,
+    "decisions": 3,
+    "decide_s": 0.010453939437866211,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -12265,7 +12506,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 6,
-    "decide_s": 0.012051105499267578,
+    "decide_s": 0.012198925018310547,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -12357,7 +12598,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.010868072509765625,
+    "decide_s": 0.011138439178466797,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -12481,7 +12722,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 8,
-    "decide_s": 0.012860536575317383,
+    "decide_s": 0.013194561004638672,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -12565,10 +12806,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.010223865509033203,
+    "decide_s": 0.010650634765625,
     "held_first": 0
    },
-   "seconds": 0.02,
+   "seconds": 0.03,
    "best_price": 14.09
   },
   {
@@ -12649,7 +12890,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.010435342788696289,
+    "decide_s": 0.010349512100219727,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -12725,7 +12966,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009818792343139648,
+    "decide_s": 0.010572195053100586,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -12798,7 +13039,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010393142700195312,
+    "decide_s": 0.010461091995239258,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -12882,7 +13123,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.011714935302734375,
+    "decide_s": 0.012151241302490234,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -12955,10 +13196,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010426759719848633,
+    "decide_s": 0.010566949844360352,
     "held_first": 0
    },
-   "seconds": 0.03,
+   "seconds": 0.02,
    "best_price": 299.21
   },
   {
@@ -13028,7 +13269,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.01028895378112793,
+    "decide_s": 0.010664701461791992,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -13104,10 +13345,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010576248168945312,
+    "decide_s": 0.010486841201782227,
     "held_first": 0
    },
-   "seconds": 0.03,
+   "seconds": 0.02,
    "best_price": 303.11
   },
   {
@@ -13188,7 +13429,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.011843204498291016,
+    "decide_s": 0.012436866760253906,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -13285,7 +13526,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 5,
-    "decide_s": 0.014410972595214844,
+    "decide_s": 0.01459956169128418,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -13358,7 +13599,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.01049184799194336,
+    "decide_s": 0.010621070861816406,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -13431,7 +13672,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010341167449951172,
+    "decide_s": 0.010422706604003906,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -13504,10 +13745,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010204315185546875,
+    "decide_s": 0.010577917098999023,
     "held_first": 0
    },
-   "seconds": 0.02,
+   "seconds": 0.03,
    "best_price": 287.0
   },
   {
@@ -13519,19 +13760,47 @@
    "archetypes": {
     "sup:70430": "data_driven"
    },
-   "end": "supplier_walked",
-   "deal": false,
+   "end": "accepted",
+   "deal": true,
    "c_open": 306671.67,
    "c_best": 234801.67,
    "c_alt": 284886.67,
-   "c_deal": null,
-   "must_haves_ok": null,
-   "score": 0.30311673855572574,
+   "supplier_id": "sup:70430",
+   "terms": {
+    "volume_per_year": 25000,
+    "contract_months": 24,
+    "payment_days": 90,
+    "lead_time_days": 7,
+    "incoterm": "DAP",
+    "ppm_commitment": 300,
+    "chargeback_eur_per_complaint": 0.0,
+    "tooling_eur": 0,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "unit_price": 5.4
+   },
+   "c_deal": 268575.0,
+   "must_haves_ok": true,
+   "score": 0.5300775010435509,
+   "breakdown": {
+    "price": 270000.0,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": -1800.0,
+    "freight": 0.0,
+    "late_delivery": 0,
+    "quality": 375.0,
+    "tooling": 0.0,
+    "index_clause": 0.0,
+    "index_risk": 0.0,
+    "relationship": 0.0
+   },
+   "deal_value_vs_floor": 0.1357,
    "threads": {
     "sup:70430": {
      "rounds": 4,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "status": "final_offer",
+     "closed": null,
      "archetype": "data_driven",
      "history": [
       {
@@ -13560,8 +13829,11 @@
       },
       {
        "round": 4,
-       "kind": "walk",
-       "why": "We need to plan our capacity and close this enquiry now."
+       "kind": "final_offer",
+       "target": 0.948243034544302,
+       "conc": 0.005782954164841014,
+       "step_b": 0.013947497763897462,
+       "levers": 0.0
       }
      ]
     }
@@ -13572,11 +13844,11 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 4,
-    "decide_s": 0.012579679489135742,
+    "decisions": 5,
+    "decide_s": 0.011287450790405273,
     "held_first": 0
    },
-   "seconds": 0.03,
+   "seconds": 0.02,
    "best_price": 4.72
   },
   {
@@ -13621,7 +13893,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.010593414306640625,
+    "decide_s": 0.009754180908203125,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -13709,7 +13981,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 7,
-    "decide_s": 0.012308359146118164,
+    "decide_s": 0.012560606002807617,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -13801,7 +14073,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.010481119155883789,
+    "decide_s": 0.01067805290222168,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -13925,7 +14197,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 8,
-    "decide_s": 0.013303041458129883,
+    "decide_s": 0.013134002685546875,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -14041,7 +14313,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 7,
-    "decide_s": 0.012808799743652344,
+    "decide_s": 0.012896537780761719,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -14157,7 +14429,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 7,
-    "decide_s": 0.01212310791015625,
+    "decide_s": 0.012294530868530273,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -14249,10 +14521,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.010422468185424805,
+    "decide_s": 0.011024951934814453,
     "held_first": 0
    },
-   "seconds": 0.02,
+   "seconds": 0.03,
    "best_price": 4.72
   },
   {
@@ -14305,7 +14577,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.010260343551635742,
+    "decide_s": 0.010381221771240234,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -14389,7 +14661,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.010282754898071289,
+    "decide_s": 0.010450601577758789,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -14473,7 +14745,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.01131296157836914,
+    "decide_s": 0.011554718017578125,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -14557,10 +14829,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.011375188827514648,
+    "decide_s": 0.011541128158569336,
     "held_first": 0
    },
-   "seconds": 0.03,
+   "seconds": 0.02,
    "best_price": 74.93
   },
   {
@@ -14633,7 +14905,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.01034998893737793,
+    "decide_s": 0.010428428649902344,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -14749,7 +15021,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 7,
-    "decide_s": 0.01702427864074707,
+    "decide_s": 0.017184972763061523,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -14764,19 +15036,47 @@
    "archetypes": {
     "sup:70720": "cash_short"
    },
-   "end": "supplier_walked",
-   "deal": false,
+   "end": "accepted",
+   "deal": true,
    "c_open": 997927.85,
    "c_best": 871018.45,
    "c_alt": 1069557.38,
-   "c_deal": null,
-   "must_haves_ok": null,
-   "score": 0.0,
+   "supplier_id": "sup:70720",
+   "terms": {
+    "volume_per_year": 5510,
+    "contract_months": 24,
+    "payment_days": 14,
+    "lead_time_days": 10,
+    "incoterm": "DAP",
+    "ppm_commitment": 50,
+    "chargeback_eur_per_complaint": 0.0,
+    "index_clause": null,
+    "tooling_eur": 0,
+    "effective_date": "2027-01-01",
+    "unit_price": 79.8
+   },
+   "c_deal": 888385.38,
+   "must_haves_ok": true,
+   "score": 0.863154896327616,
+   "breakdown": {
+    "price": 879396.0,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": 8989.38,
+    "freight": 0.0,
+    "late_delivery": 0,
+    "quality": 0.0,
+    "tooling": 0.0,
+    "index_clause": 0.0,
+    "index_risk": 0.0,
+    "relationship": 0.0
+   },
+   "deal_value_vs_floor": 0.0181,
    "threads": {
     "sup:70720": {
-     "rounds": 2,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "rounds": 3,
+     "status": "final_offer",
+     "closed": null,
      "archetype": "cash_short",
      "history": [
       {
@@ -14789,8 +15089,19 @@
       },
       {
        "round": 2,
-       "kind": "walk",
-       "why": "We are too far apart and see no movement."
+       "kind": "open",
+       "target": 0.9048234710799858,
+       "conc": 0.028426788035085106,
+       "step_b": 0.03705007392509206,
+       "levers": 0.0
+      },
+      {
+       "round": 3,
+       "kind": "final_offer",
+       "target": 0.900318902821616,
+       "conc": 0.022203335513219156,
+       "step_b": 0.022973298117686065,
+       "levers": 0.0
       }
      ]
     }
@@ -14801,11 +15112,11 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 2,
-    "decide_s": 0.011246919631958008,
+    "decisions": 4,
+    "decide_s": 0.012953996658325195,
     "held_first": 0
    },
-   "seconds": 0.02,
+   "seconds": 0.03,
    "best_price": 78.24
   },
   {
@@ -14894,7 +15205,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.012651920318603516,
+    "decide_s": 0.013005971908569336,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -14978,7 +15289,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.011651277542114258,
+    "decide_s": 0.01256108283996582,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -15094,7 +15405,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 7,
-    "decide_s": 0.016664505004882812,
+    "decide_s": 0.017255067825317383,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -15178,10 +15489,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.011355876922607422,
+    "decide_s": 0.011656045913696289,
     "held_first": 0
    },
-   "seconds": 0.02,
+   "seconds": 0.03,
    "best_price": 68.62
   },
   {
@@ -15193,19 +15504,47 @@
    "archetypes": {
     "sup:70720": "boulware"
    },
-   "end": "supplier_walked",
-   "deal": false,
+   "end": "accepted",
+   "deal": true,
    "c_open": 1001422.3,
    "c_best": 983235.55,
    "c_alt": 1069557.38,
-   "c_deal": null,
-   "must_haves_ok": null,
-   "score": 0.0,
+   "supplier_id": "sup:70720",
+   "terms": {
+    "volume_per_year": 5510,
+    "contract_months": 24,
+    "payment_days": 14,
+    "lead_time_days": 10,
+    "incoterm": "DAP",
+    "ppm_commitment": 50,
+    "chargeback_eur_per_complaint": 0.0,
+    "index_clause": null,
+    "tooling_eur": 0,
+    "effective_date": "2027-01-01",
+    "unit_price": 89.1
+   },
+   "c_deal": 991919.02,
+   "must_haves_ok": true,
+   "score": 0.5225386613881,
+   "breakdown": {
+    "price": 981882.0,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": 10037.02,
+    "freight": 0.0,
+    "late_delivery": 0,
+    "quality": 0.0,
+    "tooling": 0.0,
+    "index_clause": 0.0,
+    "index_risk": 0.0,
+    "relationship": 0.0
+   },
+   "deal_value_vs_floor": 0.006,
    "threads": {
     "sup:70720": {
      "rounds": 2,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "status": "final_offer",
+     "closed": null,
      "archetype": "boulware",
      "history": [
       {
@@ -15218,8 +15557,11 @@
       },
       {
        "round": 2,
-       "kind": "walk",
-       "why": "We are too far apart and see no movement."
+       "kind": "final_offer",
+       "target": 0.9985452824322174,
+       "conc": 0.001022840672371574,
+       "step_b": 0.0708965172078899,
+       "levers": 0.0
       }
      ]
     }
@@ -15230,11 +15572,11 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 2,
-    "decide_s": 0.011640310287475586,
+    "decisions": 3,
+    "decide_s": 0.011756658554077148,
     "held_first": 0
    },
-   "seconds": 0.02,
+   "seconds": 0.03,
    "best_price": 88.32
   },
   {
@@ -15304,7 +15646,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009612083435058594,
+    "decide_s": 0.009859085083007812,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -15377,7 +15719,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009495019912719727,
+    "decide_s": 0.010022163391113281,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -15450,7 +15792,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009374141693115234,
+    "decide_s": 0.009690999984741211,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -15523,7 +15865,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009669780731201172,
+    "decide_s": 0.00981903076171875,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -15615,10 +15957,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.010802984237670898,
+    "decide_s": 0.01081228256225586,
     "held_first": 0
    },
-   "seconds": 0.03,
+   "seconds": 0.02,
    "best_price": 34.57
   },
   {
@@ -15688,7 +16030,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.00947117805480957,
+    "decide_s": 0.009965896606445312,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -15772,7 +16114,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.009983062744140625,
+    "decide_s": 0.010173797607421875,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -15845,7 +16187,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009606122970581055,
+    "decide_s": 0.009637117385864258,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -15926,7 +16268,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.010108232498168945,
+    "decide_s": 0.010141849517822266,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -16031,7 +16373,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 6,
-    "decide_s": 0.011871099472045898,
+    "decide_s": 0.011981964111328125,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -16046,25 +16388,72 @@
    "archetypes": {
     "sup:70740": "walker"
    },
-   "end": "supplier_walked",
-   "deal": false,
+   "end": "accepted",
+   "deal": true,
    "c_open": 292071.69,
    "c_best": 242774.58,
    "c_alt": 301087.96,
-   "c_deal": null,
-   "must_haves_ok": null,
-   "score": 0.0,
+   "supplier_id": "sup:70740",
+   "terms": {
+    "volume_per_year": 23700,
+    "contract_months": 24,
+    "payment_days": 14,
+    "lead_time_days": 14,
+    "incoterm": "DAP",
+    "ppm_commitment": 70,
+    "index_clause": null,
+    "tooling_eur": 0,
+    "chargeback_eur_per_complaint": 0.0,
+    "effective_date": "2027-01-01",
+    "unit_price": 5.3
+   },
+   "c_deal": 253788.03,
+   "must_haves_ok": true,
+   "score": 0.7765903518482117,
+   "breakdown": {
+    "price": 251220.0,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": 2568.03,
+    "freight": 0.0,
+    "late_delivery": 0,
+    "quality": 0.0,
+    "tooling": 0.0,
+    "index_clause": 0.0,
+    "index_risk": 0.0,
+    "relationship": 0.0
+   },
+   "deal_value_vs_floor": 0.0444,
    "threads": {
     "sup:70740": {
-     "rounds": 1,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "rounds": 3,
+     "status": "final_offer",
+     "closed": null,
      "archetype": "walker",
      "history": [
       {
        "round": 1,
-       "kind": "walk",
-       "why": "We are too far apart and see no movement."
+       "kind": "open",
+       "target": 0.9173517102897689,
+       "conc": 0.08358744809929161,
+       "step_b": null,
+       "levers": 0.0
+      },
+      {
+       "round": 2,
+       "kind": "open",
+       "target": 0.902200470633922,
+       "conc": 0.01653428560456054,
+       "step_b": 0.04040330574892518,
+       "levers": 0.008105032280204911
+      },
+      {
+       "round": 3,
+       "kind": "final_offer",
+       "target": 0.8937831152695626,
+       "conc": 0.009278791353160997,
+       "step_b": 0.023568595020206303,
+       "levers": 0.0
       }
      ]
     }
@@ -16075,11 +16464,11 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 1,
-    "decide_s": 0.010278940200805664,
+    "decisions": 4,
+    "decide_s": 0.013146638870239258,
     "held_first": 0
    },
-   "seconds": 0.02,
+   "seconds": 0.03,
    "best_price": 5.07
   },
   {
@@ -16184,7 +16573,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 6,
-    "decide_s": 0.015999794006347656,
+    "decide_s": 0.016495943069458008,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -16284,7 +16673,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 5,
-    "decide_s": 0.014438629150390625,
+    "decide_s": 0.014361381530761719,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -16376,7 +16765,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.012952327728271484,
+    "decide_s": 0.01316070556640625,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -16492,7 +16881,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 7,
-    "decide_s": 0.01679396629333496,
+    "decide_s": 0.017942190170288086,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -16592,7 +16981,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 5,
-    "decide_s": 0.014386177062988281,
+    "decide_s": 0.014558553695678711,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -16607,19 +16996,47 @@
    "archetypes": {
     "sup:70740": "walker"
    },
-   "end": "supplier_walked",
-   "deal": false,
+   "end": "accepted",
+   "deal": true,
    "c_open": 290163.05,
    "c_best": 244365.96,
    "c_alt": 301087.96,
-   "c_deal": null,
-   "must_haves_ok": null,
-   "score": 0.0,
+   "supplier_id": "sup:70740",
+   "terms": {
+    "volume_per_year": 23700,
+    "contract_months": 24,
+    "payment_days": 45,
+    "lead_time_days": 14,
+    "incoterm": "DAP",
+    "ppm_commitment": 70,
+    "index_clause": null,
+    "tooling_eur": 0,
+    "chargeback_eur_per_complaint": 0.0,
+    "effective_date": "2027-01-01",
+    "unit_price": 5.5
+   },
+   "c_deal": 261569.0,
+   "must_haves_ok": true,
+   "score": 0.6243639060909764,
+   "breakdown": {
+    "price": 260700.0,
+    "uncovered_need": 0.0,
+    "fallback_risk": 0.0,
+    "payment_terms": 869.0,
+    "freight": 0.0,
+    "late_delivery": 0,
+    "quality": 0.0,
+    "tooling": 0.0,
+    "index_clause": 0.0,
+    "index_risk": 0.0,
+    "relationship": 0.0
+   },
+   "deal_value_vs_floor": 0.0582,
    "threads": {
     "sup:70740": {
-     "rounds": 2,
-     "status": "walked_away",
-     "closed": "walked_away",
+     "rounds": 5,
+     "status": "final_offer",
+     "closed": null,
      "archetype": "walker",
      "history": [
       {
@@ -16632,8 +17049,35 @@
       },
       {
        "round": 2,
-       "kind": "walk",
-       "why": "We are too far apart and see no movement."
+       "kind": "open",
+       "target": 0.9393276267570305,
+       "conc": 0.004654286925675644,
+       "step_b": 0.045731530821265076,
+       "levers": 0.0
+      },
+      {
+       "round": 3,
+       "kind": "open",
+       "target": 0.9393276267570305,
+       "conc": 0.004654286925675644,
+       "step_b": 0.030487687214176717,
+       "levers": 0.0
+      },
+      {
+       "round": 4,
+       "kind": "open",
+       "target": 0.9393276267570305,
+       "conc": 0.004654286925675644,
+       "step_b": 0.022018885210238908,
+       "levers": 0.0
+      },
+      {
+       "round": 5,
+       "kind": "final_offer",
+       "target": 0.9393276267570305,
+       "conc": 0.004654286925675644,
+       "step_b": 0.01693760400787592,
+       "levers": 0.0
       }
      ]
     }
@@ -16644,8 +17088,8 @@
     "over_limit": 0,
     "forced_close": null,
     "crash": null,
-    "decisions": 2,
-    "decide_s": 0.011835098266601562,
+    "decisions": 6,
+    "decide_s": 0.015732288360595703,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -16777,7 +17221,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 9,
-    "decide_s": 0.01898932456970215,
+    "decide_s": 0.019600868225097656,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -16869,7 +17313,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.012811899185180664,
+    "decide_s": 0.013105154037475586,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -16985,7 +17429,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 7,
-    "decide_s": 0.017026901245117188,
+    "decide_s": 0.017023801803588867,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -17058,7 +17502,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 2,
-    "decide_s": 0.009514093399047852,
+    "decide_s": 0.01005101203918457,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -17150,7 +17594,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.01036691665649414,
+    "decide_s": 0.010637283325195312,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -17250,10 +17694,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 5,
-    "decide_s": 0.010992765426635742,
+    "decide_s": 0.011107683181762695,
     "held_first": 0
    },
-   "seconds": 0.02,
+   "seconds": 0.03,
    "best_price": 3.85
   },
   {
@@ -17334,7 +17778,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.010211944580078125,
+    "decide_s": 0.010360956192016602,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -17415,10 +17859,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.009989500045776367,
+    "decide_s": 0.01007533073425293,
     "held_first": 0
    },
-   "seconds": 0.03,
+   "seconds": 0.02,
    "best_price": 4.36
   },
   {
@@ -17523,7 +17967,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 6,
-    "decide_s": 0.01154184341430664,
+    "decide_s": 0.011520147323608398,
     "held_first": 0
    },
    "seconds": 0.03,
@@ -17607,10 +18051,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.009844779968261719,
+    "decide_s": 0.010008811950683594,
     "held_first": 0
    },
-   "seconds": 0.03,
+   "seconds": 0.02,
    "best_price": 4.17
   },
   {
@@ -17691,10 +18135,10 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.009969949722290039,
+    "decide_s": 0.010282039642333984,
     "held_first": 0
    },
-   "seconds": 0.03,
+   "seconds": 0.02,
    "best_price": 3.68
   },
   {
@@ -17775,7 +18219,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 3,
-    "decide_s": 0.009189844131469727,
+    "decide_s": 0.010172367095947266,
     "held_first": 0
    },
    "seconds": 0.02,
@@ -17867,7 +18311,7 @@
     "forced_close": null,
     "crash": null,
     "decisions": 4,
-    "decide_s": 0.009847640991210938,
+    "decide_s": 0.009888410568237305,
     "held_first": 0
    },
    "seconds": 0.02,

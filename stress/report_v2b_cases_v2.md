@@ -1,4 +1,4 @@
-# Stress report `v2a_cases_v2`
+# Stress report `v2b_cases_v2`
 
 NOIDEA_EXPERIMENTS=`hidden` - 190 cases, offline simulator (stress/sim_supplier.py).
 
@@ -6,7 +6,7 @@ NOIDEA_EXPERIMENTS=`hidden` - 190 cases, offline simulator (stress/sim_supplier.
 
 | Overall | n | mean | median | min | no-deal | any supplier walked | all walked | agent walked | crashes | broken must-have | rounds |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| all | 190 | 0.630 | 0.681 | 0.000 | 7% | 6% | 1% | 6% | 0 | 0 | 2.91 |
+| all | 190 | 0.631 | 0.681 | 0.000 | 7% | 6% | 1% | 6% | 0 | 0 | 2.91 |
 
 ## By case type
 
@@ -15,7 +15,7 @@ NOIDEA_EXPERIMENTS=`hidden` - 190 cases, offline simulator (stress/sim_supplier.
 | bundling | 20 | 0.757 | 0.727 | 0.530 | 15% | 0% | 0% | 15% | 0 | 0 | 3.9 |
 | capacity | 20 | 0.926 | 0.953 | 0.772 | 0% | 0% | 0% | 0% | 0 | 0 | 2 |
 | price_increase | 40 | 0.610 | 0.623 | 0.040 | 2% | 0% | 0% | 2% | 0 | 0 | 2.55 |
-| quality | 20 | 0.631 | 0.612 | 0.182 | 35% | 0% | 0% | 35% | 0 | 0 | 3.95 |
+| quality | 20 | 0.644 | 0.612 | 0.308 | 30% | 0% | 0% | 30% | 0 | 0 | 3.95 |
 | raw_material | 30 | 0.557 | 0.608 | 0.000 | 7% | 3% | 3% | 3% | 0 | 0 | 3.73 |
 | renewal | 40 | 0.693 | 0.796 | 0.121 | 0% | 0% | 0% | 0% | 0 | 0 | 1.75 |
 | rfq | 20 | 0.226 | 0.199 | 0.000 | 5% | 50% | 5% | 0% | 0 | 0 | 3.55 |
@@ -35,7 +35,7 @@ NOIDEA_EXPERIMENTS=`hidden` - 190 cases, offline simulator (stress/sim_supplier.
 | case:P09 | 10 | 0.891 | 0.897 | 0.772 | 0% | 0% | 0% | 0% | 0 | 0 | 1.7 |
 | case:P10 | 10 | 0.960 | 0.965 | 0.898 | 0% | 0% | 0% | 0% | 0 | 0 | 2.3 |
 | case:P11 | 10 | 0.718 | 0.739 | 0.547 | 0% | 0% | 0% | 0% | 0 | 0 | 5.2 |
-| case:P12 | 10 | 0.545 | 0.464 | 0.182 | 70% | 0% | 0% | 70% | 0 | 0 | 2.7 |
+| case:P12 | 10 | 0.570 | 0.464 | 0.308 | 60% | 0% | 0% | 60% | 0 | 0 | 2.7 |
 | case:P13 | 10 | 0.574 | 0.609 | 0.189 | 0% | 0% | 0% | 0% | 0 | 0 | 3.5 |
 | case:P14 | 10 | 0.843 | 0.859 | 0.724 | 0% | 0% | 0% | 0% | 0 | 0 | 1.5 |
 | case:P15 | 10 | 0.743 | 0.705 | 0.530 | 30% | 0% | 0% | 30% | 0 | 0 | 4 |
@@ -52,7 +52,7 @@ NOIDEA_EXPERIMENTS=`hidden` - 190 cases, offline simulator (stress/sim_supplier.
 | cash_short | 24 | 0.532 | 0.560 | 0.000 | 4% | 8% | 0% | 4% | 0 | 0 | 3.17 |
 | conceder | 21 | 0.724 | 0.828 | 0.000 | 0% | 0% | 0% | 0% | 0 | 0 | 2.24 |
 | data_driven | 22 | 0.540 | 0.621 | 0.000 | 9% | 14% | 4% | 4% | 0 | 0 | 2.23 |
-| mirror | 84 | 0.631 | 0.648 | 0.000 | 7% | 8% | 1% | 6% | 0 | 0 | 3.35 |
+| mirror | 84 | 0.634 | 0.648 | 0.000 | 6% | 8% | 1% | 5% | 0 | 0 | 3.35 |
 | monopolist | 20 | 0.598 | 0.826 | 0.000 | 20% | 20% | 5% | 15% | 0 | 0 | 2.45 |
 | walker | 22 | 0.636 | 0.774 | 0.000 | 0% | 9% | 0% | 0% | 0 | 0 | 3.23 |
 

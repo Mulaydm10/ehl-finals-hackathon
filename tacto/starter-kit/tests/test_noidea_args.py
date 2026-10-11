@@ -1,3 +1,4 @@
+import os
 """Round 1 carries our strongest verified arguments whatever the language model picks.
 
 Live: the model chose which arguments to send and dropped the decisive one - P10 v2.x sent only the
@@ -32,6 +33,8 @@ def no_args_model(system, user):
 
 @pytest.mark.skipif(not OPENINGS.exists(), reason="needs the probed openings")
 @pytest.mark.parametrize("cid,first", [("P10", "should_cost"), ("P18", "po_prices")])
+@pytest.mark.skipif("hidden" in os.environ.get("NOIDEA_EXPERIMENTS", ""),
+                    reason="hidden mode switches off the per-case claim reactions this ranking rests on")
 def test_round_one_carries_the_top_arguments(cid, first):
     case, threads = load(cid)
     agent = NoIdeaAgent(no_args_model)
