@@ -46,3 +46,6 @@ keyed by that id (and, for lessons, also the case type), so it applies only to a
 | mean | 0.755 | **0.783** |
 
 The general principles do at least as well - generalising did not dilute the score.
+
+## 7. Out-of-sample check (stress lab, after this audit)
+A blind subagent built 190 suppliers from the raw games only. On them the final agent scores 0.631 (harsher simulator; practice-copy templates far below their live scores), with no crash, no invalid e-mail and no broken must-have. It found two real logic bugs (fixed in final-v2) and no supplier-specific behaviour; the tuned numbers held - every tuning idea tried on it (fc100, fc_ref, show2) made it worse or did nothing.
