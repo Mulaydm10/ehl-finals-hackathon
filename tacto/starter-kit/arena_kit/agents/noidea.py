@@ -204,7 +204,8 @@ class NoIdeaAgent:
         pb = root / "playbooks"
         self.playbooks = {p.stem: p.read_text(encoding="utf-8") for p in pb.glob("*.md")} if pb.exists() else {}
         self.correspondence = root / "tacto/data/correspondence"
-        les = root / "datasets/G_lessons.json"
+        # experiment `old_lessons`: the lessons as they were before the case recipes were generalised (A/B only)
+        les = root / ("datasets/G_lessons_old.json" if "old_lessons" in EXPERIMENTS else "datasets/G_lessons.json")
         self.lessons = json.loads(les.read_text(encoding="utf-8")) if les.exists() else {}
         try:  # the signal catalogue (src/eval/signals.py): category -> (regex, what works)
             import importlib.util
@@ -1646,7 +1647,10 @@ or null, "reason": "<one sentence>"}."""
         docs = self.sup[sid]["dossier"].get("documents", [])
         ranked = sorted(docs, key=lambda d: -len(words & set(re.findall(r"[a-zäöüß]{5,}", d["text"].lower()))))
         notes = [f"- {d['date']} {d['kind']}: {' '.join(d['text'].split())[:260]}" for d in ranked[:4]]
-        lessons = [f"- {x}" for x in self.lessons.get(case["type"], []) + self.lessons.get("general", [])]
+        # a returning supplier gets the lessons about ITSELF first (G_lessons "by_supplier"); any other supplier only the general
+        # lessons of its case type - a recipe for one practice supplier must not steer a new one (never in hidden mode)
+        own = [] if "hidden" in EXPERIMENTS else ((self.lessons.get("by_supplier") or {}).get(sid) or {}).get(case["type"], [])
+        lessons = [f"- {x}" for x in own + self.lessons.get(case["type"], []) + self.lessons.get("general", [])]
         principles = [f"- {x}" for x in self.lessons.get("principles", [])]
         return ("SIGNALS IN ITS E-MAIL (and what works):\n" + ("\n".join(sig) or "- none") +
                 "\nOUR NOTES ON THIS SUPPLIER (verbatim, most relevant first):\n" + ("\n".join(notes) or "- none") +
