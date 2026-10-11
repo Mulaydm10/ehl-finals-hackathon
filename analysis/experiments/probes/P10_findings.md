@@ -41,3 +41,14 @@ Before: 11 games, all `final_offer` in round 1 at EUR 31.70-32.00 (best 0.663). 
 - One-shot / capacity suppliers: anchor at a **credible** level (current price backed by the price history, never at
   the floor estimate), all strong data in round 1 (price history + should-cost), keep 36 m as the round-2 move, round-2
   ask ~1/3 of the gap above our anchor, accept its round-2 final.
+
+## Round-2 hair test (Parth, 2026-10-11): its round-2 step follows our ask - P10 stays at 0.702
+Probe G (`P10_G.json`): game B's round 1 verbatim -> **open 31.50 again** (deterministic: both claims verified). Round 2
+asked 31.12 @ 36 m (just over the (31.10, 31.20] line B's final implied) -> **final 31.40 = 0.686** (`edefadcb02c5b703`).
+Its line is not fixed: the round-2 step depends on how far under its 31.50 counter we ask (all P10 round 2s):
+31.12 (-1.2 %) -> 0.10; 30.90 (-1.9 %, weak fact) -> 0.20; 30.75 (-2.4 %) -> 0.20; **30.40 (-3.5 %) -> 0.30**;
+30.11 (-4.4 %, weak fact) -> 0.20; 29.79 / 29.09 (-5 to -8 %) -> 0.10. Peak at ~3.5 %: game B's 30.40 is the sweet spot.
+(First attempt `3ced7cf689618e98` = 0.679 was a design error of mine: on_open 'accept' took the round-1 counter.)
+Data levers are spent: P10 takes only price history (9/10) and should-cost (9/9); volume, delivery and quality "do not
+change"; a second order-history claim came back "does not change" / "irrelevant" in P07 / P18; its drivers have no
+falling window worth citing (-0.25 % at best). **P10 ceiling with this supplier: ~0.70; best 0.702 (31.20 @ 36 m).**
