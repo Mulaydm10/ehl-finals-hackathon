@@ -387,3 +387,4 @@
 | 2026-10-11 04:39 | Dhruv | P18 | v2 L8 hidden (final-v2 candidate) / gpt-6-astra | 0.6207 | see notes/analysis_v234/LOAD_L8v2.log |
 | 2026-10-11 04:52 | Neel | P18 | noidea_p18_state45 v2 (6c2813ce state 5.00 @ 45 d reproduced; 5.03 db5+4.93 -> hold; 5.04 db5+4.94 -> final "absolute limit for these terms") / gpt-6-astra | **0.69** | 81b5c6de3be181e5 |
 | 2026-10-11 05:07 | Neel | P18 | noidea_p18_pay14 record attempt (6c2813ce state; msg 3 4.97 @ 14 d db5 + 4.86 @ 14 d db0) / gpt-6-astra - final 5.00 @ 14 d: "accept your 14-day payment terms, 5.00 is the lowest we can offer" | **0.67** | d71cab8cb90339f8 |
+| 2026-10-11 05:39 | Neel | P18 | noidea_p18_open45 record attempt (new 45-d opening; run by the user via !) / gpt-6-astra - first counter 5.40 -> 5.20 -> 5.10 -> final 5.10 @ 45 d: "all possible adjustments" | **0.62** | 2493f26fb7838c69 |

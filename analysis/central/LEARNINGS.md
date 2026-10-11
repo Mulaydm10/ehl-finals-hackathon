@@ -307,3 +307,6 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
   above a per-conversation floor in its value terms, where a shorter payment term is worth ~+0.10/kg to it and db5 -0.10.
 - **Live d71cab8c (0.666):** a payment-term 'credit' is conversation-specific, not a rule (it took 14 d for nothing); its 2% rule
   reads the nominal price of its same-clause sheet. Do not build a plan on a supplier valuation seen in only two conversations.
+- **Live 2493f26f (0.621, new 45-d opening):** on a supplier whose first counter is a per-wording draw, a new opening is a
+  lottery ticket, and the bad draw (5.40 here) costs a full step at the end (final 5.10 vs 5.00). Its acceptance limit is
+  fixed per conversation before our 3rd message; nothing after round 1 moved its calculation in 62 games.

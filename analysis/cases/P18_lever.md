@@ -322,3 +322,11 @@ See analysis/offline_runs/2026-10-11_P18_offline_E_astra/README.md.
 - Plan: msg 1 4.77 @ 45 d (new paragraph + 6c2813ce's data); msg 2 4.84 @ 45 d db0 + forecast + the db5 request; msg 3 the record
   sheets 5.00 @ 45 d db5 (0.7618) + 4.89 @ 45 d db0 (0.7627), +0.05 in its value; msg 4 hold them if it cut under 5.00, else
   5.02 db5 / 4.92 (0.7486 / 0.7424). Checks pass; archived replay 0 errors. Odds of a record: low single digits per game.
+
+## 25. Live (05:37, 2493f26fb7838c69, `noidea_p18_open45.py`): **0.621 - the new 45-day opening drew the high first counter**
+- msg 1 (new cost-basis paragraph + 6c2813ce's data, 4.77 @ 45 d) -> **5.40 @ 45 d**; only the price history was confirmed as taken.
+- msg 2 4.84 @ 45 d db0 + forecast + db5 request -> 5.20 + 5.30 db5 (-0.20). msg 3 record sheets (5.00 db5 / 4.89 db0) + labour
+  -> 5.10 (-0.10). msg 4 5.02 db5 / 4.92 + OTD -> final 5.10 @ 45 d ("all possible adjustments") -> 0.6207.
+- A 5.40 start ends at 5.10 (77b16b90, 3a6491c8, ff337861 and now this). The record needs a 5.20 start and 5.00 at round 2, then a
+  limit <= 4.90 at 45 d; new wording is a fresh draw each time (5.20 in 5 of 16 distinct 45-d openings, 5.00 at round 2 in 1 of 5
+  of those). Our best stays 0.727; record 0.756 (Codacabana).
