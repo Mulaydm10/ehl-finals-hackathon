@@ -3,7 +3,7 @@ takes over). Reads tacto/starter-kit/.env.openai (gitignored) for the model.
 
     cd tacto/starter-kit && .venv/Scripts/python.exe ../../analysis/tools/p18_state45_check.py
 
-1. verbatim: messages 1-2 equal 6c2813ce's byte for byte; message 3 differs only in the proposal (4.93 @ 45 d db0);
+1. verbatim: messages 1-2 equal 6c2813ce's byte for byte; message 3 differs only in the proposal (v2: 5.03 db5 + 4.93 db0 @ 45 d);
 2. branches after message 3 on scripted replies (agreed / hold / final / counter above or below our ask / off-track);
 3. exact scores of every planned and fallback deal against our 0.727 and the record 0.75595.
 """
@@ -74,14 +74,15 @@ for n, i in enumerate(buyer_idx[:3]):
     print(f"  msg {n + 1}: ours {[lab(x['terms']) for x in out['term_sheets']]} live {[lab(x['terms']) for x in live['term_sheets']]} same {same}")
     if n == 2:
         old = "(EUR 4.91 per unit, AS-14404 index clause (45% share, 0% deadband), 30 days payment, 24 months)"
-        new = "(EUR 4.93 per unit, AS-14404 index clause (45% share, 0% deadband), 45 days payment, 24 months)"
+        new = ("(EUR 5.03 per unit, AS-14404 index clause (45% share, 5% deadband), 45 days payment, 24 months; "
+               "EUR 4.93 per unit, AS-14404 index clause (45% share, 0% deadband), 45 days payment, 24 months)")
         print(f"  msg 3 body = 6c2813ce's with only the proposal changed: {out['body'] == live['body'].replace(old, new)}")
         msg3 = out
 
 print("== 2. branches after message 3 (scripted replies)")
 base = [dict(x) for x in src[:buyer_idx[2]]] + [{**msg3, "from": "buyer"}]
-cases = {"agreed 4.93 @ 45": sup("agreed", 4.93), "hold 5.00 @ 45": sup("open", 5.00), "final 5.00 @ 45": sup("final_offer", 5.00),
-         "counter 4.92 @ 45 (under our ask)": sup("open", 4.92), "counter 4.95 @ 45 (off track)": sup("open", 4.95),
+cases = {"agreed 5.03 @ 45 db5": sup("agreed", 5.03, 45, 5), "agreed 4.93 @ 45": sup("agreed", 4.93), "hold 5.00 @ 45": sup("open", 5.00), "final 5.00 @ 45": sup("final_offer", 5.00),
+         "counter 4.93 @ 45 (= our db0 ask)": sup("open", 4.93), "counter 4.92 @ 45 (under our ask)": sup("open", 4.92), "counter 4.95 @ 45 (off track)": sup("open", 4.95),
          "hold 5.00 @ 30": sup("open", 5.00, 30)}
 for tag, rep in cases.items():
     ag = A(astra)
@@ -90,7 +91,7 @@ for tag, rep in cases.items():
     d = show(tag, ag.decide(CASE, {SID: base + [rep]}))
     if tag == "hold 5.00 @ 45":  # then message 4 -> agreed / final
         m4 = {**d["message"], "from": "buyer"}
-        for tag2, rep2 in {"  -> agreed 4.94 @ 45": sup("agreed", 4.94, n=4), "  -> final 5.00 @ 45": sup("final_offer", 5.00, n=4)}.items():
+        for tag2, rep2 in {"  -> agreed 5.04 @ 45 db5": sup("agreed", 5.04, 45, 5, n=4), "  -> agreed 4.94 @ 45": sup("agreed", 4.94, n=4), "  -> final 5.00 @ 45": sup("final_offer", 5.00, n=4)}.items():
             show(tag2, ag.decide(CASE, {SID: base + [rep, m4, rep2]}))
 
 print("== 2b. off track at message 2 (first counter 5.30 @ 45 instead of 5.20)")

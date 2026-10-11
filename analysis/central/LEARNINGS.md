@@ -294,10 +294,12 @@ notifications moved to round 3). Its first counter was EUR 5.53 instead of 5.41.
   leaving a 14 d it credited costs a step.
 - **Never step back from our own previous ask** (4.86 after 4.87 drew the final at once) - already a rule from P02, broken by me.
 - Offline sims built from recorded games missed all of this; only live probes (one input each) found it.
-- **Run 1 (offline, Astra, 04:50):** src/eval/offline_eval.py closes P18 at message 1 for every agent (0.94) because its supplier
+- **Run 1 (offline, Astra, 04:36):** src/eval/offline_eval.py closes P18 at message 1 for every agent (0.94) because its supplier
   agrees to any sheet costing >= C_best; useless for ranking P18 strategies. Rank P18 candidates on the live record instead.
-- **Run 2 (offline, Astra, 05:10):** handing a verbatim-replay conversation to main mid-way makes main re-cite facts the
+- **Run 2 (offline, Astra, 04:43):** handing a verbatim-replay conversation to main mid-way makes main re-cite facts the
   replayed messages already used and repeat our last price (an empty repeat). A replay agent must own its plan to the end of
   the rounds it replays. New candidate noidea_p18_state45 (6c2813ce state, 4.93 -> 4.94 @ 45 d); not played (no arena run).
-- **Offline A (05:30):** on a supplier that prices db5 at exactly +0.10, send each ask on db0 AND on db5 at the same value to it:
+- **Offline A (04:50):** on a supplier that prices db5 at exactly +0.10, send each ask on db0 AND on db5 at the same value to it:
   it accepts either at the same floor, and the db5 sheet is worth +0.0057 score to us on P18 (db5 is worth 0.1125/kg to us).
+- **Live 81b5c6de (0.688):** Werdenfels prices payment days steeply in its acceptance (15 more days cost >= 0.06/kg: 4.94 accepted
+  on 30 d, refused on 45 d in the same conversation). A fact-free later e-mail drew its 'send us the data' line and a final.

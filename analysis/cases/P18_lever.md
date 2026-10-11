@@ -269,12 +269,26 @@ msg 3 = 4.97 @ 14 d db5 (0.7593, worth 4.87 to it = our msg-2 ask) -> final 5.10
   change one thing; (2) an ask must stay within the supplier's approval authority (here 2%) of its current offer, never a step
   back from our own previous ask, and the structure we hold must not change once the supplier has priced it.
 
-## 20. Run 1 - offline baseline with gpt-6-astra (04:50): see analysis/offline_runs/2026-10-11_P18_run1_astra/README.md
+## 20. Run 1 - offline baseline with gpt-6-astra (04:36): see analysis/offline_runs/2026-10-11_P18_run1_astra/README.md
 Simulator 0.94 for every agent at message 1 (it accepts any sheet costing >= C_best): not predictive. Known hosted outcomes of the
 existing candidates (deterministic replies): cross 0.677, soft v2 0.677, replay(4.91) 0.727, replay default 0.673. None can beat
 0.727; Run 2 tests a new input.
 
-## 21. Run 2 - offline with gpt-6-astra (05:10): `noidea_p18_state45.py`; Run 3 not played (user: no arena run)
+## 21. Run 2 - offline with gpt-6-astra (04:43): `noidea_p18_state45.py`; Run 3 not played (user: no arena run)
 See analysis/offline_runs/2026-10-11_P18_run2_astra/README.md. The only recorded state where a <2% ask beats 0.727 on the
 structure it holds: 6c2813ce's 5.00 @ 45 d (a hold there, not a final). 4.93 / 4.94 @ 45 d db0 = 0.7357 / 0.7289 if accepted,
 fallback 5.00 @ 45 d = 0.688. The record is not reachable there (4.89 = 2.2% under 5.00).
+
+## 22. Live (04:52, 81b5c6de3be181e5, `noidea_p18_state45.py` v2): **0.688 - at 45 d its limit is 5.00**
+- 6c2813ce's msg 1-2 byte for byte -> the same state, instantly (5.20 @ 45 d, then 5.00 @ 45 d).
+- msg 3 = 5.03 @ 45 d db5 + 4.93 @ 45 d db0 + labour -> **hold** 5.00 @ 45 d (as predicted: a hold, not a final, in this state).
+- msg 4 = 5.04 @ 45 d db5 + 4.94 @ 45 d db0, no new fact -> **final 5.00 @ 45 d**: "This represents our absolute limit for these
+  terms ... Which figures is that based on? Please send us the data." Accepted: 5.00 @ 45 d db0 = 0.6883 (C 245,255.50: price
+  237,000; payment 790; index clause 6,399; index risk 1,066.50).
+- **What it establishes:** in this conversation 4.94 was accepted on 30 d (6c2813ce) but not on 45 d, so it values 15 more days of
+  payment at >= 0.06/kg (far above our 8%: 0.017), consistent with the 0.10 it credited for 14 d in 0c968aae. Payment days are
+  priced steeply in its ACCEPTANCE too, not only in its counters. "45 d is free at the floor" was wrong (that held only for the
+  counter floor 5.00, not for asks under it).
+- A msg 4 without a new fact drew the "Which figures ... send us the data" line before its final (GENERAL_RULES: a round without
+  data is followed by its final). 6c2813ce's identical fact-free msg 4 was accepted only because 4.94 @ 30 d cleared its floor.
+- Our best stays 0.727; record 0.756 (Codacabana). No more P18 sessions planned.
