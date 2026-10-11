@@ -57,3 +57,8 @@ Why our two reproducible states cannot reach 0.756:
 - One game per variant, at most 12, stopping at the first beat.
 - Every game is recorded and pushed.
 - A game that does not beat changes nothing on the board (best score per case counts).
+
+## 5. Live log (one game per variant; recorded in notes/quota_log.md and analysis/experiments/p18_top_results.jsonl)
+| time | session | msg 2 variant | its round 2 | msg 3 | result |
+|---|---|---|---|---|---|
+| 07:06 | 1c767030bd2efdd2 | 0 | 5.10 (normal) | 5.00 @ 45 db5 (1.96% under its 5.10) | final at once 5.20 @ 45 d db5 -> **0.6295**. The normal-branch shot ends the game at its db5 price |
