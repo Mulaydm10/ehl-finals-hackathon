@@ -1,0 +1,72 @@
+$ LLM_PROVIDER=openai LLM_BASE_URL=http://localhost:8081/v1 LLM_MODEL=qwen3.5-9b uv run python ../../src/eval/offline_eval.py --llm --show --agent-file ../../analysis/agent_variants/noidea_p10.py P10
+
+--- case:P10 msg 1 -> sup:70410 | sheets [{'unit_price': 29.89, 'volume_per_year': 23400, 'contract_months': 24, 'lead_time_days': 56}]
+    Dear Ms Zellner,
+    
+    Thank you for your offer and for being open about your capacity situation.
+    
+    We are ready to give you the firm commitment you asked for: a binding 23,400 pieces per year for 24 months, and we accept a longer lead time of 56 days so you can plan production.
+    
+    Our orders for Mechanical seal 24 mm, SiC/carbon, EPDM were at EUR 28.94 until December 2023 and have been at EUR 29.89 since January 2024 (po:4500010364-10, po:4500010407-10, po:4500014436-10).
+    Our should-cost estimate for Mechanical seal 24 mm, SiC/carbon, EPDM is EUR 24.31 per 1 (cost:340010).
+    Producer prices DE: other rubber products changed -0.3% from 2026-01 to 2026-02 (idx:PPI-C2219@2026-01, idx:PPI-C2219@2026-02).
+    
+    We therefore propose to keep EUR 29.89 per piece, the price we have paid since January 2024.
+    
+    Kind regards,
+    Purchasing, Hollerau Pumpenwerke
+
+--- case:P10 msg 1 -> sup:70410 | sheets [{'unit_price': 29.89, 'volume_per_year': 23400, 'contract_months': 24, 'lead_time_days': 56}]
+    Dear Ms Zellner,
+    
+    Thank you for your offer and for being open about your capacity situation.
+    
+    We are ready to give you the firm commitment you asked for: a binding 23,400 pieces per year for 24 months, and we accept a longer lead time of 56 days so you can plan production.
+    
+    Our orders for Mechanical seal 24 mm, SiC/carbon, EPDM were at EUR 28.94 until December 2023 and have been at EUR 29.89 since January 2024 (po:4500010364-10, po:4500010407-10, po:4500014436-10).
+    Our should-cost estimate for Mechanical seal 24 mm, SiC/carbon, EPDM is EUR 24.31 per 1 (cost:340010).
+    Producer prices DE: other rubber products changed -0.3% from 2026-01 to 2026-02 (idx:PPI-C2219@2026-01, idx:PPI-C2219@2026-02).
+    
+    We therefore propose to keep EUR 29.89 per piece, the price we have paid since January 2024.
+    
+    Kind regards,
+    Purchasing, Hollerau Pumpenwerke
+P10  responsive 0.80 (deal, 1 msgs)   stubborn 0.80 (deal, 1 msgs)
+MEAN responsive 0.804   stubborn 0.804   (n=1)
+LLM calls 0, mean 0.0s, max 0.0s
+
+$ uv run python ../../src/eval/offline_eval.py --show --agent-file ../../analysis/agent_variants/noidea_p10.py P10   (no LLM)
+
+--- case:P10 msg 1 -> sup:70410 | sheets [{'unit_price': 29.89, 'volume_per_year': 23400, 'contract_months': 24, 'lead_time_days': 56}]
+    Dear Ms Zellner,
+    
+    Thank you for your offer and for being open about your capacity situation.
+    
+    We are ready to give you the firm commitment you asked for: a binding 23,400 pieces per year for 24 months, and we accept a longer lead time of 56 days so you can plan production.
+    
+    Our orders for Mechanical seal 24 mm, SiC/carbon, EPDM were at EUR 28.94 until December 2023 and have been at EUR 29.89 since January 2024 (po:4500010364-10, po:4500010407-10, po:4500014436-10).
+    Our should-cost estimate for Mechanical seal 24 mm, SiC/carbon, EPDM is EUR 24.31 per 1 (cost:340010).
+    Producer prices DE: other rubber products changed -0.3% from 2026-01 to 2026-02 (idx:PPI-C2219@2026-01, idx:PPI-C2219@2026-02).
+    
+    We therefore propose to keep EUR 29.89 per piece, the price we have paid since January 2024.
+    
+    Kind regards,
+    Purchasing, Hollerau Pumpenwerke
+
+--- case:P10 msg 1 -> sup:70410 | sheets [{'unit_price': 29.89, 'volume_per_year': 23400, 'contract_months': 24, 'lead_time_days': 56}]
+    Dear Ms Zellner,
+    
+    Thank you for your offer and for being open about your capacity situation.
+    
+    We are ready to give you the firm commitment you asked for: a binding 23,400 pieces per year for 24 months, and we accept a longer lead time of 56 days so you can plan production.
+    
+    Our orders for Mechanical seal 24 mm, SiC/carbon, EPDM were at EUR 28.94 until December 2023 and have been at EUR 29.89 since January 2024 (po:4500010364-10, po:4500010407-10, po:4500014436-10).
+    Our should-cost estimate for Mechanical seal 24 mm, SiC/carbon, EPDM is EUR 24.31 per 1 (cost:340010).
+    Producer prices DE: other rubber products changed -0.3% from 2026-01 to 2026-02 (idx:PPI-C2219@2026-01, idx:PPI-C2219@2026-02).
+    
+    We therefore propose to keep EUR 29.89 per piece, the price we have paid since January 2024.
+    
+    Kind regards,
+    Purchasing, Hollerau Pumpenwerke
+P10  responsive 0.80 (deal, 1 msgs)   stubborn 0.80 (deal, 1 msgs)
+MEAN responsive 0.804   stubborn 0.804   (n=1)

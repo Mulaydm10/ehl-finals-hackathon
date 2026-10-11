@@ -1,7 +1,7 @@
 {
   "case": "P10",
   "label": "P10_R 59c8 + one step inside its 2% after the final",
-  "hypothesis": "59c899b9's two e-mails byte for byte (live 31.50 -> final 31.10, 3 of 3), then ONE step up from our 30.40 to 30.69 (record line: 0.7418) = 1.3% under its final, inside the 2% the segment manager may approve alone (doc:20260310-70410-M1; P18: its KAM accepted 1.8% under in the final round, Neel 63e5c54). Same structure, our price moves up (no backward step). Agreed -> record; 'final offer stands' -> accept its final (0.7097); walk -> 0 this game (board keeps 0.741). Push only if its final <= 31.31 (30.69 within 2%); a final in round 1 is accepted.",
+  "hypothesis": "59c899b9's two e-mails byte for byte (live 31.50 -> final 31.10, 3 of 3), then ONE step up from our 30.40 to 30.69 (record line: 0.7418) = 1.3% under its final, inside the 2% the segment manager may approve alone (doc:20260310-70410-M1). Correction (Run 1): P18's agreements under its offer (4.91/4.94) came in OPEN rounds, not after a final; no supplier in our archive agreed after a final to a sheet worth less to it than its final (rule 127) - the odds are low. Same structure, our price moves up (no backward step). Agreed -> record; 'final offer stands' -> accept its final (0.7097); walk -> 0 this game (board keeps 0.741). Push only if its final <= 31.31 (30.69 within 2%); a final in round 1 is accepted.",
   "on_agreed": "accept",
   "on_open": "next",
   "on_final": "accept",

@@ -290,3 +290,10 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
      "round-2 trade", the e-mail carried the old term). Verify every A/B in the arena trace before crediting it.
 126. **Copying a best game's moves does not copy its score** when the supplier's replies vary per session (P18: the best
      game's exact rounds 1-2 gave 0.666 x3, not 0.727). Judge a rule on its average, never on its best game.
+127. **After a final, a supplier agrees only to a sheet worth at least its final TO IT**. Every e-mail with a sheet sent after a
+     final_offer in our archive:
+     - agreed 4 of 4 when the sheet was its own alternative or a payment trade it values (P18 x3, P10 2d91214c);
+     - walked 3 of 3 when the sheet left it worse off (longer payment: P04, P07, P08);
+     - countered once on a -0.1% ask (P05).
+     The P18 agreements under its offer (4.91 / 4.94) came in OPEN rounds. A push after a final therefore needs a term the
+     supplier values, never price alone; without one, rule 24 stands. (P10 Run 1, `analysis/tools/p10_record_check.py` C.)

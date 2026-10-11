@@ -1,0 +1,50 @@
+A. EXACT BENCHMARKS (arena_kit.cost.total_cost, P10 case file, standard ppm 300 / chargeback 0)
+  31.50 @ 56 d / 36 m / 23,400: C 1,522,963.20  score 0.678516
+  31.20 @ 56 d / 36 m / 23,400: C 1,508,829.60  score 0.701933
+  31.10 @ 56 d / 36 m / 23,400: C 1,504,118.40  score 0.709739 = repeatable best
+  31.00 @ 56 d / 36 m / 23,400: C 1,499,407.20  score 0.717545
+  30.80 @ 56 d / 36 m / 23,400: C 1,489,984.80  score 0.733156
+  30.70 @ 56 d / 36 m / 23,400: C 1,485,273.60  score 0.740961 = record 673ee890
+  30.69 @ 56 d / 36 m / 23,400: C 1,484,802.48  score 0.741742
+  30.60 @ 56 d / 36 m / 23,400: C 1,480,562.40  score 0.748767
+  highest price that beats each mark (2-decimal prices; 24 and 36 months cost the same, horizon 2 y):
+    lead 35 d, 24 m: beat 0.741 at <= 31.41, beat 0.7097 at <= 31.81
+    lead 35 d, 36 m: beat 0.741 at <= 31.41, beat 0.7097 at <= 31.81
+    lead 42 d, 24 m: beat 0.741 at <= 31.41, beat 0.7097 at <= 31.81
+    lead 42 d, 36 m: beat 0.741 at <= 31.41, beat 0.7097 at <= 31.81
+    lead 54 d, 24 m: beat 0.741 at <= 30.80, beat 0.7097 at <= 31.20 (54 d = its quoted lead, not a term option: never sent in 393 games)
+    lead 54 d, 36 m: beat 0.741 at <= 30.80, beat 0.7097 at <= 31.20 (54 d = its quoted lead, not a term option: never sent in 393 games)
+    lead 56 d, 24 m: beat 0.741 at <= 30.69, beat 0.7097 at <= 31.09
+    lead 56 d, 36 m: beat 0.741 at <= 30.69, beat 0.7097 at <= 31.09
+  12 months at 31.10 @ 56 d: score 0.117 (year 2 bought at the fallback price + 25%)
+
+B. ALL ARCHIVED P10 GAMES
+  56 games with a trace: {'?': 3, 'model': 52, 'TEMPLATE': 1}; engine-template games: [('673ee8904fe2d292', 0.7409613962393361)]
+  first counter (normal mode, status open) by the facts it TOOK in our message 1:
+    31.50  x7  taken: index_change, price_history, should_cost
+    31.50  x1  taken: delivery_record, price_history, should_cost
+    31.50  x2  taken: price_history, should_cost, volume_change
+    31.50  x30  taken: price_history, should_cost
+    31.70  x1  taken: should_cost
+  final at our message 2 (normal mode) by what message 2 carried - (its counter, our ask, its final):
+    no term move + index_change: 31.50/30.11->31.10 c6b3cf46; 31.50/30.11->31.10 9f210912; 31.50/30.11->31.20 420cc050; 31.50/30.11->31.20 88889fce; 31.50/30.11->31.20 b4c0d2b2; 31.50/30.11->31.20 aa4d9ce8; 31.50/30.11->31.20 107b78d8; 31.50/30.11->31.20 7df25805; 31.50/30.11->31.20 cb8dc721; 31.50/30.11->31.20 f14a4bec; 31.50/30.11->31.30 53bab007; 31.50/30.11->31.30 a9e2c0e4; 31.50/30.11->31.30 67f3678f; 31.50/30.11->31.30 6fc3dc2b; 31.50/30.11->31.30 6ca6ae5d; 31.50/30.11->31.30 1fc63548; 31.50/30.11->31.40 b9b36814; 31.70/30.18->31.50 c283f47d; 31.50/30.11->31.50 8134c6d1
+    36-m move + index_change: 31.50/30.40->31.10 59c899b9; 31.50/30.40->31.10 3c4aa1a6; 31.50/30.40->31.10 3a968d38; 31.50/30.40->31.10 d34ee89a; 31.50/30.11->31.20 6fd876c4; 31.50/30.11->31.20 045855e3; 31.50/30.11->31.20 bb285b61; 31.50/30.40->31.20 da37a9be; 31.50/30.40->31.20 802e63e7; 31.50/30.40->31.20 fbdf654d
+    36-m move + index_change+index_change: 31.50/30.40->31.10 856dff72; 31.50/30.60->31.40 009ca00d
+    36-m move + no data: 31.50/30.40->31.20 991ff7c4; 31.50/30.40->31.20 cadacbc4; 31.50/30.75->31.30 a2e38ea8; 31.50/29.09->31.40 e61c2818; 31.50/29.79->31.40 0b29bc23; 31.50/31.12->31.40 edefadcb; 31.50/30.15->31.40 f6da173c
+    36-m move + quality_record: 31.50/30.90->31.30 7a9294b8
+  finals at message 2: {31.1: 7, 31.2: 16, 31.3: 8, 31.4: 6, 31.5: 2}  (n=39; lowest 31.10; the largest cut in that message 0.40)
+
+C. EVERY E-MAIL WITH A TERM SHEET SENT AFTER A final_offer (all cases, datasets/runs)
+  P18 06f8f4f5: final 5.3 -> we sent 5.2 (-1.9%) other terms changed {'payment_days': (30, 14)} = its own alternative -> agreed
+  P08 1f27ac1b: final 5.44 -> we sent 5.35 (-1.7%) other terms changed {'payment_days': (14, 45)} -> walked_away
+  P10 2d91214c: final 33.8 -> we sent 31.9 (-5.6%) other terms changed {'lead_time_days': (42, 56)} -> agreed
+  P18 a99d02eb: final 5.1 -> we sent 5.2 (+2.0%) other terms changed {'index_clause': ({'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 5.0, 'base_month': '2026-08'})} = its own alternative -> agreed
+  P04 bd2eabf9: final 4.89 -> we sent 4.93 (+0.8%) other terms changed {'payment_days': (45, 90)} -> walked_away
+  P18 c4599331: final 5.4 -> we sent 5.3 (-1.9%) other terms changed {'payment_days': (45, 14)} = its own alternative -> agreed
+  P07 c5d84588: final 5.4 -> we sent 5.4 (+0.0%) other terms changed {'payment_days': (30, 90)} -> walked_away
+  P05 d88810ba: final 31.0 -> we sent 30.98 (-0.1%) other terms changed none -> open
+  outcomes: {'agreed': 4, 'walked_away': 3, 'open': 1}. Agreed only where our sheet was worth at least its final to it (a payment trade it values, or its own alternative); every push that left it worse off walked or was countered.
+
+D. CURRENT P10 AGENT (noidea_p10.py) REPLAYED ON THE ARCHIVED 59c899b9 GAME (complete=None: no LLM)
+  turn 1: body SAME, sheet SAME, refs SAME  ([29.89])
+  turn 2: body SAME, sheet SAME, refs SAME  ([30.4])
