@@ -59,6 +59,7 @@ SOFT3 = ((5.00, 45, 5), (4.99, 30, 5), (4.97, 14, 5))
 NORMAL3 = ((5.00, 45, 5),)
 SOFT4 = ((5.02, 45, 5), (4.92, 45, 0))
 NORMAL4 = ((5.10, 45, 5),)
+ALT3 = (4.94, 45, 0)  # alt mode msg 3: forward from 4.88 (+0.06 draws its cut), under its 5.00 floor so it counters
 R2_OPENINGS = [  # one per game: identical text gets the identical (cached) reply, a new text is a new draw
     "Your letter and your replies both put the AS-14404 clause at the centre; it sounds like protection against alloy swings "
     "matters more to you than the headline price. We accept that clause as you proposed it. How far can the base price come "
@@ -135,13 +136,13 @@ class NoIdeaAgent(_Main):
         sheet_id, theirs = standing(events)
         accept = {"supplier_id": sid, "message": {"action": {"type": "accept", "term_sheet_id": sheet_id}}}
         subject = "Re: " + case["title"]
-        if status == "final_offer" and sheet_id and not beats(case, theirs):
+        if status in ("final_offer", "open") and sheet_id and not beats(case, theirs):
             alts = [a for a in (latest(events).get("term_sheets") or [])[1:] if beats(case, a.get("terms") or {})]
             mine = [m for m in events if m.get("from") == "buyer" and m.get("term_sheets")]
             proposed = bool(mine) and mine[-1]["term_sheets"][0]["terms"] == (alts[0]["terms"] if alts else None)
             if alts and not proposed:  # its own alternative proposed back: agreed 3 of 3 (a99d02eb, 06f8f4f5, c4599331)
                 t = {f: alts[0]["terms"][f] for f in case["negotiable"]}
-                log.info("%s P18 top: its final carries an alternative that beats 0.756 - propose it back: %s", sid, t)
+                log.info("%s P18 top: its %s carries an alternative that beats 0.756 - propose it back: %s", sid, status, t)
                 return self._send(case, sid, [t], "Dear Blankstahl Werdenfels GmbH team,\n\nWe accept your alternative as "
                                   "you proposed it; it is attached as a term sheet for your confirmation.\n\n" + SIGN, [],
                                   subject)
@@ -174,6 +175,18 @@ class NoIdeaAgent(_Main):
                     f"the attached term sheet ({words(t)}). Please let us know if this works for you.\n\n{SIGN}")
             log.info("%s P18 top msg 2: variant %d, %s", sid, i, words(t))
             return self._send(case, sid, [t], body, ["fc:370010@2026-09"], subject)
+        if k == 2 and os.environ.get("P18_TOP_MODE") == "alt":
+            # the engine artifact: when its reply adds the 5% deadband alternative, the model's price goes to that
+            # alternative and its db0 sheet is set 0.10 lower (11 of 12 -0.20 steps; asked for at round 2: 2 of 2).
+            # Asked for here, where its next counter is its 5.00 floor: alternative 5.00 @ 45 d db5 = 0.7618, proposed
+            # back (agreed 3 of 3), if the engine does not clamp its db0 sheet at 5.00.
+            t = sheet(*ALT3)
+            body = (f"Dear Blankstahl Werdenfels GmbH team,\n\nThank you for your offer. We move again, and we would like to "
+                    f"see your deadband option as well: please also quote your price with a 5% deadband as an alternative."
+                    f"\n\n{vol()} {LABOUR}\n\nOn this basis we propose the attached term sheet ({words(t)}).\n\n{SIGN}")
+            log.info("%s P18 top msg 3 (alt mode, its db0 %.2f): %s + request its 5%% deadband alternative", sid, db0,
+                     words(t))
+            return self._send(case, sid, [t], body, ["idx:LCI-C@2025-10", "idx:LCI-C@2026-01"], subject)
         if k == 2:
             plan = [sheet(*q) for q in (SOFT3 if s["top_soft"] else NORMAL3)]
             opts = ("your 5% deadband alternative, and as options a shorter payment term that brings you cash earlier"

@@ -1,0 +1,57 @@
+1. EXACT SCORES (record 0.75595; ours 0.72708)
+   Codacabana 4.90 @ 45 d db0: C 240,350.39 = 0.75595
+   msg 2        4.88 @ 45 d db0: 0.76948  BEATS 0.756
+   msg 3 soft   5.00 @ 45 d db5: 0.76184  BEATS 0.756
+   msg 3 soft   4.99 @ 30 d db5: 0.75759  BEATS 0.756
+   msg 3 soft   4.97 @ 14 d db5: 0.75931  BEATS 0.756
+   msg 3 normal 5.00 @ 45 d db5: 0.76184  BEATS 0.756
+   msg 4 soft   5.02 @ 45 d db5: 0.74861
+   msg 4 soft   4.92 @ 45 d db0: 0.74242
+   msg 4 normal 5.10 @ 45 d db5: 0.69568
+
+2. MSG 1
+   body True, subject True, refs True, sheet True (= 6c2813ce)
+
+3. MSG 2 OPENINGS
+   12 openings, distinct True; already sent (cached, do not reuse): [0, 1, 2]; sheet 4.88 @ 45 d db0 + forecast
+   Dear Blankstahl Werdenfels GmbH team,
+   
+   Your letter and your replies both put the AS-14404 clause at the centre; it sounds like protection against alloy swings matters more to you than the headline price. We accept that clause as you proposed it. How far can the base price come down now that this risk sits with us?
+   
+   We confirm a binding volume of 23,700 units per year for 24 months. Our demand forecast for Round bar 1.4404 dia 30 mm is up +1.9% (fc:370010@2026-09).
+   
+   On this basis we propose the attached term sheet (EUR 4.88 per kg, AS-14404 index clause (45% share, 0% deadband), 45 days payment, 24 months). Please let us know if this works for you.
+   
+   Kind regards,
+   Purchasing, Hollerau Pumpenwerke
+
+4. BRANCHES
+   soft round 2 (5.00 + 5.10 db5)                 -> [(5.0, 45, 5), (4.99, 30, 5), (4.97, 14, 5)]
+   normal round 2 (5.10)                          -> [(5.0, 45, 5)]
+   soft, agreed 5.00 db5 @ 45                     -> accept
+   soft, agreed 4.97 db5 @ 14                     -> accept
+   soft, hold 5.00 @ 45                           -> [(5.02, 45, 5), (4.92, 45, 0)]
+   soft, final 5.00 @ 45                          -> accept
+   soft, final 5.00 @ 45 + alt 4.89 @ 45 (beats)  -> [(4.89, 45, 0)]
+   normal, counter 5.00 @ 45                      -> [(5.1, 45, 5)]
+   normal, agreed 5.00 db5 @ 45                   -> accept
+   normal, counter 4.89 @ 45 (beats)              -> accept
+   open after msg 4                               -> accept
+   engine-template reply                          -> accept
+
+4b. ALT MODE (P18_TOP_MODE=alt; msgs 1-2 = live 1c767030bd2efdd2, whose 5.10 @ 45 d reply is cached)
+   msg 1: body True, subject True, refs True, sheet True (= live 1c767030)
+   msg 2: body True, subject True, refs True, sheet True (= live 1c767030)
+   msg 3: [(4.94, 45, 0)] | request in body: True
+   after msg 3, artifact: open 4.90 db0 + alt 5.00 db5     -> [(5.0, 45, 5)]
+   after msg 3, no artifact: open 5.00 db0 + alt 5.10 db5  -> [(5.1, 45, 5)]
+   after msg 3, final 5.00 db0 + alt 5.00 db5              -> [(5.0, 45, 5)]
+   after msg 3, final 5.00 db0 alone                       -> accept
+   after msg 3, agreed 4.94 db0                            -> accept
+   alternative proposed back, then agreed 5.00 db5 @ 45 (0.7618)          -> accept
+
+5. ARCHIVED REPLAY (every P18 game, every turn)
+   113 games, 501 turns decided
+
+agent errors (crash guard fired): 0 []
+ALL CHECKS PASS

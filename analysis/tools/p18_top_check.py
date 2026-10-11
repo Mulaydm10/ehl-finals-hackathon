@@ -156,6 +156,46 @@ for name, got, want in cases:
     ok &= good
     print(f"   {name:46s} -> {got}{'' if good else '   <-- expected ' + str(want)}")
 
+print("\n4b. ALT MODE (P18_TOP_MODE=alt; msgs 1-2 = live 1c767030bd2efdd2, whose 5.10 @ 45 d reply is cached)")
+g1 = thread_of(ROOT / "datasets/runs/1c767030bd2efdd2.json")
+gb = [m for m in g1 if m.get("from") == "buyer" and m.get("term_sheets")]
+if mod.MONTHS == 24:
+    os.environ["P18_TOP_R2"] = "0"
+    for kk in (0, 1):
+        dk = decide(g1[:g1.index(gb[kk])])["message"]
+        eq = (dk["body"] == gb[kk]["body"], dk["subject"] == gb[kk]["subject"], sorted(dk["refs"]) == sorted(gb[kk]["refs"]),
+              [t["terms"] for t in dk["term_sheets"]] == [{f: t["terms"][f] for f in CASE["negotiable"]}
+                                                          for t in gb[kk]["term_sheets"]])
+        ok &= all(eq)
+        print(f"   msg {kk + 1}: body {eq[0]}, subject {eq[1]}, refs {eq[2]}, sheet {eq[3]} (= live 1c767030)")
+    os.environ["P18_TOP_MODE"] = "alt"
+    st2 = g1[:g1.index(gb[1]) + 2]  # through its cached 5.10 @ 45 d
+    d3a = decide(st2)
+    req = "5% deadband as an alternative" in d3a["message"]["body"]
+    print("   msg 3:", act(d3a), "| request in body:", req)
+    ok &= act(d3a) == [(4.94, 45, 0)] and req
+    a3 = st2 + [buyer(d3a)]
+    for name, r, want in (
+            ("artifact: open 4.90 db0 + alt 5.00 db5", reply("open", [mod.sheet(4.90, 45, 0), mod.sheet(5.00, 45, 5)], 3),
+             [(5.00, 45, 5)]),
+            ("no artifact: open 5.00 db0 + alt 5.10 db5", reply("open", [mod.sheet(5.00, 45, 0), mod.sheet(5.10, 45, 5)], 3),
+             [(5.10, 45, 5)]),
+            ("final 5.00 db0 + alt 5.00 db5", reply("final_offer", [mod.sheet(5.00, 45, 0), mod.sheet(5.00, 45, 5)], 3),
+             [(5.00, 45, 5)]),
+            ("final 5.00 db0 alone", reply("final_offer", [mod.sheet(5.00, 45, 0)], 3), "accept"),
+            ("agreed 4.94 db0", reply("agreed", [mod.sheet(4.94, 45, 0)], 3), "accept")):
+        got = act(decide(a3 + [r]))
+        ok &= got == want
+        print(f"   after msg 3, {name:42s} -> {got}{'' if got == want else '   <-- expected ' + str(want)}")
+    back = a3 + [reply("open", [mod.sheet(4.90, 45, 0), mod.sheet(5.00, 45, 5)], 3)]
+    back = back + [buyer(decide(back))]
+    got = act(decide(back + [reply("agreed", [mod.sheet(5.00, 45, 5)], 4)]))
+    ok &= got == "accept"
+    print(f"   alternative proposed back, then agreed 5.00 db5 @ 45 (0.7618)          -> {got}")
+    os.environ.pop("P18_TOP_MODE")
+else:
+    print("   (run with P18_TOP_MONTHS=24)")
+
 print("\n5. ARCHIVED REPLAY (every P18 game, every turn)")
 files = sorted(set(glob.glob(str(ROOT / "tools/replays/raw/P18_*.json"))) |
                {f for f in glob.glob(str(ROOT / "datasets/runs/*.json"))

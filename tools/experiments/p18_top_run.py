@@ -56,7 +56,7 @@ def main(variant):
     deal = (f"{terms.get('unit_price')} @ {terms.get('payment_days')} d db"
             f"{(terms.get('index_clause') or {}).get('deadband_pct', '-')}" if terms else "no deal")
     with (ROOT / "notes" / "quota_log.md").open("a", encoding="utf-8") as f:
-        f.write(f"| {when} | Parth | P18 | noidea_p18_top r2 variant {variant} (6c2813ce msg 1, fresh msg 2, record sheets "
+        f.write(f"| {when} | Parth | P18 | noidea_p18_top r2 variant {variant} {os.environ.get('P18_TOP_MONTHS', '24')} m mode {os.environ.get('P18_TOP_MODE', 'top')} (6c2813ce msg 1, msg 2 variant, record sheets "
                 f"inside its 2% at msg 3; no model) | {sc if sc is None else round(sc, 4)} ({deal}) | {sid} |\n")
     out = ROOT / "analysis" / "experiments" / "p18_top_results.jsonl"
     with out.open("a", encoding="utf-8") as f:
