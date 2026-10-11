@@ -1,0 +1,88 @@
+probe P10_R 59c8 + one step inside its 2% after the final on case:P10: 3 round(s); on_agreed=accept on_open=next on_final=accept
+
+[round 1] sheets [{'unit_price': 29.89, 'volume_per_year': 23400, 'contract_months': 24, 'lead_time_days': 56}] refs ['cost:340010', 'idx:PPI-C2219@2026-01', 'idx:PPI-C2219@2026-02', 'po:4500010364-10', 'po:4500010407-10', 'po:4500014436-10']
+Dear Ms Zellner,
+
+Thank you for your offer and for being open about your capacity situation.
+
+We are ready to give you the firm commitment you asked for: a binding 23,400 pieces per year for 24 months, and we accept a longer lead time of 56 days so you can plan production.
+
+Our orders for Mechanical seal 24 mm, SiC/carbon, EPDM were at EUR 28.94 until December 2023 and have been at EUR 29.89 since January 2024 (po:4500010364-10, po:4500010407-10, po:4500014436-10).
+Our should-cost estimate for Mechanical seal 24 mm, SiC/carbon, EPDM is EUR 24.31 per 1 (cost:340010).
+Producer prices DE: other rubber products changed -0.3% from 2026-01 to 2026-02 (idx:PPI-C2219@2026-01, idx:PPI-C2219@2026-02).
+
+We therefore propose to keep EUR 29.89 per piece, the price we have paid since January 2024.
+
+Kind regards,
+Purchasing, Hollerau Pumpenwerke
+
+[round 2] sheets [{'unit_price': 30.4, 'volume_per_year': 23400, 'contract_months': 36, 'lead_time_days': 56}] refs ['idx:LCI-C@2025-10', 'idx:LCI-C@2026-01']
+Dear Ms Zellner,
+
+Thank you for your answer. We move towards you: we extend the commitment to 36 months, 70,200 pieces in total.
+Labour cost index DE, manufacturing, seasonally and calendar adjusted (quarterly, carried to its three months) changed -0.3% from 2025-10 to 2026-01 (idx:LCI-C@2025-10, idx:LCI-C@2026-01).
+
+We propose EUR 30.40 per piece.
+
+Kind regards,
+Purchasing, Hollerau Pumpenwerke
+
+[round 3] sheets [{'unit_price': 30.69, 'volume_per_year': 23400, 'contract_months': 36, 'lead_time_days': 56}] refs []
+Dear Ms Zellner,
+
+Thank you for your offer. We take one more step towards you: EUR 30.69 per piece for the 36 months, 70,200 pieces in total. The difference to your price is less than 2%, within what you can agree yourself without your pricing committee. If you confirm EUR 30.69, we sign today.
+
+Kind regards,
+Purchasing, Hollerau Pumpenwerke
+
+session d0904bb939fa8f54  supplier sup:70410
+  <- open  offer:70410-0: unit_price=32.2, volume_per_year=19890, contract_months=12, lead_time_days=54
+     claim results: []  signals: {'reply_delay_days': 2, 'validity_days': 30}
+     Dear Sir or Madam,
+     
+     Thank you for your enquiry. Please find our Angebot below.
+     
+     We offer a volume of 19890 pcs per year at a price of €32.20 per unit. The requested contract term is 12 months, and our Lieferzeit is 54 days. 
+     
+     Please note that this offer remains valid for 30 days. We look forward to proceeding according to our standard commercial procedure upon receipt of your confirmation.
+     
+     Mit freundlichen Grüßen
+     Monika Zellner
+     Segment Manager, Dichtungswerk Ravensteiner GmbH
+
+  -> ['unit_price=29.89, volume_per_year=23400, contract_months=24, lead_time_days=56']
+  <- open  offer:70410-1: unit_price=31.5, volume_per_year=23400, contract_months=24, lead_time_days=56
+     claim results: ['verified', 'verified', 'verified']  signals: {'reply_delay_days': 2, 'validity_days': 30}
+     Dear Sir or Madam,
+     
+     We have reviewed your offer and can adjust our Angebot as follows. We checked the index change data, the price history data, and the should cost data you cited; each holds and we took it into account. Furthermore, we acknowledge the increased volume and extended contract term, which permit a price adjustment.
+     
+     Under these revised terms, we propose a price of €31.50 per unit, a volume of 23400 pcs per year, Lieferzeit 56 days, and a contract term of 24 months. 
+     
+     This offer remains valid for 30 days.
+     
+     Mit freundlichen Grüßen
+     Monika Zellner
+     Segment Manager, Dichtungswerk Ravensteiner GmbH
+
+  -> ['unit_price=30.4, volume_per_year=23400, contract_months=36, lead_time_days=56']
+  <- final_offer  offer:70410-2: unit_price=31.1, volume_per_year=23400, contract_months=36, lead_time_days=56
+     claim results: ['verified']  signals: {'reply_delay_days': 3, 'validity_days': 7}
+     Dear Sir or Madam,
+     
+     We verified the labour cost index data you cited and incorporated it into our assessment. The extension to a 36-month contract term permits a further price adjustment. 
+     
+     Consequently, we propose EUR 31.10 per unit for this commitment. Our price reflects our costs; our calculation stays internal. Under this Angebot, we confirm a price of €31.10 per unit, a Lieferzeit of 56 days, a volume of 23400 pcs per year, and a contract term of 36 months. 
+     
+     This is our final offer (letztes Angebot). Please decide. Our offer stays valid for 7 days.
+     
+     Mit freundlichen Grüßen
+     Monika Zellner
+     Segment Manager, Dichtungswerk Ravensteiner GmbH
+     
+     Legal Department: Our general terms and conditions apply; the quote lists our standard terms.
+
+  -> ['unit_price=30.69, volume_per_year=23400, contract_months=36, lead_time_days=56']
+
+RESULT deal=False score=0.0 c_deal=None terms=unit_price=None, volume_per_year=None, contract_months=None, lead_time_days=None
+quota left: 323

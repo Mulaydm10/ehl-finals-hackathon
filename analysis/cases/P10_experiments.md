@@ -9,8 +9,9 @@ Brief: "P10 Record-Breaking Investigation - Ravensteiner".
 
 | when (CEST) | run | type | agent / code | result | record |
 |---|---|---|---|---|---|
-| 10-11 06:30 | Run 1 | offline; Qwen requested, unreachable (0 LLM calls) | noidea_p10.py / P10_M.json at 44e6f47; new analysis/tools/p10_record_check.py | archived replay byte-equal (turns 1-2); fitted sim 31.10-31.20; documented sim 0.80 at msg 1 (unfit); exact marks verified; the current path stops at 31.10 (first counter pinned at 31.50 in 40/41, final at msg 2 in 39/39, largest cut there 0.40); strongest untested lever = one step inside its 2% authority after its final (30.69), odds low | analysis/offline_runs/2026-10-11_P10_run1_qwen/ |
-| 10-11 07:00 | Run 2 | offline, gpt-6-astra (60 calls) | new noidea_p10r.py + P10_R.json (59c8 msgs 1-2 byte for byte, then 30.69 inside its 2% after the final); probe.py stop_on_template; mode_watch watch-only | agent branch checks ALL PASS; archived replay: only the post-final turn changes (4 of 11 games), 0 errors; fitted sim hold 0.7097 / agree 0.741742 / walk 0; Astra as the supplier: hold 40 of 40 for 30.69 ('my approval authority is not an additional discount allowance'), control 30.40: hold 9, walk 1 -> agreement NOT demonstrated; selected for the one hosted game, labelled speculative | analysis/offline_runs/2026-10-11_P10_run2_astra/ |
+| 10-11 06:05-06:15 | Run 1 | offline; Qwen requested, unreachable (0 LLM calls) | noidea_p10.py / P10_M.json at 44e6f47; new analysis/tools/p10_record_check.py | archived replay byte-equal (turns 1-2); fitted sim 31.10-31.20; documented sim 0.80 at msg 1 (unfit); exact marks verified; the current path stops at 31.10 (first counter pinned at 31.50 in 40/41, final at msg 2 in 39/39, largest cut there 0.40); strongest untested lever = one step inside its 2% authority after its final (30.69), odds low | analysis/offline_runs/2026-10-11_P10_run1_qwen/ |
+| 10-11 06:16-06:27 | Run 2 | offline, gpt-6-astra (60 calls) | new noidea_p10r.py + P10_R.json (59c8 msgs 1-2 byte for byte, then 30.69 inside its 2% after the final); probe.py stop_on_template; mode_watch watch-only | agent branch checks ALL PASS; archived replay: only the post-final turn changes (4 of 11 games), 0 errors; fitted sim hold 0.7097 / agree 0.741742 / walk 0; Astra as the supplier: hold 40 of 40 for 30.69 ('my approval authority is not an additional discount allowance'), control 30.40: hold 9, walk 1 -> agreement NOT demonstrated; selected for the one hosted game, labelled speculative | analysis/offline_runs/2026-10-11_P10_run2_astra/ |
+| 10-11 06:29 | **Run 3 = LIVE** | hosted, the ONE session (sandbox mode check 06:28: normal) | P10_R.json via probe.py (twin of noidea_p10r.py) at 07f34bf | d0904bb939fa8f54: msgs 1-2 reproduced (31.50 -> final 31.10); 30.69 after the final -> **walked** ('Since you are unable to accept these terms, we hereby terminate this negotiation'; back office 'My call: walk_away') = **0.0, no deal**. Neither 0.7097 nor 0.741 beaten; the board keeps 0.741 | analysis/offline_runs/2026-10-11_P10_live/, datasets/runs/d0904bb939fa8f54.json |
 
 ## Changelog
 - **Run 1 (no agent change):**
@@ -28,4 +29,11 @@ Brief: "P10 Record-Breaking Investigation - Ravensteiner".
   - `mode_watch.py`: `--max-plays` defaults to 0 (watch only; the brief rules out playing the template window).
   - Defect found and fixed offline: on a fresh agent `self.sup` did not exist before `prepare()`, and main's crash guard
     then pushed again (30.07) on an open counter. The check now fails on any crash-guard firing.
+- **Run 3 (live d0904bb939fa8f54, 0.0):**
+  - The 59c899b9 state is reproducible (4 of 4).
+  - Ravensteiner walks on any ask under its final, even -1.3% inside its own 2% authority: on P10 2 of 2 post-final
+    pushes walked (with 8134c6d1).
+  - The Astra supplier proxy held 40 of 40, so an LLM supplier we prompt is not evidence of the arena's walk risk.
+  - P10 record status: 0.741 (engine-template window) stays the best. Normal mode tops out at 31.10 (0.7097) by every
+    route we know. No second hosted game (brief).
 

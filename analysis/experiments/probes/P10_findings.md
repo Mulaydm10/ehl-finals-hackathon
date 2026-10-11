@@ -131,3 +131,12 @@ falling window worth citing (-0.25 % at best). **P10 ceiling with this supplier:
   gap = 30.40, the question again) -> final **31.10**. Ravensteiner does not name a floor.
 - probe.py gained `gap_pct` (ask a % under its price) and `if_counter_below` (another round-2 e-mail when its counter came in
   under a price).
+
+## Probe R (d0904bb939fa8f54, 06:29): one step inside its 2% after the final = WALK (0.0), the brief's one hosted game
+- 59c899b9's e-mails again drew 31.50 -> final 31.10 (4 of 4).
+- Then 30.69 (-1.3%, inside the 2% of doc:20260310-70410-M1; our own price up from 30.40) -> **walked_away**: "Since you are
+  unable to accept these terms, we hereby terminate this negotiation." Back office: "My call: walk_away."
+- On P10 every e-mail sent after its final has walked (2 of 2, with 8134c6d1); only proposing back its own alternative was
+  agreed (2d91214c).
+- Offline, an Astra-played Segment Manager held 40 of 40 on the same e-mail, so an LLM proxy does not show the walk risk.
+- Full record: analysis/cases/P10_experiments.md, analysis/offline_runs/2026-10-11_P10_live/.

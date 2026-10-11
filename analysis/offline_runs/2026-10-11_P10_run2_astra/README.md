@@ -1,4 +1,4 @@
-# P10 Run 2 - offline, Astra (2026-10-11 ~07:00 CEST; 0 arena sessions; 60 gpt-6-astra calls)
+# P10 Run 2 - offline, Astra (2026-10-11 06:16-06:27 CEST; 0 arena sessions; 60 gpt-6-astra calls)
 
 Brief: "P10 Record-Breaking Investigation - Ravensteiner", Run 2. It implements and tests Run 1's strongest untested lever:
 **one step inside the Segment Manager's own 2% authority after its final.**

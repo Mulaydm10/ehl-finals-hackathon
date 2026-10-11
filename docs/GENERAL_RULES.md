@@ -297,3 +297,5 @@ crash fix, price path, P04 ceiling, P07/P10/P18 probes).
      - countered once on a -0.1% ask (P05).
      The P18 agreements under its offer (4.91 / 4.94) came in OPEN rounds. A push after a final therefore needs a term the
      supplier values, never price alone; without one, rule 24 stands. (P10 Run 1, `analysis/tools/p10_record_check.py` C.)
+     **Confirmed live (P10 d0904bb939fa8f54):** 30.69 after a final of 31.10 (-1.3%, inside the 2% its own manager may give, our price moving up) -> walked: "Since you are unable to accept these terms, we hereby terminate this negotiation."
+     An LLM we prompt to play the supplier held 40 of 40 on the same e-mail: such proxies say nothing about the arena's walk risk.

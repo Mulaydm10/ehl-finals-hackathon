@@ -1,4 +1,4 @@
-# P10 Run 1 - offline, Qwen requested (2026-10-11 ~06:30 CEST; 0 arena sessions, 0 LLM calls)
+# P10 Run 1 - offline, Qwen requested (2026-10-11 06:05-06:15 CEST; 0 arena sessions, 0 LLM calls)
 
 Brief: "P10 Record-Breaking Investigation - Ravensteiner", Run 1. Goal: the baseline, why it stops, the strongest untested lever.
 
