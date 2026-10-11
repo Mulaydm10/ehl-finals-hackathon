@@ -330,3 +330,36 @@ See analysis/offline_runs/2026-10-11_P18_offline_E_astra/README.md.
 - A 5.40 start ends at 5.10 (77b16b90, 3a6491c8, ff337861 and now this). The record needs a 5.20 start and 5.00 at round 2, then a
   limit <= 4.90 at 45 d; new wording is a fresh draw each time (5.20 in 5 of 16 distinct 45-d openings, 5.00 at round 2 in 1 of 5
   of those). Our best stays 0.727; record 0.756 (Codacabana).
+
+## 26. Live (05:50, aaf4f9c6fe2f7fe6, `noidea_p18_beat30.py`): **0.677 - the 6c2813ce limit at 30 d is (4.93, 4.94]**
+- 6c2813ce msgs 1-2 verbatim -> the same state (4 of 4). msg 3 5.02 @ 30 db5 + 4.92 @ 30 -> hold 5.00 @ 30. msg 4 (+ OTD) 5.03 @ 30
+  db5 + 4.93 @ 30 -> final 5.00 @ 30 d (0.677). With 6c2813ce's own 4.94 agreed, its limit there is (4.93, 4.94]: max 0.718.
+- Both reproducible states are mapped: 0c968aae accepts only 4.91 @ 14 d (0.727), 6c2813ce only 4.94 @ 30 d (0.718). The one
+  ask not yet tried that beats 0.727 in a known state: 5.01 @ 14 d db5 in the 0c968aae state (0.7327, value 4.91 if db5 = 0.10).
+
+## 27. Offline H1/H2 + live (06:03, 07836ace9510eafe, `noidea_p18_coda.py`): **0.621 - fresh round 2 was normal; an ask 4% under its offer ends it**
+- User: "read the highest score holder's deal and just make a better deal than them". Codacabana: 4.90 @ 45 d db0 (0.756). Better at
+  the same value to Werdenfels: 5.00 @ 45 d db5 (0.7618) or 4.89 @ 45 d db0 (0.7627). P18 negotiates only price, clause, payment
+  days and months, so no other structure beats it at an equal value to it.
+- Agent: 6c2813ce's msg 1 verbatim (5.20 @ 45 d, now 5 of 5) + open45's msg 2 (never sent after that msg 1: a fresh round-2 draw),
+  then the record sheets. Offline H1 branch checks and H2 42-game replay passed.
+- Live: 5.20 -> **5.10** (normal; no db5 pair; "A binding higher volume would help us") -> record sheets (4.1% under 5.10) ->
+  **final 5.10 @ 45 d at once** -> 0.621.
+- Lesson: when round 2 is not soft, stay inside its 2% approval authority (5.00 @ 45 d against 5.10) to reach its 5.00 floor
+  (0.688); the record sheets are only worth sending against a 5.00 standing offer. Team best stays 0.727; record 0.756.
+
+## 28. Offline I + live (06:11, cd68b78dfb23022c, `noidea_p18_coda2.py`): **0.688 - the soft round 2 is not reproducible with a changed ask; the 2% fix banks the floor**
+- msg 2 = 6c2813ce's msg 2 byte for byte except the ask (4.90 -> 4.88) -> **5.10** (6c2813ce: 5.00 + 5.10 db5). New msg 2s after
+  6c2813ce's msg 1: 0 of 2 soft. The soft reply belongs to that exact conversation; each new msg 2 is a fresh ~1-in-5 draw.
+- Normal branch with the fix: 5.10 db5 + 5.00 db0 (inside its 2% of 5.10) -> **agreed 5.00 @ 45 d db0 at once** (0.6883), vs 0.621
+  for v1's record sheets 4.1% under. Given both sheets at the same value to it, it chose db0 (we would have preferred 5.10 db5, 0.6957).
+- Team best stays 0.727; record 0.756.
+
+## 29. Live (06:13, a9711492eacdd9a7, `noidea_p18_replay.py` P18_MSG3=5.01/14/5): **0.673 - db5 is not db0 + 0.10 in this state's acceptance**
+- 0c968aae msgs 1-2 verbatim -> 5.00 @ 14 d (reproduced again). msg 3 = 5.01 @ 14 d db5 (1.76% under its 5.10 db5; 4.91 to it at
+  +0.10) -> **hold 5.10 @ 14 d db5** ("For the requested terms including a 5% deadband ... we must hold firm"). msg 4 (hold branch:
+  a09d9536's text, 5.00 @ 30 d db5 + 4.90 @ 30 d) -> final 5.10 @ 14 d db5 -> 0.6727.
+- With 2782c270 (5.00 db5) and d05baf28 (4.97 db5): every db5 ask in this state drew 5.10 db5. Its acceptance limit on db5 here is
+  above 5.01, though 4.91 db0 was agreed: db5 is not credited at exactly 0.10 in acceptance in this conversation.
+- Both reproducible states are exhausted: 0c968aae -> only 4.91 @ 14 d db0 (0.727); 6c2813ce -> only 4.94 @ 30 d (0.718); new msg 2s
+  after 6c2813ce's msg 1 drew 5.10 (0 of 2 soft). Team best 0.727; record 0.756 (Codacabana).

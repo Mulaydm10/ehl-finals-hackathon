@@ -1,0 +1,14 @@
+06:11:28 session cd68b78dfb23022c
+06:11:28 sup:70740 patience prior: final expected around round 4
+06:11:28 prep sup:70740: ask +4.5%, justified +7.0%, full_cost~5.49, cash_rate 0.08, motives ['open_book', 'may_drop_small_accounts', 'approval_ladder']
+06:11:28 sup:70740 P18 coda2 msg 1: 6c2813ce verbatim (4.77 @ 45 d, no clause)
+06:11:28 sup:70740 open {'unit_price': 5.2, 'payment_days': 45, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+06:11:28 sup:70740 P18 coda2 msg 2: its 5.2 @ 45 d (db0 terms 5.2), soft - send ((4.88, 45, 0),), scores [0.7695]
+06:11:49 sup:70740 open {'unit_price': 5.1, 'payment_days': 45, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+06:11:49 sup:70740 P18 coda2 msg 3: its 5.1 @ 45 d (db0 terms 5.1), normal - send ((5.1, 45, 5), (5.0, 45, 0)), scores [0.6957, 0.6883]
+06:12:28 sup:70740 agreed {'unit_price': 5.0, 'payment_days': 45, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+06:12:28 sup:70740 {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+deal: 5.00 @ 45 d, AS-14404 db0, 24 m; c_open 295173.23, c_deal 245255.5, c_best 222651.27, score 0.6883119264840607
+replay: https://arena.tacto.ai/replay/cd68b78dfb23022c | practice sessions left: 325
+saved: tools/replays/raw/P18_cd68b78dfb23022c.json
+(the "soft" label at msg 2 is the log's default before round 2 is classified; round 2 was classified normal at msg 3)

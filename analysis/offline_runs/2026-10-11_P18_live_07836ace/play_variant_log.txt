@@ -1,0 +1,13 @@
+06:03:29 session 07836ace9510eafe
+06:03:29 sup:70740 patience prior: final expected around round 4
+06:03:29 prep sup:70740: ask +4.5%, justified +7.0%, full_cost~5.49, cash_rate 0.08, motives ['open_book', 'may_drop_small_accounts', 'approval_ladder']
+06:03:29 sup:70740 P18 coda msg 1: 6c2813ce verbatim (4.77 @ 45 d, no clause)
+06:03:29 sup:70740 open {'unit_price': 5.2, 'payment_days': 45, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+06:03:29 sup:70740 P18 open45 msg 2: ((4.84, 45, 0),) - scores [0.7965], values to it [4.84]
+06:04:03 sup:70740 open {'unit_price': 5.1, 'payment_days': 45, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+06:04:03 sup:70740 P18 open45 msg 3: ((5.0, 45, 5), (4.89, 45, 0)) - scores [0.7618, 0.7627], values to it [4.9, 4.89]
+06:04:25 sup:70740 final_offer {'unit_price': 5.1, 'payment_days': 45, 'index_clause': {'series': 'AS-14404', 'material_share': 0.45, 'deadband_pct': 0.0, 'base_month': '2026-08'}, 'contract_months': 24}
+06:04:25 sup:70740 {'type': 'accept', 'term_sheet_id': 'offer:70740-3'}
+deal: 5.10 @ 45 d, AS-14404 db0, 24 m; c_open 295173.23, c_deal 250160.61, c_best 222651.27, score 0.6206757236015132
+replay: https://arena.tacto.ai/replay/07836ace9510eafe | practice sessions left: 326
+saved: tools/replays/raw/P18_07836ace9510eafe.json
