@@ -1,6 +1,9 @@
 STATUS: PARTIAL - HANDOFF (cloud credits almost out) - 2026-10-11, cloud session, offline only (0 arena sessions, no LLM).
 Done: record decoded, scorer exact, payment-day pricing measured, levers ranked. NOT done: agent `noidea_p18.py`, sim, replays -
 the local side takes over from §6.
+UPDATE 2026-10-11 ~03:30 (cloud): **`P18_deep.md`** covers all 40 games and corrects section 3 below. After round 1 its cuts ignored our
+payment moves, and 14-day and 45-day games scored the same (0.663 vs 0.658), so "stay on 14 d" is withdrawn. Plan to cross 0.756:
+`analysis/agent_variants/noidea_p18_cross.py` (our best round 1, then 90 days from round 2; 18% per game to beat if 90 d is free).
 
 # P18 (Werdenfels): the record is 4.90 @ 45 d; Werdenfels charges ~EUR 0.10/kg per 30 days of payment, 3x what it is worth to us - stay on 14 d
 
