@@ -30,6 +30,7 @@ Distilled from the hidden-supplier loops of 2026-10-10/11 (v2.34 - v2.34h). Deta
 | a wave case that cannot open was dropped | load test: P01 never started (429, 10 sessions per key) | runner retries until 90 s before the cap; nobody else uses the key |
 | claimed bests without checking the arena mode | P07 0.825 / P10 0.741 were template-mode | rule 118 |
 | trusted the log, not the sent e-mail | P10 "trade" A/B never traded (model path rebuilt the sheets) | check the arena trace; `trade_now` |
+| testing a second version from another folder (git worktree) with the shared venv | the venv's editable install loads `arena_kit` from the MAIN checkout, so the "v2" run silently plays v1 | run v2 with `PYTHONPATH=<v2>/tacto/starter-kit`; check `arena_kit.__file__` first |
 
 ## Ideas tested and rejected (they helped one case and hurt another = overfitting)
 - moving the payment term toward the supplier's standard in round 2 (`pay_trade`: P18 0.610 / 0.666 vs 0.688).

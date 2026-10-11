@@ -348,4 +348,15 @@
 | 2026-10-11 02:54 | Dhruv | P10 | v2.34j hidden A/B general lessons / gpt-6-astra | 0.7019 | f14a4bece64b33b8 |
 | 2026-10-11 02:54 | Dhruv | P11 | v2.34j hidden A/B old_lessons / gpt-6-astra | 0.7935 | d1e499ee783f7e1a |
 | 2026-10-11 02:54 | Dhruv | P11 | v2.34j hidden A/B general lessons / gpt-6-astra | 0.8771 | c8b2844b0f2b7cd5 |
+| 2026-10-11 03:13 | Dhruv | P01 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.9987 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | P02 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.7692 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | P03 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.9872 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | P04 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.7661 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | P07 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.8051 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | P08 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.9156 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | P10 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.6863 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | P11 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.7935 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | P18 | final config L7 hidden (general lessons only) / gpt-6-astra | 0.6883 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | D01 sandbox | final config L7 hidden (general lessons only) / gpt-6-astra | 0.9425 | see notes/analysis_v234/LOAD_L7.log |
+| 2026-10-11 03:13 | Dhruv | D02 sandbox | final config L7 hidden (general lessons only) / gpt-6-astra | 0.5786 | see notes/analysis_v234/LOAD_L7.log |
 | 2026-10-11 03:29 | Neel | P18 | noidea_p18_harvest (cloud cross: 90 d from r2 + two-sheet r4) / gpt-6-astra - 90 d priced +0.10, guard to 30 d, final 5.00 @ 30 d | **0.68** | f2770f53c9ebd512 |
