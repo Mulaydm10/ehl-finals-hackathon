@@ -1454,3 +1454,20 @@ every case a deal, 9 in parallel in 241 s. Unseen sandbox suppliers: **D01 0.943
   model ok 2.2 s; release present; tests 69 + 3 skips (2 skip by design in hidden mode, 1 needs a hosted test arena; 71 + 1
   without hidden); crash 0; D01 0.920, D02 0.579, P01 0.999, no failed / safe-move / slow-decision lines; final runner 60 s:
   12 polls on 403, no session opened, stopped. Practice sessions left 295.
+
+### RFQ analysis 08:45 - 09:20: no change shipped (Dhruv asked to improve RFQ with proper tests)
+Testbeds: the stress sim scores RFQs 0.226 vs real 0.58 (D02) - 0.97 (P05) and its RFQ model is crude (ENGINE_MODEL.md), so
+it cannot judge an RFQ change; P05 is off-limits; D02 (free) + the 29 archived D02 games + archived P05 games remain.
+- D02's gap is price: C_best 156.7k = ~13.06 @ 60 d / 35 d / DAP (arena cost function); J1's final 14.8 @ 14 d / 42 d / DAP =
+  180.5k. Of the 24k gap, payment days are worth 1.8k, lead time 1.1k, the rest is price. Our asks (12.5-13.1) sit at the
+  floors; the bidders go final early at their own price (J1 at its 3rd reply, C1 at its 4th-5th, never under 14.8).
+- J1's final follows its first counter, and the first counter follows the number of verified facts in our round 1: 3 facts
+  (should-cost, forecast, C1's quote) -> 15.3-15.4 in 21 of 21 games -> final 14.7-14.8, 0.58-0.60; 1 fact (older versions)
+  -> 15.6-15.8 in 8 of 8 -> 14.9-15.1, 0.40-0.56. The current agent sends all 3 (the arena checks at most 3 per message).
+- Rival citations work as built: J1 gets C1's quote in round 1 (29 of 29); C1 gets J1's offer in round 2 in 21 of 29 games,
+  with no measurable effect on C1's next price (15.4-15.5 either way). Payment days do not explain the spread (14 d in round 2:
+  0.561 over 26 games; 30 d: 0.565 over 3).
+- Not built: a small push under the cheapest bidder's final while a rival is live. Real data: RFQ pushes within 2.8% walked
+  0 of 4; single pushes within 1.6%: 3 of 5 agreed, 1 walked. D02: +0.05 if agreed, -0.27 if J1 walks (C1 is EXW, +7.2k
+  freight) -> expected value about zero with real downside.
+Result: the D02 ceiling is J1's own concession schedule; nothing we control has evidence. final-v5 stays.
