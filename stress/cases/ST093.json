@@ -1,0 +1,167 @@
+{
+ "case_id": "case:ST093",
+ "set": "stress",
+ "type": "capacity",
+ "title": "Ravensteiner cuts the seal allocation",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with Dichtungswerk Ravensteiner GmbH. Ravensteiner cuts the seal allocation. Need: 23400 pc a year. Category goal: secure supply of a bottleneck part: coverage of the full need and a supplier that stays healthy come first. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 42 days). There is no fallback supplier: without a deal the demand is bought at the fallback price. Must-haves: volume_per_year >= 22230. Prepare from the data package.",
+ "trigger_doc": "doc:20260918-70410-P10",
+ "parts": [
+  "part:340010"
+ ],
+ "suppliers": [
+  "sup:70410"
+ ],
+ "negotiable": [
+  "unit_price",
+  "volume_per_year",
+  "contract_months",
+  "lead_time_days"
+ ],
+ "fixed_terms": {
+  "payment_days": 30,
+  "effective_date": "2027-01-01",
+  "index_clause": null,
+  "incoterm": "DAP",
+  "tooling_eur": 0
+ },
+ "term_options": {
+  "volume_per_year": [
+   16379,
+   19890,
+   23400
+  ],
+  "contract_months": [
+   12,
+   24,
+   36
+  ],
+  "lead_time_days": [
+   35,
+   42,
+   56
+  ]
+ },
+ "buyer": {
+  "need_per_year": 23400,
+  "horizon_years": 2,
+  "current_unit_price": 29.89,
+  "fallback_unit_price": 37.36,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 42,
+  "category_goal": "secure_supply",
+  "fallback_risk_pct": 25,
+  "index_risk_pct": 3,
+  "late_cost_per_day": 2400,
+  "cost_per_defect": 380,
+  "sustainable_margin_pct": 10,
+  "relationship_eur_per_point": 13990,
+  "freight_eur_per_unit": {
+   "EXW": 0.01,
+   "FCA": 0.01,
+   "DAP": 0.0
+  },
+  "index_paths": {},
+  "must_haves": [
+   {
+    "field": "volume_per_year",
+    "op": ">=",
+    "value": 22230
+   }
+  ],
+  "alternative": {
+   "kind": "none",
+   "ref": null,
+   "terms": {}
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260918-70410-P10",
+  "ctr:4600070410",
+  "sc:70410@2026Q3",
+  "fc:340010@2026-09"
+ ],
+ "_hidden": {
+  "template": "case:P10",
+  "variant": 2,
+  "suppliers": {
+   "sup:70410": {
+    "grid": 0.1,
+    "rate": 0.11569175584966797,
+    "r_base": 0.9324159778085752,
+    "levers": {
+     "index_change": 0.01449727225433346,
+     "should_cost": 0.0,
+     "price_history": 0.0,
+     "quality": 0.0,
+     "volume_change": 0.0,
+     "news": 0.0,
+     "notice": 0.0,
+     "contract": 0.0
+    },
+    "lever_repeat": 0.226216341694302,
+    "fact_pass": 0.8817007098945022,
+    "first_frac": 0.6713697761202342,
+    "recip": 0.8389968939526352,
+    "cap": 0.03038360911291202,
+    "final_round": 6,
+    "p_walk_final": 0.3384520326771987,
+    "patience": 7,
+    "insult": 0.05483123852829304,
+    "min_move": 0.10919237410014108,
+    "hazard": 0.0,
+    "rival_follow": 0.7600190751185673,
+    "rival_premium": 0.023888457608073625,
+    "lt_cost": 0.0035239503366811726,
+    "vol_elast": 0.17681649116686426,
+    "ppm_cost": 0.04119896959899985,
+    "contract_bonus": 0.0019951316537759043,
+    "ix_base": 0.016527217183641203,
+    "ix_slope": 0.0033439701290310523,
+    "max_payment_days": null,
+    "trust_penalty": 0.008182268058521174,
+    "alt_std": true,
+    "strict_drivers": true,
+    "archetype": "conceder",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 300,
+     "lead_time_days": 54,
+     "volume_per_year": 19890,
+     "contract_months": 12,
+     "incoterm": "DAP",
+     "tooling_eur": 0,
+     "chargeback_eur_per_complaint": 0.0
+    },
+    "opening": {
+     "unit_price": 33.45,
+     "lead_time_days": 54,
+     "volume_per_year": 19890,
+     "contract_months": 12
+    },
+    "drivers": [
+     "LCI-C",
+     "PPI-C2219"
+    ],
+    "ppm_real": 331,
+    "full_cost_frac": 0.863192129084765,
+    "usual_rate": 0.11569175584966797
+   }
+  },
+  "c_open": 1957520.43,
+  "c_alt": null,
+  "c_best": 1472739.85,
+  "best_package": {
+   "supplier_id": "sup:70410",
+   "terms": {
+    "unit_price": 30.06,
+    "volume_per_year": 23400,
+    "contract_months": 24,
+    "lead_time_days": 54
+   },
+   "c": 1472739.85
+  },
+  "best_is_alternative": false
+ }
+}

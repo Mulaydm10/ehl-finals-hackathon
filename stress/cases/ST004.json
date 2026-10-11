@@ -1,0 +1,168 @@
+{
+ "case_id": "case:ST004",
+ "set": "stress",
+ "type": "price_increase",
+ "title": "Brandlhuber announces +9.5 % on HN volute casings",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with Gie\u00dferei Brandlhuber GmbH & Co. KG. Brandlhuber announces +9.5 % on HN volute casings. Need: 8150 pc a year. Category goal: stabilise a strategic supply: a healthy supplier and stable prices count, not only the lowest price. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 45 days). Fallback if you walk away: the second-source quote quote:7200001. Must-haves: none. Prepare from the data package.",
+ "trigger_doc": "doc:20260911-70110-P01",
+ "parts": [
+  "part:310010"
+ ],
+ "suppliers": [
+  "sup:70110"
+ ],
+ "negotiable": [
+  "unit_price",
+  "effective_date",
+  "payment_days"
+ ],
+ "fixed_terms": {
+  "lead_time_days": 42,
+  "volume_per_year": 8150,
+  "contract_months": 12,
+  "index_clause": null,
+  "incoterm": "FCA",
+  "tooling_eur": 0
+ },
+ "term_options": {
+  "effective_date": [
+   "2026-11-01",
+   "2027-01-01",
+   "2027-04-01"
+  ],
+  "payment_days": [
+   14,
+   30,
+   45,
+   60,
+   90
+  ]
+ },
+ "buyer": {
+  "need_per_year": 8150,
+  "horizon_years": 1.0,
+  "current_unit_price": 126.53,
+  "fallback_unit_price": 136.65,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 45,
+  "category_goal": "stabilise",
+  "fallback_risk_pct": 10,
+  "index_risk_pct": 4,
+  "late_cost_per_day": 420,
+  "cost_per_defect": 216,
+  "sustainable_margin_pct": 3,
+  "relationship_eur_per_point": 15470,
+  "freight_eur_per_unit": {
+   "EXW": 2.19,
+   "FCA": 1.9,
+   "DAP": 0.0
+  },
+  "index_paths": {},
+  "must_haves": [],
+  "alternative": {
+   "kind": "quote",
+   "ref": "quote:7200001",
+   "terms": {
+    "unit_price": 143.22,
+    "payment_days": 60,
+    "lead_time_days": 70,
+    "volume_per_year": 8150,
+    "contract_months": 12,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "incoterm": "FCA",
+    "tooling_eur": 1500,
+    "ppm_commitment": 2376
+   }
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260911-70110-P01",
+  "ctr:4600070110",
+  "sc:70110@2026Q3",
+  "quote:7200001"
+ ],
+ "_hidden": {
+  "template": "case:P01",
+  "variant": 3,
+  "suppliers": {
+   "sup:70110": {
+    "grid": 0.5,
+    "rate": 0.09408731654369769,
+    "r_base": 0.9929762014883422,
+    "levers": {
+     "index_change": 0.0,
+     "should_cost": 0.018858233506663866,
+     "price_history": 0.012859244383792245,
+     "quality": 0.0,
+     "volume_change": 0.0,
+     "news": 0.013296607795796795,
+     "notice": 0.031069820211690954,
+     "contract": 0.010240827293397863
+    },
+    "lever_repeat": 0.566947789761143,
+    "fact_pass": 0.8316109722147423,
+    "first_frac": 0.8547448094473397,
+    "recip": 0.9921354813502705,
+    "cap": 0.02066796457191692,
+    "final_round": 5,
+    "p_walk_final": 0.8221433684094654,
+    "patience": 3,
+    "insult": 0.08028138621516506,
+    "min_move": 0.008950435368409537,
+    "hazard": 0.0,
+    "rival_follow": 0.9068585889436207,
+    "rival_premium": 0.00027642388673609127,
+    "lt_cost": 0.005143525499193341,
+    "vol_elast": 0.04646130227913819,
+    "ppm_cost": 0.044731089717232095,
+    "contract_bonus": 0.00012361754681928527,
+    "ix_base": 0.03587896488978849,
+    "ix_slope": 0.005671301312001863,
+    "max_payment_days": null,
+    "trust_penalty": 0.004999937953572913,
+    "alt_std": true,
+    "strict_drivers": true,
+    "archetype": "data_driven",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 900,
+     "effective_date": "2026-11-01",
+     "lead_time_days": 42,
+     "incoterm": "FCA",
+     "volume_per_year": 8150,
+     "contract_months": 12,
+     "tooling_eur": 0,
+     "chargeback_eur_per_complaint": 0.0
+    },
+    "opening": {
+     "unit_price": 137.64,
+     "effective_date": "2026-11-01"
+    },
+    "drivers": [
+     "LCI-C",
+     "PPI-C241",
+     "PPI-D351"
+    ],
+    "ppm_real": 828,
+    "full_cost_frac": 0.9281193618503859,
+    "usual_rate": 0.09408731654369769
+   }
+  },
+  "c_open": 1146313.8,
+  "c_alt": 1176178.02,
+  "c_best": 1078178.24,
+  "best_package": {
+   "supplier_id": "sup:70110",
+   "terms": {
+    "unit_price": 127.04,
+    "effective_date": "2027-04-01",
+    "payment_days": 14
+   },
+   "c": 1078178.24
+  },
+  "best_is_alternative": false
+ }
+}

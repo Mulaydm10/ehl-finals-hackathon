@@ -1,0 +1,173 @@
+{
+ "case_id": "case:ST110",
+ "set": "stress",
+ "type": "quality",
+ "title": "Kalwisz: bearing brackets in red",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with Odlewnia Kalwisz Sp. z o.o.. Kalwisz: bearing brackets in red. Need: 15900 pc a year. Category goal: quality first: defects and late deliveries cost more than a few cents of price. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 58 days). Fallback if you walk away: the second-source quote quote:7200011. Must-haves: ppm_commitment <= 1500. Prepare from the data package.",
+ "trigger_doc": "doc:20260921-70140-P11",
+ "parts": [
+  "part:310020"
+ ],
+ "suppliers": [
+  "sup:70140"
+ ],
+ "negotiable": [
+  "ppm_commitment",
+  "chargeback_eur_per_complaint",
+  "unit_price"
+ ],
+ "fixed_terms": {
+  "payment_days": 60,
+  "lead_time_days": 56,
+  "volume_per_year": 15900,
+  "contract_months": 12,
+  "effective_date": "2027-01-01",
+  "index_clause": null,
+  "incoterm": "FCA",
+  "tooling_eur": 0
+ },
+ "term_options": {
+  "ppm_commitment": [
+   300,
+   800,
+   1500,
+   2500
+  ],
+  "chargeback_eur_per_complaint": [
+   0,
+   150,
+   300,
+   500
+  ]
+ },
+ "buyer": {
+  "need_per_year": 15900,
+  "horizon_years": 1.0,
+  "current_unit_price": 45.15,
+  "fallback_unit_price": 47.86,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 58,
+  "category_goal": "quality_first",
+  "fallback_risk_pct": 8,
+  "index_risk_pct": 2,
+  "late_cost_per_day": 300,
+  "cost_per_defect": 450,
+  "freight_eur_per_unit": {
+   "EXW": 1.77,
+   "FCA": 1.54,
+   "DAP": 0.0
+  },
+  "index_paths": {},
+  "must_haves": [
+   {
+    "field": "ppm_commitment",
+    "op": "<=",
+    "value": 1500
+   }
+  ],
+  "alternative": {
+   "kind": "quote",
+   "ref": "quote:7200011",
+   "terms": {
+    "unit_price": 53.56,
+    "payment_days": 30,
+    "lead_time_days": 56,
+    "volume_per_year": 15900,
+    "contract_months": 12,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "incoterm": "FCA",
+    "tooling_eur": 7500,
+    "ppm_commitment": 715
+   }
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260921-70140-P11",
+  "ctr:4600070140",
+  "sc:70140@2026Q3",
+  "quote:7200011"
+ ],
+ "_hidden": {
+  "template": "case:P11",
+  "variant": 9,
+  "suppliers": {
+   "sup:70140": {
+    "grid": 0.05,
+    "rate": 0.07860325296398296,
+    "r_base": 0.9054989645220086,
+    "levers": {
+     "index_change": 0.0,
+     "should_cost": 0.01021449462227892,
+     "price_history": 0.0051744930232550095,
+     "quality": 0.0,
+     "volume_change": 0.0,
+     "news": 0.0,
+     "notice": 0.0,
+     "contract": 0.0
+    },
+    "lever_repeat": 0.7936678063127804,
+    "fact_pass": 0.37673552154356765,
+    "first_frac": 0.8411789868220401,
+    "recip": 0.4478495389833939,
+    "cap": 0.007999240483538577,
+    "final_round": 5,
+    "p_walk_final": 1.0,
+    "patience": 2,
+    "insult": 0.042685141943811594,
+    "min_move": 0.1532414267018134,
+    "hazard": 0.062196096472712493,
+    "rival_follow": 0.8038277710182669,
+    "rival_premium": 0.0009018392865320635,
+    "lt_cost": 0.005140625780002235,
+    "vol_elast": 0.18175321327043348,
+    "ppm_cost": 0.03201759824795993,
+    "contract_bonus": 0.0016640458102952253,
+    "ix_base": 0.009220080724175553,
+    "ix_slope": 0.00502818265028161,
+    "max_payment_days": null,
+    "trust_penalty": 0.0070044170056665555,
+    "alt_std": false,
+    "strict_drivers": true,
+    "archetype": "walker",
+    "standard": {
+     "payment_days": 60,
+     "ppm_commitment": 6400,
+     "chargeback_eur_per_complaint": 0.0,
+     "lead_time_days": 56,
+     "incoterm": "FCA",
+     "volume_per_year": 15900,
+     "contract_months": 12,
+     "tooling_eur": 0
+    },
+    "opening": {
+     "unit_price": 48.75,
+     "ppm_commitment": 6400
+    },
+    "drivers": [
+     "LCI-C",
+     "PPI-C241",
+     "PPI-D351"
+    ],
+    "ppm_real": 3087,
+    "full_cost_frac": 0.9185677222875236,
+    "usual_rate": 0.07860325296398296
+   }
+  },
+  "c_open": 845403.0,
+  "c_alt": 894383.19,
+  "c_best": 740383.5,
+  "best_package": {
+   "supplier_id": "sup:70140",
+   "terms": {
+    "ppm_commitment": 300,
+    "chargeback_eur_per_complaint": 0,
+    "unit_price": 44.89
+   },
+   "c": 740383.5
+  },
+  "best_is_alternative": false
+ }
+}

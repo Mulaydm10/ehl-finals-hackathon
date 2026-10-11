@@ -1,0 +1,165 @@
+{
+ "case_id": "case:ST142",
+ "set": "stress",
+ "type": "bundling",
+ "title": "Bundle O-rings, gaskets and lip seals",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with Elasto-Dicht Hermannsdorfer GmbH. Bundle O-rings, gaskets and lip seals. Need: 25000 kits a year. Category goal: routine: fewer suppliers and less process cost. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 7 days). Fallback if you walk away: today's terms continue unchanged. Must-haves: none. Prepare from the data package.",
+ "trigger_doc": "doc:20260913-70430-P15",
+ "parts": [
+  "part:340020",
+  "part:340030",
+  "part:340040"
+ ],
+ "suppliers": [
+  "sup:70430"
+ ],
+ "negotiable": [
+  "unit_price",
+  "payment_days",
+  "contract_months"
+ ],
+ "fixed_terms": {
+  "lead_time_days": 7,
+  "volume_per_year": 25000,
+  "effective_date": "2027-01-01",
+  "index_clause": null,
+  "incoterm": "DAP",
+  "tooling_eur": 0
+ },
+ "term_options": {
+  "payment_days": [
+   14,
+   30,
+   45,
+   60,
+   90
+  ],
+  "contract_months": [
+   12,
+   24,
+   36
+  ]
+ },
+ "buyer": {
+  "need_per_year": 25000,
+  "horizon_years": 2,
+  "current_unit_price": 5.66,
+  "fallback_unit_price": 6.23,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 7,
+  "category_goal": "routine",
+  "fallback_risk_pct": 5,
+  "index_risk_pct": 2,
+  "late_cost_per_day": 50,
+  "cost_per_defect": 25,
+  "freight_eur_per_unit": {
+   "EXW": 0.01,
+   "FCA": 0.01,
+   "DAP": 0.0
+  },
+  "index_paths": {},
+  "must_haves": [],
+  "alternative": {
+   "kind": "current_contract",
+   "ref": null,
+   "terms": {
+    "unit_price": 5.66,
+    "payment_days": 30,
+    "lead_time_days": 7,
+    "volume_per_year": 25000,
+    "contract_months": 24,
+    "effective_date": "2027-01-01",
+    "index_clause": null,
+    "incoterm": "DAP",
+    "tooling_eur": 0
+   }
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260913-70430-P15",
+  "ctr:4600070430",
+  "sc:70430@2026Q3"
+ ],
+ "_hidden": {
+  "template": "case:P15",
+  "variant": 1,
+  "suppliers": {
+   "sup:70430": {
+    "grid": 0.01,
+    "rate": 0.0685054440891745,
+    "r_base": 0.9693729600116751,
+    "levers": {
+     "index_change": 0.0066745399983046474,
+     "should_cost": 0.0,
+     "price_history": 0.0,
+     "quality": 0.0,
+     "volume_change": 0.015171452939041482,
+     "news": 0.018884545657499884,
+     "notice": 0.0,
+     "contract": 0.008206281019552987
+    },
+    "lever_repeat": 0.3027823048477345,
+    "fact_pass": 0.6818153252102914,
+    "first_frac": 0.7698281880240155,
+    "recip": 0.20125419675044381,
+    "cap": 0.0225374355921251,
+    "final_round": 3,
+    "p_walk_final": 0.5805614058658226,
+    "patience": 6,
+    "insult": 0.13349980695773395,
+    "min_move": 0.045307591095557216,
+    "hazard": 0.0,
+    "rival_follow": 0.5722108503371339,
+    "rival_premium": 0.021179153371581473,
+    "lt_cost": 0.007340702770247805,
+    "vol_elast": 0.11296480630955737,
+    "ppm_cost": 0.00532301184303432,
+    "contract_bonus": 0.0026046967839846403,
+    "ix_base": 0.01780152152837696,
+    "ix_slope": 0.005094540264159362,
+    "max_payment_days": null,
+    "trust_penalty": 0.0072295298062211326,
+    "alt_std": false,
+    "strict_drivers": true,
+    "archetype": "mirror",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 300,
+     "chargeback_eur_per_complaint": 0.0,
+     "contract_months": 12,
+     "lead_time_days": 7,
+     "incoterm": "DAP",
+     "volume_per_year": 25000,
+     "tooling_eur": 0
+    },
+    "opening": {
+     "unit_price": 6.19,
+     "payment_days": 30,
+     "contract_months": 12
+    },
+    "drivers": [
+     "LCI-C",
+     "PPI-C2219"
+    ],
+    "ppm_real": 227,
+    "full_cost_frac": 0.9122129726320112,
+    "usual_rate": 0.0685054440891745
+   }
+  },
+  "c_open": 319506.67,
+  "c_alt": 284886.67,
+  "c_best": 284886.67,
+  "best_package": {
+   "supplier_id": "sup:70430",
+   "terms": {
+    "unit_price": 5.7,
+    "payment_days": 60,
+    "contract_months": 36
+   },
+   "c": 285375.0
+  },
+  "best_is_alternative": true
+ }
+}

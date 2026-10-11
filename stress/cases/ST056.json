@@ -1,0 +1,236 @@
+{
+ "case_id": "case:ST056",
+ "set": "stress",
+ "type": "rfq",
+ "title": "RFQ: volute casing for the new HX series",
+ "briefing": "You negotiate for Hollerau Pumpenwerke with Eisengie\u00dferei Velkenreith GmbH, Tarsevi D\u00f6k\u00fcm Sanayi A.\u015e.. RFQ: volute casing for the new HX series. Need: 4200 pc a year. Category goal: stabilise a strategic supply: a healthy supplier and stable prices count, not only the lowest price. Score: the lowest total cost C as defined in the rules, valued with this case's rates (need lead time 56 days). There is no fallback supplier: without a deal the demand is bought at the fallback price. Must-haves: lead_time_days <= 84. Prepare from the data package.",
+ "trigger_doc": "doc:20260926-70120-P06",
+ "parts": [
+  "part:310070"
+ ],
+ "suppliers": [
+  "sup:70120",
+  "sup:70150"
+ ],
+ "negotiable": [
+  "unit_price",
+  "tooling_eur",
+  "payment_days",
+  "lead_time_days"
+ ],
+ "fixed_terms": {
+  "volume_per_year": 4200,
+  "contract_months": 24,
+  "effective_date": "2027-01-01",
+  "index_clause": null,
+  "incoterm": "DAP"
+ },
+ "term_options": {
+  "tooling_eur": [
+   0,
+   7500,
+   15000
+  ],
+  "payment_days": [
+   14,
+   30,
+   45,
+   60,
+   90
+  ],
+  "lead_time_days": [
+   49,
+   56,
+   70,
+   84
+  ]
+ },
+ "buyer": {
+  "need_per_year": 4200,
+  "horizon_years": 2.0,
+  "current_unit_price": 253.19,
+  "fallback_unit_price": 253.19,
+  "interest_rate": 0.08,
+  "reference_payment_days": 60,
+  "need_lead_time_days": 56,
+  "category_goal": "stabilise",
+  "fallback_risk_pct": 10,
+  "index_risk_pct": 4,
+  "late_cost_per_day": 480,
+  "cost_per_defect": 216,
+  "sustainable_margin_pct": 3,
+  "relationship_eur_per_point": 15950,
+  "freight_eur_per_unit": {
+   "EXW": 12.14,
+   "FCA": 10.56,
+   "DAP": 0.0
+  },
+  "index_paths": {},
+  "must_haves": [
+   {
+    "field": "lead_time_days",
+    "op": "<=",
+    "value": 84
+   }
+  ],
+  "alternative": {
+   "kind": "none",
+   "ref": null,
+   "terms": {}
+  }
+ },
+ "round_limit": 10,
+ "refs": [
+  "doc:20260926-70120-P06",
+  "sc:70120@2026Q3",
+  "sc:70150@2026Q3"
+ ],
+ "_hidden": {
+  "template": "case:P06",
+  "variant": 5,
+  "suppliers": {
+   "sup:70120": {
+    "grid": 0.01,
+    "rate": 0.05828125955300767,
+    "r_base": 0.9890204181822044,
+    "levers": {
+     "index_change": 0.04856286271548645,
+     "should_cost": 0.0,
+     "price_history": 0.0,
+     "quality": 0.0,
+     "volume_change": 0.015389290893525028,
+     "news": 0.0,
+     "notice": 0.04790808379618697,
+     "contract": 0.01011988333260283,
+     "rival_quote": 0.05795478210455773
+    },
+    "lever_repeat": 0.5368279059145022,
+    "fact_pass": 0.9428009879924071,
+    "first_frac": 0.5627833282593697,
+    "recip": 0.8774974715778137,
+    "cap": 0.01355515028839128,
+    "final_round": 3,
+    "p_walk_final": 0.6777044454326095,
+    "patience": 3,
+    "insult": 0.09661354242360864,
+    "min_move": 0.08279109893469105,
+    "hazard": 0.0,
+    "rival_follow": 0.7117892843482416,
+    "rival_premium": 0.021446180394538283,
+    "lt_cost": 0.00643037251710312,
+    "vol_elast": 0.05798181582337321,
+    "ppm_cost": 0.022699240332392352,
+    "contract_bonus": 0.00785043695150437,
+    "ix_base": 0.01154051452922327,
+    "ix_slope": 0.0020387387227701424,
+    "max_payment_days": 45,
+    "trust_penalty": 0.005281701516240578,
+    "alt_std": true,
+    "strict_drivers": true,
+    "archetype": "data_driven",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 750,
+     "chargeback_eur_per_complaint": 0.0,
+     "lead_time_days": 84,
+     "tooling_eur": 15000,
+     "incoterm": "DAP",
+     "volume_per_year": 4200,
+     "contract_months": 24
+    },
+    "opening": {
+     "unit_price": 261.59,
+     "tooling_eur": 15000,
+     "payment_days": 30,
+     "lead_time_days": 84
+    },
+    "drivers": [
+     "LCI-C",
+     "PPI-C241",
+     "PPI-D351"
+    ],
+    "ppm_real": 773,
+    "full_cost_frac": 0.9632432336618248,
+    "usual_rate": 0.05828125955300767
+   },
+   "sup:70150": {
+    "grid": 0.1,
+    "rate": 0.11672950782720798,
+    "r_base": 0.9942369923649695,
+    "levers": {
+     "index_change": 0.0,
+     "should_cost": 0.0,
+     "price_history": 0.0,
+     "quality": 0.0,
+     "volume_change": 0.0,
+     "news": 0.0,
+     "notice": 0.0,
+     "contract": 0.0,
+     "rival_quote": 0.01335704604734569
+    },
+    "lever_repeat": 0.756896543674622,
+    "fact_pass": 0.531011491145409,
+    "first_frac": 0.34883191027509747,
+    "recip": 0.5294433624449963,
+    "cap": 0.0025661424051638825,
+    "final_round": 6,
+    "p_walk_final": 0.5441593859589079,
+    "patience": 3,
+    "insult": 0.04868234064954506,
+    "min_move": 0.09752975369080433,
+    "hazard": 0.0,
+    "rival_follow": 0.8691185667521399,
+    "rival_premium": 0.02566619424652347,
+    "lt_cost": 0.007556970453273578,
+    "vol_elast": 0.025167837241086025,
+    "ppm_cost": 0.0008613711830603555,
+    "contract_bonus": 0.0020726452704593105,
+    "ix_base": -0.00650362477953897,
+    "ix_slope": 0.004090838959579103,
+    "max_payment_days": null,
+    "trust_penalty": 0.00035362087469402394,
+    "alt_std": false,
+    "strict_drivers": false,
+    "archetype": "mirror",
+    "standard": {
+     "payment_days": 30,
+     "ppm_commitment": 2650,
+     "chargeback_eur_per_complaint": 0.0,
+     "lead_time_days": 84,
+     "tooling_eur": 15000,
+     "incoterm": "DAP",
+     "volume_per_year": 4200,
+     "contract_months": 24
+    },
+    "opening": {
+     "unit_price": 246.09,
+     "tooling_eur": 15000,
+     "payment_days": 30,
+     "lead_time_days": 84
+    },
+    "drivers": [
+     "LCI-C",
+     "PPI-C241",
+     "PPI-D351"
+    ],
+    "ppm_real": 3370,
+    "full_cost_frac": 0.9237183397955544,
+    "usual_rate": 0.11672950782720798
+   }
+  },
+  "c_open": 2114185.2,
+  "c_alt": null,
+  "c_best": 2071044.18,
+  "best_package": {
+   "supplier_id": "sup:70150",
+   "terms": {
+    "unit_price": 240.14,
+    "tooling_eur": 15000,
+    "payment_days": 14,
+    "lead_time_days": 84
+   },
+   "c": 2071044.18
+  },
+  "best_is_alternative": false
+ }
+}
